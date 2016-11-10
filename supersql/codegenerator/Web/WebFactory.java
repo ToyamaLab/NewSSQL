@@ -2,6 +2,7 @@ package supersql.codegenerator.Web;
 
 import supersql.codegenerator.Attribute;
 import supersql.codegenerator.Connector;
+import supersql.codegenerator.Decorator;
 import supersql.codegenerator.Factory;
 import supersql.codegenerator.Function;
 import supersql.codegenerator.Grouper;
@@ -15,6 +16,11 @@ public class WebFactory extends Factory {
 	@Override
 	public Attribute createAttribute(Manager manager) {
 		return new WebAttribute(manager, webEnv, webEnv2);
+	}
+	
+	@Override
+	public Decorator createDecoration(Manager manager) {
+		return new WebDecoration(manager, webEnv, webEnv2);
 	}
 	
 	@Override

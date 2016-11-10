@@ -14,7 +14,7 @@
 	<classpathentry kind="lib" path="libs/postgresql-9.4.1208.jre6.jar"/>
 	<classpathentry kind="lib" path="libs/servlet-api.jar"/>
 	<classpathentry kind="lib" path="libs/sqlitejdbc-v056.jar"/>
+	<classpathentry kind="lib" path="libs/commons-codec-1.10.jar"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
-	<classpathentry kind="lib" path="/Users/taji/Documents/workspace/NewSSQL/libs/commons-codec-1.10.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

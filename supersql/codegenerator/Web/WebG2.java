@@ -43,6 +43,14 @@ public class WebG2 extends Grouper {
 			listol_event = true;
 		}
 		
+		// クラス名の取得
+		String classname;
+		if (this.decos.containsKey("class")) {
+			classname = WebEnv.stringsub(this.decos.getStr("class"));
+		} else {
+			classname = WebEnv.getClassID(this);
+		}
+		
 		// cssの情報を取得
 		webEnv.append_css_def_att(WebEnv.getClassID(this), this.decos);
 		
@@ -52,22 +60,37 @@ public class WebG2 extends Grouper {
 				webEnv.code.append("<td>\n");
 			} else if (listul_event || listol_event) {
 				webEnv.code.append("<li>\n");
+			} else if (webEnv.decorationStartFlag) {
+				WebDecoration.divFront.append("<div class=\"");
+//				WebDecoration.divEnd.append(WebEnv.getClassID(this));
+				WebDecoration.divEnd.append(classname);
+				WebDecoration.divEnd.append(" col\">\n");
+				webEnv.decorationStartFlag = false;
+			} else if (webEnv.decorationFlag) {
+				WebDecoration.divEnd.append("<div class=\"");
+//				WebDecoration.divEnd.append(WebEnv.getClassID(this));
+				WebDecoration.divEnd.append(classname);
+				WebDecoration.divEnd.append(" col\">\n");
 			} else {
 				webEnv.code.append("<div class=\"");
-				webEnv.code.append(WebEnv.getClassID(this));
+//				webEnv.code.append(WebEnv.getClassID(this));
+				webEnv.code.append(classname);
 				webEnv.code.append(" col\">\n");
 			}
 			if (webEnv.tableFlag) { // table
 				webEnv.code.append("<table class=\"");
-				webEnv.code.append(WebEnv.getClassID(this));
+//				webEnv.code.append(WebEnv.getClassID(this));
+				webEnv.code.append(classname);
 				webEnv.code.append(" col\">\n");
 			} else if (webEnv.listUlFlag) { // list-ul
 				webEnv.code.append("<ul class=\"");
-				webEnv.code.append(WebEnv.getClassID(this));
+//				webEnv.code.append(WebEnv.getClassID(this));
+				webEnv.code.append(classname);
 				webEnv.code.append(" col\">\n");
 			} else if (webEnv.listOlFlag) { // list-ol
 				webEnv.code.append("<ol class=\"");
-				webEnv.code.append(WebEnv.getClassID(this));
+//				webEnv.code.append(WebEnv.getClassID(this));
+				webEnv.code.append(classname);
 				webEnv.code.append(" col\">\n");
 			}
 		}
@@ -115,6 +138,8 @@ public class WebG2 extends Grouper {
 			webEnv.code.append("</td>\n");
 		} else if (listul_event || listol_event) {
 			webEnv.code.append("</li>\n");
+		} else if (webEnv.decorationFlag) {
+			WebDecoration.divEnd.append("</div>\n");
 		} else {
 			webEnv.code.append("</div>\n");
 		}

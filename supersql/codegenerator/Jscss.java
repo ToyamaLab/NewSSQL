@@ -140,7 +140,7 @@ public class Jscss {
 		else if(media.equals("mobile_html5"))
 			css = Mobile_HTML5Env.commonCSS() + Mobile_HTML5Env.css;
 		else if(media.equals("web"))
-			css = WebEnv.commonCSS() + WebEnv.css;
+			css = WebEnv.commonCSS() + WebEnv.css + WebEnv.cssTableInput(WebEnv.cssClass);
 		String outputCssFileName = outdirPath+fs+fs+getGenerateCssFileName(1);
 		
 		if(!createFile(outputCssFileName, css))
