@@ -603,7 +603,7 @@ public class GlobalEnv {
 
 	//��³����ɥ饤�ФΥѥ����
 	public static String getpassword() {
-		String ret = seek("-p");
+		String ret = seek("-password");
 		if (ret == null) {
 			if (password != null) {
 				ret = password;
