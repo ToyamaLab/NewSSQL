@@ -13,9 +13,6 @@ import supersql.common.GlobalEnv;
 import supersql.common.Log;
 import supersql.extendclass.ExtList;
 
-
-
-
 public class VRC1 extends Connector implements Serializable {
 
 	private VREnv vrEnv;
@@ -40,8 +37,8 @@ public class VRC1 extends Connector implements Serializable {
 		Log.out("countconnectitem=" + countconnectitem());
 		this.setDataList(data_info);
 
-		//TODO: check if the code between A and B is relevant to VR.
-		//A
+		// TODO: check if the code between A and B is relevant to VR.
+		// A
 		if (decos.containsKey("insert")) {
 			VREnv.setIDU("insert");
 		}
@@ -73,14 +70,12 @@ public class VRC1 extends Connector implements Serializable {
 				}
 
 				if (decos.containsKey("class")) {
-					//					System.out.println("existing classdecolater:::::::::");
-					if (!vrEnv.writtenClassId.contains(VREnv
-							.getClassID(this))) {
+					// System.out.println("existing classdecolater:::::::::");
+					if (!vrEnv.writtenClassId.contains(VREnv.getClassID(this))) {
 					} else {
 						vrEnv.code.append(" ");
 					}
-				} else if (vrEnv.writtenClassId.contains(VREnv
-						.getClassID(this))) {
+				} else if (vrEnv.writtenClassId.contains(VREnv.getClassID(this))) {
 				}
 			}
 		}
@@ -89,45 +84,31 @@ public class VRC1 extends Connector implements Serializable {
 		if (GlobalEnv.isOpt()) {
 			vrEnv2.code.append("<tfe type=\"connect\" dimension =\"1\"");
 			if (decos.containsKey("tablealign"))
-				vrEnv2.code.append(" align=\""
-						+ decos.getStr("tablealign") + "\"");
+				vrEnv2.code.append(" align=\"" + decos.getStr("tablealign") + "\"");
 			if (decos.containsKey("tablevalign"))
-				vrEnv2.code.append(" valign=\""
-						+ decos.getStr("tablevalign") + "\"");
+				vrEnv2.code.append(" valign=\"" + decos.getStr("tablevalign") + "\"");
 			if (decos.containsKey("tabletype")) {
-				vrEnv2.code.append(" tabletype=\""
-						+ decos.getStr("tabletype") + "\"");
+				vrEnv2.code.append(" tabletype=\"" + decos.getStr("tabletype") + "\"");
 				if (decos.containsKey("cellspacing")) {
-					vrEnv2.code.append(" cellspacing=\""
-							+ decos.getStr("cellspacing") + "\"");
+					vrEnv2.code.append(" cellspacing=\"" + decos.getStr("cellspacing") + "\"");
 				}
 				if (decos.containsKey("cellpadding")) {
-					vrEnv2.code.append(" cellpadding=\""
-							+ decos.getStr("cellpadding") + "\"");
+					vrEnv2.code.append(" cellpadding=\"" + decos.getStr("cellpadding") + "\"");
 				}
 				if (decos.containsKey("border")) {
-					vrEnv2.code.append(" border=\""
-							+ decos.getStr("border").replace("\"", "")
-							+ "\"");
+					vrEnv2.code.append(" border=\"" + decos.getStr("border").replace("\"", "") + "\"");
 				}
 				if (decos.containsKey("tableborder")) {
-					vrEnv2.code.append(" tableborder=\""
-							+ decos.getStr("tableborder").replace("\"", "")
-							+ "\"");
+					vrEnv2.code.append(" tableborder=\"" + decos.getStr("tableborder").replace("\"", "") + "\"");
 				}
 			} else {
 				if (decos.containsKey("border")) {
-					vrEnv2.code.append(" border=\""
-							+ decos.getStr("border").replace("\"", "")
-							+ "\"");
+					vrEnv2.code.append(" border=\"" + decos.getStr("border").replace("\"", "") + "\"");
 				} else {
-					vrEnv2.code.append(" border=\""
-							+ vrEnv.tableBorder.replace("\"", "") + "\"");
+					vrEnv2.code.append(" border=\"" + vrEnv.tableBorder.replace("\"", "") + "\"");
 				}
 				if (decos.containsKey("tableborder")) {
-					vrEnv2.code.append(" tableborder=\""
-							+ decos.getStr("tableborder").replace("\"", "")
-							+ "\"");
+					vrEnv2.code.append(" tableborder=\"" + decos.getStr("tableborder").replace("\"", "") + "\"");
 				}
 			}
 			if (vrEnv.writtenClassId.contains(VREnv.getClassID(this))) {
@@ -135,31 +116,28 @@ public class VRC1 extends Connector implements Serializable {
 				vrEnv2.code.append(VREnv.getClassID(this));
 			}
 			if (decos.containsKey("class")) {
-				if (!vrEnv.writtenClassId.contains(VREnv
-						.getClassID(this))) {
+				if (!vrEnv.writtenClassId.contains(VREnv.getClassID(this))) {
 					vrEnv2.code.append(" class=\"");
 				} else {
 					vrEnv2.code.append(" ");
 				}
 				vrEnv2.code.append(decos.getStr("class") + "\" ");
-			} else if (vrEnv.writtenClassId.contains(VREnv
-					.getClassID(this))) {
+			} else if (vrEnv.writtenClassId.contains(VREnv.getClassID(this))) {
 				vrEnv2.code.append("\" ");
 			}
 
 			if (decos.containsKey("form")) {
-				vrEnv2.code.append(" form=\"" + VREnv.getFormNumber()
-				+ "\" ");
+				vrEnv2.code.append(" form=\"" + VREnv.getFormNumber() + "\" ");
 			}
 			vrEnv2.code.append(">");
 		}
-		//B
+		// B
 
 		int i = 0;
-		
-		if(CodeGenerator.getMedia().equalsIgnoreCase("unity_dv")){
-			Element connector = vrEnv.xml.createElement("Connector"+j);
-			connector.setAttribute("type","C1");
+
+		if (CodeGenerator.getMedia().equalsIgnoreCase("unity_dv")) {
+			Element connector = vrEnv.xml.createElement("Connector" + j);
+			connector.setAttribute("type", "C1");
 			vrEnv.currentNode = vrEnv.currentNode.appendChild(connector);
 			j++;
 		}
@@ -170,34 +148,34 @@ public class VRC1 extends Connector implements Serializable {
 			vrEnv.xmlDepth++;
 			ITFE tfe = tfes.get(i);
 
-			if(CodeGenerator.getMedia().equalsIgnoreCase("unity_dv")){//tatsu
+			if (CodeGenerator.getMedia().equalsIgnoreCase("unity_dv")) {// tatsu
 				String classid = VREnv.getClassID(tfe);
 				this.worknextItem();
 
-				//TODO: check what this if does
+				// TODO: check what this if does
 				if (vrEnv.notWrittenClassId.contains(classid)) {
-					if(vrEnv.code.indexOf(classid)>=0){
-						vrEnv.code.delete(vrEnv.code.indexOf(classid),vrEnv.code.indexOf(classid) + classid.length() + 1);
+					if (vrEnv.code.indexOf(classid) >= 0) {
+						vrEnv.code.delete(vrEnv.code.indexOf(classid),
+								vrEnv.code.indexOf(classid) + classid.length() + 1);
 					}
 				}
 				vrEnv.cNum--;
 				vrEnv.xmlDepth--;
-			}else{
-				if(VRAttribute.genre.equals("")){// kotani 16/10/04
-					if(vrEnv.gLevel == 0){
+			} else {
+				if (VRAttribute.genre.equals("")) {// kotani 16/10/04
+					if (vrEnv.gLevel == 0) {
 						VRAttribute.groupcount++;
-					}else if (vrEnv.gLevel < 2){ //vrEnv.gLevel == 1
+					} else if (vrEnv.gLevel < 2) { // vrEnv.gLevel == 1
 						vrEnv.currentNode = vrEnv.currentNode.appendChild(vrEnv.xml.createElement("category"));
 					}
-				}else{
+				} else {
 					Element category = vrEnv.xml.createElement("category");
 					category.setAttribute("name", VRAttribute.genre);
 					vrEnv.currentNode = vrEnv.currentNode.appendChild(category);
 
-
 					VRAttribute.genrearray2.add("\"" + VRAttribute.genre + "\"");
 
-					if(VRAttribute.genrecount == 0){
+					if (VRAttribute.genrecount == 0) {
 						VRAttribute.genrearray22.add(0);
 					}
 					VRAttribute.genrecount++;
@@ -206,10 +184,11 @@ public class VRC1 extends Connector implements Serializable {
 				String classid = VREnv.getClassID(tfe);
 				this.worknextItem();
 
-				//TODO: check what this if does
+				// TODO: check what this if does
 				if (vrEnv.notWrittenClassId.contains(classid)) {
-					if(vrEnv.code.indexOf(classid)>=0){
-						vrEnv.code.delete(vrEnv.code.indexOf(classid),vrEnv.code.indexOf(classid) + classid.length() + 1);
+					if (vrEnv.code.indexOf(classid) >= 0) {
+						vrEnv.code.delete(vrEnv.code.indexOf(classid),
+								vrEnv.code.indexOf(classid) + classid.length() + 1);
 					}
 				}
 
@@ -220,20 +199,20 @@ public class VRC1 extends Connector implements Serializable {
 
 		}
 
-		if(CodeGenerator.getMedia().equalsIgnoreCase("unity_dv")){
+		if (CodeGenerator.getMedia().equalsIgnoreCase("unity_dv")) {
 			vrEnv.currentNode = vrEnv.currentNode.getParentNode();
 			j--;
-		}else{
-			//TODO: check what this if does
-			if(VRAttribute.gjudge == 0){
-				if(VRAttribute.billnum >= 2){
+		} else {
+			// TODO: check what this if does
+			if (VRAttribute.gjudge == 0) {
+				if (VRAttribute.billnum >= 2) {
 					VRAttribute.billnum = 0;
 				}
 			}
 
 			vrEnv2.code.append("</tfe>");
 
-			if(vrEnv.gLevel == 1){
+			if (vrEnv.gLevel == 1) {
 				vrEnv.currentNode = vrEnv.currentNode.getParentNode().getParentNode();
 			}
 		}

@@ -63,20 +63,56 @@ grouper :
     OPEN_BRACKET
     exp
     CLOSE_BRACKET
-    (C1
-    |
+    C1 
+  | 
+    OPEN_BRACKET
+    exp
+    CLOSE_BRACKET
     C2
-    |
+  | 
+    OPEN_BRACKET
+    exp
+    CLOSE_BRACKET
     C3
-    |
-    C4
-    |
-    CIRCLE
-    ) 
   ;
-  /**grouper is [exp], | ! | % | # | ◯ */
+  /**grouper is [exp], | ! | % */
   
-/*
+  
+
+ /* 
+composite_iterator  :
+  (
+    OPEN_BRACKET 
+    exp
+    CLOSE_BRACKET
+    C1
+    (
+    NUMERIC_LITERAL //NUMERIC_LITERAL is number
+      (
+        (C1 | C3)
+        | 
+        (C2 (NUMERIC_LITERAL C3)?) //()? There is or Nothing. Either ok.
+      )
+    )//[],2! or [],2!3% or [],2% or [],2,
+  )
+  | 
+  (
+    OPEN_BRACKET 
+    exp
+    CLOSE_BRACKET 
+    C2
+    (
+    NUMERIC_LITERAL  
+      (
+        (C2 | C3)
+        |
+        (C1 (NUMERIC_LITERAL C3)?)
+      )
+    )
+  )//[]!2, or []!2% or []!2,3% or []!2!
+  ;
+*/
+
 composite_iterator  :
   OPEN_BRACKET 
   exp
@@ -89,7 +125,7 @@ composite_iterator  :
   )//[],2! or [],2!3% or [],2% or [],2%3!
   | 
   OPEN_BRACKET 
-  exp 
+  exp
   CLOSE_BRACKET 
   C2
   (
@@ -108,36 +144,21 @@ composite_iterator  :
   NUMERIC_LITERAL C2 (NUMERIC_LITERAL C1)?
   )//[]%2, or []%2,3! or []%2! or []%2!3,
   ;
-*/
 
-composite_iterator :
-OPEN_BRACKET
-exp
-CLOSE_BRACKET
-{List<String> groupersList = new ArrayList<>();}
-(grouper_token=(C1|C2|C3|C4|CIRCLE) NUMERIC_LITERAL {groupersList.add($grouper_token.text);})+
-grouper_token=(C1|C2|C3|C4|CIRCLE) {groupersList.add($grouper_token.text);}
-{Set<String> groupersSet = new HashSet<>(groupersList); if(groupersList.size() != groupersSet.size()){throw new RuntimeException("Two identical connectors used in composite connector at line " + $grouper_token.line);}}
-;
 
 exp : 
-  t_exp
-  ;
-
-t_exp :
   d_exp
-  (C4 (d_exp | operand) )*
   ;
 
 d_exp :
   v_exp
   (C3 (v_exp | operand) )*
-  ;
+    ;
     
 v_exp :
   h_exp
   (C2 (h_exp | operand))*
-  ;
+    ;
     
 h_exp :
   (operand | n_exp)
@@ -146,7 +167,7 @@ h_exp :
 
 n_exp :
   operand C0 operand
-  ;
+    ;
 
 sorting :
     OPEN_PARENTHESE
@@ -661,8 +682,6 @@ C0  : '?' ;
 C1  : ',' ;
 C2  : '!' ;
 C3  : '%' ;
-C4  : '#' ;
-CIRCLE  : '◯' | '@';
 DOT : '.' ;
 OPEN_PARENTHESE : '(' ;
 CLOSE_PARENTHESE  : ')' ;

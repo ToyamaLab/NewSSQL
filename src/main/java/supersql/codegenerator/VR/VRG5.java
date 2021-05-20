@@ -1,7 +1,5 @@
 package supersql.codegenerator.VR;
 
-import java.io.IOException;
-
 import org.w3c.dom.Element;
 
 import supersql.codegenerator.CodeGenerator;
@@ -11,41 +9,37 @@ import supersql.common.GlobalEnv;
 import supersql.common.Log;
 import supersql.extendclass.ExtList;
 
-public class VRG2 extends Grouper {
+public class VRG5 extends Grouper {
 
 	private VREnv vrEnv;
 	private VREnv vr_env2;
 	boolean retFlag = false;	// 20140611_masato pagenationフラグ
-	boolean pageFlag = false;	// 20140611_masato pagenationフラグ
 
-	public VRG2(Manager manager, VREnv henv, VREnv henv2) {
+	public VRG5(Manager manager, VREnv henv, VREnv henv2) {
 		this.vrEnv = henv;
 		this.vr_env2 = henv2;
 	}
 
+
 	@Override
 	public String getSymbol() {
-		return "VRG2";
+		return "VRG5";
 	}
 
 	@Override
 	public String work(ExtList data_info) {
-		Log.out("------- G2 -------");
 		if(!CodeGenerator.getMedia().equalsIgnoreCase("unity_dv")){
 			if(vrEnv.gLevel == 0){
 				vrEnv.currentNode = vrEnv.currentNode.appendChild(vrEnv.xml.createElement("group"));
 			}
 		}
-		
-		this.setDataList(data_info);
-		if (VREnv.getSelectFlg()){
-			data_info = (ExtList) data_info.get(0);
-		}
 
-		int i = -1;				// 20140526_masato
-		int j = 0;				// 20140611_masato
-		int k = -1;	
+		int i = -1;			// 20140526_masato
+		int j = -1;			// 20140526_masato
+		int k = 0;	
+		
 		String margin = "10.0";
+		String axis = "z";
 		
 		if (vrEnv.decorationStartFlag.size() > 0 
 				&& ((vrEnv.decorationStartFlag.get(0) || decos.size()>0) 
@@ -61,15 +55,14 @@ public class VRG2 extends Grouper {
 				}
 			}
 		}
-		
-//		System.out.println(decos);
+
+		//		System.out.println(decos);
 		if (decos.containsKey("vr_x")) {
 			i = Integer.parseInt(decos.getStr("vr_x"));
-//			System.out.println("vr_x2="+i);
 			retFlag = true;
 			if(!VRAttribute.componexflag){
 				VRAttribute.compx[VRAttribute.cgcount] = i;
-				VRAttribute.compflag[VRAttribute.cgcount] = 2;
+				VRAttribute.compflag[VRAttribute.cgcount] = 3;
 			}
 			VRAttribute.componexflag = true;
 		}
@@ -78,16 +71,16 @@ public class VRG2 extends Grouper {
 			retFlag = true;
 			if(!VRAttribute.componeyflag){
 				VRAttribute.compy[VRAttribute.cgcount] = j;
-				VRAttribute.compflag[VRAttribute.cgcount] = 2;
+				VRAttribute.compflag[VRAttribute.cgcount] = 3;
 			}
 			VRAttribute.componeyflag = true;
-		}
+		}		
 		if (decos.containsKey("vr_z")) {
 			k = Integer.parseInt(decos.getStr("vr_z"));
 			retFlag = true;
-			if (!VRAttribute.componezflag) {
+			if(!VRAttribute.componezflag){
 				VRAttribute.compz[VRAttribute.cgcount] = k;
-				VRAttribute.compflag[VRAttribute.cgcount] = 2;
+				VRAttribute.compflag[VRAttribute.cgcount] = 3;
 			}
 			VRAttribute.componezflag = true;
 		}
@@ -95,123 +88,97 @@ public class VRG2 extends Grouper {
 		if (decos.containsKey("margin")) {
 			margin = decos.getStr("margin");
 		}
+		
+		if (decos.containsKey("axis")) {
+			axis = decos.getStr("axis");
+		}
+		
+		this.setDataList(data_info);
 
-		if(vrEnv.gLevel == 0){
-			VRAttribute.floorarray.add(2);
-		} else if(vrEnv.gLevel == 1){
-			VRAttribute.exharray.add(2);//G2の時はまだ使ってない
+		if(vrEnv.gLevel == 0) {
+			VRAttribute.floorarray.add(3);
+		} else if(vrEnv.gLevel == 1) {
+			VRAttribute.exharray.add(3);
 		}
 
 		VRAttribute.gjudge++;
 
-	
-			if(CodeGenerator.getMedia().equalsIgnoreCase("unity_dv")){
-				if(j==0){
-					Element grouper = vrEnv.xml.createElement("Grouper"+VRG1.level);
-					grouper.setAttribute("type","G2");
-					grouper.setAttribute("margin", margin);
-					vrEnv.currentNode = vrEnv.currentNode.appendChild(grouper);
+		if(CodeGenerator.getMedia().equalsIgnoreCase("unity_dv")){
+			//this area is composite_iterator or only ◯ (k == 0)
+			if(k==0){
+				Element grouper = vrEnv.xml.createElement("Grouper"+VRG1.level);
+				grouper.setAttribute("type","G5");
+				grouper.setAttribute("margin", margin);
+				grouper.setAttribute("axis", axis);
+				vrEnv.currentNode = vrEnv.currentNode.appendChild(grouper);
+				VRG1.level++;
+				while(this.hasMoreItems()){
+					this.worknextItem();
+				}
+				vrEnv.currentNode = vrEnv.currentNode.getParentNode();
+				if (vrEnv.currentNode.getNodeName().equals("foreach")){
+					vrEnv.currentNode = vrEnv.currentNode.getParentNode();
+				}
+				VRG1.level--;
+			} else if (j==-1 && i==0){
+				Element grouper = vrEnv.xml.createElement("Grouper"+VRG1.level);
+				grouper.setAttribute("type","G1");
+				grouper.setAttribute("margin", margin);
+				vrEnv.currentNode = vrEnv.currentNode.appendChild(grouper);
+				VRG1.level++;
+				while(this.hasMoreItems()){
+					Element grouper2 = vrEnv.xml.createElement("Grouper"+VRG1.level);
+					grouper2.setAttribute("type","G5");
+					grouper2.setAttribute("margin", margin);
+					vrEnv.currentNode = vrEnv.currentNode.appendChild(grouper2);
 					VRG1.level++;
-					while(this.hasMoreItems()){
+					for(int s = 0; s < k && this.hasMoreItems(); s++){
 						this.worknextItem();
 					}
 					vrEnv.currentNode = vrEnv.currentNode.getParentNode();
-					if (vrEnv.currentNode.getNodeName().equals("foreach")){
-						vrEnv.currentNode = vrEnv.currentNode.getParentNode();
-					}
 					VRG1.level--;
-				} else if (k==-1 && i==0){
-					Element grouper = vrEnv.xml.createElement("Grouper"+VRG1.level);
-					grouper.setAttribute("type","G1");
-					grouper.setAttribute("margin", margin);
-					vrEnv.currentNode = vrEnv.currentNode.appendChild(grouper);
+				}
+				vrEnv.currentNode = vrEnv.currentNode.getParentNode();
+				VRG1.level--;
+			} else if (i==-1 && j==0){
+				Element grouper = vrEnv.xml.createElement("Grouper"+VRG1.level);
+				grouper.setAttribute("type","G2");
+				vrEnv.currentNode = vrEnv.currentNode.appendChild(grouper);
+				VRG1.level++;
+				while(this.hasMoreItems()){
+					Element grouper2 = vrEnv.xml.createElement("Grouper"+VRG1.level);
+					grouper2.setAttribute("type","G5");
+					grouper2.setAttribute("margin", margin);
+					vrEnv.currentNode = vrEnv.currentNode.appendChild(grouper2);
 					VRG1.level++;
-					while(this.hasMoreItems()){
-						Element grouper2 = vrEnv.xml.createElement("Grouper"+VRG1.level);
-						grouper2.setAttribute("type","G2");
-						grouper2.setAttribute("margin", margin);
-						vrEnv.currentNode = vrEnv.currentNode.appendChild(grouper2);
+					for(int s = 0; s < k && this.hasMoreItems(); s++){
+						this.worknextItem();
+					}
+					vrEnv.currentNode = vrEnv.currentNode.getParentNode();
+					VRG1.level--;
+				}
+				vrEnv.currentNode = vrEnv.currentNode.getParentNode();
+				VRG1.level--;
+			} else if (j == 0 && i > 0){
+				Element grouper = vrEnv.xml.createElement("Grouper"+VRG1.level);
+				grouper.setAttribute("type","G2");
+				grouper.setAttribute("margin", margin);
+				vrEnv.currentNode = vrEnv.currentNode.appendChild(grouper);
+				VRG1.level++;
+				while(this.hasMoreItems()){
+					Element grouper2 = vrEnv.xml.createElement("Grouper"+VRG1.level);
+					grouper2.setAttribute("type","G1");
+					grouper2.setAttribute("margin", margin);
+					vrEnv.currentNode = vrEnv.currentNode.appendChild(grouper2);
+					VRG1.level++;
+					for(int s = 0; s < i && this.hasMoreItems(); s++){
+						Element grouper3 = vrEnv.xml.createElement("Grouper"+VRG1.level);
+						grouper3.setAttribute("type","G5");
+						grouper3.setAttribute("margin", margin);
+						vrEnv.currentNode = vrEnv.currentNode.appendChild(grouper3);
 						VRG1.level++;
-						for(int s = 0; s < j && this.hasMoreItems(); s++){
+						for (int t=0; t < k && this.hasMoreItems(); t++){
 							this.worknextItem();
-						}
-						vrEnv.currentNode = vrEnv.currentNode.getParentNode();
-						VRG1.level--;
-					}
-					vrEnv.currentNode = vrEnv.currentNode.getParentNode();
-					VRG1.level--;
-				} else if (i==-1 && k==0){
-					Element grouper = vrEnv.xml.createElement("Grouper"+VRG1.level);
-					grouper.setAttribute("type","G3");
-					grouper.setAttribute("margin", margin);
-					vrEnv.currentNode = vrEnv.currentNode.appendChild(grouper);
-					VRG1.level++;
-					while(this.hasMoreItems()){
-						Element grouper2 = vrEnv.xml.createElement("Grouper"+VRG1.level);
-						grouper2.setAttribute("type","G2");
-						grouper2.setAttribute("margin", margin);
-						vrEnv.currentNode = vrEnv.currentNode.appendChild(grouper2);
-						VRG1.level++;
-						for(int s = 0; s < j && this.hasMoreItems(); s++){
-							this.worknextItem();
-						}
-						vrEnv.currentNode = vrEnv.currentNode.getParentNode();
-						VRG1.level--;
-					}
-					vrEnv.currentNode = vrEnv.currentNode.getParentNode();
-					VRG1.level--;
-				} else if (k==0 && i > 0){
-					Element grouper = vrEnv.xml.createElement("Grouper"+VRG1.level);
-					grouper.setAttribute("type","G3");
-					grouper.setAttribute("margin", margin);
-					vrEnv.currentNode = vrEnv.currentNode.appendChild(grouper);
-					VRG1.level++;
-					while(this.hasMoreItems()){
-						Element grouper2 = vrEnv.xml.createElement("Grouper"+VRG1.level);
-						grouper2.setAttribute("type","G1");
-						grouper2.setAttribute("margin", margin);
-						vrEnv.currentNode = vrEnv.currentNode.appendChild(grouper2);
-						VRG1.level++;
-						for(int s = 0; s < i && this.hasMoreItems(); s++){
-							Element grouper3 = vrEnv.xml.createElement("Grouper"+VRG1.level);
-							grouper3.setAttribute("type","G2");
-							grouper3.setAttribute("margin", margin);
-							vrEnv.currentNode = vrEnv.currentNode.appendChild(grouper3);
-							VRG1.level++;
-							for (int t=0; t < j && this.hasMoreItems(); t++){
-								this.worknextItem();
-							}
-							vrEnv.currentNode = vrEnv.currentNode.getParentNode();
-							VRG1.level--;
-						}
-						vrEnv.currentNode = vrEnv.currentNode.getParentNode();
-						VRG1.level--;
-					}
-					vrEnv.currentNode = vrEnv.currentNode.getParentNode();
-					VRG1.level--;
-				} else if (i==0 && k >0) {
-					Element grouper = vrEnv.xml.createElement("Grouper"+VRG1.level);
-					grouper.setAttribute("type","G1");
-					grouper.setAttribute("margin", margin);
-					vrEnv.currentNode = vrEnv.currentNode.appendChild(grouper);
-					VRG1.level++;
-					while(this.hasMoreItems()){
-						Element grouper2 = vrEnv.xml.createElement("Grouper"+VRG1.level);
-						grouper2.setAttribute("type","G3");
-						grouper2.setAttribute("margin", margin);
-						vrEnv.currentNode = vrEnv.currentNode.appendChild(grouper2);
-						VRG1.level++;
-						for(int s = 0; s < k && this.hasMoreItems(); s++){
-							Element grouper3 = vrEnv.xml.createElement("Grouper"+VRG1.level);
-							grouper3.setAttribute("type","G2");
-							grouper3.setAttribute("margin", margin);
-							vrEnv.currentNode = vrEnv.currentNode.appendChild(grouper3);
-							VRG1.level++;
-							for (int t=0; t < j && this.hasMoreItems(); t++){
-								this.worknextItem();
-							}
-							vrEnv.currentNode = vrEnv.currentNode.getParentNode();
-							VRG1.level--;
 						}
 						vrEnv.currentNode = vrEnv.currentNode.getParentNode();
 						VRG1.level--;
@@ -219,14 +186,45 @@ public class VRG2 extends Grouper {
 					vrEnv.currentNode = vrEnv.currentNode.getParentNode();
 					VRG1.level--;
 				}
+				vrEnv.currentNode = vrEnv.currentNode.getParentNode();
+				VRG1.level--;
+			} else if (i==0 && j > 0) {
+				Element grouper = vrEnv.xml.createElement("Grouper"+VRG1.level);
+				grouper.setAttribute("type","G1");
+				grouper.setAttribute("margin", margin);
+				vrEnv.currentNode = vrEnv.currentNode.appendChild(grouper);
+				VRG1.level++;
+				while(this.hasMoreItems()){
+					Element grouper2 = vrEnv.xml.createElement("Grouper"+VRG1.level);
+					grouper2.setAttribute("type","G2");
+					grouper2.setAttribute("margin", margin);
+					vrEnv.currentNode = vrEnv.currentNode.appendChild(grouper2);
+					VRG1.level++;
+					for(int s = 0; s < j && this.hasMoreItems(); s++){
+						Element grouper3 = vrEnv.xml.createElement("Grouper"+VRG1.level);
+						grouper3.setAttribute("type","G5");
+						grouper3.setAttribute("margin", margin);
+						vrEnv.currentNode = vrEnv.currentNode.appendChild(grouper3);
+						VRG1.level++;
+						for (int t=0; t < k && this.hasMoreItems(); t++){
+							this.worknextItem();
+						}
+						vrEnv.currentNode = vrEnv.currentNode.getParentNode();
+						VRG1.level--;
+					}
+					vrEnv.currentNode = vrEnv.currentNode.getParentNode();
+					VRG1.level--;
+				}
+				vrEnv.currentNode = vrEnv.currentNode.getParentNode();
+				VRG1.level--;
 			}
-		
-		
-		if(!CodeGenerator.getMedia().equalsIgnoreCase("unity_dv")){
+		}
+
+		if(!CodeGenerator.getMedia().equalsIgnoreCase("unity_dv")){	
 			while (this.hasMoreItems()) {
+				//////////////////////////G22//////////////////////////
 				VRAttribute.genre = "";
 
-				// 20140528_masato
 				VRAttribute.elearraySeq = 0;//n2 kotani
 
 				try {
@@ -243,7 +241,7 @@ public class VRG2 extends Grouper {
 
 				String classid = VREnv.getClassID(tfe);
 
-				//TODO: check this has nothing to do with VR
+				//TODO: check this has nothing to do with vr
 				if (GlobalEnv.isOpt() && !VREnv.getSelectRepeat()) {
 					vr_env2.code.append("<tfe type=\"repeat\" dimension=\"2\"");
 					vr_env2.code.append(" border=\"" + vrEnv.tableBorder
@@ -257,10 +255,12 @@ public class VRG2 extends Grouper {
 								+ decos.getStr("tablevalign") + "\"");
 
 					if (decos.containsKey("class")) {
+						// class=menu�Ȃǂ̎w�肪��������t��
 						vr_env2.code.append(" class=\"");
 						vr_env2.code.append(decos.getStr("class") + " ");
 					}
 					if (vrEnv.writtenClassId.contains(VREnv.getClassID(this))) {
+						// TFE10000�Ȃǂ̎w�肪��������t��
 						if (decos.containsKey("class")) {
 							vr_env2.code.append(VREnv.getClassID(this) + "\"");
 						} else {
@@ -296,17 +296,16 @@ public class VRG2 extends Grouper {
 				}
 
 				vrEnv.gLevel--;
-			}
+			
 
-
-
+			
 
 				VRManager.gindex.set(vrEnv.gLevel, 0);
 				if(vrEnv.gLevel == 0){
 					VRManager.nest1count++;
 				}
 
-				for(int l=0; l<VRAttribute.elearrayXML.size();l++){///n2 kotani
+				for(int l=0; l<VRAttribute.elearrayXML.size();l++){///n2 kotani		
 					vrEnv.currentNode.appendChild(VRAttribute.elearrayXML.get(l));
 				}
 				VRAttribute.elearrayXML.clear();//初期化
@@ -317,6 +316,8 @@ public class VRG2 extends Grouper {
 				}
 				VRAttribute.gjudge--;
 
+				/////////////////////////G22end//////////////////////
+
 				if(vrEnv.gLevel == 0){
 					VRAttribute.componexflag = false;
 					VRAttribute.componeyflag = false;
@@ -326,10 +327,13 @@ public class VRG2 extends Grouper {
 					vrEnv.currentNode = vrEnv.currentNode.getParentNode();
 					VRAttribute.grouptag++;
 					VRAttribute.genrearray22.add(VRAttribute.genrecount);
-
-				}				
-				Log.out("TFEId = " + VREnv.getClassID(this));
+				}
 			}
-			return null;
 		}
+		return null;
+
 	}
+
+}
+
+

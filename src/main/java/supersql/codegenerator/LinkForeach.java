@@ -69,10 +69,11 @@ public class LinkForeach {
 					 "			SSQL_DynamicDisplay1(atts);\n" +
 					 "		else\n" +
 					 //"			document.write(\"SuperSQL Foreach Page\");\n";
-					 "			document.body.innerHTML = \"SuperSQL Foreach Page\";\n";
+					 "			document.body.innerHTML = \"SuperSQL Foreach PageA\";\n";
 			}else{
 				//r += "		document.write(\"SuperSQL Foreach Page\");\n";
-				r += "		document.body.innerHTML = \"SuperSQL Foreach Page\";\n";
+				r += "		document.body.innerHTML += \"SuperSQL Foreach Page<br>\";\n" +
+				     "          get_id();\n"  ;
 			}
 			r +=
 					"	}else{\n" +
@@ -104,6 +105,17 @@ public class LinkForeach {
 					//"}\n" +
 					"});\n";
 		}
+		r += "function get_id(){\n" + 
+				"     $(\"div\").each(function() {\n" + 
+				"          var url = location.href ;\n" + 
+				"          var foreach_id = $(this).attr('id') ;\n" + 
+				"          if(foreach_id != 'ssql_body_contents'){\n" + 
+				"               var id = foreach_id.substr(\"ssql_foreach_\".length);\n" + 
+				"               //console.log( url );\n" + 
+				"               document.body.innerHTML += \"<a href=\" + url + \"?att=\" + id + \">\" + foreach_id + \"<a><br>\";\n" + 
+				"          }\n" + 
+				"     });\n" + 
+				"}";
 		r += 	"//-->" +
 				"</script>\n";
 		return r;

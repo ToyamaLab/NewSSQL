@@ -46,7 +46,7 @@ public class VRFactory extends Factory {
 
 	@Override
 	public Connector createC4(Manager manager) {
-		return new VRC1(manager, vrEnv, vrEnv2);
+		return new VRC4(manager, vrEnv, vrEnv2);
 	}
 
 
@@ -68,9 +68,14 @@ public class VRFactory extends Factory {
 
 	@Override
 	public Grouper createG4(Manager manager) {
-		return new VRG1(manager, vrEnv, vrEnv2);
+		return new VRG4(manager, vrEnv, vrEnv2);
 	}
-
+	
+	@Override
+	public Grouper createG5(Manager manager) {
+		return new VRG5(manager, vrEnv, vrEnv2);
+	}
+	
 	@Override
 	public Function createFunction(Manager manager) {
 		return new VRFunction(manager, vrEnv, vrEnv2);

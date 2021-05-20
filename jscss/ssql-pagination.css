@@ -1,0 +1,6 @@
+.ssqlPagination_pagination { margin:0 0 5px 0; padding:0; height:2.5em; }
+.ssqlPagination_pagination a { text-decoration:none; border:solid 1px black; color:black; }
+.ssqlPagination_pagination a, .ssqlPagination_pagination span { font-weight:bold; display:block; float:left; margin:0 5px 0 0; padding:.3em .5em; }
+.ssqlPagination_pagination .current { background:#B1B3B6; color:#fff; border:solid 1px #B1B3B6; }
+.ssqlPagination_pagination .current.prev, .ssqlPagination_pagination .current.next { color:#999; border-color:#999; background:#fff; }
+.ssqlPagination_res { margin:0; padding:0 10px; border:solid 1px #ccc; background:#fff; clear:both; }

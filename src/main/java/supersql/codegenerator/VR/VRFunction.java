@@ -359,14 +359,12 @@ public class VRFunction extends Function {
 					Element sphere = vrEnv.xml.createElement("sphere");
 					sphere.setAttribute("size", getArg(1).getStr());
 					if (getArg(sizeArg()-1).getTFE().decos.containsKey("name")){
-						System.out.println("name");
 						sphere.setAttribute("spsize_name", getArg(sizeArg()-1).getTFE().decos.getStr("name"));
 					} else {
 						sphere.setAttribute("spsize_name", getArg(sizeArg()-1).toString());
 					}
 					sphere.setAttribute("size_name", getArg(1).getTFE().decos.getStr("filtername"));
 					sphere.setAttribute("filter", getArg(1).getTFE().decos.getStr("filter"));
-					System.out.println("sphere");
 					addOptions(sphere);
 					if (filterset.size() > 0){
 						addFilterSet(sphere);
@@ -468,6 +466,7 @@ public class VRFunction extends Function {
 			Element gradientColor = vrEnv.xml.createElement("gradient");
 			gradientColor.setAttribute("min_c", min_color);
 			gradientColor.setAttribute("max_c", max_color);
+			gradientColor.setAttribute("value", getArg(sizeArg()-1).getStr());
 			
 			if (getArg(sizeArg()-1).getTFE().decos.containsKey("name")){
 				gradientColor.setAttribute("gradient_name", getArg(sizeArg()-1).getTFE().decos.getStr("name"));
@@ -717,9 +716,6 @@ public class VRFunction extends Function {
 					rPx += childX;
 					rPy += childY;
 					rPz += childZ;
-					System.out.println("rpx"+rPx);
-					System.out.println("rpy"+rPy);
-					System.out.println("rpz"+rPz);
 					move.setAttribute("x", String.valueOf(rPx));
 					move.setAttribute("y", String.valueOf(rPy));
 					move.setAttribute("z", String.valueOf(rPz));
