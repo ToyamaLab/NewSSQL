@@ -50,17 +50,14 @@ public class X3DEnv extends LocalEnv{
     
     private String KeisenMode = "";
     
-    /*o—ÍƒƒfƒBƒA*/
     static String media;
     static String shelf;
     static String object;
     
-    /*–{’I‚Æ–{‚ÌÀ•W*/
     static double x=0.0, y=0.5, z=0.0;
     static double bx, by, bz;
     static double vx, vy, vz;
     
-    /*}‘ŠÙ‚Ì‘å‚«‚³*/
     static double length;
     static double width;
     static double height = 16.0;
@@ -68,12 +65,10 @@ public class X3DEnv extends LocalEnv{
     static double[] wid = new double[100];
     static double[] hei = new double[100];
     
-    /*}‘ŠÙ‚Ì’†S*/
     static double[] lx = new double[100];
     static double[] ly = new double[100];
     static double[] lz = new double[100];
     
-    /*}‘ŠÙ‚Ì•Ç‚ÌÀ•W*/
     static double rwx, rwy = 7.5, rwz;
     static double lwx, lwy = 7.5, lwz;
     static double fwx, fwy = 7.5, fwz;
@@ -91,13 +86,10 @@ public class X3DEnv extends LocalEnv{
     static double [] fwzl = new double[100];
     static double [] bwzl = new double[100];
     
-    /*–{‚Ì”*/
     static int bookcount = 1;
     
-    /*’I‚ÌÀ•W‚ÌÅ‘å’l*/
     static double xmax = 0, ymax = 0, zmax = 0;
     
-    /*ƒtƒ‰ƒO*/
     static int groupflag = 1;
     static int linkflag = 1;
     static int yokoflag = 0;
@@ -114,13 +106,10 @@ public class X3DEnv extends LocalEnv{
     	}
     }
    
-    /*}‘ŠÙ‚Ì”*/
     static int lcount;
     
-    /*‰Šú’l‚ğ•Û‚·‚é•Ï”*/
     static double xi = 0.0, yi = 0.50, zi = 0.0;
     static double[] xil = new double[100];
-    /*ˆÚ“®—Ê‚Ì’è‹`*/
     static double dx = 0, dy = 0, dz = 0;
     
     /*entrance*/
@@ -255,7 +244,7 @@ public class X3DEnv extends LocalEnv{
     	footer.append("roof " + ((r-l) - 1.0) + " 0.5 40\n");
     	footer.append("rightp " + (r - (l+r)/2.0) + " 7.5 5\n");
     	footer.append("leftp " + (l - (l+r)/2.0) + " 7.5 5}\n");
-    	footer.append("#ó•t\n");
+    	footer.append("#ï¿½ï¿½t\n");
     	footer.append("Transform{\n");
     	footer.append("translation 5 0 4\n");
     	footer.append("children[\n");

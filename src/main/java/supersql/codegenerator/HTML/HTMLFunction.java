@@ -22,7 +22,6 @@ import java.util.Date;
 import java.util.Hashtable;
 
 import org.antlr.v4.parse.ANTLRParser.wildcard_return;
-
 import supersql.codegenerator.Attribute;
 import supersql.codegenerator.CodeGenerator;
 import supersql.codegenerator.DecorateList;
@@ -43,6 +42,9 @@ public class HTMLFunction extends Function {
 
 	protected static String updateFile;
 	private boolean link1 = false; //added by goto 20161025 for link1/foreach1
+	
+	public static boolean HTMLFunctionFlag = false;
+	
 
 	public static String createForm(DecorateList decos) {
 		new String();
@@ -249,6 +251,7 @@ public class HTMLFunction extends Function {
 				//htmlEnv.code.append("class=\"" + decos.getStr("class") + "\"");
 				htmlEnv.code.append(Modifier.getClassAndIdMOdifierValues(decos));//kotani_idmodifier_ok
 
+
 			htmlEnv.code.append(">\n");
 			htmlEnv.code.append("<div id=\"mTab\" class=\"yui-navset\">\n");
 
@@ -273,9 +276,9 @@ public class HTMLFunction extends Function {
 			htmlEnv.code.append(Modifier.getClassName(decos, HTMLEnv.getClassID(this)));//kotani_idmodifier_ok
 
 			htmlEnv.code.append("\"");
-			
-			
-			
+
+
+
 			htmlEnv.code.append("><tr><td>");
 		}
 
@@ -313,7 +316,7 @@ public class HTMLFunction extends Function {
 		 * file.substring(file.lastIndexOf("\\")+1,file.indexOf(".sql")); }
 		 * //only file name else { divname =
 		 * file.substring(0,file.indexOf(".sql")); }
-		 * 
+		 *
 		 * }
 		 */
 		if (GlobalEnv.isAjax() && decos.containsKey("droppable")) {
@@ -694,7 +697,7 @@ public class HTMLFunction extends Function {
 		for (int i = 0; i < this.countconnectitem(); i++) {
 			att = att + "_" + this.getAtt(Integer.toString(i));
 		}
-		
+
 		if(!Start_Parse.foreach1Flag){
 			//added by goto 20161019 for new foreach
 			HTMLG3.foreachID = att;
@@ -883,7 +886,7 @@ public class HTMLFunction extends Function {
 				e.printStackTrace();
 			}
 		}
-		
+
 		if (this.getAtt("action").equals("")) {
 			try {
 				if (file.toLowerCase().contains(".sql")) {
@@ -1046,6 +1049,7 @@ public class HTMLFunction extends Function {
 			fa.workAtt();
 		} else
 			this.workAtt("default");
+		//Merged by li 20210526
 		htmlEnv.sinvokeFlag = false;
 		link1 = false;
 		return;
@@ -1069,15 +1073,52 @@ public class HTMLFunction extends Function {
 		htmlEnv.linkUrl = target;
 		htmlEnv.plinkFlag = true;
 
+		// added by masato 20151124 for plink
+		String form_type = (glink_flag)? "glink" : "plink"; 	//TODO
+		if(image_link_flag)	form_type = "image_"+form_type;
+		if (htmlEnv.plinkFlag) {
+			String tmp = "";
+			for (int i = 0; i < htmlEnv.valueArray.size(); i++) {
+				tmp += " value" + (i + 1) + "='" + htmlEnv.valueArray.get(i) + "'";
+			}
+			Incremental.outXMLData(htmlEnv.xmlDepth, "<"+form_type+" target='" + htmlEnv.linkUrl + "'" + tmp + ">\n");
+		}
+		
 		if (this.Args.get(0) instanceof FuncArg) {
 			Log.out("ARGS are function");
 			FuncArg fa = this.Args.get(0);
 			fa.workAtt();
 		} else
 			this.workAtt("default");
-		// tk//////////////////////////////////////////////////
+		
+		// added by masato 20151124 for plink
+		if (htmlEnv.plinkFlag) {
+			Incremental.outXMLData(htmlEnv.xmlDepth, "</"+form_type+">\n");
+		}
+		
 
 		htmlEnv.plinkFlag = false;
+		return;
+	}
+	// Func_glink
+	private static boolean glink_flag = false;
+	private void Func_glink(ExtList data_info) {	 	//TODO 動作確認
+		glink_flag = true;
+		Func_plink(data_info);
+		glink_flag = false;
+		return;
+	}
+	private static boolean image_link_flag = false;
+	private void Func_image_plink(ExtList data_info) {	 	//TODO 動作確認
+		image_link_flag = true;
+		Func_plink(data_info);
+		image_link_flag = false;
+		return;
+	}
+	private void Func_image_glink(ExtList data_info) {	 	//TODO 動作確認
+		image_link_flag = true;
+		Func_glink(data_info);
+		image_link_flag = false;
 		return;
 	}
 
@@ -1100,21 +1141,29 @@ public class HTMLFunction extends Function {
 		htmlEnv.code.append(statement);
 	}
 
+
 	protected void Func_imagefile() {
+		HTMLFunctionFlag = true;
 		/*
 		 * ImageFile function : <td> <img src="${imgpath}/"+att /> </td>
 		 */
 		// little change by masato 20150623
-		String path = "";
+		String path = "./";
 		try {
 			path = this.Args.get(1).toString();
+			if(!path.endsWith("/'")) {
+				path = path.substring(0, path.length() - 1) + "/'";
+
+			}
 		} catch (Exception e) {
 			try {
-				path = this.getAtt("path", ".");
+				if(this.Args.get(0).getStr().startsWith("http://") || this.Args.get(0).getStr().startsWith("https://")) {
+					path = this.getAtt("path", "");
+				}
 			} catch (Exception e2) { }
 		}
 		if (path == null) {
-			path = ".";
+			path = "";
 		} else {
 			if (path.startsWith("'") || path.startsWith("\"")) {
 				path = path.substring(1, path.length() - 1);
@@ -1187,10 +1236,10 @@ public class HTMLFunction extends Function {
 					htmlEnv.code.append("<A href=\"" + relative_path + "\" ");
 				} else
 					htmlEnv.code.append("<A href=\"" + htmlEnv.linkUrl + "\" ");
-	
+
 				// html_env.code.append("<A href=\"" + html_env.linkurl + "\" ");
 				// added by goto 20121222 end
-	
+
 				if (decos.containsKey("target"))
 					htmlEnv.code.append(" target=\"" + decos.getStr("target")
 							+ "\" ");
@@ -1207,11 +1256,9 @@ public class HTMLFunction extends Function {
 		if (htmlEnv.plinkFlag) {
 			String tmp = "";
 			for (int i = 0; i < htmlEnv.valueArray.size(); i++) {
-				tmp += " value" + (i + 1) + "='" + htmlEnv.valueArray.get(i)
-						+ "'";
+				tmp += " value" + (i + 1) + "='" + htmlEnv.valueArray.get(i) + "'";
 			}
-			Incremental.outXMLData(htmlEnv.xmlDepth, "<PostLink target='"
-					+ htmlEnv.linkUrl + "'" + tmp + ">\n");
+			Incremental.outXMLData(htmlEnv.xmlDepth, "<PostLink target='" + htmlEnv.linkUrl + "'" + tmp + ">\n");
 		}
 		// tk/////////////////////////////////////////////////////////////////////////////////
 
@@ -1221,7 +1268,7 @@ public class HTMLFunction extends Function {
 			String today = sdf.format(d1);
 
 			if (htmlEnv.decorationStartFlag.size() > 0) {
-				HTMLDecoration.ends.get(0).append("<a href=\"" + path + "/"
+				HTMLDecoration.ends.get(0).append("<a href=\"" + path
 						+ this.Args.get(0).getStr() + "\" rel=\"lightbox[lb"
 						+ today + "]\">");
 				if (decos.getStr("lightbox").compareTo("root") == 0
@@ -1232,28 +1279,32 @@ public class HTMLFunction extends Function {
 //					}
 					HTMLDecoration.ends.get(0).append(Modifier.getClassModifierValue(decos));//kotani_id_modifier
 					HTMLDecoration.ends.get(0).append(Modifier.getIdModifierValue(decos));
-					
-					HTMLDecoration.ends.get(0).append(" \" src=\"" + path + "/"
+
+//<<<<<<< HEAD
+//					HTMLDecoration.ends.get(0).append(" \" src=\"" + path + "/"
+//=======
+					HTMLDecoration.ends.get(0).append(" \" src=\"" + path
+//>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 							+ this.Args.get(0).getStr()
 							+ "\" onLoad=\"initLightbox()\"/>");
 				}
 				HTMLDecoration.ends.get(0).append("</a>");
 			} else {
-				htmlEnv.code.append("<a href=\"" + path + "/"
+				htmlEnv.code.append("<a href=\"" + path
 						+ this.Args.get(0).getStr() + "\" rel=\"lightbox[lb"
 						+ today + "]\">");
-	
+
 				if (decos.getStr("lightbox").compareTo("root") == 0
 						|| decos.getStr("lightbox").compareTo("thumb") == 0) {
 					htmlEnv.code.append("<img class=\"" + HTMLEnv.getClassID(this)
 							+ " ");
-	
+
 //					if (decos.containsKey("class"))
 //						htmlEnv.code.append(decos.getStr("class"));
 					htmlEnv.code.append(Modifier.getClassModifierValue(decos));//kotani_idmodifier_ok
 					htmlEnv.code.append(Modifier.getIdModifierValue(decos));
 
-					htmlEnv.code.append(" \" src=\"" + path + "/"
+					htmlEnv.code.append(" \" src=\"" + path
 							+ this.Args.get(0).getStr()
 							+ "\" onLoad=\"initLightbox()\"/>");
 				}
@@ -1262,9 +1313,15 @@ public class HTMLFunction extends Function {
 		} else {
 			// added by masato 20151124 image function for xml
 			if (Ehtml.flag || Incremental.flag) {
-				Incremental.outXMLData(htmlEnv.xmlDepth, "<Img class=\'"
+//<<<<<<< HEAD
+				Incremental.outXMLData(htmlEnv.xmlDepth, "<img class=\'"
 						+ HTMLEnv.getClassID(this) + "\' src='" + path + "/"
-						+ this.Args.get(0).getStr() + "'></Img>\n");
+						+ this.Args.get(0).getStr() + "'></img>\n");
+//=======
+//				Incremental.outXMLData(htmlEnv.xmlDepth, "<Img class=\'"
+//						+ HTMLEnv.getClassID(this) + "\' src='" + path
+//						+ this.Args.get(0).getStr() + "'></Img>\n");
+//>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 			} else {
 				if (htmlEnv.decorationStartFlag.size() > 0) {
@@ -1277,7 +1334,7 @@ public class HTMLFunction extends Function {
 //						}
 						HTMLDecoration.ends.get(0).append(" " + Modifier.getClassModifierValue(decos));//kotani_idmodifier_ok
 						HTMLDecoration.ends.get(0).append(" " + Modifier.getIdModifierValue(decos));
-						HTMLDecoration.ends.get(0).append("\" src=\"" + path + "/" + this.Args.get(0).getStr() + "\"/>");
+						HTMLDecoration.ends.get(0).append("\" src=\"" + path + this.Args.get(0).getStr() + "\"/>");
 						htmlEnv.decorationStartFlag.set(0, false);
 					} else {
 						HTMLDecoration.ends.get(0).append("<img");
@@ -1288,8 +1345,12 @@ public class HTMLFunction extends Function {
 //						}
 						HTMLDecoration.ends.get(0).append(" " + Modifier.getClassModifierValue(decos));//kotani_idmodifier_ok
 						HTMLDecoration.ends.get(0).append(" " + Modifier.getIdModifierValue(decos));
-						
+
+//<<<<<<< HEAD
 						HTMLDecoration.ends.get(0).append("\" src=\"" + path + "/" + this.Args.get(0).getStr() + "\"/>");
+//=======
+//						HTMLDecoration.ends.get(0).append("\" src=\"" + path + this.Args.get(0).getStr() + "\"/>");
+//>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 					}
 				} else {
 					htmlEnv.code.append("<img class=\"" + HTMLEnv.getClassID(this)
@@ -1300,9 +1361,9 @@ public class HTMLFunction extends Function {
 //						htmlEnv.code.append(decos.getStr("class"));
 					htmlEnv.code.append(Modifier.getClassModifierValue(decos));
 					htmlEnv.code.append(Modifier.getIdModifierValue(decos));//kotani_idmodifier_ok
-					htmlEnv.code.append(" \" src=\"" + path + "/"
+					htmlEnv.code.append(" \" src=\"" + path
 							+ this.Args.get(0).getStr() + "\"/>");
-					htmlEnv2.code.append(" \" src=\"" + path + "/"
+					htmlEnv2.code.append(" \" src=\"" + path
 							+ this.Args.get(0).getStr() + "\" ");
 					if (decos.containsKey("width")) {
 						htmlEnv2.code.append("width=\""
@@ -1330,6 +1391,7 @@ public class HTMLFunction extends Function {
 			Incremental.outXMLData(htmlEnv.xmlDepth, "</PostLink>\n");
 		}
 		// tk///////////////////////////////////////////////////////////////////////////////////
+		HTMLFunctionFlag = false;
 		return;
 	}
 
@@ -1373,11 +1435,33 @@ public class HTMLFunction extends Function {
 		return;
 	}
 
+	private String Func_line() {
+		String statement = "\n<hr";
+		try{
+			//size
+			FuncArg fa1 = (FuncArg) this.Args.get(0);
+			statement += " size=\""+fa1.getStr()+"\"";
+			//color
+			FuncArg fa2 = (FuncArg) this.Args.get(1);
+			if(!fa2.getStr().equals(""))
+				statement += " color=\""+fa2.getStr()+"\"";
+			else
+				statement += " color=\"black\"";
+		}catch(Exception e){
+			statement += " color=\"black\"";
+		}
+		statement += ">\n";
+
+		//    	// 各引数毎に処理した結果をHTMLに書きこむ
+		htmlEnv.code.append(statement);
+		return statement;
+	}
+
 	// added by goto 20130308 start "anchor" anchor(), a(), url(), mail()
 	/**
 	 * anchor関数: anchor( name/button-name/button-url, url,
 	 * type(bt/button/img/image) )
-	 * 
+	 *
 	 * @{ width=~, height=~, transition=~ } /* url("title", "detail/imgURL", int
 	 *    type), anchor(), a()
 	 */
@@ -1438,7 +1522,7 @@ public class HTMLFunction extends Function {
 //							}
 							HTMLDecoration.ends.get(0).append(" " + Modifier.getClassModifierValue(decos));
 							HTMLDecoration.ends.get(0).append(" " + Modifier.getIdModifierValue(decos));//kotani_idmodifier_ok
-							
+
 							HTMLDecoration.ends.get(0).append("\" " + transition() + prefetch() + target(url) + ">" + A + "</a>" + notA2);
 							htmlEnv.decorationStartFlag.set(0, false);
 						} else {
@@ -1473,7 +1557,7 @@ public class HTMLFunction extends Function {
 //							}
 							HTMLDecoration.ends.get(0).append(" " + Modifier.getClassModifierValue(decos));
 							HTMLDecoration.ends.get(0).append(" " + Modifier.getIdModifierValue(decos));//kotani_idmodifier_ok
-							
+
 							HTMLDecoration.ends.get(0).append("\" " + transition() + prefetch() + target(url) + ">" + A + "</a>" + notA2);
 						}
 					} else {
@@ -1494,7 +1578,7 @@ public class HTMLFunction extends Function {
 //							}
 							HTMLDecoration.ends.get(0).append(" " + Modifier.getClassModifierValue(decos));
 							HTMLDecoration.ends.get(0).append(" " + Modifier.getIdModifierValue(decos));//kotani_idmodifier_ok
-							
+
 							HTMLDecoration.ends.get(0).append("\" " + transition() + prefetch() + target(url) + ">" + name + "</a>");
 							htmlEnv.decorationStartFlag.set(0, false);
 						} else {
@@ -1506,8 +1590,8 @@ public class HTMLFunction extends Function {
 //							}
 							HTMLDecoration.ends.get(0).append(" " + Modifier.getClassModifierValue(decos));
 							HTMLDecoration.ends.get(0).append(" " + Modifier.getIdModifierValue(decos));//kotani_idmodifier_ok
-							
-							
+
+
 							HTMLDecoration.ends.get(0).append("\" " + transition() + prefetch() + target(url) + ">" + name + "</a>");
 						}
 					} else {
@@ -1529,8 +1613,8 @@ public class HTMLFunction extends Function {
 //							}
 							HTMLDecoration.ends.get(0).append(" " + Modifier.getClassModifierValue(decos));
 							HTMLDecoration.ends.get(0).append(" " + Modifier.getIdModifierValue(decos));//kotani_idmodifier_ok
-							
-							
+
+
 							HTMLDecoration.ends.get(0).append("\">");
 							htmlEnv.decorationStartFlag.set(0, false);
 						} else {
@@ -1540,7 +1624,7 @@ public class HTMLFunction extends Function {
 							HTMLDecoration.ends.get(0).append(htmlEnv.getClassID(this));
 //							if (decos.containsKey("class")) {
 //								HTMLDecoration.ends.get(0).append(" " + decos.getStr("class"));
-//							}							
+//							}
 							HTMLDecoration.ends.get(0).append(" " + Modifier.getClassModifierValue(decos));//kotani_idmodifier_ok
 							HTMLDecoration.ends.get(0).append("\"");
 							HTMLDecoration.ends.get(0).append(" " + Modifier.getIdModifierValue(decos));//kotani_idmodifier_ok
@@ -1550,7 +1634,7 @@ public class HTMLFunction extends Function {
 						statement = "<input type=\"button\" value=\"" + name
 								+ "\" onClick=\"location.href='" + url + "'\""
 								+ className();
-	
+
 						// urlボタン width,height指定時の処理
 						if (decos.containsKey("width")
 								|| decos.containsKey("height")) {
@@ -1581,7 +1665,7 @@ public class HTMLFunction extends Function {
 //							}
 							HTMLDecoration.ends.get(0).append(" " + Modifier.getClassModifierValue(decos));
 							HTMLDecoration.ends.get(0).append(" " + Modifier.getIdModifierValue(decos));//kotani_idmodifier_ok
-							
+
 							HTMLDecoration.ends.get(0).append("\" " + transition() + prefetch() + target(url) + "><img src=\"" + name + "\"></a>");
 							htmlEnv.decorationStartFlag.set(0, false);
 						} else {
@@ -1593,14 +1677,14 @@ public class HTMLFunction extends Function {
 //							}
 							HTMLDecoration.ends.get(0).append(" " + Modifier.getClassModifierValue(decos));
 							HTMLDecoration.ends.get(0).append(" " + Modifier.getIdModifierValue(decos));//kotani_idmodifier_ok
-							
+
 							HTMLDecoration.ends.get(0).append("\" " + transition() + prefetch() + target(url) + "><img src=\"" + name + "\"></a>");
 						}
 					} else {
 						statement = "<a href=\"" + url + "\"" + className()
 								+ transition() + prefetch() + target(url)
 								+ "><img src=\"" + name + "\"";
-	
+
 						// url画像 width,height指定時の処理
 						if (decos.containsKey("width"))
 							statement += " width="
@@ -1658,7 +1742,7 @@ public class HTMLFunction extends Function {
 //							}
 							HTMLDecoration.ends.get(0).append(" " + Modifier.getClassModifierValue(decos));
 							HTMLDecoration.ends.get(0).append(" " + Modifier.getIdModifierValue(decos));//kotani_idmodifier_ok
-							
+
 							HTMLDecoration.ends.get(0).append("\" " + transition() + prefetch() + target(url) + ">" + A + "</a>" + notA2);
 							htmlEnv.decorationStartFlag.set(0, false);
 						} else {
@@ -1693,7 +1777,7 @@ public class HTMLFunction extends Function {
 //							}
 							HTMLDecoration.ends.get(0).append(" " + Modifier.getClassModifierValue(decos));
 							HTMLDecoration.ends.get(0).append(" " + Modifier.getIdModifierValue(decos));//kotani_idmodifier_ok
-							
+
 							HTMLDecoration.ends.get(0).append("\" " + transition() + prefetch() + target(url) + ">" + A + "</a>" + notA2);
 							htmlEnv.decorationStartFlag.set(0, false);
 						}
@@ -1716,7 +1800,7 @@ public class HTMLFunction extends Function {
 //					}
 					HTMLDecoration.ends.get(0).append(" " + Modifier.getClassModifierValue(decos));
 					HTMLDecoration.ends.get(0).append(" " + Modifier.getIdModifierValue(decos));//kotani_idmodifier_ok
-					
+
 					HTMLDecoration.ends.get(0).append("\" " + transition() + prefetch() + target(url) + ">" + url + "</a>");
 					htmlEnv.decorationStartFlag.set(0, false);
 				} else {
@@ -1728,7 +1812,7 @@ public class HTMLFunction extends Function {
 //					}
 					HTMLDecoration.ends.get(0).append(" " + Modifier.getClassModifierValue(decos));
 					HTMLDecoration.ends.get(0).append(" " + Modifier.getIdModifierValue(decos));//kotani_idmodifier_ok
-					
+
 					HTMLDecoration.ends.get(0).append("\" " + transition() + prefetch() + target(url) + ">" + url + "</a>");
 				}
 			} else {
@@ -1830,7 +1914,7 @@ public class HTMLFunction extends Function {
 		// Log.out("FuncName= " + this.getFuncName());
 		// Log.out("filename= " + this.getAtt("filename"));
 		// Log.out("condition= " + this.getAtt("condition"));
-		
+
 		String FuncName = this.getFuncName();
 
 		if (FuncName.equalsIgnoreCase("imagefile")
@@ -1857,7 +1941,11 @@ public class HTMLFunction extends Function {
 		else if (FuncName.equalsIgnoreCase("plink")) {
 			Func_plink(data_info);
 		} else if (FuncName.equalsIgnoreCase("glink")) {
-			// Func_glink(data_info);
+			Func_glink(data_info);					// TODO  動作確認
+		} else if (FuncName.equalsIgnoreCase("image_plink")) {
+			Func_image_plink(data_info);
+		} else if (FuncName.equalsIgnoreCase("image_glink")) {
+			Func_image_glink(data_info);
 		} else if (FuncName.equalsIgnoreCase("null")) {
 			Func_null();
 		}
@@ -1882,6 +1970,8 @@ public class HTMLFunction extends Function {
 			Func_hidden();
 		} else if (FuncName.equalsIgnoreCase("session")) {
 			// Func_session(); not use
+		} else if(FuncName.equalsIgnoreCase("line")){
+			Func_line();
 		}
 		// tk start//////////////////////////////////
 		else if (FuncName.equalsIgnoreCase("embed")) {
@@ -1898,11 +1988,15 @@ public class HTMLFunction extends Function {
 				|| FuncName.equalsIgnoreCase("image_a")) {
 			Func_url(false, "image");
 		}
-		// for educ2015
+		// for educ2018
 		else if (FuncName.equalsIgnoreCase("echo")) {
 			Func_echo();
 		}
-		
+		// for educ2018
+//		else if(FuncName.equalsIgnoreCase("shift_image")){
+//			Func_simage();
+//		}
+
 		Log.out("TFEId = " + HTMLEnv.getClassID(this));
 		htmlEnv.append_css_def_td(HTMLEnv.getClassID(this), this.decos);
 		return null;

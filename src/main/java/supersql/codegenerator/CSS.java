@@ -1,8 +1,6 @@
 package supersql.codegenerator;
 import java.util.ArrayList;
 
-import supersql.common.GlobalEnv;
-
 
 public class CSS {
 	private ArrayList<String> selector = new ArrayList<String>();

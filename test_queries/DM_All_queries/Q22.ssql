@@ -3,7 +3,7 @@ GENERATE HTML {
 -- 関数@{x=属性}
 [
 a(d.name, d.id)@{bgcolor = dc.fcolor},
-image(d.name, d.id)@{bgcolor = dc.fcolor},
+image(d.name, 'path')@{bgcolor = dc.fcolor},
 
 link(d.name, 'Q12.ssql', d.id),
 link(d.name, 'Q12.ssql', d.id)@{bgcolor = 'gray'},

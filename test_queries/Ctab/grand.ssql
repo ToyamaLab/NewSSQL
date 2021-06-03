@@ -1,0 +1,7 @@
+GENERATE HTML
+cross_tab(
+    {[pref],, 'total'},
+    {[agrp]!! 'total'},
+    {[sex, count[id]], ! count[id]}
+)@{side_width=100, null_value='該当なし'}
+FROM cov

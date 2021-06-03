@@ -17,7 +17,7 @@ public class VRC0 extends Connector {
 
 	@Override
 	public String getSymbol() {
-		return "HTMLC0";
+		return "VRC0";
 	}
 
 	@Override

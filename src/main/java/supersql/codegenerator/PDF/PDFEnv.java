@@ -1,10 +1,10 @@
 package supersql.codegenerator.PDF;
 
-import supersql.codegenerator.LocalEnv;
-import supersql.extendclass.ExtList;
-
 import com.pdflib.PDFlibException;
 import com.pdflib.pdflib;
+
+import supersql.codegenerator.LocalEnv;
+import supersql.extendclass.ExtList;
 
 public class PDFEnv extends LocalEnv {
 
@@ -15,7 +15,6 @@ public class PDFEnv extends LocalEnv {
 	
 	String pre_operator;
 
-	//PDFValueのオブジェクトを要素として次々に足していくベクトル
 	//Vector vector;
 
 	int font;
@@ -31,7 +30,6 @@ public class PDFEnv extends LocalEnv {
 	int alternate;
 
 	
-	//追加
 	float widthPaper = 595;//test1:217;//test2:350;//600;//1000;//10000;
 	float heightPaper = 842;//600;//10000;//600;
 	float paddingPaper_H = 10;
@@ -41,12 +39,11 @@ public class PDFEnv extends LocalEnv {
 	//
 	//TFE tfeInfo;
 	
-	//追加
 	float padding_H = 5;
 	float padding_V = 5;
-	float tmp_width;			//Grouperのwidthはこれを足していく
-	float tmp_height;			//Grouperのheightはこれを足していく
-	float linewidth = 1;//1.5f;		//定義
+	float tmp_width;
+	float tmp_height;
+	float linewidth = 1;//1.5f;
 	//String fontname = "HeiseiKakuGo-W5";
 	String fontname = "Helvetica-Bold";
 	//String encoding = "UniJIS-UCS2-H";
@@ -54,7 +51,7 @@ public class PDFEnv extends LocalEnv {
 	int DefaultFontSize;
 	String DefaultFontStyle = "normal";
 	
-	//初期化 optimizeのメソッドinitializeAdjust
+
 	int labelH;
 	int labelV;
 	int labelmaxH;
@@ -72,17 +69,14 @@ public class PDFEnv extends LocalEnv {
 	ExtList labelListOV;
 	
 	
-	//追加　レイアウト最適化
-	float flexTH;			//globalEnvやファイルから読み込んで数値代入
+	float flexTH;
 	int minFontsize = 3;
 	
-	//レイアウト最適化　幅のＣ１・高さのＣ２用
 	//Stack stack;
 	float cutWidth;
 	
 	
 	
-	/* コンストラクタ */
 	public PDFEnv() {
 		try {
 
@@ -125,14 +119,12 @@ public class PDFEnv extends LocalEnv {
 		}
 	}
 
-	//ページを用意。初期設定をし,さらにベクトルも用意するメソッド
 	public void page_ready() {
 		try {
 			
 			//p.begin_page_ext(595, 842, "");
 			p.begin_page_ext(widthPaper, heightPaper, "");
 			
-			//追加10.28 保留 メートル座標系への変換(単位：センチメートル)
 			//p.scale(28.3465, 28.3465);
 			
 			//p.begin_page(595, 842);
@@ -141,8 +133,8 @@ public class PDFEnv extends LocalEnv {
 			//font = p.load_font("Helvetica-Bold", "host", "");
 			
 			//font = p.load_font("HeiseiKakuGo-W5", "UniJIS-UCS2-HW-H", "");
-			//font = p.load_font("HeiseiKakuGo-W5", "UniJIS-UCS2-H", "");//このエンコードが一番いい！
-			font = p.load_font(fontname, encoding, "");//このエンコードが一番いい！
+			//font = p.load_font("HeiseiKakuGo-W5", "UniJIS-UCS2-H", "");
+			font = p.load_font(fontname, encoding, "");
 			
 			//font = p.findfont("Helvetica-Bold", "host", 0);
 			////font = p.findfont("HeiseiKakuGo-W5", "EUC-H", 0);
@@ -211,25 +203,23 @@ public class PDFEnv extends LocalEnv {
 		return data_width;
 	}
 	
-/*	//文字列の長さを測るメソッド
+/*
 	public float stringwidth(String s, PDFEnv pdf_env) {
 		float s_width;
 		//int char_length;
 
-		fontsize = 8;/////////////応急処置10/04
+		fontsize = 8;
 		
-		//4.22英語用修正 英語版
+
 		s_width = pdf_env.stringwidth(s, fontsize);
 		s_width = (int) s_width;
 
-		//4.22日本語用修正 日本語版
 		//char_all = s.length();
 		//s_width = char_all * fontsize;
 
 		return s_width;
 	}
 */
-	//追加　仮
 	public void setlinewidth() {
 		try {
 
@@ -341,7 +331,6 @@ public class PDFEnv extends LocalEnv {
 		}
 	}
 
-	//text_flowを使うならいらないかも
 	public void setfont(int font_type, float out_fontsize) {
 		try {
 
@@ -356,7 +345,6 @@ public class PDFEnv extends LocalEnv {
 		}
 	}
 
-	//text_flowを使うならいらないかも
 	public void show_xy(String s, float str_x, float str_y) {
 		try {
 
@@ -389,13 +377,12 @@ public class PDFEnv extends LocalEnv {
 			optlistC += "alignment=justify"+" ";
 			optlistC += "fontsize="+fontsize+" ";
 			optlistC += "fontstyle="+fontstyle+" ";
-			optlistC += "hyphenchar=1"+" ";//行換えのハイフンを消す。ただし英単語もなくなる
+			optlistC += "hyphenchar=1"+" ";
 	//		optlistC += "shrinklimit=100%"+" ";
 	//		optlistC += "spreadlimit=100%"+" ";
 			
 			flow_num = p.create_textflow(data, optlistC);
 			optlistF = "blind";
-			//842は紙の縦サイズ
 			p.fit_textflow(flow_num, 0, 0, data_width, heightPaper, optlistF);
 			
 			int textline = (int)p.info_textflow(flow_num, "boxlinecount");
@@ -431,11 +418,8 @@ public class PDFEnv extends LocalEnv {
 			optlistC += "alignment=justify"+" ";
 			optlistC += "fontsize="+instance.fontsize+" ";
 			optlistC += "fontstyle="+instance.fontstyle+" ";
-			//本当はdefaultで現在のfillcolorを使うはずなのでsetしなくていいはずだけど、こうしないとうまくいかない
 			optlistC += "fillcolor={rgb "+fontcolor[0]+" "+fontcolor[1]+" "+fontcolor[2]+"}"+" ";
-			optlistC += "hyphenchar=1"+" ";//行換えのハイフンを消す。ただし英単語もなくなる
-			//optlistC += "alignment=left"+" ";//このalignはこのままの方が多分良い
-//			以下はpdflib6.1のマニュアルに書いてあったような指定
+			optlistC += "hyphenchar=1"+" ";
 			optlistC += "shrinklimit=100%"+" ";
 			optlistC += "spreadlimit=100%"+" ";
 			
@@ -451,10 +435,8 @@ public class PDFEnv extends LocalEnv {
 			flow_num = p.create_textflow(instance.data, optlistC);
 			//flow_num = p.create_textflow(instance.labelV, optlistC);
 			//flow_num = p.create_textflow(Float.toString(instance.box_width), optlistC);
-//			flow_num = p.create_textflow("明日はMy name is Kameoka Shinpei. 足タマ I like intersection very much. 明日はきっ とsunnyだ！！", optlistC);
 			optlistF = "showborder=false";
-			posV += linewidth/2;//微調整
-//注		//data_width+1の訳：文字列GODZILLAの最後のAが出ない・・・
+			posV += linewidth/2;//鐃緒申調鐃緒申
 			p.fit_textflow(flow_num, posH, posV, posH+instance.data_width+1, posV+instance.data_height, optlistF);
 			
 			/*setlinewidth();

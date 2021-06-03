@@ -1,3 +1,8 @@
 GENERATE HTML
-[e.id@{font-size=30}]!@{color='green'},avg[e.salary]@{color = 'red', font-size=100}
-FROM employee e
+cross_tab(
+    [st.city],,
+    [d.name, [i.name]!]!,
+    sum[sa.quantity]
+)@{side_width=202, null_value='購買なし'}
+FROM store st, item i, sale sa, dept d
+WHERE st.id = sa.store AND sa.item = i.id AND d.id = i.dept

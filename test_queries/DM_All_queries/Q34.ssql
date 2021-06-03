@@ -1,0 +1,4 @@
+GENERATE HTML
+[m.id, [e.name]!, [d.name]!]!
+FROM employee e, employee m, dept d
+WHERE e.manager = m.id AND m.id = d.manager

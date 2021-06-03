@@ -8,7 +8,6 @@ import supersql.codegenerator.Incremental;
 import supersql.codegenerator.Manager;
 import supersql.codegenerator.Sass;
 import supersql.codegenerator.TFE;
-import supersql.codegenerator.Mobile_HTML5.Mobile_HTML5Env;
 import supersql.codegenerator.infinitescroll.Infinitescroll;
 import supersql.common.GlobalEnv;
 import supersql.common.Log;
@@ -55,11 +54,38 @@ public class Mobile_HTML5C2 extends Connector {
 
 		this.setDataList(data_info);
 
-		if (Incremental.flag || Ehtml.flag) {
+		if (Ehtml.infinitescroll_flag && (Incremental.flag || Ehtml.flag)) {
 			Infinitescroll.C2(this, html_env, data_info, data, tfes, tfeItems);
 			return null;
+			
 		} else {
+			boolean isEhtml = Ehtml.isEhtml();
+			
+			if (isEhtml) {
+				String outType = "div";
 
+				if(html_env.xmlDepth!=0){
+					// 親のoutTypeを継承
+					outType = html_env.outTypeList.get(html_env.xmlDepth-1);
+				}
+				if (decos.containsKey("table") || !outType.equals("div")) {
+					html_env.outTypeList.add(html_env.xmlDepth, "table");
+				} else {
+					html_env.outTypeList.add(html_env.xmlDepth, "div");
+				}
+				if (decos.containsKey("div")) {
+					html_env.outTypeList.add(html_env.xmlDepth, "div");
+				}
+				Log.info("out:"+html_env.outTypeList);
+				//			System.out.println("C2 tableFlg = " + tableFlg + ", divFlg = " + divFlg);
+				html_env.append_css_def_td(html_env.getClassID(this), this.decos);
+				Incremental.outXMLData(html_env.xmlDepth,
+						"<Connector" + html_env.cNum
+						+ " type=\'C2\' outType=\'" + html_env.outTypeList.get(html_env.xmlDepth) + "\' class=\'"
+						+ html_env.getClassID(this) + "\'>\n");
+			}
+
+			
 			if(decos.containsKey("insert")){
 				Mobile_HTML5Env.setIDU("insert");
 			}
@@ -172,6 +198,11 @@ public class Mobile_HTML5C2 extends Connector {
 					if(firstFlg){
 						html_env.code.append("<DIV Class=\"row\">\n");
 						html_env.code.append("<DIV Class=\""+classid+"\">\n");
+						if (isEhtml) {
+//							html_env.append_css_def_td(HTMLEnv.getClassID(this), this.decos);
+							Incremental.outXMLData(html_env.xmlDepth, "<div" + html_env.cNum + " type=\'row\' outType=\'div\' class=\'" + classid + "\'>\n");
+							Incremental.outXMLData(html_env.xmlDepth, "<div" + html_env.cNum + " type=\'" + classid + "\' outType=\'div\' class=\'" + classid + "\'>\n");
+						}
 
 						if(Sass.outofloopFlg.peekFirst()){
 							//        				Sass.makeRowClass();
@@ -191,6 +222,11 @@ public class Mobile_HTML5C2 extends Connector {
 
 			Mobile_HTML5.beforeWhileProcess(getSymbol(), decos, html_env);
 			while (this.hasMoreItems()) {
+				if (isEhtml) {
+					html_env.cNum++;
+					html_env.xmlDepth++;
+				}
+				
 				ITFE tfe = (ITFE) tfes.get(i);
 				DecorateList decos2 = ((TFE)tfe).decos;
 				String classid2 = Mobile_HTML5Env.getClassID(tfe);
@@ -218,29 +254,15 @@ public class Mobile_HTML5C2 extends Connector {
 						Log.out("<TR><TD class=\"nest "
 								+ classid2 + " nest\"> decos:" + decos);
 					}
-
-					//	      	if(Mobile_HTML5Env.dynamicFlg){	//20130529 dynamic
-					//	      		//☆★
-					//	      		Log.info("☆★C2 tfe : " + tfe);
-					//	      		//☆★      		 Log.info("C2 tfe : " + tfe);
-					//            	//☆★            Log.info("C2 tfes : " + this.tfes);
-					//            	//☆★            Log.info("C2 tfeItems : " + this.tfeItems);
-					//	      	}
 				}else if(Sass.isBootstrapFlg()){
-					//            	html_env.code.append("<DIV Class=\"row\">\n");
-					//	      		if(Sass.outofloopFlg.peekFirst()){
-					//	      			Sass.makeRowClass();
-					//	      		}
 					html_env.code.append("<DIV Class=\"row\">\n");
 					html_env.code.append("<div class=\"" + classid2 +"\">\n");
+					if (isEhtml) {
+//						html_env.append_css_def_td(HTMLEnv.getClassID(this), this.decos);
+						Incremental.outXMLData(html_env.xmlDepth, "<div" + html_env.cNum + " type=\'row\' outType=\'div\' class=\'" + classid2 + "\'>\n");
+						Incremental.outXMLData(html_env.xmlDepth, "<div" + html_env.cNum + " type=\'" + classid2 + "\' outType=\'div\' class=\'" + classid2 + "\'>\n");
+					}
 					if(Sass.outofloopFlg.peekFirst()){
-						//            		Sass.makeRowClass();
-						//            		Sass.makeClass(classid2);
-						//            		Sass.defineGridBasic(classid2, decos2);
-
-						//            		Sass.makeClass(classid2);
-						//            		Sass.defineGridBasic(classid2, decos2);
-						//            		Sass.closeBracket();
 						Sass.makeColumn(classid2, decos2, "", -1);
 					}
 				}
@@ -256,7 +278,7 @@ public class Mobile_HTML5C2 extends Connector {
 					if(decos.containsKey("div")){
 						divFlg = true;
 						tableFlg = false;
-					}//else divFlg = false;
+					}
 
 					//20130314  table
 					if(tableFlg)
@@ -273,15 +295,13 @@ public class Mobile_HTML5C2 extends Connector {
 						Mobile_HTML5Function.textFlg = false;
 					}
 				}else if(Sass.isBootstrapFlg()){
-					//	        	html_env.code.append("\n</div>");
-					//	      		if(Sass.outofloopFlg.peekFirst()){
-					//	      			Sass.closeBracket();
-					//	      		}
 					html_env.code.append("</div>\n");//classid2
 					html_env.code.append("</div>\n");//row
+					if (isEhtml) {
+						Incremental.outXMLData(html_env.xmlDepth, "</div"+ html_env.cNum + ">\n");//classid2
+						Incremental.outXMLData(html_env.xmlDepth, "</div"+ html_env.cNum + ">\n");//row
+					}
 					if(Sass.outofloopFlg.peekFirst()){
-						//	        		Sass.closeBracket();//classid2
-						//	        		Sass.closeBracket();//row
 					}
 				}
 
@@ -292,6 +312,11 @@ public class Mobile_HTML5C2 extends Connector {
 				i++;
 
 				Mobile_HTML5.whileProcess2_2(getSymbol(), decos, html_env, data, data_info, tfe, null, -1);
+				
+				if (isEhtml) {
+					html_env.cNum--;
+					html_env.xmlDepth--;
+				}
 			}	//	/while
 			Mobile_HTML5.afterWhileProcess(getSymbol(), classid, decos, html_env);
 
@@ -339,6 +364,10 @@ public class Mobile_HTML5C2 extends Connector {
 				if(firstFlg){
 					html_env.code.append("</DIV>\n");//.classid
 					html_env.code.append("</DIV>\n");//.row
+					if (isEhtml) {
+						Incremental.outXMLData(html_env.xmlDepth, "</div"+ html_env.cNum + ">\n");
+						Incremental.outXMLData(html_env.xmlDepth, "</div"+ html_env.cNum + ">\n");
+					}
 
 					if(Sass.outofloopFlg.peekFirst()){
 						//        			Sass.closeBracket();//classid
@@ -354,6 +383,10 @@ public class Mobile_HTML5C2 extends Connector {
 			//20131001 tableDivHeader
 			if(decos.containsKey("header"))
 				html_env.code = Mobile_HTML5G2.createAndCutTableDivHeader(html_env);
+			
+			if (isEhtml) {
+				Incremental.outXMLData(html_env.xmlDepth, "</Connector" + html_env.cNum + ">\n");
+			}
 			return null;
 		}
 	}

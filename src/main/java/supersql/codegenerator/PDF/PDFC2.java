@@ -36,7 +36,6 @@ public class PDFC2 extends Connector implements PDFTFE {
 		System.out.println("[PDFC2:work]data_info = " + data_info);
 
 		System.out.println("++++ C2 ++++");
-		//�ɲ�10.17
 		value = new PDFValue("C2");
 		
 		PDFModifier modifier = new PDFModifier();

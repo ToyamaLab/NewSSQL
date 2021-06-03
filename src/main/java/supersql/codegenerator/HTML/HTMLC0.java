@@ -1,6 +1,7 @@
 package supersql.codegenerator.HTML;
 
 import supersql.codegenerator.Connector;
+import supersql.codegenerator.FuncArg;
 import supersql.codegenerator.Manager;
 import supersql.extendclass.ExtList;
 
@@ -38,9 +39,17 @@ public class HTMLC0 extends Connector {
 				HTMLEnv.setSearch(true);
 		}
 
+		String ret = "";
 		while (this.hasMoreItems()) {
-			this.worknextItem();
+			ret += this.worknextItem();
+//			this.worknextItem();
 		}
+
+		//tbt add 180807
+		//for decoration of HTMLJOIN
+		//TODO: Check hierarchical structure between each exp
+		htmlEnv.append_css_def_td(HTMLEnv.getClassID(this), this.decos);
+		//tbt end
 
 		if (decos.containsKey("form")) {
 			htmlEnv2.code.append("<form" + HTMLEnv.getFormNumber() + "end />");
@@ -51,7 +60,8 @@ public class HTMLC0 extends Connector {
 			if (decos.getStr("form").toLowerCase().equals("search"))
 				HTMLEnv.setSearch(false);
 		}
-		return null;
+		return (!HTMLFunction.HTMLFunctionFlag)? null : ret;
+//		return null;
 	}
 
 }

@@ -5,7 +5,6 @@ import java.io.Serializable;
 import java.util.Iterator;
 import java.util.StringTokenizer;
 
-import supersql.common.Log;
 import supersql.extendclass.ExtList;
 
 public class WhereInfo implements Serializable {
@@ -44,16 +43,27 @@ public class WhereInfo implements Serializable {
 		String skip_ch = " \t\n\r\f;";
 		StringTokenizer st = new StringTokenizer(line, "()" + skip_ch, true);
 		int paren = 0;
+		boolean inQ = false;
 		while (st.hasMoreTokens()) {
 			String ch = st.nextToken().trim();
 			if (skip_ch.indexOf(ch) == -1) {
-				if (ch.equals("(")) {
+				if(ch.contains("'")){
+					char c;
+					for(int j=0; j<ch.length(); j++){
+						c = ch.charAt(j);
+						if(c == '\'' && !(j>0 && ch.charAt(j-1)=='\'')){	// ' && not ''
+							inQ = !inQ;
+						}
+					}
+				}
+				
+				if (!inQ && ch.equals("(")) {
 					paren++;
 					buf.append(ch);
-				} else if (ch.equals(")")) {
+				} else if (!inQ && ch.equals(")")) {
 					paren--;
 					buf.append(ch);
-				} else if (ch.equalsIgnoreCase("and") && (paren == 0)) {
+				} else if (!inQ && ch.equalsIgnoreCase("and") && (paren == 0)) {
 					//clause分鐃緒申
 					WhereParse wp = new WhereParse(buf.toString().trim());
 					where_clause.add(wp);

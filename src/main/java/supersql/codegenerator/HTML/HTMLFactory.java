@@ -50,7 +50,12 @@ public class HTMLFactory extends Factory implements Serializable{
 		return new HTMLC1(manager, htmlEnv, htmlEnv2);
 		// return new HTMLC4(manager);
 	}
-
+	//tbt add 180806
+	@Override
+	public Connector createConcat(Manager manager) {
+		return new HTMLCONCAT(manager, htmlEnv, htmlEnv2);
+	}
+	//tbt end
 	@Override
 	public Attribute createConditionalAttribute(Manager manager) {
 		return new HTMLAttribute(manager, htmlEnv, htmlEnv2, true);

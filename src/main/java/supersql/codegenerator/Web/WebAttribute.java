@@ -6,7 +6,6 @@ import java.util.ArrayList;
 import supersql.codegenerator.Attribute;
 import supersql.codegenerator.Manager;
 import supersql.codegenerator.Modifier;
-import supersql.common.GlobalEnv;
 import supersql.common.Log;
 import supersql.extendclass.ExtList;
 

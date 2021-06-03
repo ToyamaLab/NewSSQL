@@ -6,6 +6,11 @@
 	<groupId>jp.ac.keio.ics.db.ssql</groupId>
 	<artifactId>newssql</artifactId>
 	<version>1.0</version>
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<java.version>1.8</java.version>
+		<junit.jupiter.version>5.0.2</junit.jupiter.version>
+	</properties>
 	<dependencies>
 		<dependency>
 			<groupId>org.jsoup</groupId>
@@ -15,7 +20,7 @@
 		<dependency>
 			<groupId>org.antlr</groupId>
 			<artifactId>antlr4</artifactId>
-			<version>4.5</version>
+			<version>4.8</version>
 		</dependency>
 		<dependency>
 			<groupId>javax.servlet</groupId>
@@ -32,7 +37,7 @@
 			<artifactId>db2jcc</artifactId>
 			<version>1.0</version> <!-- Adjust this properly -->
 			<scope>system</scope>
-			<systemPath>${basedir}/lib/db2jcc.jar</systemPath>
+			<systemPath>${project.basedir}/lib/db2jcc.jar</systemPath>
 		</dependency>
 		<dependency>
 			<groupId>org.antlr</groupId>
@@ -44,7 +49,7 @@
 			<artifactId>pdflib</artifactId>
 			<version>1.0</version> <!-- Adjust this properly -->
 			<scope>system</scope>
-			<systemPath>${basedir}/lib/pdflib.jar</systemPath>
+			<systemPath>${project.basedir}/lib/pdflib.jar</systemPath>
 		</dependency>
 		<dependency>
 			<groupId>org.jgrapht</groupId>
@@ -76,19 +81,57 @@
     		<artifactId>postgresql</artifactId>
     		<version>9.4.1208.jre7</version>
 		</dependency>
-
 		<dependency>
 			<groupId>org.slf4j</groupId>
 			<artifactId>slf4j-log4j12</artifactId>
 			<version>1.7.25</version>
 		</dependency>
-		
 		<dependency>
 			<groupId>org.jboss.openjdk-orb</groupId>
 			<artifactId>openjdk-orb</artifactId>
 			<version>8.1.1.Final</version>
 		</dependency>
 		
+		<!-- https://mvnrepository.com/artifact/com.github.jsqlparser/jsqlparser -->
+		<dependency>
+			<groupId>com.github.jsqlparser</groupId>
+			<artifactId>jsqlparser</artifactId>
+			<version>1.2</version>
+		</dependency>
+		<dependency>
+			<groupId>org.junit.jupiter</groupId>
+			<artifactId>junit-jupiter-api</artifactId>
+			<version>${junit.jupiter.version}</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.junit.jupiter</groupId>
+			<artifactId>junit-jupiter-engine</artifactId>
+			<version>${junit.jupiter.version}</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.junit.platform</groupId>
+			<artifactId>junit-platform-launcher</artifactId>
+			<version>1.0.2</version>
+			<scope>test</scope>
+		</dependency>
+		<!-- https://mvnrepository.com/artifact/org.apache.hive/hive-jdbc -->
+		<dependency>
+			<groupId>org.rosuda.JRI</groupId>
+			<artifactId>JRI</artifactId>
+			<version>1.0</version>
+			<scope>system</scope>
+			<systemPath>${project.basedir}/lib/JRI.jar</systemPath>
+		</dependency>
+		<dependency>
+			<!-- SQL server JDBC for Java8 -->
+			<groupId>com.microsoft.sqlserver</groupId>
+			<artifactId>mssql-jdbc</artifactId>
+			<version>8.2.2.jre8</version>
+			<scope>system</scope>
+			<systemPath>${project.basedir}/lib/mssql-jdbc-8.2.2.jre8.jar</systemPath>
+		</dependency>
 	</dependencies>
 	<build>
 		<plugins>

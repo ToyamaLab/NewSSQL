@@ -10,24 +10,40 @@ import java.io.ObjectOutputStream;
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
-import java.nio.file.Files;
-import java.nio.file.attribute.FileAttribute;
-import java.nio.file.attribute.PosixFilePermission;
-import java.nio.file.attribute.PosixFilePermissions;
-import java.util.Set;
 
 import supersql.codegenerator.HTML.HTMLEnv;
 import supersql.codegenerator.Mobile_HTML5.Mobile_HTML5Env;
 import supersql.common.GlobalEnv;
-import supersql.common.Log;
 import supersql.parser.Start_Parse;
 
 public class Incremental {
 	public static boolean flag = false;
+	public static boolean flag2 = false;
 	
 	
 	public Incremental(){
 		
+	}
+	
+	// set incremental flag
+	public static void setIncremental(){
+		if (Ehtml.isMediaHTML)
+			flag = true;		// for HTML 	// html出力テスト用にコメントアウト 20191009
+		else
+			setIncremental2();	// for ResponsiveHTML
+		
+//		//TODO
+//		String m = CodeGenerator.getMedia().toLowerCase();
+//		Log.ehtmlInfo("Ehtml media: "+m);
+//		if(m.equals("html")){
+//			flag = true;
+//		}else{
+//			setIncremental2();
+//		}
+	}
+	public static void setIncremental2(){
+		flag2 = true;
+		//Ehtml.setEhtml2();
 	}
 	
 	// output XMLData
@@ -40,17 +56,13 @@ public class Incremental {
 			}
 			if(factry[2].equals("HTML")){
 				HTMLEnv.xmlCode.append(indentchar + str);
-			}else if(factry[2].equals("Mobile_HTML5")){
+			// }else if(factry[2].equals("Mobile_HTML5")){
+			}else if(Ehtml.media == 1){
 				Mobile_HTML5Env.xmlCode.append(indentchar + str);
 			}
 		} else {
 			return;
 		}
-	}
-	
-	// set incremental flag
-	public static void setIncremental(){
-		flag = true;
 	}
 	
 	// create xml data for incremental update

@@ -1,25 +1,9 @@
 package supersql.common;
 
-import java.awt.Color;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-import java.lang.StringBuilder;
 
-import javax.swing.text.BadLocationException;
-import javax.swing.text.DefaultStyledDocument;
 import javax.swing.text.Document;
-import javax.swing.text.SimpleAttributeSet;
-import javax.swing.text.StyleConstants;
-import javax.swing.text.StyleContext;
-
-import supersql.codegenerator.CodeGenerator;
-import supersql.common.GlobalEnv;
-import supersql.common.Log;
-import supersql.common.Suggest;
-import supersql.parser.Start_Parse;
 
 public class Ssedit {
 

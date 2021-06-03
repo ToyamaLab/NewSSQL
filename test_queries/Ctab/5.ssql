@@ -1,0 +1,4 @@
+GENERATE HTML
+cross_tab([m.name@{width=106}],, [(asc)e.byear@{width=100}]!, [e.name@{width=100}]!)@{side_width=100}
+FROM employee e, employee m
+WHERE e.manager = m.id AND m.id < 130

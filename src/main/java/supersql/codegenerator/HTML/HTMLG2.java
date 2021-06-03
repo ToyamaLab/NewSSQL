@@ -221,6 +221,7 @@ public class HTMLG2 extends Grouper implements Serializable {
 					html_env.code.append(html_env.tableBorder + "\" ");
 					Log.out("embed flag :" + html_env.embedFlag);
 					html_env.code.append("class=\"");
+
 					if (html_env.embedFlag)
 						html_env.code.append(" embed ");
 
@@ -252,6 +253,7 @@ public class HTMLG2 extends Grouper implements Serializable {
 			Log.out("<TABLE class=\"" + HTMLEnv.getClassID(this) + "\">");
 
 			while (this.hasMoreItems()) {
+
 				// 20140528_masato
 				count++;
 				// System.out.println(html_env.gLevel);
@@ -270,6 +272,7 @@ public class HTMLG2 extends Grouper implements Serializable {
 					//
 					// } else {
 					if (html_env.decorationStartFlag.size() > 0) {
+
 						HTMLDecoration.ends.get(0).append("<TR><TD class=\"" + HTMLEnv.getClassID(tfe) + " nest\">\n");
 					} else {
 						//						if(!((ExtList)data.get(dindex)).get(0).toString().equals("dummydummydummy")){

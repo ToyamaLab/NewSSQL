@@ -6,7 +6,12 @@ import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 
 import supersql.codegenerator.Attribute;
+import supersql.codegenerator.Ehtml;
+import supersql.codegenerator.Incremental;
 import supersql.codegenerator.Manager;
+import supersql.codegenerator.VR.VRCONCAT;
+import supersql.codegenerator.VR.VREnv;
+import supersql.common.GlobalEnv;
 import supersql.common.Log;
 import supersql.extendclass.ExtList;
 
@@ -83,6 +88,16 @@ public class VRAttribute extends Attribute {
 			}
 		}
 
+		//tbt acc 180806
+		if(GlobalEnv.joinFlag){
+			// if (Incremental.flag || Ehtml.flag) {
+			VRCONCAT.joinClassID = VREnv.getClassID(this);
+			VRCONCAT.joinDecos = this.decos;
+					// htmlEnv.append_css_def_td(HTMLCONCAT.joinClassID, this.decos);
+			if ((!Incremental.flag && !Ehtml.flag) || !Ehtml.isEhtml2()) ;
+			else	vrEnv.append_css_def_td(VRCONCAT.joinClassID, this.decos);
+			return this.getStr(data_info);
+		}
 		//if this attribute is a decoration
 		if(vrEnv.decorationEndFlag.size() > 0 && vrEnv.decorationEndFlag.get(0)){
 			//get the property name from decorationProperty

@@ -1,8 +1,9 @@
 package supersql.parser;
 
 import java.io.Serializable;
-import java.util.StringTokenizer;
+import java.util.*;
 
+import supersql.common.GlobalEnv;
 import supersql.common.Log;
 import supersql.extendclass.ExtHashSet;
 import supersql.extendclass.ExtList;
@@ -17,6 +18,8 @@ public class WhereParse implements Serializable {
 
 	private ExtHashSet usetables;
 
+	private final List<String> bookedWords = Arrays.asList("like", "is", "in", "not", "null");
+
 	public WhereParse(String line) {
 		this.line = line;
 		this.useatts = new ExtList();
@@ -27,21 +30,89 @@ public class WhereParse implements Serializable {
 	public void parseString(String line) {
 		StringBuffer buf = new StringBuffer();
 
-		StringTokenizer st = new StringTokenizer(line, " 	()+-*/<>=~@");
+		StringTokenizer st = new StringTokenizer(line, " 	!()+-*/<>=~@");
 		while (st.hasMoreTokens()) {
 			String ch = st.nextToken();
 			StringTokenizer st1 = new StringTokenizer(ch, ".");
-			if (st1.countTokens() == 2) {
-				//属性が来た
-				//		Log.out("[parseString] ch : "+ch);
-				useatts.add(new String(ch));
-				String tbl = new String(st1.nextToken());
-				usetables.add(tbl);
-				//		Log.out("[parseString] tables : "+usetables);
+			if (ch.startsWith("'") && ch.endsWith("'")) {
+				useatts.add(ch);
+			} else if (st1.countTokens() == 2) {
+				String table = st1.nextToken();
+				String attribute = st1.nextToken();
+				boolean onlyStartAndEnd = true;
+				// エイリアスに""がついてたら除去(Imageでは持ってるのでSQLクエリ作るときはそっち使う)
+				if (table.startsWith("\"") && table.endsWith("\"")) {
+					table = table.substring(1, table.length() - 1);
+					onlyStartAndEnd = false;
+				}
+				// 属性値に""がついてたら除去
+				if (attribute.startsWith("\"") && attribute.endsWith("\"")) {
+					attribute = attribute.substring(1, attribute.length() - 1);
+					onlyStartAndEnd = false;
+				}
+				if (ch.startsWith("\"") && ch.endsWith("\"") && onlyStartAndEnd) {
+					// "e.id"みたいな場合
+					ch = ch.substring(1, ch.length() - 1);
+					useatts.add(ch);
+				} else {
+					// その他
+					usetables.add(table);
+					useatts.add(attribute);
+				}
+				if (usetables.size() == 0) {
+					ch = useatts.getExtListString(0);
+					ArrayList<String> containedTableList = new ArrayList<>();
+					for(Map.Entry<String, ExtList> ent: GlobalEnv.tableAtts.entrySet()){
+						String tableName = ent.getKey();
+						ExtList attributes = ent.getValue();
+						if(attributes.contains(ch)){
+							for (FromTable fromTable: From.getFromItems()) {
+								if(fromTable.getTableName().equals(tableName)) {
+									containedTableList.add(fromTable.getAlias());
+								}
+							}
+						}
+					}
+					if(containedTableList.size() > 1){
+						Log.err("Attribute <" + ch + "> is contained by more than two tables.");
+						Log.err("Please use alias in From clause");
+					} else if (containedTableList.size() == 1) {
+						usetables.add(containedTableList.get(0));
+					}
+				}
+			} else {
+				// 予約語だったらスキップ
+				if (bookedWords.contains(ch.toLowerCase())) {
+					continue;
+				}
+				// ""で囲まれてたら除去
+				if (ch.startsWith("\"") && ch.endsWith("\"")) {
+					ch = ch.substring(1, ch.length() - 1);
+				}
+				useatts.add(ch);
+				ArrayList<String> containedTableList = new ArrayList<>();
+				for(Map.Entry<String, ExtList> ent: GlobalEnv.tableAtts.entrySet()){
+					String tableName = ent.getKey();
+					ExtList attributes = ent.getValue();
+					if(attributes.contains(ch)){
+						for (FromTable fromTable: From.getFromItems()) {
+							if(fromTable.getTableName().equals(tableName)) {
+								containedTableList.add(fromTable.getAlias());
+							}
+						}
+					}
+				}
+				if(containedTableList.size() > 1){
+					Log.err("Attribute <" + ch + "> is contained by more than two tables.");
+					Log.err("Please use alias in From clause");
+				} else if (containedTableList.size() == 1) {
+					usetables.add(containedTableList.get(0));
+				}
 			}
 		}
-		//	Log.out("[parseString] atts : "+useatts);
-		//	Log.out("[parseString] tables : "+usetables);
+		Log.out("[WhereParse] atts : "+useatts);
+		Log.out("[WhereParse] tables : "+usetables);
+		Log.out("[WhereParse] line: " + line);
 	}
 
 	@Override

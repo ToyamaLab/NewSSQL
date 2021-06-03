@@ -70,6 +70,8 @@ public class HTMLG1 extends Grouper implements Serializable {
 			if (decos.containsKey("div")) {
 				html_env.outTypeList.add(html_env.xmlDepth, "div");
 			}
+			Log.info("out:"+html_env.outTypeList);
+
 			// System.out.println("G1 tableFlg = " + tableFlg + ", divFlg = " +
 			// divFlg);
 			html_env.append_css_def_td(HTMLEnv.getClassID(this), this.decos);

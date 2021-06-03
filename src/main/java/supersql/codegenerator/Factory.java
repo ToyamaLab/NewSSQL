@@ -3,13 +3,6 @@ package supersql.codegenerator;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 
-import supersql.codegenerator.Attribute;
-import supersql.codegenerator.Connector;
-import supersql.codegenerator.Decorator;
-import supersql.codegenerator.Grouper;
-import supersql.codegenerator.Function;
-import supersql.codegenerator.LocalEnv;
-import supersql.codegenerator.Manager;
 import supersql.common.Log;
 
 public class Factory {
@@ -184,6 +177,28 @@ public class Factory {
 		}
 		return null;
 	}
+
+	//tbt add 180806
+	//for join_string
+	public Connector createConcat(Manager manager) {
+		try {
+			Constructor connectorConstructor = getConstructor("CONCAT");
+			return (Connector) connectorConstructor.newInstance(manager, getEnv(), getEnv2());
+
+		} catch (SecurityException e) {
+			e.printStackTrace();
+		} catch (IllegalArgumentException e) {
+			e.printStackTrace();
+		} catch (InstantiationException e) {
+			e.printStackTrace();
+		} catch (IllegalAccessException e) {
+			e.printStackTrace();
+		} catch (InvocationTargetException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+	//tbt end
 
 	public Grouper createG0(Manager manager) {
 		try {

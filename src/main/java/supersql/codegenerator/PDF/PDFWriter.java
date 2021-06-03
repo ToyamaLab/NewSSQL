@@ -2,7 +2,6 @@ package supersql.codegenerator.PDF;
 
 import supersql.extendclass.ExtList;
 
-//PDFに関する基本的な変数とメソッドを持つクラス
 public class PDFWriter {
 
 	private PDFEnv pdf_env;
@@ -25,19 +24,16 @@ public class PDFWriter {
 
 	
 	
-	//コンストラクタ
 	public PDFWriter(PDFEnv pdf_env) {
 		this.pdf_env = pdf_env;
 	}
 
 	
-	//ページを用意
 	public void page_ready() {
 		pdf_env.page_ready();
 	}
 
 /*
-	//配列にコピーされた文字列毎の情報を元にボックス等を出力し,ページを閉じる
 	public void pagePrint(PDFValue result) {
 		default_posH = pdf_env.paddingPaper_H;
 		default_posV = pdf_env.heightPaper - pdf_env.paddingPaper_V;
@@ -56,7 +52,6 @@ public class PDFWriter {
 	}
 */	
 	
-	//配列にコピーされた文字列毎の情報を元にボックス等を出力し,ページを閉じる
 	public void pagePrint(ExtList outputResult) {
 		default_posH = pdf_env.paddingPaper_H;
 		default_posV = pdf_env.heightPaper - pdf_env.paddingPaper_V;
@@ -77,33 +72,28 @@ public class PDFWriter {
 	}
 	
 	
-	//追加10.17 再帰的に呼ばれて全ての内容を出力するメソッド
 	public void output(PDFValue result, float posH, float posV){
 		
 		PDFValue instance;
 		String type = result.type;
-		int local;//////////////ポイント　メソッド内で定義しないと駄目
+		int local;
 		
-		//追加10.31　折り畳み
 		float tmp_posH = posH;
 		float tmp_posV = posV;
 		int fold_num = 0;
 		int tmp = 0;
 		
-		//初めにこれがC1なのかG2なのかを取得　関数positionの引数となる
 		//String type = instance.type;
 
-		//出力するものはする
 //		if(result.type.equals("G1"))
 		box_out(result, posH, posV);
 		
 		for(local=0; local<result.inList.size(); local++){
 			
-			instance = (PDFValue)result.inList.get(local);//まだあれば
+			instance = (PDFValue)result.inList.get(local);
 //			System.out.println("instance.data ="+instance.data);
-			output(instance, posH, posV);//resultではなくinstanceを渡す
+			output(instance, posH, posV);
 			
-			//親のtypeと子が引数
 			//position(type, instance);
 			if(type.equals("C1")){
 				posH += instance.box_width;
@@ -113,7 +103,7 @@ public class PDFWriter {
 			}
 			else if(type.equals("G1")){
 				if(tmp == Integer.parseInt((String)result.rows.get(fold_num))-1){
-					if(fold_num < result.rowNum)//右辺に-1が書いてあった
+					if(fold_num < result.rowNum)
 						fold_num++;
 					posH = tmp_posH;
 					posV -= instance.box_height;
@@ -124,7 +114,7 @@ public class PDFWriter {
 			}
 			else if(type.equals("G2")){
 				if(tmp == Integer.parseInt((String)result.columns.get(fold_num))-1){
-					if(fold_num < result.columnNum)//右辺に-1が書いてあった
+					if(fold_num < result.columnNum)
 						fold_num++;
 					posV = tmp_posV;
 					posH += instance.box_width;
@@ -150,7 +140,7 @@ public class PDFWriter {
 			bordercolor = getColor(result.bordercolor);
 			pdf_env.setBorderColor(bordercolor[0], bordercolor[1], bordercolor[2]);
 		}
-		pdf_env.defaultbackground();//デフォルト背景色の設定
+		pdf_env.defaultbackground();
 		if(!(result.bgcolor.equals("null"))){
 			bgcolor = new float[3];
 			bgcolor = getColor(result.bgcolor);
@@ -169,7 +159,6 @@ public class PDFWriter {
 		}
 		pdf_env.save();
 		
-		//座標は図形の左下隅なので
 		posV -= result.box_height;
 		
 		pdf_env.rect(posH, posV, result.box_width, result.box_height);
@@ -181,9 +170,9 @@ public class PDFWriter {
 //		System.out.println("result.data_height = "+result.data_height);
 		
 		////////////////////////////////////
-//		pdf_env.stroke();//線だけ
+//		pdf_env.stroke();
 		if (line == true)
-			pdf_env.fill_stroke();//全部
+			pdf_env.fill_stroke();
 		else
 			pdf_env.fill();
 		/////////////////////////////////////
@@ -193,30 +182,26 @@ public class PDFWriter {
 		if(result.type.equals("Att")){		
 			textOut(result, posH, posV);
 		}
-		else{//今は関数がimage関数しかないから
+		else{
 			imageOut(result, posH, posV);
 		}
 	}
 
 	
-	//追加10.25 色関係
 	public float[] getColor(String decorate){
 		color = new float[3];
 		//System.out.println("wwwww "+decorate);
 		if( decorate.startsWith("#") ){
-			String rgb = decorate.substring(1);//#を取り除く
+			String rgb = decorate.substring(1);
 			//System.out.println("wwwww "+rgb);
-			//直接オブジェクトに各RGB値を代入255fはfloat型ってこと 
 			color[0] = Integer.parseInt(rgb.substring(0,2),16)/255f;
 			color[1] = Integer.parseInt(rgb.substring(2,4),16)/255f;
 			color[2] = Integer.parseInt(rgb.substring(4,6),16)/255f;
 			//System.out.println("wwwww "+color[0]+color[1]+color[2]);
 		}
-		//スポットカラーの処理
 		return color;
 	}
 	
-	//メソッド化10.25
 	public void textOut(PDFValue instance, float posH, float posV){
 		
 		if(instance.align.equals("left"))
@@ -233,16 +218,14 @@ public class PDFWriter {
 		else if(instance.valign.equals("bottom"))
 			adjust_valign = instance.padding;
 		
-		//text_flowだと何故かこれが機能しない
 		//pdf_env.defaultfont();
 		
-		fontcolor = new float[3];//text_flowでなければifの中
+		fontcolor = new float[3];
 		fontcolor[0] = 0;
 		fontcolor[1] = 0;
 		fontcolor[2] = 0;
 		if(!(instance.fontcolor.equals("null"))){
 			fontcolor = getColor(instance.fontcolor);
-			//text_flowだと何故かこれが機能しない
 			//pdf_env.setFontColor(fontcolor[0], fontcolor[1], fontcolor[2]);
 		}
 		pdf_env.save();
@@ -256,13 +239,12 @@ public class PDFWriter {
 		pdf_env.restore();	
 	}
 	
-	//追加10.25
+	//鐃宿駕申10.25
 	public void imageOut(PDFValue instance, float posH, float posV){
 		
 		if(instance.image_num!=-1){
 			
-			/*移動10.27  PDFFunction内に移動
-			/* これではうまく行かない 下の二つを並列に置いて両方計算させた方が無難
+			/*
 			if( (instance.data_width > instance.box_width) && (instance.data_height > instance.box_height) ){
 				
 				instance.data_width = instance.box_width - instance.padding*2f;
@@ -311,8 +293,5 @@ public class PDFWriter {
 	}
 	
 
-	/*
-	 * //PDFファイルを閉じるメソッド public void closePDFfile() { pdf_env.closePDFfile(); }
-	 */
 
 }

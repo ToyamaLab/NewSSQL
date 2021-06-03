@@ -1,0 +1,29 @@
+# These examples demonstrate ways to display binned/aggregated selections
+library(plotly)
+
+d <- highlight_key(mpg)
+<<<<<<< HEAD
+dots <- plot_ly(d, colors = "Set1", color = ~class, x = ~displ, y = ~cyl) %>%
+=======
+dots <- plot_ly(d, colors = "Set1", color = ~class, x = ~displ, y = ~jitter(cyl)) %>%
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
+  layout(
+    xaxis = list(title = "Engine displacement"),
+    yaxis = list(title = "Number of cylinders")
+  )
+boxs <- plot_ly(d, colors = "Set1", color = ~class, x = ~class, y = ~cty) %>% 
+  add_boxplot() %>%
+  layout(
+    xaxis = list(title = ""),
+    yaxis = list(title = "Miles per gallon (city)")
+  )
+bars <- plot_ly(d, colors = "Set1", x = ~class, color = ~class)
+
+subplot(dots, boxs, titleX = TRUE, titleY = TRUE) %>%
+  subplot(bars, nrows = 2, titleX = TRUE, titleY = TRUE) %>%
+  layout(
+    title = "Dynamic 2-way ANOVA (click & drag on scatterplot)",
+    barmode = "overlay",
+    showlegend = FALSE
+  ) %>%
+  highlight("plotly_selected", opacityDim = 0.6)

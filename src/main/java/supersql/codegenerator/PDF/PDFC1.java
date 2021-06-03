@@ -13,10 +13,8 @@ public class PDFC1 extends Connector implements PDFTFE {
 
 	private PDFEnv pdf_env;
 	
-	//ÄÉ²Ã10.17
 	private PDFValue value;
 	
-	//ÄÉ²Ã10.30
 	private ExtList maxWidths;
 	private float max_width;
 	
@@ -24,7 +22,6 @@ public class PDFC1 extends Connector implements PDFTFE {
 	private boolean change = false;
 
 
-	//¥³¥ó¥¹¥È¥é¥¯¥¿
 	public PDFC1(Manager manager, PDFEnv pdf_env) {
 		this.manager = manager;
 		this.pdf_env = pdf_env;
@@ -32,10 +29,8 @@ public class PDFC1 extends Connector implements PDFTFE {
 		maxWidths = new ExtList();
 	}
 
-	//C1¤Îwork¥á¥½¥Ã¥É
 	@Override
 	public String work(ExtList data_info) {
-		//ÄÉ²Ã10.14 ¥á¥½¥Ã¥ÉÆâ¤Ë°ÜÆ°10.24
 		float box_width = 0;
 		float box_height = 0;
 		float tmp_height = 0;
@@ -44,7 +39,6 @@ public class PDFC1 extends Connector implements PDFTFE {
 		System.out.println("\n------- C1 -------");
 		System.out.println("[PDFC1:work]data_info = " + data_info);
 
-		//ÄÉ²Ã10.17
 		value = new PDFValue("C1");
 		
 		int i;
@@ -58,19 +52,15 @@ public class PDFC1 extends Connector implements PDFTFE {
 				System.out.println("[PDFC1:work]tfe is Attribute");
 				worknextItem();
 				
-				System.out.println("++++ C1¤ÇAtt¤òset¤·¤Þ¤¹");
-				//ÄÉ²Ã10.17 value¤Î¥»¥Ã¥È
 				value.inList.add(((PDFTFE)tfe).getInstance());
 				
-				//ÄÉ²Ã10.17
-				//¤³¤³¤Çtmp_width,height¤òÂ­¤·¤³¤ó¤Ç¤¤¤¯
+
 				box_width += pdf_env.tmp_width;
 				tmp_height = pdf_env.tmp_height;
 				if (tmp_height > box_height) {
 					box_height = tmp_height;
 				}
 				/////////////////////////////////
-				//C1¤Ê¤Î¤ÇxºÂÉ¸¤ò¥×¥é¥¹,¤¿¤À¤·ºÇ¸å¤ÎÍ×ÁÇ¤Ç¤Ï++¤·¤Ê¤¤
 				//if( i+1 < data_info.size() ) //??
 				if (hasMoreItems())
 					pdf_env.x_back++;
@@ -103,11 +93,8 @@ public class PDFC1 extends Connector implements PDFTFE {
 				worknextItem();
 				
 				System.out.println("++++ C1");
-				//ÄÉ²Ã10.17 value¤Î¥»¥Ã¥È
 				value.inList.add(((PDFTFE)tfe).getInstance());
 				
-				//ÄÉ²Ã10.17
-				//¤³¤³¤Çtmp_width,height¤òÂ­¤·¤³¤ó¤Ç¤¤¤¯
 				box_width += pdf_env.tmp_width;
 				tmp_height = pdf_env.tmp_height;
 				if (tmp_height > box_height) {
@@ -115,7 +102,6 @@ public class PDFC1 extends Connector implements PDFTFE {
 				}
 
 				////////////////////////////////
-				//C1¤Ê¤Î¤ÇxºÂÉ¸¤ò¥×¥é¥¹,¤¿¤À¤·ºÇ¸å¤ÎÍ×ÁÇ¤Ç¤Ï++¤·¤Ê¤¤
 				//if( i+1 < data_info.size() )
 				if (hasMoreItems())
 					pdf_env.x_back++;
@@ -126,7 +112,7 @@ public class PDFC1 extends Connector implements PDFTFE {
 			}
 
 			
-			checkMaxWidth(pdf_env.tmp_width, i);//¥á¥½¥Ã¥É²½¤·¤Æ¤â¤¤¤¤
+			checkMaxWidth(pdf_env.tmp_width, i);
 			//if(maxWidth[i] < box_width)
 			//	maxWidth[i] = box_width;
 			//if(maxWidth[i] < pdf_env.tmp_width)
@@ -140,8 +126,8 @@ public class PDFC1 extends Connector implements PDFTFE {
 			re_set.box_height = box_height;
 		}
 		
-		//ÄÉ²Ã10.17
-		//¥Ñ¥é¥á¡¼¥¿¤ò¥»¥Ã¥È
+		//ï¿½É²ï¿½10.17
+		//ï¿½Ñ¥ï¿½á¡¼ï¿½ï¿½ï¿½ò¥»¥Ã¥ï¿½
 		value.box_width = box_width;
 		value.box_height = box_height;
 		
@@ -157,7 +143,6 @@ public class PDFC1 extends Connector implements PDFTFE {
 
 	
 	
-	//ÄÉ²Ã10.30
 	public void checkMaxWidth(float box_width, int i){
 		if(i >= maxWidths.size())
 			maxWidths.add("0");
@@ -169,7 +154,6 @@ public class PDFC1 extends Connector implements PDFTFE {
 	}
 	
 	public PDFValue getInstance(){
-		System.out.println("++++ C1¤òset¤·¤Þ¤·¤¿");
 		return value;
 	}
 	
@@ -283,12 +267,12 @@ public class PDFC1 extends Connector implements PDFTFE {
 		ExtList sortDList = new ExtList();
 	//	System.out.println("AAAAAAAAAAAA "+Dexcess);
 		
-	//	for(local=0; local<tfeitems; local++) {	//½ç¤ËÁöºº
-		for(local=tfeItems-1; local>-1; local--) {	//µÕ¤«¤éÁöºº
+	//	for(local=0; local<tfeitems; local++) {
+		for(local=tfeItems-1; local>-1; local--) {
 			ITFE tfe = (ITFE)tfes.get(local);
 			PDFValue inBox = (PDFValue)box.inList.get(local);
 			
-			tmpDexcess = (inBox.box_width / box.box_width) * Dexcess;	//¤³¤³¤Ï¥¤¥ó¥¹¥¿¥ó¥¹¤ÎoriginalWidth¤Ç¤Ï¤Ê¤¯¡¢max
+			tmpDexcess = (inBox.box_width / box.box_width) * Dexcess;
 			flex = ((PDFTFE)tfe).optimizeW(tmpDexcess, inBox);
 
 			 	DList.add(Float.toString(pdf_env.cutWidth));
@@ -300,7 +284,7 @@ public class PDFC1 extends Connector implements PDFTFE {
 					tfe = (ITFE)tfes.get(local2);
 					((PDFTFE)tfe).redoChange();
 				}
-				break;		//»ÒÍ×ÁÇ¤Ç£±¤Ä¤Ç¤âÊÑ´¹¤Ç¤­¤Ê¤¤Í×ÁÇ¤¬¤¢¤Ã¤¿¤é¤â¤¦¤ä¤é¤Ê¤¤¡¡ËÜÅö¤Ï¤â¤Ã¤ÈºÙ¤«¤¯¤ä¤ê¤¿¤¤
+				break;
 			}
 		}
 		
@@ -331,7 +315,6 @@ public class PDFC1 extends Connector implements PDFTFE {
 		for(local=sortDList.size()-1; local>-1; local--){
 			tempD = Float.parseFloat((String)sortDList.get(local));
 			if(tempD >= Dexcess){
-				System.out.println("£±Í×ÁÇ¤À¤±¤Ç¤¿¤¹");
 				int index = DList.lastIndexOf(Float.toString(tempD));
 				System.out.println("index " +index);
 				//index++;					
@@ -351,7 +334,6 @@ public class PDFC1 extends Connector implements PDFTFE {
 		}
 if(!flex){
 	System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>");
-		//£²Í×ÁÇ¢·
 		float sumD = 0;
 		tempD = 0;
 		escape:
@@ -362,7 +344,6 @@ if(!flex){
 					sumD += tempD;
 				}
 				if(sumD >= Dexcess){
-					//¤ä¤äÍðË½
 					for(local3=0; local3<local2; local3++){
 						tempD = Float.parseFloat((String)DList.get(local));
 						int index = DList.lastIndexOf(Float.toString(tempD));
@@ -381,7 +362,7 @@ if(!flex){
 		if(flex){
 			System.out.println("vvvvvvvvvvvvvvvvvv");
 
-			for (local=tfeItems-1; local>-1; local--) {	//µÕ¤«¤éÁöºº
+			for (local=tfeItems-1; local>-1; local--) {
 				ITFE tfe = (ITFE)tfes.get(local);
 				if( ((PDFTFE)tfe).changeORnot() )
 					this.tfes.set(local, ((PDFTFE)tfe).getNewChild() );
@@ -393,20 +374,18 @@ if(!flex){
 
 			for(local=0; local<box.inList.size(); local++){
 				PDFValue inBox = (PDFValue)box.inList.get(local);
-				if(tmpWidth < inBox.box_width){			//originalWidth¤Ç¤Ï¤Ê¤¯max
+				if(tmpWidth < inBox.box_width){
 					keyBox = inBox;
 					tmpWidth = inBox.box_width;
 				}
 			}
 			//---------------------------------------------------------//
-			if(box.box_width - keyBox.box_width >= Dexcess){		//¤³¤³¤ÏkeyBox¤ÎoriginalWidth¤Ç¤Ï¤Ê¤¤¤È»×¤¦
-				//¸Ç¤µ¤Î¥Á¥§¥Ã¥¯
+			if(box.box_width - keyBox.box_width >= Dexcess){
 //				if( !(pdf_env.flexTH < (tmpHeight - box.box_height) / Dexcess) ){
 					newLE = new PDFC2(manager, pdf_env);
 					((PDFC2)newLE).tfeItems = this.tfeItems;
 					((PDFC2)newLE).tfes = originalTFE;//this.tfes;
 					((PDFC2)newLE).decos = this.decos;
-					//maxWidth¤ÎÊÑ¹¹ <-- ¤·¤Ê¤¤¤«
 					System.out.println("C1 change to C2");
 					change = true;
 					flex = true;

@@ -55,6 +55,7 @@ public class HTMLC2 extends Connector implements Serializable {
 			if (decos.containsKey("div")) {
 				htmlEnv.outTypeList.add(htmlEnv.xmlDepth, "div");
 			}
+			Log.info("out:"+htmlEnv.outTypeList);
 			//			System.out.println("C2 tableFlg = " + tableFlg + ", divFlg = " + divFlg);
 			htmlEnv.append_css_def_td(HTMLEnv.getClassID(this), this.decos);
 			Incremental.outXMLData(htmlEnv.xmlDepth,

@@ -7,8 +7,8 @@ import supersql.extendclass.ExtList;
 
 public class Function extends Operand {
 
-	protected String Name; 
-	protected ExtList<FuncArg> Args;     
+	protected String Name;
+	protected ExtList<FuncArg> Args;
 	protected Hashtable<String, FuncArg> ArgHash = new Hashtable<String, FuncArg>();
 
 	public Function() {
@@ -24,7 +24,7 @@ public class Function extends Operand {
 	public void addArg(FuncArg fa) {
 		Args.add(fa);
 	}
-	
+
 	//taji added
 	public FuncArg getArg(int i) {
 		return Args.get(i);
@@ -36,7 +36,7 @@ public class Function extends Operand {
 		return Args.toString();
 	}
 	//taji added
-	
+
 	public void debugout(int count) {
 
 		Debug dbgout = new Debug();
@@ -61,7 +61,7 @@ public class Function extends Operand {
 				outsch.addAll(outsch1);
 			}
 		}
-		
+
 		return outsch;
 	}
 
@@ -106,7 +106,7 @@ public class Function extends Operand {
 			fa = Args.get(i);
 			ci = fa.countconnectitem();
 			fa.setData(data.ExtsubList(dindex, dindex + ci));
-			if (Name.equalsIgnoreCase("foreach") 
+			if (Name.equalsIgnoreCase("foreach")
 					|| Name.equalsIgnoreCase("foreach1")){	//added by goto 20161025 for link1/foreach1
 				ArgHash.put(Integer.toString(i), fa);
 			}
@@ -151,7 +151,7 @@ public class Function extends Operand {
 		}
 		return;
 	}
-	
+
 	public Object createNodeAtt(String key){
 		FuncArg fa = ArgHash.get(key);
 
@@ -172,12 +172,12 @@ public class Function extends Operand {
 			    result = fa.getStr();
 			}
 		}
-		
+
 		Log.out("getClassName = "+result);
 		return result;
 
 	}
-	
+
 	public ExtList makeschImage() {
 		ExtList outsch = new ExtList();
 		ExtList outsch1 = new ExtList();
@@ -196,8 +196,8 @@ public class Function extends Operand {
 	public Object createNode(ExtList<ExtList<String>> data_info) {
 		return null;
 	}
-	
-	
+
+
     //20131201 nesting function
     //[Important] Check whether it is 'nesting Function' or not.
 	public static int nestingLevel = 0;	//20131201 nesting function
@@ -210,5 +210,5 @@ public class Function extends Operand {
     		return "";
     	}
     }
-	
+
 }

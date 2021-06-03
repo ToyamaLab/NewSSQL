@@ -20,7 +20,6 @@ public class PDFAttribute extends Attribute implements PDFTFE {
 	private String fontstyle;
 
 	
-	//�쥤������Ѵ��� newLE��Attribute�Ǥ��ä˰�̣�Ϥʤ�
 	private TFE newLE;
 	private boolean change = false;
 	private boolean fontsizeDECO = false;
@@ -31,7 +30,6 @@ public class PDFAttribute extends Attribute implements PDFTFE {
 	private float tmpTuneFontsize;
 	
 	
-	//���󥹥ȥ饯��
 	public PDFAttribute(Manager manager, PDFEnv penv) {
 		super();
 		this.pdf_env = penv;
@@ -39,7 +37,7 @@ public class PDFAttribute extends Attribute implements PDFTFE {
 		new PDFModifier();
 	}
 
-	//Attribute��work�᥽�å�
+
 	@Override
 	public String work(ExtList data_info) {
 		
@@ -49,16 +47,13 @@ public class PDFAttribute extends Attribute implements PDFTFE {
 		padding_V = pdf_env.padding_V;
 		fontsize = pdf_env.DefaultFontSize;
 		
-		System.out.println("++++ Att��value��new���ޤ�");
 		this.value = new PDFValue("Att");
 		
-		//��̤�������������� from PDFEnv
-			
+
 		data = this.getStr(data_info);
 		System.out.println("[PDFAtt]data = "+data);
 		
 		
-		//�ͤ������������˽�������������
 		setDecoration1();
 		
 		if(tuneFontsize != 0)
@@ -67,10 +62,8 @@ public class PDFAttribute extends Attribute implements PDFTFE {
 		//-------------------------------------------------------//
 		//data_width = modifier.stringwidth(data, pdf_env);
 		data_width = pdf_env.stringwidth(data, fontsize);
-		//data_height = pdf_env.fontsize;////���˹⤵�����ˤ���
-		data_height = fontsize;////���˹⤵�����ˤ���
+		data_height = fontsize;
 		
-		//���ˤ��ɽ��¤�����β�á���
 		if(data_width - (int)data_width > 0.9)
 			data_width = (int)data_width + 1;
 		
@@ -78,14 +71,12 @@ public class PDFAttribute extends Attribute implements PDFTFE {
 		box_height = data_height + padding_V * 2;
 		//-------------------------------------------------------//
 		
-		//�ͤ���������ľ���˽�������������
 		fontstyle = pdf_env.DefaultFontStyle;
-		setDecoration2();//image�Τ褦�˾����Ѥ���٤�����
+		setDecoration2();
 		
 		if(tuneWidth != 0)
 			box_width = tuneWidth;
 		
-		//�ɲ�10.27���ƥ����ȥܥå��������Τ���
 		if(box_width - padding_H * 2 < data_width){
 			data_width = box_width - padding_H * 2;
 			data_height = pdf_env.textflow_blind(data, fontsize, fontstyle, data_width);
@@ -94,7 +85,6 @@ public class PDFAttribute extends Attribute implements PDFTFE {
 		
 		System.out.println("*************"+data_width+" "+box_width);
 		
-		//�ѹ�10.17
 		value.data = data;
 		value.data_width = data_width;
 		value.data_height = data_height;
@@ -104,24 +94,20 @@ public class PDFAttribute extends Attribute implements PDFTFE {
 		value.fontsize = fontsize;
 		value.fontstyle = fontstyle;
 		
-		value.originalWidth = box_width;		//C2�Υ쥤�������Ѵ��˻���
-		value.originalHeight = box_height;	//C1�Υ쥤�������Ѵ��˻���
+		value.originalWidth = box_width;
+		value.originalHeight = box_height;
 		
 
-		//�ͤ�����������ˤ˽�������������
 		setDecoration3();
 			
 		
-		//������
 		//modifier.set_modifier2(data, data_width, pdf_env, value);
 		
-		//�ɲ�10.17
 		pdf_env.tmp_width = box_width;
 		pdf_env.tmp_height = box_height;
 		return null;
 		
-		//���򤷤Ƥ�������������᤹ to PDFEnv
-		
+
 	}
 	
 	public void setDecoration1(){
@@ -131,7 +117,6 @@ public class PDFAttribute extends Attribute implements PDFTFE {
 			padding_V = Float.parseFloat(decos.get("padding").toString());
 		}
 		
-		//ʸ��������
 		if(decos.containsKey("font-size")){
 			fontsize = Float.parseFloat(decos.get("font-size").toString());
 			fontsizeDECO = true;
@@ -149,7 +134,6 @@ public class PDFAttribute extends Attribute implements PDFTFE {
 			fontsizeDECO = true;
 		}
 		
-		//ʸ���Υ�������
 		if(decos.containsKey("style"))
 			fontstyle = decos.get("style").toString();
 		else if(decos.containsKey("font-style"))
@@ -161,30 +145,25 @@ public class PDFAttribute extends Attribute implements PDFTFE {
 	}
 	
 	public void setDecoration2(){
-		//����������⤵ data�Ǽ��ʤ��ȥƥ����ȥܥå����ˤʤ�ʤ���height����ꤷ�ʤ��ȹԤ��Ѥ����ʤ�
 		if(decos.containsKey("width")){
 			box_width = Float.parseFloat(decos.get("width").toString());
 			widthDECO = true;
 		}
-		//�ƥ����ȥܥå������� text_flow�ǲ��
 		if(decos.containsKey("height"))
 			box_height = Float.parseFloat(decos.get("height").toString());
 	}
 	
 	public void setDecoration3(){
-		//ʸ������
 		if(decos.containsKey("align"))
 			value.align = decos.get("align").toString();
 		if(decos.containsKey("valign"))
 			value.valign = decos.get("valign").toString();
 		
-		//�طʿ�
 		if(decos.containsKey("background-color"))
 			value.bgcolor = decos.get("background-color").toString();
 		else if(decos.containsKey("bgcolor"))
 			value.bgcolor = decos.get("bgcolor").toString();
 		
-		//ʸ����
 		if(decos.containsKey("color"))
 			value.fontcolor = decos.get("color").toString();
 		else if(decos.containsKey("font-color"))
@@ -196,7 +175,6 @@ public class PDFAttribute extends Attribute implements PDFTFE {
 	}
 	
 	public PDFValue getInstance(){
-		System.out.println("++++ Att��set���ޤ���");
 		return this.value;
 	}
 	
@@ -253,10 +231,9 @@ public class PDFAttribute extends Attribute implements PDFTFE {
 	public boolean optimizeW(float Dexcess, PDFValue box){
 		boolean flex = false;
 		
-		//fontsize�ν̾������λ����ޤ�������郎�����ø�
-		
-		if(!fontsizeDECO){		//����ifʸ�ξ����Ѥ����Τǡ����꤬���äƤ⤤������
-			int charNum = box.data.length();//�ѿ���������������ǤϤʤ�����length���㤢�б�������ʤ�����
+
+		if(!fontsizeDECO){
+			int charNum = box.data.length();
 			float DperChar = Dexcess / charNum;
 			float newFontsize = box.fontsize - DperChar;
 			if( newFontsize > box.fontsize - (pdf_env.DefaultFontSize - pdf_env.minFontsize) ){
@@ -267,7 +244,6 @@ public class PDFAttribute extends Attribute implements PDFTFE {
 				tuneFontsize = newFontsize;
 				
 				System.out.println("fontsize change");
-				//change = true;//layout���ѹ����������ǤϤʤ��Τ�
 				flex = true;
 				pdf_env.cutWidth = Dexcess;
 			}
@@ -277,24 +253,16 @@ public class PDFAttribute extends Attribute implements PDFTFE {
 		if(!widthDECO && !flex){
 		//if(!widthDECO){
 			float newWidth = box.box_width - Dexcess;
-			//pdf_env.flexTH��Ȥ�ʤ��Ȥ����ʤ�
 			if(newWidth > 0){
 				
-				//--------------------------------------//
-				//	Attribute�Ͽ�����new����Τ��񤷤�	//
-				//	newLE = new PDFAttribute(manager, pdf_env);
-				//	((PDFAttribute)newLE).decos = this.decos;
-				//	((PDFAttribute)newLE).Items = this.Items;
-				//	decos.put("width", Float.toString(newWidth));
-				//	change = true;//��äѤ��ѹ������פˤ���C1�˶Ť�ƶ�
-				//--------------------------------------//
+
 				
 	//			decos.put("width", Float.toString(newWidth));
 				tmpTuneWidth = tuneWidth;
 				tuneWidth = newWidth;
 		
 				System.out.println("width change");
-				//change = true;//layout���ѹ����������ǤϤʤ��Τ�		
+				//change = true;
 				flex = true;
 				pdf_env.cutWidth = Dexcess;
 			}
@@ -317,7 +285,6 @@ public class PDFAttribute extends Attribute implements PDFTFE {
 	}
 	
 	
-	//Attribute�Ǥ��ä˰�̣�Ϥʤ�
 	public TFE getNewChild(){
 		return newLE;
 	}

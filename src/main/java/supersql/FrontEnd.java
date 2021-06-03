@@ -15,62 +15,79 @@ import supersql.parser.Start_Parse;
 public class FrontEnd {
 
 	public final static String VERSION = "2.2.0_73";
-	
+
 	public static Start_Parse parser;
 	public static long start = 0;
 	public static long afterparser = 0;
 	public static long afterdc;
 	public static long aftercg;
 	public static long aftersql;
-	
+
 	public static void main(String[] args) {
 		new FrontEnd(args);
 	}
-	
+
 	public FrontEnd() {
-		
+
 	}
 	public FrontEnd(String[] args) {
 		execSuperSQL(args);
 	}
 
 	public void execSuperSQL(String[] args) {
-
 		start = System.currentTimeMillis();
-		
+		//Log.info("0");
+
 		GlobalEnv.setGlobalEnv(args);
 		if(GlobalEnv.versionProcess())	return;	//added by goto 170612  for --version
 
 		Log.info("//Entering SuperSQL System//");
+//		Log.info("1");
 
 		parser = new Start_Parse(); //read file & parse query
-
+		Log.out("tfe_tree:"+parser.list_tfe);
 		if (GlobalEnv.isCheckquery()){
 			if (GlobalEnv.getErrFlag() == 0)
 				Log.info("// Parser completed normally //");
 			return;
 		}
+//		Log.info("2");
 
 		afterparser = System.currentTimeMillis();
 		afterdc = 0;
 		aftercg = 0;
 		aftersql = 0;
-		
+
 		if (GlobalEnv.getErrFlag() == 0) {
+//			Log.info("2-1");
 			CodeGenerator codegenerator = parser.getcodegenerator();
+//			Log.info("2-2");
 			if (GlobalEnv.getErrFlag() == 0) {
+//				Log.info("2-2-1");
 				codegenerator.CodeGenerator(parser);
-
+//				Log.info("2-2-2");
+				GlobalEnv.beforedc = System.currentTimeMillis();
 				DataConstructor dc = new DataConstructor(parser);
-				afterdc = System.currentTimeMillis();
-
+				GlobalEnv.afterdc2 = System.currentTimeMillis();
+//				Log.info("MakeSch time : " + (GlobalEnv.afterMakeSch - GlobalEnv.beforedc) + "ms");
+//				Log.info("MakeSQL time : " + (GlobalEnv.afterMakeSQL - GlobalEnv.beforeMakeSQL) + "ms");
+//				Log.info("GetFromDB time : " + (GlobalEnv.afterGetFromDB - GlobalEnv.beforeGetFromDB) + "ms");
+//				Log.info("MakeTree time : " + (GlobalEnv.afterMakeTree - GlobalEnv.beforeMakeTree) + "ms");
+//				Log.info("DataConstruct Time : " + (GlobalEnv.afterdc2 - GlobalEnv.beforedc) + "ms");
+//				System.exit(0);
+//				Log.info("2-2-3");
 				if (GlobalEnv.getErrFlag() == 0) {
+//					Log.info("2-2-3-1");
 					codegenerator.generateCode(parser, dc.getData());
+//					Log.info("2-2-3-2");
 			        Responsive.process(codegenerator, parser, dc.getData());	//added by goto 20161217  for responsive
+//					Log.info("2-2-3-3");
 					aftercg = System.currentTimeMillis();
 				}
 			}
+//			Log.info("2-3");
 		}
+//		Log.info("3");
 
 		long end = System.currentTimeMillis();
 //		Log.info("Parsing Time : " + (afterparser - start) + "msec");

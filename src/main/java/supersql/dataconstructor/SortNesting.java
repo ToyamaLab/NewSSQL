@@ -10,8 +10,6 @@ import java.util.List;
 import supersql.common.Log;
 import supersql.extendclass.ExtList;
 
-/* 屡?斜煮痔煮 sch痔射痔漆痔偲痔質nest痔汐漆蒔痔?痔偲痔質tuple痔蕊痔爾痔?痔宍痔縞 */
-
 public class SortNesting {
 
 	LinkedHashMap<Object, Object> BufferedData;
@@ -35,7 +33,12 @@ public class SortNesting {
 	}
 
 	private void buffered(ExtList t) {
+
+		// Log.out("buffering : "+t);
 		ExtList ExtListkey = this.KeyAtt(t);
+		// Log.out("ExtListKey = "+ ExtListkey);
+		// Log.out("BufferedData = "+ BufferedData);
+
 		if (!BufferedData.containsKey(ExtListkey)) {
 			ExtList buffer = new ExtList();
 			ExtList o;
@@ -47,10 +50,12 @@ public class SortNesting {
 					buffer.add(s);
 				}
 			}
+			// Log.out("putting ExtListKey = "+ ExtListkey);
+			// Log.out("putting buffer = "+ buffer);
 			BufferedData.put(ExtListkey, buffer);
 		} else {
 			ExtList gotExtList = (ExtList) (BufferedData.get(ExtListkey));
-					Log.out("gotExtList = "+ gotExtList);
+			// Log.out("gotExtList = "+ gotExtList);
 			for (int idx = 0; idx < gotExtList.size(); idx++) {
 				Object o;
 				o = gotExtList.get(idx);
@@ -58,6 +63,8 @@ public class SortNesting {
 					((SortNesting) o).buffered((ExtList) t.get(idx));
 				}
 			}
+			// Log.out("replacing ExtListKey = "+ ExtListkey);
+			// Log.out("replacing buffer = "+ gotExtList);
 			BufferedData.remove(ExtListkey);
 			BufferedData.put(ExtListkey, gotExtList);
 			
@@ -94,7 +101,7 @@ public class SortNesting {
 			}
 			result.add(buffer);
 		}
-		
+
 		return result;
 	}
 
@@ -102,13 +109,20 @@ public class SortNesting {
 	public ExtList GetResultWithOrderBy(ExtList info, ExtList sch) {
 
 		int a;
-		
 		ExtList result = new ExtList();
 		ExtList buffer, buffer1 = null;
 
+//<<<<<<< HEAD
 		Collection<Object> c = BufferedData.values();
 		for (Object el: c) {
 			buffer = (ExtList) el;
+/*=======
+		Enumeration e = BufferedData.elements();
+
+		while (e.hasMoreElements()) {
+			buffer = (ExtList) e.nextElement();
+>>>>>>> feature/enable_to_use_double_quote
+*/
 			for (int i = 0; i < buffer.size(); i++) {
 				if (buffer.get(i) instanceof SortNesting) {
 					if(!(sch.get(i) instanceof ExtList)){
@@ -118,35 +132,35 @@ public class SortNesting {
 					}else{
 						buffer1 = ((SortNesting) (buffer.get(i))).GetResultWithOrderBy(info, (ExtList)sch.get(i));
 					}
-					
+
 					buffer.set(i, buffer1);
 				}
 			}
 			result.add(buffer);
 		}
-		
+
 		Log.out(" * sort at the schema level " + sch + " *");
 		Log.out(" " + result);
 
 		/* sort from the deepest schema level */
 		OrderBy order_by = new OrderBy();
-		
+
 		for (int i = 0; i < info.size(); i++) {
 			for (int j = 0; j < sch.size(); j++) {
 				a = info.get(i).toString().indexOf(" ");
 				if (info.get(i).toString().substring(0, a).equals
-						(sch.get(j).toString())) {
-					
+				(sch.get(j).toString())) {
+
 					result = order_by.sort(info.get(i).toString(), sch, result);
-					
+
 				}
 			}
 		}
-	
+
 		return result;
 	}
 	//hanki end
-	
+
 	@Override
 	public String toString() {
 		return "[SortNesting:" + BufferedData + "]";

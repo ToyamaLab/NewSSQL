@@ -2,6 +2,7 @@ package supersql.codegenerator;
 
 import java.io.Serializable;
 
+import supersql.common.GlobalEnv;
 import supersql.common.Log;
 import supersql.extendclass.ExtList;
 
@@ -59,6 +60,7 @@ public class Connector extends Operator implements Serializable{
 	public ExtList<Integer> makesch() {
 		ExtList<Integer> outsch = new ExtList<Integer>();
 		for (int i = 0; i < tfeItems; i++) {
+
 			outsch.addAll(tfes.get(i).makesch());
 		}
 		return outsch;
@@ -96,7 +98,7 @@ public class Connector extends Operator implements Serializable{
 	public boolean hasMoreItems() {
 		return (sindex < tfes.size());
 	}
-	
+
 	public Object createNextItemNode(ExtList data) {
 		ITFE tfe = (ITFE) tfes.get(sindex);
 		int ci = tfe.countconnectitem();
@@ -112,30 +114,35 @@ public class Connector extends Operator implements Serializable{
 			return tfe.createNode((ExtList) subdata.get(0));
 		}
 	}
-	
-	public void worknextItem() {
+	//tbt add variable 'string' 180806
+	public String worknextItem() {
 		ITFE tfe = (ITFE) tfes.get(sindex);
 		int ci = tfe.countconnectitem();
 
 		ExtList subdata = data.ExtsubList(dindex, dindex + ci);
-
+		String string = new String();
 		if (tfe instanceof Connector || tfe instanceof Attribute
 				|| tfe instanceof Function || tfe instanceof IfCondition || tfe instanceof Decorator) {
-			
+
 //			//20131118 dynamic
 //			if(Mobile_HTML5.dynamicDisplay){
 //				subdata = Mobile_HTML5.dynamicConnectorProcess(tfe, subdata);
 //			}
-			
-			tfe.work(subdata);
+			string = tfe.work(subdata);
+
 		}
 		else {
-			tfe.work((ExtList) subdata.get(0));
+			string = tfe.work((ExtList) subdata.get(0));
 		}
 		sindex++;
 		dindex += ci;
+		if(GlobalEnv.joinFlag){
+			return string;
+		}
+		return null;
 
 	}
+	// tbt end
 
 	public boolean isFirstItem() {
 	    return (sindex == 0);
@@ -157,7 +164,7 @@ public class Connector extends Operator implements Serializable{
 
 	public void addDeco(String key, String val, String condition) {
 		decos.put(key, val, condition);
-		
+
 	}
 
 	@Override
@@ -174,4 +181,43 @@ public class Connector extends Operator implements Serializable{
 	public ExtList<ExtList<String>> getData() {
 		return data;
 	}
+
+
+	//added by taji 171102 start
+	public ExtList get_keys(boolean flag){
+		ExtList keys = new ExtList();
+		ExtList buf = new ExtList();
+		ExtList anotherkyes_buf = new ExtList();
+		for(int i = 0; i < tfeItems; i++){
+			if(!(tfes.get(i) instanceof Grouper)){
+				if(flag == true){
+					buf.add(tfes.get(i));
+				}else{
+
+				}
+			}else{
+				ExtList another_key = new ExtList();
+				another_key = tfes.get(i).get_keys(false);
+				if(another_key.size() != 0){
+					anotherkyes_buf.add(another_key);
+				}
+			}
+		}
+		if(anotherkyes_buf.size() != 0){
+			if(buf.size() != 0){
+				keys.add(buf);
+			}
+			for(int j = 0; j < anotherkyes_buf.size(); j++){
+				keys.add(anotherkyes_buf.get(j));
+			}
+		}else{
+			if(buf.size() != 0){
+				keys.add(buf);
+			}
+		}
+
+		return keys;
+
+	}
+	//added by taji 171102 end
 }

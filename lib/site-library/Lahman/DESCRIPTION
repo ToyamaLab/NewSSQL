@@ -1,0 +1,33 @@
+Package: Lahman
+Type: Package
+Title: Sean 'Lahman' Baseball Database
+Version: 6.0-0
+Date: 2017-08-07
+Authors@R: c(person(given = "Michael", family = "Friendly", role="aut", email="friendly@yorku.ca"), 
+        person(given= "Dennis", family = "Murphy", role="ctb"), 
+        person(given ="Martin", family = "Monkman", role="ctb"),
+        person(given ="Chris", family = "Dalzell", role=c("cre","ctb"), email="cdalzell@gmail.com"))
+Author: Michael Friendly [aut], Dennis Murphy [ctb], Martin Monkman [ctb], Chris
+    Dalzell [cre, ctb]
+Maintainer: Chris Dalzell <cdalzell@gmail.com>
+Description: Provides the tables from the 'Sean Lahman Baseball Database' as
+    a set of R data.frames. It uses the data on pitching, hitting and fielding
+    performance and other tables from 1871 through 2015, as recorded in the 2016
+    version of the database.
+Depends: R (>= 2.10)
+Suggests: lattice, ggplot2, googleVis, data.table, vcd, reshape2,
+        tidyr, zipcode
+Imports: dplyr
+License: GPL
+URL: http://lahman.r-forge.r-project.org/
+LazyLoad: yes
+LazyData: yes
+Repository: CRAN
+Repository/R-Forge/Project: lahman
+Repository/R-Forge/Revision: 39
+Repository/R-Forge/DateTimeStamp: 2013-06-01 03:33:30
+Date/Publication: 2017-08-15 05:14:24 UTC
+Packaged: 2017-08-15 01:17:49 UTC; dz
+NeedsCompilation: no
+RoxygenNote: 6.0.1
+Built: R 3.5.1; ; 2018-08-28 01:03:01 UTC; unix

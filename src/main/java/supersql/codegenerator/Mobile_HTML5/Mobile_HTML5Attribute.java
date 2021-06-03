@@ -9,7 +9,6 @@ import supersql.codegenerator.Ehtml;
 import supersql.codegenerator.Incremental;
 import supersql.codegenerator.LinkForeach;
 import supersql.codegenerator.Manager;
-import supersql.codegenerator.HTML.HTMLEnv;
 import supersql.codegenerator.infinitescroll.Infinitescroll;
 import supersql.common.GlobalEnv;
 import supersql.common.Log;
@@ -54,6 +53,19 @@ public class Mobile_HTML5Attribute extends Attribute {
 	}
 	//Attribute��work�᥽�å�
 	public String work(ExtList data_info) {
+		
+		//tbt acc 180806
+		if(GlobalEnv.joinFlag){
+			// if (Incremental.flag || Ehtml.flag) {
+			Mobile_HTML5CONCAT.joinClassID = Mobile_HTML5Env.getClassID(this);
+			Mobile_HTML5CONCAT.joinDecos = this.decos;
+			// html_env.append_css_def_td(Mobile_HTML5CONCAT.joinClassID, this.decos);
+			if ((!Incremental.flag && !Ehtml.flag) || !Ehtml.isEhtml2()) ;
+			else	html_env.append_css_def_td(Mobile_HTML5CONCAT.joinClassID, this.decos);
+			return this.getStr(data_info);
+		}
+		//tbt end
+		
 		/*
         if(GlobalEnv.getSelectFlg())
         	data_info = (ExtList) data_info.get(0);
@@ -65,7 +77,7 @@ public class Mobile_HTML5Attribute extends Attribute {
 		//	  	}
 		//		HTMLEnv.divWidth = "";
 
-		if (Incremental.flag || Ehtml.flag) {
+		if (Ehtml.infinitescroll_flag && (Incremental.flag || Ehtml.flag)) {
 			Infinitescroll.Attributes(this, html_env,html_env2, data_info);
 			return null;
 		} else {
@@ -96,12 +108,12 @@ public class Mobile_HTML5Attribute extends Attribute {
 						html_env.code.append("<table width=\"100%\"" + html_env.getOutlineModeAtt() + " ");
 						html_env.code.append("class=\"att");
 						if(html_env.written_classid.contains(classid)){
-							//classを持っているとき(ex.TFE10000)のみ指定 
+							//classを持っているとき(ex.TFE10000)のみ指定
 							html_env.code.append(" " + classid);
 						}
-						if(decos.containsKey("class")){ 
-							//classを持っているとき(ex.TFE10000)のみ指定 
-							html_env.code.append(" " + decos.getStr("class"));    	
+						if(decos.containsKey("class")){
+							//classを持っているとき(ex.TFE10000)のみ指定
+							html_env.code.append(" " + decos.getStr("class"));
 						}
 						html_env.code.append("\"");
 						html_env.code.append(">");
@@ -127,10 +139,10 @@ public class Mobile_HTML5Attribute extends Attribute {
 
 					//tk start for draggable div///////////////////////////////////////
 					if(html_env.draggable)
-					{	
+					{
 						html_env.code.append("<div id=\""+html_env.dragdivid+"\" class=\"draggable\"");
 						Log.out("<div id=\""+html_env.dragdivid+"\" ");
-					}	
+					}
 					else{
 						//tk end for draggable div/////////////////////////////////////////
 						if(html_env.isPanel)
@@ -227,10 +239,59 @@ public class Mobile_HTML5Attribute extends Attribute {
 				if(whichForm == 0){ //normal process (not form)
 					//***APPEND DATABASE VALUE***//
 					Log.out(data_info);
-					if(Mobile_HTML5_dynamic.dynamicDisplay || Mobile_HTML5_form.form){
+//<<<<<<< HEAD
+					
+					// added by masato 20150924 incremental update
+					if (Incremental.flag || Ehtml.flag) {
+						// modified by masato 20151201 XMLの要素名をTFE******に変更
+						// Incremental.outXMLData(htmlEnv.xmlDepth, "<" +
+						// Items.get(0) + tfe + ">" + this.getStr(data_info) + "</"
+						// + Items.get(0) + ">\n");
+						String outType = "div";
+
+						if (html_env.xmlDepth != 0) {
+							// 親のoutTypeを継承
+							outType = html_env.outTypeList.get(html_env.xmlDepth - 1);
+						}
+						if (decos.containsKey("table") || !outType.equals("div")) {
+							html_env.outTypeList.add(html_env.xmlDepth, "table");
+						} else {
+							html_env.outTypeList.add(html_env.xmlDepth, "div");
+						}
+						if (decos.containsKey("div")) {
+							html_env.outTypeList.add(html_env.xmlDepth, "div");
+						}
+						Log.info("out:"+html_env.outTypeList);
+						String data = this.getStr(data_info)
+								.replaceAll("<", "&lt;");
+						data = data.replaceAll(">", "&gt;");
+						
+						if (!Ehtml.infinitescroll_flag) {
+							String cid = Mobile_HTML5Env.getClassID(this);
+							Incremental.outXMLData(
+									html_env.xmlDepth,
+									"<"+cid+" outType=\'"
+											+ html_env.outTypeList.get(html_env.xmlDepth)
+											+ "\'>" + data + "</"+cid+">\n");
+						} else {
+							Incremental.outXMLData(
+									html_env.xmlDepth,
+									"<Value outType=\'"
+											+ html_env.outTypeList.get(html_env.xmlDepth)
+											+ "\' class=\'" + Mobile_HTML5Env.getClassID(this)
+											+ "'>" + data + "</Value>\n");
+						}
+
+					}else if(Mobile_HTML5_dynamic.dynamicDisplay || Mobile_HTML5_stream.streamDisplay || Mobile_HTML5_form.form){
+//=======
+//					if(Mobile_HTML5_dynamic.dynamicDisplay || Mobile_HTML5_stream.streamDisplay || Mobile_HTML5_form.form){
+//>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 						//20131118 dynamic
 						if(Mobile_HTML5_dynamic.dynamicDisplay){
 							html_env.code.append( Mobile_HTML5_dynamic.dynamicAttributeProcess(this, html_env, decos) );
+						}
+						if(Mobile_HTML5_stream.streamDisplay){
+							html_env.code.append( Mobile_HTML5_stream.streamAttributeProcess(this, html_env, decos) );
 						}
 						//20131127 form
 						if(Mobile_HTML5_form.form){
@@ -266,6 +327,12 @@ public class Mobile_HTML5Attribute extends Attribute {
 								html_env.code.append("</div>\n");
 						}
 						Log.out("</A>");
+					}
+					
+					// added by masato 20151124 for plink
+					if (html_env.plinkFlag) {
+						Incremental.outXMLData(html_env.xmlDepth, "</PostLink>\n");
+
 					}
 
 					/*
@@ -330,12 +397,12 @@ public class Mobile_HTML5Attribute extends Attribute {
 		StringBuffer string_tmp = new StringBuffer();
 		string_tmp.append("<VALUE");
 		if(html_env.written_classid.contains(classid)){
-			//class���äƤ���Ȥ�(ex.TFE10000)�Τ߻��� 
+			//class���äƤ���Ȥ�(ex.TFE10000)�Τ߻���
 			string_tmp.append(" class=\"");
 			string_tmp.append(classid);
 		}
 
-		if(decos.containsKey("class")){ 
+		if(decos.containsKey("class")){
 			//class����(ex.class=menu)������Ȥ�
 			if(!html_env.written_classid.contains(classid)){
 				string_tmp.append(" class=\"");
@@ -343,7 +410,7 @@ public class Mobile_HTML5Attribute extends Attribute {
 				string_tmp.append(" ");
 			}
 			string_tmp.append(decos.getStr("class") + "\"");
-		}else if(html_env.written_classid.contains(classid)){ 
+		}else if(html_env.written_classid.contains(classid)){
 			string_tmp.append("\"");
 		}
 
@@ -375,8 +442,18 @@ public class Mobile_HTML5Attribute extends Attribute {
 
 		}else{
 			html_env2.code.append(string_tmp);
-			Log.out(string_tmp); 
+			Log.out(string_tmp);
 		}
+		
+		// added by masato 20151124 for plink
+		if (html_env.plinkFlag) {
+			String tmp = "";
+			for (int i = 0; i < html_env.valueArray.size(); i++) {
+				tmp += " value" + (i + 1) + "='" + html_env.valueArray.get(i) + "'";
+			}
+			Incremental.outXMLData(html_env.xmlDepth, "<PostLink target='" + html_env.linkUrl + "'" + tmp + ">\n");
+		}
+		
 
 		createForm(data_info);
 
@@ -394,7 +471,7 @@ public class Mobile_HTML5Attribute extends Attribute {
 				s = s.replaceAll("���", "&#65374;");
 			if(s.isEmpty())
 				s = "��";
-			html_env2.code.append(s);            
+			html_env2.code.append(s);
 			Log.out(this.getStr(data_info));
 		}
 
@@ -436,12 +513,12 @@ public class Mobile_HTML5Attribute extends Attribute {
 	        	html_env.code.append("class=\"att");
 	        	//tk start/////////////////////////////////////////////////////////
 	        	if(html_env.written_classid.contains(HTMLEnv.getClassID(this))){
-	        		//class���äƤ���Ȥ�(ex.TFE10000)�Τ߻��� 
+	        		//class���äƤ���Ȥ�(ex.TFE10000)�Τ߻���
 	        		html_env.code.append(" " + HTMLEnv.getClassID(this));
 	        	}
-	        	if(decos.containsKey("class")){ 
+	        	if(decos.containsKey("class")){
 	        		//class����(ex.class=menu)������Ȥ�
-	        		html_env.code.append(" " + decos.getStr("class"));    	
+	        		html_env.code.append(" " + decos.getStr("class"));
 	        	}
 	        	html_env.code.append("\"");
 	        	html_env.code.append(">");
@@ -452,20 +529,20 @@ public class Mobile_HTML5Attribute extends Attribute {
         if(GlobalEnv.isOpt()){
         	html_env2.code.append("<VALUE");
         	if(html_env.written_classid.contains(HTMLEnv.getClassID(this))){
-        		//class���äƤ���Ȥ�(ex.TFE10000)�Τ߻��� 
+        		//class���äƤ���Ȥ�(ex.TFE10000)�Τ߻���
         		html_env2.code.append(" class=\"");
         		html_env2.code.append(HTMLEnv.getClassID(this));
         	}
 
-        	if(decos.containsKey("class")){ 
+        	if(decos.containsKey("class")){
         		//class����(ex.class=menu)������Ȥ�
         		if(!html_env.written_classid.contains(HTMLEnv.getClassID(this))){
         			html_env2.code.append(" class=\"");
         		}else{
         			html_env2.code.append(" ");
         		}
-        		html_env2.code.append(decos.getStr("class") + "\"");        	
-        	}else if(html_env.written_classid.contains(HTMLEnv.getClassID(this))){ 
+        		html_env2.code.append(decos.getStr("class") + "\"");
+        	}else if(html_env.written_classid.contains(HTMLEnv.getClassID(this))){
         		html_env2.code.append("\"");
         	}
 
@@ -477,7 +554,7 @@ public class Mobile_HTML5Attribute extends Attribute {
         	if(decos.containsKey("tabletype"))
         		html_env2.code.append(" tabletype=\"" + decos.getStr("tabletype") + "\"");
 
-        }         
+        }
         //tk end////////////////////////////////////////////////////////////
 
         if(HTMLEnv.getFormItemFlg()){
@@ -491,10 +568,10 @@ public class Mobile_HTML5Attribute extends Attribute {
 
         	//tk start for draggable div///////////////////////////////////////
         	if(html_env.draggable)
-        	{	
+        	{
         		html_env.code.append("<div id=\""+html_env.dragdivid+"\" class=\"draggable\"");
         		Log.out("<div id=\""+html_env.dragdivid+"\" ");
-        	}	
+        	}
         	else{
         	//tk end for draggable div/////////////////////////////////////////
         		if(html_env.isPanel)
@@ -579,7 +656,7 @@ public class Mobile_HTML5Attribute extends Attribute {
     			html_env.code.append("<input type=\"text\" name=\"" + name + "\" value=\"");
         		html_env2.code.append("<input type=\"text\" name=\"" + name + "\" value=\"");
     		}
-        	Log.out("<input type=\"text\" name=\"" + name + "\" value=\"");            	           	
+        	Log.out("<input type=\"text\" name=\"" + name + "\" value=\"");
 
         }else if(decos.containsKey("delete")){
     		String name = decos.getStr("delete");
@@ -660,7 +737,7 @@ public class Mobile_HTML5Attribute extends Attribute {
 	private void createForm(ExtList data_info){
 
 		String form = new String();
-		String name = new String();		
+		String name = new String();
 		String inputFormString = new String();
 
 		for(int i = 1; i < formSql.length ; i++ ){
@@ -703,7 +780,7 @@ public class Mobile_HTML5Attribute extends Attribute {
 					inputFormString += "<input type=\"submit\" name=\"logout\" value=\""+this.getStr(data_info)+"\" />";
 					whichForm = i;
 					break;
-				}	
+				}
 			}
 		}
 
@@ -723,11 +800,11 @@ public class Mobile_HTML5Attribute extends Attribute {
 
 			}else{
 				if(s.isEmpty()){
-					inputFormString += "<input type=\"text\" name=\"" + name + "\" />";					
+					inputFormString += "<input type=\"text\" name=\"" + name + "\" />";
 				}else{
 					inputFormString += "<input type=\"text\" name=\"" + name + "\" value=\"" + s + "\" />";
 				}
-			}	
+			}
 
 			//add constraint
 			String constraint = new String();
@@ -745,7 +822,7 @@ public class Mobile_HTML5Attribute extends Attribute {
 						constraint = "number";
 					else
 						constraint += ",number";
-				}	
+				}
 			}else if(decos.containsKey("english")){//eng
 				if(constraint.isEmpty())
 					constraint = "english";

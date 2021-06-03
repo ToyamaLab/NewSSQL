@@ -11,12 +11,14 @@ import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
 import java.sql.Connection;
+import java.sql.DatabaseMetaData;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import org.apache.commons.codec.digest.DigestUtils;
@@ -146,7 +148,7 @@ public class SQLManager {
     		query = query.trim();
     		if(!query.endsWith(";"))	query += ";";
     	}
-    	if(query.contains(" #"))	query = query.substring(0,query.indexOf(" #"));	//TODO
+    	if(!Ehtml.flag && query.contains(" #"))	query = query.substring(0,query.indexOf(" #"));	//TODO
     	query = Mobile_HTML5.checkQuery(query);
         Log.out("[SQLManager ExecQuery]");
         if(!query.endsWith("FROM ;")){
@@ -184,10 +186,14 @@ public class SQLManager {
             String val;
             StringBuffer tmp = new StringBuffer();
             while (rs.next()) {
-                tmplist = new ExtList<String>();
+                tmplist = new ExtList();
                 for (int i = 1; i <= columnCount; i++) {
-                    val = rs.getString(i);
-                    tmp.append(val);
+                	if(rs.getObject(i) != null) {
+						val = rs.getObject(i).toString();
+						tmp.append(val);
+					}else{
+                		val = "";
+					}
                     if (val != null) {
                     	
                         tmplist.add(val.trim());
@@ -198,9 +204,10 @@ public class SQLManager {
                 }
                 tuples.add(tmplist);
             }
-
-            // added by masato 20151221
-            if (Ehtml.flag) { // SQLの結果を保存
+            
+            
+			// added by masato 20151221
+            if (Ehtml.flag || Ehtml.flag2) { // SQLの結果を保存
             	String outDir = GlobalEnv.getoutdirectory();
             	String outFile = GlobalEnv.getoutfilename();
             	String a = outFile.substring(0, outFile.toLowerCase().indexOf("."));
@@ -222,9 +229,9 @@ public class SQLManager {
     				e.printStackTrace();
     			}
 				String hexString = DigestUtils.md5Hex(tmp.toString());
-//    			pw.println(hexString);
+    			pw.println(hexString);
     			pw.close();
-            } else if (Incremental.flag) { // 前回のsqlの結果を確認
+            } else if (Incremental.flag || Incremental.flag2) { // 前回のsqlの結果を確認
             	String outDir = GlobalEnv.getoutdirectory();
             	String outFile = GlobalEnv.getoutfilename();
             	String a = outFile.substring(0, outFile.toLowerCase().indexOf("."));
@@ -246,7 +253,7 @@ public class SQLManager {
                     ex.printStackTrace();
                 }
 				String hexString = DigestUtils.md5Hex(tmp.toString());
-                if(hexString.equals(sqlResultBuffer.toString())){
+                if(hexString.equals(sqlResultBuffer.toString())){	// TODO if outType==1
                 	// 同じだった場合
                 	Log.ehtmlInfo("test");
 
@@ -259,6 +266,8 @@ public class SQLManager {
                 	System.exit(0);
                 } else {
                 	// 違った場合は更新
+                	Ehtml.setEhtml();	//必要? -> おそらく必要
+                	
                 	if ( !sqlResultFileDir.exists() ) {
         				sqlResultFileDir.mkdirs();
         			}
@@ -271,7 +280,7 @@ public class SQLManager {
         			} catch (FileNotFoundException e) {
         				e.printStackTrace();
         			}
-//        			pw.println(hexString);
+        			pw.println(hexString);
         			pw.close();
                 }
             }
@@ -302,8 +311,10 @@ public class SQLManager {
 //	              GlobalEnv.errorText += "Error[SQLManager.ExecSQL]: Can't Exec Query : query = "
 //	                      + query;
 			      Log.err(e);
+			      LogError.logErr();
 //			      GlobalEnv.errorText += e;
 			      GlobalEnv.addErr("Error[SQLManager.ExecSQL]: Can't Exec Query : query = " + query);
+
 
 			      //added by goto 20131016 start
 			      String list = "";
@@ -315,6 +326,7 @@ public class SQLManager {
 		    		  //(driver.contains("mysql") ) ||	//TODO
 		    		  //(driver.contains("db2") ) ||	//TODO
 		    		  (driver.contains("sqlite") && errorContents[0].contains("column")))
+		    		  //||(driver.contains("sqlserver") )	//TODO
 		    		){
 			    	  if(errorContents[0].contains("ambiguous")){
 			    		  list = Suggest.getgetAmbiguousTableAndColumnNameList(conn, tableNameAndAlias.get(0), errorContents[1]);
@@ -503,4 +515,118 @@ public class SQLManager {
     	return columnList;
     }
 
+    //added by taji 171103 start
+	public void ExecUpdate(String query) {
+        if(!query.endsWith("FROM ;")){
+	        Log.info("\n********** UPDATE statement is **********");
+	        Log.info(query);
+        }
+        GlobalEnv.query = query;
+
+        header_name = new ExtList<String>();
+        header_type = new ExtList<String>();
+        tuples = new ExtList<ExtList<String>>();
+
+        try {
+            Statement stat = conn.createStatement();
+            
+            stat.executeUpdate(query);
+        } catch (SQLException e) {
+        	
+        } catch (IllegalStateException e) {
+            System.err
+                    .println("Error[SQLManager.ExecSQL]: No Data Found : query = "
+                            + query);
+        }
+	}
+
+	public void create_log(String query_name, ArrayList pTables, HashMap<String, ArrayList> trigger_tables) {
+		try {
+            Statement stat = conn.createStatement();
+            String log_table = "";
+            DatabaseMetaData dbmd = conn.getMetaData();
+            int pTablesize = pTables.size();
+            for(int i = 0; i < pTablesize; i++){
+            	String new_column = "";
+            	String table = (String) pTables.get(i);
+            	log_table += "create table " + query_name + "_" + table + " ( ";
+            	ResultSet rs = dbmd.getColumns(null, null, table, "");
+            	try{
+            		while(rs.next()){
+            			String name = rs.getString("COLUMN_NAME");
+        				String type = rs.getString("TYPE_NAME");
+        				if(type.equals("serial")){
+        					type = "int4";
+        				}
+        				if(trigger_tables.get(table).contains(name)){
+        					new_column += ", log_" + name + " " + type;
+        				}
+        				log_table += name + " " + type + ", ";
+//        				if(!rs.isLast()){
+//        					log_table += ", ";
+//        				}
+            		}
+            	}finally {
+        			rs.close();
+        		}
+            	log_table += "log_time timestamp, op varchar" + new_column + " );\n";
+            }
+            Log.info("\n********** create log tables **********");
+ 	        Log.info(log_table);
+        	stat.executeUpdate(log_table);
+        } catch (SQLException e) {
+        	
+        }
+		
+	}
+	//added by taji 171103 end
+	public void ExecMetaQuery(String tblName) {
+    	try{
+//			String statement = "SELECT * FROM " + tblName + " WHERE 1=0";
+			String statement = "";
+			if(GlobalEnv.getdbms().equals("hive")){
+				statement = "Describe formatted " + tblName;
+			}
+			if(GlobalEnv.getdbms().equals("postgresql")){
+				statement = "select relname, (relpages * 8192) as bytes FROM pg_class WHERE relname = '" +tblName+ "';";
+			}
+			Statement stat = conn.createStatement();
+			ResultSet rs = stat.executeQuery(statement);
+			ExtList tmpList = new ExtList();
+			while(rs.next()){
+				try {
+					ResultSetMetaData rsmd1 = rs.getMetaData();
+					int columnCount1 = rsmd1.getColumnCount();
+					ExtList tmp = new ExtList();
+					for (int i = 1; i <= columnCount1; i++) {
+						tmp.add(rs.getObject(i));
+					}
+					tmpList.add(tmp);
+				}catch (NullPointerException e){
+				}
+			}
+			this.tuples = tmpList;
+    	}catch (SQLException e){
+    		e.printStackTrace();
+		}
+
+    }
+
+	public void getTableAtt(String tblName) {
+    	try{
+    		this.tuples = new ExtList<>();
+    		String sql = "Select * from " + tblName + " where 1 = 0;";
+    		Statement stmt = conn.createStatement();
+			ResultSet rs = stmt.executeQuery(sql);
+			ResultSetMetaData metaData = rs.getMetaData();
+			int columnCount = metaData.getColumnCount();
+			ExtList tmp = new ExtList();
+			for(int i = 1 ; i <= columnCount;i++){
+				tmp.add(metaData.getColumnName(i));
+			}
+			this.tuples.add(tmp);
+		}catch(SQLException e){
+    		//e.printStackTrace();
+		}
+	}
 }

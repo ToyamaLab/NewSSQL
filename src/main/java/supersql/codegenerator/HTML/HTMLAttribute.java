@@ -1,6 +1,5 @@
 package supersql.codegenerator.HTML;
 
-import java.io.DataInput;
 import java.io.File;
 import java.util.ArrayList;
 
@@ -12,6 +11,7 @@ import supersql.codegenerator.Modifier;
 import supersql.common.GlobalEnv;
 import supersql.common.Log;
 import supersql.extendclass.ExtList;
+import supersql.parser.Preprocessor;
 
 //added by goto
 
@@ -402,6 +402,7 @@ public class HTMLAttribute extends Attribute {
 	// Attribute鐃緒申work鐃潤ソ鐃獣ワ申
 	@Override
 	public String work(ExtList data_info) {
+		Log.out("----Attribute----");
 		/*
 		 * if(GlobalEnv.getSelectFlg()) data_info = (ExtList) data_info.get(0);
 		 */
@@ -411,6 +412,54 @@ public class HTMLAttribute extends Attribute {
 		String classname;
 		classname = Modifier.getClassName(decos, HTMLEnv.getClassID(this));
 		String link_a_tag_str = "";
+		
+		
+//		// added by masato 20150924 incremental update
+//		if (Incremental.flag || Ehtml.flag) {
+//			// modified by masato 20151201 XMLの要素名をTFE******に変更
+//			// Incremental.outXMLData(htmlEnv.xmlDepth, "<" +
+//			// Items.get(0) + tfe + ">" + this.getStr(data_info) + "</"
+//			// + Items.get(0) + ">\n");
+//			String outType = "div";
+//
+//			if (htmlEnv.xmlDepth != 0) {
+//				// 親のoutTypeを継承
+//				outType = htmlEnv.outTypeList.get(htmlEnv.xmlDepth - 1);
+//			}
+//			if (decos.containsKey("table") || !outType.equals("div")) {
+//				htmlEnv.outTypeList.add(htmlEnv.xmlDepth, "table");
+//			} else {
+//				htmlEnv.outTypeList.add(htmlEnv.xmlDepth, "div");
+//			}
+//			if (decos.containsKey("div")) {
+//				htmlEnv.outTypeList.add(htmlEnv.xmlDepth, "div");
+//			}
+//			Log.info("out:"+htmlEnv.outTypeList);
+//			String data = this.getStr(data_info)
+//					.replaceAll("<", "&lt;");
+//			data = data.replaceAll(">", "&gt;");
+//			Incremental.outXMLData(
+//					htmlEnv.xmlDepth,
+//					"<Value outType=\'"
+//							+ htmlEnv.outTypeList.get(htmlEnv.xmlDepth)
+//							+ "\' class=\'" + HTMLEnv.getClassID(this)
+//							+ "'>" + data + "</Value>\n");
+//
+//		}
+//		Incremental.outXMLData(1, classname);	//Test
+		
+		//tbt acc 180806
+		if(GlobalEnv.joinFlag){
+			// if (Incremental.flag || Ehtml.flag) {
+			HTMLCONCAT.joinClassID = HTMLEnv.getClassID(this);
+			HTMLCONCAT.joinDecos = this.decos;
+			// htmlEnv.append_css_def_td(HTMLCONCAT.joinClassID, this.decos);
+			if ((!Incremental.flag && !Ehtml.flag) || !Ehtml.isEhtml2()) ;
+			else	htmlEnv.append_css_def_td(HTMLCONCAT.joinClassID, this.decos);
+			return this.getStr(data_info);
+		}
+		//tbt end
+//		Incremental.outXMLData(1, classname);	//Test
 
 		htmlEnv.append_css_def_td(HTMLEnv.getClassID(this), this.decos);
 		if (GlobalEnv.isOpt()) {
@@ -450,7 +499,7 @@ public class HTMLAttribute extends Attribute {
 						// class鐃緒申鐃獣てわ申鐃緒申箸鐃x.TFE10000)�Τ߻���
 						htmlEnv.code.append(" " + HTMLEnv.getClassID(this));
 					}
-					
+
 					htmlEnv.code.append(" " + Modifier.getClassModifierValue(decos));// added by masato 20140711　属性が一つのときにclassを指定しても機能しなかった問題を解決
 					//kotani_idmodifier_ok
 					if (decos.getConditions().size() > 0) {
@@ -477,8 +526,10 @@ public class HTMLAttribute extends Attribute {
 				}
 			}
 
+
 			if (htmlEnv.linkFlag > 0 || htmlEnv.sinvokeFlag) {
 				String s = "";
+
 				if (htmlEnv.draggable) {
 					s += "<div id=\"" + htmlEnv.dragDivId
 							+ "\" class=\"draggable\"";
@@ -564,7 +615,7 @@ public class HTMLAttribute extends Attribute {
 
 				}
 				s += ">\n";
-				
+
 				if (htmlEnv.decorationEndFlag.size() < 1 )
 					htmlEnv.code.append(s);
 				else
@@ -576,17 +627,15 @@ public class HTMLAttribute extends Attribute {
 			if (htmlEnv.plinkFlag) {
 				String tmp = "";
 				for (int i = 0; i < htmlEnv.valueArray.size(); i++) {
-					tmp += " value" + (i + 1) + "='"
-							+ htmlEnv.valueArray.get(i) + "'";
+					tmp += " value" + (i + 1) + "='" + htmlEnv.valueArray.get(i) + "'";
 				}
-				Incremental.outXMLData(htmlEnv.xmlDepth, "<PostLink target='"
-						+ htmlEnv.linkUrl + "'" + tmp + ">\n");
+				Incremental.outXMLData(htmlEnv.xmlDepth, "<PostLink target='" + htmlEnv.linkUrl + "'" + tmp + ">\n");
 			}
 			// Log.out("data_info: "+this.getStr(data_info));
 
-			
+
 			createForm(data_info);
-			
+
 			if (whichForm == 0) { // normal process (not form)
 				// ***APPEND DATABASE VALUE***//
 				Log.out(data_info);
@@ -610,17 +659,49 @@ public class HTMLAttribute extends Attribute {
 					if (decos.containsKey("div")) {
 						htmlEnv.outTypeList.add(htmlEnv.xmlDepth, "div");
 					}
+					Log.info("out:"+htmlEnv.outTypeList);
 					String data = this.getStr(data_info)
 							.replaceAll("<", "&lt;");
 					data = data.replaceAll(">", "&gt;");
-					Incremental.outXMLData(
-							htmlEnv.xmlDepth,
-							"<Value outType=\'"
-									+ htmlEnv.outTypeList.get(htmlEnv.xmlDepth)
-									+ "\' class=\'" + HTMLEnv.getClassID(this)
-									+ "'>" + data + "</Value>\n");
+					
+					if (!Ehtml.infinitescroll_flag) {
+						String cid = HTMLEnv.getClassID(this);
+						Incremental.outXMLData(
+								htmlEnv.xmlDepth,
+								"<"+cid+" outType=\'"
+										+ htmlEnv.outTypeList.get(htmlEnv.xmlDepth)
+										+ "\'>" + data + "</"+cid+">\n");
+					} else {
+						Incremental.outXMLData(
+								htmlEnv.xmlDepth,
+								"<Value outType=\'"
+										+ htmlEnv.outTypeList.get(htmlEnv.xmlDepth)
+										+ "\' class=\'" + HTMLEnv.getClassID(this)
+										+ "'>" + data + "</Value>\n");
+					}
 
-				} else {
+				} else if (this.getStr(data_info).contains("ggplot")) {
+					String width = "700";
+					String height = "700";
+
+					for (int i = 0; i < new Preprocessor().getGGplotList().size(); i++) {
+						int n = new Preprocessor().getGGplotList().get(i).toString().split(",").length;
+						for (int j = 1; j < n; j++) {
+							if (new Preprocessor().getGGplotList().getExtListString(i).split(",")[j].contains("width")) {
+								width = new Preprocessor().getGGplotList().getExtListString(i).split(",")[j].substring(new Preprocessor().getGGplotList().getExtListString(i).split(",")[j].indexOf("=") + 1);
+							}
+
+							if (new Preprocessor().getGGplotList().getExtListString(i).split(",")[j].contains("height")) {
+								height = new Preprocessor().getGGplotList().getExtListString(i).split(",")[j].substring(new Preprocessor().getGGplotList().getExtListString(i).split(",")[j].indexOf("=") + 1);
+							}
+						}
+					}
+					if((this.getStr(data_info).substring(0, 6).equals("ggplot")) && (this.getStr(data_info).substring(this.getStr(data_info).length() - 5).equals(".html"))) {
+						htmlEnv.code.append("<iframe src=\"" + this.getStr(data_info).substring(6) + "\" width=\"" + width + "\" height=\"" + height + "\" seamlesss=\"seamless\"></iframe>");
+					} else {
+						htmlEnv.code.append(this.getStr(data_info));
+					}
+				}	else {
 					if (htmlEnv.decorationEndFlag.size() > 0) {
 						if (htmlEnv.decorationEndFlag.get(0)) {
 							String property = htmlEnv.decorationProperty.get(0).get(0);
@@ -637,14 +718,15 @@ public class HTMLAttribute extends Attribute {
 							htmlEnv.decorationProperty.get(0).remove(0);
 						} else {
 							HTMLDecoration.ends.get(0).append(
-									link_a_tag_str + 
-									(this).getStr(data_info) + 
+									link_a_tag_str +
+									(this).getStr(data_info) +
 									((link_a_tag_str.length() < 1)? "" : getEndOfA(htmlEnv.draggable, htmlEnv.isPanel)));
 							Log.out("HTMLDecoration append data "/*+HTMLDecoration.ends.get(0)*/);
 						}
 					} else {
 						System.out.println("what");
 							htmlEnv.code.append(this.getStr(data_info));
+
 					}
 				}
 				Log.out(this.getStr(data_info));
@@ -659,7 +741,7 @@ public class HTMLAttribute extends Attribute {
 			// added by masato 20151124 for plink
 			if (htmlEnv.plinkFlag) {
 				Incremental.outXMLData(htmlEnv.xmlDepth, "</PostLink>\n");
-			
+
 			}
 
 			/*
@@ -688,9 +770,12 @@ public class HTMLAttribute extends Attribute {
 				}
 			}
 
+
 			Log.out("TFEId = " + HTMLEnv.getClassID(this));
 			// html_env.append_css_def_td(HTMLEnv.getClassID(this), this.decos);
 		}
+
+
 		return null;
 	}
 	private String getEndOfA(boolean draggable, boolean isPanel) {
@@ -699,7 +784,7 @@ public class HTMLAttribute extends Attribute {
 			s += "</div>\n";
 		else {
 			s += "</A>\n";
-	
+
 			if (htmlEnv.isPanel)
 				s += "</div>\n";
 		}
@@ -725,11 +810,11 @@ public class HTMLAttribute extends Attribute {
 				string_tmp.append(" ");
 			}
 			string_tmp.append(Modifier.getClassModifierValue(decos) + "\"");//kotani_idmodifier_ok
-			
+
 		} else if (htmlEnv.writtenClassId.contains(HTMLEnv.getClassID(this))) {
 			string_tmp.append("\"");
 		}
-		
+
 		string_tmp.append(Modifier.getIdModifierValue(decos));//kotani_idmodifier_ok
 
 		if (decos.containsKey("update") || decos.containsKey("insert")

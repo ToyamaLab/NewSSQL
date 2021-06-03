@@ -1,0 +1,8 @@
+GENERATE HTML
+cross_tab(
+    [st.state],,
+    [d.name, [i.name]!]!,
+    '合計は' || sum[sa.quantity] || '個'
+)@{side_width=202, null_value='購買なし'}
+FROM store st, item i, sale sa, dept d
+WHERE st.id = sa.store AND sa.item = i.id AND d.id = i.dept

@@ -28,13 +28,15 @@ import supersql.extendclass.ExtList;
 import supersql.parser.Start_Parse;
 
 public class Mobile_HTML5G3 extends Grouper {
-	
+
 	public static String foreachID = "";	//added by goto 20161019 for new foreach
-	
+
 	//added by goto 20161112 for dynamic foreach
 	public static boolean G3 = false;
 	public static boolean dynamic_G3 = false;
+	public static boolean stream_G3 = false;
 	public static ArrayList<String> dynamic_G3_atts = new ArrayList<>();
+	public static ArrayList<String> stream_G3_atts = new ArrayList<>();
 //	static int G3_while_i = 0;
 
     Manager manager;
@@ -59,12 +61,13 @@ public class Mobile_HTML5G3 extends Grouper {
     	//added by goto 20161112 for dynamic foreach
     	G3 = true;
     	dynamic_G3 = false;
+			stream_G3 = false;
 //    	G3_while_i = 0;
-    	
+
 		//added by goto 20161019 for new foreach
 		final String ID = LinkForeach.ID1;
-		StringBuffer foreachContents = new StringBuffer((!Compiler.isCompiler && !Mobile_HTML5_dynamic.dynamicDisplay)? LinkForeach.getJS("G3", "") : "");	//added by goto 20161112 for dynamic foreach
-		
+		StringBuffer foreachContents = new StringBuffer((!Compiler.isCompiler && (!Mobile_HTML5_dynamic.dynamicDisplay || !Mobile_HTML5_stream.streamDisplay))? LinkForeach.getJS("G3", "") : "");	//added by goto 20161112 for dynamic foreach
+
         String parentfile = html_env.filename;
         String parentnextbackfile = html_env.nextbackfile;
         StringBuffer parentcode = html_env.code;
@@ -85,11 +88,11 @@ public class Mobile_HTML5G3 extends Grouper {
 //        html_env2.css = new StringBuffer();
 //        html_env2.header = new StringBuffer();
 //        html_env2.footer = new StringBuffer();
-        
+
         if(Sass.isBootstrapFlg()){
         	Sass.beforeLoop();
         }
-        
+
         this.setDataList(data_info);
         while (this.hasMoreItems()) {
         	//Log.e(G3_and_dynamic);
@@ -116,7 +119,7 @@ public class Mobile_HTML5G3 extends Grouper {
 
             html_env.setOutlineMode();
             this.worknextItem();
-            
+
 			if(!Start_Parse.foreach1Flag){
 				//added by goto 20161019 for new foreach
 //				if(!dynamic_G3){	//added by goto 20161112 for dynamic foreach
@@ -135,14 +138,14 @@ public class Mobile_HTML5G3 extends Grouper {
                 setLinkButton();
             }
             html_env.setGlevel(html_env.getGlevel() - 1);
-            
+
 			if(Start_Parse.foreach1Flag){
 				//added by goto 20161025 for link1/foreach1
 	            html_env.getHeader(1);
 	            html_env.getFooter(1);
 	//            html_env2.header.append("<?xml version=\"1.0\" encoding=\""+html_env.getEncode()+"\"?><SSQL>");
 	//            html_env2.footer.append("</SSQL>");
-	            
+
 	            if(!Responsive.isReExec()){	//added by goto 20161217  for responsive
 		            try {
 		        		//changed by goto 20120715_2 start
@@ -155,13 +158,13 @@ public class Mobile_HTML5G3 extends Grouper {
 			            	pw = new PrintWriter(new BufferedWriter(new FileWriter(
 			        	                    html_env.filename)));
 		        		//changed by goto 20120715_2 end
-						
+
 						//changed by goto 20161019 for HTML Formatter
 						String html = "" + html_env.header + html_env.code + html_env.footer;
 						if(!Start_Parse.sessionFlag)
 							html = FileFormatter.process(html);
 						pw.println(html);
-		                
+
 		                pw.close();
 		//                if(GlobalEnv.isOpt()){
 		//	                html_env2.filename = html_env.filename.substring(0,html_env.filename.lastIndexOf(".html"))+".xml";
@@ -178,7 +181,7 @@ public class Mobile_HTML5G3 extends Grouper {
 		//		        	                    html_env2.filename)));
 		//		            //Log.info("File encoding: "+((html_env.charset!=null)? html_env.charset : "UTF-8"));
 		//	        		//changed by goto 20120715_2 end
-		//	                
+		//
 		//	                pw2.println(html_env2.header);
 		//	                pw2.println(html_env2.code);
 		//	                pw2.println(html_env2.footer);
@@ -219,12 +222,12 @@ public class Mobile_HTML5G3 extends Grouper {
         if (Sass.isBootstrapFlg()){
         	Sass.afterLoop();
         }
-        
+
 		if(!Start_Parse.foreach1Flag){
 			//added by goto 20161019 for new foreach
 			html_env.getHeader(1);
 			html_env.getFooter(1);
-			
+
 			if(!Responsive.isReExec()){	//added by goto 20161217  for responsive
 				try {
 					PrintWriter pw;
@@ -235,15 +238,15 @@ public class Mobile_HTML5G3 extends Grouper {
 					} else
 						pw = new PrintWriter(new BufferedWriter(new FileWriter(
 								html_env.filename+Compiler.getExtension())));
-					
+
 					//changed by goto 20161019 for HTML Formatter
 					String html = "" + html_env.header + foreachContents + html_env.footer;
 					if(!Start_Parse.sessionFlag)
 						html = FileFormatter.process(html);
 					pw.println(html);
-	
+
 					pw.close();
-					
+
 					Jscss.process();
 				} catch (FileNotFoundException fe) {
 					Log.err("Error: specified outdirectory \""
@@ -275,10 +278,11 @@ public class Mobile_HTML5G3 extends Grouper {
 
         Log.out("TFEId = " + Mobile_HTML5Env.getClassID(this));
         html_env.append_css_def_td(Mobile_HTML5Env.getClassID(this), this.decos);
-        
+
         //added by goto 20161112 for dynamic foreach
         G3 = false;
         dynamic_G3 = false;
+				stream_G3 = false;
 //        G3_while_i = 0;
         return null;
     }

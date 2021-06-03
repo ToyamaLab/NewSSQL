@@ -160,6 +160,18 @@ $(document).on('pageshow', '#p-gallery', function(e){
 	}
 });
 
+//for educ2018
+// $(function(off_path, on_path){
+// 	console.log("aaaaa "+off_path);
+//      $('a img').hover(function(){
+//         $(this).attr('src', on_path.toString());
+//           }, function(){
+//              if (!$(this).hasClass('currentPage')) {
+//              $(this).attr('src', off_path.toString());
+//         }
+//    });
+// });
+
 /*
 $(document).ready(function() {
 	$( "[id=tabs]" ).tabs();

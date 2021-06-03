@@ -22,13 +22,12 @@ public class PDFFunction extends Function implements PDFTFE {
 	private boolean change = false;
 	private boolean widthDECO = false;
 	
-	//コンストラクタ
+
 	public PDFFunction(Manager manager, PDFEnv penv) {
 		super();
 		this.pdf_env = penv;
 	}
 
-	//Functionのworkメソッド
 	@Override
 	public String work(ExtList data_info) {
 
@@ -46,7 +45,6 @@ public class PDFFunction extends Function implements PDFTFE {
 	}
 
 
-	//追加10.25
 	private void Func_imagefile() {
 
 		/*
@@ -56,7 +54,6 @@ public class PDFFunction extends Function implements PDFTFE {
 		padding_H = pdf_env.linewidth*2;// /2f;//0;//pdf_env.padding_H;
 		padding_V = pdf_env.linewidth*2;// /2f;//0;//pdf_env.padding_V;
 		
-		System.out.println("++++ Funcでvalueをnewします");
 		this.value = new PDFValue("Func");
 		
 		String path = this.getAtt("path", ".");
@@ -93,10 +90,8 @@ public class PDFFunction extends Function implements PDFTFE {
 		System.out.println("filename = "+filename);
 		int image_num = pdf_env.open_image_file(type, filename);
 		value.image_num = image_num;
-		//pdf_env.fit_image(image_num, , ,);ここには必要ない
 
 		
-//うまくいかない		
 //		System.out.println("xxxxxxxxxxx "+box_width+" "+box_height);
 //		if(image_num!=-1)
 //			pdf_env.fit_image_blind(image_num, 0, 0, box_width, box_height);
@@ -168,13 +163,11 @@ public class PDFFunction extends Function implements PDFTFE {
 	}
 	
 	public void setDecoration3(){
-		//位置
 		if(decos.containsKey("align"))
 			value.align = decos.get("align").toString();
 		if(decos.containsKey("valign"))
 			value.valign = decos.get("valign").toString();
 		
-		//背景色
 		if(decos.containsKey("background-color"))
 			value.bgcolor = decos.get("background-color").toString();
 		else if(decos.containsKey("bgcolor"))
@@ -183,7 +176,6 @@ public class PDFFunction extends Function implements PDFTFE {
 	}
 	
 	public PDFValue getInstance(){
-		System.out.println("++++ Funcをsetしました");
 		return this.value;
 	}
 	
@@ -229,7 +221,6 @@ public class PDFFunction extends Function implements PDFTFE {
 		
 	}
 	
-	//Imageでは特に意味はない
 	public void restoreFOLD(PDFValue check){
 		
 	}
@@ -259,7 +250,6 @@ public class PDFFunction extends Function implements PDFTFE {
 	}
 	
 	
-	//Imageでは特に意味はない
 	public TFE getNewChild(){
 		return newLE;
 	}

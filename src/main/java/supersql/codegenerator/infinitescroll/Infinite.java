@@ -15,9 +15,7 @@ import supersql.codegenerator.Mobile_HTML5.Mobile_HTML5Env;
 import supersql.codegenerator.Mobile_HTML5.Mobile_HTML5Function;
 import supersql.codegenerator.Mobile_HTML5.Mobile_HTML5G1;
 import supersql.codegenerator.Mobile_HTML5.Mobile_HTML5G2;
-import supersql.codegenerator.Mobile_HTML5.Mobile_HTML5_dynamic;
 import supersql.codegenerator.Responsive.Responsive;
-import supersql.common.Log;
 import supersql.extendclass.ExtList;
 import supersql.parser.Start_Parse;
 

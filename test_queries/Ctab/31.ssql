@@ -1,0 +1,10 @@
+GENERATE HTML
+m.grade!
+cross_tab(
+    'math',
+    [(asc)m.grade]!,
+    sum[m.math]
+)
+from student_score m
+where m.grade = 1
+;

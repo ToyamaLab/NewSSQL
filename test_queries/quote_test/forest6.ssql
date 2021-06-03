@@ -1,0 +1,4 @@
+GENERATE HTML {
+   [e.manager, e.id]!, [s.city, [s.state]!]!
+}
+from employee e, store s

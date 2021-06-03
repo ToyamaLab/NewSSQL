@@ -12,49 +12,42 @@ public class PDFG1 extends Grouper implements PDFTFE {
 
 	private PDFEnv pdf_env;
 	
-	//ÄÉ²Ã10.17
 	private PDFValue value;
 	
-	private ExtList rows;		//³Æ¥¤¥ó¥¹¥¿¥ó¥¹¤Î³ÆÎó¤ÎÍ×ÁÇ¿ô  Ãí¡§¥¯¥é¥¹ÊÑ¿ô¤Ç¤ÏÌµÍý
+	private ExtList rows;
 	
-	//°ÜÆ°10.28  ¸µ¡¹¤Ïwork¥á¥½¥Ã¥ÉÆâ
 	private float tmp_width;
 	private float tmp_height;
-	private float box_widthMAX;		//ÀÞ¤ê¾ö¤ß¤ÎÊÑ¿ô¡¡Éý¤ÎºÇÂçÃÍ
-	private float box_heightSUM;	//ÀÞ¤ê¾ö¤ß¤ÎÊÑ¿ô¡¡¹â¤µ¤Î¹ç·×
-	private float fold;				//ÀÞ¤ê¾ö¤ß¤ÎÊÑ¿ô¡¡²¿cm¡¢²¿¸Ä¤ÇÀÞ¤ê¾ö¤à¤«¤ò³ÊÇ¼			
-	private int topID;				//width¤òre_set¤¹¤ë»þinList¤Î²¿ÈÖÌÜ¤«¤é¤«
+	private float box_widthMAX;
+	private float box_heightSUM;
+	private float fold;
+	private int topID;
 
 //	boolean fold_or_not = false;
 	
-	ExtList maxHeights;			//¤³¤ÎG1¤Î³ÆÎóºÇÂç¹â¤µ
-	
-	int rowNum;					//³Æ¥¤¥ó¥¹¥¿¥ó¥¹¤ÎÀÞ¤ê¾ö¤ó¤À²ó¿ô
-	ExtList rowHeights;			//³Æ¥¤¥ó¥¹¥¿¥ó¥¹¤Î³ÆÎóºÇÂç¹â¤µ
+	ExtList maxHeights;
 
-//	float rowMaxHeight;			//¥á¥½¥Ã¥ÉÆâ¤Ë°ÜÆ°
+	int rowNum;
+	ExtList rowHeights;
+
+//	float rowMaxHeight;
 
 	
-	//----- setLevel¥á¥½¥Ã¥É¤ÇÉýÄ´Àá¤ÎSuffixÍÑ -----//
 	int repeatNum = 0;
 	
 	
-	//¥ì¥¤¥¢¥¦¥ÈÊÑ´¹ÍÑ
 	TFE newLE;
 	boolean change = false;
 	
 	
-	//¥³¥ó¥¹¥È¥é¥¯¥¿
 	public PDFG1(Manager manager, PDFEnv pdf_env) {
 		this.manager = (PDFManager) manager;
 		this.pdf_env = pdf_env;
-		//ÄÉ²Ã10.30  ÀÞ¤ê¾ö¤ßÍÑ
 		maxHeights = new ExtList();
 	}
 
 	@Override
 	public String work(ExtList data_info) {
-		//ÄÉ²Ã10.14 ¥á¥½¥Ã¥ÉÆâ¤Ë°ÜÆ°10.24
 		float box_width = 0;
 		float box_height = 0;
 //		int level = pdf_env.level;
@@ -75,8 +68,8 @@ public class PDFG1 extends Grouper implements PDFTFE {
 		System.out.println("[PDFG1:work]tfe_info = " + makele0());
 		System.out.println("[PDFG1:work]data_info = " + data_info);
 
-		System.out.println("++++ G1¤Çvalue¤ònew¤·¤Þ¤¹");
-		//ÄÉ²Ã10.17
+		System.out.println("++++ G1ï¿½ï¿½valueï¿½ï¿½newï¿½ï¿½ï¿½Þ¤ï¿½");
+		//ï¿½É²ï¿½10.17
 		value = new PDFValue("G1");
 		
 		rows = new ExtList();
@@ -94,11 +87,9 @@ public class PDFG1 extends Grouper implements PDFTFE {
 
 
 			for (i = 0; i < data_info.size(); i++) {
-				//ÄÉ²Ã10.27¡¡±¦²¼Êý¸þ¤Î¤ß¤Ë¿¼¤¯¤Ê¤é¤Ê¤¤¹½Â¤¤Î·»Äï¤òÈ½ÊÌ¤¹¤ë¥Ý¥¤¥ó¥È
 //				pdf_env.level_max = level;
 
 				
-				//ÄÉ²Ã10.24 ÄÉ²Ã10.28ÀÞ¤ê¾ö¤ßÂÐ±þ¡¡·»Äï¤ËÆ±¤¸¿ô»ú¤ò³ä¤ê¿¶¤ë½èÍý
 //				pdf_env.level++;
 ////				pdf_env.level += rowNum;
 //				if(pdf_env.level > pdf_env.level_max ){
@@ -107,12 +98,10 @@ public class PDFG1 extends Grouper implements PDFTFE {
 
 				worknextItem();
 				
-				//ÄÉ²Ã10.24 ·»Äï¤ËÆ±¤¸¿ô»ú¤ò³ä¤ê¿¶¤ë½èÍý¡¡ÊÑ¹¹10.27
 				//pdf_env.level--;
 //				pdf_env.level = level;
 				
 				
-				//ÄÉ²Ã10.28¡¡ÀÞ¤ê¾ö¤ßÈ½ÃÇ
 				if(fold != 0){
 					if(Fold_or_Not(box_width, box_height, fold)){
 						box_width = 0;
@@ -121,24 +110,19 @@ public class PDFG1 extends Grouper implements PDFTFE {
 				}
 				
 				
-				//ÄÉ²Ã10.17
-				//¤³¤³¤Çtmp_width,height¤òÂ­¤·¤³¤ó¤Ç¤¤¤¯
 				box_width += pdf_env.tmp_width;
 				tmp_height = pdf_env.tmp_height;
 				if (box_height < tmp_height)
 					box_height = tmp_height;
 				
 				
-				//ÄÉ²Ã10.30
 				//checkMaxHeight(pdf_env.tmp_width);
 				checkMaxHeight(box_height);
 				
 				
-				System.out.println("++++ G1¤ÇAtt¤òset¤·¤Þ¤¹");
-				//ÄÉ²Ã10.17 value¤Î¥»¥Ã¥È
 				value.inList.add(((PDFTFE)tfe).getInstance());
 				
-				//°ÜÆ°
+				//ï¿½ï¿½Æ°
 
 			}
 
@@ -146,19 +130,16 @@ public class PDFG1 extends Grouper implements PDFTFE {
 		}
 
 		//////////////////////////////////////////
-		//////////////////(G2 (C1 1 2))¤È¤«¤Î¤È¤­
+		//////////////////(G2 (C1 1 2))
 		//////////////////////////////////////////
 		else {
 			System.out.println("[PDFG1:work]tfe is Operator");
 
 
-			//table¤ÎÃÍ¤¬¤¢¤ë¤À¤±¡¢½èÍý¤ò¤¹¤ë
 			for (i = 0; i < data_info.size(); i++) {
-				//ÄÉ²Ã10.27¡¡±¦²¼Êý¸þ¤Î¤ß¤Ë¿¼¤¯¤Ê¤é¤Ê¤¤¹½Â¤¤Î·»Äï¤òÈ½ÊÌ¤¹¤ë¥Ý¥¤¥ó¥È
 //				pdf_env.level_max = level;
 
 
-				//ÄÉ²Ã10.24 ÄÉ²Ã10.28ÀÞ¤ê¾ö¤ßÂÐ±þ¡¡ ·»Äï¤ËÆ±¤¸¿ô»ú¤ò³ä¤ê¿¶¤ë½èÍý
 //				pdf_env.level++;
 ////				pdf_env.level += rowNum;
 //				if(pdf_env.level > pdf_env.level_max ){
@@ -167,13 +148,11 @@ public class PDFG1 extends Grouper implements PDFTFE {
 				
 				worknextItem();
 				
-				//ÄÉ²Ã10.24 ·»Äï¤ËÆ±¤¸¿ô»ú¤ò³ä¤ê¿¶¤ë½èÍý¡¡ÊÑ¹¹10.27
 				//pdf_env.level--;
 //				pdf_env.level = level;
 
 				
 				
-				//ÄÉ²Ã10.28¡¡ÀÞ¤ê¾ö¤ßÈ½ÃÇ
 				if(fold != 0){
 					if(Fold_or_Not(box_width, box_height, fold)){
 						box_width = 0;
@@ -182,26 +161,20 @@ public class PDFG1 extends Grouper implements PDFTFE {
 				}
 				
 				
-				//ÄÉ²Ã10.11,14
-				//¤³¤³¤Çtmp_width,height¤òÂ­¤·¤³¤ó¤Ç¤¤¤¯
-				//G1¤Î¾ì¹ç¡¡height¤Èwidth¤òÆþ¤ìÂØ¤¨¤ë
+
 				box_width += pdf_env.tmp_width;
 				tmp_height = pdf_env.tmp_height;
 				if (box_height < tmp_height)
 					box_height = tmp_height;
 
-				
-				//ÄÉ²Ã10.30
+
 				//checkMaxHeight(pdf_env.tmp_height);
 				checkMaxHeight(box_height);
 				
 				
-				System.out.println("++++ G1¤Ç¥ê¥¹¥È¤òset¤·¤Þ¤¹");
-				//ÄÉ²Ã10.17 value¤Î¥»¥Ã¥È
 				value.inList.add(((PDFTFE)tfe).getInstance());
 				
 				
-				//°ÜÆ°
 
 			}
 
@@ -210,7 +183,6 @@ public class PDFG1 extends Grouper implements PDFTFE {
 
 		///////////////////////////////
 
-		//ÄÉ²Ã10.24  ÊÑ¹¹10.28  ¥á¥½¥Ã¥É²½¤·¤ÆÀÞ¤ê¾ö¤ß¤È¶¦Í­
 		//for(i=0; i<value.inList.size(); i++){
 		//	PDFValue re_set = (PDFValue)value.inList.get(i);
 		//	re_set.box_height = box_height;
@@ -218,23 +190,19 @@ public class PDFG1 extends Grouper implements PDFTFE {
 		re_setHeight(topID, value.inList.size(), box_height);
 
 		
-		//ÄÉ²Ã10.28  ÀÞ¤ê¾ö¤ß»þ¤Ïbox_width,height¤ÎÄ´À°
 		if(fold != 0){
 			if(box_width < box_widthMAX){
 				box_width = box_widthMAX;
 			}
-			box_height += box_heightSUM;//²¼¤Î¤³¤Î¥¤¥ó¥¹¥¿¥ó¥¹¤Î¹â¤µ¼èÆÀ¤Ç¤¤¤¤¤«¤â
+			box_height += box_heightSUM;
 		}
 
 		
-		//¤ª¤½¤é¤¯²¼¤Î¤è¤¦¤Ë¤¿¤ÀÄÉ²Ã¤¹¤ë¤À¤±¤Ç¤¤¤¤
 //		if(columns.size() == 0)
 //			columns.add(Integer.toString(value.inList.size()));
-		//ÄÉ²Ã11.2  Âç»ö
 		rows.add(Integer.toString(value.inList.size()));
 
 		
-		//---------- ¤³¤Î¥¤¥ó¥¹¥¿¥ó¥¹¤Î¹â¤µ¼èÆÀ ------------//
 		float rowHeight = 0;
 		
 		for(i=0; i<rowHeights.size(); i++)
@@ -242,12 +210,11 @@ public class PDFG1 extends Grouper implements PDFTFE {
 		box_height = rowHeight;
 		//------------------------------------------------//
 		
-		//ÄÉ²Ã10.17
 		value.box_width = box_width;
 		value.box_height = box_height;
 		
-		value.originalWidth = box_width;		//C2¤Î¥ì¥¤¥¢¥¦¥ÈÊÑ´¹¤Ë»ÈÍÑ
-		value.originalHeight = box_height;	//C1¤Î¥ì¥¤¥¢¥¦¥ÈÊÑ´¹¤Ë»ÈÍÑ
+		value.originalWidth = box_width;
+		value.originalHeight = box_height;
 		
 		
 		value.rowNum = rowNum;
@@ -262,7 +229,6 @@ public class PDFG1 extends Grouper implements PDFTFE {
 
 		
 		
-		//-------- ¤³¤ÎG1¤Î³ÆÎóºÇÂç¹â¤µ¤ò¾ï¤Ë´Æ»ë ----------//
 		float maxHeight;
 		
 		if( maxHeights.size() < rows.size() ){
@@ -279,7 +245,6 @@ public class PDFG1 extends Grouper implements PDFTFE {
 		//------------------------------------------------//
 		
 		
-		System.out.println("ÀÞ¤ê¾ö¤ó¤À²ó¿ô¡á"+rowNum);
 		int local;
 		for(local=0;local<rows.size();local++){
 			System.out.println("dore"+rows.get(local));
@@ -290,7 +255,6 @@ public class PDFG1 extends Grouper implements PDFTFE {
 	
 	
 	
-	//ÄÉ²Ã10.28¡¡ÀÞ¤ê¾ö¤ßÈ½ÃÇ
 	public boolean Fold_or_Not(float box_width, float box_height, float fold){
 		boolean fold_or_not = false;
 //		fold_or_not = false;
@@ -300,26 +264,22 @@ public class PDFG1 extends Grouper implements PDFTFE {
 			Fold(box_width, box_height);
 			rows.add(Integer.toString(value.inList.size()));
 			System.out.println("eeeeeeeeeeeeeee"+value.inList.size());
-			//1¤ÄÁ°¤ÎÍ×ÁÇ¡¢ÀÞ¤êÊÖ¤¹Ä¾Á°¤ÎÍ×ÁÇ¤Ë¾ðÊó¤òÂåÆþ¤·¤¿¤¤
-			rowNum++;																//¤³¤ì¤¬Áá¤¤
+			rowNum++;
 			fold_or_not = true;
 		}
 		return fold_or_not;
 	}
 	
-	//ÄÉ²Ã10.28  ÀÞ¤ê¾ö¤ß
-	public void Fold(float box_width, float box_height){	
+	public void Fold(float box_width, float box_height){
 		tmp_width = box_width;
 		if(tmp_width > box_widthMAX){
 			box_widthMAX = tmp_width;
 		}
-		box_heightSUM += box_height;//Â¾¤ÈÂç¾®Èæ³Ó¤¬É¬Í×¡¡checkMaxHeight()¤Ç¤¤¤¤¤Î¤«¤â
-		//¤³¤Î»þinList¤Ëset¤µ¤ì¤Æ¤¤¤ëvalue¤Ë¤Ïbox_height¤òre-set
+		box_heightSUM += box_height;
 		re_setHeight(topID, value.inList.size(), box_height);
 		topID = value.inList.size();
 	}
 	
-	//ÄÉ²Ã10.30
 	public void checkMaxHeight(float box_height){
 		float rowTmpHeight;
 		
@@ -342,14 +302,12 @@ public class PDFG1 extends Grouper implements PDFTFE {
 	}
 	
 	public void setDecoration(){
-		//ÀÞ¤ê¾ö¤ß
 		if(decos.containsKey("fold")){
 			fold = Float.parseFloat(decos.get("fold").toString());
 		}
 	}
 	
 	public PDFValue getInstance(){
-		System.out.println("++++ G1¤òset¤·¤Þ¤·¤¿");
 		return value;
 	}
 
@@ -359,21 +317,19 @@ public class PDFG1 extends Grouper implements PDFTFE {
 		int i;
 		PDFValue instance;
 		
-		//---- columnNum¤òrepeatNum¤È¤·¤Æ¥¯¥é¥¹ÊÑ¿ô¤ËÊÑ¹¹ ----//
-		int rowNum = 0;					//ÀÞ¤ê¾ö¤ßÂÐ±þ¡¡¥ì¥Ù¥ë¤ÎÀÜÈø¸ì¡Ö²¿ÎóÌÜ¡×
-		//int columnNum = 0;			//È¿Éü½ÐÎÏ¤·¤¿²ó¿ô¡¡¥ì¥Ù¥ë¤ÎÀÜÈø¸ì¡Ö²¿¹ÔÌÜ¡×
+		int rowNum = 0;
+		//int columnNum = 0;
 		
-		int labelH = pdf_env.labelH;					//¼«Ê¬¤ÎÉý¥é¥Ù¥ë¤ò¼èÆÀ¡õÂàÈò
-		int labelV = pdf_env.labelV;					//¼«Ê¬¤Î¹â¤µ¥é¥Ù¥ë¤ò¼èÆÀ¡õÂàÈò
-		String labelSuffixH = pdf_env.labelSuffixH;		//¼«Ê¬¤ÎÉý¥é¥Ù¥ëSuffix¤ò¼èÆÀ
-		String labelSuffixV = pdf_env.labelSuffixV;		//¼«Ê¬¤Î¹â¤µ¥é¥Ù¥ëSuffix¤ò¼èÆÀ
+		int labelH = pdf_env.labelH;
+		int labelV = pdf_env.labelV;
+		String labelSuffixH = pdf_env.labelSuffixH;
+		String labelSuffixV = pdf_env.labelSuffixV;
 		
 		
 		//----------------------------------------------
 		int labelO = pdf_env.labelO;
 		
 		
-		//--------- label¤ÈSuffix¤ò¹ç¤ï¤»¤Æ¡¢¼«Ê¬¤Î¥é¥Ù¥ë¤òÂåÆþ -----------//
 		if( pdf_env.labelSuffixH.equals("null") )
 			result.labelH = Integer.toString(labelH);
 		else
@@ -395,7 +351,6 @@ public class PDFG1 extends Grouper implements PDFTFE {
 			result.labelOV = Integer.toString(labelO) + labelSuffixV;
 		
 		
-		//--------- ³Æ¥é¥Ù¥ë¤¬½é¤á¤Æ¤ÎÃÍ¤Ê¤é¤Ð¥é¥Ù¥ë¥ê¥¹¥È¤ËÄÉ²Ã¡¡---------//
 		if( !pdf_env.labelListH.contains(result.labelH) )
 			pdf_env.labelListH.add(result.labelH);
 		if( !pdf_env.labelListV.contains(result.labelV) )
@@ -407,28 +362,25 @@ public class PDFG1 extends Grouper implements PDFTFE {
 			pdf_env.labelListOV.add(result.labelOV);
 		
 		
-		//Ãí¡¡C1Ä¾²¼¤ÎG1Ä¾²¼¤ÎC1¤Ç¹â¤µ¤òÂ·¤¨¤è¤¦¤È¤¹¤ë¤Ë¤Ï¡¢
-		//    ¤³¤³¤Ç¿Æ¤¬C1¤À¤Ã¤¿¤émax¤ò¥«¥¦¥ó¥È¥¢¥Ã¥×¤·¤Ê¤±¤ì¤Ð¤¤¤¤¤Ï¤º
-		//    ¤·¤«¤·¡¢¤½¤ì¤Ë¤Ï¿Æ¤¬¤Ê¤ó¤À¤«¤ï¤«¤ëÉ¬Í×¤¬¤¢¤ë
-		//    ¤µ¤é¤ËÂ·¤¨¤è¤¦¤È¤·¤Æ¤â¼ÂºÝ¤¢¤Þ¤ê¶ËÃ¼¤Ë¥­¥ì¥¤¤Ë¤Ï¤Ê¤é¤Ê¤¤¤Ï¤º
+
 		
 		
-		int maxHtmp;				//»ÒÍ×ÁÇ¤ËÅÏ¤¹max¤òÂàÈò¤·¤Æ¤ª¤¯ÊÑ¿ô
-		int maxVtmp;				//»ÒÍ×ÁÇ¤ËÅÏ¤¹max¤òÂàÈò¤·¤Æ¤ª¤¯ÊÑ¿ô
+		int maxHtmp;
+		int maxVtmp;
 		
 		pdf_env.labelmaxH++;
-		maxHtmp = pdf_env.labelmaxH;			//max¤òÂàÈò
+		maxHtmp = pdf_env.labelmaxH;
 		pdf_env.labelmaxV++;
-		maxVtmp = pdf_env.labelmaxV;			//max¤òÂàÈò
+		maxVtmp = pdf_env.labelmaxV;
 		
 		
-		int labelHtmp;				//»ÒÍ×ÁÇ¤ËÅÏ¤¹labelH¤òÂàÈò¤·¤Æ¤ª¤¯ÊÑ¿ô
-		int labelVtmp;				//»ÒÍ×ÁÇ¤ËÅÏ¤¹labelV¤òÂàÈò¤·¤Æ¤ª¤¯ÊÑ¿ô
+		int labelHtmp;
+		int labelVtmp;
 		
 		pdf_env.labelH = pdf_env.labelmaxH;
-		labelHtmp = pdf_env.labelH;				//labelH¤òÂàÈò		
+		labelHtmp = pdf_env.labelH;
 		pdf_env.labelV = pdf_env.labelmaxV;
-		labelVtmp = pdf_env.labelV;				//labelV¤òÂàÈò
+		labelVtmp = pdf_env.labelV;
 		
 		//----------------------------------
 		int maxOtmp;
@@ -454,9 +406,8 @@ public class PDFG1 extends Grouper implements PDFTFE {
 			
 			
 			
-			//------------- ¥¤¥ó¥¹¥¿¥ó¥¹Ëè¤ËSuffixH¤Î¿ô»ú¤òÁý¤ä¤¹ ------------//
 			repeatNum++;
-			//columnNum = i;		//Â¿Ê¬¤³¤Ã¤Á¤ÇOK
+			//columnNum = i;
 			String columnStr = Integer.toString(repeatNum);
 			if(labelSuffixH.equals("null"))
 				pdf_env.labelSuffixH = "-" + columnStr;
@@ -465,7 +416,6 @@ public class PDFG1 extends Grouper implements PDFTFE {
 			//----------------------------------------------------------------//
 			
 
-			//------------- ÀÞ¤ê¾ö¤ó¤À¤éSuffixV¤Î¿ô»ú¤òÁý¤ä¤¹ ----------------//
 			if( i == Integer.parseInt((String)result.rows.get(rowNum)) ){
 				rowNum++;
 			}
@@ -482,10 +432,8 @@ public class PDFG1 extends Grouper implements PDFTFE {
 			((PDFTFE)tfe).setLabel(instance);
 			
 				
-			//¤¤¤é¤Ê¤¤¤Ã¤Ý¤¤
 			//pdf_env.labelV = labelV;
 			
-			//------------ forÊ¸¤Ç·«¤êÊÖ¤¹Á°¤ËSuffix¤ò¸µ¤ËÌá¤¹ ---------------//
 			pdf_env.labelSuffixH = labelSuffixH;
 			pdf_env.labelSuffixV = labelSuffixV;
 			//----------------------------------------------------------------//
@@ -554,37 +502,32 @@ public class PDFG1 extends Grouper implements PDFTFE {
 		float tmpDexcess;
 		float tmpWidth = 0;
 		float tmpHeight = 0;
-		PDFValue keyBox = box;		//¤È¤ê¤¢¤¨¤º¤Î½é´ü²½
+		PDFValue keyBox = box;
 		
 		float sumCutWidth = 0;
 	
-		TFE originalTFE = this.tfe;		//ÂàÈò
+		TFE originalTFE = this.tfe;
 		
-		for (local=box.inList.size()-1; local>-1; local--) {	//µÕ¤«¤éÁöºº
+		for (local=box.inList.size()-1; local>-1; local--) {
 			PDFValue inBox = (PDFValue)box.inList.get(local);
 			
-			//------------ Á´¤ÆAttËô¤ÏImage¤Î»þ¤Î¤ß¡¡Î×»þ -------------------//
 			if(inBox.type.equals("Att") || inBox.type.equals("Func")){
 				flex = false;
 				break;
 			}
 			//---------------------------------------------------------------//
 			
-			tmpDexcess = (inBox.box_width / box.box_width) * Dexcess;	//¤³¤³¤Ï¥¤¥ó¥¹¥¿¥ó¥¹¤ÎoriginalWidth¤Ç¤Ï¤Ê¤¯¡¢max
+			tmpDexcess = (inBox.box_width / box.box_width) * Dexcess;
 			flex = ((PDFTFE)tfe).optimizeW(tmpDexcess, inBox);
 			if(!flex)
-				break;		//È¿ÉüÍ×ÁÇ¤ÇÊÑ´¹½ÐÍè¤­¤Ê¤¤Í×ÁÇ¤¬¤¢¤Ã¤¿¤é¤â¤¦¤ä¤é¤Ê¤¤¡¡ËÜÅö¤Ï¤â¤Ã¤ÈºÙ¤«¤¯¤ä¤ê¤¿¤¤
+				break;
 			else{
 				sumCutWidth += pdf_env.cutWidth;
 			}
 			
-			//Ãí¡§C1¤È°ã¤Ã¤ÆÁ´È¿ÉüÍ×ÁÇ¤ÇÆ±¤¸ÊÑ´¹¤ò¤·¤¿¤¤ <-- Æñ ¤È¤¤¤¦¤«ÉÔ²ÄÇ½
-			//¤³¤Î¤Þ¤Þ¤Ç¤Ï³ÆÍ×ÁÇ¤Ç°ã¤¦ÊÑ´¹¤ò¤¹¤ë²ÄÇ½À­¤¬¤¢¤ë
-			// --> ·ë¶Étfe_info¤Ï£±¤Ä¤Ê¤Î¤ÇºÇ¸å¤ÎÍ×ÁÇ¤ÎÊÑ´¹¤¬ºÎÍÑ¤µ¤ì¤ë
-			//¤½¤ì¤Ç¤ÏÆþ¤ê¤­¤ë¤«¤É¤¦¤«¤ï¤«¤é¤Ê¤¤ <-- ºÇ¸å¤ÎÍ×ÁÇ¤ÎÊÑ´¹¤ÇtmpDexcess°Ê¾å¸º¤ë¤È¤Ï¸Â¤é¤Ê¤¤
+
 		}
 		if(flex){
-			//Á´ÉôÊÑ´¹¤Ç¤­¤¿¤é¡¢Ä¾²¼¤Î»Ò¤¬ÊÑ¤ï¤Ã¤Æ¤¤¤ë¤«Ä´¤Ù¤Æ¡¢ÊÑ¤ï¤Ã¤Æ¤¤¤¿¤é»ÒÍ×ÁÇ¤ògetNewChild¤Ç¼è¤Ã¤Æ¤­¤Æ¥»¥Ã¥È
 			if( ((PDFTFE)tfe).changeORnot() ){
 				this.tfe = ((PDFTFE)tfe).getNewChild();
 				//flex = true;
@@ -592,12 +535,12 @@ public class PDFG1 extends Grouper implements PDFTFE {
 			}
 		}
 		
-		//ÀÞ¤ê¾ö¤ß¥È¥é¥¤
+		//ï¿½Þ¤ï¿½ï¿½ï¿½ß¥È¥é¥¤
 		if(!flex){
 			float newFold;
 			
 			newFold = box.box_width - Dexcess;
-			tmpHeight = box.box_height;			//½é¤á¤Î£±¹ÔÊ¬
+			tmpHeight = box.box_height;
 			for(local=0; local<box.inList.size(); local++){
 				PDFValue inBox = (PDFValue)box.inList.get(local);
 				if(tmpWidth > newFold){
@@ -618,30 +561,27 @@ public class PDFG1 extends Grouper implements PDFTFE {
 			tmpWidth = 0;
 			tmpHeight = 0;
 			
-			//--------- G2¤Ë¤·¤¿»þ¤Ë¤½¤ÎÉý¤È¤Ê¤ëinBox¤òÃµ¤¹ -----------//
 			for(local=0; local<box.inList.size(); local++){
 				PDFValue inBox = (PDFValue)box.inList.get(local);
-				if(tmpWidth < inBox.box_width){			//originalWidth¤Ç¤Ï¤Ê¤¯max
+				if(tmpWidth < inBox.box_width){
 					keyBox = inBox;
 					tmpWidth = inBox.box_width;
 				}
 				tmpHeight += inBox.box_height;
 			}
 			//---------------------------------------------------------//
-			if(box.box_width - keyBox.box_width >= Dexcess){		//¤³¤³¤ÏkeyBox¤ÎoriginalWidth¤Ç¤Ï¤Ê¤¤¤È»×¤¦
-				//¸Ç¤µ¤Î¥Á¥§¥Ã¥¯
+			if(box.box_width - keyBox.box_width >= Dexcess){
 				if( !(pdf_env.flexTH < (tmpHeight - box.box_height) / Dexcess) ){
 					newLE = new PDFG2(manager, pdf_env);
 					((PDFG2)newLE).tfe = originalTFE;//this.tfe;
 					((PDFG2)newLE).decos = this.decos;
 					this.decos.put("fold", "0");
-					//maxWidth¤ÎÊÑ¹¹ <-- ¤·¤Ê¤¤¤«¤â
 					System.out.println("G1 change to G2");
 					change = true;
 					flex = true;
 					pdf_env.cutWidth = box.box_width - keyBox.box_width;
 				}
-				else						//¤³¤ÎelseÊ¸¤¤¤é¤Ê¤¤µ¤¤¬¤¹¤ë
+				else
 					flex = false;
 			}
 		}

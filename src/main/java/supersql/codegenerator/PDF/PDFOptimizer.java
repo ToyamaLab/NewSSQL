@@ -8,7 +8,6 @@ import java.util.regex.Pattern;
 import supersql.codegenerator.ITFE;
 import supersql.extendclass.ExtList;
 
-//PDF¤Ë´Ø¤¹¤ë´ðËÜÅª¤ÊÊÑ¿ô¤È¥á¥½¥Ã¥É¤ò»ý¤Ä¥¯¥é¥¹
 public class PDFOptimizer {
 	
 	private int i, j;
@@ -25,7 +24,6 @@ public class PDFOptimizer {
 	
 	
 	
-	//½ÄÈ¿Éü¤Î¹â¤µ¡¢²£È¿Éü¤ÎÉý¤òÄ´Àá¤¹¤ë»þ¤Ë»ÈÍÑ
 	private ExtList matchListH = new ExtList();
 	private ExtList matchListV = new ExtList();
 
@@ -37,17 +35,12 @@ public class PDFOptimizer {
 	private ExtList flatTFE = new ExtList();
 	
 	
-	//¥³¥ó¥¹¥È¥é¥¯¥¿
 	public PDFOptimizer(PDFEnv pdf_env) {
 		this.pdf_env = pdf_env;
 	}
 	
 	
-	
-	//ÄÉ²Ã10.24¡¡¥µ¥¤¥º¤òºÆÄ´À°¤¹¤ë¥á¥½¥Ã¥É¡¡
-	//¥ê¥¹¥È¤ò¥Õ¥é¥Ã¥È¤Ë¤·¤Æ¤«¤é³Æ·»Äï¤ÎºÇÂçÉý¤ò¼èÆÀ¤·¡¢
-	//¥ê¥¹¥È¤ÎÀÞ¤ê¾ö¤ß¤¬¤¢¤Ã¤¿¾ì¹ç¤ÏÀÞ¤ê¾ö¤ß¤ÎºÆ¹½À®¤ò¹Ô¤Ã¤¿¤ê¤¹¤ë
-	//ºÇ½ªÅª¤Ë¥µ¥¤¥º¤ò´°àú¤ËÄ´À°¤·¡¢³ÆPDFValue¤Ë¥»¥Ã¥È
+
 	public int adjust(PDFValue result){		
 		
 		//debug("Before Sort Label");
@@ -66,7 +59,6 @@ public class PDFOptimizer {
 		
 		int layoutChange;
 		
-		//--- G1¤ÎFOLD¤ÈG2¤ÎFOLD¡¢¤É¤Ã¤Á¤ÎÊý¤¬¿¼¤¤°ÌÃÖ¤Ë¤¢¤ë¤«Ä´¤Ù¤ë ---//
 		int from = 0;
 		int index = 0;
 		int depthH = 0;
@@ -90,10 +82,7 @@ public class PDFOptimizer {
 		}
 		//--------------------------------------------------------------//
 		
-		//¿¼¤«¤Ã¤¿Êý¤À¤±ºÇÂç¥µ¥¤¥º¤ò¥»¥Ã¥È
-		//  ¼¡¤ÎAdjust¤ÇÀõ¤¤¤«¤Ã¤¿Êý¤¬Ìµ»ë¤µ¤ì¤Ê¤¤¤è¤¦¤Ë¡¢
-		//  restoreFOLD¥á¥½¥Ã¥ÉÆâ¤ÇÀõ¤«¤Ã¤¿Êý¤Ëfalse¤òÂåÆþ
-		//FOLD¤ÎºÆ¹½À®¤¬¤Ê¤¤»þ¡¢Î¾Êý¤ËºÇÂç¥µ¥¤¥º¤ò¥»¥Ã¥È
+
 		if(depthH > depthV){
 			set_maxWidth(result);
 			restoreFOLD("H");
@@ -108,8 +97,7 @@ public class PDFOptimizer {
 			set_maxWidth(result);
 			set_maxHeight(result);
 			
-			//ÀÞ¤ê¾ö¤ß¤ÎºÆ¹½À®¤ÏºÑ¤ó¤Ç¤¤¤ë
-			//¤½¤Î¹½À®¤Ë½¾¤Ã¤Æ¥ª¥ê¥¸¥Ê¥ë¥µ¥¤¥º¤Î¥é¥Ù¥ë¤â¿¶¤é¤ì¤Æ¤¤¤ë
+
 			sortLabelListOH();
 			sortLabelListOV();
 			initializeOriginalAdjust();
@@ -122,7 +110,6 @@ public class PDFOptimizer {
 		}
 
 		
-		//ÊÑ¹¹¤¬¤¢¤Ã¤¿¤é£±¤òÊÖ¤·¡¢¤Ê¤«¤Ã¤¿¤é0¤òÊÖ¤¹
 		return layoutChange;
 	}
 	
@@ -145,13 +132,9 @@ public class PDFOptimizer {
 			System.exit(0);
 		}
 		
-		//ºÇ¾å°Ì¤¬²£È¿Éü¤Ç¹â¤µ¤òÄ´Àá¤¹¤ë
-			//½ÄÈ¿Éü¤ÇÀÞ¤ê¾ö¤Þ¤ì¤Æ¤¤¤¿¾ì¹ç¤â¤³¤Î½èÍý¤À¤¬¡¢¸úÎ¨Åª¤Ç¤Ê¤¤
-			//fold¤¬»æ¤Î¹â¤µ¤òÄ¶¤¨¤Æ¤¤¤¿¤é¥¨¥é¡¼¤Ë¤¹¤ë¤À¤±
+
 		else if( result.type.equals("G1") ){		
-			
-			//-- ÀÞ¤ê¾ö¤ó¤Ç¤¤¤Æ¤â¤¤¤Ê¤¯¤Æ¤â°ìÈÖÂç¤­¤Ê¹Ô¤Î¹â¤µ¤¬¥Ú¡¼¥¸Æâ¤ËÆþ¤ê¤­¤ë¤«¤òÄ´¤Ù¤ë --//
-			//°ÜÆ°
+
 	/*
 			float tmpHeight;
 			float maxRowHeight = 0;
@@ -174,14 +157,10 @@ public class PDFOptimizer {
 			
 		}
 		
-		//ºÇ¾å°Ì¤¬½ÄÈ¿Éü¤ÇÉý¤òÄ´Àá¤¹¤ë
-			//²£È¿Éü¤ÇÀÞ¤ê¾ö¤Þ¤ì¤Æ¤¤¤¿¾ì¹ç¤â¤³¤Î½èÍý¤À¤¬¡¢¸úÎ¨Åª¤Ç¤Ê¤¤
-			//fold¤¬»æ¤ÎÉý¤òÄ¶¤¨¤Æ¤¤¤¿¤é¥¨¥é¡¼¤Ë¤¹¤ë¤À¤±
+
 		else if( result.type.equals("G2") ){
 			
-			//--- ÀÞ¤ê¾ö¤ó¤Ç¤¤¤Æ¤â¤¤¤Ê¤¯¤Æ¤â°ìÈÖÂç¤­¤ÊÎó¤ÎÉý¤¬¥Ú¡¼¥¸Æâ¤ËÆþ¤ê¤­¤ë¤«¤òÄ´¤Ù¤ë ---//
-			//°ÜÆ°
-	/*		
+	/*
 	 		float tmpWidth;
 			float maxColumnWidth = 0;
 			for(i=0; i<result.columnNum+1; i++){
@@ -205,9 +184,8 @@ public class PDFOptimizer {
 		if(layoutChange){
 			tfe_info.work(data_info);
 			PDFValue newResult = ((PDFTFE)tfe_info).getInstance();
-			
-			//ÊÑ¿ô¤Î½é´ü²½
-			initializeAdjust();	
+
+			initializeAdjust();
 			
 			((PDFTFE)tfe_info).setLabel(newResult);
 			
@@ -220,7 +198,6 @@ public class PDFOptimizer {
 		else
 			layoutChange = -1;
 		
-		//¤Ê¤Ë¤âÊÑ¹¹¤¬¤Ê¤«¤Ã¤¿¤é-1¤ò¡¢¤¢¤Ã¤¿¤é2¤òÊÖ¤¹
 		return layoutChange;
 	}
 	
@@ -231,18 +208,14 @@ public class PDFOptimizer {
 		ExtList AllPage = new ExtList();
 
 
-		//--------- ¥ì¥¤¥¢¥¦¥ÈÊÑ¹¹¤·¤¿¤Ï¤º¤Ê¤Î¤Ë¡¢½Ä¡¦²£Î¾Êý¥ª¡¼¥Ð¡¼¤·¤Æ¤¤¤ë¾ì¹ç ----------//
 		if(result.box_height > pdf_env.heightPaper && result.box_width > pdf_env.widthPaper){
 			System.out.println("ERROR: LayoutChange is not completion with success");
 			System.exit(0);
 		}
 		
-		//----------- ½Ä¤Ë¥ª¡¼¥Ð¡¼¤·¤Æ¤¤¤ë¾ì¹ç (G2¤ÈG1¤ÇÀÞ¤ê¾ö¤ó¤À¾ì¹ç¤Î2ÄÌ¤ê) ------------//
 		else if(result.box_height > pdf_env.heightPaper){
 			
-			//-------- G2¤Î¾ì¹ç -------------------------------------------------//
 			if(result.type.equals("G2")){
-				//Ê¬³ä¸å¤Î1¥Ú¡¼¥¸ÌÜ¤ÎG2¤Ë¤¢¤¿¤ëbox¤ò¤Ä¤¯¤ë//
 				PDFValue Page = new PDFValue("G2");
 				Page.columnNum = result.columnNum;
 				Page.columns = result.columns;
@@ -253,7 +226,6 @@ public class PDFOptimizer {
 					instance = (PDFValue)result.inList.get(i);
 				
 					if(instance.box_height > pdf_env.heightPaper - pdf_env.paddingPaper_V*2){
-						//¥Ï¥¤¥Ñ¡¼¥ê¥ó¥¯»È¤ï¤Ê¤­¤ã¡¦¡¦¡¦
 						System.out.println(instance.box_height);
 						for(j=0; j<4; j++)
 						System.out.println(((PDFValue)instance.inList.get(j)).box_height);//------------------------
@@ -265,7 +237,6 @@ public class PDFOptimizer {
 					if(tmpHeight > (pdf_env.heightPaper - pdf_env.paddingPaper_V*2)){
 						AllPage.add(Page);
 						
-						//¼¡¥Ú¡¼¥¸¤ÎG2¤Ë¤¢¤¿¤ëbox¤ò¤Ä¤¯¤ë//
 						Page = new PDFValue("G2");
 						Page.columnNum = result.columnNum;
 						Page.columns = result.columns;
@@ -279,9 +250,7 @@ public class PDFOptimizer {
 				AllPage.add(Page);
 			}
 			
-			//-------- G1¤ÇÀÞ¤ê¾ö¤ó¤À¾ì¹ç ---------------------------------------//
 			else{
-				//Ê¬³ä¸å¤Î1¥Ú¡¼¥¸ÌÜ¤ÎG1¤Ë¤¢¤¿¤ëbox¤ò¤Ä¤¯¤ë//
 				PDFValue Page = new PDFValue("G1");
 				
 				float rowHeight;
@@ -295,7 +264,6 @@ public class PDFOptimizer {
 					rowHeight = Float.parseFloat((String)result.rowHeights.get(i));
 					
 					if(rowHeight > pdf_env.heightPaper - pdf_env.paddingPaper_V*2){
-						//¥Ï¥¤¥Ñ¡¼¥ê¥ó¥¯»È¤ï¤Ê¤­¤ã¡¦¡¦¡¦
 						System.out.println("ERROR: one row is over the Paper heihgt");
 						System.exit(0);
 					}
@@ -304,7 +272,6 @@ public class PDFOptimizer {
 					if(tmpHeight > (pdf_env.heightPaper - pdf_env.paddingPaper_V*2)){
 						
 						//----------------------------------//
-						//			²ø¤·¤¤					//
 						Page.box_width = 0;
 						//Page.box_width = result.box_width;
 						Page.box_height = 0;
@@ -334,7 +301,6 @@ public class PDFOptimizer {
 					endRow++;
 				}
 				//----------------------------------//
-				//			²ø¤·¤¤					//
 				Page.box_width = result.box_width;
 				Page.rows = result.rows.ExtsubList(fromRow, endRow);
 				Page.rowHeights = result.rowHeights.ExtsubList(fromRow, endRow);
@@ -354,12 +320,9 @@ public class PDFOptimizer {
 			}
 		}
 		
-		//----------- ²£¤Ë¥ª¡¼¥Ð¡¼¤·¤Æ¤¤¤ë¾ì¹ç (G1¤ÈG2¤ÇÀÞ¤ê¾ö¤ó¤À¾ì¹ç¤Î2ÄÌ¤ê) ------------//
 		else if(result.box_width > pdf_env.widthPaper){
 			
-			//-------- G1¤Î¾ì¹ç -------------------------------------------------//
 			if(result.type.equals("G1")){
-				//Ê¬³ä¸å¤Î1¥Ú¡¼¥¸ÌÜ¤ÎG1¤Ë¤¢¤¿¤ëbox¤ò¤Ä¤¯¤ë//
 				PDFValue Page = new PDFValue("G1");
 				Page.rowNum = result.rowNum;
 				Page.rows = result.rows;
@@ -370,7 +333,6 @@ public class PDFOptimizer {
 					instance = (PDFValue)result.inList.get(i);
 				
 					if(instance.box_width > pdf_env.widthPaper - pdf_env.paddingPaper_H*2){
-						//¥Ï¥¤¥Ñ¡¼¥ê¥ó¥¯»È¤ï¤Ê¤­¤ã¡¦¡¦¡¦
 						System.out.println("ERROR: one instance is over the Paper width");
 						System.exit(0);
 					}
@@ -379,7 +341,6 @@ public class PDFOptimizer {
 					if(tmpWidth > (pdf_env.widthPaper - pdf_env.paddingPaper_H*2)){
 						AllPage.add(Page);
 						
-						//¼¡¥Ú¡¼¥¸¤ÎG1¤Ë¤¢¤¿¤ëbox¤ò¤Ä¤¯¤ë//
 						Page = new PDFValue("G1");
 						Page.rowNum = result.rowNum;
 						Page.rows = result.rows;
@@ -393,9 +354,7 @@ public class PDFOptimizer {
 				AllPage.add(Page);
 			}
 			
-			//-------- G2¤ÇÀÞ¤ê¾ö¤ó¤À¾ì¹ç ---------------------------------------//
 			else{
-				//Ê¬³ä¸å¤Î1¥Ú¡¼¥¸ÌÜ¤ÎG2¤Ë¤¢¤¿¤ëbox¤ò¤Ä¤¯¤ë//
 				PDFValue Page = new PDFValue("G2");
 				
 				float columnWidth;
@@ -409,7 +368,6 @@ public class PDFOptimizer {
 					columnWidth = Float.parseFloat((String)result.columnWidths.get(i));
 					
 					if(columnWidth > pdf_env.widthPaper - pdf_env.paddingPaper_H*2){
-						//¥Ï¥¤¥Ñ¡¼¥ê¥ó¥¯»È¤ï¤Ê¤­¤ã¡¦¡¦¡¦
 						System.out.println("ERROR: one column is over the Paper width "+Float.toString(columnWidth)+"  "+ (pdf_env.widthPaper - pdf_env.paddingPaper_H*2));
 						System.exit(0);
 					}
@@ -418,7 +376,6 @@ public class PDFOptimizer {
 					if(tmpWidth > (pdf_env.widthPaper - pdf_env.paddingPaper_H*2)){
 						
 						//----------------------------------//
-						//			²ø¤·¤¤					//
 						Page.box_height = 0;
 						//Page.box_height = result.box_height;
 						Page.box_width = 0;
@@ -448,7 +405,6 @@ public class PDFOptimizer {
 					endColumn++;
 				}
 				//----------------------------------//
-				//			²ø¤·¤¤					//
 				Page.box_height = result.box_height;
 				Page.columns = result.columns.ExtsubList(fromColumn, endColumn);
 				Page.columnWidths = result.columnWidths.ExtsubList(fromColumn, endColumn);
@@ -468,11 +424,9 @@ public class PDFOptimizer {
 			}
 		}
 
-		//---------------------- ¤Þ¤Ã¤¿¤¯1¥Ú¡¼¥¸¤ÇºÑ¤ó¤Ç¤·¤Þ¤¦¾ì¹ç -----------------------//
 		else{
 			
 			if(result.type.equals("G1")){
-				//¥Ú¡¼¥¸¤ÎG1¤Ë¤¢¤¿¤ëbox¤ò¿·¤·¤¯¤Ä¤¯¤ë//
 				PDFValue Page = new PDFValue("G1");
 				Page.rowNum = result.rowNum;
 				Page.rows = result.rows;
@@ -490,7 +444,6 @@ public class PDFOptimizer {
 			}
 			
 			if(result.type.equals("G2")){
-				//¥Ú¡¼¥¸¤ÎG2¤Ë¤¢¤¿¤ëbox¤ò¿·¤·¤¯¤Ä¤¯¤ë//
 				PDFValue Page = new PDFValue("G2");
 				Page.columnNum = result.columnNum;
 				Page.columns = result.columns;
@@ -564,7 +517,6 @@ public class PDFOptimizer {
 		int i, j;
 		String temp;
 		
-	    //¥Ð¥Ö¥ë¥½¡¼¥È¤Ë¤è¤ëÊÂ¤Ó´¹¤¨¡¡Æ±¤¸¤À¤Ã¤¿¤é¼¡¤ÎSuffix¤òÈæ³Ó
 	    for(i=0; i<pdf_env.labelListH.size()-1; i++){
 	    	
 	    	for(j=pdf_env.labelListH.size()-1; j>i; j--){
@@ -595,7 +547,6 @@ public class PDFOptimizer {
 		int i, j;
 		String temp;
 		
-		//¥Ð¥Ö¥ë¥½¡¼¥È¤Ë¤è¤ëÊÂ¤Ó´¹¤¨¡¡Æ±¤¸¤À¤Ã¤¿¤é¼¡¤ÎSuffix¤òÈæ³Ó
 	    for(i=0; i<pdf_env.labelListV.size()-1; i++){
 	    	
 	    	for(j=pdf_env.labelListV.size()-1; j>i; j--){
@@ -626,7 +577,6 @@ public class PDFOptimizer {
 		int i, j;
 		String temp;
 		
-	    //¥Ð¥Ö¥ë¥½¡¼¥È¤Ë¤è¤ëÊÂ¤Ó´¹¤¨¡¡Æ±¤¸¤À¤Ã¤¿¤é¼¡¤ÎSuffix¤òÈæ³Ó
 	    for(i=0; i<pdf_env.labelListOH.size()-1; i++){
 	    	
 	    	for(j=pdf_env.labelListOH.size()-1; j>i; j--){
@@ -657,7 +607,6 @@ public class PDFOptimizer {
 		int i, j;
 		String temp;
 		
-		//¥Ð¥Ö¥ë¥½¡¼¥È¤Ë¤è¤ëÊÂ¤Ó´¹¤¨¡¡Æ±¤¸¤À¤Ã¤¿¤é¼¡¤ÎSuffix¤òÈæ³Ó
 	    for(i=0; i<pdf_env.labelListOV.size()-1; i++){
 	    	
 	    	for(j=pdf_env.labelListOV.size()-1; j>i; j--){
@@ -701,7 +650,6 @@ public class PDFOptimizer {
 	}
 */	
 	
-	//ÄÉ²Ã10.24¡¡ºÆµ¢Åª¤Ë¥ê¥¹¥È¹½Â¤¤ò³«¤¤¤Æ¥Õ¥é¥Ã¥È²½
 	public void List2Flat(PDFValue instance){
 		int local;
 		flatList.add(instance);
@@ -723,11 +671,11 @@ public class PDFOptimizer {
 		
 		escape:
 		
-		//for(i=0; i<pdf_env.levelListH.size(); i++){		//½ç¤ËÁöºº
-		for(i=pdf_env.labelListH.size()-1; i>-1; i--){		//µÕ¤«¤éÁöºº
+		//for(i=0; i<pdf_env.levelListH.size(); i++){
+		for(i=pdf_env.labelListH.size()-1; i>-1; i--){
 			label = (String)pdf_env.labelListH.get(i);
-			//for(j=0; j<flatList.size(); j++){			//½èÍý¤·¤¿½ç¤Ë¼è¤ê½Ð¤¹
-			for(j=flatList.size()-1; j>-1; j--){		//½èÍý¤ÈµÕ½ç¤Ë¼è¤ê½Ð¤¹
+			//for(j=0; j<flatList.size(); j++){
+			for(j=flatList.size()-1; j>-1; j--){
 				PDFValue check = (PDFValue)flatList.get(j);
 				
 				//if(check.labelH.equals("0"))
@@ -737,8 +685,6 @@ public class PDFOptimizer {
 				
 				if( check.labelH.equals(label) ){//&& !check.widthFLAG ){
 					
-					////////////////¤Á¤ç¤Ã¤È¶¯°ú¤À¤±¤É¤³¤³¤¬¥­¥â
-					//¥ê¥¹¥È¤Î¾å²¼¤ËÍè¤ëC2¤Ï¤³¤ì¤Ç¤Ï¥À¥á
 					if(check.type.equals("Att")||check.type.equals("Func")){
 //						check.widthFLAG = true;
 						
@@ -749,7 +695,6 @@ public class PDFOptimizer {
 					
 					else if(check.type.equals("G1")){
 						
-						//ºÆ³ÊÇ¼¡¡Ãæ¤¬Â°À­¤Ê¤é¤¤¤é¤Ê¤¤¤Ï¤º Func¤â¤«¤â
 						if(check.fold != 0 && !check.foldFLAG_H
 							&& ( !((PDFValue)check.inList.get(0)).type.equals("Att") &&
 								 !((PDFValue)check.inList.get(0)).type.equals("Func") ) //&& !check.widthFLAG){
@@ -764,17 +709,7 @@ public class PDFOptimizer {
 						String labelPrefix;
 						String labelSuffix;
 						String tmpLabel;
-						//¤µ¤é¤Ë¥¯¥é¥¹ÊÑ¿ô¤ËmatchListH¤òÄêµÁ
-						
-						//------------------------- ÀÞ¤ê¾ö¤ß¤ËÂÐ±þ¤¹¤ë4ÊÑ¿ô -------------------------//
-						//rowNum   :ÀÞ¤ê¾ö¤ß¤¬²¿²óÈ¯À¸¤·¤¿¤«¤ò³ÊÇ¼¤·¡¢½é¤á¤ÏºÇ¸å¤Î¹Ô¤ò»Ø¤·¡¢         //                       
-						//          ½ù¡¹¤Ë¥«¥¦¥ó¥È¥À¥¦¥ó                                             //
-						//foldWidth:¤É¤Î¹Ô¤¬ºÇÂçÉý¤«¤ò¼èÆÀ¤·¡¢maxWidth¤Ë³ÊÇ¼                         //
-						//matchNum :»ÒÍ×ÁÇ¤Ë³ºÅö¤¹¤ë¤â¤Î¤òÃµ¤·¤ÆÅö¤Æ¤Ï¤Þ¤Ã¤¿¸Ä¿ô                     //
-						//preNum   :³Æ¹Ô¤ÎÍ×ÁÇ¿ô¤¬2,1¤À¤Ã¤¿¾ì¹ç¡¢³Æ¹Ô¤ÎÍ×ÁÇ¿ô¤¬³ÊÇ¼¤µ¤ì¤¿rows¤Ë¤Ï    //
-						//          2,3¤ÈÆþ¤Ã¤Æ¤¤¤ë¤Î¤Ç¡¢¸å¤í¤«¤é½èÍý¤¹¤ë¾ì¹ç3¸Ä¥Þ¥Ã¥Á¤Ç¤Ï¤Ê¤¯¤Æ     //
-						//          1¸Ä¥Þ¥Ã¥Á¤Ë¤·¤Ê¤¯¤Æ¤Ï¤Ê¤é¤Ê¤¤¡¡¤½¤³¤Ç1¤ÄÁ°¤Î¹Ô¤Þ¤Ç¤ÎÍ×ÁÇ¿ô¤ò°ú¤¯ //
-						//          ¤½¤Î£±¤ÄÁ°¤Þ¤Ç¤ÎÍ×ÁÇ¿ô¤ò³ÊÇ¼                                     //
+
 						int rowNum = check.rowNum;
 						float foldWidth = 0;
 						int matchNum = 0;
@@ -795,14 +730,13 @@ public class PDFOptimizer {
 						boolean match;
 						
 						check.box_width = 0;
-						//for(local=0; local<pdf_env.labelListH.size(); local++){	//½ç¤ËÁöºº
-						for(local=pdf_env.labelListH.size()-1; local>-1; local--){	//µÕ¤ËÁöºº
+						//for(local=0; local<pdf_env.labelListH.size(); local++){
+						for(local=pdf_env.labelListH.size()-1; local>-1; local--){
 							tmpLabel = (String)pdf_env.labelListH.get(local);
 							matcher = pattern.matcher(tmpLabel);
 							match = matcher.matches();
 							if(match){
 								if(!matchListH.contains(tmpLabel)){
-									//System.out.println("»Ò¡¡"+tmpLabel);
 									matchListH.add(tmpLabel);
 									tmpWidth = Float.parseFloat((String)maxWidth.get(tmpLabel));
 									check.box_width += tmpWidth;
@@ -829,8 +763,6 @@ public class PDFOptimizer {
 						}
 
 						
-						//¤â¤·fold¤¬»ØÄê¤µ¤ì¤Æ¤¤¤¿¤é¤½¤ÎÄ¹¤µ¤òmaxHeight¤Ë¤¹¤ë///////////////////
-						//¤³¤³¤ò¥³¥á¥ó¥È¥¢¥¦¥È¤¹¤ì¤Ð¡¢ºÇÂçÉý¤¬ºÎÍÑ¤µ¤ì¤ë////////////////////////
 						if(check.fold != 0)
 							foldWidth = check.fold;
 						
@@ -951,17 +883,15 @@ public class PDFOptimizer {
 		
 		escape:
 		
-		//for(i=0; i<pdf_env.levelListV.size(); i++){		//½ç¤ËÁöºº
-		for(i=pdf_env.labelListV.size()-1; i>-1; i--){		//µÕ¤«¤éÁöºº
+		//for(i=0; i<pdf_env.levelListV.size(); i++){
+		for(i=pdf_env.labelListV.size()-1; i>-1; i--){
 			label = (String)pdf_env.labelListV.get(i);
-			//for(j=0; j<flatList.size(); j++){			//½èÍý¤·¤¿½ç¤Ë¼è¤ê½Ð¤¹
-			for(j=flatList.size()-1; j>-1; j--){		//½èÍý¤ÈµÕ½ç¤Ë¼è¤ê½Ð¤¹
+			//for(j=0; j<flatList.size(); j++){
+			for(j=flatList.size()-1; j>-1; j--){
 				PDFValue check = (PDFValue)flatList.get(j);
 				
 				if( check.labelV.equals(label) ){//&& !check.heightFLAG ){
 					
-					////////////////¤Á¤ç¤Ã¤È¶¯°ú¤À¤±¤É¤³¤³¤¬¥­¥â
-					//¥ê¥¹¥È¤Î¾å²¼¤ËÍè¤ëC2¤Ï¤³¤ì¤Ç¤Ï¥À¥á
 					if(check.type.equals("Att")||check.type.equals("Func")){
 //						check.heightFLAG = true;
 						
@@ -1019,7 +949,7 @@ public class PDFOptimizer {
 						
 						System.out.println(maxHeight.size()+" "+check.inList.size()+" "+check.type);//---------
 						
-						//ºÆ³ÊÇ¼¡¡Ãæ¤¬Â°À­¤Ê¤é¤¤¤é¤Ê¤¤¤Ï¤º Func¤â¤«¤â
+						//ï¿½Æ³ï¿½Ç¼ï¿½ï¿½ï¿½æ¤¬Â°ï¿½ï¿½ï¿½Ê¤é¤¤ï¿½ï¿½Ê¤ï¿½ï¿½Ï¤ï¿½ Funcï¿½â¤«ï¿½ï¿½
 						if(check.fold != 0  && !check.foldFLAG_V
 							&& ( !((PDFValue)check.inList.get(0)).type.equals("Att") &&
 								 !((PDFValue)check.inList.get(0)).type.equals("Func") ) //&& !check.heightFLAG
@@ -1035,17 +965,7 @@ public class PDFOptimizer {
 						String labelPrefix;
 						String labelSuffix;
 						String tmpLabel;
-						//¤µ¤é¤Ë¥¯¥é¥¹ÊÑ¿ô¤ËmatchListV¤òÄêµÁ
-						
-						//------------------------- ÀÞ¤ê¾ö¤ß¤ËÂÐ±þ¤¹¤ë4ÊÑ¿ô --------------------------//
-						//rowNum    :ÀÞ¤ê¾ö¤ß¤¬²¿²óÈ¯À¸¤·¤¿¤«¤ò³ÊÇ¼¤·¡¢½é¤á¤ÏºÇ¸å¤ÎÎó¤ò»Ø¤·¡¢         //                       
-						//           ½ù¡¹¤Ë¥«¥¦¥ó¥È¥À¥¦¥ó                                             //
-						//foldHeight:¤É¤ÎÎó¤¬ºÇÂçÉý¤«¤ò¼èÆÀ¤·¡¢maxHeight¤Ë³ÊÇ¼                        //
-						//matchNum  :»ÒÍ×ÁÇ¤Ë³ºÅö¤¹¤ë¤â¤Î¤òÃµ¤·¤ÆÅö¤Æ¤Ï¤Þ¤Ã¤¿¸Ä¿ô                     //
-						//preNum    :³ÆÎó¤ÎÍ×ÁÇ¿ô¤¬2,1¤À¤Ã¤¿¾ì¹ç¡¢³ÆÎó¤ÎÍ×ÁÇ¿ô¤¬³ÊÇ¼¤µ¤ì¤¿columns¤Ë¤Ï //
-						//           2,3¤ÈÆþ¤Ã¤Æ¤¤¤ë¤Î¤Ç¡¢¸å¤í¤«¤é½èÍý¤¹¤ë¾ì¹ç3¸Ä¥Þ¥Ã¥Á¤Ç¤Ï¤Ê¤¯¤Æ     //
-						//           1¸Ä¥Þ¥Ã¥Á¤Ë¤·¤Ê¤¯¤Æ¤Ï¤Ê¤é¤Ê¤¤¡¡¤½¤³¤Ç1¤ÄÁ°¤ÎÎó¤Þ¤Ç¤ÎÍ×ÁÇ¿ô¤ò°ú¤¯ //
-						//           ¤½¤Î£±¤ÄÁ°¤Þ¤Ç¤ÎÍ×ÁÇ¿ô¤ò³ÊÇ¼                                     //
+
 						int columnNum = check.columnNum;			
 						float foldHeight = 0;
 						int matchNum = 0;
@@ -1066,8 +986,8 @@ public class PDFOptimizer {
 						boolean match;
 						
 						check.box_height = 0;
-						//for(local=0; local<pdf_env.labelListV.size(); local++){	//½ç¤ËÁöºº
-						for(local=pdf_env.labelListV.size()-1; local>-1; local--){	//µÕ¤ËÁöºº
+						//for(local=0; local<pdf_env.labelListV.size(); local++){
+						for(local=pdf_env.labelListV.size()-1; local>-1; local--){
 							tmpLabel = (String)pdf_env.labelListV.get(local);
 							matcher = pattern.matcher(tmpLabel);
 							match = matcher.matches();
@@ -1092,8 +1012,7 @@ public class PDFOptimizer {
 							
 						}
 							
-						//¤â¤·fold¤¬»ØÄê¤µ¤ì¤Æ¤¤¤¿¤é¤½¤ÎÄ¹¤µ¤òmaxHeight¤Ë¤¹¤ë//////////////////////
-						//¤³¤³¤ò¥³¥á¥ó¥È¥¢¥¦¥È¤¹¤ì¤Ð¡¢ºÇÂç¹â¤µ¤¬ºÎÍÑ¤µ¤ì¤ë/////////////////////////
+
 						if(check.fold != 0)
 							foldHeight = check.fold;
 							
@@ -1165,10 +1084,10 @@ public class PDFOptimizer {
 		float tmpWidth;
 
 		
-		for(i=pdf_env.labelListOH.size()-1; i>-1; i--){		//µÕ¤«¤éÁöºº
+		for(i=pdf_env.labelListOH.size()-1; i>-1; i--){
 			label = (String)pdf_env.labelListOH.get(i);
 			
-			for(j=flatList.size()-1; j>-1; j--){		//½èÍý¤ÈµÕ½ç¤Ë¼è¤ê½Ð¤¹
+			for(j=flatList.size()-1; j>-1; j--){
 				PDFValue check = (PDFValue)flatList.get(j);
 
 				if( check.labelOH.equals(label) ){
@@ -1207,7 +1126,7 @@ public class PDFOptimizer {
 						boolean match;
 						
 						check.originalWidth = 0;
-						for(local=pdf_env.labelListOH.size()-1; local>-1; local--){	//µÕ¤ËÁöºº
+						for(local=pdf_env.labelListOH.size()-1; local>-1; local--){
 							tmpLabel = (String)pdf_env.labelListOH.get(local);
 							matcher = pattern.matcher(tmpLabel);
 							match = matcher.matches();
@@ -1237,8 +1156,7 @@ public class PDFOptimizer {
 						}
 
 						
-						//¤â¤·fold¤¬»ØÄê¤µ¤ì¤Æ¤¤¤¿¤é¤½¤ÎÄ¹¤µ¤òmaxHeight¤Ë¤¹¤ë///////////////////
-						//¤³¤³¤ò¥³¥á¥ó¥È¥¢¥¦¥È¤¹¤ì¤Ð¡¢ºÇÂçÉý¤¬ºÎÍÑ¤µ¤ì¤ë////////////////////////
+
 						if(check.fold != 0)
 							foldWidth = check.fold;
 						
@@ -1332,10 +1250,10 @@ public class PDFOptimizer {
 		float tmpHeight;
 		
 		
-		for(i=pdf_env.labelListOV.size()-1; i>-1; i--){		//µÕ¤«¤éÁöºº
+		for(i=pdf_env.labelListOV.size()-1; i>-1; i--){
 			label = (String)pdf_env.labelListOV.get(i);
 			
-			for(j=flatList.size()-1; j>-1; j--){		//½èÍý¤ÈµÕ½ç¤Ë¼è¤ê½Ð¤¹
+			for(j=flatList.size()-1; j>-1; j--){
 				PDFValue check = (PDFValue)flatList.get(j);
 				
 				if( check.labelOV.equals(label) ){
@@ -1417,7 +1335,7 @@ public class PDFOptimizer {
 						boolean match;
 						
 						check.originalHeight = 0;
-						for(local=pdf_env.labelListOV.size()-1; local>-1; local--){	//µÕ¤ËÁöºº
+						for(local=pdf_env.labelListOV.size()-1; local>-1; local--){	//ï¿½Õ¤ï¿½ï¿½ï¿½ï¿½ï¿½
 							tmpLabel = (String)pdf_env.labelListOV.get(local);
 							matcher = pattern.matcher(tmpLabel);
 							match = matcher.matches();
@@ -1442,8 +1360,7 @@ public class PDFOptimizer {
 							
 						}
 							
-						//¤â¤·fold¤¬»ØÄê¤µ¤ì¤Æ¤¤¤¿¤é¤½¤ÎÄ¹¤µ¤òmaxHeight¤Ë¤¹¤ë//////////////////////
-						//¤³¤³¤ò¥³¥á¥ó¥È¥¢¥¦¥È¤¹¤ì¤Ð¡¢ºÇÂç¹â¤µ¤¬ºÎÍÑ¤µ¤ì¤ë/////////////////////////
+
 						if(check.fold != 0)
 							foldHeight = check.fold;
 							
@@ -1506,7 +1423,7 @@ public class PDFOptimizer {
 	}
 
 	
-	//ÄÉ²Ã11.10
+	//ï¿½É²ï¿½11.10
 	public void set_maxHeight(PDFValue result){
 		PDFValue instance;
 		int local;

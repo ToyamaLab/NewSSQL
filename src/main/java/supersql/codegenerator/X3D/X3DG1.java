@@ -52,7 +52,6 @@ public class X3DG1 extends Grouper{
             x3d_env.glevel--;
             X3DEnv.groupflag = 1;
             
-            /*�I�𐅕����ɂ��炷*/
             if (i%4 == 0) {
             X3DEnv.x += 4;
             X3DEnv.bx = X3DEnv.x-0.20;

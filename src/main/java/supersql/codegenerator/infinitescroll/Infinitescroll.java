@@ -24,6 +24,7 @@ import java.util.Hashtable;
 
 import supersql.codegenerator.CodeGenerator;
 import supersql.codegenerator.DecorateList;
+import supersql.codegenerator.Ehtml;
 import supersql.codegenerator.FuncArg;
 import supersql.codegenerator.Function;
 import supersql.codegenerator.ITFE;
@@ -62,7 +63,13 @@ public class Infinitescroll {
 	static String[] formHtml = {"","submit","select","checkbox","radio","text","textarea","hidden"};
 	static int whichForm;
 
+	public static ArrayList<Boolean> decompose = new ArrayList<Boolean>();
+	public static int IS_level = 0;
+	public static int IS_point = 0;
+
 	public static void Attributes(Mobile_HTML5Attribute ATT, Mobile_HTML5Env html_env, Mobile_HTML5Env html_env2, ExtList data_info){
+
+		//		Log.ehtmlInfo(IS_level);
 		String classid_for_ifs = "";
 		String[] ifs_div_String = {"", ""};
 		codes = new StringBuffer();
@@ -343,6 +350,7 @@ public class Infinitescroll {
 
 	public static void C1(Mobile_HTML5C1 C1, Mobile_HTML5Env html_env, ExtList data_info, ExtList data, ExtList<TFE> tfes, int tfeItems){
 		String outType = "div";
+
 
 		String classid_for_ifs = "";
 		String[] ifs_div_String = {"", ""};
@@ -843,6 +851,7 @@ public class Infinitescroll {
 		StringBuffer tmp = new StringBuffer();
 		if(!Infinite.preProcess(G2.getSymbol(), G2.decos, html_env)) return;	//Pre-process (前処理)
 
+		IS_level++;
 
 		if(G2.decos.containsKey("infinite-scroll")){
 			classid_for_ifs = classid + "_wrapper";
@@ -851,7 +860,23 @@ public class Infinitescroll {
 			html_env.append_css_def_td(G2.getSymbol(), classid_for_ifs, classid2 ,deco_ifs);
 			G2.decos.remove("infinite-scroll");
 			ifs_div_String = Mobile_HTML5.ifs_div_start(G2.getSymbol(), html_env, classid_for_ifs, ifs_div_String);
+
+			decompose.add(true);
+			if(IS_level > 1){
+				if(!decompose.get(Infinitescroll.IS_level-2)){
+					IS_point++;
+				}
+			}else{
+				IS_point++;
+			}
+			
+		}else{
+			decompose.add(false);
+			//			if(IS_level > 1){
+			//				
+			//			}
 		}
+
 		// ページネーション
 		if(Mobile_HTML5Env.getSelectFlg())
 			data_info = (ExtList) data_info.get(0);
@@ -1209,6 +1234,13 @@ public class Infinitescroll {
 		//
 		//        }
 		//		codes.append(tmp.toString());
+
+		if(IS_level > 1){
+			if(Infinitescroll.decompose.get(Infinitescroll.IS_level-2)){
+				IS_point--;
+			}
+		}
+		IS_level--;
 		StringBuffer before = new StringBuffer();
 		before.append("\n<div class=\""+ classid_for_ifs +"\" onscroll=\"scrolled(this)\" itemnum=\"'.$i1.'\">\n");//todo $i1
 		before.append(tmp.toString());
@@ -1229,20 +1261,34 @@ public class Infinitescroll {
 		String[] ifs_div_String = {"", ""};
 		String classid_for_ifs = "";
 		codes = new StringBuffer();
-		
+
+		IS_level++;
+
 		int infinite_scroll_num = 0;
 		StringBuffer tmp = new StringBuffer();
 		if(!Infinite.preProcess(G1.getSymbol(), G1.decos, html_env))	return;
 		if(G1.decos.containsKey("infinite-scroll")){
 			classid_for_ifs = classid + "_wrapper";// div class=TFE10009_wrapper
 			DecorateList deco_ifs = new DecorateList();
-			
+
 			infinite_scroll_num = Integer.parseInt(G1.decos.getStr("infinite-scroll"));//infinite-scroll = 3
-			
+
 			deco_ifs.put("infinite-scroll", "");
 			html_env.append_css_def_td(G1.getSymbol(), classid_for_ifs, classid2, deco_ifs);//make css for IS
 			G1.decos.remove("infinite-scroll");
 			ifs_div_String = Infinite.ifs_div_start(G1.getSymbol(), html_env, classid_for_ifs, ifs_div_String);
+
+			decompose.add(true);
+			if(IS_level > 1){
+				if(!decompose.get(Infinitescroll.IS_level-2)){
+					IS_point++;
+				}
+			}else{
+				IS_point++;
+			}
+			
+		}else{
+			decompose.add(false);
 		}
 		html_env.append_css_def_td(classid, G1.decos);
 		// ページネーション
@@ -1651,6 +1697,13 @@ public class Infinitescroll {
 			G1.rowFlg = false;
 			Mobile_HTML5G2.tableStartTag = "";
 		}
+
+		if(IS_level > 1){
+			if(Infinitescroll.decompose.get(Infinitescroll.IS_level-2)){
+				IS_point--;
+			}
+		}
+		IS_level--;
 		Mobile_HTML5.postProcess(G1.getSymbol(), classid2, G1.decos, html_env);	//Post-process (後処理)
 		//		codes.append(tmp.toString());
 		StringBuffer before = new StringBuffer();
@@ -2432,7 +2485,7 @@ public class Infinitescroll {
 				tmp.append(Func.decos.getStr("class"));
 			}
 
-			//System.out.println("out:path:"+Func.getAtt("default"));
+			//Log.info("out:path:"+Func.getAtt("default"));
 
 			//added by goto 20121217 start
 			//html_env.code.append(" \" src=\"" + path + "/" + Func.getAtt("default") + "\"/>");
@@ -4611,7 +4664,7 @@ public class Infinitescroll {
 							}
 
 							if(isSQL){
-								String b = "require_once '"+fn+"';";
+								String b = "require_once ('"+fn+"');";
 								if(!Start_Parse.sessionFlag)
 									b = "<?php "+b+" ?>\n";
 								else

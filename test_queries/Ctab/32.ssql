@@ -1,0 +1,3 @@
+GENERATE HTML
+cross_tab([store],, [floor]!, [name]!)
+from dept;

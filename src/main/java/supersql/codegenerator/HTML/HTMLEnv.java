@@ -5,18 +5,12 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Map.Entry;
 import java.util.Vector;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
-import org.antlr.v4.codegen.CodeGenerator;
-import org.apache.bcel.generic.TABLESWITCH;
 import org.jsoup.nodes.Attribute;
 import org.jsoup.nodes.Attributes;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.parser.Tag;
-
-import com.gargoylesoftware.htmlunit.javascript.host.css.CSS;
 
 import supersql.codegenerator.Connector;
 import supersql.codegenerator.DecorateList;
@@ -26,6 +20,7 @@ import supersql.codegenerator.Jscss;
 import supersql.codegenerator.LinkForeach;
 import supersql.codegenerator.LocalEnv;
 import supersql.codegenerator.Modifier;
+import supersql.codegenerator.Responsive.Responsive;
 import supersql.common.GlobalEnv;
 import supersql.common.Log;
 import supersql.common.Utils;
@@ -51,12 +46,12 @@ public class HTMLEnv extends LocalEnv implements Serializable{
 	protected static int IDOld = 0; // add oka
 	public static String cond = "";
 	public static String bg = "";
-	public static String color = "";
+	public static String bgcolor = "";
 	public static String pos = "";
 	public ArrayList<ArrayList<String>> decorationProperty = new ArrayList<ArrayList<String>>();
 	public ArrayList<Boolean> decorationStartFlag = new ArrayList<Boolean>();
 	public ArrayList<Boolean> decorationEndFlag = new ArrayList<Boolean>();
-	// added by masato 20151202 
+	// added by masato 20151202
 	public static boolean defaultCssFlag = true;
 	// added by masato 20151214 for paging
 	public static int itemNumPerPage = 0;
@@ -69,7 +64,7 @@ public class HTMLEnv extends LocalEnv implements Serializable{
 	public static int g2PaginationRowNum = 0;
 	public static int g2PaginationColumnNum = 0;
 
-	
+
 	public static String condName = "";
 	// global form item number : t1,t2,t3...
 	public static int formPartsNumber = 1;
@@ -149,8 +144,9 @@ public class HTMLEnv extends LocalEnv implements Serializable{
 			result = getClassID((((HTMLG3) tfe).tfe));
 			return result;
 		}
-		
+
 		result = "TFE" + tfe.getId();
+//		Ehtml.tfe_id = result;
 		return result;
 	}
 
@@ -353,12 +349,12 @@ public class HTMLEnv extends LocalEnv implements Serializable{
 
 	// add 20141203_masato
 	public String code_tmp = "";
-	
+
 	public StringBuffer code;
-	
+
 	// added by masato 20150914
 	public static StringBuffer xmlCode;
-	
+
 	public int countFile;
 
 	public static StringBuffer css;
@@ -381,9 +377,9 @@ public class HTMLEnv extends LocalEnv implements Serializable{
 	public boolean foreachFlag;
 
 	public int gLevel = 0;
-	
+
 	public ArrayList<String> outTypeList = new ArrayList<>();
-	
+
 	// added by masato 20150914
 	public int cNum = 0;
 	public int xmlDepth = 0;
@@ -422,21 +418,21 @@ public class HTMLEnv extends LocalEnv implements Serializable{
 	public int scriptNum = 0;
 
 	public boolean sinvokeFlag = false;
-	
+
 	// added by masato 20151124 for plink'values
 	public ArrayList<String> valueArray;
-	
+
 	// added by masato 20151124 for plink'values
 	public boolean plinkFlag = false;
-	
-	public String tableBorder = new String("1");
+
+	public String tableBorder = new String("0"); //190604 1->0
 
 	public Vector<String> writtenClassId;
-	
+
 	//tbt add
 	public StringBuffer body_css = new StringBuffer();
 	public StringBuffer ssql_body_css = new StringBuffer();
-	
+
 	public HTMLEnv() {
 		this.htmlEnv1 = new Document("");
 		new Document("");
@@ -581,16 +577,16 @@ public class HTMLEnv extends LocalEnv implements Serializable{
 				s += "#"+ id + " .row { display: flex; flex-direction: row; }\n";
 				s += "#"+ id + " .col { display: flex; flex-direction: column; }\n";
 				s += "#"+ id + " .att { border: solid 0px; }\n";
-				
+
 				s += "#"+ id + " table {\n" +
 						"\tborder: 1px solid;\n" +
 						"\tpadding: 1px;\n" +
 						"}\n\n";
-				
+
 				s += "#"+ id + " td {\n" +
 						"\tvertical-align: middle;\n" +
 						"}\n\n";
-				
+
 //				s += "#"+ id + " table {\n" +
 //						"\tmargin-left: auto;\n" +
 //						"\tmargin-right: auto;\n" +
@@ -620,9 +616,9 @@ public class HTMLEnv extends LocalEnv implements Serializable{
 //						"\tmargin-top: auto;\n" +
 //						"\tmargin-bottom: auto;\n" +
 //						"\tborder: 1px #F0F0F0 solid;\n" +
-//						"}\n\n";	
+//						"}\n\n";
 			}
-		} else 
+		} else
 		// modifeid by masato 20151118 for ehtml end
 		if (!GlobalEnv.isOpt()) {
 			s += ".att { padding:0px; margin:0px; height:100%; z-index:2; }\n";
@@ -639,10 +635,10 @@ public class HTMLEnv extends LocalEnv implements Serializable{
 		for (String key : decolist.keySet()) {
 			decos.put(key, decolist.get(key));
 		}
-		
+
 		Log.out("[HTML append_css_def_att] classid=" + classid);
-		
-		
+
+
 		if (decorationStartFlag.size() > 0) {
 			if ((decorationStartFlag.get(0) || decos.size()>0) && !decorationEndFlag.get(0)) {
 			//if (decorationStartFlag.get(0) && !decorationEndFlag.get(0)) {
@@ -659,7 +655,7 @@ public class HTMLEnv extends LocalEnv implements Serializable{
 				}
 			}
 		}
-		
+
 		haveClass = 0;
 		// ������classid��������������������?����������������������������������������������������������������������?������
 		if (writtenClassId.contains(classid)) {
@@ -723,7 +719,7 @@ public class HTMLEnv extends LocalEnv implements Serializable{
 				}
 			}
 		}
-		
+
 		//added by goto 20130703  ex) jsfile=" a.js; b.js "
 		if (decos.containsKey("jsfile")) {
 			String js = decos.getStr("jsfile").trim();
@@ -733,9 +729,9 @@ public class HTMLEnv extends LocalEnv implements Serializable{
 				js = js.substring(js.indexOf(",")+1);
 			}
 		}
-		
-		
-		
+
+
+
 		if (decos.containsKey("divalign") && div.length() == 0)
 			div.append(" align=" + decos.getStr("divalign"));
 
@@ -789,7 +785,7 @@ public class HTMLEnv extends LocalEnv implements Serializable{
 			cssbuf.append(" margin-bottom:" + decos.getStr("margin-bottom")
 					+ ";");
 		}
-		
+
 		// �������������������������������
 		if (decos.containsKey("padding")) {
 			if (GlobalEnv.getframeworklist() == null && !Ehtml.flag)
@@ -830,7 +826,7 @@ public class HTMLEnv extends LocalEnv implements Serializable{
 		if (decos.containsKey("line-height"))
 			cssbuf.append(" line-height:" + decos.getStr("line-height") + "%;");
 
-		
+
 		// ������������������
 		if (decos.containsKey("align")){
 			cssbuf.append(" text-align:" + decos.getStr("align") + ";");
@@ -846,8 +842,8 @@ public class HTMLEnv extends LocalEnv implements Serializable{
 					+ decos.getStr("background-color") + ";");
 		if (decos.containsKey("bgcolor"))
 			cssbuf.append(" background-color:" + decos.getStr("bgcolor") + ";");
-		
-		
+
+
 
 		// ��������
 		if (decos.containsKey("color"))
@@ -859,21 +855,22 @@ public class HTMLEnv extends LocalEnv implements Serializable{
 
 		// ��������������
 		//170710 changed by tbt
-		if (decos.containsKey("font-size"))
+		if (decos.containsKey("font-size")){
 			if (GlobalEnv.getframeworklist() == null && !Ehtml.flag && !GlobalEnv.isNumber(decos.getStr("font-size")))
 				cssbuf.append(" font-size:" + decos.getStr("font-size") + ";");
 			else
 				cssbuf.append(" font-size:" + decos.getStr("font-size") + "px;");
-		if (decos.containsKey("font size"))
+		}
+		if (decos.containsKey("font size")){
 			if (GlobalEnv.getframeworklist() == null && !Ehtml.flag && !GlobalEnv.isNumber(decos.getStr("font size")))
 				cssbuf.append(" font-size:" + decos.getStr("font size") + ";");
 			else
-				cssbuf.append(" font-size:" + decos.getStr("font size") + "px;");
-		if (decos.containsKey("size"))
+				cssbuf.append(" font-size:" + decos.getStr("font size") + "px;");}
+		if (decos.containsKey("size")){
 			if (GlobalEnv.getframeworklist() == null && !Ehtml.flag  && !GlobalEnv.isNumber(decos.getStr("size")))
 				cssbuf.append(" font-size:" + decos.getStr("size") + ";");
 			else
-				cssbuf.append(" font-size:" + decos.getStr("size") + "px;");
+				cssbuf.append(" font-size:" + decos.getStr("size") + "px;");}
 		//tbt end
 		// �����������������������
 		if (decos.containsKey("font-weight"))
@@ -884,6 +881,12 @@ public class HTMLEnv extends LocalEnv implements Serializable{
 			cssbuf.append(" font-style:" + decos.getStr("font-style") + ";");
 		if (decos.containsKey("font-family"))
 			cssbuf.append(" font-family:" + decos.getStr("font-family") + ";");
+
+		if (decos.containsKey("debug")) //190604
+			if(decos.getStr("debug").toLowerCase().trim().equals("on") && !decos.containsKey("border")
+				&& !decos.containsKey("tableborder")) {
+				tableBorder = new String("1");
+			}
 
 		if (decos.containsKey("border"))
 			cssbuf.append(" border:" + decos.getStr("border") + ";");
@@ -896,40 +899,57 @@ public class HTMLEnv extends LocalEnv implements Serializable{
 		if (decos.containsKey("border-collapse"))
 			cssbuf.append(" border-collapse:" + decos.getStr("border-collapse")
 					+ ";");
-		
+
         //added by masato 20141214  "style"
         if (decos.containsKey("style")){
         	String style = decos.getStr("style");
         	cssbuf.append(" " + style);
         	if(!style.matches(".*;\\s*$"))	cssbuf.append(";");	//���������";"���������������������
         }
-		
+
         //added by goto 20130311  "background"
         if (decos.containsKey("background"))
         	bg = decos.getStr("background");
-        
-      //tbt add
-      	if(decos.containsKey("page-bgcolor") || decos.containsKey("pbgcolor")){
-      		if(decos.containsKey("page-bgcolor")){
-      			color = decos.getStr("page-bgcolor");
-      		}else{
-      			color = decos.getStr("pbgcolor");
-      		}
-      	}
-      	
-      	if(decos.containsKey("table-align")){
+
+//<<<<<<< HEAD
+        //tbt add
+  		if(decos.containsKey("page-bgcolor")){
+  			bgcolor = decos.getStr("page-bgcolor");
+  		}else if(decos.containsKey("pbgcolor")){
+  			bgcolor = decos.getStr("pbgcolor");
+  		}
+
+  		if(decos.containsKey("page-align")){
+  			pos = decos.getStr("page-align");
+  		}else if(decos.containsKey("palign")){
+  			pos = decos.getStr("palign");
+  		}else if(decos.containsKey("table-align")){
       		pos = decos.getStr("table-align");
-      	}
-      	
-      	if(decos.containsKey("talign")){
+      	}else if(decos.containsKey("talign")){
+//=======
+//      //tbt add
+//      	if(decos.containsKey("page-bgcolor") || decos.containsKey("pbgcolor")){
+//      		if(decos.containsKey("page-bgcolor")){
+//      			color = decos.getStr("page-bgcolor");
+//      		}else{
+//      			color = decos.getStr("pbgcolor");
+//      		}
+//      	}
+//
+//      	if(decos.containsKey("table-align")){
+//      		pos = decos.getStr("table-align");
+//      	}
+//
+//      	if(decos.containsKey("talign")){
+//>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
       		pos = decos.getStr("talign");
       	}
-      	
-        
+
+
         // added by masato 20151202  "no default css"
         if (decos.containsKey("nodefaultcss"))
         	defaultCssFlag = false;
-        
+
 		// tk
 		// start////////////////////////////////////////////////////////////////
 		// added by goto 20120715 start
@@ -954,6 +974,9 @@ public class HTMLEnv extends LocalEnv implements Serializable{
 		// charsetFlg=1;
 		// }
 		// added by goto 20120715 end
+		
+		//added by goto 20161217  for responsive
+		Responsive.check(decos);
 
 		if (decos.containsKey("description"))
 			metabuf.append("<meta name=\"Description\" content=\""
@@ -1009,7 +1032,7 @@ public class HTMLEnv extends LocalEnv implements Serializable{
 		}
 		// tk end////////////////////////////////////////////////////////////
 
-		
+
 	}
 
 	public void createHeader() {
@@ -1140,7 +1163,7 @@ public class HTMLEnv extends LocalEnv implements Serializable{
 			footer.append("</BODY>\n</HTML>\n");
 			Log.out("</body>\n</html>");
 		}
-		
+
 		header_creation();
 	}
 
@@ -1154,7 +1177,7 @@ public class HTMLEnv extends LocalEnv implements Serializable{
 //			header.append(css);
 //			Log.out(css.toString());
 //			header.append("\n-->\n</STYLE>\n");
-			
+
 	        //Generator
 	        header.append("<meta name=\"GENERATOR\" content=\" SuperSQL (Generate HTML) \">\n");
 		}
@@ -1180,7 +1203,15 @@ public class HTMLEnv extends LocalEnv implements Serializable{
 	public void header_creation() {
 		// tk start////////////////////////////////////////////////////
 		header.append(meta);
-		// masato
+
+		if (!title.equals(""))
+			header.append("<title>"+title+"</title>\n");
+
+		if(!title.toString().trim().equals("")){
+			header.append("<title>");
+			header.append(title);
+			header.append("</title>\n");
+		}
 
 		if (GlobalEnv.isAjax()) {
 			String js = GlobalEnv.getJsDirectory();
@@ -1255,7 +1286,7 @@ public class HTMLEnv extends LocalEnv implements Serializable{
 
 			header.append(cssFile);
 			header.append(jsFile);		//added by goto 20130703
-			
+
 			// 20140704_masato
 			css.append("\n");
 			//tbt add
@@ -1263,8 +1294,8 @@ public class HTMLEnv extends LocalEnv implements Serializable{
 //	            body_css.append("body { background-image: url(../"+bg+"); }");
 				body_css.append("\tbackground-image: url(../"+bg+");\n");
 	        }
-			if(!color.equals("")){
-				body_css.append("\tbackground-color: "+color+";\n");
+			if(!bgcolor.equals("")){
+				body_css.append("\tbackground-color: "+bgcolor+";\n");
 			}
 			if(!pos.equals("")){
 				body_css.append("\ttext-align: "+pos+";\n");
@@ -1273,8 +1304,8 @@ public class HTMLEnv extends LocalEnv implements Serializable{
 			}
 			css.insert(0, "#ssql_body_contents {\n"+ssql_body_css+"}\n\n");
 			css.insert(0,"body {\n"+body_css+"}\n");
-			
-			
+
+
 			header.append("<!-- Generated CSS -->\n");
 			header.append("<link rel=\"stylesheet\" type=\"text/css\" href=\""+ Jscss.getGenerateCssFileName(0) + "\">\n");
 			header.append("</HEAD>\n");
@@ -1284,14 +1315,14 @@ public class HTMLEnv extends LocalEnv implements Serializable{
 			code_tmp += "<BODY class=\"body\">\n";
 			code_tmp += "<!-- SuperSQL Body  Start -->";
 			code_tmp += "<div id=\"ssql_body_contents\">\n";	//added by goto 20161019 for new foreach
-			if(!title.toString().trim().equals("")){
-				code_tmp += "<div";
-				code_tmp += div;
-				code_tmp += titleClass;
-				code_tmp += ">";
-				code_tmp += title;
-				code_tmp += "</div>";
-			}
+//			if(!title.toString().trim().equals("")){
+//				code_tmp += "<div";
+//				code_tmp += div;
+//				code_tmp += titleClass;
+//				code_tmp += ">";
+//				code_tmp += title;
+//				code_tmp += "</div>";
+//			}
 		}
 
 		if (Connector.loginFlag) {
@@ -1328,6 +1359,7 @@ public class HTMLEnv extends LocalEnv implements Serializable{
 			if (Connector.updateFlag)
 				code_tmp += "<input type=\"hidden\" name=\"sql_param\" value=\"update\" >";
 		}
+
 		code.insert(0, code_tmp);
 
 	}
@@ -1444,7 +1476,7 @@ public class HTMLEnv extends LocalEnv implements Serializable{
 	public void setOutlineMode() {
 		OutlineMode = true;
 	}
-	
+
 	public static void initXML(){
 		xmlCode = new StringBuffer();
 		xmlCode.append("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n");

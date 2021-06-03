@@ -3,11 +3,7 @@ package supersql.extendclass;
 import java.util.ArrayList;
 import java.util.Collection;
 
-import org.antlr.runtime.tree.RewriteRuleNodeStream;
-
-import supersql.common.Log;
-
-public class ExtList<T> extends ArrayList<T> {
+public class ExtList<T> extends ArrayList<T>{
 
 	/**
 	 * serialVersionUID
@@ -42,7 +38,18 @@ public class ExtList<T> extends ArrayList<T> {
 		}
 		return list;
 	}
-	
+
+	public ExtList getExtList(ArrayList<Integer> array){
+		int[] in = new int[array.size()];
+		int i = 0;
+		for (int v: array) {
+			in[i] = v;
+			i++;
+		}
+		ExtList result = this.getExtList(in);
+		return result;
+	}
+
 	public ExtList getExtList(int... value_array){
 		ExtList tmp = this;
 		for(int i = 0; i < value_array.length; i++){
@@ -50,25 +57,34 @@ public class ExtList<T> extends ArrayList<T> {
 			try{
 				tmp = (ExtList)tmp.get(value_array[i]);
 			}catch(ClassCastException castException){
-				Log.err("the return value is not ExtList");
-				castException.printStackTrace();
 				return null;
 			}
 		}
 		return tmp;
 	}
-	
+
+	public String getExtListString(ArrayList<Integer> array){
+		int[] in = new int[array.size()];
+		int i = 0;
+		for (int v: array) {
+			in[i] = v;
+			i++;
+		}
+		String result = this.getExtListString(in);
+		return result;
+	}
+
 	public String getExtListString(int... value_array){
 		ExtList tmp = this;
 		int length = value_array.length;
 		for(int i = 0; i < length; i++){
 //			Log.info("tmp"+tmp);
-			if(tmp.get(value_array[i]) instanceof String){
+			if(tmp.get(value_array[i]) instanceof String || tmp.get(value_array[i]) instanceof Integer){
 				String return_value = tmp.get(value_array[i]).toString();
 				if(i >= length - 1){
 					return return_value;
 				}else{
-					Log.err("return value is "+return_value+".");
+//					Log.err("return value is "+return_value+".");
 					break;
 				}
 			}else{
@@ -78,20 +94,46 @@ public class ExtList<T> extends ArrayList<T> {
 					castException.printStackTrace();
 				}
 			}
-//			try{
-//				tmp = (ExtList)tmp.get(value_array[i]);
-//			}catch(ClassCastException castException){
-//				String return_value = tmp.get(value_array[i]).toString();
-//				if(i >= length - 1){
-//					return return_value;
-//				}else{
-//					Log.err("return value is "+return_value+".");
-//					castException.printStackTrace();
-//					break;
-//				}
-//			}
 		}
-		Log.err("Index is wrong.");
+//		Log.err("Index is wrong.");
 		return null;
+	}
+
+
+	//remove target from extlist
+	//only first target will be removed, and the available type is "String" and "Integer"
+	public void removeContent(Object target){
+		if(this instanceof ExtList){
+			if (this.contains(target)){
+				this.remove(this.indexOf(target));
+			}
+		}
+		for(int i = 0; i < this.size(); i++){
+			Object child = this.get(i);
+			if(child instanceof String || child instanceof Integer ){
+				continue;
+			}else if(child instanceof ExtList){
+				((ExtList)child).removeContent(target);
+			}
+		}
+	}
+
+	public boolean removeNull() {
+		boolean flag = false;
+		for (int i = 0; i < this.size(); i++) {
+			if(this.get(i) instanceof ExtList){
+				if(this.getExtList(i).size() == 0){
+					this.remove(i);
+					flag = true;
+				}else{
+					flag = (this.getExtList(i).removeNull() || flag);
+				}
+			}
+		}
+		return flag;
+	}
+
+	public void extRemoveRange(int from, int to){
+		this.removeRange(from, to);
 	}
 }

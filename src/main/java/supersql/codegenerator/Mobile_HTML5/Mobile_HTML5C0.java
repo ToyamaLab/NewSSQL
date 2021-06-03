@@ -2,6 +2,7 @@ package supersql.codegenerator.Mobile_HTML5;
 
 import supersql.codegenerator.Connector;
 import supersql.codegenerator.Manager;
+import supersql.codegenerator.HTML.HTMLFunction;
 import supersql.extendclass.ExtList;
 
 //import common.Log;
@@ -36,8 +37,9 @@ public class Mobile_HTML5C0 extends Connector {
 //	        		Mobile_HTML5Env.setSearch(true);
 //		 }	 
 		
+		String ret = "";
 		while (this.hasMoreItems()) {
-			this.worknextItem();
+			ret += this.worknextItem();
 		}
 
 //        if(decos.containsKey("form")){
@@ -49,7 +51,8 @@ public class Mobile_HTML5C0 extends Connector {
 //           	if(decos.getStr("form").toLowerCase().equals("search"))
 //        		Mobile_HTML5Env.setSearch(false);
 //        }
-		return null;
+//		return null;
+		return (!Mobile_HTML5Function.Mobile_HTML5FunctionFlag)? null : ret;
 	}
 
 	@Override

@@ -1,0 +1,4 @@
+GENERATE HTML
+[m.name, [&ROUND(e.salary, -3)]!]! , [(asc)d.name, [(desc)i.name]!, d.name || "で" || sum[i.price] || "円"]!  , [m.name, [(desc)e.salary]!]! ,[m.name, [(asc)e.salary]!]!
+FROM employee e, employee m, dept d, item i
+WHERE e.manager = m.id AND m.id = d.manager AND i.dept = d.id

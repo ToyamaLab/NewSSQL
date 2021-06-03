@@ -20,7 +20,6 @@ import supersql.codegenerator.Jscss;
 import supersql.codegenerator.Manager;
 import supersql.common.GlobalEnv;
 import supersql.common.Log;
-import supersql.dataconstructor.DataConstructor;
 import supersql.extendclass.ExtList;
 
 public class HTMLManager extends Manager implements Serializable {
@@ -116,7 +115,7 @@ public class HTMLManager extends Manager implements Serializable {
 		} else {
 			htmlEnv.outFile = getOutfile(outfile);
 		}
-		
+
 		if (htmlEnv.outFile.indexOf("/") > 0) {
 			htmlEnv.linkOutFile = htmlEnv.outFile.substring(htmlEnv.outFile
 					.lastIndexOf("/") + 1);
@@ -187,17 +186,29 @@ public class HTMLManager extends Manager implements Serializable {
 		htmlEnv2.fileName = htmlEnv.outFile + ".xml";
 
 		htmlEnv.setOutlineMode();
-		
+
 		if (data_info.size() == 0
 		// added by goto 20130306 "FROM�ʤ��������к� 3/3"
-				&& !DataConstructor.SQL_string
-						.equals("SELECT DISTINCT  FROM ;") && !DataConstructor.SQL_string.equals("SELECT  FROM ;")) {
-			Log.out("no data");
-			htmlEnv.code.append("<div class=\"nodata\" >");
-			htmlEnv.code.append("NO DATA FOUND");
-			htmlEnv.code.append("</div>");
-		} else 
+//<<<<<<< HEAD
+//				&& !DataConstructor.SQL_string
+//						.equals("SELECT DISTINCT  FROM ;") && !DataConstructor.SQL_string.equals("SELECT  FROM ;")) {
+//			Log.out("no data");
+//			htmlEnv.code.append("<div class=\"nodata\" >");
+//			htmlEnv.code.append("NO DATA FOUND");
+//			htmlEnv.code.append("</div>");
+//=======
+				/*&& !DataConstructor.SQL_string
+						.equals("SELECT DISTINCT  FROM ;") && !DataConstructor.SQL_string.equals("SELECT  FROM ;")*/) {
+//			Log.out("no data");
+//			htmlEnv.code.append("<div class=\"nodata\" >");
+//			htmlEnv.code.append("NO DATA FOUND");
+//			htmlEnv.code.append("</div>");
 			tfe_info.work(data_info);
+
+//>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
+		} else
+			tfe_info.work(data_info);
+		
 
 		// add by masato 20151118 start for incremental
 		if (Ehtml.flag) {
@@ -206,22 +217,25 @@ public class HTMLManager extends Manager implements Serializable {
 			String id = "ssqlResult" + GlobalEnv.getQueryNum();
 			String phpFileName = htmlEnv.outFile.substring(htmlEnv.outFile.lastIndexOf(GlobalEnv.OS_FS) + 1, htmlEnv.outFile.length());
 			//TODO -scrolled 1 -> ssqlresult1-1.xml, -scrolled == null -> ssqlresult1.xml
-			String path = "";			
+
+			String xmlFileName = htmlEnv.outFile.substring(htmlEnv.outFile.lastIndexOf(GlobalEnv.OS_FS) + 1, htmlEnv.outFile.length());
+			String path = htmlEnv.outDir + GlobalEnv.OS_FS + "GeneratedXML" + GlobalEnv.OS_FS + xmlFileName + GlobalEnv.OS_FS + id + ".xml";
+//			String path = "";
 			Incremental.createXML(path, htmlEnv.xmlCode);
 			// 既存のHTMLのヘッダー内に書き込むjsコード
 			Ehtml.appendToHeadFromBody(path);
 			// XMLをparseして生成したテーブルをappendするhtmlコード（divタグ）
 			Ehtml.createBaseHTMLCode();
 			// cssの生成・コピー
-			Jscss.process();
-			
+			Jscss.process();	//TODO
+
 			// TODO 終了どうする？
 //			System.exit(0);
 		}
 		// add by masato 20151118 end for incremental
 		// add by masato 20151120 start
 		else if (Incremental.flag) {
-			// TODO 
+			// TODO
 			String id = "ssqlResult" + GlobalEnv.getQueryNum();
 			String xmlFileName = htmlEnv.outFile.substring(htmlEnv.outFile.lastIndexOf(GlobalEnv.OS_FS) + 1, htmlEnv.outFile.length());
 			String path = htmlEnv.outDir + GlobalEnv.OS_FS + "GeneratedXML" + GlobalEnv.OS_FS + xmlFileName + GlobalEnv.OS_FS + id + ".xml";
@@ -231,7 +245,7 @@ public class HTMLManager extends Manager implements Serializable {
 			// XMLをparseして生成したテーブルをappendするhtmlコード（divタグ）
 			Ehtml.createBaseHTMLCode();
 			// add by masato 20151120 end for incremental
-			
+
 		} else {
 			htmlEnv.getHeader();
 			htmlEnv.getFooter();
@@ -256,11 +270,11 @@ public class HTMLManager extends Manager implements Serializable {
 						// Log.info("File encoding: "+((html_env.charset!=null)?
 						// html_env.charset : "UTF-8"));
 						// changed by goto 20120715 end
-	
+
 						//changed by goto 20161019 for HTML Formatter
 						String html = "";
 						if (GlobalEnv.cssout() == null)
-							html += htmlEnv.header;
+						html += htmlEnv.header;
 						html += htmlEnv.code;
 						html += htmlEnv.footer;
 						html = FileFormatter.process(html);

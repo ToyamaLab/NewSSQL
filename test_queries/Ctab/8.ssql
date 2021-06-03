@@ -1,0 +1,5 @@
+GENERATE HTML
+cross_tab([st.city@{width=104}],, [d.name@{width=100}, sum[i.price]@{width=100}]
+!, sum[sa.quantity]@{width=100, height=70})@{side_width=202}
+FROM store st, dept d, sale sa, item i
+WHERE st.id = sa.store AND sa.dept = d.id AND i.dept = d.id

@@ -56,6 +56,9 @@ public class VRFunction extends Function {
 	static Float[] oldPosition = {0f,0f,0f};
 	static Element passedfilter = null;
 	
+	//added by li 20210601
+	public static boolean VRFunctionFlag = false;
+	
 	public static String opt(String s) {
 		if (s.contains("\"")) {
 			s = s.replaceAll("\"", "");
@@ -379,6 +382,9 @@ public class VRFunction extends Function {
 				Element text = vrEnv.xml.createElement("text");
 				String contents = getArg(1).getStr();
 				String t_size = getArg(2).getStr();
+				//String contents = getArg(sizeArg()-2).getStr();
+				//String t_size = getArg(sizeArg()-1).getStr();
+				//String t_size = "5";
 				text.setAttribute("contents",contents);
 				text.setAttribute("size", t_size);
 				text.setAttribute("size_name", getArg(1).getTFE().decos.getStr("filtername"));

@@ -3,7 +3,7 @@ GENERATE HTML
 {
 [e.name@{class='name'},e.salary@{class='salary'},
 e.byear@{class='birth'}]!
-}@{title='MEMBER',tablealign='center'}
+}@{title='MEMBER',table-align='center'}
 }@{cssfile='demo.css',charset='euc-jp'}
 FROM employee e
 

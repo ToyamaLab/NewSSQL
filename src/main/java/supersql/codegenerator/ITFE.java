@@ -34,16 +34,18 @@ public interface ITFE extends Serializable {
 
 	void addDeco(String key, Object val);
 	void setDeco(DecorateList d);
-	
+
 	void setId(int id);
 	int getId();
 
 	void setOrderBy(String order);
 	void setAggregate(String aggregate);
+	void setGGplot(String ggplot);
+	void setCtab(String ctab);
 
 //	void setcheckdeco(boolean decocheck);
 //	boolean getcheckdeco();
-	
+
 	ExtList makeschImage();
 
 	void addDeco(String name, String value, String condition);

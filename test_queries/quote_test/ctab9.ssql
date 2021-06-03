@@ -1,0 +1,10 @@
+GENERATE HTML {
+'文字列ですよ'! 'ほんとだよ！'!
+cross_tab(
+    ["st"."state"],,
+    ["d"."name"]!,
+    "sa"."でぷと" || 'dept'
+)@{side_width=100, null_value='該当なし'}
+}
+FROM store st, item i, "sale" "sa", dept d
+WHERE st.id = sa.store AND sa.item = i.id AND d.id = i.dept

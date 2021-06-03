@@ -1,7 +1,5 @@
 package supersql.codegenerator;
 
-import supersql.common.Log;
-
 /**
  * 分数の値、および計算メソッドを保持するクラス。計算メソッドを利用すると自信の分数の値が書き換わる。(引数の値は書き換わりません)
  *

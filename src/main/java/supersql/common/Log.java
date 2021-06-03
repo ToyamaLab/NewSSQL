@@ -70,7 +70,8 @@ public class Log {
 	public static void info(Object o) {
 		// add 20151118 masato for ehtml
 		// TODO 
-		if (Ehtml.flag || Incremental.flag) {
+		if (Ehtml.flag || Ehtml.isEhtml2() || Incremental.flag || Incremental.flag2) {
+			// System.out.println(o.toString());	//for Debug
 			return;
 		}
 		switch (infoflag) {
@@ -92,17 +93,21 @@ public class Log {
 			break;
 		}
 	}
-	
+
 	public static void err(Object o) {
-		System.err.println(o.toString());
-		GlobalEnv.errorText += o.toString();
+		if (Ehtml.flag || Incremental.flag || Ehtml.isEhtml2()) {
+			System.out.println(o.toString());	//for Debug
+		}else{
+			System.err.println(o.toString());
+			GlobalEnv.errorText += o.toString();
+		}
 	}
 
 	public static void ehtmlInfo(Object o) {
 		// add 20141204 masato for ehtml
-			System.out.println(o.toString());
+		System.out.println(o.toString());
 	}
-	
+
 	// added by goto 20130415
 	public static void i(Object o) {
 		info(o);
@@ -111,7 +116,7 @@ public class Log {
 	public static void o(Object o) {
 		out(o);
 	}
-	
+
 	public static void e(Object o) {
 		err(o);
 	}

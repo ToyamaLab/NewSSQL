@@ -13,10 +13,12 @@ public class Asc_Desc {
 
 	//Asc_Desc
 	public Asc_Desc() {
-		
+
 	}
 	private static int dynamicTokenCount = 0;
 	private static int dynamicCount = 0;
+	private static int streamTokenCount = 0;
+	private static int streamCount = 0;
 	private static int ascCount = 0;
 	private static int descCount = 0;
 
@@ -40,17 +42,8 @@ public class Asc_Desc {
 			add_asc_desc(no, token+" DESC");
 		}
 		asc_desc_attributes += ", "+token;		//added by goto 20161113  for @dynamic: distinct order by
-//		try{
-//			if(order.toLowerCase().startsWith("asc")){
-//				int no = Integer.parseInt(order.substring(3));
-//				asc_desc.add(new AscDesc(no, token+" ASC"));
-//			}else{
-//				int no = Integer.parseInt(order.substring(4));
-//				asc_desc.add(new AscDesc(no, token+" DESC"));
-//			}
-//		}catch(Exception e){ }
 	}
-	
+
 	//dynamicTokenProcess
 	//added by goto 170604 for asc/desc@dynamic
 	public void dynamicTokenProcess() {
@@ -60,7 +53,6 @@ public class Asc_Desc {
 			try {
 				Asc_Desc.asc_desc_Array2.get(previousDynamicCount);
 			} catch (Exception e) {
-				//set ""
 				asc_desc_Array1.add(previousDynamicCount, new ArrayList<AscDesc>());
 				asc_desc_Array2.add(previousDynamicCount, "");	//added by goto 20161113  for @dynamic: distinct order by
 				asc_desc = new ArrayList<AscDesc>();
@@ -69,24 +61,48 @@ public class Asc_Desc {
 			}
 		}
 	}
-	
+
+	public static ArrayList<String> streamPeriod = new ArrayList<>();
+	public void streamTokenProcess(String value) {
+		streamTokenCount++;
+		if(streamTokenCount%2==0){
+			int previousStreamCount = streamTokenCount/2-1;
+			try {
+				Asc_Desc.asc_desc_Array2.get(previousStreamCount);
+				streamPeriod.add(previousStreamCount, value);
+			} catch (Exception e) {
+				asc_desc_Array1.add(previousStreamCount, new ArrayList<AscDesc>());
+				asc_desc_Array2.add(previousStreamCount, "");
+				Asc_Desc.asc_desc_Array2.get(previousStreamCount);
+				asc_desc = new ArrayList<AscDesc>();
+				asc_desc_attributes = "";
+				streamPeriod.add(previousStreamCount, value);
+				setStreamCount(getStreamCount()+1);
+			}
+		}
+	}
+
 	//add1
 	public void add_asc_desc_Array(String deco) {
 		if(deco.contains("dynamic") && !asc_desc_attributes.isEmpty()){
-		//if(!asc_desc_attributes.isEmpty()){
-			//TODO (asc)@{static}! ?
-			//Log.i(asc_desc.get(0)+" / "+asc_desc_attributes);
-			//Log.e("asc_desc_Array1.add("+dynamicCount+", "+asc_desc+")");
-			//Log.e("asc_desc_Array2.add("+dynamicCount+", "+asc_desc_attributes+")");
-			
+
 			asc_desc_Array1.add(dynamicCount, asc_desc);
 			asc_desc_Array2.add(dynamicCount, asc_desc_attributes);	//added by goto 20161113  for @dynamic: distinct order by
 			asc_desc = new ArrayList<AscDesc>();
 			asc_desc_attributes = "";
 			setDynamicCount(getDynamicCount()+1);
 		}
+
+		if(deco.contains("stream") && !asc_desc_attributes.isEmpty()){
+
+			asc_desc_Array1.add(streamCount, asc_desc);
+			asc_desc_Array2.add(streamCount, asc_desc_attributes);
+			asc_desc = new ArrayList<AscDesc>();
+			asc_desc_attributes = "";
+			setStreamCount(getStreamCount()+1);
+		}
 	}
-	
+
 	//setDynamicCount
 	private void setDynamicCount(int num) {
 		dynamicCount = num;
@@ -95,13 +111,22 @@ public class Asc_Desc {
 	private int getDynamicCount() {
 		return dynamicCount;
 	}
-	
+
+	//setStreamCount
+	private void setStreamCount(int num) {
+		streamCount = num;
+	}
+	//getStreamCount
+	private int getStreamCount() {
+		return streamCount;
+	}
+
 	//add2
 	private void add_asc_desc(int no, String AscDesc) {
 		//System.out.println(no+" "+AscDesc);
 		asc_desc.add(new AscDesc(no, AscDesc));
 	}
-	
+
 	//get1
 	public ArrayList<AscDesc> get_asc_desc_Array1(int ASC_DESC_ARRAY_COUNT) {
 		try {
@@ -123,13 +148,13 @@ public class Asc_Desc {
 	public void sorting() {
 		Collections.sort(asc_desc, new AscDescComparator());
 	}
-	
-	
+
+
 	//AscDesc
 	public class AscDesc {
 		private int no;
 		private String ascDesc;
-		
+
 		public AscDesc(int no, String ascDesc) {
 			this.no = no;
 			this.ascDesc = ascDesc;

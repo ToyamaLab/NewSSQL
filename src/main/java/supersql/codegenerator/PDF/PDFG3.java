@@ -11,7 +11,6 @@ public class PDFG3 extends Grouper {
 
 	private PDFEnv pdf_env;
 
-	//コンストラクタ
 	public PDFG3(Manager manager, PDFEnv pdf_env) {
 		this.manager = (PDFManager) manager;
 		this.pdf_env = pdf_env;
@@ -29,14 +28,12 @@ public class PDFG3 extends Grouper {
 		boolean fold = false;
 		int alternate = 1;
 
-		//オペレータ側
 		modifier.clean1();
 		/*
 		 * if( le2.car() instanceof AddedInfo ){ modifier.get_modifier1(
 		 * le2.car() ); limit = modifier.limit; modifier.set_modifier1( writer );
 		 * //writer.separate = modifier.separate; }
 		 */
-		//要素側
 		modifier.clean2();
 		/*
 		 * if( (le2.cdr()).car() instanceof AddedInfo ) modifier.get_modifier2(
@@ -46,7 +43,6 @@ public class PDFG3 extends Grouper {
 		setDataList(data_info);
 
 		///////////////////////////////
-		//////////////////(G3 1)のとき
 		///////////////////////////////
 
 		if (tfe instanceof Attribute) {
@@ -58,22 +54,10 @@ public class PDFG3 extends Grouper {
 			//	    System.out.println("[PDFG2:work]decorate = " + test );
 			//
 
-			/*
-			 * //////////////////////////tableから値をとってくる
-			 * //le.car()を調べる(table位置を知るため) Object o = le.car(); //String s =
-			 * o.toString(); //i_tmp = Integer.valueOf(s).intValue();
-			 * //System.out.println("[PDFG3:work]i_tmp = " + i_tmp);
-			 * 
-			 * 
-			 * //tableから文字列のリストを変数tabに取得する List tab = new List(); tab =
-			 * (List)table.car();
-			 * 
-			 * System.out.println("[PDFG3:work]tab = " + tab);
-			 */
+
 
 			for (i = 0; i < data_info.size(); i++) {
 
-				//２度手間 ExtListにメソッドでまとめた方がいいかも
 				//Object data_List = data_info.get(i);
 				//System.out.println(data_List);
 				//Object data = ((ExtList)data_List).get(0);
@@ -89,7 +73,6 @@ public class PDFG3 extends Grouper {
 
 //del
 
-				//出力してページを閉じ,新しいページを開く
 				if (hasMoreItems()) {
 //					manager.pagePrint();
 					//modifier.page_clean(writer);
@@ -101,26 +84,21 @@ public class PDFG3 extends Grouper {
 		}
 
 		//////////////////////////////////////////
-		//////////////////(G3 (C1 1 2))とかのとき
 		//////////////////////////////////////////
 		else {
 			System.out.println("[PDFG3:work]tfe is Operator");
 
-			//現在のx,y座標を1にする
 			//writer.x_back = 1;
 			//writer.y_back = 1;
 
 			//////////////////////////////
-			//現在のtate,yokoを退避
 			//tate_tmp = writer.tate_back;
 			//yoko_tmp = writer.yoko_back;
 
-			//tableの値があるだけ、処理をする
 			for (i = 0; i < data_info.size(); i++) {
 				//System.out.println("le2.cdr() = " + le2.cdr());
 				//System.out.println("le2.car() = " + le2.car());
 
-				//繰り返し対応するオペレータのworkへ
 				//Object tmp2 = le2.car();
 
 				pdf_env.alternate = alternate;
@@ -130,14 +108,11 @@ public class PDFG3 extends Grouper {
 				pdf_env.pre_operator = getSymbol();
 				worknextItem();
 
-				///////11.25 折り畳みの前に移動
-				//３重反覆の真ん中で折り畳むとちょっと問題
-				////解決策はlimitになる毎に退避して前のと比較する////
+
 				//if( fold != true )
 				//    tate_inside = tate_inside + writer.tate_back;
 
 				///////////////////////////////
-				//退避していたtate,yokoを戻す
 				//writer.tate_back = tate_tmp;
 				//writer.yoko_back = yoko_tmp;
 
@@ -145,7 +120,6 @@ public class PDFG3 extends Grouper {
 				//    yoko_inside = writer.yoko_back;
 
 				/*
-				 * //27//折り畳んだものがG1だったりした時これは必須になってくる if( fold_now == true || (
 				 * fold == true && !(e2.hasMoreElements()) ) ){ yoko_tmp =
 				 * yoko_tmp + yoko_inside; yoko_inside = 0; fold_now = false; }
 				 */
@@ -155,7 +129,6 @@ public class PDFG3 extends Grouper {
 				//    tate_inside = tate_inside + tate_fold;//25
 				//else//25
 				//    tate_inside = tate_inside + writer.tate_back;
-				//出力してページを閉じ,新しいページを開く
 				if (hasMoreItems()) {
 //					manager.pagePrint();
 					//modifier.page_clean(writer);

@@ -102,4 +102,9 @@ public class VRFactory extends Factory {
 		return new VRManager(vrEnv, vrEnv2);
 	}
 
+	@Override
+	public Connector createConcat(Manager manager) {
+		return new VRCONCAT(manager, vrEnv, vrEnv2);
+	}
+
 }

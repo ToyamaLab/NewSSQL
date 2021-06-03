@@ -54,6 +54,13 @@ public class Mobile_HTML5Factory extends Factory {
 		return new Mobile_HTML5C1(manager, html_env,html_env2);
 		//return new HTMLC4(manager);
 	}
+	
+	//tbt add 180806
+	@Override
+	public Connector createConcat(Manager manager) {
+		return new Mobile_HTML5CONCAT(manager, html_env, html_env2);
+	}
+	//tbt end
 
 	@Override
 	public Grouper createG0(Manager manager) {

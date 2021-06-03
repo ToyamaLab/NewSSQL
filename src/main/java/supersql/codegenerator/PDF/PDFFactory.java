@@ -9,7 +9,6 @@ import supersql.codegenerator.IfCondition;
 import supersql.codegenerator.Manager;
 import supersql.codegenerator.TFE;
 
-//Operator, Managerを生成するクラス
 
 public class PDFFactory extends Factory {
 

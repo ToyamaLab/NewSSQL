@@ -33,6 +33,7 @@ import supersql.codegenerator.Manager;
 import supersql.codegenerator.Sass;
 import supersql.codegenerator.Compiler.Compiler;
 import supersql.codegenerator.Compiler.PHP.PHP;
+import supersql.codegenerator.Responsive.Responsive;
 import supersql.codegenerator.infinitescroll.Infinitescroll;
 import supersql.common.GlobalEnv;
 import supersql.common.Log;
@@ -83,6 +84,9 @@ public class Mobile_HTML5Function extends Function {
 	public static String updateFile;
 
 	public boolean link1 = false; //added by goto 20161025 for link1/foreach1
+	
+	public static boolean Mobile_HTML5FunctionFlag = false;
+	
 
 	public Mobile_HTML5Function()
 	{
@@ -104,10 +108,14 @@ public class Mobile_HTML5Function extends Function {
 		//    	Log.out("condition= " + this.getAtt("condition"));
 
 		String FuncName = this.getFuncName();
+		
+		// Mobile_HTML5FunctionFlag = true;		// NG
 
 		String ret = "";	//20131201 nesting function
 
-		if (Incremental.flag || Ehtml.flag) {
+
+//		if (Incremental.flag || Ehtml.flag) {
+		if (Ehtml.isInfinitescroll()) {
 			ret = Infinitescroll.Funciton(this, html_env, html_env2, FuncName, data_info);
 			html_env.code.append( Function.checkNestingLevel(ret) );
 			return ret;
@@ -128,10 +136,17 @@ public class Mobile_HTML5Function extends Function {
 				}
 			} else if (FuncName.equalsIgnoreCase("sinvoke") || FuncName.equalsIgnoreCase("link")) {
 				Func_sinvoke(data_info, 1);
-			} else if (FuncName.equalsIgnoreCase("glink")) {	//added by goto 20161109 for plink/glink
-				Func_sinvoke(data_info, 2);
-			} else if (FuncName.equalsIgnoreCase("plink")) {	//added by goto 20161109 for plink/glink
-				Func_sinvoke(data_info, 3);
+//			} else if (FuncName.equalsIgnoreCase("glink")) {	//added by goto 20161109 for plink/glink
+//				Func_sinvoke(data_info, 2);
+//			} else if (FuncName.equalsIgnoreCase("plink")) {	//added by goto 20161109 for plink/glink
+//				Func_sinvoke(data_info, 3);
+				
+			// added by masato 20151124 for plink in ehtml
+			} else if (FuncName.equalsIgnoreCase("plink")) {
+				Func_plink(data_info);
+			} else if (FuncName.equalsIgnoreCase("glink")) {
+				 Func_glink(data_info);						// TODO
+				
 			} else if (FuncName.equalsIgnoreCase("null")) {
 				Func_null();
 			}
@@ -339,15 +354,23 @@ public class Mobile_HTML5Function extends Function {
 			else if (FuncName.equalsIgnoreCase("divide") || FuncName.equalsIgnoreCase("div")) {
 				ret = Func_divide();
 			}
-			else{
+			//for educ2018
+			else if(FuncName.equalsIgnoreCase("shift_image")){
+//				Log.info("shift!!!!!!!!!!!!");
+				Func_simage();
+			}else{
 				//Log.err("[Warning] no such function name: "+FuncName+"()");
 			}
+
 
 			//    	checkFuncReturnValue(ret);
 			//    	Log.e(""+Args+" "+ArgHash+" "+data_info+" "+html_env+" "+aggregateFlag+" "+manager);
 			html_env.code.append( Function.checkNestingLevel(ret) );//20131201 nesting function
 
 		}
+		
+		// Mobile_HTML5FunctionFlag = false;	// NG
+		
 		Log.out("TFEId = " + Mobile_HTML5Env.getClassID(this));
 		html_env.append_css_def_td(Mobile_HTML5Env.getClassID(this), this.decos);
 		return ret;	//20131201 nesting function
@@ -416,9 +439,26 @@ public class Mobile_HTML5Function extends Function {
 		return s;
 	}
 
+	// for educ2018
+	protected void Func_simage(){
+		String off = this.Args.get(0).getStr().trim();
+		String path = this.Args.get(1).getStr().trim();
+		String on = this.Args.get(2).getStr().trim();
+		String path_on = this.Args.get(3).getStr().trim();
+		if (!path.startsWith("/")) {
+			String basedir = GlobalEnv.getBaseDir();
+			if (basedir != null && basedir != "") {
+				path = GlobalEnv.getBaseDir() + "/" + path;
+			}
+		}
+		String statement = "<script>$(function shift_"+off.substring(0, off.indexOf("_"))+"(){$('a."+off.substring(0, off.indexOf("_"))+" img').hover(function(){$(this).attr('src', \""+path_on+"/"+on+"\");}, function(){if (!$(this).hasClass('currentPage')) {$(this).attr('src', \""+path+"/"+off+"\");}});});</script>";
+		statement += "<a href=\"#\" class=\""+off.substring(0, off.indexOf("_"))+"\"><img src=\""+path+"/"+off+"\" alt=\"no image\" border=\"0\" /></a>";
+		html_env.code.append(statement);
+	}
 
 
 	private void Func_imagefile() {
+		Mobile_HTML5FunctionFlag = true;
 
 		/*
 		 * ImageFile function : <td> <img src="${imgpath}/"+att /> </td>
@@ -490,14 +530,22 @@ public class Mobile_HTML5Function extends Function {
 				html_env.code.append(" target=\"" + decos.getStr("target")+"\" ");
 			if(decos.containsKey("class"))
 				html_env.code.append(" class=\"" + decos.getStr("class") + "\" ");
+			html_env.code.append(" "+getDeco(decos));
 			html_env.code.append(">\n");
 
 			Log.out("<A href=\"" + html_env.linkurl + "\">");
 		}
+		// added by masato 20151124 for plink
+		if (html_env.plinkFlag) {
+			String tmp = "";
+			for (int i = 0; i < html_env.valueArray.size(); i++) {
+				tmp += " value" + (i + 1) + "='" + html_env.valueArray.get(i) + "'";
+			}
+			Incremental.outXMLData(html_env.xmlDepth, "<PostLink target='" + html_env.linkUrl + "'" + tmp + ">\n");
+		}
 		//tk/////////////////////////////////////////////////////////////////////////////////
 
-		if(decos.containsKey("lightbox"))
-		{
+		if(decos.containsKey("lightbox")) {
 			Date d1 = new Date();
 			SimpleDateFormat sdf = new SimpleDateFormat("yyyymmddHHmmss");
 			String today = sdf.format(d1);
@@ -516,153 +564,212 @@ public class Mobile_HTML5Function extends Function {
 
 			}
 			html_env.code.append("</a>");
-		}
-		else{
-			//added by goto 20121217 start
-			//html_env.code.append("<img class=\"" + HTMLEnv.getClassID(this) +" ");
-			if(type.matches(".") || type.matches("normal")){					//type==null
-				//20130206
-				//defaultは下記の1行のみ
+		} else {
+			// added by masato 20151124 image function for xml
+			if (Ehtml.isEhtml()) {
+				Incremental.outXMLData(html_env.xmlDepth, "<img class=\'"
+						+ html_env.getClassID(this) + "\' src='" + path + "/"
+						+ this.Args.get(0).getStr() + "'></img>\n");
+
+			} else {
+				//added by goto 20121217 start
 				//html_env.code.append("<img class=\"" + HTMLEnv.getClassID(this) +" ");
-
-				//        		//20130206
-				if (decos.containsKey("effect") && decos.getStr("effect").matches("bound")){
-					//String display_type = decos.getStr("display-type");//.replace("\"", "") +"\" " );
-					//this.getAtt("display-type", "null");
-					//Log.info("bound!");
-					//System.out.println("type="+type);
-					html_env.code.append("<div id=\"bounce\" class=\"ui-widget-content ui-corner-all\">" +
-							"<img class=\"" + Mobile_HTML5Env.getClassID(this) +" ");
-				}else{
-					html_env.code.append("<img class=\"" + Mobile_HTML5Env.getClassID(this) +" ");
-				}
-
-				//added by goto 20130312  "Default width: 100%"
-				if(!decos.containsKey("width")){
-					if(!Sass.isBootstrapFlg()){
-						html_env.code.append("\" width=\"100% " );
+				if(type.matches(".") || type.matches("normal")){					//type==null
+					//20130206
+					//defaultは下記の1行のみ
+					//html_env.code.append("<img class=\"" + HTMLEnv.getClassID(this) +" ");
+	
+					//        		//20130206
+					if (decos.containsKey("effect") && decos.getStr("effect").matches("bound")){
+						//String display_type = decos.getStr("display-type");//.replace("\"", "") +"\" " );
+						//this.getAtt("display-type", "null");
+						//Log.info("bound!");
+						//System.out.println("type="+type);
+						html_env.code.append("<div id=\"bounce\" class=\"ui-widget-content ui-corner-all\">" +
+								"<img class=\"" + Mobile_HTML5Env.getClassID(this) +" ");
+					}else{
+						html_env.code.append("<img class=\"" + Mobile_HTML5Env.getClassID(this) +" ");
 					}
+	
+					//added by goto 20130312  "Default width: 100%"
+					if(!decos.containsKey("width")){
+						if(!Sass.isBootstrapFlg()){
+							html_env.code.append("\" width=\"100% " );
+						}
+					}
+					//        		//20130205
+					//        		if (decos.containsKey("display-type") && decos.getStr("display-type").matches("fisheye")){
+					//	                //String display_type = decos.getStr("display-type");//.replace("\"", "") +"\" " );
+					//	                //this.getAtt("display-type", "null");
+					//	                Log.info("fisheye!");
+					//	                //System.out.println("type="+type);
+					//	                html_env.code.append("<div id=\"fisheye\" class=\"fisheye\">\n" +
+					//        			"<div class=\"fisheyeContainter\">" +
+					//	                		"<a href=\"#\" class=\"fisheyeItem\"><img class=\"" + HTMLEnv.getClassID(this) +" ");
+					//        		}else{
+					//               // if(display_type.matches("null") || !display_type.matches("fisheye")){	//display_type=null;
+					//                	html_env.code.append("<img class=\"" + HTMLEnv.getClassID(this) +" ");
+					//                }
 				}
-				//        		//20130205
-				//        		if (decos.containsKey("display-type") && decos.getStr("display-type").matches("fisheye")){
-				//	                //String display_type = decos.getStr("display-type");//.replace("\"", "") +"\" " );
-				//	                //this.getAtt("display-type", "null");
-				//	                Log.info("fisheye!");
-				//	                //System.out.println("type="+type);
-				//	                html_env.code.append("<div id=\"fisheye\" class=\"fisheye\">\n" +
-				//        			"<div class=\"fisheyeContainter\">" +
-				//	                		"<a href=\"#\" class=\"fisheyeItem\"><img class=\"" + HTMLEnv.getClassID(this) +" ");
-				//        		}else{
-				//               // if(display_type.matches("null") || !display_type.matches("fisheye")){	//display_type=null;
-				//                	html_env.code.append("<img class=\"" + HTMLEnv.getClassID(this) +" ");
-				//                }
-			}
-			//        	else if(type=="slideshow"){	//type==slideshow
-			//        		html_env.code.append("<a href="
-			//        		
-			//        		
-			//        	}
-
-			html_env2.code.append("<VALUE type=\"img\" class=\"" + Mobile_HTML5Env.getClassID(this) +" ");
-			if(decos.containsKey("class"))
-				html_env.code.append(decos.getStr("class"));
-
-			//System.out.println("out:path:"+this.getAtt("default"));
-
-			//added by goto 20121217 start
-			//html_env.code.append(" \" src=\"" + path + "/" + this.getAtt("default") + "\"/>");
-			if(type.matches(".") || type.matches("normal")){					//type==null
-
-
-				//TODO 20131106
-				String url = "";
-				//url = this.getAtt("default"); 	//TODO
-				try{
-					FuncArg fa1 = (FuncArg) this.Args.get(0);
-					url = fa1.getStr();
-				}catch(Exception e){ return; }
-
-
-				//added 20130703  For external URLs.
+//<<<<<<< HEAD
+				//        	else if(type=="slideshow"){	//type==slideshow
+				//        		html_env.code.append("<a href="
+				//
+				//
+				//        	}
+	
+				html_env2.code.append("<VALUE type=\"img\" class=\"" + Mobile_HTML5Env.getClassID(this) +" ");
+				if(decos.containsKey("class"))
+					html_env.code.append(decos.getStr("class"));
+	
+				//Log.info("out:path:"+this.getAtt("default"));
+	
+				//added by goto 20121217 start
+//=======
+//				//        		//20130205
+//				//        		if (decos.containsKey("display-type") && decos.getStr("display-type").matches("fisheye")){
+//				//	                //String display_type = decos.getStr("display-type");//.replace("\"", "") +"\" " );
+//				//	                //this.getAtt("display-type", "null");
+//				//	                Log.info("fisheye!");
+//				//	                //System.out.println("type="+type);
+//				//	                html_env.code.append("<div id=\"fisheye\" class=\"fisheye\">\n" +
+//				//        			"<div class=\"fisheyeContainter\">" +
+//				//	                		"<a href=\"#\" class=\"fisheyeItem\"><img class=\"" + HTMLEnv.getClassID(this) +" ");
+//				//        		}else{
+//				//               // if(display_type.matches("null") || !display_type.matches("fisheye")){	//display_type=null;
+//				//                	html_env.code.append("<img class=\"" + HTMLEnv.getClassID(this) +" ");
+//				//                }
+//			}
+//			//        	else if(type=="slideshow"){	//type==slideshow
+//			//        		html_env.code.append("<a href="
+//			//
+//			//
+//			//        	}
+//
+//			html_env2.code.append("<VALUE type=\"img\" class=\"" + Mobile_HTML5Env.getClassID(this) +" ");
+//			if(decos.containsKey("class"))
+//				html_env.code.append(decos.getStr("class"));
+//
+//			//System.out.println("out:path:"+this.getAtt("default"));
+//
+//			//added by goto 20121217 start
+//			//html_env.code.append(" \" src=\"" + path + "/" + this.getAtt("default") + "\"/>");
+//			if(type.matches(".") || type.matches("normal")){					//type==null
+//
+//
+//				//TODO 20131106
+//				String url = "";
+//				//url = this.getAtt("default"); 	//TODO
+//				try{
+//					FuncArg fa1 = (FuncArg) this.Args.get(0);
+//					url = fa1.getStr();
+//				}catch(Exception e){ return; }
+//
+//
+//				//added 20130703  For external URLs.
+//>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 				//html_env.code.append(" \" src=\"" + path + "/" + this.getAtt("default") + "\"/>");
-				if(url.startsWith("http://") || url.startsWith("https://")){
-					html_env.code.append(" \" src=\"" + url + "\"/>");
-				}else{
-					html_env.code.append(" \" src=\"" + path + "/" + url + "\"/>");
-					if(Sass.isBootstrapFlg()){
-						html_env.code.append("\n</DIV>\n");
+				if(type.matches(".") || type.matches("normal")){					//type==null
+	
+	
+					//TODO 20131106
+					String url = "";
+					//url = this.getAtt("default"); 	//TODO
+					try{
+						FuncArg fa1 = (FuncArg) this.Args.get(0);
+						url = fa1.getStr();
+					}catch(Exception e){ return; }
+	
+	
+					//added 20130703  For external URLs.
+					//html_env.code.append(" \" src=\"" + path + "/" + this.getAtt("default") + "\"/>");
+					if(url.startsWith("http://") || url.startsWith("https://")){
+						html_env.code.append(" \" src=\"" + url + "\"/ "+getDeco(decos)+">");
+					}else{
+						html_env.code.append(" \" src=\"" + path + "/" + url + "\"/ "+getDeco(decos)+">");
+						if(Sass.isBootstrapFlg()){
+							html_env.code.append("\n</DIV>\n");
+						}
 					}
+	
+					//20130206
+					if (decos.containsKey("effect") && decos.getStr("effect").matches("bound"))
+						html_env.code.append("</div>");
+	
+	
+					//        		//20130205
+					//        		html_env.code.append(" \" src=\"" + path + "/" + this.getAtt("default") + "\"/>" +
+					//        				"<span>"+this.getAtt("default")+"</span></a></div></div>");
+				}else if(type.matches("slideshow")){	//type==slideshow
+					//System.out.println("slideshowFlg="+slideshowFlg+"  lio="+html_env.code.lastIndexOf("</TD"));
+					//tableタグの削除
+					if(slideshowFlg!=true){
+						//html_env.code.substring(0,html_env.code.lastIndexOf("<TABLE"));
+						html_env.code.append("<div data-role=\"page\" data-add-back-btn=\"true\" id=\"p-gallery\">\n");
+						html_env.code.append("<ul id=\"Gallery\" class=\"gallery\">\n");
+						slideshowFlg=true;
+					}else
+						html_env.code.delete(html_env.code.lastIndexOf("</ul>"),html_env.code.length());
+	
+					slideshowNum++;
+	
+					//column : 列数(<li>のwidthで指定)
+					String column = this.getAtt("column", "null");
+					if(column.matches("null")){	//column==null
+						column = "3";			//default
+					}
+					//        		Log.info(column);
+					int li_width = 100/Integer.parseInt(column);
+					html_env.code.append(
+							"<li style=\"width:"+li_width+"%;\"><a href=\""+path+"/"+this.getAtt("default")+"\" rel=\"external\">" +
+									"<img src=\"" + path + "/" + this.getAtt("default") + "\" class=\"" + Mobile_HTML5Env.getClassID(this) +"\" alt=\""+slideshowNum+"\" /></a></li>\n");
+	
+					//        		//column : 列数(<li>のwidthで指定)
+					//                String column = this.getAtt("column", ".");
+					//                if(type.matches(".")){	//column==null
+					//            		html_env.code.append(
+					//            				"<li><a href=\""+path+"/"+this.getAtt("default")+"\" rel=\"external\">" +
+					//            				//"<li><a href=\""+path+"/"+this.getAtt("default")+"\" class=\"" + HTMLEnv.getClassID(this) +"\" rel=\"external\">" +
+					//            				//"<img src=\"" + path + "/" + this.getAtt("default") + "\" alt=\""+slideshowNum+"\" /></a></li>\n");
+					//            				//"<img src=\"" + path + "/" + this.getAtt("default") + "\" alt=\""+slideshowNum+"\" /></a></li>\n");
+					//            				//"<img src=\"" + path + "/" + this.getAtt("default") + "\" height=100 alt=\""+slideshowNum+"\" /></a></li>\n");
+					//            				"<img src=\"" + path + "/" + this.getAtt("default") + "\" class=\"" + HTMLEnv.getClassID(this) +"\" alt=\""+slideshowNum+"\" /></a></li>\n");
+					//            				//"<img src=\"" + path + "/" + this.getAtt("default") + "\" /*alt=\"num\"*/ />");
+					//        		}else{
+					//        			Log.info(column);
+					//        			int li_width = 100/Integer.parseInt(column);
+					//	        		html_env.code.append(
+					//	        				"<li style=\"width:"+li_width+"%;\"><a href=\""+path+"/"+this.getAtt("default")+"\" rel=\"external\">" +
+					//	        				"<img src=\"" + path + "/" + this.getAtt("default") + "\" class=\"" + HTMLEnv.getClassID(this) +"\" alt=\""+slideshowNum+"\" /></a></li>\n");
+					//        		}
 				}
-
-				//20130206
-				if (decos.containsKey("effect") && decos.getStr("effect").matches("bound"))
-					html_env.code.append("</div>");
-
-
-				//        		//20130205
-				//        		html_env.code.append(" \" src=\"" + path + "/" + this.getAtt("default") + "\"/>" +
-				//        				"<span>"+this.getAtt("default")+"</span></a></div></div>");
-			}else if(type.matches("slideshow")){	//type==slideshow
-				//System.out.println("slideshowFlg="+slideshowFlg+"  lio="+html_env.code.lastIndexOf("</TD"));
-				//tableタグの削除
-				if(slideshowFlg!=true){
-					//html_env.code.substring(0,html_env.code.lastIndexOf("<TABLE"));
-					html_env.code.append("<div data-role=\"page\" data-add-back-btn=\"true\" id=\"p-gallery\">\n");
-					html_env.code.append("<ul id=\"Gallery\" class=\"gallery\">\n");
-					slideshowFlg=true;
-				}else
-					html_env.code.delete(html_env.code.lastIndexOf("</ul>"),html_env.code.length());
-
-				slideshowNum++;
-
-				//column : 列数(<li>のwidthで指定)
-				String column = this.getAtt("column", "null");
-				if(column.matches("null")){	//column==null
-					column = "3";			//default
+				html_env2.code.append(" \" src=\"" + path + "/" + this.getAtt("default") + "\" ");
+				if(decos.containsKey("width")){
+					html_env2.code.append("width=\"" + decos.getStr("width").replace("\"", "")+"\" " );
 				}
-				//        		Log.info(column);
-				int li_width = 100/Integer.parseInt(column);
-				html_env.code.append(
-						"<li style=\"width:"+li_width+"%;\"><a href=\""+path+"/"+this.getAtt("default")+"\" rel=\"external\">" +
-								"<img src=\"" + path + "/" + this.getAtt("default") + "\" class=\"" + Mobile_HTML5Env.getClassID(this) +"\" alt=\""+slideshowNum+"\" /></a></li>\n");
-
-				//        		//column : 列数(<li>のwidthで指定)
-				//                String column = this.getAtt("column", ".");
-				//                if(type.matches(".")){	//column==null
-				//            		html_env.code.append(
-				//            				"<li><a href=\""+path+"/"+this.getAtt("default")+"\" rel=\"external\">" +
-				//            				//"<li><a href=\""+path+"/"+this.getAtt("default")+"\" class=\"" + HTMLEnv.getClassID(this) +"\" rel=\"external\">" +
-				//            				//"<img src=\"" + path + "/" + this.getAtt("default") + "\" alt=\""+slideshowNum+"\" /></a></li>\n");
-				//            				//"<img src=\"" + path + "/" + this.getAtt("default") + "\" alt=\""+slideshowNum+"\" /></a></li>\n");
-				//            				//"<img src=\"" + path + "/" + this.getAtt("default") + "\" height=100 alt=\""+slideshowNum+"\" /></a></li>\n");
-				//            				"<img src=\"" + path + "/" + this.getAtt("default") + "\" class=\"" + HTMLEnv.getClassID(this) +"\" alt=\""+slideshowNum+"\" /></a></li>\n");
-				//            				//"<img src=\"" + path + "/" + this.getAtt("default") + "\" /*alt=\"num\"*/ />");
-				//        		}else{
-				//        			Log.info(column);
-				//        			int li_width = 100/Integer.parseInt(column);
-				//	        		html_env.code.append(
-				//	        				"<li style=\"width:"+li_width+"%;\"><a href=\""+path+"/"+this.getAtt("default")+"\" rel=\"external\">" +
-				//	        				"<img src=\"" + path + "/" + this.getAtt("default") + "\" class=\"" + HTMLEnv.getClassID(this) +"\" alt=\""+slideshowNum+"\" /></a></li>\n");
-				//        		}
+				if(decos.containsKey("height")){
+					html_env2.code.append("height=\"" + decos.getStr("height").replace("\"", "") +"\" " );
+				}
+				html_env2.code.append(" ></VALUE>");
 			}
-			html_env2.code.append(" \" src=\"" + path + "/" + this.getAtt("default") + "\" ");
-			if(decos.containsKey("width")){
-				html_env2.code.append("width=\"" + decos.getStr("width").replace("\"", "")+"\" " );
-			}
-			if(decos.containsKey("height")){
-				html_env2.code.append("height=\"" + decos.getStr("height").replace("\"", "") +"\" " );
-			}
-			html_env2.code.append(" ></VALUE>");
 		}
 		//tk  to make hyper link to image///////////////////////////////////////////////////////////////////////////////////
 		if (html_env.link_flag > 0 || html_env.sinvoke_flag) {
 			html_env.code.append("</a>");
 		}
 		//tk///////////////////////////////////////////////////////////////////////////////////
+		
+		// added by masato 20151124 for plink
+		if (html_env.plinkFlag) {
+			Incremental.outXMLData(html_env.xmlDepth, "</PostLink>\n");
+		}
+		Mobile_HTML5FunctionFlag = false;
 		return;
 	}
-
+	
 	private void Func_imagefile_bs() {
+		Mobile_HTML5FunctionFlag = true;
+		
 		/*
 		 * ImageFile function : <td> <img src="${imgpath}/"+att /> </td>
 		 */
@@ -712,13 +819,21 @@ public class Mobile_HTML5Function extends Function {
 				html_env.code.append(" target=\"" + decos.getStr("target")+"\" ");
 			if(decos.containsKey("class"))
 				html_env.code.append(" class=\"" + decos.getStr("class") + "\" ");
+			html_env.code.append(" "+getDeco(decos));
 			html_env.code.append(">\n");
 
 			Log.out("<A href=\"" + html_env.linkurl + "\">");
 		}
+		// added by masato 20151124 for plink
+		if (html_env.plinkFlag) {
+			String tmp = "";
+			for (int i = 0; i < html_env.valueArray.size(); i++) {
+				tmp += " value" + (i + 1) + "='" + html_env.valueArray.get(i) + "'";
+			}
+			Incremental.outXMLData(html_env.xmlDepth, "<PostLink target='" + html_env.linkUrl + "'" + tmp + ">\n");
+		}
 
-		if(decos.containsKey("lightbox"))
-		{
+		if(decos.containsKey("lightbox")) {
 			Date d1 = new Date();
 			SimpleDateFormat sdf = new SimpleDateFormat("yyyymmddHHmmss");
 			String today = sdf.format(d1);
@@ -737,106 +852,162 @@ public class Mobile_HTML5Function extends Function {
 
 			}
 			html_env.code.append("</a>");
-		}
-		else{
-			if(type.matches(".") || type.matches("normal")){					//type==null
-				if (decos.containsKey("effect") && decos.getStr("effect").matches("bound")){
-					html_env.code.append("<div id=\"bounce\" class=\"ui-widget-content ui-corner-all\">" +
-							"<img class=\"" + Mobile_HTML5Env.getClassID(this) +" ");
-				}else{
-					if(!Sass.isBootstrapFlg()){
-						html_env.code.append("<img class=\"" + Mobile_HTML5Env.getClassID(this) +" ");
-					}else if(Sass.isBootstrapFlg()){
-						//						if(Sass.outofloopFlg.peekFirst()){
-						//							Sass.makeClass(Mobile_HTML5Env.getClassID(this));
-						//							Sass.defineGridBasic(Mobile_HTML5Env.getClassID(this), decos);
-						//							Sass.closeBracket();
-						//						}
-						if(this.decos.containsKey("slide")){	
-							if(this.decos.get("slide").equals("true")){
-								html_env.code.append("<div class=\"item active\">");
-							}else{
-								html_env.code.append("<div class=\"item\">");
+//<<<<<<< HEAD
+		} else {
+			// added by masato 20151124 image function for xml
+			if (Ehtml.isEhtml()) {
+				Incremental.outXMLData(html_env.xmlDepth, "<img class=\'"
+						+ html_env.getClassID(this) + "\' src='" + path + "/"
+						+ this.Args.get(0).getStr() + "'></img>\n");
+
+			} else {
+				if (type.matches(".") || type.matches("normal")) { //type==null
+					if (decos.containsKey("effect")
+							&& decos.getStr("effect").matches("bound")) {
+						html_env.code
+								.append("<div id=\"bounce\" class=\"ui-widget-content ui-corner-all\">"
+										+ "<img class=\""
+										+ Mobile_HTML5Env.getClassID(this)
+										+ " ");
+					} else {
+						if (!Sass.isBootstrapFlg()) {
+							html_env.code.append("<img class=\""
+									+ Mobile_HTML5Env.getClassID(this) + " ");
+						} else if (Sass.isBootstrapFlg()) {
+							//						if(Sass.outofloopFlg.peekFirst()){
+							//							Sass.makeClass(Mobile_HTML5Env.getClassID(this));
+							//							Sass.defineGridBasic(Mobile_HTML5Env.getClassID(this), decos);
+							//							Sass.closeBracket();
+							//						}
+							if (this.decos.containsKey("slide")) {
+								if (this.decos.get("slide").equals("true")) {
+									html_env.code
+											.append("<div class=\"item active\">");
+								} else {
+									html_env.code
+											.append("<div class=\"item\">");
+								}
+								html_env.code.append("<img ");
+							} else {
+								//							html_env.code.append("<div class=\"" + Mobile_HTML5Env.getClassID(this) + "\">");
+								html_env.code
+										.append("<img class=\"img-responsive ");
+//=======
+//		}
+//		else{
+//			if(type.matches(".") || type.matches("normal")){					//type==null
+//				if (decos.containsKey("effect") && decos.getStr("effect").matches("bound")){
+//					html_env.code.append("<div id=\"bounce\" class=\"ui-widget-content ui-corner-all\">" +
+//							"<img class=\"" + Mobile_HTML5Env.getClassID(this) +" ");
+//				}else{
+//					if(!Sass.isBootstrapFlg()){
+//						html_env.code.append("<img class=\"" + Mobile_HTML5Env.getClassID(this) +" ");
+//					}else if(Sass.isBootstrapFlg()){
+//						//						if(Sass.outofloopFlg.peekFirst()){
+//						//							Sass.makeClass(Mobile_HTML5Env.getClassID(this));
+//						//							Sass.defineGridBasic(Mobile_HTML5Env.getClassID(this), decos);
+//						//							Sass.closeBracket();
+//						//						}
+//						if(this.decos.containsKey("slide")){
+//							if(this.decos.get("slide").equals("true")){
+//								html_env.code.append("<div class=\"item active\">");
+//							}else{
+//								html_env.code.append("<div class=\"item\">");
+//>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 							}
-							html_env.code.append("<img ");
-						}else{
-							//							html_env.code.append("<div class=\"" + Mobile_HTML5Env.getClassID(this) + "\">");
-							html_env.code.append("<img class=\"img-responsive ");
+						}
+					}
+
+					if (!decos.containsKey("width")) {
+						if (!Sass.isBootstrapFlg()) {
+							html_env.code.append("\" width=\"100% ");
 						}
 					}
 				}
+				html_env2.code.append("<VALUE type=\"img\" class=\""
+						+ Mobile_HTML5Env.getClassID(this) + " ");
+				if (decos.containsKey("class"))
+					html_env.code.append(decos.getStr("class"));
+				if (type.matches(".") || type.matches("normal")) { //type==null
 
-				if(!decos.containsKey("width")){
-					if(!Sass.isBootstrapFlg()){
-						html_env.code.append("\" width=\"100% " );
+					//TODO 20131106
+					String url = "";
+					//url = this.getAtt("default"); 	//TODO
+					try {
+						FuncArg fa1 = (FuncArg) this.Args.get(0);
+						url = fa1.getStr();
+					} catch (Exception e) {
+						return;
 					}
-				}
-			}
 
-			html_env2.code.append("<VALUE type=\"img\" class=\"" + Mobile_HTML5Env.getClassID(this) +" ");
-			if(decos.containsKey("class"))
-				html_env.code.append(decos.getStr("class"));
-
-			if(type.matches(".") || type.matches("normal")){					//type==null
-
-				//TODO 20131106
-				String url = "";
-				//url = this.getAtt("default"); 	//TODO
-				try{
-					FuncArg fa1 = (FuncArg) this.Args.get(0);
-					url = fa1.getStr();
-				}catch(Exception e){ return; }
-
-				if(url.startsWith("http://") || url.startsWith("https://")){
-					html_env.code.append(" \" src=\"" + url + "\"/>");
-				}else{
-					html_env.code.append(" \" src=\"" + path + "/" + url + "\"/>");
-					//					html_env.code.append("</div>");
-					if(Sass.isBootstrapFlg()){
-						//						html_env.code.append("\n</DIV>\n");
+					if (url.startsWith("http://") || url.startsWith("https://")) {
+						html_env.code.append(" \" src=\"" + url + "\"/ "+getDeco(decos)+">");
+					} else {
+						html_env.code.append(" \" src=\"" + path + "/" + url+ "\" "+getDeco(decos)+"/>");
+						//					html_env.code.append("</div>");
+						if (Sass.isBootstrapFlg()) {
+							//						html_env.code.append("\n</DIV>\n");
+						}
 					}
+
+					//20130206
+					if (decos.containsKey("effect")
+							&& decos.getStr("effect").matches("bound"))
+						html_env.code.append("</div>");
+
+				} else if (type.matches("slideshow")) { //type==slideshow
+					if (slideshowFlg != true) {
+						html_env.code
+								.append("<div data-role=\"page\" data-add-back-btn=\"true\" id=\"p-gallery\">\n");
+						html_env.code
+								.append("<ul id=\"Gallery\" class=\"gallery\">\n");
+						slideshowFlg = true;
+					} else
+						html_env.code.delete(
+								html_env.code.lastIndexOf("</ul>"),
+								html_env.code.length());
+
+					slideshowNum++;
+
+					//column : 列数(<li>のwidthで指定)
+					String column = this.getAtt("column", "null");
+					if (column.matches("null")) { //column==null
+						column = "3"; //default
+					}
+					//	        		Log.info(column);
+					int li_width = 100 / Integer.parseInt(column);
+					html_env.code.append("<li style=\"width:" + li_width
+							+ "%;\"><a href=\"" + path + "/"
+							+ this.getAtt("default") + "\" rel=\"external\">"
+							+ "<img src=\"" + path + "/"
+							+ this.getAtt("default") + "\" class=\""
+							+ Mobile_HTML5Env.getClassID(this) + "\" alt=\""
+							+ slideshowNum + "\" /></a></li>\n");
 				}
-
-				//20130206
-				if (decos.containsKey("effect") && decos.getStr("effect").matches("bound"))
-					html_env.code.append("</div>");
-
-
-			}else if(type.matches("slideshow")){	//type==slideshow
-				if(slideshowFlg!=true){
-					html_env.code.append("<div data-role=\"page\" data-add-back-btn=\"true\" id=\"p-gallery\">\n");
-					html_env.code.append("<ul id=\"Gallery\" class=\"gallery\">\n");
-					slideshowFlg=true;
-				}else
-					html_env.code.delete(html_env.code.lastIndexOf("</ul>"),html_env.code.length());
-
-				slideshowNum++;
-
-				//column : 列数(<li>のwidthで指定)
-				String column = this.getAtt("column", "null");
-				if(column.matches("null")){	//column==null
-					column = "3";			//default
+				html_env2.code.append(" \" src=\"" + path + "/"
+						+ this.getAtt("default") + "\" ");
+				if (decos.containsKey("width")) {
+					html_env2.code.append("width=\""
+							+ decos.getStr("width").replace("\"", "") + "\" ");
 				}
-				//	        		Log.info(column);
-				int li_width = 100/Integer.parseInt(column);
-				html_env.code.append(
-						"<li style=\"width:"+li_width+"%;\"><a href=\""+path+"/"+this.getAtt("default")+"\" rel=\"external\">" +
-								"<img src=\"" + path + "/" + this.getAtt("default") + "\" class=\"" + Mobile_HTML5Env.getClassID(this) +"\" alt=\""+slideshowNum+"\" /></a></li>\n");
+				if (decos.containsKey("height")) {
+					html_env2.code.append("height=\""
+							+ decos.getStr("height").replace("\"", "") + "\" ");
+				}
+				html_env2.code.append(" ></VALUE>");
 			}
-			html_env2.code.append(" \" src=\"" + path + "/" + this.getAtt("default") + "\" ");
-			if(decos.containsKey("width")){
-				html_env2.code.append("width=\"" + decos.getStr("width").replace("\"", "")+"\" " );
-			}
-			if(decos.containsKey("height")){
-				html_env2.code.append("height=\"" + decos.getStr("height").replace("\"", "") +"\" " );
-			}
-			html_env2.code.append(" ></VALUE>");
 		}
 		//tk  to make hyper link to image///////////////////////////////////////////////////////////////////////////////////
 		if (html_env.link_flag > 0 || html_env.sinvoke_flag) {
 			html_env.code.append("</a>");
 		}
 		//tk///////////////////////////////////////////////////////////////////////////////////
+		
+		// added by masato 20151124 for plink
+		if (html_env.plinkFlag) {
+			Incremental.outXMLData(html_env.xmlDepth, "</PostLink>\n");
+		}
+		Mobile_HTML5FunctionFlag = false;
 		return;
 	}
 
@@ -914,7 +1085,7 @@ public class Mobile_HTML5Function extends Function {
 
 	//added by goto 20130308 start  "anchor"  anchor(), a(), url(), mail()
 	/** anchor関数: anchor( name/button-name/button-url, url, type(bt/button/img/image) )
-	 *          @{ width=~, height=~, transition=~ } 
+	 *          @{ width=~, height=~, transition=~ }
     /*    url("title", "detail/imgURL", int type), anchor(), a()    */
 	/*    <type:1> a(リンク元の名前, リンク先URL) <=> a(リンク元の名前, リンク先URL, 1)    */
 	/*    <type:2> a(画像URL, リンク先URL, 2)    	   	*/
@@ -971,8 +1142,15 @@ public class Mobile_HTML5Function extends Function {
 				}
 
 			}catch(Exception e){		//引数2つの場合
-				statement = getTextAnchor(url, name);
-				//statement = "<a href=\""+url+"\""+transition()+prefetch()+target(url)+">"+name+"</a>";
+				// added by masato 20151124 anchor function for xml
+				if (Ehtml.isEhtml()) {
+					// statement = "<" + fa1 + " func='anchor' url='"+ url +
+					// "'>" + name + "</" + fa1 + ">\n";
+					statement = "<Anchor url='" + url + "'>" + "<" + fa1 + ">"
+							+ name + "</" + fa1 + "></Anchor>\n";
+				} else
+					statement = getTextAnchor(url, name);
+					//statement = "<a href=\""+url+"\""+transition()+prefetch()+target(url)+">"+name+"</a>";
 			}
 
 		}catch(Exception e){	//引数1つの場合
@@ -981,6 +1159,10 @@ public class Mobile_HTML5Function extends Function {
 		}
 
 		//    	// 各引数毎に処理した結果をHTMLに書きこむ
+		// added by masato 20151124 anchor function for xml
+		if (Ehtml.isEhtml()) {
+			Incremental.outXMLData(html_env.xmlDepth, statement);
+		}
 		//    	html_env.code.append(statement);
 		return statement;
 	}
@@ -1022,8 +1204,8 @@ public class Mobile_HTML5Function extends Function {
 	//					s += name.charAt(i);
 	//				}
 	//			}
-	//			
-	//			
+	//
+	//
 	//			s=s.replaceAll("\\\\\\[", "[").replaceAll("\\\\\\]", "]");
 	////			if(a1==0 && a2==name.length()-1)	A=name.substring(a1,a2+1);
 	////			else								A=name.substring(a1+1,a2);
@@ -1031,8 +1213,8 @@ public class Mobile_HTML5Function extends Function {
 	////			notA1=name.substring(0,a1).replaceAll("\\\\\\[", "[").replaceAll("\\\\\\]", "]");
 	////			notA2=name.substring(a2+1).replaceAll("\\\\\\[", "[").replaceAll("\\\\\\]", "]");
 	//		}catch(Exception e){}
-	//		
-	//		
+	//
+	//
 	//		Log.i("s:"+s);
 	//		return s;
 	////		return notA1+"<a href=\""+url+"\""+className()+transition()+prefetch()+target(url)+">"+A+"</a>"+notA2;
@@ -1095,15 +1277,17 @@ public class Mobile_HTML5Function extends Function {
 	private String Func_line() {
 		String statement = "\n<hr";
 		try{
-			//color
-			FuncArg fa1 = (FuncArg) this.Args.get(0);
-			if(!fa1.getStr().equals(""))
-				statement += " color=\""+fa1.getStr()+"\"";
 			//size
+			FuncArg fa1 = (FuncArg) this.Args.get(0);
+			statement += " size=\""+fa1.getStr()+"\"";
+			//color
 			FuncArg fa2 = (FuncArg) this.Args.get(1);
-			statement += " size=\""+fa2.getStr()+"\"";
+			if(!fa2.getStr().equals(""))
+				statement += " color=\""+fa2.getStr()+"\"";
+			else
+				statement += " color=\"black\"";
 		}catch(Exception e){
-			statement += " size=\"1\"";
+			statement += " color=\"black\"";
 		}
 		statement += ">\n";
 
@@ -1201,19 +1385,19 @@ public class Mobile_HTML5Function extends Function {
 				"<div class=\"ui-btn-right\">\n" +
 				"	<table border=\"0\" cellpadding=\"0\" cellspacing=\"0\"><tr>\n";
 		if(!home.isEmpty()){
-			headerString += 
+			headerString +=
 					"	<td>\n" +
 							"		<a href=\""+home+"\" data-role=\"button\" data-icon=\"home\" data-iconpos=\"notext\" data-mini=\"true\" data-ajax=\"false\"></a>\n" +
 							"	</td>\n";
 		}
-		headerString += 
+		headerString +=
 				"	<td>\n" +
 						"		<form style=\"display:inline;\">\n" +
 						"			<input type=\"button\" data-icon=\"forward\" data-iconpos=\"notext\" data-mini=\"true\" onClick=\"history.forward()\" >\n" +
 						"		</form>\n" +
 						"	</td>\n";
 		if(Start_Parse.sessionFlag || url.size()>0){
-			headerString += 
+			headerString +=
 					"	<td>\n" +
 							"		<a href=\"#popupMenu\" data-rel=\"popup\" data-role=\"button\" data-icon=\"grid\" data-iconpos=\"notext\" data-mini=\"true\"></a>\n" +
 							"		<div data-role=\"popup\" id=\"popupMenu\" data-transition=\"slidedown\" style=\"width:95%;\" data-overlay-theme=\"a\">\n" +
@@ -1234,12 +1418,12 @@ public class Mobile_HTML5Function extends Function {
 			if(Start_Parse.sessionFlag){
 				headerString += "				<li><a href=\"\" data-rel=\"back\" onclick=\"document.LOGOUTpanel1.submit();return falese;\">Logout</a></li>\n";
 			}
-			headerString += 
+			headerString +=
 					"			</ul>\n" +
 							"		</div>\n" +
 							"	</td>\n";
 		}
-		headerString += 
+		headerString +=
 				"	</tr></table>\n" +
 						"</div>\n\n" +
 						"<div>"+title+"</div>\n" +
@@ -1377,27 +1561,27 @@ public class Mobile_HTML5Function extends Function {
 	//    	if(popupType==2){	//popup button
 	//    		btHTML = " data-role=\"button\" data-icon=\"arrow-r\"";
 	//    	}
-	//    	
+	//
 	//    	String statement = "";
 	//    	FuncArg fa1 = (FuncArg) this.Args.get(0), fa2, fa3;
 	//    	String title, detailORurl, type;
 	//    	int type1Flg = 0; //type1(文字)フラグ
-	//    	
+	//
 	////    	Log.info("popCount = "+popCount);
 	//    	try{					//引数2つ or 3つの場合
 	//    		fa2 = (FuncArg) this.Args.get(1);
 	//    		detailORurl = fa2.getStr();
 	//    		if(detailORurl.equals(""))	return "";		//added 20130910
 	//    		title = fa1.getStr();
-	//    		
+	//
 	//    		try{						//引数3つの場合
 	//    			fa3 = (FuncArg) this.Args.get(2);
 	//    			type = fa3.getStr();
-	//    			
+	//
 	//    			//type=1 -> 文字
 	//    			if(type.equals("1") || type.equals("text") || type.equals("")){
 	//    				type1Flg = 1;
-	//    				
+	//
 	//    				//type=2 -> imageFile
 	//    			}else if(type.equals("2") || type.equals("image") || type.equals("img")){
 	//    				statement += "	<a href=\"#popup"+getCount(popCount)+"\" data-rel=\"popup\""+btHTML+" data-inline=\"true\" class=\"ui-li-inside\">"+getPopupTitle(title, "Photo", popupType)+"</a>\n" +
@@ -1405,7 +1589,7 @@ public class Mobile_HTML5Function extends Function {
 	//    						"	<div data-role=\"popup\" id=\"popup"+getCount(popCount)+"\" data-transition=\"pop\" style=\"width:95%;\" data-overlay-theme=\"a\">\n" +
 	//    						"		<a href=\"#\" data-rel=\"back\" data-role=\"button\" data-theme=\"a\" data-icon=\"delete\" data-iconpos=\"notext\" class=\"ui-btn-right\">Close</a>\n" +
 	//    						"		<img src=\""+detailORurl+"\"";
-	//    				
+	//
 	////        			//type=2 width,height指定時の処理
 	////            		if(decos.containsKey("width"))
 	////            			statement += " width="+decos.getStr("width").replace("\"", "");
@@ -1415,19 +1599,19 @@ public class Mobile_HTML5Function extends Function {
 	////            		}
 	////        			if(decos.containsKey("height"))
 	////        				statement += " height="+decos.getStr("height").replace("\"", "");
-	//    				
+	//
 	//    				statement += ">\n";
-	//    				
+	//
 	//    				////画像下部にtitleを付加
 	//    				//if(!title.equals(""))	statement += "		<p style=\"margin:0px;\">"+title+"</p>\n";
-	//    				
+	//
 	//    				statement += "	</div>\n";
 	//    			}
-	//    			
+	//
 	//    		}catch(Exception e){		//引数2つの場合
 	//    			type1Flg = 1;	//type=1 -> 文字
 	//    		}
-	//    		
+	//
 	//    		//type=1 -> 文字
 	//    		if(type1Flg == 1){
 	//    			statement += "	<a href=\"#popup"+getCount(popCount)+"\" data-rel=\"popup\""+btHTML+" data-inline=\"true\">"+getPopupTitle(title, "Open", popupType)+"</a>\n";
@@ -1437,12 +1621,12 @@ public class Mobile_HTML5Function extends Function {
 	//    			statement += "		<p>"+detailORurl+"</p>\n";
 	//    			statement += "	</div>\n";
 	//    		}
-	//    		
+	//
 	//    	}catch(Exception e){	//引数1つの場合
 	//    		Log.info("<Warning> pop関数の引数が不足しています。 ex. pop(title, Detail/URL[, typeValue])");
 	//    		return "";
 	//    	}
-	//    	
+	//
 	//    	popCount++;
 	//    	return statement;
 	//    }
@@ -1500,7 +1684,7 @@ public class Mobile_HTML5Function extends Function {
 		return statement;
 	}
 
-	private String Func_pop_bs(int popupType) {	//popupType: 1=anchor, 2=button, 3=image, 4=over    	
+	private String Func_pop_bs(int popupType) {	//popupType: 1=anchor, 2=button, 3=image, 4=over
 		String statement = "";
 		String title = getValue(1);
 		String header = getValue(2);
@@ -1526,8 +1710,8 @@ public class Mobile_HTML5Function extends Function {
 		}else if(popupType==2){
 			statement += "<button type=\"button\" class=\"btn btn-info btn-lg\"  data-toggle=\"modal\" data-target=\"#myModal"+getCount(popCount)+"\">" + title + "</button>\n";
 		}else if(popupType==3){
-			statement += "<a data-toggle=\"modal\" data-target=\"#myModal" + getCount(popCount)+"\">" + 
-					"<img src=\"" + title + "\" class=\"img-responsive\">" + 
+			statement += "<a data-toggle=\"modal\" data-target=\"#myModal" + getCount(popCount)+"\">" +
+					"<img src=\"" + title + "\" class=\"img-responsive\">" +
 					"</a>\n";
 		}
 
@@ -1551,7 +1735,7 @@ public class Mobile_HTML5Function extends Function {
 		}
 
 		statement += "</div>\n" +
-				"</div>\n" + 
+				"</div>\n" +
 				"</div>\n";
 
 		popCount++;
@@ -1794,7 +1978,7 @@ public class Mobile_HTML5Function extends Function {
 
 
 		String statement = "";
-		statement += 
+		statement +=
 				"<!-- Search start -->\n" +
 						"<!-- Search Panel start -->\n" +
 						"<br>\n" +
@@ -1812,10 +1996,10 @@ public class Mobile_HTML5Function extends Function {
 						"  <thead>\n" +
 						"    <tr id=\"Search"+searchCount+"_text_th\">\n";
 		for(int i=0; i<col_num; i++){
-			statement += 
+			statement +=
 					"        <th data-priority=\"1\">"+s_name_array[i]+"</th>\n";
 		}
-		statement += 
+		statement +=
 				"    </tr>\n" +
 						"  </thead>\n" +
 						"  <tbody>\n" +
@@ -1824,7 +2008,7 @@ public class Mobile_HTML5Function extends Function {
 			statement +=
 					"        <td id=\"Search"+searchCount+"_text"+(i+1)+"\" style=\"white-space:nowrap; overflow:hidden; text-overflow:ellipsis;\"></td>\n";
 		}
-		statement += 
+		statement +=
 				"    </tr>\n" +
 						"  </tbody>\n" +
 						"</table>\n" +
@@ -2039,7 +2223,7 @@ public class Mobile_HTML5Function extends Function {
 						"?>\n";
 		//End of php
 
-		statement += 
+		statement +=
 				"\n" +
 						"<script type=\"text/javascript\">\n" +
 						"function Search"+searchCount+"_echo1(str){\n" +
@@ -2270,7 +2454,7 @@ public class Mobile_HTML5Function extends Function {
 
 		String statement = "";
 		//php
-		statement += 
+		statement +=
 				"<!-- Select start -->\n" +
 						"<!-- Select Panel start -->\n" +
 						"<br>\n" +
@@ -2284,10 +2468,10 @@ public class Mobile_HTML5Function extends Function {
 						"  <thead>\n" +
 						"    <tr id=\"Select"+selectCount+"_text_th\">\n";
 		for(int i=0; i<col_num; i++){
-			statement += 
+			statement +=
 					"        <th data-priority=\"1\">"+s_name_array[i]+"</th>\n";
 		}
-		statement += 
+		statement +=
 				"    </tr>\n" +
 						"  </thead>\n" +
 						"  <tbody>\n" +
@@ -2296,7 +2480,7 @@ public class Mobile_HTML5Function extends Function {
 			statement +=
 					"        <td id=\"Select"+selectCount+"_text"+(i+1)+"\" style=\"white-space:nowrap; overflow:hidden; text-overflow:ellipsis;\"></td>\n";
 		}
-		statement += 
+		statement +=
 				"    </tr>\n" +
 						"  </tbody>\n" +
 						"</table>\n" +
@@ -2574,7 +2758,7 @@ public class Mobile_HTML5Function extends Function {
 		//End of php
 
 
-		statement += 
+		statement +=
 				"\n" +
 						"<script type=\"text/javascript\">\n" +
 						"function Select"+selectCount+"_echo1(str){\n" +
@@ -2800,8 +2984,33 @@ public class Mobile_HTML5Function extends Function {
 
 			if(s_array[i].replaceAll(" ","").contains("@{")){
 				str = s_array[i].substring(s_array[i].lastIndexOf("@")+1);	//@以下の文字列
-				at_array[i] = str;
+//				at_array[i] = str;
 				//Log.e(str);
+				
+				//201911 @{val=}	//TODO ehtmlだとval=''のクォーテーションのエスケープが必要なためうまくいかない 
+				//@{val=△,〜} -> =(△)@{,〜}
+				if (str.replaceAll(" ","").contains("val=")) {
+					String valstr = "";
+					Log.i("str = "+str);
+//					str = str.replaceAll(" ","");
+					String str_l = str.substring(0, str.indexOf("val"));
+					String str_r = str.substring(str.indexOf("val")+3);
+					str_r = str.substring(str.indexOf("=")+1).trim();
+					Log.i("str_l = "+str_l);
+					Log.i("str_r = "+str_r);
+					String str_r_startsWith = str_r.substring(0, 1);	// ' or "
+					valstr = str_r.substring(1, str_r.indexOf(str_r_startsWith));
+					str_r = str_r.substring(str_r.indexOf(str_r_startsWith)+1);
+					if (str_r.contains(",")) 
+						str_r = str_r.substring(str_r.indexOf(",")+1);
+					Log.i("str_r = "+str_r);
+					Log.i("valstr = "+valstr);
+					str = str_l + str_r;
+					Log.i("str = "+str);
+				}
+				
+				at_array[i] = str;
+				
 				if(str.contains("='")){
 					//image='', file=''
 					String l = str.substring(str.indexOf("='")+2);
@@ -2817,8 +3026,8 @@ public class Mobile_HTML5Function extends Function {
 				if(str.contains("textarea"))
 					textareaFlg[i] = true;
 				/*if(str.contains("textarea="))
-				{ 
-					
+				{
+
 				}*/
 				if(str.contains("hidden"))
 					hiddenFlg[i] = true;
@@ -2857,7 +3066,7 @@ public class Mobile_HTML5Function extends Function {
 					a = a.substring(0,a.indexOf("=")).trim() + a.substring(a.indexOf(")")+1).trim();
 					s_array[i] = s_array[i].substring(0,s_array[i].indexOf("=")).trim() + s_array[i].substring(s_array[i].indexOf(")")+1).trim();
 				}else if(a_right.startsWith("time(") || a_right.startsWith("date(")){
-					String d = s_array[i].substring(s_array[i].indexOf("(")+1,s_array[i].lastIndexOf(")")).trim(); 
+					String d = s_array[i].substring(s_array[i].indexOf("(")+1,s_array[i].lastIndexOf(")")).trim();
 					$time_array[i] = "date(\""+( (d.equals(""))? ("Y-m-d H:i:s") : (d) )+"\")";	//"date(\"Y/m/d(D) H:i:s\")";
 					$session_array[i] = "";
 					$gps_array[i] = "";
@@ -2881,6 +3090,14 @@ public class Mobile_HTML5Function extends Function {
 					$gps_array[i] = "";
 					a = a.substring(0,a.indexOf("=")).trim() + a.substring(a.indexOf("}")+1).trim();
 					s_array[i] = s_array[i].substring(0,s_array[i].indexOf("=")).trim() + s_array[i].substring(s_array[i].indexOf("}")+1).trim();
+				}else if(a.contains("(") && a.contains(")")){
+					String x = s_array[i];
+					text_array[i] = x.substring(x.indexOf("(")+"(".length(), x.indexOf(")"));
+					$session_array[i] = "";
+					$time_array[i] = "";
+					$gps_array[i] = "";
+					a = a.substring(0,a.indexOf("=")).trim() + a.substring(a.indexOf(")")+1).trim();
+					s_array[i] = s_array[i].substring(0,s_array[i].indexOf("=")).trim() + s_array[i].substring(s_array[i].indexOf(")")+1).trim();
 				}else{
 					$session_array[i] = "";
 					$time_array[i] = "";
@@ -3006,7 +3223,7 @@ public class Mobile_HTML5Function extends Function {
 		}
 
 		//php
-		statement += 
+		statement +=
 				"\n" +
 						"<!-- SSQL Insert"+insertCount+" start -->\n" +
 						"<!-- SSQL Insert"+insertCount+" FORM start -->\n" +
@@ -3015,7 +3232,7 @@ public class Mobile_HTML5Function extends Function {
 						//"<div style=\"padding:3px 5px;border-color:hotpink;border-width:0 0 1px 7px;border-style:solid;background:#F8F8F8; font-size:30;\" id=\"SSQL_insertTitle"+insertCount+"\">"+title+"</div>\n" +
 						"<div id=\"SSQL_insert"+insertCount+"panel\" style=\"\" data-role=\"none\">\n";
 		if(!title.isEmpty()){
-			statement += 
+			statement +=
 					"<hr>\n<div style=\"font-size:30;\" id=\"SSQL_insertTitle"+insertCount+"\">"+title+"</div>\n<hr>\n" +
 							"<br>\n";
 		}
@@ -3037,7 +3254,7 @@ public class Mobile_HTML5Function extends Function {
 
 					if(!at.contains("radio") && !at.contains("select") && !at.contains("check") && pipeCount==1){
 						//編集不可テキスト ex){2013秋}
-						statement += 
+						statement +=
 								"	<"+((!textareaFlg[i])?("input"):("textarea"))+" type=\""+((!hiddenFlg[i])?("text"):("hidden"))+"\" disabled=\"disabled\" value=\""+( (!s_name_array[i].equals(""))? (s_name_array[i]+": "):("") )+"" +
 										""+( (!textareaFlg[i])? ("\n") : ((!s_name_array[i].equals(""))? ("\">"+s_name_array[i]+": "):("")) )+text_array[i]+"" +
 										""+((!textareaFlg[i])?("\">"):("</textarea>"))+"\n";
@@ -3047,7 +3264,7 @@ public class Mobile_HTML5Function extends Function {
 								""+( (!textareaFlg[i])? ("\n") : ((!s_name_array[i].equals(""))? ("\">"+s_name_array[i]+": "):("")) )+text_array[i]+"" +
 								""+((!textareaFlg[i])?("\">"):(updateFromValue+"</textarea>"))+"\n";
 						if(!noinsertFlg[i]){
-							statement += 
+							statement +=
 									"	<input type=\"hidden\" id=\"SSQL_insert"+insertCount+"_words"+(++insertWordCount)+"\" name=\"SSQL_insert"+insertCount+"_words"+(insertWordCount)+"\" value=\""+text_array[i]+"\">\n";
 							update_statement += //TODO: button
 									"	<input type=\"hidden\" id=\"SSQL_insert"+insertCount+"_words"+(insertWordCount)+"\" name=\"SSQL_insert"+insertCount+"_words"+(insertWordCount)+"\" value=\""+text_array[i]+"\">\n";
@@ -3057,7 +3274,7 @@ public class Mobile_HTML5Function extends Function {
 						//							String bt1=ss.substring(0,ss.indexOf("|")).trim();
 						//							String bt2=ss.substring(ss.indexOf("|")+1,ss.length()-1).trim();
 						//							insertWordCount++;
-						//							statement += 
+						//							statement +=
 						//									"	<div class=\"ui-grid-a\">\n" +
 						//									"		<div class=\"ui-block-a\">\n" +
 						//									"    		<input type=\"submit\" id=\"SSQL_insert"+insertCount+"_words"+(insertWordCount)+"\" name=\"SSQL_insert"+insertCount+"_words"+(insertWordCount)+"\" value=\""+bt1+"\" data-theme=\"a\" onClick=\"SSQL_insert"+insertCount+"()\">\n" +
@@ -3083,10 +3300,22 @@ public class Mobile_HTML5Function extends Function {
 						//セレクトボックス ex){出席|欠席|その他}@{selectbox もしくは select}
 						//チェックボックス ex){出席|欠席|その他}@{checkbox もしくは check}
 						//※ DBから値を取得する場合の記述例：{select name, id from movie}@{sql, selectbox}
-						statement += "   <div data-role=\"controlgroup\">\n" + 
-								"		<div style=\"text-align:left; font-size:16.5px\">"+s_name_array[i]+"</div>\n";
-						update_statement += "   <div data-role=\"controlgroup\">\n" + 
-								"		<div style=\"text-align:left; font-size:16.5px\">"+s_name_array[i]+"</div>\n";
+//<<<<<<< HEAD
+						if (!at.contains("noplaceholder") && inputType.equals("select")) {
+							statement += "   <div data-role=\"controlgroup\" style=\"padding: 15px 0px 15px 0px;\">\n";
+							update_statement += "   <div data-role=\"controlgroup\" style=\"padding: 15px 0px 15px 0px;\">\n";
+						}else{
+							statement += "   <div data-role=\"controlgroup\" style=\"padding: 15px 0px 15px 0px;\">\n" +
+									"		<div style=\"text-align:left;"+((!Ehtml.isEhtml2())? " font-size:16.5px" : "")+"\">"+s_name_array[i]+":</div>\n";
+							update_statement += "   <div data-role=\"controlgroup\" style=\"padding: 15px 0px 15px 0px;\">\n" +
+									"		<div style=\"text-align:left;"+((!Ehtml.isEhtml2())? " font-size:16.5px" : "")+"\">"+s_name_array[i]+":</div>\n";
+						}
+//=======
+//						statement += "   <div data-role=\"controlgroup\">\n" +
+//								"		<div style=\"text-align:left; font-size:16.5px\">"+s_name_array[i]+"</div>\n";
+//						update_statement += "   <div data-role=\"controlgroup\">\n" +
+//								"		<div style=\"text-align:left; font-size:16.5px\">"+s_name_array[i]+"</div>\n";
+//>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 						insertWordCount++;
 
 						if(inputType.equals("select")){
@@ -3096,8 +3325,10 @@ public class Mobile_HTML5Function extends Function {
 							//							statement += "		<select name=\""+name+"\" data-native-menu=\"false\">\n";
 							//							update_statement += "		<select name=\""+name+"\" data-native-menu=\"false\">\n";	//TODO?
 							//20161207 bootstrap
-							statement += "		<select class=\"form-control\" name=\""+name+"\">\n";
-							update_statement += "		<select class=\"form-control\" name=\""+name+"\">\n";	//TODO?
+
+							String placeholder_for_select = "			<option value=\"\" style=\"background: #00001c;\" disabled selected>"+s_name_array[i]+"</option>\n";
+							statement += "		<select class=\"form-control\" name=\""+name+"\">\n" + placeholder_for_select;
+							update_statement += "		<select class=\"form-control\" name=\""+name+"\">\n" + placeholder_for_select;	//TODO?
 						}
 						for(int k=1; k<=pipeCount; k++){
 							String val = ss.substring(0,ss.indexOf("|")).trim();
@@ -3123,7 +3354,7 @@ public class Mobile_HTML5Function extends Function {
 									radioButton_array[i] = name;
 
 								if(!isSQL){
-									statement += 
+									statement +=
 											"		<input type=\""+inputType+"\" name=\""+name+"\" id=\""+id+"_"+k+"\" value=\""+insert_val+"\""+checked+">\n" +
 													"		<label for=\""+id+"_"+k+"\">"+val+"</label>\n";
 									update_statement += //TODO radio button
@@ -3131,7 +3362,7 @@ public class Mobile_HTML5Function extends Function {
 											"		<label for=\""+id+"_"+k+"\">"+val+"</label>\n";
 								}else{
 									//DBから値を取得する処理 ex){select name, id from movie}@{sql, selectbox}
-									php_echo += 
+									php_echo +=
 											"			echo '		<input type=\""+inputType+"\" name=\"'.$name.'\" id=\"'.$id.'_'.$i.'\" value=\"'.$insert_val.'\"'.(($i != $checked_num)? '' : '"+checked+"').\">\n\";\n" +
 													"	    	echo '		<label for=\"'.$id.'_'.$i.'\">'.$val.\"</label>\n\";\n";
 								}
@@ -3139,17 +3370,32 @@ public class Mobile_HTML5Function extends Function {
 							else if(inputType.equals("select")){
 								//セレクトボックス
 								if(!isSQL){
-									statement += "			<option value=\""+insert_val+"\""+((k>1)? (""):(" selected"))+">"+val+"</option>\n";
-									update_statement += "			<option value=\""+insert_val+"\""+((k>1)? (""):(" selected"))+">"+val+"</option>\n";	//TODO?
+									if (!at.contains("noplaceholder")) {
+										statement += "			<option value=\""+insert_val+"\">"+val+"</option>\n";
+										update_statement += "			<option value=\""+insert_val+"\">"+val+"</option>\n";	//TODO?
+									}else{
+										statement += "			<option value=\""+insert_val+"\""+((k>1)? (""):(" selected"))+">"+val+"</option>\n";
+										update_statement += "			<option value=\""+insert_val+"\""+((k>1)? (""):(" selected"))+">"+val+"</option>\n";	//TODO?
+									}
 								}else{
 									//DBから値を取得する処理 ex){select name, id from movie}@{sql, selectbox}
-									php_echo += 
-											"			echo '			<option value=\"'.$insert_val.'\"'.(($i != $checked_num)? '' : ' selected').'>'.$val.'</option>\n';\n";
+//<<<<<<< HEAD
+									if (!at.contains("noplaceholder")) {
+										php_echo +=
+												"			echo '			<option value=\"'.$insert_val.'\">'.$val.'</option>\n';\n";
+									}else{
+										php_echo +=
+												"			echo '			<option value=\"'.$insert_val.'\"'.(($i != $checked_num)? '' : ' selected').'>'.$val.'</option>\n';\n";
+									}
+//=======
+//									php_echo +=
+//											"			echo '			<option value=\"'.$insert_val.'\"'.(($i != $checked_num)? '' : ' selected').'>'.$val.'</option>\n';\n";
+//>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 								}
 							}
 
 							if(isSQL){
-								String b = "require_once '"+fn+"';";
+								String b = "require_once ('"+fn+"');";
 								if(!Start_Parse.sessionFlag)
 									b = "<?php "+b+" ?>\n";
 								else
@@ -3169,7 +3415,7 @@ public class Mobile_HTML5Function extends Function {
 										"   $sql = '"+sql+"';\n" +
 										"	try{\n";
 								if(DBMS.equals("sqlite") || DBMS.equals("sqlite3")){
-									php2 += 
+									php2 +=
 											"		$db = new SQLite3('"+DB+"');\n" +
 													"		$results = $db->query($sql);\n" +
 													"		$i = 1;\n" +
@@ -3223,7 +3469,7 @@ public class Mobile_HTML5Function extends Function {
 					}
 
 					if(validationType[i].isEmpty()){
-						statement += 
+						statement +=
 								outTitle +
 								"<div class=\"form-group\">" +	//20161207 bootstrap
 								"	"+( (!textareaFlg[i])? "" : "<span>" )+"<span>" +
@@ -3236,7 +3482,7 @@ public class Mobile_HTML5Function extends Function {
 								""+((!textareaFlg[i])?(""):("</textarea>")) +
 								"</span>"+( (!textareaFlg[i])? "" : "</span>" )+"\n"+
 								"</div>";	//20161207 bootstrap
-						update_statement += 
+						update_statement +=
 								outTitle +
 								"<div class=\"form-group\">" +	//20161207 bootstrap
 								"	"+( (!textareaFlg[i])? "" : "<span>" )+"<span>" +
@@ -3293,26 +3539,26 @@ public class Mobile_HTML5Function extends Function {
 									"</script>\n";
 				}
 
-				statement += 
+				statement +=
 						"    <"+((!textareaFlg[i])?("input"):("textarea"))+" type=\""+((!hiddenFlg[i])?("text"):("hidden"))+"\" disabled=\"disabled\" value=\""+( (!s_name_array[i].equals(""))? (s_name_array[i]+": "):("") )+"" +
 								""+( (!textareaFlg[i])? ("\n") : ((!s_name_array[i].equals(""))? ("\">"+s_name_array[i]+": "):("")) )+"\n" +
 								"EOF;\n" +
 								echo +
 								"		echo <<<EOF\n" +
 								""+((!textareaFlg[i])?("\">"):("</textarea>"))+"\n";
-				update_statement += 
+				update_statement +=
 						"    <"+((!textareaFlg[i])?("input"):("textarea"))+" type=\""+((!hiddenFlg[i])?("text"):("hidden"))+"\" disabled=\"disabled\" value=\""+( (!s_name_array[i].equals(""))? (s_name_array[i]+": "):("") )+"" +
 								""+( (!textareaFlg[i])? ("\n") : ((!s_name_array[i].equals(""))? ("\">"+s_name_array[i]+": "):("")) )+"" +
 								echo2 +
 								""+((!textareaFlg[i])?("\">"):("</textarea>"))+"\n";
 				if(!noinsertFlg[i]){
-					statement += 
+					statement +=
 							"    <input type=\"hidden\" id=\"SSQL_insert"+insertCount+"_words"+(++insertWordCount)+"\" name=\"SSQL_insert"+insertCount+"_words"+(insertWordCount)+"\" value=\"\n" +
 									"EOF;\n" +
 									echo +
 									"		echo <<<EOF\n" +
 									"\">\n";
-					update_statement += 
+					update_statement +=
 							"    <input type=\"hidden\" id=\"SSQL_insert"+insertCount+"_words"+(insertWordCount)+"\" name=\"SSQL_insert"+insertCount+"_words"+(insertWordCount)+"\" value=\"" +
 									echo2 +
 									"\">\n";
@@ -3321,18 +3567,18 @@ public class Mobile_HTML5Function extends Function {
 		}
 		if(buttonSubmit.equals("")){
 			if(buttonName.isEmpty()){
-				statement += 
+				statement +=
 						"    <input type=\"submit\" class=\"btn btn-default\" value=\""+( (!update)? ("登録"):("更新") )+"&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\" name=\"SSQL_insert"+insertCount+"\" id=\"SSQL_insert"+insertCount+"\" data-icon=\"insert\" data-mini=\"false\" data-inline=\"false\">\n";
 			}else{
-				statement += 
+				statement +=
 						"    <input type=\"submit\" class=\"btn btn-default\"  value=\""+buttonName+"\" name=\"SSQL_insert"+insertCount+"\" id=\"SSQL_insert"+insertCount+"\" data-mini=\"false\" data-inline=\"false\">\n";
 			}
 		}
-		statement += 
+		statement +=
 				"</form>\n" +
 						"\n";
 		if(!noresult){
-			statement += 
+			statement +=
 					"<div id=\"SSQL_insert"+insertCount+"_result\" data-role=\"none\"><!-- SSQL Insert"+insertCount+" Result"+insertCount+" --></div>\n" +
 							"\n" +
 							//added by goto 20141128 form confirm  start
@@ -3344,11 +3590,11 @@ public class Mobile_HTML5Function extends Function {
 							//added by goto 20141128 form confirm  end
 							"<br>\n";
 		}
-		statement += 
+		statement +=
 				"</div>\n\n";
 		//getGPSinfo()
 		statement += gps_js;
-		statement += 
+		statement +=
 				"<!-- SSQL Insert"+insertCount+" FORM end -->\n" +
 						"\n" +
 						"<!-- SSQL Insert"+insertCount+" JS start -->\n" +
@@ -3372,13 +3618,13 @@ public class Mobile_HTML5Function extends Function {
 						//added by goto 20141128 form confirm  end
 						"function SSQL_insert"+insertCount+"_echo(str){\n";
 		if(!noresult){
-			statement += 
+			statement +=
 					"	var textArea = document.getElementById(\"SSQL_insert"+insertCount+"_result\");\n" +
 							"	textArea.innerHTML = str;\n" +
 							"	$(\"#SSQL_insert"+insertCount+"_confirmButton\").hide();\n";	//added by goto 20141128 form confirm
 		}
 		if(!noreset){
-			statement += 
+			statement +=
 							"	if(str.indexOf(\"completed\") !== -1) {\n" +
 							"		$(\"#SSQL_insert"+insertCount+"panel form\")[0].reset();\n";
 			//added by goto 170606 for update(file/image)
@@ -3390,13 +3636,13 @@ public class Mobile_HTML5Function extends Function {
 							"	}\n";
 		}
 		if(reloadAfterInsert){
-			statement += 
+			statement +=
 					"	setInterval(function(){\n" +
 							"		location.reload();\n" +
 							"	}, "+(reloadAfterInsertTime*1000)+");\n";
 		}else{
 			//3秒後に結果をクリア
-			statement += 
+			statement +=
 					"	$(function(){\n" +
 							"		setTimeout(function(){\n" +
 							"			document.getElementById(\"SSQL_insert"+insertCount+"_result\").innerHTML = '';\n" +
@@ -3404,7 +3650,7 @@ public class Mobile_HTML5Function extends Function {
 							"		},3000);\n" +
 							"	});\n";
 		}
-		statement += 
+		statement +=
 				"}\n" +
 						"$(function(){\n" +
 						"	//validation\n" +
@@ -3431,7 +3677,7 @@ public class Mobile_HTML5Function extends Function {
 			if(hiddenFlg[i]) continue;
 			if(!checkbox_array[i].equals("")){
 				s = checkbox_array[i];
-				statement += 
+				statement +=
 						"	var "+s+"=[];\n" +
 								"	$('[name=\""+s+"[]\"]:checked').each(function(){\n" +
 								"		//"+s+".push($(this).val());\n" +
@@ -3452,13 +3698,13 @@ public class Mobile_HTML5Function extends Function {
 				statement += "	var "+s+"=$('#"+s+"').val();\n";
 				checkboxFlg_array += "FALSE,";
 			}
-			statement += 
+			statement +=
 					"	s += \"<tr><td style='width:40%; text-align:center;'>"+s_name_array[i]+"</td>" +
 							"<td>「<span style='color:red;'>\"+"+s+"+\"</span>」</td></tr>\";\n";
 		}
-		if(checkboxFlg_array.contains(","))	
+		if(checkboxFlg_array.contains(","))
 			checkboxFlg_array = checkboxFlg_array.substring(0, checkboxFlg_array.lastIndexOf(","));
-		statement += 
+		statement +=
 				"	document.getElementById(\"SSQL_insert"+insertCount+"_result\").innerHTML = s+\"</table></div>\";\n" +
 						"	SSQL_insert"+insertCount+"_showButton(1);\n" +
 						"}\n" +
@@ -3537,7 +3783,7 @@ public class Mobile_HTML5Function extends Function {
 			if(!$time_array[i].equals(""))
 				php += "		if($k=="+i+")	$var[$k] = "+$time_array[i]+";\n";	//現在時刻
 		}
-		php +=	
+		php +=
 				"    }\n" +
 						"\n" +
 						"	$b = \"\";\n" +
@@ -3735,7 +3981,7 @@ public class Mobile_HTML5Function extends Function {
 	}
 	//getFormFileUploadPHP1
 	private String getFormFileUploadPHP1(){
-		String r = 
+		String r =
 				"		$s = '';\n" +
 						"		if(!$checkboxFlg[$k-1]){\n" +
 						"			$s = $_POST['SSQL_insert"+insertCount+"_words'.$k];\n" +
@@ -3746,7 +3992,7 @@ public class Mobile_HTML5Function extends Function {
 						"			if(strstr($s, ','))	$s = substr($s, 0, -1);\n" +
 						"		}\n";
 		if(formFileUpload){
-			return  r + 
+			return  r +
 					"		if(empty($fileDir[$k-1])){\n" +
 					"			$var[$k] = checkHTMLsc($s);\n" +
 					"    	}else{\n" +
@@ -3904,7 +4150,7 @@ public class Mobile_HTML5Function extends Function {
 	private String getSSQLUpdateformHTML(int num, String phpFileName, String title) {
 		String s = "";
 		if(!title.isEmpty()){
-			s += 
+			s +=
 					"<hr>\n<div style=\"font-size:30;\" id=\"SSQL_insertTitle"+num+"\">"+title+"</div>\n<hr>\n" +
 							"<br>\n";
 		}
@@ -4008,7 +4254,7 @@ public class Mobile_HTML5Function extends Function {
 
 		//type = 1
 		if(type.equals("1") || type.equals("form")){
-			statement += 
+			statement +=
 					"<!-- Check"+checkCount+" start -->\n" +
 							"<form method=\"post\" action=\"\" target=\"dummy_ifr\">\n" +
 							//"<form method=\"post\" action=\"\" target=\"check"+checkCount+"_ifr\">\n" +
@@ -4028,7 +4274,7 @@ public class Mobile_HTML5Function extends Function {
 							"</script>\n" +
 							"<!-- Check"+checkCount+" end -->\n";
 
-			Mobile_HTML5Env.PHP += 
+			Mobile_HTML5Env.PHP +=
 					"<?php\n" +
 							"//Check"+checkCount+"\n" +
 							//"else if($_POST['check"+checkCount+"'] || $_POST['check_word"+checkCount+"']){\n" +
@@ -4044,7 +4290,7 @@ public class Mobile_HTML5Function extends Function {
 							"    echo '<script type=\"text/javascript\">window.parent.Check"+checkCount+"_echo1(\"'.$str.'\");</script>';\n" +
 							"}\n" +
 							"?>\n";
-			//		HTMLEnv.PHPpost += 
+			//		HTMLEnv.PHPpost +=
 			//				"\n" +
 			//						"//Check"+checkCount+"\n" +
 			//						//"else if($_POST['check"+checkCount+"'] || $_POST['check_word"+checkCount+"']){\n" +
@@ -4071,7 +4317,7 @@ public class Mobile_HTML5Function extends Function {
 			}
 			//Log.i("y:"+yes+"	n:"+no);
 
-			statement += 
+			statement +=
 					"<!-- Check"+checkCount+" start -->\n" +
 							"<form method=\"post\" action=\"\" target=\"dummy_ifr\">\n" +
 							"	<div class=\"ui-grid-a\">\n" +
@@ -4093,7 +4339,7 @@ public class Mobile_HTML5Function extends Function {
 							"</script>\n" +
 							"<!-- Check"+checkCount+" end -->\n";
 
-			Mobile_HTML5Env.PHP += 
+			Mobile_HTML5Env.PHP +=
 					"<?php\n" +
 							"//Check"+checkCount+"\n" +
 							"if($_POST['check"+checkCount+"_yes'] || $_POST['check"+checkCount+"_no']){\n" +
@@ -4128,20 +4374,20 @@ public class Mobile_HTML5Function extends Function {
 			}
 
 
-			statement += 
+			statement +=
 					"<!-- Check"+checkCount+" start -->\n" +
 							"<form method=\"post\" action=\"\" target=\"dummy_ifr\">\n" +
-							"   <div data-role=\"controlgroup\">\n";
+							"   <div data-role=\"controlgroup\" style=\"padding: 15px 0px 15px 0px;\">\n";
 			//	    			"	<div data-role=\"fieldcontain\">\n" +
 			//	    			"		<fieldset data-role=\"controlgroup\" style=\"width:100%;\">\n";
 			for(int i=0;i<columnNum;i++){
-				statement += 	
+				statement +=
 						"    		<input type=\"radio\" name=\"check"+checkCount+"_choose\" id=\"check"+checkCount+"_choose"+(i+1)+"\" value=\""+sbuf[i]+"\""+( (i<1)? (" checked=\"checked\""):("") )+">\n" +
 								"    		<label for=\"check"+checkCount+"_choose"+(i+1)+"\">"+sbuf[i]+"</label>\n";
 				//"    		<input type=\"radio\" name=\"check"+checkCount+"_choose\" value=\""+sbuf[i]+"\""+( (i<1)? (" checked"):("") )+">"+sbuf[i]+"\n";
 			}
 
-			statement += 
+			statement +=
 					//"		</fieldset>\n" +
 					"	</div>\n" +
 					"   <input type=\"submit\" class=\"btn btn-default\"  value=\"Check&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\" name=\"check"+checkCount+"\" id=\"check"+checkCount+"\" data-icon=\"question\" data-mini=\"false\" data-inline=\"false\">\n" +
@@ -4156,7 +4402,7 @@ public class Mobile_HTML5Function extends Function {
 					"</script>\n" +
 					"<!-- Check"+checkCount+" end -->\n";
 
-			Mobile_HTML5Env.PHP += 
+			Mobile_HTML5Env.PHP +=
 					"<?php\n" +
 							"//Check"+checkCount+"\n" +
 							"if($_POST['check"+checkCount+"']){\n" +
@@ -4304,13 +4550,13 @@ public class Mobile_HTML5Function extends Function {
 		Mobile_HTML5Env.addJsCss("jscss/googleMap.js");
 
 		if(searchFlg){
-			statement += 
+			statement +=
 					"		<form method=\"post\" action=\"\" target=\"dummy_ifr\">\n" +
 							"    		<input type=\"search\" id=\"search_map_words"+getCount(mapFuncCount)+"\" placeholder=\"住所など\">\n" +
 							"    		<input type=\"submit\" class=\"btn btn-default\"  value=\"地図を表示&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\" id=\"search_map"+getCount(mapFuncCount)+"\" data-icon=\"search\" data-mini=\"false\" data-inline=\"false\">\n" +
 							"		</form>\n";
 		}
-		statement += 
+		statement +=
 				//"		<script src=\"http://maps.google.com/maps/api/js?sensor=false&libraries=geometry\"></script>\n" +
 				//"		<script src=\"jscss/googleMap.js\"></script>\n" +
 				"		<script type=\"text/javascript\">\n";
@@ -4319,7 +4565,7 @@ public class Mobile_HTML5Function extends Function {
 		if(!searchFlg)	statement += "$(function(){\n";
 
 		else			statement += "$(\"#search_map"+getCount(mapFuncCount)+"\").click(function () {\n";
-		statement += 
+		statement +=
 				//				"  	var map = null; // Google Map\n" +
 				"  	var map = null;\n" +
 				//"    $(\"#map"+getCount(mapFuncCount)+"\").remove();	// 地図をクリア\n" +
@@ -4331,7 +4577,7 @@ public class Mobile_HTML5Function extends Function {
 				"      \n";
 		if(!searchFlg)	statement += "    var sad = \""+geolocation+"\";\n";
 		else			statement += "    var sad = $(\"#search_map_words"+getCount(mapFuncCount)+"\").val();\n";
-		statement += 
+		statement +=
 				"    var geocoder = new google.maps.Geocoder();\n" +
 						"    geocoder.geocode({\"address\": sad}, function(results, status) {\n" +
 						"      if (status == google.maps.GeocoderStatus.OK) {\n" +
@@ -4417,7 +4663,7 @@ public class Mobile_HTML5Function extends Function {
 
 		Mobile_HTML5Env.addJsCss("jscss/googleMap.js");
 
-		statement += 
+		statement +=
 				//"		<script src=\"http://maps.google.com/maps/api/js?sensor=false&libraries=geometry\"></script>\n" +
 				//"		<script src=\"jscss/googleMap.js\"></script>\n" +
 				"		<script type=\"text/javascript\">\n" +
@@ -4434,12 +4680,12 @@ public class Mobile_HTML5Function extends Function {
 				"\n" +
 				"  var map = null; // Google Map\n";
 		if(type.equals("2")){
-			statement += 
+			statement +=
 					"  // 移動開始ボタンクリック時の処理\n" +
 							"  $(this).on(\"click\", \"#gps_button\", function(e) {\n" +
 							"    $(\"#gps_button\").addClass(\"ui-disabled\"); 	// ボタンの無効化\n";
 		}
-		statement += 
+		statement +=
 				"    navigator.geolocation.getCurrentPosition(function(pos) {\n" +
 						"      // 画面上の経度、緯度、距離、地図をクリア //\n" +
 						"      $(\"[id=gps_latitude]\").html(\"\");\n" +
@@ -4463,7 +4709,7 @@ public class Mobile_HTML5Function extends Function {
 						"      alert(e.message);\n" +
 						"    }, geolocationOptions);\n";
 		if(type.equals("2"))
-			statement += 
+			statement +=
 			"    $(\"#gps_button\").removeClass(\"ui-disabled\"); // ボタンの有効化\n" +
 					"  });\n";
 		statement +=
@@ -4472,7 +4718,7 @@ public class Mobile_HTML5Function extends Function {
 						"		</script>\n" +
 						"		\n";
 		if(type.equals("2")){
-			statement += 
+			statement +=
 					"		<div>\n" +
 							"			<a href=\"#\" data-role=\"button\" data-icon=\"home\" id=\"gps_button\">現在地を表示</a>\n" +
 							"		</div>\n";
@@ -4499,7 +4745,7 @@ public class Mobile_HTML5Function extends Function {
 		//			format = ((FuncArg) this.Args.get(0)).getStr();
 		//		}catch(Exception e){ }
 		Mobile_HTML5Env.addJsCss("jscss/googleMap.js");
-		statement += 
+		statement +=
 				//"		<script src=\"http://maps.google.com/maps/api/js?sensor=false&libraries=geometry\"></script>\n" +
 				//"		<script src=\"jscss/googleMap.js\"></script>\n" +
 				"		<script type=\"text/javascript\">\n" +
@@ -5625,10 +5871,15 @@ public class Mobile_HTML5Function extends Function {
 						filename += "?"+LinkForeach.ID2+"="+att.substring(1);
 					else if(ltype==2 || ltype==3){
 						//<A href="" onclick="ssql_foreach(\'GET\', \'test04_php-foreach.html\', \''.$row1[1].'_'.$row1[2].'_'.$row1[3].'\'); return false;" data-ajax="false" >
-						if(!PHP.isPHP && !Mobile_HTML5_dynamic.dynamicDisplay)
+						if(!PHP.isPHP && !Mobile_HTML5_dynamic.dynamicDisplay){
 							html_env.plink_glink_onclick = "'"+(ltype==2? "GET" : "POST")+"', '"+filename+"', '"+att.substring(1)+"'";
-						else
+						}
+						else if(!PHP.isPHP && !Mobile_HTML5_stream.streamDisplay){
+							html_env.plink_glink_onclick = "'"+(ltype==2? "GET" : "POST")+"', '"+filename+"', '"+att.substring(1)+"'";
+						}
+						else{
 							html_env.plink_glink_onclick = "\\'"+(ltype==2? "GET" : "POST")+"\\', \\'"+filename+"\\', \\'"+att.substring(1)+"\\'";
+						}
 						LinkForeach.plink_glink = true;
 					}
 				}else{
@@ -5778,6 +6029,123 @@ public class Mobile_HTML5Function extends Function {
 		html_env.sinvoke_flag = false;
 		return;
 	}
+	
+
+//	// added by masato 20151124 for plink
+//	// plink(属性名, '***.php', 受け渡す値1(*.id), 受け渡す値2(*.id)...)
+//	private void Func_plink(ExtList data_info) {
+//		// リンク先phpファイル
+//		String target = this.Args.get(1).toString();
+//		if (target.startsWith("\'") || target.startsWith("\"")) {
+//			target = target.substring(1, target.length() - 1);
+//		}
+//
+//		// value
+//		html_env.valueArray = new ArrayList<>();
+//		for (int i = 2; i < this.Args.size(); i++) {
+//			html_env.valueArray.add(this.Args.get(i).getStr());
+//		}
+//
+//		html_env.linkUrl = target;
+//		html_env.plinkFlag = true;
+//
+//		// added by masato 20151124 for plink
+//		if (html_env.plinkFlag) {
+//			String tmp = "";
+//			for (int i = 0; i < html_env.valueArray.size(); i++) {
+//				tmp += " value" + (i + 1) + "='" + html_env.valueArray.get(i)
+//						+ "'";
+//			}
+//			Incremental.outXMLData(html_env.xmlDepth, "<plink target='"
+//					+ html_env.linkUrl + "'" + tmp + ">\n");
+//		}
+//		
+//		if (this.Args.get(0) instanceof FuncArg) {
+//			Log.out("ARGS are function");
+//			FuncArg fa = this.Args.get(0);
+//			fa.workAtt();
+//		} else
+//			this.workAtt("default");
+//		
+//		// added by masato 20151124 for plink
+//		if (html_env.plinkFlag) {
+//			Incremental.outXMLData(html_env.xmlDepth, "</plink>\n");
+//		}
+//		
+//
+//		html_env.plinkFlag = false;
+//		return;
+//	}
+	// added by masato 20151124 for plink
+	// plink(属性名, '***.php', 受け渡す値1(*.id), 受け渡す値2(*.id)...)
+	private static int plink_num = 0;
+	private void Func_plink(ExtList data_info) {
+		Log.info("Func_plink start: "+plink_num);
+		// リンク先phpファイル
+		String target = this.Args.get(1).toString();
+		if (target.startsWith("\'") || target.startsWith("\"")) {
+			target = target.substring(1, target.length() - 1);
+		}
+
+		// value
+		html_env.valueArray = new ArrayList<>();
+		for (int i = 2; i < this.Args.size(); i++) {
+			html_env.valueArray.add(this.Args.get(i).getStr());
+		}
+
+		html_env.linkUrl = target;
+		html_env.plinkFlag = true;
+
+		// added by masato 20151124 for plink
+		if (html_env.plinkFlag) {
+			String tmp1 = "", tmp2 = "";
+			for (int i = 0; i < html_env.valueArray.size(); i++) {
+				String val = "" + html_env.valueArray.get(i);
+				tmp1 += " value" + (i + 1) + "='" + val + "'";	//xml
+				tmp2 +=  "    <input type=\"hidden\" name=\"ssql_ehtml_att"+(i+1)+"\" value=\""+val+"\">\n";	//html	//TODO
+				//tmp2 +=  "    <input type=\"hidden\" name=\"att"+(i+1)+"\" value=\""+val+"\">\n";	//html
+			}
+			
+			//xml
+			Incremental.outXMLData(html_env.xmlDepth, "<plink target='" + html_env.linkUrl + "'" + tmp1 + ">\n");
+			
+			// html
+			// TODO ssql_plink_form"1"_1
+			String form_method = (glink_flag)? "GET" : "POST"; 
+			String plink_name = "ssql_plink_form" + Ehtml.getNumber() + "_" +(++plink_num);
+			html_env.code.append("<form method=\""+form_method+"\" name=\""+plink_name+"\" action=\"" + html_env.linkUrl + "\">\n" +
+								 tmp2 +
+								 "    <a href=\"javascript:"+plink_name+".submit()\">");
+		}
+		
+		if (this.Args.get(0) instanceof FuncArg) {
+			Log.out("ARGS are function");
+			FuncArg fa = this.Args.get(0);
+			fa.workAtt();
+		} else
+			this.workAtt("default");
+		
+		// added by masato 20151124 for plink
+		if (html_env.plinkFlag) {
+			Incremental.outXMLData(html_env.xmlDepth, "</plink>\n");	//xml
+			html_env.code.append("</a>\n</form>\n");	// html
+		}
+		
+
+		html_env.plinkFlag = false;
+		Log.info("Func_plink end");
+		return;
+	}
+	// Func_glink
+	private static boolean glink_flag = false;
+	private void Func_glink(ExtList data_info) {
+		glink_flag = true;
+		Func_plink(data_info);
+		glink_flag = false;
+		return;
+	}
+
+	
 
 	public static String opt(String s){
 		if(s.contains("\"")){
@@ -5824,13 +6192,78 @@ public class Mobile_HTML5Function extends Function {
 
 	//20131118 dynamic
 	private String getCount(int count){
-		return count+Mobile_HTML5_dynamic.getDynamicLabel();
+		if (Mobile_HTML5_dynamic.dynamicDisplay){
+			return count+Mobile_HTML5_dynamic.getDynamicLabel();
+		}
+		else if (Mobile_HTML5_stream.streamDisplay){
+			return count+Mobile_HTML5_stream.getStreamLabel();
+		}
+		return "";
 	}
 	public static int getGlvl() {
 		return glvl;
 	}
 	public static void setGlvl(int glvl) {
 		Mobile_HTML5Function.glvl = glvl;
+	}
+	
+	
+	// getDeco
+	private String getDeco(DecorateList decos) {
+		String r = "style=\"";
+        if (decos.containsKey("style")){
+        	String style = decos.getStr("style");
+        	r += style;
+        	if(!style.matches(".*;\\s*$"))	r += ";";
+        }
+        
+		if (decos.containsKey("width")) {
+			if (GlobalEnv.getframeworklist() == null && !Ehtml.flag && !GlobalEnv.isNumber(decos.getStr("width")))
+				r += " width:" + decos.getStr("width").replace("\"", "") + ";";
+			else
+				r += " width:" + decos.getStr("width").replace("\"", "") + "px;";
+		}
+		if (decos.containsKey("height")) {
+			if (GlobalEnv.getframeworklist() == null && !Ehtml.flag && !GlobalEnv.isNumber(decos.getStr("height")))
+				r += " height:" + decos.getStr("height").replace("\"", "") + ";";
+			else
+				r += " height:" + decos.getStr("height").replace("\"", "") + "px;";
+		}
+		
+		if (decos.containsKey("align")) {
+			String a = decos.getStr("align").replace("\"", "").trim();
+			if (Sass.isBootstrapFlg() && a.equals("center"))
+				r += " display:block; margin-left:auto; margin-right:auto;";	//bootstrap centering
+			else
+				r += " text-align:" + a + ";";
+		}
+		if (decos.containsKey("valign"))
+			r += " vertical-align:" + decos.getStr("valign").replace("\"", "") + ";";
+		
+		if (decos.containsKey("padding")) {
+			if (GlobalEnv.getframeworklist() == null && !Ehtml.flag)
+				r += " padding:" + decos.getStr("padding").replace("\"", "") + ";";
+			else
+				r += " padding:" + decos.getStr("padding").replace("\"", "") + "px;";
+		}
+
+		if (decos.containsKey("background-color"))
+			r += " background-color:"
+					+ decos.getStr("background-color").replace("\"", "") + ";";
+		if (decos.containsKey("bgcolor"))
+			r += " background-color:" + decos.getStr("bgcolor").replace("\"", "") + ";";
+		if (decos.containsKey("color"))
+			r += " color:" + decos.getStr("color") + ";";
+			
+		if (decos.containsKey("font-size")){
+			if (GlobalEnv.getframeworklist() == null && !Ehtml.flag && !GlobalEnv.isNumber(decos.getStr("font-size")))
+				r += " font-size:" + decos.getStr("font-size").replace("\"", "") + ";";
+			else
+				r += " font-size:" + decos.getStr("font-size").replace("\"", "") + "px;";
+		}
+		
+    	r += "\"";	//end of style="
+		return r;
 	}
 
 }

@@ -6,6 +6,7 @@ import java.util.Map;
 import java.util.Set;
 
 import supersql.codegenerator.DecorateList;
+import supersql.codegenerator.Ehtml;
 import supersql.codegenerator.ITFE;
 import supersql.codegenerator.Sass;
 import supersql.common.DB;
@@ -14,28 +15,26 @@ import supersql.common.Log;
 
 //20131127 form
 public class Mobile_HTML5_form {
-	
+
 	public Mobile_HTML5_form() {
 
 	}
-	
+
 	static String formString = "";
-//	static String formHTMLbuf0 = "";
 	static String formHTMLbuf = "";
 	public static int formCount = 1; //taji changed to public
 	static int formWordCount = 1;
-//	static String formFuncCountLabel = "___DynamicFunc_CountLabel___";
 	public static boolean form = false;
 	static ArrayList<String> formColumn = new ArrayList<>();
 	static ArrayList<String> formColumn0 = new ArrayList<>();
 	static ArrayList<String> formColumnAlias = new ArrayList<>();
 	static ArrayList<String> formColumnTable = new ArrayList<>();
-	
+
 	public static Set<String> formTypeFileResetID = new HashSet<String>();
-	
+
 	public static boolean G2 = false; //taji changed to public
 //	static int G2_dataQuantity = 0;
-	
+
 //	public static String formFuncArgProcess(ITFE tfe, DecorateList decos){
 //		//For Function
 //		return createFormAttribute(tfe, decos);
@@ -67,10 +66,10 @@ public class Mobile_HTML5_form {
 				formColumn.add(buf);
 			}
 			formColumnTable.add("");
-			
+
 			//E-mail:email=$session(email)@{noupdate},
 //	          備考:notes@{textarea},
-//	          attend={出席|欠席}", 
+//	          attend={出席|欠席}",
 //			"attendance WHERE id=$session(id)"
 			if(decos.containsKey("label")){
 				buf = decos.getStr("label")+":"+buf;
@@ -86,7 +85,7 @@ public class Mobile_HTML5_form {
 			}
 			formColumn0.add(buf);
 			//Log.e("buf="+buf);
-			
+
 			s = "    <input type=\"text\" name=\"form"+formCount+"_words"+(formWordCount++)+"\" placeholder=\"\">";	//TODO ここ以外の位置で
 		}
 		return s;
@@ -110,20 +109,20 @@ public class Mobile_HTML5_form {
 	}
 	public static boolean formProcess(String symbol, DecorateList decos, Mobile_HTML5Env html_env){
 		if(decos.containsKey("form")){
-			
-			
+
+
 			//Log.e(" - Start form process -");
 			//Log.e(formString);
-			
+
 			//formColumnに格納されている列名がどのTableのものか判定
 			checkFormColumnSTableName();
-			
-			
+
+
 			boolean update = false;
 			boolean insert_update = true;
-			
-			
-			
+
+
+
 //	    	String title = "";
 	    	String columns = "";
 	    	String after_from = "";
@@ -136,7 +135,7 @@ public class Mobile_HTML5_form {
 	    	after_from = formColumnTable.get(0);	//TODO 複数テーブルへのinsert
 
 	    	//columns = "user_id = $session(user_id)@{hidden},text";
-	    	
+
 	    	try{
 	    		//title（第一引数）
 //	    		FuncArg fa1 = (FuncArg) this.Args.get(0);
@@ -158,18 +157,20 @@ public class Mobile_HTML5_form {
 //		    		if(insertFlag.equals(""))	insertFlag="false";
 //	    		}
 	    	}catch(Exception e){
-	    		Log.info("<Warning> insert関数の引数が不足しています。 ex. insert(\"title\", \"c1:column1, c2:column2, ... \", \"From以下\")");
+	    		Log.info("<Warning> insert関数の引数が不足しています。1 ex. insert(\"title\", \"c1:column1, c2:column2, ... \", \"From以下\")");
 	    		return false;
 	    	}
 			if(columns.trim().equals("") || after_from.equals("")){
-				Log.info("<Warning> insert関数の引数が不足しています。 ex. insert(\"title\", \"c1:column1, c2:column2, ... \", \"From以下\")");
+				Log.info("<Warning> insert関数の引数が不足しています。2 ex. insert(\"title\", \"c1:column1, c2:column2, ... \", \"From以下\")");
+				Log.info("columns.trim() = "+columns.trim());
+				Log.info("after_from = "+after_from);
 	    		return false;
 			}
 			if(after_from.toLowerCase().startsWith("from "))	after_from = after_from.substring("from".length()).trim();
 			if(insert_update)	insertFlag = "true";	//20130721
 			//Log.info(title);
-	    	
-	    	
+
+
 	    	//置換 ( @ { , }  ->  @ { ; } )
 			//Log.i("Before: "+columns);
 	    	int inAtFlg = 0;
@@ -187,8 +188,8 @@ public class Mobile_HTML5_form {
 	    		}
 	    	}
 	    	//Log.i("After:  "+columns);
-	    	
-	    	
+
+
 	    	int col_num=1;
 	    	String columns0 = columns;
 	    	while(columns0.contains(",")){
@@ -246,7 +247,7 @@ public class Mobile_HTML5_form {
 				noinsertFlg[i] = false;
 				validationType[i] = "";
 				value[i] = "";
-	    		
+
 	    		a = s_array[i].replaceAll(" ","");
 	    		//Log.i(a);
 	    		//$session()あり
@@ -260,7 +261,7 @@ public class Mobile_HTML5_form {
 	    				a = a.substring(0,a.indexOf("=")).trim() + a.substring(a.indexOf(")")+1).trim();
 	        			s_array[i] = s_array[i].substring(0,s_array[i].indexOf("=")).trim() + s_array[i].substring(s_array[i].indexOf(")")+1).trim();
 	    			}else if(a_right.startsWith("time(") || a_right.startsWith("date(")){
-	    				String d = s_array[i].substring(s_array[i].indexOf("(")+1,s_array[i].lastIndexOf(")")).trim(); 
+	    				String d = s_array[i].substring(s_array[i].indexOf("(")+1,s_array[i].lastIndexOf(")")).trim();
 //	    				$time_array[i] = "date(\"Y-m-d H:i:s\")";	//"date(\"Y/m/d(D) H:i:s\")";
 	    				$time_array[i] = "date(\""+( (d.equals(""))? ("Y-m-d H:i:s") : (d) )+"\")";	//"date(\"Y/m/d(D) H:i:s\")";
 	    				$session_array[i] = "";
@@ -270,10 +271,10 @@ public class Mobile_HTML5_form {
 	    				s_array[i] = s_array[i].substring(0,s_array[i].indexOf("=")).trim() + s_array[i].substring(s_array[i].indexOf(")")+1).trim();
 	    			}else if(a_right.startsWith("gps_info(")){
 	    				//gps_info()の取得
-	    				//String d = s_array[i].substring(s_array[i].indexOf("(")+1,s_array[i].lastIndexOf(")")).trim(); 
+	    				//String d = s_array[i].substring(s_array[i].indexOf("(")+1,s_array[i].lastIndexOf(")")).trim();
 	    				//$gps_array[i] = "date(\""+( (d.equals(""))? ("Y-m-d H:i:s") : (d) )+"\")";	//"date(\"Y/m/d(D) H:i:s\")";
 	    				$gps_array[i] = "gps_info";
-	    				
+
 	    				$session_array[i] = "";
 	    				$time_array[i] = "";
 	    				button_array[i] = "";
@@ -301,13 +302,13 @@ public class Mobile_HTML5_form {
 	    		}
 	    		//Log.i(s_array[i]+"	"+$session_array[i]);
 	    		//Log.i(button_array[i]+"	"+button_array[i]);
-	    		
+
 				s_array[i] = s_array[i].trim();
 				if(s_array[i].contains("=")){
 					value[i] = s_array[i].substring(s_array[i].indexOf("=")+1);
 					s_array[i] = s_array[i].substring(0, s_array[i].indexOf("="));
 				}
-	    		
+
 	    		if(a.startsWith("max(") || a.startsWith("min(") || a.startsWith("avg(") ||  a.startsWith("count(") )	groupbyFlg = true;
 	    		if(a.startsWith("a(") || a.startsWith("anchor(")){
 	    			insert_aFlg += "true\""+((i<col_num-1)?(",\""):(""));
@@ -337,7 +338,7 @@ public class Mobile_HTML5_form {
 	    			}else	a_pop_count++;
 	    		}else
 	    			insert_popFlg += "false\""+((i<col_num-1)?(",\""):(""));
-	    		
+
 	    		//Log.i(s_array[i]);
 	    		//Check: @textarea, @hidden, @noinsert, @notnull, @date, @date1-5, @time	//TODO:リファクタリング
 	    		textareaFlg[i] = false;
@@ -365,14 +366,14 @@ public class Mobile_HTML5_form {
 			    		}
 		    		}
 		    		validationType[i] = checkFormValidationType(str);	//form validation
-		    		
+
 		    		s_array[i] = s_array[i].substring(0,s_array[i].indexOf("@"));
 		    		//Log.i(s_array[i]);
 	    		}else{
 	    			if(i==(col_num-1))	notnullFlg_array += "FALSE";
 	    			else				notnullFlg_array += "FALSE,";
 	    		}
-	    		
+
 	    		if(!noinsertFlg[i]){
 	    			insert_col += s_array[i] +((i<col_num-1)?(","):(""));
 	    			if(update)	update_col_array += s_array[i] +"'"+((i<col_num-1)?(",'"):(""));
@@ -381,14 +382,14 @@ public class Mobile_HTML5_form {
 	    	col_num -= a_pop_count;
 	    	insert_col = insert_col.replaceAll("a\\(","").replaceAll("anchor\\(","").replaceAll("pop\\(","").replaceAll("popup\\(","").replaceAll("\\)","");
 //	    	insert_col_array = insert_col_array.replaceAll("a\\(","").replaceAll("anchor\\(","").replaceAll("pop\\(","").replaceAll("popup\\(","").replaceAll("\\)","");
-	    	
-	    	
+
+
 	    	//Log.i("	1:"+title+"	2:"+columns+"	col_num:"+col_num);
 	    	//Log.i("	insert_col:"+insert_col+"	update_col_array:"+update_col_array);
 	    	//Log.i("	insert_aFlg:"+insert_aFlg+"	insert_popFlg:"+insert_popFlg);
 	    	//Log.i("	notnullFlg_array: "+notnullFlg_array);
-	    	
-	    	
+
+
 	    	String DBMS = GlobalEnv.getdbms();										//DBMS
 	    	String DB = GlobalEnv.getdbname();										//DB
 	    	String HOST = "", USER = "", PASSWD = "";
@@ -397,7 +398,7 @@ public class Mobile_HTML5_form {
 	    		USER = GlobalEnv.getusername();
 	    		PASSWD = GlobalEnv.getpassword();
 	    	}
-	    	
+
 	    	String query = "";
 	    	//Log.i(after_from_string);
 //	    	if(after_from.startsWith("#")){					//From以下をクエリの下(#*)から取ってくる場合
@@ -423,14 +424,14 @@ public class Mobile_HTML5_form {
 	    	//Log.i("	FROM:"+from+"	update_where:"+update_where);
 	    	//Log.i("	FROM: "+from+"\n	WHERE: "+where+"\n	GROUP: "+groupby+"\n	HAVING: "+having);
 	    	//Log.i("	ORDER: "+orderby+"\n	LIMIT: "+limit+"\n	Query: "+query);
-	    	
-	    	
+
+
 
 	    	String statement = "";
 	    	String gps_js = "";
-	    	
+
 	    	//php
-    		statement += 
+    		statement +=
     				"<!-- Form start -->\n" +
     				"<!-- Form Panel start -->\n" +
     				"<br>\n" +
@@ -444,7 +445,7 @@ public class Mobile_HTML5_form {
 
     		//TODO 下の部分の処理が必要
 //				statement += formString;
-			
+
     		int insertWordCount = 0;
     		for(int i=0; i<col_num; i++){
 				if($session_array[i].equals("") && $time_array[i].equals("") && $gps_array[i].equals("")){
@@ -453,12 +454,12 @@ public class Mobile_HTML5_form {
 						String ss = button_array[i]+"|";
 						int btRcount = ss.length() - ss.replaceAll("\\|","").length();
 						//Log.i("btRcount:"+btRcount);
-						
+
 						if(btRcount == 1){				//テキスト ex){2013秋}
 
 							//statement +=
 							//		"    <input type="text" disabled="disabled" value="お名前: 五嶋">";
-							statement += 
+							statement +=
 									//20161207 bootstrap
 									"<div class=\"form-group\">" +
 									"    <"+((!textareaFlg[i])?("input"):("textarea"))+" type=\""+((!hiddenFlg[i])?("text"):("hidden"))+"\" disabled=\"disabled\" value=\""+( (!s_name_array[i].equals(""))? (s_name_array[i]+": "):("") )+"" +
@@ -466,15 +467,15 @@ public class Mobile_HTML5_form {
 									""+((!textareaFlg[i])?("\">"):("</textarea>"))+"\n"+
 									"</div>";
 							if(!noinsertFlg[i])
-								statement += 
+								statement +=
 										"    <input type=\"hidden\" name=\"form"+formCount+"_words"+(++insertWordCount)+"\" value=\""+button_array[i]+"\">\n";
-						
-						
+
+
 						}else if(btRcount == 2){		//ボタン ex){出席|欠席}
 							String bt1=ss.substring(0,ss.indexOf("|")).trim();
 							String bt2=ss.substring(ss.indexOf("|")+1,ss.length()-1).trim();
 							insertWordCount++;
-							statement += 
+							statement +=
 									"	<div class=\"ui-grid-a\">\n" +
 									"		<div class=\"ui-block-a\">\n" +
 									"    		<input type=\"submit\" class=\"btn btn-default\" name=\"form"+formCount+"_words"+(insertWordCount)+"\" value=\""+bt1+"\" data-theme=\"a\">\n" +
@@ -489,7 +490,7 @@ public class Mobile_HTML5_form {
 							insertWordCount++;
 							for(int k=1; k<=btRcount; k++){
 								String val = ss.substring(0,ss.indexOf("|")).trim();
-								statement += 
+								statement +=
 										"		<input type=\"radio\" name=\"form"+formCount+"_words"+(insertWordCount)+"\" id=\"form"+formCount+"_words"+(insertWordCount)+"_"+k+"\" value=\""+val+"\""+( (k>1)? (""):(" checked=\"checked\"") )+">\n" +
 										"		<label for=\"form"+formCount+"_words"+(insertWordCount)+"_"+k+"\">"+val+"</label>\n";
 								ss = ss.substring(ss.indexOf("|")+1);
@@ -498,7 +499,7 @@ public class Mobile_HTML5_form {
 						}
 					}else{
 						if(validationType[i].isEmpty()){
-							statement += 
+							statement +=
 									//20161207 bootstrap
 									"<div class=\"form-group\">" +
 									"    <"+((!textareaFlg[i])?("input"):("textarea"))+" type=\""+((!hiddenFlg[i])?("text"):("hidden"))+"\" name=\"form"+formCount+"_words"+(++insertWordCount)+"\"" +
@@ -508,7 +509,7 @@ public class Mobile_HTML5_form {
 									"</div>";
 						}else{
 							//TODO 2nd引数
-							statement += 
+							statement +=
 									getFormValidationString(validationType[i], false, "form"+formCount+"_words"+(++insertWordCount), s_name_array[i], null, "", "");
 						}
 					}
@@ -544,19 +545,19 @@ public class Mobile_HTML5_form {
 								"// -->\n" +
 								"</script>\n";
 					}
-					
-					statement += 
+
+					statement +=
 							"    <"+((!textareaFlg[i])?("input"):("textarea"))+" type=\""+((!hiddenFlg[i])?("text"):("hidden"))+"\" disabled=\"disabled\" value=\""+( (!s_name_array[i].equals(""))? (s_name_array[i]+": "):("") )+"" +
 							""+( (!textareaFlg[i])? ("\n") : ((!s_name_array[i].equals(""))? ("\">"+s_name_array[i]+": "):("")) )+"\n";
-					statement += 
+					statement +=
 							"EOF;\n" +
 							echo +
 							"		echo <<<EOF\n";
-						
-					statement += 
+
+					statement +=
 							""+((!textareaFlg[i])?("\">"):("</textarea>"))+"\n";
 					if(!noinsertFlg[i])
-						statement += 
+						statement +=
 								"    <input type=\"hidden\" name=\"form"+formCount+"_words"+(++insertWordCount)+"\" value=\"\n" +
 								"EOF;\n" +
 								echo +
@@ -564,20 +565,20 @@ public class Mobile_HTML5_form {
 								"\">\n";
 				}
     		}
-    		
+
     		if(buttonSubmit.equals(""))
-    			statement += 
+    			statement +=
 	    			"    <input type=\"submit\" class=\"btn btn-default\" value=\"OK&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\" name=\"form"+formCount+"\" id=\"form"+formCount+"\" data-mini=\"false\" data-inline=\"false\">\n";
-			
-    		statement += 
+
+    		statement +=
     				"</form>\n" +
     				"</div>\n";
     		//getGPSinfo()
     		statement += gps_js;
-    		statement += 
+    		statement +=
     				"<!-- Form Panel end -->\n" +
     				"\n";
-			statement += 
+			statement +=
     				"\n" +
     				"<script type=\"text/javascript\">\n" +
     				"function Form"+formCount+"_echo1(str){\n" +
@@ -590,8 +591,8 @@ public class Mobile_HTML5_form {
     				"}\n" +
     				"</script>\n" +
     				"<!-- Form end -->\n";
-			
-			
+
+
 			Mobile_HTML5Env.PHP +=
     				"<?php\n" +
     				"if($_POST['form"+formCount+"'] "+buttonSubmit+"){\n" +
@@ -621,13 +622,13 @@ public class Mobile_HTML5_form {
 				if(!$time_array[i].equals(""))
 					Mobile_HTML5Env.PHP += "		if($k=="+i+")	$var[$k] = "+$time_array[i]+";\n";	//現在時刻
 			}
-			Mobile_HTML5Env.PHP +=	
+			Mobile_HTML5Env.PHP +=
     				"    }\n" +
     				"\n" +
     				"	if($insert_str == \"\"){\n" +
     				"        form"+formCount+"_p1('<font color=\\\"red\\\">Please check the value.</font>');\n" +
     				"	}else{\n";
-			
+
 			if(!update){
 				//insert()
 				if(DBMS.equals("sqlite") || DBMS.equals("sqlite3")){
@@ -654,7 +655,7 @@ public class Mobile_HTML5_form {
 					for(int i=1; i<=(col_num - noinsert_count); i++)
 						pg_prepare_array += "$"+i+",";
 					pg_prepare_array = pg_prepare_array.substring(0, pg_prepare_array.length()-1);
-					
+
 					Mobile_HTML5Env.PHP +=
 							"		//DBへ登録\n" +
 		    				"		$insert_db"+formCount+" = pg_connect (\"host="+HOST+" dbname="+DB+" user="+USER+""+(!PASSWD.isEmpty()? (" password="+PASSWD):"")+"\");\n" +
@@ -759,7 +760,7 @@ public class Mobile_HTML5_form {
 						((DBMS.equals("sqlite") || DBMS.equals("sqlite3"))?      ("        unset($insert_db"+formCount+");\n"):"") +
 						((DBMS.equals("sqlite") || DBMS.equals("sqlite3"))?      ("        pg_close($insert_db"+formCount+");\n"):"");
 			}
-    				
+
 			Mobile_HTML5Env.PHP +=
     				"    }\n" +
     				"}\n" +
@@ -769,7 +770,7 @@ public class Mobile_HTML5_form {
     				"?>\n";
 			//End of php
 
-			
+
 	    	// 各引数毎に処理した結果をHTMLに書きこむ
 	    	html_env.code.append(statement);
 
@@ -791,7 +792,7 @@ public class Mobile_HTML5_form {
 		for(int i=0;i<formColumn.size();i++){
 			String fcAlias = formColumnAlias.get(i);
 			String fc = formColumn.get(i);
-			
+
 			if(fcAlias.isEmpty()){
 				//Aliasなし: From句に書かれている全テーブルの列名(上で取得)と照合してTable名を決定
 				for(String tableName : al1){
@@ -836,7 +837,7 @@ public class Mobile_HTML5_form {
 		String s = "";
 		type = type.toLowerCase().trim();
 //		upFormVal = updateFromValue; //TODO: 他の方法
-		
+
 		//date, time
 //	    ◎date <input type="text" name="insert1_words4" placeholder="Year / Month / Day" data-role="datebox" data-options='{"mode":"calbox", "useNewStyle":true, "overrideCalHeaderFormat": "%Y / %m / %d", "overrideDateFormat": "%Y/%m/%d" }' >
 //	    ◎date1<input type="text" name="insert1_words4" placeholder="Year" data-role="datebox" data-options='{"mode":"flipbox", "useNewStyle":true, "overrideHeaderFormat": "%Y", "overrideDateFormat": "%Y", "overrideDateFieldOrder":["y"] }' >
@@ -876,14 +877,14 @@ public class Mobile_HTML5_form {
 		  case "img":	//img
 			  s += getFormTag("image", name, placeholder,"Choose file", notnull, "", updateFromValue, uploadFilePath);
 			  break;
-			  
+
 		  case "alphabet":	//alphabet (custom type)
 			  s += getFormTag("text", name, placeholder, "Alphabet", notnull, type);
 			  break;
 		  case "alphabet_number":	//alphabet_number (custom type)
 			  s += getFormTag("text", name, placeholder, "Alphabet or Number", notnull, type);
 			  break;
-			  
+
 		  case "date":	//Year / Month / Day
 			  s += getFormTag("date", name, placeholder, "Year / Month / Day", notnull, "") + "data-role=\"datebox\" data-options='{\"mode\":\"calbox\", \"useFocus\":true, \"useNewStyle\":true, \"overrideCalHeaderFormat\": \"%Y / %m / %d\", \"overrideDateFormat\": \"%Y/%m/%d\" }'";
 			  break;
@@ -927,12 +928,16 @@ public class Mobile_HTML5_form {
 			type = "file";
 		}
 		String ph = ((!placeholder.isEmpty())? placeholder : defaultPlaceholder);
-		String ret = 
+		String ret =
 				//20161207 bootstrap
 				"<div class=\"form-group\">\n"+
-				((!type.equals("file"))? "" : "<div style=\"text-align:left; font-size:16.5px\">"+ph+"</div>\n" );
-		
-		
+//<<<<<<< HEAD
+				((!type.equals("file"))? "" : "<div style=\"text-align:left;"+((!Ehtml.isEhtml2())? " font-size:16.5px" : "")+"\">"+ph+"</div>\n" );
+//=======
+//				((!type.equals("file"))? "" : "<div style=\"text-align:left; font-size:16.5px\">"+ph+"</div>\n" );
+//>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
+
+
 		//added by goto 170606 for update(file/image)
 		if(type.equals("file")){
 			if(!uploadFilePath.endsWith("/") && !uploadFilePath.endsWith("\\"))	uploadFilePath = uploadFilePath+GlobalEnv.OS_FS;
@@ -959,15 +964,15 @@ public class Mobile_HTML5_form {
 					"	</script>\n" +
 					"</div>\n\n";
 		}
-		
-		
+
+
 		ret +=
 				"    <span>\n" +
 				"<input type=\""+type+"\""+((accept.isEmpty())? "" : " accept=\""+accept+"/*\"" )+
 				" id=\""+name+"\" name=\""+name+"\"" +
 				" placeholder=\""+ph+"\" " + getFormClass(notnull, customType);
-		
-		
+
+
 		//added by goto 170606 for update(file/image)
 		if(type.equals("file")){
 			ret += 	">\n" +
@@ -998,8 +1003,8 @@ public class Mobile_HTML5_form {
 				   	"<input type=\"hidden\" id=\""+name+"_hidden\" name=\""+name+"_hidden\" ";
 			formTypeFileResetID.add(name+"_reset");
 		}
-		
-		
+
+
 		if(type.equals("password")){
 			//add confirm password form
 			ret += 	">\n</span>\n" +

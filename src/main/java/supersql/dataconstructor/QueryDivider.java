@@ -1,6 +1,5 @@
 package supersql.dataconstructor;
 
-import java.util.ArrayList;
 import java.util.TreeMap;
 
 import supersql.common.Log;

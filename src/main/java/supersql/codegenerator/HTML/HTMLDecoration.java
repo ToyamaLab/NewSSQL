@@ -1,16 +1,10 @@
 package supersql.codegenerator.HTML;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 
-import com.ibm.db2.jcc.am.ke;
-
-import supersql.codegenerator.Connector;
 import supersql.codegenerator.Decorator;
-import supersql.codegenerator.ITFE;
 import supersql.codegenerator.LinkForeach;
 import supersql.codegenerator.Manager;
-import supersql.common.GlobalEnv;
 import supersql.common.Log;
 import supersql.extendclass.ExtList;
 
@@ -58,7 +52,8 @@ public class HTMLDecoration extends Decorator {
 		htmlEnv.decorationStartFlag.add(0, false);
 		htmlEnv.decorationEndFlag.add(0, false);
 
-		this.setDataList(data_info);
+		this.setDataList(data_info);//d.floor
+		
 		
 		if (decos.containsKey("form")) {
 			htmlEnv.code.append(HTMLFunction.createForm(decos));
@@ -68,7 +63,6 @@ public class HTMLDecoration extends Decorator {
 		while (this.hasMoreItems()) {
 			//ITFE tfe = tfes.get(i);
 			//String classid = HTMLEnv.getClassID(tfe);
-			
 			htmlEnv.decorationStartFlag.set(0, true);
 			this.worknextItem();
 			htmlEnv.decorationEndFlag.set(0, true);

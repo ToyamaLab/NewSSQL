@@ -8,3 +8,10 @@ bin/
 .settings/*
 target/
 test_queries/tatsu/
+.idea
+.idea*
+newssql.iml
+reset
+out/
+META-INF/
+/.metadata/

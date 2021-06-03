@@ -1,0 +1,4 @@
+GENERATE HTML {
+   'hoge: ' || sum[x.c] || ': hehe'
+}
+from x

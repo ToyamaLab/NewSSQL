@@ -1,0 +1,17 @@
+animation_options	filter_slider
+bscols	bscols
+ClientValue	ClientValue
+crosstalkLibs	crosstalkLibs
+filter_checkbox	filter_select
+filter_select	filter_select
+filter_slider	filter_slider
+<<<<<<< HEAD
+=======
+getDefaultReactiveDomain	getDefaultReactiveDomain
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
+is.SharedData	is.SharedData
+maintain_selection	maintain_selection
+scale_color_selection	scale_fill_selection
+scale_fill_selection	scale_fill_selection
+selection_factor	scale_fill_selection
+SharedData	SharedData

@@ -1,0 +1,4 @@
+country_codes           Country codes
+country_colors          Gapminder color schemes.
+gapminder               Gapminder data.
+gapminder_unfiltered    Gapminder data, unfiltered.

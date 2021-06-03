@@ -1,3 +1,3 @@
 GENERATE HTML
-[e.name, image(e.pict,'./picts')@{width=200}]!
+[e.name, image(e.pict,'./pict')@{width=200}]!
 FROM employee e

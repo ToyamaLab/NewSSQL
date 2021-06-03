@@ -14,13 +14,11 @@ public class X3DG2 extends Grouper{
     
     X3DValue value;
 
-    //���󥹥ȥ饯��
     public X3DG2(Manager manager, X3DEnv lenv) {
         this.manager = manager;
         this.x3d_env = lenv;
     }
 
-    //G2��work�᥽�å�
     @Override
 	public String work(ExtList data_info) {
 
@@ -46,7 +44,6 @@ public class X3DG2 extends Grouper{
         while (this.hasMoreItems()) {
             x3d_env.glevel++;
 
-            /*�I�𐂒����ɒǉ�*/
             /*if (add == true){
             	x3d_env.code.append("Shelf2 {position " + xs + " " + ys + " " + zs + " }\n");
             	Log.out("Shelf2 {position " + xs + " " + ys + " " + zs + " }");

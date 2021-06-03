@@ -1,0 +1,25 @@
+Package: nycflights13
+Title: Flights that Departed NYC in 2013
+Version: 1.0.0
+Authors@R: c(
+    person("Hadley", "Wickham", , "hadley@rstudio.com", c("aut", "cre")),
+    person("RStudio", role = "cph")
+    )
+Description: Airline on-time data for all flights departing NYC in 2013.
+    Also includes useful 'metadata' on airlines, airports, weather, and planes.
+License: CC0
+URL: http://github.com/hadley/nycflights13
+BugReports: https://github.com/hadley/nycflights13/issues
+Depends: R (>= 2.10)
+Imports: tibble
+Suggests: dplyr
+LazyData: true
+RoxygenNote: 6.0.1
+NeedsCompilation: no
+Packaged: 2018-06-26 17:30:08 UTC; hadley
+Author: Hadley Wickham [aut, cre],
+  RStudio [cph]
+Maintainer: Hadley Wickham <hadley@rstudio.com>
+Repository: CRAN
+Date/Publication: 2018-06-26 17:39:38 UTC
+Built: R 3.5.1; ; 2018-08-28 01:02:52 UTC; unix

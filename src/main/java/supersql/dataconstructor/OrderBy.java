@@ -1,10 +1,12 @@
 package supersql.dataconstructor;
 
 import java.util.Arrays;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
+import supersql.common.GlobalEnv;
 import supersql.common.Log;
 import supersql.extendclass.ExtList;
-import supersql.parser.Preprocessor;
 
 public class OrderBy {
 
@@ -37,7 +39,6 @@ public class OrderBy {
 			for (int j = i + 1; j < data_info.size(); j++) {
 
 				y = data_info.get(j).get(key);
-
 				/* ascending order */
 				if (way.equalsIgnoreCase("asc")) {
 					/* attribute whose value is null */
@@ -266,8 +267,8 @@ public class OrderBy {
 
 	private boolean isAggregate(String target) {
 
-		for (int i = 0; i < Preprocessor.getAggregateList().size(); i++) {
-			if (target.equals(Preprocessor.getAggregateList().get(i).toString().substring(0, 1))) {
+		for (int i = 0; i < GlobalEnv.aggListTmp.size(); i++) {
+			if (Integer.parseInt(target) == Integer.parseInt(GlobalEnv.aggListTmp.get(i).toString().split(" ")[0])) {
 				return true;
 			}
 		}
@@ -275,12 +276,18 @@ public class OrderBy {
 	}
 
 	private boolean isNumeric(String target) {
+		Pattern p = Pattern.compile("^-?\\d+(\\.\\d+)?$");
+        Matcher m = p.matcher(target);
+        if(!m.find()) {
+        		return false;
+        }
 
-		for (int i = 0; i < target.length(); i++) {
-			if (!((target.charAt(i) >= '0' && target.charAt(i) <= '9') || target.charAt(i) == '.')) {
-				return false;
-			}
-		}
+//		for (int i = 0; i < target.length(); i++) {
+//			if (!((target.charAt(i) >= '0' && target.charAt(i) <= '9') || target.charAt(i) == '.' )) {
+//
+//				return false;
+//			}
+//		}
 		return true;
 	}
 

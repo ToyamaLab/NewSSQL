@@ -20,7 +20,6 @@ import org.w3c.dom.Node;
 import org.w3c.dom.Text;
 import org.xml.sax.InputSource;
 
-import supersql.common.GlobalEnv;
 import supersql.common.Log;
 
 public class HTMLoptimizer {

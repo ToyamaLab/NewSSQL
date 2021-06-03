@@ -52,7 +52,6 @@ public class X3DG3 extends Grouper{
 	            X3DEnv.groupflag = 1;
 	            X3DEnv.bookcount = 1;
 	            
-	            /*�I��y�����ɒǉ�*/
 	            X3DEnv.z += value.z;
 	            X3DEnv.x = X3DEnv.xi;
 	            X3DEnv.bz = X3DEnv.z-0.2;

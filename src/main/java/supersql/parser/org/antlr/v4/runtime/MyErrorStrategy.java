@@ -1,6 +1,5 @@
 package supersql.parser.org.antlr.v4.runtime;
 
-import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -12,11 +11,7 @@ import org.antlr.v4.runtime.Parser;
 import org.antlr.v4.runtime.RecognitionException;
 import org.antlr.v4.runtime.Token;
 import org.antlr.v4.runtime.TokenStream;
-import org.antlr.v4.runtime.atn.ATN;
-import org.antlr.v4.runtime.atn.ATNState;
-import org.antlr.v4.runtime.atn.RuleTransition;
 import org.antlr.v4.runtime.misc.IntervalSet;
-import org.antlr.v4.runtime.misc.Pair;
 
 import supersql.common.GlobalEnv;
 import supersql.common.Ssedit;

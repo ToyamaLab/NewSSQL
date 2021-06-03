@@ -57,73 +57,24 @@ public class Attribute extends Operand {
 			AttNames.add(nm);
 		}
 		ValKey = key;
-		try {
-			Integer.parseInt(attimg);
-			attimg ="\""+attimg+"\"";	//Only a numerical value(数値のみ) -> "a numerical value"（ダブルクォートで囲う）
-
-		} catch (NumberFormatException e) {}
-		//tk/////////////////////////////////////////////////////////////////
-		StringTokenizer st0;
+//		try {
+//			Integer.parseInt(attimg);
+//			attimg ="\""+attimg+"\"";	//Only a numerical value(数値のみ) -> "a numerical value"（ダブルクォートで囲う）
+//		} catch (NumberFormatException e) {}
 		AttributeItem item;
-		if(attimg.contains("||") || CodeGenerator.sqlfunc_flag){
+		if(attimg.contains("||") || CodeGenerator.sqlfunc_flag > 0){
 			//			st0 = new StringTokenizer(attimg, "\"", true);
 //			attimg = attimg.replace("\"", "'");
-			
+			//
 			item = new AttributeItem(attimg, no);
 			Items.add(item);
 			attp.put(new Integer(no), item);
 			no++;
 		}else{
-			st0 = new StringTokenizer(attimg, "\"'", true);
-			//		StringTokenizer st0 = new StringTokenizer(attimg, "\"+", true);		//161202 taji comment outed for arithmetics
-			//StringTokenizer st0 = new StringTokenizer(attimg, "\\\"+", true);
-			//tk//////////////////////////////////////////////////////////////////
-			String ch1, buf;
-			//		AttributeItem item;
-
-			while (st0.hasMoreTokens()) {
-				ch1 = st0.nextToken();
-
-				if (ch1.equals("+")) {
-					continue;
-				}
-				if (ch1.equals("\"")) {
-					// quoted str
-					buf = "";
-					while (st0.hasMoreTokens()) {
-						ch1 = st0.nextToken();
-						if (ch1.equals("\\")) {
-							buf += ch1;
-							buf += st0.nextToken();
-						} else if (ch1.equals("\"")) {
-							Items.add(new AttributeItem(buf));
-							break;
-						}
-						buf += ch1;
-					}
-				}
-				else if (ch1.equals("'")) {
-					// quoted str
-					buf = "";
-					while (st0.hasMoreTokens()) {
-						ch1 = st0.nextToken();
-						if (ch1.equals("\\")) {
-							buf += ch1;
-							buf += st0.nextToken();
-						} else if (ch1.equals("'")) {
-							Items.add(new AttributeItem(buf));
-							break;
-						}
-						buf += ch1;
-					}
-				} 
-				else {
-					item = new AttributeItem(ch1, no);
-					Items.add(item);
-					attp.put(new Integer(no), item);
-					no++;
-				}
-			}
+			item = new AttributeItem(attimg, no);
+			Items.add(item);
+			attp.put(no, item);
+			no++;
 		}
 		Log.out("[set Attribute] Attribute Items : " + Items);
 		Log.out("[set Attribute] Sch: " + this.makesch());
@@ -172,19 +123,30 @@ public class Attribute extends Operand {
 
 	public ExtList<Integer> makesch() {
 		ExtList<Integer> outsch = new ExtList<Integer>();
-
 		for (int i = 0; i < Items.size(); i++) {
 			outsch.addAll((Items.get(i)).makesch());
 		}
 
+
+
 		if (orderFlag) {
 			Preprocessor.putOrderByTable(order, outsch);
 			orderFlag = false;
-		} 
+		}
 
 		if (aggregateFlag) {
 			Preprocessor.putAggregateList(outsch, aggregate);
 			aggregateFlag = false;
+		}
+
+		if (ggplotFlag) {
+			Preprocessor.putGGplotList(outsch, ggplot);
+			ggplotFlag = false;
+		}
+
+		if (ctabFlag) {
+			Preprocessor.putCtabList(outsch, ctab);
+			ctabFlag = false;
 		}
 		return outsch;
 	}
@@ -211,7 +173,7 @@ public class Attribute extends Operand {
 	public <T> String getStr(ExtList<T> data_info) {
 		String str = "";
 		if(conditional){
-			int stringItemsNumber = 0; 
+			int stringItemsNumber = 0;
 			Iterator<AttributeItem> iterator = Items.iterator();
 			while(iterator.hasNext()){
 				if(((AttributeItem)iterator.next()).IsStr)
@@ -266,7 +228,7 @@ public class Attribute extends Operand {
 		if(AttNames.size() > 1)
 			return AttNames.toString();
 		else
-			return AttName;			
+			return AttName;
 	}
 
 	public String getKey() {
@@ -305,5 +267,19 @@ public class Attribute extends Operand {
 	public Object createNode(ExtList<ExtList<String>> data_info) {
 		return null;
 	}
+
+
+	//added by taji 171102 start
+	public ExtList get_keys(boolean flag){
+		ExtList keys = new ExtList();
+		if(flag == true){
+			for (int i = 0; i < Items.size(); i++) {
+				keys.add(Items.get(i));
+			}
+		}
+		return keys;
+
+	}
+	//added by taji 171102 end
 
 }
