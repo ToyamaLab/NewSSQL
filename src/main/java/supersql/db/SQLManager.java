@@ -90,8 +90,6 @@ public class SQLManager {
 	}
 
     @SuppressWarnings({ "rawtypes", "unchecked" })
-	boolean firstSQLStatement = false;
-    int SQLstatementCount = 0;
 	public void ExecSQL(String query, String create, String update) {
     	if(isMulti)
     	{
@@ -154,12 +152,8 @@ public class SQLManager {
     	query = Mobile_HTML5.checkQuery(query);
         Log.out("[SQLManager ExecQuery]");
         if(!query.endsWith("FROM ;")){
-        	if (!firstSQLStatement) {
-    	        //Log.info("\n********** SQL is **********");
-    	        Log.info("\n********** SQL **********");
-        		firstSQLStatement = true;
-			}
-	        Log.info((++SQLstatementCount)+". "+query);
+	        Log.info("\n********** SQL is **********");
+	        Log.info(query);
         }
         GlobalEnv.query = query;
 

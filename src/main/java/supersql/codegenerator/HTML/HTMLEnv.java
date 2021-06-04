@@ -2,7 +2,6 @@ package supersql.codegenerator.HTML;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Iterator;
 import java.util.Map.Entry;
 import java.util.Vector;
@@ -71,224 +70,6 @@ public class HTMLEnv extends LocalEnv implements Serializable{
 	public static int formPartsNumber = 1;
 	public static String nameId = "";
 	public static int searchId = 0;
-	
-
-	/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-	//20210416  new table border
-	/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-	// new & old table
-	private static int currnt_nestDepth = 0;	//G1, G2のネストの深さ
-	private static int new_table_start_nestDepth = -1;		//start ネスト位置の保存用, end実行判定に使用
-	private static int old_table_start_nestDepth = -1;		//start ネスト位置の保存用, end実行判定に使用
-	private static String new_table_start_symbol = null;	//start symbolの保存用, end実行判定に使用
-	private static String old_table_start_symbol = null;	//start symbolの保存用, end実行判定に使用
-	private static boolean isUseOldTable = GlobalEnv.isUseOldTable();	//旧tableborderを使うかどうか
-	public static void start_table(String symbol, DecorateList decos, HTMLEnv html_env) {
-		if (symbol.endsWith("G1") || symbol.endsWith("G2")) {
-			currnt_nestDepth++;
-			//System.out.println(symbol+" start "+currnt_nestDepth);
-		}
-		
-		//System.out.println("isUseOldTable = "+isUseOldTable);
-		
-		if (decos.containsKey("border1") || decos.containsKey("tableborder1") || 
-			decos.containsKey("old_table") || decos.containsKey("old_border") || decos.containsKey("old_tableborder")) {
-			decos.put("table1", "");
-		}
-		
-		if (decos.containsKey("debug")) {		 //20210416
-			String d = decos.getStr("debug").toLowerCase().trim();
-			String[] ds = d.split("\\s*,\\s*");
-			System.out.println("debug = "+Arrays.toString(ds));
-			if (Arrays.asList(ds).contains("on")) {
-//				if (!isUseOldTable) {	//new table
-//					System.out.println("new table");
-					if (Arrays.asList(ds).contains("table1") || isUseOldTable) {	//@table1
-						//System.out.println("table1");
-						decos.put("table1", "");
-					} else {				//@table		//default
-						//System.out.println("table (debug)");
-						decos.put("table", "");
-					}
-//				} else {				//old table
-//					System.out.println("old table");
-//					System.out.println("table1");
-//					decos.put("table1", "");
-//				}
-
-			}
-		} else if (decos.containsKey("border") || decos.containsKey("tableborder")) {
-			if (!decos.containsKey("table") && !decos.containsKey("table1")) {
-				if (!isUseOldTable) {	//new table
-					//System.out.println("table (border)");
-					decos.put("table", "");		//@table		//default
-				} else {				//old table
-					//System.out.println("table1 (border)");
-					decos.put("table1", "");
-				}
-			}
-		}
-		
-		if (decos.containsKey("table")) {
-		//if (decos.containsKey("table") || decos.containsKey("new_table")) {
-			//System.out.println("table");
-			new_table_start_symbol = symbol;
-			new_table_start_nestDepth = currnt_nestDepth;		//TODO { { }@{table1} }@{table} のためには, new/oldそれぞれ別々に保存する必要がある？
-			HTMLEnv.start_new_table(decos, html_env);
-		} else if (decos.containsKey("table1")) {
-			//System.out.println("table1");						//TODO { { }@{table1} }@{table} のためには, new/oldそれぞれ別々に保存する必要がある？
-			old_table_start_symbol = symbol;
-			old_table_start_nestDepth = currnt_nestDepth;
-			HTMLEnv.start_old_table(decos, html_env);
-		}
-	}
-	public static void end_table(String symbol) {
-//		System.out.println("end_table "+nestDepth);
-		end_new_table(symbol);
-		end_old_table(symbol);
-		//tableBorder = "0";					//TODO ok? -> TFE全体にtableborder/borderが指定されていない場合はok?
-		
-		if (symbol.endsWith("G1") || symbol.endsWith("G2")) {
-			//System.out.println(symbol+" end "+currnt_nestDepth);
-			currnt_nestDepth--;
-		}
-	}
-
-	
-	// new table
-	public static boolean isNewTableBorder = false;		//20210416  new table border	//TODO 実行引数や装飾子でfalseにする処理
-//	public static boolean isNewTableBorder = true;		//20210416  new table border	//TODO 実行引数や装飾子でfalseにする処理
-	private static boolean insideTable = false;			//20210416  new table border
-	private static int newTableBorderNum = 10001;
-	public static String getNewTableBorderDIV_start() {
-		if (!insideTable && isNewTableBorder) 
-//		if (!insideTable && (isNewTableBorder || isOldTableBorder)) 
-			return "<div id=\""+getCurrentNewTableBorderID()+"\">";
-		return "";
-	}
-	public static String getNewTableBorderStyle() {				//20210416  new table border
-		if (!insideTable && isNewTableBorder) {
-//		if (!insideTable && (isNewTableBorder || isOldTableBorder)) {
-			//insideTable = true;
-			//if (isNewTableBorder)
-			//	return " style=\"border-style:solid;\" ";
-			insideTable = true;
-			if (isNewTableBorder)
-				return " style=\"border-style:solid;\" ";
-			// id="T10001"  style="border-style:solid;"
-//			return " id=\""+getCurrentNewTableBorderID()+"\" style=\"border-style:solid;\" ";
-		}
-		return "";
-	}
-	public static String getNewTableBorderDIV_end() {
-		if (!insideTable && isNewTableBorder) 
-//		if (!insideTable && (isNewTableBorder || isOldTableBorder)) 
-			return "</div>";
-		return "";
-	}
-//	public static String getNewTableBorderTableStyle(DecorateList decos) {
-//		String s = "";
-//		if (decos.containsKey("style")){
-//			s = decos.getStr("style");
-//			if (!s.trim().endsWith(";"))	s += ";";
-//			s += " ";
-//		}
-//		return " style=\""+s+"border:0;\" ";
-//	}
-//	public static String getNewTableBorderDIV_start2() {	//[重要]セルの途中で折返しがあった場合でも縦線を途切れさせないため  CSSと連携 -> おそらく不要
-////		if (isNewTableBorder && insideTable) 
-////			return "<div>";
-//		return "";
-//	}
-//	public static String getNewTableBorderDIV_end2() {		//[重要]セルの途中で折返しがあった場合でも縦線を途切れさせないため  CSSと連携 -> おそらく不要
-////		if (isNewTableBorder && insideTable) 
-////			return "</div>";
-//		return "";
-//	}
-	private static String getCurrentNewTableBorderID() {
-		return "ssqlTable"+newTableBorderNum;
-//		String r = "ssqlTable"+newTableBorderNum;
-//		newTableBorderNum++;
-//		return r;
-	}
-	private static void start_new_table(DecorateList decos, HTMLEnv html_env) {
-		isNewTableBorder = true;
-		if (decos.containsKey("tableborder"))
-			tableBorder = decos.getStr("tableborder");
-		else if (decos.containsKey("border"))
-			tableBorder = decos.getStr("border");
-		else
-			tableBorder = "1";					//TODO ok?
-		html_env.css.append(HTMLEnv.getNewTableBorderCSS());
-		//System.out.println("start_new_table "+currnt_nestDepth);
-	}
-	private static void end_new_table(String symbol) {
-		if (symbol.equals(new_table_start_symbol) && currnt_nestDepth == new_table_start_nestDepth && isNewTableBorder) {
-			isNewTableBorder = false;
-			insideTable = false;
-			newTableBorderNum ++;
-			tableBorder = "0";
-			new_table_start_nestDepth = -1;
-			//System.out.println("end_new_table "+currnt_nestDepth);
-		}
-	}
-	private static String getNewTableBorderCSS() {
-		return getNewTableBorderCSS(true);
-	}
-	private static String getNewTableBorderCSS(boolean withID) {
-		if (isNewTableBorder) {
-//		if (isNewTableBorder || isOldTableBorder) {
-			// TODO  線colorの取得			//idで適用範囲を制限, 線サイズの取得
-			String id = "";
-			if(withID)	id = "#"+getCurrentNewTableBorderID()+" ";
-			if (isNewTableBorder) {
-				//newTableBorderNum++;
-				return "\n"+
-					   id+"table, "+id+"tr, "+id+"td { border:"+tableBorder+"px solid black; }\n" +
-					   id+"table { border-collapse:collapse; border-style:hidden; border-spacing:0; height:100%; }\n\n";//" +		//TODO border-spacing:0は不要？
-//				       id+"tr, "+id+"td { border-collapse:collapse; }\n\n";		//不要？
-				       //id+"td { padding:0; height:100%; }\n" +				//おそらく不要
-					   //id+"td div { height:100%; display:flex; justify-content:center; flex-direction:column; }\n\n";		//[重要]セルの途中で折返しがあった場合でも縦線を途切れさせないため -> おそらく不要
-				//#ssqlTable10001 table:not(.att) { border:1px solid black; }
-				//s += "tr, td { border:solid; border-collapse:collapse; }\n\n";
-				//s += "td { empty-cells:hide; }\n";
-				//s += "th:empty, td:empty { border-collapse:collapse; border:0; visibility:hidden; }\n\n";
-			} 
-//			else if (HTMLEnv.isOldTableBorder) {
-//				return "\n"+
-//					   id+"table, "+id+"tr, "+id+"td { border:"+tableBorder+"px solid black; }\n\n";
-////				return "\n";
-//			}
-		}
-		return "";
-	}
-	
-	//old table
-	private static boolean isOldTableBorder = false;
-	private static void start_old_table(DecorateList decos, HTMLEnv html_env) {
-		isOldTableBorder = true;
-		if (decos.containsKey("tableborder"))
-			tableBorder = decos.getStr("tableborder");
-		else if (decos.containsKey("border"))
-			tableBorder = decos.getStr("border");
-		else
-			tableBorder = "1";					//TODO ok?
-		//html_env.css.append(HTMLEnv.getNewTableBorderCSS());
-		//System.out.println("start_old_table "+currnt_nestDepth);
-	}
-	private static void end_old_table(String symbol) {
-		if (symbol.equals(old_table_start_symbol) && currnt_nestDepth == old_table_start_nestDepth && isOldTableBorder) {
-			isOldTableBorder = false;
-			//insideTable = false;
-			//newTableBorderNum ++;
-			tableBorder = "0";
-			old_table_start_nestDepth = -1;
-			//System.out.println("end_old_table "+currnt_nestDepth);
-		}
-	}
-	/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-	
-	
 
 	public static void computeConditionalDecorations(DecorateList decos,
 			StringBuffer css) {
@@ -644,7 +425,7 @@ public class HTMLEnv extends LocalEnv implements Serializable{
 	// added by masato 20151124 for plink'values
 	public boolean plinkFlag = false;
 
-	public static String tableBorder = new String("0"); //190604 1->0
+	public String tableBorder = new String("0"); //190604 1->0
 
 	public Vector<String> writtenClassId;
 
@@ -840,9 +621,6 @@ public class HTMLEnv extends LocalEnv implements Serializable{
 		} else
 		// modifeid by masato 20151118 for ehtml end
 		if (!GlobalEnv.isOpt()) {
-//			s += getNewTableBorderCSS(false);	// TODO debug=がついている場合のみ？
-//			s += getNewTableBorderCSS();	// TODO debug=がついている場合のみ？
-
 			s += ".att { padding:0px; margin:0px; height:100%; z-index:2; }\n";
 			s += ".linkbutton { text-align:center; margin-top:5px; padding:5px; }\n";
 			s += ".embed { vertical-align:text-top; padding:0px; margin:0px; border:0px,0px,0px,0px; width:100%; }\n" +
@@ -851,7 +629,6 @@ public class HTMLEnv extends LocalEnv implements Serializable{
 		}
 		return s;
 	}
-
 
 	public void append_css_def_td(String classid, DecorateList decolist) {
 		DecorateList decos = new DecorateList();
@@ -936,11 +713,9 @@ public class HTMLEnv extends LocalEnv implements Serializable{
 				} else {
 					// itc
 					if (GlobalEnv.isOpt())
-						//cssFile.append("<link rel=\"stylesheet\" type=\"text/css\" href=\"http://www.db.ics.keio.ac.jp/ssqlcss/default_opt.css\">\n");
-						cssFile.append("<link rel=\"stylesheet\" type=\"text/css\" href=\"jscss/default_opt.css\">\n");			//TODO jscss以下へ
+						cssFile.append("<link rel=\"stylesheet\" type=\"text/css\" href=\"http://www.db.ics.keio.ac.jp/ssqlcss/default_opt.css\">\n");
 					else
-						//cssFile.append("<link rel=\"stylesheet\" type=\"text/css\" href=\"http://www.db.ics.keio.ac.jp/ssqlcss/default.css\">\n");
-						cssFile.append("<link rel=\"stylesheet\" type=\"text/css\" href=\"jscss/default.css\">\n");				//TODO jscss以下へ
+						cssFile.append("<link rel=\"stylesheet\" type=\"text/css\" href=\"http://www.db.ics.keio.ac.jp/ssqlcss/default.css\">\n");
 				}
 			}
 		}
@@ -966,8 +741,6 @@ public class HTMLEnv extends LocalEnv implements Serializable{
 			titleClass.append(" class=\"" + decos.getStr("title_class") + "\"");
 		if (decos.containsKey("tableborder"))// && tableborder.length() == 0)
 			tableBorder = decos.getStr("tableborder");
-		else if (decos.containsKey("border"))
-			tableBorder = decos.getStr("border");
 
 		// tk end//////////////////////////////////////////////////////////////
 
@@ -1109,12 +882,11 @@ public class HTMLEnv extends LocalEnv implements Serializable{
 		if (decos.containsKey("font-family"))
 			cssbuf.append(" font-family:" + decos.getStr("font-family") + ";");
 
-//		if (decos.containsKey("debug")) {		 //190604
-//			if(decos.getStr("debug").toLowerCase().trim().equals("on") && !decos.containsKey("border")
-//				&& !decos.containsKey("tableborder")) {
-//				tableBorder = new String("1");
-//			}
-//		}
+		if (decos.containsKey("debug")) //190604
+			if(decos.getStr("debug").toLowerCase().trim().equals("on") && !decos.containsKey("border")
+				&& !decos.containsKey("tableborder")) {
+				tableBorder = new String("1");
+			}
 
 		if (decos.containsKey("border"))
 			cssbuf.append(" border:" + decos.getStr("border") + ";");
@@ -1634,8 +1406,6 @@ public class HTMLEnv extends LocalEnv implements Serializable{
 
 		if (decos.containsKey("tableborder"))
 			tableBorder = decos.getStr("tableborder");
-		else if (decos.containsKey("border"))
-			tableBorder = decos.getStr("border");
 
 		computeConditionalDecorations(decos, css);
 

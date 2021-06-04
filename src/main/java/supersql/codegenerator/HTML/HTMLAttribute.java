@@ -448,9 +448,6 @@ public class HTMLAttribute extends Attribute {
 //		}
 //		Incremental.outXMLData(1, classname);	//Test
 		
-		
-		HTMLEnv.start_table("HTMLAttribute", decos, htmlEnv);
-		
 		//tbt acc 180806
 		if(GlobalEnv.joinFlag){
 			// if (Incremental.flag || Ehtml.flag) {
@@ -473,7 +470,6 @@ public class HTMLAttribute extends Attribute {
 
 			} else {
 				if (htmlEnv.decorationStartFlag.size() > 0) {
-					HTMLDecoration.fronts.get(0).append(HTMLEnv.getNewTableBorderDIV_start());
 					if (htmlEnv.decorationEndFlag.get(0)) {
 						// do nothing
 					} else if (htmlEnv.decorationStartFlag.get(0)) {
@@ -483,7 +479,7 @@ public class HTMLAttribute extends Attribute {
 						if (decos.getConditions().size() > 0) {
 							HTMLDecoration.ends.get(0).append(" " + computeStringForDecoration(data_info));
 						}
-						HTMLDecoration.ends.get(0).append(" att\" "+HTMLEnv.getNewTableBorderStyle()+">");
+						HTMLDecoration.ends.get(0).append(" att\">");
 					} else {
 						HTMLDecoration.ends.get(0).append("<table" + htmlEnv.getOutlineModeAtt());
 						HTMLDecoration.ends.get(0).append(" class=\"");
@@ -491,11 +487,11 @@ public class HTMLAttribute extends Attribute {
 						if (decos.getConditions().size() > 0) {
 							HTMLDecoration.ends.get(0).append(" " + computeStringForDecoration(data_info));
 						}
-						HTMLDecoration.ends.get(0).append(" att\" "+HTMLEnv.getNewTableBorderStyle()+">");
+						HTMLDecoration.ends.get(0).append(" att\">");
 					}
 				} else {
-					htmlEnv.code.append(HTMLEnv.getNewTableBorderDIV_start());
-					htmlEnv.code.append("<table" + htmlEnv.getOutlineModeAtt() + " ");
+					htmlEnv.code.append("<table" + htmlEnv.getOutlineModeAtt()
+							+ " ");
 					htmlEnv.code.append("class=\"att");
 					// tk
 					// start/////////////////////////////////////////////////////////
@@ -512,7 +508,7 @@ public class HTMLAttribute extends Attribute {
 					}
 					htmlEnv.code.append("\"");
 					htmlEnv.code.append(Modifier.getIdModifierValue(decos));
-					htmlEnv.code.append(HTMLEnv.getNewTableBorderStyle()+">");
+					htmlEnv.code.append(">");
 				}
 			}
 
@@ -768,14 +764,12 @@ public class HTMLAttribute extends Attribute {
 					} else {
 						HTMLDecoration.ends.get(0).append("</td></tr></table>\n");
 					}
-					HTMLDecoration.ends.get(0).append(HTMLEnv.getNewTableBorderDIV_end());
 				} else {
 					htmlEnv.code.append("</td></tr></table>\n");
-					htmlEnv.code.append(HTMLEnv.getNewTableBorderDIV_end());
 					Log.out("</td></tr></table>");
 				}
 			}
-			HTMLEnv.end_table("HTMLAttribute");
+
 
 			Log.out("TFEId = " + HTMLEnv.getClassID(this));
 			// html_env.append_css_def_td(HTMLEnv.getClassID(this), this.decos);
