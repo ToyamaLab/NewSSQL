@@ -1,0 +1,4 @@
+GENERATE HTML
+ggplot[x."internship",x."rate"]@{geom_point= "size = 3", geom_line}!
+
+FROM industry_research x;
