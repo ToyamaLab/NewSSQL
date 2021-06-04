@@ -8,7 +8,7 @@ bin/
 .settings/*
 target/
 test_queries/tatsu/
-Datavisualize
+Datavisualize/
 .idea
 .idea*
 newssql.iml
