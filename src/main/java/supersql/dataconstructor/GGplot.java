@@ -13,7 +13,8 @@ import supersql.parser.Preprocessor;
 
 public class GGplot {
 
-	private static int count;
+//	private static int count;
+	private static int count = 0;
 	private ExtList result;
 
 
@@ -24,9 +25,14 @@ public class GGplot {
 	/* navigate the whole schema in this method */
 	public ExtList ggplot(ExtList criteria_set, ExtList info, ExtList sch, ExtList tuples) {
 
+//		System.out.println();
 //		System.out.println(tuples);
 //		System.out.println(sch);
 //		System.out.println(info);
+		
+//if (tuples.toString().equals("[[]]")) {
+//	return tuples;
+//}
 		boolean is_ggplot = false;
 		boolean is_ggplot_1 = false;
 		boolean aethFlag = true;
@@ -81,10 +87,12 @@ public class GGplot {
 
 				/* push it into criteria_set, if "ggplot functions" not found */
 				if (!is_ggplot) {
+//				if (count>=0 && !is_ggplot) {
 					if (criteria_set.size() >= 1) {
 						if (Integer.parseInt(sch.get(i).toString()) == Integer.parseInt(criteria_set.get(criteria_set.size() - 1).toString()) + 1) {
 							criteria_set.add(sch.get(i));
 						} else {
+//							System.out.println(count+" "+i);
 							aeth[count] = Integer.parseInt(sch.get(i).toString());
 						}
 					} else {
@@ -188,6 +196,10 @@ public class GGplot {
 			/* find tuples with the same criteria */
 
 			x = (ExtList)(tuples.get(0));
+			//System.out.println(x+" "+x.size()+" "+tuples.size());
+//			if (x.size()<2) {
+//				break;
+//			}
 			for (int i = 1; i < tuples.size(); i++) {
 				y = (ExtList)(tuples.get(i));
 
@@ -416,7 +428,10 @@ public class GGplot {
 
 	        for (int i = 0; i < buffer.size(); i++) {
 	        		buffer.getExtList(i).set(Integer.parseInt(target_x), "ggplot" + r_html_filename + "_" + count + ".html");
-	        		buffer.getExtList(i).set(Integer.parseInt(target_y), r_html_filename);
+	        		//buffer.getExtList(i).set(Integer.parseInt(target_y), r_html_filename);
+	        		buffer.getExtList(i).set(Integer.parseInt(target_y), "");
+//	        		System.out.println(buffer.getExtListString(i, Integer.parseInt(target_x)));
+//	        		System.out.println(buffer.getExtListString(i, Integer.parseInt(target_y)));
 	        }
 //	        buffer.getExtList(0).set(Integer.parseInt(target_x), "ggplot" + name + ".html");
 //	        buffer.getExtList(0).set(Integer.parseInt(target_y), name);
@@ -429,7 +444,7 @@ public class GGplot {
 //			System.out.println(count);
 
 		}
-
+		count++;
 		return tuples_buffer;
 
 	}

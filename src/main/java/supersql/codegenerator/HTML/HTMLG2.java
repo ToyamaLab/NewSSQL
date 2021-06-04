@@ -103,6 +103,7 @@ public class HTMLG2 extends Grouper implements Serializable {
 					+ html_env.gLevel + ">\n");
 			return null;
 		} else {
+			HTMLEnv.start_table(this.getSymbol(), decos, html_env);
 
 			if (HTMLEnv.getSelectFlg())
 				data_info = (ExtList) data_info.get(0);
@@ -144,6 +145,7 @@ public class HTMLG2 extends Grouper implements Serializable {
 				retFlag = true;
 				i = Integer.parseInt(decos.getStr("row"));
 				if (html_env.decorationStartFlag.size() > 0) {
+					HTMLDecoration.fronts.get(0).append(HTMLEnv.getNewTableBorderDIV_start());
 					if (html_env.decorationStartFlag.get(0)) {
 						HTMLDecoration.fronts.get(0).append("TABLE cellSpacing=\"0\" cellPadding=\"0\" border=\"");
 						HTMLDecoration.fronts.get(0).append(html_env.tableBorder + "\"");
@@ -185,6 +187,7 @@ public class HTMLG2 extends Grouper implements Serializable {
 			// 20140613_masato && j != 1を追加　→　[tfe]!3%とかのとき
 			if (!GlobalEnv.isOpt()) {
 				if (html_env.decorationStartFlag.size() > 0) {
+					HTMLDecoration.fronts.get(0).append(HTMLEnv.getNewTableBorderDIV_start());
 					if (html_env.decorationStartFlag.get(0)) {
 						HTMLDecoration.fronts.get(0).append("<TABLE cellSpacing=\"0\" cellPadding=\"0\" border=\"");
 						HTMLDecoration.fronts.get(0).append(html_env.tableBorder + "\"");
@@ -198,7 +201,7 @@ public class HTMLG2 extends Grouper implements Serializable {
 						}
 						HTMLDecoration.ends.get(0).append(" nest\"");
 						HTMLDecoration.ends.get(0).append(html_env.getOutlineMode());
-						HTMLDecoration.ends.get(0).append(">");
+						HTMLDecoration.ends.get(0).append(HTMLEnv.getNewTableBorderStyle()+">");
 						html_env.decorationStartFlag.set(0, false);
 					} else {
 						HTMLDecoration.ends.get(0).append("<TABLE cellSpacing=\"0\" cellPadding=\"0\" border=\"");
@@ -213,9 +216,10 @@ public class HTMLG2 extends Grouper implements Serializable {
 						}
 						HTMLDecoration.ends.get(0).append(" nest\"");
 						HTMLDecoration.ends.get(0).append(html_env.getOutlineMode());
-						HTMLDecoration.ends.get(0).append(">");
+						HTMLDecoration.ends.get(0).append(HTMLEnv.getNewTableBorderStyle()+">");
 					}
 				} else {
+					html_env.code.append(HTMLEnv.getNewTableBorderDIV_start());
 					html_env.code
 					.append("<TABLE cellSpacing=\"0\" cellPadding=\"0\" border=\"");
 					html_env.code.append(html_env.tableBorder + "\" ");
@@ -244,8 +248,8 @@ public class HTMLG2 extends Grouper implements Serializable {
 					html_env.code.append(html_env.getOutlineMode());
 
 					html_env.code.append(Modifier.getIdModifierValue(decos) + " ");//kotani_idmodifier_ok
-					html_env.code.append(">");
-					html_env.code.append("<TR>");//taji add
+					html_env.code.append(HTMLEnv.getNewTableBorderStyle()+">");
+					if (!HTMLEnv.isNewTableBorder) html_env.code.append("<TR>");//taji add //TODO 不要？
 				}
 			}
 			// tk end/////////////////////////////////////////////////////
@@ -527,11 +531,13 @@ public class HTMLG2 extends Grouper implements Serializable {
 					}
 					HTMLDecoration.ends.get(0).append("</TR></TABLE>\n");
 				}
+				HTMLDecoration.ends.get(0).append(HTMLEnv.getNewTableBorderDIV_end());
 			} else {
 				if (flag) {
 					html_env.code.append("</TABLE>\n");
 				}
 				html_env.code.append("</TR></TABLE>\n");
+				html_env.code.append(HTMLEnv.getNewTableBorderDIV_end());
 				if (pageFlag) {//taji add
 					html_env.code.append("</div>\n");
 					html_env.code.append("</div>\n");
@@ -539,6 +545,7 @@ public class HTMLG2 extends Grouper implements Serializable {
 				}
 			}
 			Log.out("</TABLE>");
+			HTMLEnv.end_table(this.getSymbol());
 
 			Log.out("TFEId = " + HTMLEnv.getClassID(this));
 			// html_env.append_css_def_td(HTMLEnv.getClassID(this), this.decos);

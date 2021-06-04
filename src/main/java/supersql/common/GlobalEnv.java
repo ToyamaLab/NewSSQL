@@ -603,7 +603,7 @@ public class GlobalEnv {
 
 	//��³����ɥ饤�ФΥѥ����
 	public static String getpassword() {
-		String ret = seek("-p");
+		String ret = seek("-password");
 		if (ret == null) {
 			if (password != null) {
 				ret = password;
@@ -645,7 +645,8 @@ public class GlobalEnv {
 
 	// add tbt 180718 to set multiple query
 	private static void setMulti() {
-		if (seek("-multiquery") != null) {
+		//if (seek("-multiquery") != null) {
+		if (seek("-singlequery") == null || seek("-multiquery") != null) {
 			GlobalEnv.setMultiQuery();
 		}
 		if(seek("-multigb") != null){
@@ -706,6 +707,14 @@ public class GlobalEnv {
 			}
 		}
 		return ret;
+	}
+	
+	// 20210416  new table border
+	public static boolean isUseOldTable(){
+		if(seek("-table1") != null || seek("-border1") != null || seek("-tableborder1") != null || 
+		   seek("-old_table") != null || seek("-old_border") != null || seek("-old_tableborder") != null)
+			return true;
+		return false;
 	}
 
 
