@@ -1,4 +1,4 @@
-// Generated from prefix.g4 by ANTLR 4.5
+// Generated from prefix.g4 by ANTLR 4.8
 
 package supersql.parser;
 
@@ -13,7 +13,7 @@ import org.antlr.v4.runtime.misc.*;
 
 @SuppressWarnings({"all", "warnings", "unchecked", "unused", "cast"})
 public class prefixLexer extends Lexer {
-	static { RuntimeMetaData.checkVersion("4.5", RuntimeMetaData.VERSION); }
+	static { RuntimeMetaData.checkVersion("4.8", RuntimeMetaData.VERSION); }
 
 	protected static final DFA[] _decisionToDFA;
 	protected static final PredictionContextCache _sharedContextCache =
@@ -23,29 +23,42 @@ public class prefixLexer extends Lexer {
 		K_IMPORT=8, K_DEFINE=9, OPEN_PARENTHESE=10, CLOSE_PARENTHESE=11, OPEN_BRACKET=12, 
 		CLOSE_BRACKET=13, OPEN_BRACE=14, CLOSE_BRACE=15, IDENTIFIER=16, STRING_LITERAL=17, 
 		MULTI_LINE_COMMENT=18, SINGLE_LINE_COMMENT=19, WS=20, UNEXPECTED_CHAR=21;
+	public static String[] channelNames = {
+		"DEFAULT_TOKEN_CHANNEL", "HIDDEN"
+	};
+
 	public static String[] modeNames = {
 		"DEFAULT_MODE"
 	};
 
-	public static final String[] ruleNames = {
-		"T__0", "T__1", "T__2", "DEF", "K_FOREACH", "K_FOREACH1", "K_PARAMETER", 
-		"K_IMPORT", "K_DEFINE", "OPEN_PARENTHESE", "CLOSE_PARENTHESE", "OPEN_BRACKET", 
-		"CLOSE_BRACKET", "OPEN_BRACE", "CLOSE_BRACE", "IDENTIFIER", "STRING_LITERAL", 
-		"MULTI_LINE_COMMENT", "SINGLE_LINE_COMMENT", "WS", "UNEXPECTED_CHAR", 
-		"DIGIT", "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", 
-		"N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"
-	};
+	private static String[] makeRuleNames() {
+		return new String[] {
+			"T__0", "T__1", "T__2", "DEF", "K_FOREACH", "K_FOREACH1", "K_PARAMETER", 
+			"K_IMPORT", "K_DEFINE", "OPEN_PARENTHESE", "CLOSE_PARENTHESE", "OPEN_BRACKET", 
+			"CLOSE_BRACKET", "OPEN_BRACE", "CLOSE_BRACE", "IDENTIFIER", "STRING_LITERAL", 
+			"MULTI_LINE_COMMENT", "SINGLE_LINE_COMMENT", "WS", "UNEXPECTED_CHAR", 
+			"DIGIT", "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", 
+			"M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"
+		};
+	}
+	public static final String[] ruleNames = makeRuleNames();
 
-	private static final String[] _LITERAL_NAMES = {
-		null, "','", "'.'", "'#'", null, null, null, null, null, null, "'('", 
-		"')'", "'['", "']'", "'{'", "'}'"
-	};
-	private static final String[] _SYMBOLIC_NAMES = {
-		null, null, null, null, "DEF", "K_FOREACH", "K_FOREACH1", "K_PARAMETER", 
-		"K_IMPORT", "K_DEFINE", "OPEN_PARENTHESE", "CLOSE_PARENTHESE", "OPEN_BRACKET", 
-		"CLOSE_BRACKET", "OPEN_BRACE", "CLOSE_BRACE", "IDENTIFIER", "STRING_LITERAL", 
-		"MULTI_LINE_COMMENT", "SINGLE_LINE_COMMENT", "WS", "UNEXPECTED_CHAR"
-	};
+	private static String[] makeLiteralNames() {
+		return new String[] {
+			null, "','", "'.'", "'#'", null, null, null, null, null, null, "'('", 
+			"')'", "'['", "']'", "'{'", "'}'"
+		};
+	}
+	private static final String[] _LITERAL_NAMES = makeLiteralNames();
+	private static String[] makeSymbolicNames() {
+		return new String[] {
+			null, null, null, null, "DEF", "K_FOREACH", "K_FOREACH1", "K_PARAMETER", 
+			"K_IMPORT", "K_DEFINE", "OPEN_PARENTHESE", "CLOSE_PARENTHESE", "OPEN_BRACKET", 
+			"CLOSE_BRACKET", "OPEN_BRACE", "CLOSE_BRACE", "IDENTIFIER", "STRING_LITERAL", 
+			"MULTI_LINE_COMMENT", "SINGLE_LINE_COMMENT", "WS", "UNEXPECTED_CHAR"
+		};
+	}
+	private static final String[] _SYMBOLIC_NAMES = makeSymbolicNames();
 	public static final Vocabulary VOCABULARY = new VocabularyImpl(_LITERAL_NAMES, _SYMBOLIC_NAMES);
 
 	/**
@@ -95,13 +108,16 @@ public class prefixLexer extends Lexer {
 	public String getSerializedATN() { return _serializedATN; }
 
 	@Override
+	public String[] getChannelNames() { return channelNames; }
+
+	@Override
 	public String[] getModeNames() { return modeNames; }
 
 	@Override
 	public ATN getATN() { return _ATN; }
 
 	public static final String _serializedATN =
-		"\3\u0430\ud6d1\u8206\uad2d\u4417\uaef1\u8d80\uaadd\2\27\u011c\b\1\4\2"+
+		"\3\u608b\ua72a\u8133\ub9ed\u417c\u3be7\u7786\u5964\2\27\u011c\b\1\4\2"+
 		"\t\2\4\3\t\3\4\4\t\4\4\5\t\5\4\6\t\6\4\7\t\7\4\b\t\b\4\t\t\t\4\n\t\n\4"+
 		"\13\t\13\4\f\t\f\4\r\t\r\4\16\t\16\4\17\t\17\4\20\t\20\4\21\t\21\4\22"+
 		"\t\22\4\23\t\23\4\24\t\24\4\25\t\25\4\26\t\26\4\27\t\27\4\30\t\30\4\31"+
@@ -128,8 +144,8 @@ public class prefixLexer extends Lexer {
 		"\4\2CCcc\4\2DDdd\4\2EEee\4\2FFff\4\2GGgg\4\2HHhh\4\2IIii\4\2JJjj\4\2K"+
 		"Kkk\4\2LLll\4\2MMmm\4\2NNnn\4\2OOoo\4\2PPpp\4\2QQqq\4\2RRrr\4\2SSss\4"+
 		"\2TTtt\4\2UUuu\4\2VVvv\4\2WWww\4\2XXxx\4\2YYyy\4\2ZZzz\4\2[[{{\4\2\\\\"+
-		"||\u010b\2\3\3\2\2\2\2\5\3\2\2\2\2\7\3\2\2\2\2\t\3\2\2\2\2\13\3\2\2\2"+
-		"\2\r\3\2\2\2\2\17\3\2\2\2\2\21\3\2\2\2\2\23\3\2\2\2\2\25\3\2\2\2\2\27"+
+		"||\2\u010b\2\3\3\2\2\2\2\5\3\2\2\2\2\7\3\2\2\2\2\t\3\2\2\2\2\13\3\2\2"+
+		"\2\2\r\3\2\2\2\2\17\3\2\2\2\2\21\3\2\2\2\2\23\3\2\2\2\2\25\3\2\2\2\2\27"+
 		"\3\2\2\2\2\31\3\2\2\2\2\33\3\2\2\2\2\35\3\2\2\2\2\37\3\2\2\2\2!\3\2\2"+
 		"\2\2#\3\2\2\2\2%\3\2\2\2\2\'\3\2\2\2\2)\3\2\2\2\2+\3\2\2\2\3c\3\2\2\2"+
 		"\5e\3\2\2\2\7g\3\2\2\2\ti\3\2\2\2\13q\3\2\2\2\ry\3\2\2\2\17\177\3\2\2"+
@@ -160,9 +176,9 @@ public class prefixLexer extends Lexer {
 		"\2\2\2\u00a6\u00a4\3\2\2\2\u00a6\u00a7\3\2\2\2\u00a7\u00a9\3\2\2\2\u00a8"+
 		"\u00a6\3\2\2\2\u00a9\u00ad\t\4\2\2\u00aa\u00ac\t\3\2\2\u00ab\u00aa\3\2"+
 		"\2\2\u00ac\u00af\3\2\2\2\u00ad\u00ab\3\2\2\2\u00ad\u00ae\3\2\2\2\u00ae"+
-		"\"\3\2\2\2\u00af\u00ad\3\2\2\2\u00b0\u00b4\7$\2\2\u00b1\u00b3\n\5\2\2"+
+		"\"\3\2\2\2\u00af\u00ad\3\2\2\2\u00b0\u00b4\3\2\2\2\u00b1\u00b3\n\5\2\2"+
 		"\u00b2\u00b1\3\2\2\2\u00b3\u00b6\3\2\2\2\u00b4\u00b2\3\2\2\2\u00b4\u00b5"+
-		"\3\2\2\2\u00b5\u00b7\3\2\2\2\u00b6\u00b4\3\2\2\2\u00b7\u00c1\7$\2\2\u00b8"+
+		"\3\2\2\2\u00b5\u00b7\3\2\2\2\u00b6\u00b4\3\2\2\2\u00b7\u00c1\3\2\2\2\u00b8"+
 		"\u00bc\7)\2\2\u00b9\u00bb\n\6\2\2\u00ba\u00b9\3\2\2\2\u00bb\u00be\3\2"+
 		"\2\2\u00bc\u00ba\3\2\2\2\u00bc\u00bd\3\2\2\2\u00bd\u00bf\3\2\2\2\u00be"+
 		"\u00bc\3\2\2\2\u00bf\u00c1\7)\2\2\u00c0\u00b0\3\2\2\2\u00c0\u00b8\3\2"+

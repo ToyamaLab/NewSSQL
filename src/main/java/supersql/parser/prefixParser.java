@@ -1,4 +1,4 @@
-// Generated from prefix.g4 by ANTLR 4.5
+// Generated from prefix.g4 by ANTLR 4.8
 
 package supersql.parser;
 
@@ -13,7 +13,7 @@ import java.util.ArrayList;
 
 @SuppressWarnings({"all", "warnings", "unchecked", "unused", "cast"})
 public class prefixParser extends Parser {
-	static { RuntimeMetaData.checkVersion("4.5", RuntimeMetaData.VERSION); }
+	static { RuntimeMetaData.checkVersion("4.8", RuntimeMetaData.VERSION); }
 
 	protected static final DFA[] _decisionToDFA;
 	protected static final PredictionContextCache _sharedContextCache =
@@ -28,22 +28,31 @@ public class prefixParser extends Parser {
 		RULE_function = 5, RULE_expr = 6, RULE_function_name = 7, RULE_database_name = 8, 
 		RULE_table_name = 9, RULE_column_alias = 10, RULE_column_name = 11, RULE_table_alias = 12, 
 		RULE_index_name = 13, RULE_any_name = 14;
-	public static final String[] ruleNames = {
-		"prefix", "fix", "operand", "exdef", "foreach", "function", "expr", "function_name", 
-		"database_name", "table_name", "column_alias", "column_name", "table_alias", 
-		"index_name", "any_name"
-	};
+	private static String[] makeRuleNames() {
+		return new String[] {
+			"prefix", "fix", "operand", "exdef", "foreach", "function", "expr", "function_name", 
+			"database_name", "table_name", "column_alias", "column_name", "table_alias", 
+			"index_name", "any_name"
+		};
+	}
+	public static final String[] ruleNames = makeRuleNames();
 
-	private static final String[] _LITERAL_NAMES = {
-		null, "','", "'.'", "'#'", null, null, null, null, null, null, "'('", 
-		"')'", "'['", "']'", "'{'", "'}'"
-	};
-	private static final String[] _SYMBOLIC_NAMES = {
-		null, null, null, null, "DEF", "K_FOREACH", "K_FOREACH1", "K_PARAMETER", 
-		"K_IMPORT", "K_DEFINE", "OPEN_PARENTHESE", "CLOSE_PARENTHESE", "OPEN_BRACKET", 
-		"CLOSE_BRACKET", "OPEN_BRACE", "CLOSE_BRACE", "IDENTIFIER", "STRING_LITERAL", 
-		"MULTI_LINE_COMMENT", "SINGLE_LINE_COMMENT", "WS", "UNEXPECTED_CHAR"
-	};
+	private static String[] makeLiteralNames() {
+		return new String[] {
+			null, "','", "'.'", "'#'", null, null, null, null, null, null, "'('", 
+			"')'", "'['", "']'", "'{'", "'}'"
+		};
+	}
+	private static final String[] _LITERAL_NAMES = makeLiteralNames();
+	private static String[] makeSymbolicNames() {
+		return new String[] {
+			null, null, null, null, "DEF", "K_FOREACH", "K_FOREACH1", "K_PARAMETER", 
+			"K_IMPORT", "K_DEFINE", "OPEN_PARENTHESE", "CLOSE_PARENTHESE", "OPEN_BRACKET", 
+			"CLOSE_BRACKET", "OPEN_BRACE", "CLOSE_BRACE", "IDENTIFIER", "STRING_LITERAL", 
+			"MULTI_LINE_COMMENT", "SINGLE_LINE_COMMENT", "WS", "UNEXPECTED_CHAR"
+		};
+	}
+	private static final String[] _SYMBOLIC_NAMES = makeSymbolicNames();
 	public static final Vocabulary VOCABULARY = new VocabularyImpl(_LITERAL_NAMES, _SYMBOLIC_NAMES);
 
 	/**
@@ -93,6 +102,7 @@ public class prefixParser extends Parser {
 		super(input);
 		_interp = new ParserATNSimulator(this,_ATN,_decisionToDFA,_sharedContextCache);
 	}
+
 	public static class PrefixContext extends ParserRuleContext {
 		public List<FixContext> fix() {
 			return getRuleContexts(FixContext.class);
@@ -181,6 +191,7 @@ public class prefixParser extends Parser {
 		enterRule(_localctx, 2, RULE_fix);
 		try {
 			setState(41);
+			_errHandler.sync(this);
 			switch ( getInterpreter().adaptivePredict(_input,1,_ctx) ) {
 			case 1:
 				enterOuterAlt(_localctx, 1);
@@ -244,6 +255,7 @@ public class prefixParser extends Parser {
 			enterOuterAlt(_localctx, 1);
 			{
 			setState(46);
+			_errHandler.sync(this);
 			switch ( getInterpreter().adaptivePredict(_input,2,_ctx) ) {
 			case 1:
 				{
@@ -301,6 +313,7 @@ public class prefixParser extends Parser {
 		enterRule(_localctx, 6, RULE_exdef);
 		try {
 			setState(61);
+			_errHandler.sync(this);
 			switch ( getInterpreter().adaptivePredict(_input,3,_ctx) ) {
 			case 1:
 				enterOuterAlt(_localctx, 1);
@@ -378,6 +391,7 @@ public class prefixParser extends Parser {
 		try {
 			int _alt;
 			setState(107);
+			_errHandler.sync(this);
 			switch (_input.LA(1)) {
 			case K_FOREACH:
 			case K_FOREACH1:
@@ -388,10 +402,14 @@ public class prefixParser extends Parser {
 				_la = _input.LA(1);
 				if ( !(_la==K_FOREACH || _la==K_FOREACH1) ) {
 				_errHandler.recoverInline(this);
-				} else {
+				}
+				else {
+					if ( _input.LA(1)==Token.EOF ) matchedEOF = true;
+					_errHandler.reportMatch(this);
 					consume();
 				}
 				setState(83);
+				_errHandler.sync(this);
 				switch ( getInterpreter().adaptivePredict(_input,6,_ctx) ) {
 				case 1:
 					{
@@ -454,6 +472,7 @@ public class prefixParser extends Parser {
 				setState(85);
 				match(K_PARAMETER);
 				setState(105);
+				_errHandler.sync(this);
 				switch ( getInterpreter().adaptivePredict(_input,9,_ctx) ) {
 				case 1:
 					{
@@ -631,6 +650,7 @@ public class prefixParser extends Parser {
 		try {
 			int _alt;
 			setState(142);
+			_errHandler.sync(this);
 			switch ( getInterpreter().adaptivePredict(_input,16,_ctx) ) {
 			case 1:
 				enterOuterAlt(_localctx, 1);
@@ -644,6 +664,7 @@ public class prefixParser extends Parser {
 				{
 				{
 				setState(125);
+				_errHandler.sync(this);
 				switch ( getInterpreter().adaptivePredict(_input,12,_ctx) ) {
 				case 1:
 					{
@@ -664,6 +685,7 @@ public class prefixParser extends Parser {
 					if ( _alt==1 ) {
 						{
 						setState(137);
+						_errHandler.sync(this);
 						switch (_input.LA(1)) {
 						case T__0:
 							{
@@ -679,6 +701,7 @@ public class prefixParser extends Parser {
 							{
 							{
 							setState(134);
+							_errHandler.sync(this);
 							switch ( getInterpreter().adaptivePredict(_input,13,_ctx) ) {
 							case 1:
 								{
@@ -863,7 +886,10 @@ public class prefixParser extends Parser {
 			_la = _input.LA(1);
 			if ( !(_la==IDENTIFIER || _la==STRING_LITERAL) ) {
 			_errHandler.recoverInline(this);
-			} else {
+			}
+			else {
+				if ( _input.LA(1)==Token.EOF ) matchedEOF = true;
+				_errHandler.reportMatch(this);
 				consume();
 			}
 			}
@@ -999,9 +1025,11 @@ public class prefixParser extends Parser {
 	public static class Any_nameContext extends ParserRuleContext {
 		public TerminalNode IDENTIFIER() { return getToken(prefixParser.IDENTIFIER, 0); }
 		public TerminalNode STRING_LITERAL() { return getToken(prefixParser.STRING_LITERAL, 0); }
+		public TerminalNode OPEN_PARENTHESE() { return getToken(prefixParser.OPEN_PARENTHESE, 0); }
 		public Any_nameContext any_name() {
 			return getRuleContext(Any_nameContext.class,0);
 		}
+		public TerminalNode CLOSE_PARENTHESE() { return getToken(prefixParser.CLOSE_PARENTHESE, 0); }
 		public Any_nameContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
 		}
@@ -1021,6 +1049,7 @@ public class prefixParser extends Parser {
 		enterRule(_localctx, 28, RULE_any_name);
 		try {
 			setState(164);
+			_errHandler.sync(this);
 			switch (_input.LA(1)) {
 			case IDENTIFIER:
 				enterOuterAlt(_localctx, 1);
@@ -1063,7 +1092,7 @@ public class prefixParser extends Parser {
 	}
 
 	public static final String _serializedATN =
-		"\3\u0430\ud6d1\u8206\uad2d\u4417\uaef1\u8d80\uaadd\3\27\u00a9\4\2\t\2"+
+		"\3\u608b\ua72a\u8133\ub9ed\u417c\u3be7\u7786\u5964\3\27\u00a9\4\2\t\2"+
 		"\4\3\t\3\4\4\t\4\4\5\t\5\4\6\t\6\4\7\t\7\4\b\t\b\4\t\t\t\4\n\t\n\4\13"+
 		"\t\13\4\f\t\f\4\r\t\r\4\16\t\16\4\17\t\17\4\20\t\20\3\2\3\2\3\2\7\2$\n"+
 		"\2\f\2\16\2\'\13\2\3\3\3\3\3\3\5\3,\n\3\3\4\3\4\3\4\5\4\61\n\4\3\4\3\4"+
@@ -1075,14 +1104,14 @@ public class prefixParser extends Parser {
 		"\b\3\b\3\b\3\b\3\b\5\b\u0089\n\b\3\b\7\b\u008c\n\b\f\b\16\b\u008f\13\b"+
 		"\5\b\u0091\n\b\3\t\3\t\3\n\3\n\3\13\3\13\3\f\3\f\3\r\3\r\3\16\3\16\3\17"+
 		"\3\17\3\20\3\20\3\20\3\20\3\20\3\20\5\20\u00a7\n\20\3\20\2\2\21\2\4\6"+
-		"\b\n\f\16\20\22\24\26\30\32\34\36\2\4\3\2\7\b\3\2\22\23\u00ad\2 \3\2\2"+
-		"\2\4+\3\2\2\2\6\60\3\2\2\2\b?\3\2\2\2\nm\3\2\2\2\fo\3\2\2\2\16\u0090\3"+
-		"\2\2\2\20\u0092\3\2\2\2\22\u0094\3\2\2\2\24\u0096\3\2\2\2\26\u0098\3\2"+
-		"\2\2\30\u009a\3\2\2\2\32\u009c\3\2\2\2\34\u009e\3\2\2\2\36\u00a6\3\2\2"+
-		"\2 %\5\4\3\2!\"\7\3\2\2\"$\5\4\3\2#!\3\2\2\2$\'\3\2\2\2%#\3\2\2\2%&\3"+
-		"\2\2\2&\3\3\2\2\2\'%\3\2\2\2(,\5\n\6\2),\5\f\7\2*,\5\16\b\2+(\3\2\2\2"+
-		"+)\3\2\2\2+*\3\2\2\2,\5\3\2\2\2-.\5\32\16\2./\7\4\2\2/\61\3\2\2\2\60-"+
-		"\3\2\2\2\60\61\3\2\2\2\61\62\3\2\2\2\62\63\5\30\r\2\63\7\3\2\2\2\64\65"+
+		"\b\n\f\16\20\22\24\26\30\32\34\36\2\4\3\2\7\b\3\2\22\23\2\u00ad\2 \3\2"+
+		"\2\2\4+\3\2\2\2\6\60\3\2\2\2\b?\3\2\2\2\nm\3\2\2\2\fo\3\2\2\2\16\u0090"+
+		"\3\2\2\2\20\u0092\3\2\2\2\22\u0094\3\2\2\2\24\u0096\3\2\2\2\26\u0098\3"+
+		"\2\2\2\30\u009a\3\2\2\2\32\u009c\3\2\2\2\34\u009e\3\2\2\2\36\u00a6\3\2"+
+		"\2\2 %\5\4\3\2!\"\7\3\2\2\"$\5\4\3\2#!\3\2\2\2$\'\3\2\2\2%#\3\2\2\2%&"+
+		"\3\2\2\2&\3\3\2\2\2\'%\3\2\2\2(,\5\n\6\2),\5\f\7\2*,\5\16\b\2+(\3\2\2"+
+		"\2+)\3\2\2\2+*\3\2\2\2,\5\3\2\2\2-.\5\32\16\2./\7\4\2\2/\61\3\2\2\2\60"+
+		"-\3\2\2\2\60\61\3\2\2\2\61\62\3\2\2\2\62\63\5\30\r\2\63\7\3\2\2\2\64\65"+
 		"\7\5\2\2\65\66\7\n\2\2\66@\7\22\2\2\678\7\5\2\289\7\13\2\29:\5\20\t\2"+
 		":;\5\36\20\2;<\7\20\2\2<=\7\6\2\2=>\7\21\2\2>@\3\2\2\2?\64\3\2\2\2?\67"+
 		"\3\2\2\2@\t\3\2\2\2AU\t\2\2\2BG\5\6\4\2CD\7\3\2\2DF\5\6\4\2EC\3\2\2\2"+
