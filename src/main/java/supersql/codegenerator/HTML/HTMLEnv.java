@@ -1610,7 +1610,8 @@ public class HTMLEnv extends LocalEnv implements Serializable{
 //		}
 		Modifier.getClassModifierPutValue(decos, cssclass, classId);
 		Modifier.getIdModifierPutValue(decos, cssclass, classId);//kotani_idmodifier_ok
-
+		
+		if (decos.containsKey("div"))
 		if (decos.containsKey("divalign"))
 			div.append(" align=" + decos.getStr("divalign"));
 

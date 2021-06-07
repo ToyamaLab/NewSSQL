@@ -122,7 +122,6 @@ public class TreeGenerator {
 			// Log.out("result = " + result);
 			tuples.set(i, result);
 		}
-
 		Log.out("= nest_tuple end =");
 		Log.out("tuples : " + tuples);
 		//tk start/////

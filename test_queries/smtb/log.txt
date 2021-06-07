@@ -1,0 +1,24 @@
+[クエリを実行]
+■実行ファイル: /Users/li/NewSSQL/test_queries/SMTB/ggplot.ssql
+
+＜詳細＞
+//Entering SuperSQL System//
+[Parser:Parser] filename = /Users/li/NewSSQL/test_queries/SMTB/ggplot.ssql
+GENERATE HTML {
+	[ggplot[x.store,x.floor]@{geom_point}]!
+}@{debug='on'}
+FROM "dept" x;
+Schema is [[0, 1]]
+le0 is [HTMLG2, [HTMLC1, [0], [1]]]
+
+********** SQL **********
+1. SELECT x.store, x.floor FROM "dept" x ;
+
+debug = [on]
+File encoding: UTF-8
+outputCssFileName = /Users/li/SMTB/jscss/ggplot.css
+
+ExecTime: 3100msec
+// completed normally //
+結果: 成功
+

@@ -35,11 +35,10 @@ public class HTMLG1 extends Grouper implements Serializable {
 	public String work(ExtList data_info) {
 		Log.out("------- G1 -------");
 		this.setDataList(data_info);
-
+		
 		if (Incremental.flag || Ehtml.flag) {
 			String row = "";
 			String column = "";
-			
 			// ページネーション
 			if (decos.containsKey("row") && decos.containsKey("column")) {
 				html_env.g1PaginationRowNum = Integer.parseInt(decos

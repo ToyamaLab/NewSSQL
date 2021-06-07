@@ -533,7 +533,6 @@ public class HTMLAttribute extends Attribute {
 
 			if (htmlEnv.linkFlag > 0 || htmlEnv.sinvokeFlag) {
 				String s = "";
-
 				if (htmlEnv.draggable) {
 					s += "<div id=\"" + htmlEnv.dragDivId
 							+ "\" class=\"draggable\"";
@@ -551,19 +550,16 @@ public class HTMLAttribute extends Attribute {
 					// ������ʤ�
 					// 2.ITC�μ½��Ķ��Ǥϥ����
 					// ������ʤ�
-					String fileDir = new File(htmlEnv.linkUrl)
-							.getAbsoluteFile().getParent();
+					String fileDir = new File(htmlEnv.linkUrl).getAbsoluteFile().getParent();
 					if (fileDir.length() < htmlEnv.linkUrl.length()
-							&& fileDir.equals(htmlEnv.linkUrl.substring(0,
-									fileDir.length()))) {
-						String relative_path = htmlEnv.linkUrl
-								.substring(fileDir.length() + 1);
+							&& fileDir.equals(htmlEnv.linkUrl.substring(0,fileDir.length()))) 
+					{
+						String relative_path = htmlEnv.linkUrl.substring(fileDir.length() + 1);
 						s += "<A href=\"" + relative_path
 								+ "\" ";
 					} else
 						s += "<A href=\"" + htmlEnv.linkUrl
 								+ "\" ";
-
 					// html_env.code.append("<A href=\"" + html_env.linkurl +
 					// "\" ";
 					// added by goto 20120614 end
@@ -629,8 +625,7 @@ public class HTMLAttribute extends Attribute {
 					link_a_tag_str = s;
 
 				Log.out("<A href=\"" + htmlEnv.linkUrl + "\">");
-			}
-
+			} 
 			// added by masato 20151124 for plink
 			if (htmlEnv.plinkFlag) {
 				String tmp = "";

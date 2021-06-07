@@ -186,7 +186,7 @@ public class GGplot {
 //		engine.eval(".libPaths(\"/usr/local/lib/R/4.0/site-library\")");			//TODO_old -> おそらく無しでOK
 		engine.eval("library(tidyverse)");
 		engine.eval("library(plotly)");
-
+		engine.eval("Sys.setlocale(\"LC_CTYPE\", \"ja_JP.UTF-8\")");
 
 		target_x = process.toString().split(" ")[0];
 		target_y = process.toString().split(" ")[1];

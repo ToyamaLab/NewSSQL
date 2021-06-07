@@ -319,6 +319,7 @@ public class HTMLManager extends Manager implements Serializable {
 					}
 					// add 20141204 masato for ehtml
 				} else {
+					
 					Log.ehtmlInfo("=-=-=-=");
 					Log.ehtmlInfo(htmlEnv.header);
 					Log.ehtmlInfo(htmlEnv.code);

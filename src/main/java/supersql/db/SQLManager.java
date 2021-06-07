@@ -23,6 +23,9 @@ import java.util.List;
 
 import org.apache.commons.codec.digest.DigestUtils;
 
+import com.gargoylesoftware.htmlunit.WebConsole.Logger;
+
+import net.sourceforge.htmlunit.corejs.javascript.tools.shell.Global;
 import supersql.FrontEnd;
 import supersql.codegenerator.Ehtml;
 import supersql.codegenerator.Incremental;
@@ -182,8 +185,7 @@ public class SQLManager {
             int columnCount = rsmd.getColumnCount();
             for (int i = 1; i <= columnCount; i++) {
                 header_name.add(rsmd.getColumnName(i));
-                header_type.add(Integer.toString(rsmd
-                        .getColumnType(i)));
+                header_type.add(Integer.toString(rsmd.getColumnType(i)));
             }
 
             ExtList<String> tmplist;
@@ -199,6 +201,7 @@ public class SQLManager {
                 		val = "";
 					}
                     if (val != null) {
+                    	
                         tmplist.add(val.trim());
                     } else {
                         tmplist.add("");
@@ -310,15 +313,13 @@ public class SQLManager {
 
         } catch (SQLException e) {
         	if(!query.endsWith("FROM ;")){
-	              Log.err("Error[SQLManager.ExecSQL]: Can't Exec Query : query = "
-			                      + query);
+	              Log.err("Error[SQLManager.ExecSQL]: Can't Exec Query : query = " + query);
 //	              GlobalEnv.errorText += "Error[SQLManager.ExecSQL]: Can't Exec Query : query = "
 //	                      + query;
 			      Log.err(e);
 			      LogError.logErr();
 //			      GlobalEnv.errorText += e;
-			      GlobalEnv.addErr("Error[SQLManager.ExecSQL]: Can't Exec Query : query = "
-			              + query);
+			      GlobalEnv.addErr("Error[SQLManager.ExecSQL]: Can't Exec Query : query = " + query);
 
 
 			      //added by goto 20131016 start
@@ -369,9 +370,7 @@ public class SQLManager {
 			      return ;
         	}
         } catch (IllegalStateException e) {
-            System.err
-                    .println("Error[SQLManager.ExecSQL]: No Data Found : query = "
-                            + query);
+            System.err.println("Error[SQLManager.ExecSQL]: No Data Found : query = " + query);
         }
     }
 

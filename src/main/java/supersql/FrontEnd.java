@@ -1,5 +1,7 @@
 package supersql;
 
+import java.util.Arrays;
+
 import supersql.codegenerator.CodeGenerator;
 import supersql.codegenerator.Responsive.Responsive;
 import supersql.common.GlobalEnv;

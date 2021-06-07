@@ -190,5 +190,9 @@ public class FuncArg {
 	public Class<? extends TFE> getTFEClass(){
 		return tfe.getClass();
 	}
+	
+	public TFE getTFE(){
+		return tfe;
+	}
 
 }

@@ -39,7 +39,6 @@ public class HTMLIfCondition extends IfCondition {
 	}
 
 	public String work(ExtList data_info) {
-
 		String conditionResult = (String) data_info.get(0);
 		if(conditionResult.equals("t") || conditionResult.equals("1")) {
 			if(thenTfe instanceof Connector || thenTfe instanceof Attribute

@@ -1,5 +1,6 @@
 package supersql.codegenerator.VR;
 
+import org.apache.log4j.net.SyslogAppender;
 import org.w3c.dom.Element;
 
 import supersql.codegenerator.CodeGenerator;
@@ -9,13 +10,13 @@ import supersql.common.GlobalEnv;
 import supersql.common.Log;
 import supersql.extendclass.ExtList;
 
-public class VRG3 extends Grouper {
+public class VRG4 extends Grouper {
 
 	private VREnv vrEnv;
 	private VREnv vr_env2;
 	boolean retFlag = false;	// 20140611_masato pagenationフラグ
 
-	public VRG3(Manager manager, VREnv henv, VREnv henv2) {
+	public VRG4(Manager manager, VREnv henv, VREnv henv2) {
 		this.vrEnv = henv;
 		this.vr_env2 = henv2;
 	}
@@ -23,12 +24,12 @@ public class VRG3 extends Grouper {
 
 	@Override
 	public String getSymbol() {
-		return "VRG3";
+		return "VRG4";
 	}
 
 	@Override
 	public String work(ExtList data_info) {
-		Log.out("------- G3 -------");
+		Log.out("------- G4 -------");
 		if(!CodeGenerator.getMedia().equalsIgnoreCase("unity_dv")){
 			if(vrEnv.gLevel == 0){
 				vrEnv.currentNode = vrEnv.currentNode.appendChild(vrEnv.xml.createElement("group"));
@@ -37,9 +38,10 @@ public class VRG3 extends Grouper {
 
 		int i = -1;			// 20140526_masato
 		int j = -1;			// 20140526_masato
-		int k = 0;	
+		int k = 0;
 		
 		String margin = "10.0";
+		String timerange = "";
 		
 		if (vrEnv.decorationStartFlag.size() > 0 
 				&& ((vrEnv.decorationStartFlag.get(0) || decos.size()>0) 
@@ -84,9 +86,23 @@ public class VRG3 extends Grouper {
 			}
 			VRAttribute.componezflag = true;
 		}
+//		if (decos.containsKey("vr_c")) {
+//			k = Integer.parseInt(decos.getStr("vr_c"));
+//			retFlag = true;
+//			if(!VRAttribute.componezflag){
+//				VRAttribute.compz[VRAttribute.cgcount] = k;
+//				VRAttribute.compflag[VRAttribute.cgcount] = 3;
+//			}
+//			VRAttribute.componezflag = true;
+//		}
+			
 		
 		if (decos.containsKey("margin")) {
 			margin = decos.getStr("margin");
+		} 
+		
+		if (decos.containsKey("interval")) {
+			timerange = decos.getStr("interval");
 		}
 		
 		this.setDataList(data_info);
@@ -102,8 +118,9 @@ public class VRG3 extends Grouper {
 		if(CodeGenerator.getMedia().equalsIgnoreCase("unity_dv")){
 			if(k==0){
 				Element grouper = vrEnv.xml.createElement("Grouper"+VRG1.level);
-				grouper.setAttribute("type","G3");
+				grouper.setAttribute("type","G4");
 				grouper.setAttribute("margin", margin);
+				grouper.setAttribute("timerange", timerange);
 				vrEnv.currentNode = vrEnv.currentNode.appendChild(grouper);
 				VRG1.level++;
 				while(this.hasMoreItems()){

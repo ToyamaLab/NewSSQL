@@ -9,13 +9,13 @@ import supersql.common.GlobalEnv;
 import supersql.common.Log;
 import supersql.extendclass.ExtList;
 
-public class VRG3 extends Grouper {
+public class VRG5 extends Grouper {
 
 	private VREnv vrEnv;
 	private VREnv vr_env2;
 	boolean retFlag = false;	// 20140611_masato pagenationフラグ
 
-	public VRG3(Manager manager, VREnv henv, VREnv henv2) {
+	public VRG5(Manager manager, VREnv henv, VREnv henv2) {
 		this.vrEnv = henv;
 		this.vr_env2 = henv2;
 	}
@@ -23,12 +23,11 @@ public class VRG3 extends Grouper {
 
 	@Override
 	public String getSymbol() {
-		return "VRG3";
+		return "VRG5";
 	}
 
 	@Override
 	public String work(ExtList data_info) {
-		Log.out("------- G3 -------");
 		if(!CodeGenerator.getMedia().equalsIgnoreCase("unity_dv")){
 			if(vrEnv.gLevel == 0){
 				vrEnv.currentNode = vrEnv.currentNode.appendChild(vrEnv.xml.createElement("group"));
@@ -40,6 +39,7 @@ public class VRG3 extends Grouper {
 		int k = 0;	
 		
 		String margin = "10.0";
+		String axis = "z";
 		
 		if (vrEnv.decorationStartFlag.size() > 0 
 				&& ((vrEnv.decorationStartFlag.get(0) || decos.size()>0) 
@@ -89,6 +89,10 @@ public class VRG3 extends Grouper {
 			margin = decos.getStr("margin");
 		}
 		
+		if (decos.containsKey("axis")) {
+			axis = decos.getStr("axis");
+		}
+		
 		this.setDataList(data_info);
 
 		if(vrEnv.gLevel == 0) {
@@ -100,10 +104,12 @@ public class VRG3 extends Grouper {
 		VRAttribute.gjudge++;
 
 		if(CodeGenerator.getMedia().equalsIgnoreCase("unity_dv")){
+			//this area is composite_iterator or only ◯ (k == 0)
 			if(k==0){
 				Element grouper = vrEnv.xml.createElement("Grouper"+VRG1.level);
-				grouper.setAttribute("type","G3");
+				grouper.setAttribute("type","G5");
 				grouper.setAttribute("margin", margin);
+				grouper.setAttribute("axis", axis);
 				vrEnv.currentNode = vrEnv.currentNode.appendChild(grouper);
 				VRG1.level++;
 				while(this.hasMoreItems()){
@@ -122,7 +128,7 @@ public class VRG3 extends Grouper {
 				VRG1.level++;
 				while(this.hasMoreItems()){
 					Element grouper2 = vrEnv.xml.createElement("Grouper"+VRG1.level);
-					grouper2.setAttribute("type","G3");
+					grouper2.setAttribute("type","G5");
 					grouper2.setAttribute("margin", margin);
 					vrEnv.currentNode = vrEnv.currentNode.appendChild(grouper2);
 					VRG1.level++;
@@ -141,7 +147,7 @@ public class VRG3 extends Grouper {
 				VRG1.level++;
 				while(this.hasMoreItems()){
 					Element grouper2 = vrEnv.xml.createElement("Grouper"+VRG1.level);
-					grouper2.setAttribute("type","G3");
+					grouper2.setAttribute("type","G5");
 					grouper2.setAttribute("margin", margin);
 					vrEnv.currentNode = vrEnv.currentNode.appendChild(grouper2);
 					VRG1.level++;
@@ -167,7 +173,7 @@ public class VRG3 extends Grouper {
 					VRG1.level++;
 					for(int s = 0; s < i && this.hasMoreItems(); s++){
 						Element grouper3 = vrEnv.xml.createElement("Grouper"+VRG1.level);
-						grouper3.setAttribute("type","G3");
+						grouper3.setAttribute("type","G5");
 						grouper3.setAttribute("margin", margin);
 						vrEnv.currentNode = vrEnv.currentNode.appendChild(grouper3);
 						VRG1.level++;
@@ -196,7 +202,7 @@ public class VRG3 extends Grouper {
 					VRG1.level++;
 					for(int s = 0; s < j && this.hasMoreItems(); s++){
 						Element grouper3 = vrEnv.xml.createElement("Grouper"+VRG1.level);
-						grouper3.setAttribute("type","G3");
+						grouper3.setAttribute("type","G5");
 						grouper3.setAttribute("margin", margin);
 						vrEnv.currentNode = vrEnv.currentNode.appendChild(grouper3);
 						VRG1.level++;

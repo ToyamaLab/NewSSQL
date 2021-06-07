@@ -13,6 +13,7 @@ public class LinkForeach {
 	public final static StringBuffer C3contents = new StringBuffer();
 
 	public static boolean plink_glink = false;				//added by goto 20161109 for plink/glink
+	private String r;
 
 	public LinkForeach() {
 
@@ -123,6 +124,7 @@ public class LinkForeach {
 					"});\n";
 		}
 		r += "function get_id(){\n" +  //added by li 20201207
+
 				"     $(\"div\").each(function() {\n" + 
 				"          var url = location.href ;\n" + 
 				"          var foreach_id = $(this).attr('id') ;\n" + 

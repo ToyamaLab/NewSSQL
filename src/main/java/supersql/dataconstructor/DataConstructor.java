@@ -13,6 +13,7 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 import supersql.codegenerator.AttributeItem;
+import supersql.codegenerator.Debug;
 import supersql.common.GlobalEnv;
 import supersql.common.Log;
 import supersql.db.ConnectDB;
@@ -238,8 +239,8 @@ public class DataConstructor {
 		GlobalEnv.afterSchemaToData = System.currentTimeMillis();
 		data_info = sep_data_info;
 
-		Log.out("## Result ##");
-		Log.out(data_info);
+		Log.info("## Result ##");
+		Log.info(data_info);
 	}
 
 //	private ExtList schemaToDataFromApi(Start_Parse parser, MakeSQL msql,
@@ -475,6 +476,7 @@ public class DataConstructor {
 		} else {
 			getTuples(sep_sch, sep_data_info);
 			start = System.nanoTime();
+			Log.info("I'm in not msql ");
 			sep_data_info = MakeTree(qd.getSchema());
 //			 System.out.println(sep_data_info);
 			end = System.nanoTime();
@@ -855,6 +857,10 @@ public class DataConstructor {
 
 	private ExtList[] getTuples(ExtList sep_sch, ExtList sep_data_info) {
 
+		for(int i=0; i < sep_sch.size(); i++){
+			Log.info("getsep_sch "+ sep_sch.get(i));
+			Log.info("getsep_data_info "+ sep_data_info.get(i));
+		}
 		long start, end;
 		start = System.nanoTime();
 
@@ -1057,7 +1063,7 @@ public class DataConstructor {
 
 	private ExtList getFromDB(MakeSQL msql, ExtList sep_sch,
 			ExtList sep_data_info) {
-
+		System.out.println("sep_sch: " + sep_sch.get(0));
 		// MakeSQL
 		long start, end;
 		start = System.nanoTime();
@@ -1525,7 +1531,6 @@ public class DataConstructor {
 		start = System.nanoTime();
 
 		TreeGenerator tg = new TreeGenerator();
-
 		sep_data_info = tg.makeTree(sep_sch, sep_data_info);
 
 		//terui start

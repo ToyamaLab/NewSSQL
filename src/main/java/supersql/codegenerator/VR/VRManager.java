@@ -7,7 +7,9 @@ import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Vector;
 
+import javax.xml.transform.OutputKeys;
 import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerConfigurationException;
 import javax.xml.transform.TransformerException;
 import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
@@ -27,14 +29,11 @@ public class VRManager extends Manager {
 
 	private VREnv vrEnv;
 	private VREnv vrEnv2;
-	public static boolean vrflag = false;//vr
-	public static boolean VRmoduleflag = false;//vrのmodule
-	public static boolean[] momoflag = new boolean[100];//module modifier flag
+	public static boolean vrflag = false;
 	
 	public static ArrayList<String> multiexh = new ArrayList<>();////展示物を複数くっつけて並べる、使わない
 	public static ArrayList<Integer> gindex = new ArrayList<>();////展示物を複数くっつけて並べる、使わない
 	public static int nest1count = 0;
-	
 
 	public VRManager(VREnv henv, VREnv henv2) {
 		this.vrEnv = henv;
@@ -80,8 +79,7 @@ public class VRManager extends Manager {
 		return out;
 	}
 
-	protected void getOutfilename() {//ここ通る
-		
+	protected void getOutfilename() {
 		String file = GlobalEnv.getfilename();
 		String outdir = GlobalEnv.getoutdirectory();
 		String outfile = GlobalEnv.getoutfilename();
@@ -121,6 +119,8 @@ public class VRManager extends Manager {
 
 	@Override
 	public void generateCode(ITFE tfe_info, ExtList data_info) {
+
+
 		vrEnv.countFile = 0;
 		vrEnv.code = new StringBuffer();
 		VREnv.css = new StringBuffer();
@@ -146,17 +146,23 @@ public class VRManager extends Manager {
 		
 		vrEnv.setOutlineMode();
 		VREnv.header.append("<?xml version=\"1.0\" ?>");///kotaniadd
-		vrEnv.getFooter();
+		if (!CodeGenerator.unity_dv_flag){
+			vrEnv.getFooter();
+		}
 		if (data_info.size() == 0
 				&& !DataConstructor.SQL_string
 				.equals("SELECT DISTINCT  FROM ;") && !DataConstructor.SQL_string.equals("SELECT  FROM ;")) {
 			Log.out("no data");
-			Element doc = vrEnv.xml.createElement("DOC");
-			doc.setTextContent("NO DATA FOUND");
-			vrEnv.xml.appendChild(doc);
-			vrEnv.code.append("<DOC>");
-			vrEnv.code.append("NO DATA FOUND");
-			vrEnv.code.append("</DOC>");
+//			if (!CodeGenerator.unity_dv_flag) {
+				Element doc = vrEnv.xml.createElement("DOC");
+				doc.setTextContent("NO DATA FOUND");
+				vrEnv.xml.appendChild(doc);
+				vrEnv.code.append("<DOC>");
+				vrEnv.code.append("NO DATA FOUND");
+				vrEnv.code.append("</DOC>");
+//			}else{
+//				vrEnv.xml.appendChild(doc);
+//			}
 		} else{
 			tfe_info.work(data_info);
 //			vrEnv.code = new StringBuffer(vrEnv.code.substring(0,vrEnv.code.lastIndexOf("<group>")));
@@ -164,11 +170,12 @@ public class VRManager extends Manager {
 		VREnv.cs_code.append("9 "+tfe_info+"\n");
 		
 		try {
-			//kotani ここでXML作ってる
-			if(CodeGenerator.getMedia().equalsIgnoreCase("vr_museum") || CodeGenerator.getMedia().equalsIgnoreCase("unity_museum")
-				|| VRmoduleflag//20180511 kotani module
-				){
-				//今はxmlここで作ってる
+			if(CodeGenerator.getMedia().equalsIgnoreCase("vr") || 
+			   CodeGenerator.getMedia().equalsIgnoreCase("unity") ||
+			   CodeGenerator.getMedia().equalsIgnoreCase("unity_museum") ||
+			   CodeGenerator.getMedia().equalsIgnoreCase("unity_dv")
+			   ){
+				//xmlcreateに使った
 				if (!GlobalEnv.isOpt()) {
 					TransformerFactory transformerFactory = TransformerFactory.newInstance();
 					Transformer transformer = null;
@@ -176,14 +183,17 @@ public class VRManager extends Manager {
 						transformer = transformerFactory.newTransformer();
 						transformer.setOutputProperty(javax.xml.transform.OutputKeys.INDENT, "yes");
 						transformer.setOutputProperty("{http://xml.apache.org/xslt}indent-amount", "2");
+						transformer.setOutputProperty(OutputKeys.DOCTYPE_PUBLIC, "yes");
 						DOMSource source = new DOMSource(vrEnv.xml);
 						StreamResult result = new StreamResult(new File(vrEnv.fileName));
-						transformer.transform(source, result);//これでxml出力してる
+						transformer.transform(source, result);
 					} catch (TransformerException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
 
+
+				
 				}
 
 				// xml
@@ -212,7 +222,12 @@ public class VRManager extends Manager {
 				Log.ehtmlInfo(vrEnv.footer);
 			}
 
-			VRfilecreate.process(vrEnv.outFile); //Generate and save the cs code
+			try{
+//				VRfilecreate.process(vrEnv.outFile); //Generate and save the cs code ここは後日直す！！
+			}catch(Exception e){
+//				System.err.println("No cs file generated");
+				e.printStackTrace();
+			}
 		} catch (FileNotFoundException fe) {
 			fe.printStackTrace();
 			Log.err("Error: specified outdirectory \""
@@ -355,8 +370,11 @@ public class VRManager extends Manager {
 		vrEnv.setOutlineMode();
 		tfe_info.work(data_info);
 		VREnv.cs_code.append("103 "+tfe_info+"\n");
-
-		vrEnv.getFooter();
+		
+		if (!CodeGenerator.unity_dv_flag){
+			vrEnv.getFooter();
+		}
+		
 		vrEnv.embedFlag = false;
 		Log.out("header : " + VREnv.header);
 
@@ -370,9 +388,11 @@ public class VRManager extends Manager {
 	public StringBuffer generateCodeNotuple(ITFE tfe_info) {
 		Log.out("no data found");
 		vrEnv.code = new StringBuffer();
+		if (!CodeGenerator.unity_dv_flag) {
 		vrEnv.code.append("<DOC>");
 		vrEnv.code.append("NO DATA FOUND");
 		vrEnv.code.append("</DOC>");
+		}
 		return vrEnv.code;
 	}
 }

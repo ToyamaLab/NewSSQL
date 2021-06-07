@@ -17,9 +17,13 @@ import java.net.URLConnection;
 import java.net.URLEncoder;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.Hashtable;
 
+import org.antlr.v4.parse.ANTLRParser.wildcard_return;
+
+import supersql.codegenerator.Attribute;
 import supersql.codegenerator.CodeGenerator;
 import supersql.codegenerator.DecorateList;
 import supersql.codegenerator.Ehtml;
@@ -869,13 +873,11 @@ public class HTMLFunction extends Function {
 		for (int i = 2; i < this.Args.size(); i++) {
 			att += "_" + this.Args.get(i).getStr();
 		}
-
 		// String file = this.getAtt("file");
 		String action = this.getAtt("action");
 		// int attNo = 1;
 		// String att = new String();
 		Log.out("sinvoke file 3: " + file);
-
 		//changed by goto 20161019 for new foreach
 		if(link1){
 			//added by goto 20161025 for link1/foreach1
@@ -914,7 +916,7 @@ public class HTMLFunction extends Function {
 			} else {
 
 				if(!link1){
-					//added by goto 20161019 for new foreach
+					//added by goto 20161019 for new foreach 
 					filename = file;
 					//added by goto 20161109
 					if(!file.endsWith(".php") && !file.endsWith(".rb") && !file.endsWith(".erb") && !file.endsWith(".jsp"))
@@ -929,7 +931,6 @@ public class HTMLFunction extends Function {
 			filename.replace("\\\\", "\\");
 			htmlEnv.linkUrl = filename;
 			htmlEnv.sinvokeFlag = true;
-
 		} else {
 			String filename = new String();
 			if (!this.getAtt("att").equals(""))

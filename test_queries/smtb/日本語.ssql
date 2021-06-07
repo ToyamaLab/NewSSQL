@@ -1,0 +1,4 @@
+GENERATE HTML {
+	[ggplot[(asc)x.r, x.r]@{geom_point}]!
+}@{debug='on'}
+FROM "510037-115a" x;

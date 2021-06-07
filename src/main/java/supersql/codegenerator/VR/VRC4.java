@@ -9,24 +9,24 @@ import supersql.codegenerator.Manager;
 import supersql.common.Log;
 import supersql.extendclass.ExtList;
 
-public class VRC3 extends Connector {
+public class VRC4 extends Connector {
 
 	private VREnv vrEnv;
 	private VREnv vrEnv2;
 
-	public VRC3(Manager manager, VREnv henv, VREnv henv2) {
+	public VRC4(Manager manager, VREnv henv, VREnv henv2) {
 		this.vrEnv = henv;
 		this.vrEnv2 = henv2;
 	}
 
 	@Override
 	public String getSymbol() {
-		return "VRC3";
+		return "VRC4";
 	}
 	
 	@Override
 	public String work(ExtList data_info) {
-		Log.out("------- C3 -------");
+		Log.out("------- C4 -------");
 		Log.out("tfes.contain_itemnum=" + tfes.contain_itemnum());
 		Log.out("tfessize=" + tfes.size());
 		Log.out("countconnetitem=" + countconnectitem());
@@ -48,7 +48,7 @@ public class VRC3 extends Connector {
 		
 		if(CodeGenerator.getMedia().equalsIgnoreCase("unity_dv")){
 			Element connector = vrEnv.xml.createElement("Connector"+VRC1.j);
-			connector.setAttribute("type","C3");
+			connector.setAttribute("type","C4");
 			vrEnv.currentNode = vrEnv.currentNode.appendChild(connector);
 			VRC1.j++;
 		}
@@ -75,9 +75,9 @@ public class VRC3 extends Connector {
 		if(vrEnv.gLevel == 2 && VRManager.gindex.get(vrEnv.gLevel-2) == 1 && VRManager.gindex.get(vrEnv.gLevel-1) == 1){
 			try {
 				String l=VRManager.multiexh.get(VRManager.nest1count);
-				VRManager.multiexh.set(VRManager.nest1count,l+"%");//gindex[]++
+				VRManager.multiexh.set(VRManager.nest1count,l+"#");//gindex[]++
 			} catch (Exception e) {
-				VRManager.multiexh.add("%");
+				VRManager.multiexh.add("#");
 			}
 		}
 		

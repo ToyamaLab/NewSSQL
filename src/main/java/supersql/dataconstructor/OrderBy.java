@@ -22,7 +22,6 @@ public class OrderBy {
 		ExtList buffer;
 		String x;
 		String y;
-
 		a = info.toString().indexOf(" ");
 		target = info.toString().substring(0, a);
 		way = info.toString().substring(a+1);

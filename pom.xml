@@ -20,7 +20,7 @@
 		<dependency>
 			<groupId>org.antlr</groupId>
 			<artifactId>antlr4</artifactId>
-			<version>4.5</version>
+			<version>4.8</version>
 		</dependency>
 		<dependency>
 			<groupId>javax.servlet</groupId>
@@ -125,6 +125,11 @@
 			<version>8.2.2.jre8</version>
 			<scope>system</scope>
 			<systemPath>${project.basedir}/lib/mssql-jdbc-8.2.2.jre8.jar</systemPath>
+		</dependency>
+		<dependency>
+			<groupId>org.jboss.openjdk-orb</groupId>
+			<artifactId>openjdk-orb</artifactId>
+			<version>8.1.1.Final</version>
 		</dependency>
 	</dependencies>
 	<build>

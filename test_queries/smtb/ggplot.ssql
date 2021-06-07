@@ -1,0 +1,3 @@
+GENERATE HTML 
+[ggplot[x.b,x.c]@{geom_point= "color = 'green',size = 3",geom_line}]! 
+FROM test x;

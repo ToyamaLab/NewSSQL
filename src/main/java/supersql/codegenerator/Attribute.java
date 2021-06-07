@@ -5,6 +5,9 @@ import java.util.Hashtable;
 import java.util.Iterator;
 import java.util.StringTokenizer;
 
+import org.apache.bcel.verifier.exc.StaticCodeConstraintException;
+import org.omg.CORBA.PUBLIC_MEMBER;
+
 import supersql.common.Log;
 import supersql.extendclass.ExtHashSet;
 import supersql.extendclass.ExtList;
@@ -168,9 +171,7 @@ public class Attribute extends Operand {
 	}
 
 	public <T> String getStr(ExtList<T> data_info) {
-
 		String str = "";
-
 		if(conditional){
 			int stringItemsNumber = 0;
 			Iterator<AttributeItem> iterator = Items.iterator();
