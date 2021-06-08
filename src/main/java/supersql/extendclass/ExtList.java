@@ -2,6 +2,7 @@ package supersql.extendclass;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import supersql.common.Log;
 
 public class ExtList<T> extends ArrayList<T>{
 
@@ -53,7 +54,7 @@ public class ExtList<T> extends ArrayList<T>{
 	public ExtList getExtList(int... value_array){
 		ExtList tmp = this;
 		for(int i = 0; i < value_array.length; i++){
-//			Log.info("tmp"+tmp);
+			//Log.info("tmp"+tmp);
 			try{
 				tmp = (ExtList)tmp.get(value_array[i]);
 			}catch(ClassCastException castException){
@@ -78,7 +79,7 @@ public class ExtList<T> extends ArrayList<T>{
 		ExtList tmp = this;
 		int length = value_array.length;
 		for(int i = 0; i < length; i++){
-//			Log.info("tmp"+tmp);
+			Log.info("tmp"+tmp);
 			if(tmp.get(value_array[i]) instanceof String || tmp.get(value_array[i]) instanceof Integer){
 				String return_value = tmp.get(value_array[i]).toString();
 				if(i >= length - 1){

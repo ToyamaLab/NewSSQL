@@ -1,7 +1,12 @@
 package supersql.dataconstructor;
 
 import java.io.File;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 
 import org.rosuda.JRI.Rengine;
@@ -236,6 +241,7 @@ public class GGplot {
 				int result_x[] = new int[buffer_x.size()];
 				for (int i = 0; i < buffer_x.size(); i++) {
 					result_x[i] = Integer.parseInt(buffer_x.get(i));
+					Log.out("result_x(int): " + result_x);
 				}
 				engine.assign("result_x", result_x);
 			} catch(NumberFormatException e) {
@@ -243,14 +249,32 @@ public class GGplot {
 					double result_x[] = new double[buffer_x.size()];
 					for (int i = 0; i < buffer_x.size(); i++) {
 						result_x[i] = Double.parseDouble(buffer_x.get(i));
+						Log.out("result_x(double): " + result_x);
 					}
 					engine.assign("result_x", result_x);
 				} catch (NumberFormatException e1) {
 					String result_x[] = new String[buffer_x.size()];
+					
 					for (int i = 0; i < buffer_x.size(); i++) {
 						result_x[i] = buffer_x.get(i);
 					}
-					engine.assign("result_x", result_x);
+					//Log.out("result_x(string): " + Arrays.toString(result_x));
+					//added by li to check date
+					try {
+						SimpleDateFormat sdFormat = new SimpleDateFormat("yyyy-MM-dd");
+						for (int i = 0; i < buffer_x.size(); i++) {
+							result_x[i] = buffer_x.get(i);
+							Date date = sdFormat.parse(result_x[i]);
+							Log.out("Is Date :" + date);
+						}
+						engine.assign("result_x", result_x);
+						//added by li
+						engine.eval("result_x <- as.Date(result_x)");
+						Log.out("break");
+					} catch(ParseException e2) {
+						Log.out("Error!Result_x is not a date.");
+						engine.assign("result_x", result_x);
+					}
 				}
 			}
 
@@ -272,7 +296,21 @@ public class GGplot {
 					for (int i = 0; i < buffer_y.size(); i++) {
 						result_y[i] = buffer_y.get(i);
 					}
-					engine.assign("result_y", result_y);
+					//added by li to check date
+					try {
+						SimpleDateFormat sdFormat = new SimpleDateFormat("yyyy-MM-dd");
+						for (int i = 0; i < buffer_x.size(); i++) {
+							result_y[i] = buffer_x.get(i);
+							Date date = sdFormat.parse(result_y[i]);
+							Log.out("Is Date :" + date);
+						}
+						engine.assign("result_y", result_y);
+						//added by li
+						engine.eval("result_y <- as.Date(result_y)");
+					} catch(ParseException e2) {
+						Log.out("Error!Result_y is not a date.");
+						engine.assign("result_y", result_y);
+					}
 				}
 			}
 
@@ -316,7 +354,6 @@ public class GGplot {
 
 			if (aeth > 0) {
 				engine.eval("frame <- data.frame(X=result_x, Y=result_y, AETH=result_aeth)");
-
 				for (int i = 1; i < n; i++) {
 					if (process.toString().split(":")[i].contains("color") && !process.toString().split(":")[i].contains("\"") ) {
 						aeth_type = process.toString().split(":")[i].substring(0, process.toString().split(":")[i].indexOf("=") + 1);
@@ -333,9 +370,12 @@ public class GGplot {
 				}
 
 				engine.eval("graph <- ggplot(data = frame, aes(x = X, y = Y, " + aeth_type +"AETH))");
+				//engine.eval("graph <- ggplot(subset(data = frame, !is.na(x,y)), aes(x = X, y = Y, " + aeth_type +"AETH))");
 			} else {
 				engine.eval("frame <- data.frame(X=result_x, Y=result_y)");
+				//engine.eval("frame <- subset(data.frame(X=result_x, Y=result_y), !is.na(x,y))");
 				engine.eval("graph <- ggplot(data = frame, aes(x = X, y = Y))");
+				//engine.eval("graph <- ggplot(data = subset(frame, !is.na(X), !is.na(Y)), aes(x = X, y = Y))");
 			}
 
 			for (int i = 1; i < n; i++) {

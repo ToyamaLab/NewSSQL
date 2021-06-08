@@ -1,3 +1,26 @@
-GENERATE HTML 
-[ggplot[x.b,x.c]@{geom_point= "color = 'green',size = 3",geom_line}]! 
+GENERATE HTML {
+	[ggplot[x.r, x.r]@{geom_point, geom_line}]!
+}@{debug='on'}
+FROM "510037-115a" x;
+
+
+/*GENERATE HTML
+'SUM: ' , SUM[(asc)x.e]
 FROM test x;
+*/
+
+/*GENERATE HTML 
+[ggplot[(asc)x.b,x.e]@{geom_point= "color = 'green',size = 3"}]!
+FROM test x;
+*/
+
+/*GENERATE HTML
+['X: ', x."基準日" ,'Y: ',x."基準価額"]!
+FROM "510037-113" x;
+*/
+
+/*GENERATE HTML
+[ggplot[x."基準日",x."基準価額"]
+@{geom_point= "color = 'red',size = 3", geom_line}]!
+FROM "510037-113" x;
+*/
