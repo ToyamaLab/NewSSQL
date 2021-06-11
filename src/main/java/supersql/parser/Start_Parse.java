@@ -520,7 +520,7 @@ public class Start_Parse {
 				if(i != 0){
 					where_tmp += " AND "; 
 				}
-				// where_tmp += parameter_atts.get(i) + " = " + parameters[i];
+				 where_tmp += parameter_atts.get(i) + " = " + parameters[i];
 				p = parameters[i];
 				where_tmp += parameter_atts.get(i) + " = ";
 				if(GlobalEnv.isNumber(p)) {

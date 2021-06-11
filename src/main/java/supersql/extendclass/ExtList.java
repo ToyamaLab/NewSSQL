@@ -79,13 +79,15 @@ public class ExtList<T> extends ArrayList<T>{
 		ExtList tmp = this;
 		int length = value_array.length;
 		for(int i = 0; i < length; i++){
-			Log.info("tmp"+tmp);
+			//Log.info("tmp "+tmp);
+			//Log.info("tmp length: " + tmp.size());
+			//Log.info("value_array.length:" + length + " value_array: " + value_array[i]);
 			if(tmp.get(value_array[i]) instanceof String || tmp.get(value_array[i]) instanceof Integer){
 				String return_value = tmp.get(value_array[i]).toString();
 				if(i >= length - 1){
 					return return_value;
 				}else{
-//					Log.err("return value is "+return_value+".");
+					Log.err("return value is "+return_value+".");
 					break;
 				}
 			}else{
@@ -96,7 +98,7 @@ public class ExtList<T> extends ArrayList<T>{
 				}
 			}
 		}
-//		Log.err("Index is wrong.");
+		Log.err("Index is wrong.");
 		return null;
 	}
 

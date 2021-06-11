@@ -49,11 +49,20 @@ public class AttributeItem implements Serializable{
 		if (str.startsWith("'") && str.endsWith("'")) {
 			isConst = true;
 			UseAtts.add(str);
+			//Log.err("Break 定数 str: " + str);
 		} else if (CodeGenerator.sqlfunc_flag > 0) {
+			//Log.err("Break CodeGenerator.sqlfunc_flag > 0 str: " + str);
 			// sql関数だったら
 			UseAtts.add(str);
 			UseTables.addAll(CodeGenerator.useTablesInSQLFunc);
 		} else if (st1.countTokens() == 2) {
+		//Changed by li 20210610
+		//} else if (st1.countTokens() == 2 || st1.countTokens() == 3) {
+		    //while(st1.hasMoreTokens()) {
+		      //  Log.err("break st1 token:" + st1.nextToken());
+		      //}
+		     
+			//Log.err("Break countTokens()==2 str: " + str);
 			//st1 is table.attribute
 			String table = st1.nextToken();
 			String attribute = st1.nextToken();
@@ -101,6 +110,10 @@ public class AttributeItem implements Serializable{
 				}
 			}
 		} else {
+		    //while(st1.hasMoreTokens()) {
+		      //  Log.err("break st1 token:" + st1.nextToken());
+		     // }
+			//Log.err("Break else str: " + str);
 			// ""で囲まれてたら除去
 			if (str.startsWith("\"") && str.endsWith("\"")) {
 				str = str.substring(1, str.length() - 1);

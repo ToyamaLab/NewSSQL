@@ -15,13 +15,13 @@ import supersql.common.GlobalEnv;
 import supersql.common.Log;
 import supersql.extendclass.ExtList;
 import supersql.parser.Preprocessor;
+import supersql.dataconstructor.TreeGenerator;
 
 public class GGplot {
 
 //	private static int count;
 	private static int count = 0;
 	private ExtList result;
-
 
 	public GGplot () {
 		result = new ExtList();
@@ -50,8 +50,6 @@ public class GGplot {
 
 
 		Log.out(" * ggplot at the schema level " + sch + " *");
-
-
 		//add tbt 180727
 				//For forest
 				//not to use attributes to other trees
@@ -59,6 +57,7 @@ public class GGplot {
 				//tbt end
 
 		/* current schema level */
+		Log.out("sch: " + sch + " size:" + sch.size());
 		for (int i = 0; i < sch.size(); i++) {
 			if (is_ggplot_1) {
 				if (criteria_set.size() == 0 && sch.size() == 3 && aethFlag) {
@@ -69,42 +68,60 @@ public class GGplot {
 				is_ggplot_1 = false;
 				continue;
 			}
+			
 			/* attribute found in this current level */
 			if (!(sch.get(i) instanceof ExtList)) {
 				is_forest = false;
 				is_ggplot = false;
 
-
 				for (int j = 0; j < info.size(); j++) {
-
 					/* "ggplot functions" found */
+					//Log.out("info.get(" + j + "): " + info.get(j).toString().split(" ")[0]);
+					//Log.out("sch.get(" + i + "): " + sch.get(i));
 					if (info.get(j).toString().split(" ")[0].equals(sch.get(i).toString())){
 
 						Log.out("    ggplot found : " + sch.get(i) + " with " + info.get(j).toString().split(" ")[1]);
-
+						
+						//Changed by li to fix the sch level
+						initializeSepSch(sch);
+						Log.out("break sch: " + sch.get(1));
+						Log.out("break:" + info.get(j).toString().split("ggplot")[1]);
+						String tmp_info;
+						tmp_info = sch.get(0).toString() + ' ' + sch.get(1) + ' ' + "ggplot" + info.get(j).toString().split("ggplot")[1];
+						Log.out("break:" + tmp_info);
 						is_ggplot = true;
 						is_ggplot_1 = true;
-						process_set.add(info.get(j));
+						//process_set.add(info.get(j));
+						process_set.add(tmp_info);
+						//
+						
+						Log.out("process_set: " + process_set + " size: " + process_set.size());
 						count++;
 
 					}
 				}
-
+				
 				/* push it into criteria_set, if "ggplot functions" not found */
+				//Log.out("is_ggplot: " + is_ggplot);
+				//Log.out("is_ggplot1: " + is_ggplot_1);
+				
+				//Comment out by li 20210610
+				/*
 				if (!is_ggplot) {
+					Log.out("the criteria_set before: " + criteria_set);
 //				if (count>=0 && !is_ggplot) {
 					if (criteria_set.size() >= 1) {
 						if (Integer.parseInt(sch.get(i).toString()) == Integer.parseInt(criteria_set.get(criteria_set.size() - 1).toString()) + 1) {
 							criteria_set.add(sch.get(i));
 						} else {
 //							System.out.println(count+" "+i);
-							aeth[count] = Integer.parseInt(sch.get(i).toString());
 						}
 					} else {
 						criteria_set.add(sch.get(i));
 					}
+					Log.out("the criteria_set after: " + criteria_set);
 				}
-
+				*/
 			/* inner level found in this current level */
 			} else {
 				deep_set.add(sch.get(i));
@@ -114,7 +131,6 @@ public class GGplot {
 		}
 
 		int cnt = 0;
-
 		/* do "ggplot functions" in this current level, if there is any */
 		while (process_set.size() > 0) {
 
@@ -145,7 +161,6 @@ public class GGplot {
 				criteria_set.clear();
 			}
 			//end tbt
-
 			tuples = ggplot.ggplot(criteria_set, info, (ExtList)(deep_set.get(0)), tuples);
 			result = ggplot.getResult();
 			deep_set.remove(0);
@@ -158,8 +173,13 @@ public class GGplot {
 
 	/* make graph in units of groups having the same contents in criteria_set */
 	private ExtList makeGraph(ExtList criteria, Object process, ExtList tuples, int aeth, ExtList result) {
-
 //		System.out.println("propa"+System.getProperty("java.library.path"));
+		Log.out("criteria " + criteria);
+		Log.out("process " + process);
+		Log.out("tuples " + tuples);
+		Log.out("aeth " + aeth);
+		Log.out("result " + result);
+		
 		ExtList buffer = new ExtList();
 		ExtList tuples_buffer = new ExtList();
 		ExtList tmp = new ExtList();
@@ -195,7 +215,7 @@ public class GGplot {
 
 		target_x = process.toString().split(" ")[0];
 		target_y = process.toString().split(" ")[1];
-
+		Log.info("process: " + process.toString());
 		while (tuples.size() > 0) {
 
 			/* find tuples with the same criteria */
@@ -207,12 +227,18 @@ public class GGplot {
 //			}
 			for (int i = 1; i < tuples.size(); i++) {
 				y = (ExtList)(tuples.get(i));
-
+				Log.out("criteria: " + criteria);
+				Log.out("criteria_size: " + criteria.size());
+				Log.out("break x: " + x + " size: " + x.size() + " tuples.size" + tuples.size());
+				Log.out("break y: " + y + " size: " + y.size() + " tuples.size" + tuples.size());
+				
 				for (int k = 0; k < criteria.size(); k++) {
+					
 					if (!(x.get(Integer.parseInt(criteria.get(k).toString())).equals
 					     (y.get(Integer.parseInt(criteria.get(k).toString()))))) {
 						flag = false;
 					}
+				
 				}
 				if (flag) {
 					buffer.add(y);
@@ -231,6 +257,9 @@ public class GGplot {
 			List<String> buffer_aeth = new ArrayList<String>();
 
 			for (int i = 0; i < buffer.size(); i++) {
+				Log.out("2.break i: " + i + " target_x: " + target_x);
+				Log.out("2.break i: " + i +  " target_y: " + target_y);
+				Log.out("2.break size of buffer " + buffer.size());
 				buffer_x.add(buffer.getExtListString(i, Integer.parseInt(target_x)));
 				buffer_y.add(buffer.getExtListString(i, Integer.parseInt(target_y)));
 				if (aeth > 0)
@@ -270,9 +299,8 @@ public class GGplot {
 						engine.assign("result_x", result_x);
 						//added by li
 						engine.eval("result_x <- as.Date(result_x)");
-						Log.out("break");
 					} catch(ParseException e2) {
-						Log.out("Error!Result_x is not a date.");
+						//Log.out("Error!Result_x is not a date.");
 						engine.assign("result_x", result_x);
 					}
 				}
@@ -491,5 +519,18 @@ public class GGplot {
 
 	public ExtList getResult() {
 		return result;
+	}
+	
+	private void initializeSepSch(ExtList sep_sch){
+		for (int i = 0; i < sep_sch.size(); i++) {
+			try{
+				ExtList sep_child = (ExtList)sep_sch.get(i);
+				initializeSepSch(sep_child);
+			}catch(ClassCastException e){
+				sep_sch.remove(i);
+				sep_sch.add(i, count);
+				count++;
+			}
+		}
 	}
 }
