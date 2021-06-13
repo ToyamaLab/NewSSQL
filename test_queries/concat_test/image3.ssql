@@ -1,4 +1,5 @@
 GENERATE HTML
-[e.name, image(e.id || '.' || ex.extension, './picts')]!
+ex.extension!
+[e.name, image(e.id || '.' || ex.extension, './picts')],
 from employee e, extension ex
 where ex.id = 1
