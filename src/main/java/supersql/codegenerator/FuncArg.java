@@ -86,9 +86,6 @@ public class FuncArg {
 
 		}
 		else if (tfe instanceof Attribute) {
-
-			System.out.println("in Attribute: " + Data);
-
 			//20131118 dynamic
 			if(Mobile_HTML5_dynamic.dynamicDisplay){
 				return Mobile_HTML5_dynamic.dynamicFuncArgProcess(tfe, null, null);
