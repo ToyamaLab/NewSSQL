@@ -1,7 +1,6 @@
 package supersql.codegenerator.HTML;
 
 import supersql.codegenerator.Connector;
-import supersql.codegenerator.FuncArg;
 import supersql.codegenerator.Manager;
 import supersql.extendclass.ExtList;
 
@@ -62,6 +61,10 @@ public class HTMLC0 extends Connector {
 		}
 		return (!HTMLFunction.HTMLFunctionFlag)? null : ret;
 //		return null;
+	}
+
+	public String getConcatStr(ExtList data) {
+		return data.stream().reduce("", (l, r) -> l.toString() + r.toString()).toString();
 	}
 
 }
