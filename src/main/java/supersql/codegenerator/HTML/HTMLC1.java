@@ -245,7 +245,7 @@ public class HTMLC1 extends Connector implements Serializable {
 				htmlEnv.cNum++;
 				htmlEnv.xmlDepth++;
 				ITFE tfe = tfes.get(i);
-				
+				Log.out("break in VRC1");
 				if (HTMLEnv.isNewTableBorder)	sb = new StringBuffer(htmlEnv.code);
 					sb = new StringBuffer(htmlEnv.code);
 				

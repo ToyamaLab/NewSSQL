@@ -11,6 +11,7 @@ import supersql.codegenerator.Compiler.Compiler;
 import supersql.codegenerator.Compiler.JSP.JSPFactory;
 import supersql.codegenerator.Compiler.PHP.PHP;
 import supersql.codegenerator.Compiler.Rails.RailsFactory;
+import supersql.codegenerator.HTML.HTMLCONCAT;
 import supersql.codegenerator.HTML.HTMLFactory;
 import supersql.codegenerator.Mobile_HTML5.Mobile_HTML5Factory;
 import supersql.codegenerator.PDF.PDFFactory;
@@ -122,6 +123,7 @@ public class CodeGenerator {
 				unity_dv_flag = true;
 			}
 			factory = new VRFactory();
+			Ehtml.setType(0, 0);
 		}else if(media.toLowerCase().equals("pdf")){
 			factory = new PDFFactory();
 		}else if(media.toLowerCase().equals("php")){	//added by goto 20161104
@@ -438,9 +440,14 @@ public class CodeGenerator {
 				}
 			}
 			else{
+				Log.out("function in read_att: " + ((ExtList)((ExtList)tfe_tree.get(1)).get(0)).get(0).toString());
+				Log.out("tfe_tree.get(1): " + ((ExtList)tfe_tree.get(1)));
 				if( ((ExtList)((ExtList)tfe_tree.get(1)).get(0)).get(0).toString().equals("sorting") ){
 					if(decos.isEmpty()){
 						decos = ((ExtList)((ExtList)((ExtList)tfe_tree.get(1)).get(0)).get(1)).get(1).toString();
+					}
+					if(decos.equals("ggplot")) {
+						Log.out("decos: " + decos);
 					}
 					add_deco = true;
 					((ExtList)tfe_tree.get(1)).remove(0);
@@ -586,7 +593,7 @@ public class CodeGenerator {
 						GlobalEnv.setMultiQuery();
 						ExtList result = ctab.makeCtab(fn);
 						out_sch = read_attribute(result);
-					}else{
+					}else {
 						out_sch = func_read((ExtList)((ExtList)((ExtList)tfe_tree.get(1)).get(0)).get(1));
 						//out_sch = func_read((ExtList)((ExtList)((ExtList)tfe_tree.get(1)).get(0)).get(1)).fnc;
 					}
@@ -594,7 +601,7 @@ public class CodeGenerator {
 				else if( ((ExtList)((ExtList)tfe_tree.get(1)).get(0)).get(0).toString().equals("sqlfunc") ){
                     sqlfunc_flag++;
 //                    System.out.println("====sqlfunc eval start====");
-                    ExtList base = ((ExtList) ((ExtList) tfe_tree.get(1)).get(0));
+                    ExtList base = ((ExtList) ((ExtList) tfe_tree.get(1)).get(0)); 
 //                    System.out.println("image: " + getText((ExtList) tfe_tree.get(1), Start_Parse.ruleNames));
                     builder = "";
 //                    System.out.println("base: " + base);
@@ -617,6 +624,7 @@ public class CodeGenerator {
                     }
                     // useTablesInSQLFuncに利用するテーブルを入れておく
                     useTablesInSQLFunc.addAll(getUsedtablesInSQLFunc(base));
+                    Log.out("useTablesInSQLFunc: " + useTablesInSQLFunc);
                     if (inner_sqlfunc_count == 0) {
                         // 入子の大元のSQLFuncだったらAttributeに登録しuseTablesだけ更新しておく
 //                        System.out.println("usedTablesInSQLFunc: " + useTablesInSQLFunc);
@@ -813,6 +821,7 @@ public class CodeGenerator {
 		Connector con = createconnector(dim);
 
 		for (int i = 0; i < atts.size(); i++) {
+			Log.out("!!In codegenerator atts.get(" + i +"): " +atts.get(i));
 			con.setTFE((ITFE) (atts.get(i)));
 		}
 		return con;
@@ -884,10 +893,13 @@ public class CodeGenerator {
             if (arg.getExtListString(1, 0, 0).equals("arithmetics")) {
 //                System.out.println("算術演算子を発見");
                 ExtList baseAriths = arg.getExtList(1, 0, 1);
+                //Log.out("baseAriths.size(): " + baseAriths.size());
                 for (int j = 0; j < baseAriths.size(); j += 2) {
 //                    System.out.println("used:: " + usedTables);
                     ExtList argArith = baseAriths.getExtList(j);
-//                    System.out.println("argArith: " + argArith);
+                    System.out.println("argArith: " + argArith);
+                    Log.out("items: " + argArith.unnest());
+                    Log.out("argArith get(1,0,1,0,0)" + argArith.getExtListString(1, 0, 1, 0, 0));
                     // 整数の場合
                     if (argArith.getExtList(1).size() == 1 && !(argArith.getExtList(1).get(0) instanceof ExtList)) {
                         continue;
@@ -900,11 +912,15 @@ public class CodeGenerator {
                         continue;
                     }
                     // attributeの場合
+                   
                     if (argArith.getExtListString(1, 0, 1, 0, 0).equals("attribute")) {
                         // table_aliasの場合
+                        //Log.out("In getUsedtablesInSQLFunc attribute");
+                    	//Log.out("In attribute argArith get(1,0,1,0,1,0,0)" + argArith.getExtListString(1, 0, 1, 0, 1, 0, 0));
                         if (argArith.getExtListString(1, 0, 1, 0, 1, 0, 0).equals("table_alias")) {
 //                            System.out.println("table_aliasを発見 -> " + getText(argArith.getExtList(1, 0, 1, 0, 1, 0), Start_Parse.ruleNames));
                             builder = "";
+                            Log.out("argArith get(1,0,1,0,1,0): "  + argArith.getExtList(1, 0, 1, 0, 1, 0));
                             usedTables.add(getText(argArith.getExtList(1, 0, 1, 0, 1, 0), Start_Parse.ruleNames));
                             builder = "";
                         } else {
@@ -928,7 +944,44 @@ public class CodeGenerator {
                                 usedTables.add(correTableList.get(0));
                             }
                         }
+                     //Added by li 20210613 to fix the sqlfunc
+                    }else if (argArith.getExtListString(1, 0, 1, 0, 0).equals("arith")){
+                        Log.out("In arith argArith get(1,2,1,0,1,0,1,0,0)" + argArith.getExtListString(1, 2, 1, 0, 1, 0, 1, 0, 0));
+                        Log.out("argArith get(1,2,1,0,1,0,1,0): "  + argArith.getExtList(1,2,1,0,1,0,1,0));
+                        if (argArith.getExtListString(1, 2, 1, 0, 1, 0, 1, 0, 0).equals("table_alias")) {
+                        	builder = "";
+                        	usedTables.add(getText(argArith.getExtList(1, 2, 1, 0, 1, 0, 1, 0), Start_Parse.ruleNames));
+                            builder = "";
+                        }
+                    }else {
+                    	ExtList tmp_x = new ExtList();
+                    	ExtList tmp_any_name = new ExtList();
+                    	ExtList tmp_any_name2 = new ExtList();
+                    	ExtList tmp_table_alias = new ExtList();
+                    	try {
+							for(i = 0; i < argArith.unnest().size(); i++) {
+								if(argArith.unnest().get(i).toString().equals("table_alias")) {
+									//Log.out("argArith.unnest():" + argArith.unnest().get(i) + ", index: " + i);
+									tmp_x.add(argArith.unnest().get(i+2));
+									tmp_any_name.add(argArith.unnest().get(i+1));
+									tmp_any_name.add(tmp_x);
+									//Log.out("tmp_any_name: " + tmp_any_name);
+									tmp_any_name2.add(tmp_any_name);
+									//Log.out("tmp_any_name2: " + tmp_any_name2);
+									tmp_table_alias.add(argArith.unnest().get(i));
+									tmp_table_alias.add(tmp_any_name2);
+									//Log.out("tmp_table_alias: " + tmp_table_alias);
+									builder = "";
+		                        	usedTables.add(getText(tmp_table_alias, Start_Parse.ruleNames));
+		                            builder = "";
+								}
+							}
+						} catch (Exception e) {
+							// TODO: handle exception
+							Log.err("Exception in sqlfunc arithmetics");
+						}
                     }
+                    //
                 }
             }
         }
@@ -1161,7 +1214,6 @@ public class CodeGenerator {
 	}
 
 	private static Function func_read(ExtList fn) {
-
 		String token;
 		Function fnc = createFunction();
 		String func_name = new String();
@@ -1194,12 +1246,14 @@ public class CodeGenerator {
 		Log.out("[func*read start funcname]=" + fn);
 		/* func_read */
 		TFE read_tfe = read_attribute(func_atts);
-
+		//Log.out("read_tfe " + ((Connector)read_tfe).countconnectitem());
 		Log.out("[func*TFE]=" + read_tfe.makele0());
 		if (read_tfe instanceof Connector) {
 			//		if(read_tfe instanceof Connector && ((Connector) read_tfe).getDimension() == 1){
 			for(TFE tfe: ((Connector)read_tfe).tfes){
+				Log.out("break FncArg(tfe): " + ((Connector)read_tfe).tfes);
 				fnc.addArg(makeFuncArg(tfe));
+				Log.out("break: get.Arg: " + fnc.getArg(0));
 			}
 		}
 		else
@@ -1213,12 +1267,17 @@ public class CodeGenerator {
 
 	private static FuncArg makeFuncArg(TFE arg) {
 		FuncArg out_fa;
-		Log.out("argsaregs: " + arg);
+		Log.out("argsaregs: " + arg.getClass().getName());
+
 		VRFunction vrfnc = new VRFunction();
 
 		if (arg instanceof Attribute) {
 			out_fa = new FuncArg(((Attribute) arg).getKey(), arg);
-		} else {
+		}else if(arg instanceof HTMLCONCAT) {
+			out_fa = new FuncArg("default", arg);
+			out_fa.setConcatFlag(true);
+		}
+		else {
 			out_fa = new FuncArg("default", arg);
 		}
 

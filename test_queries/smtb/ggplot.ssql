@@ -1,4 +1,65 @@
-GENERATE HTML 
+GENERATE HTML {
+'国・地域別スプレッドデュレーション構成'!
+[ggplot[x.name,(desc)x.salary]@{geom_bar="fill ='deeppink'"}]!
+}
+FROM "employee" x;
+
+
+/*GENERATE HTML
+    [x.name, (asc)x.salary]!
+FROM "employee" x;
+*/
+
+/*GENERATE HTML {
+'国・地域別スプレッドデュレーション構成'!
+[ggplot[x.name,(desc)x.salary]@{geom_bar="fill ='deeppink'"}]!
+}
+FROM "employee" x;
+*/
+
+/*GENERATE HTML
+cross_tab(
+    [st.city],,
+    [e.name, [i.name]!]!@{bgcolor='aliceblue'},
+    SUM[i.price]@{bgcolor='white'}
+)@{side_width=200, tableborder = 1}
+FROM store st, employee e, item i, sale s
+WHERE st.id = s.store AND e.id = s.employee AND i.id = s.item 
+*/
+/*GENERATE HTML 
+{
+'組入投資信託証券の状況'@{bgcolor='navy',color='white'}!
+'投資信託証券'@{bgcolor='aliceblue',width='300'}, '比率'@{bgcolor='aliceblue', width='71', align='center'}! 
+[null((asc)x."構成比"),
+x."クラス_プロダクト名"@{width='300'},
+&CONVERT(DECIMAL(10,2), x."構成比"*100) || '%'@{width='70', align='right'}
+]!!
+{'その他'@{width='300'}, &CONVERT(DECIMAL(10,2), 1 - x."構成比"*100) || '%'@{width='70', align='right'}}!
+{'合計'@{align='center',width='300'}, '100%'@{width='70', align='right'}}
+}@{table1, pbgcolor = 'white'}
+FROM "510070-140" x;
+*/
+
+/*
+GENERATE HTML
+    [x.name||'test']!
+FROM "employee" x;
+*/
+/*
+GENERATE HTML
+    [ testconcat(i.name||'test') ]!
+FROM "employee" i
+*/
+/*generate Unity_dv
+[    object('text', i.name||'test', 4)
+    ]!
+FROM "employee" i
+*/
+/*GENERATE HTML
+[link('link', 'Q12.ssql', i.salary || 'test')]!
+FROM "employee" i;
+*/
+/*GENERATE HTML 
   {         ' マンスリー・レポート'@{color='black'}!
           ' ブルーベイ クレジットLSファンド（SMA専用）'@{bgcolor='navy', color='white', width='1000'}!
            ' 追加型投信／内外／資産複合／特殊型（絶対収益追求型）'@{width='500', bgcolor='navy', color='white'},
@@ -80,7 +141,7 @@ GENERATE HTML
      image('./img/logo.png')@{align='right', width='300'}
 FROM "510070-129" x, "510070-130" y, "510070-期間別騰落率" z, "510070-140" v, "510070-144_format_view" w, "510070_format_124" d, "510037-113" u
 WHERE w."分配金" is not null;
-
+*/
 /*GENERATE HTML {
 '国・地域別スプレッドデュレーション構成'@{color='white',bgcolor='navy'}!
 [ggplot[x.name,x.salary]@{geom_bar="fill ='deeppink'"}]!

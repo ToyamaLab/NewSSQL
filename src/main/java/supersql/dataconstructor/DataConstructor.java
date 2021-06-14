@@ -358,7 +358,7 @@ public class DataConstructor {
 					for (int j = 0; j < qb.size(); j++) {
 						QueryBuffer q = qb.get(j);
 						if(Preprocessor.isCtab()){
-//							Log.info("Making All Pattern");
+							//Log.info("Making All Pattern");
 							Long makeAllPatternStart = System.currentTimeMillis();
 							q.makeAllPattern();
 							Long makeAllPatternEnd = System.currentTimeMillis();
@@ -1152,6 +1152,7 @@ public class DataConstructor {
 				if (result.size() == 1 && result.get(0) instanceof ExtList) {
 					if (result.getExtList(0).size() == 1 && !(result.getExtList(0).get(0) instanceof ExtList)) {
 						qb = new ArrayList<>(msql.makeMultipleSQL(result.getExtList(0)));
+						
 						if (singleValue) {
 							ExtList buf = new ExtList();
 							buf.add(sep_sch.get(i));

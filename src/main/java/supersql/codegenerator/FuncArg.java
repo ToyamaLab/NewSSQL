@@ -12,18 +12,24 @@ public class FuncArg {
 
 	String Name; //
 
-	TFE tfe; //
+	public TFE tfe; //
 
 	ExtList Data = new ExtList(); //
 	
+	boolean concatFlag;
 //	public static boolean FuncArgFlag = false;
 	
 
 	public FuncArg(String nm, TFE t) {
 		Name = nm;
 		tfe = t;
+		concatFlag = false;
 	}
 
+	public void setName(String nm) {
+		Name = nm;
+	}
+	
 	public void debugout() {
 		debugout(0);
 	}
@@ -195,4 +201,11 @@ public class FuncArg {
 		return tfe;
 	}
 
+	public void setConcatFlag(boolean _concatFlag) {
+		concatFlag = _concatFlag;
+	}
+	
+	public boolean getConcatFlag() {
+		return concatFlag;
+	}
 }

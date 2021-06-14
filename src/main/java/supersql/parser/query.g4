@@ -292,9 +292,11 @@ aggregate :
 ggplot :
 	gg_function_name
 	OPEN_BRACKET
+	(sorting)?
     attribute
     (
     C1
+    (sorting)?
     attribute
     )*
     CLOSE_BRACKET

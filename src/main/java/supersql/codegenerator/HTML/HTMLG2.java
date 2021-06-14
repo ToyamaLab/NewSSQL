@@ -345,7 +345,6 @@ public class HTMLG2 extends Grouper implements Serializable {
 					html_env2.code.append(">");
 				}
 				this.worknextItem();
-
 				// if (html_env.notWrittenClassId.contains(classid)
 				// && html_env.code.indexOf(classid) >= 0) {
 				// html_env.code.delete(html_env.code.indexOf(classid),

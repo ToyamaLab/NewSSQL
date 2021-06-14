@@ -143,7 +143,6 @@ public class VRC1 extends Connector implements Serializable {
 		}
 
 		while (this.hasMoreItems()) {
-
 			vrEnv.cNum++;
 			vrEnv.xmlDepth++;
 			ITFE tfe = tfes.get(i);

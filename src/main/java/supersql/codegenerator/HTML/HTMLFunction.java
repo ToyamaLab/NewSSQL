@@ -10,6 +10,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
+import java.io.Serializable;
 import java.io.UnsupportedEncodingException;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -25,32 +26,38 @@ import org.antlr.v4.parse.ANTLRParser.wildcard_return;
 
 import supersql.codegenerator.Attribute;
 import supersql.codegenerator.CodeGenerator;
+import supersql.codegenerator.Connector;
 import supersql.codegenerator.DecorateList;
+import supersql.codegenerator.Decorator;
 import supersql.codegenerator.Ehtml;
 import supersql.codegenerator.FuncArg;
 import supersql.codegenerator.Function;
+import supersql.codegenerator.Grouper;
+import supersql.codegenerator.ITFE;
+import supersql.codegenerator.IfCondition;
 import supersql.codegenerator.Incremental;
 import supersql.codegenerator.LinkForeach;
 import supersql.codegenerator.Manager;
 import supersql.codegenerator.Modifier;
+import supersql.codegenerator.TFE;
 import supersql.common.GlobalEnv;
 import supersql.common.Log;
 import supersql.dataconstructor.DataConstructor;
 import supersql.extendclass.ExtList;
 import supersql.parser.Start_Parse;
 
-public class HTMLFunction extends Function {
+public class HTMLFunction extends Function implements Serializable{
 
 	protected static String updateFile;
 	private boolean link1 = false; //added by goto 20161025 for link1/foreach1
 	
 	public static boolean HTMLFunctionFlag = false;
-	
 
 	public static String createForm(DecorateList decos) {
 		new String();
 		String path = new String();
 		String form = new String();
+		
 		// System.out.println(this.getAtt("label"));
 		if (decos.containsKey("path")) {
 			path = decos.getStr("path").replaceAll("\"", "");
@@ -149,12 +156,12 @@ public class HTMLFunction extends Function {
 	private String createForm() {
 		String path = new String();
 		String form = new String();
+		
 		if (this.getAtt("path") != null && !this.getAtt("path").isEmpty()) {
 			path = this.getAtt("path").replaceAll("\"", "");
 		} else {
 			path = ".";
 		}
-
 		form += "<form method=\"POST\" action=\"" + path
 				+ "/servlet/supersql.form.FormServlet\"" + ">";
 
@@ -756,7 +763,7 @@ public class HTMLFunction extends Function {
 		}
 
 		htmlEnv.code.append(form);
-
+		
 		if (this.Args.get(0) instanceof FuncArg) {
 			// HTMLEnv.setSelectFlg(true,(String)this.decos.get("select"));
 			HTMLEnv.setFormValueString(att);
@@ -1044,6 +1051,7 @@ public class HTMLFunction extends Function {
 				htmlEnv.scriptNum++;
 			}
 		}
+		
 		if (this.Args.get(0) instanceof FuncArg) {
 			Log.out("ARGS are function");
 			FuncArg fa = this.Args.get(0);
@@ -1912,7 +1920,8 @@ public class HTMLFunction extends Function {
 	@Override
 	public String work(ExtList data_info) {
 		this.setDataList(data_info);
-		// Log.out("FuncName= " + this.getFuncName());
+		 Log.out("FuncName= " + this.getFuncName());
+
 		// Log.out("filename= " + this.getAtt("filename"));
 		// Log.out("condition= " + this.getAtt("condition"));
 
@@ -1973,6 +1982,8 @@ public class HTMLFunction extends Function {
 			// Func_session(); not use
 		} else if(FuncName.equalsIgnoreCase("line")){
 			Func_line();
+		} else if(FuncName.equalsIgnoreCase("testconcat")){
+			Log.out("testconcat:" + getArg(0));
 		}
 		// tk start//////////////////////////////////
 		else if (FuncName.equalsIgnoreCase("embed")) {
@@ -2001,7 +2012,5 @@ public class HTMLFunction extends Function {
 		Log.out("TFEId = " + HTMLEnv.getClassID(this));
 		htmlEnv.append_css_def_td(HTMLEnv.getClassID(this), this.decos);
 		return null;
-
 	}
-
 }

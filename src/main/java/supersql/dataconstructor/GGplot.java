@@ -57,7 +57,7 @@ public class GGplot {
 				//tbt end
 
 		/* current schema level */
-		Log.out("sch: " + sch + " size:" + sch.size());
+		//Log.out("sch: " + sch + " size:" + sch.size());
 		for (int i = 0; i < sch.size(); i++) {
 			if (is_ggplot_1) {
 				if (criteria_set.size() == 0 && sch.size() == 3 && aethFlag) {
@@ -84,11 +84,11 @@ public class GGplot {
 						
 						//Changed by li to fix the sch level
 						initializeSepSch(sch);
-						Log.out("break sch: " + sch.get(1));
-						Log.out("break:" + info.get(j).toString().split("ggplot")[1]);
+						//Log.out("break sch: " + sch.get(1));
+						//Log.out("break:" + info.get(j).toString().split("ggplot")[1]);
 						String tmp_info;
 						tmp_info = sch.get(0).toString() + ' ' + sch.get(1) + ' ' + "ggplot" + info.get(j).toString().split("ggplot")[1];
-						Log.out("break:" + tmp_info);
+						//Log.out("break:" + tmp_info);
 						is_ggplot = true;
 						is_ggplot_1 = true;
 						//process_set.add(info.get(j));
@@ -227,10 +227,10 @@ public class GGplot {
 //			}
 			for (int i = 1; i < tuples.size(); i++) {
 				y = (ExtList)(tuples.get(i));
-				Log.out("criteria: " + criteria);
-				Log.out("criteria_size: " + criteria.size());
-				Log.out("break x: " + x + " size: " + x.size() + " tuples.size" + tuples.size());
-				Log.out("break y: " + y + " size: " + y.size() + " tuples.size" + tuples.size());
+				//Log.out("criteria: " + criteria);
+				//Log.out("criteria_size: " + criteria.size());
+				//Log.out("break x: " + x + " size: " + x.size() + " tuples.size" + tuples.size());
+				//Log.out("break y: " + y + " size: " + y.size() + " tuples.size" + tuples.size());
 				
 				for (int k = 0; k < criteria.size(); k++) {
 					
@@ -257,9 +257,9 @@ public class GGplot {
 			List<String> buffer_aeth = new ArrayList<String>();
 
 			for (int i = 0; i < buffer.size(); i++) {
-				Log.out("2.break i: " + i + " target_x: " + target_x);
-				Log.out("2.break i: " + i +  " target_y: " + target_y);
-				Log.out("2.break size of buffer " + buffer.size());
+				//Log.out("2.break i: " + i + " target_x: " + target_x);
+				//Log.out("2.break i: " + i +  " target_y: " + target_y);
+				//Log.out("2.break size of buffer " + buffer.size());
 				buffer_x.add(buffer.getExtListString(i, Integer.parseInt(target_x)));
 				buffer_y.add(buffer.getExtListString(i, Integer.parseInt(target_y)));
 				if (aeth > 0)
@@ -300,7 +300,7 @@ public class GGplot {
 						//added by li
 						engine.eval("result_x <- as.Date(result_x)");
 					} catch(ParseException e2) {
-						//Log.out("Error!Result_x is not a date.");
+						//Log.out("Result_x is not a date.");
 						engine.assign("result_x", result_x);
 					}
 				}

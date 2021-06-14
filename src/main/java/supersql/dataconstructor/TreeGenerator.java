@@ -71,15 +71,15 @@ public class TreeGenerator {
 
 				Log.out("= ggplot started =");
 				info = Preprocessor.getGGplotList();
-				Log.out("break info:" + info.get(0).toString().split(" ")[0]);
-				Log.out("break sch:" + sch.get(0).toString().split(",")[0]);
+				//Log.out("break info:" + info.get(0).toString().split(" ")[0]);
+				//Log.out("break sch:" + sch.get(0).toString().split(",")[0]);
 				//added by li to check sch level 20210611
 				if(('['+info.get(0).toString().split(" ")[0]).equals(sch.get(0).toString().split(",")[0])) {
 					for (int i = 0; i < sch.size(); i++) {
 						for (int j = 0; j < info.size(); j++) {
 							/* "ggplot functions" found */
-							Log.out("info.get(" + j + "): " + info.get(j).toString().split(" ")[0]);
-							Log.out("sch.get(" + i + "): " + sch.get(i));
+							//Log.out("info.get(" + j + "): " + info.get(j).toString().split(" ")[0]);
+							//	Log.out("sch.get(" + i + "): " + sch.get(i));
 						}
 					}
 						

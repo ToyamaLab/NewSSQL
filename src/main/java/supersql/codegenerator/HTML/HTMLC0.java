@@ -3,6 +3,7 @@ package supersql.codegenerator.HTML;
 import supersql.codegenerator.Connector;
 import supersql.codegenerator.FuncArg;
 import supersql.codegenerator.Manager;
+import supersql.common.Log;
 import supersql.extendclass.ExtList;
 
 //import common.Log;
@@ -27,7 +28,7 @@ public class HTMLC0 extends Connector {
 	public String work(ExtList data_info) {
 
 		// Log.out("data_info =" +data_info);
-
+		Log.out("******* HTMLC0 *******");
 		this.setDataList(data_info);
 
 		if (decos.containsKey("form")) {

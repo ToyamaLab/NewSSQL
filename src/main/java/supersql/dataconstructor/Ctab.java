@@ -30,7 +30,6 @@ public class Ctab {
 		addTag(value, "width=100");
 		addTag(value, "height=50");
 //		addTag(value, "border=0");
-
 //		Log.out("top_addtag:::"+top);
 //		Log.out("side_addtag:::"+side);
 //		Log.out("value_addtag:::"+value);

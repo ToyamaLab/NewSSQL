@@ -38,6 +38,8 @@ public class Connector extends Operator implements Serializable{
 	public void setTFE(ITFE t) {
 		tfeItems++;
 		tfes.add((TFE) t);
+		Log.out("Add connector setTFE: " + ((TFE) t));
+		Log.out("Connector TFEs are: " + tfes);
 	}
 
 	public void debugout() {
@@ -72,7 +74,7 @@ public class Connector extends Operator implements Serializable{
 		for (int i = 0; i < tfeItems; i++) {
 			le0.add(((ITFE) tfes.get(i)).makele0());
 		}
-
+		Log.out("Con le0 symbol:" + getSymbol());
 		Log.out("Con le0:" + le0);
 		return le0;
 	}
@@ -83,8 +85,10 @@ public class Connector extends Operator implements Serializable{
 
 	public int countconnectitem() {
 		int items = 0;
+		Log.out("In Connector TFEs" + tfes);
 		for (int i = 0; i < tfes.size(); i++) {
 			items += ((ITFE) tfes.get(i)).countconnectitem();
+			Log.out("In connector symbol: " + getSymbol() + " get(" + i + "): " + tfes.get(i) + " items: " +items);
 		}
 		return items;
 	}

@@ -221,7 +221,6 @@ public class VRG2 extends Grouper {
 				}
 			}
 		
-		
 		if(!CodeGenerator.getMedia().equalsIgnoreCase("unity_dv")){
 			while (this.hasMoreItems()) {
 				VRAttribute.genre = "";
@@ -235,7 +234,7 @@ public class VRG2 extends Grouper {
 				} catch (Exception e) {
 					VRManager.gindex.add(1);	//gindex[]=1
 				}
-
+				
 				vrEnv.gLevel++;
 				Log.out("selectFlg" + VREnv.getSelectFlg());
 				Log.out("selectRepeatFlg" + VREnv.getSelectRepeat());

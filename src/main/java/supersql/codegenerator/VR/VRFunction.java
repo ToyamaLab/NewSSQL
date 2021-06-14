@@ -1,11 +1,13 @@
 package supersql.codegenerator.VR;
 
 import supersql.codegenerator.CodeGenerator;
+import supersql.codegenerator.Connector;
 import supersql.codegenerator.DecorateList;
 import supersql.codegenerator.FuncArg;
 import supersql.codegenerator.Function;
 import supersql.codegenerator.Manager;
 import supersql.codegenerator.TFE;
+import supersql.codegenerator.HTML.HTMLEnv;
 import supersql.common.Log;
 import supersql.extendclass.ExtList;
 
@@ -103,7 +105,12 @@ public class VRFunction extends Function {
 		String FuncName = this.getFuncName().toLowerCase();
 		
 		switch (FuncName) {
-	
+		case "testconcat":
+			try {
+				Log.info("Func test100: " + getArg(0).getStr());
+			} catch (Exception e) {
+				// TODO: handle exception
+			}
 		case "asset":
 			try{
 				if (VRAttribute.elearrayXML.size() > VRAttribute.elearraySeq) {
@@ -380,11 +387,27 @@ public class VRFunction extends Function {
 
 			case "text":
 				Element text = vrEnv.xml.createElement("text");
+				for(int i = 0; i < sizeArg(); i++){
+					Log.out("break: " + (getArg(1).tfe));
+					Log.out("In text Arg(" + i + ") " + (getArg(i).tfe).countconnectitem());
+				}
+				/*
+				Connector tmp = ((Connector)getArg(1).tfe);
+				Log.out(tmp.tfes.get(0));
+				Log.out(tmp.tfes.get(1));
+				Connector tmp2 = ((Connector)tmp.tfes.get(0));
+				Log.out(tmp2.tfes.get(0));
+				Connector tmp3 = ((Connector)tmp2.tfes.get(0));
+				Log.out(tmp3.tfes.get(0));
+				Log.out(tmp3.tfes.get(1));
+				*/
+				//String contents = tmp3.tfes.get(0).toString() + tmp3.tfes.get(1).toString();
+				//String t_size = tmp.tfes.get(1).toString();
+				
 				String contents = getArg(1).getStr();
 				String t_size = getArg(2).getStr();
-				//String contents = getArg(sizeArg()-2).getStr();
-				//String t_size = getArg(sizeArg()-1).getStr();
-				//String t_size = "5";
+				//String t_size = getArg(sizeArg()-1).getStr();		
+				//String t_size = "50";
 				text.setAttribute("contents",contents);
 				text.setAttribute("size", t_size);
 				text.setAttribute("size_name", getArg(1).getTFE().decos.getStr("filtername"));
