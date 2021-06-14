@@ -1983,7 +1983,7 @@ public class HTMLFunction extends Function implements Serializable{
 		} else if(FuncName.equalsIgnoreCase("line")){
 			Func_line();
 		} else if(FuncName.equalsIgnoreCase("testconcat")){
-			Log.out("testconcat:" + getArg(0));
+			Log.out("testconcat:" + getArg(0).getStr());
 		}
 		// tk start//////////////////////////////////
 		else if (FuncName.equalsIgnoreCase("embed")) {

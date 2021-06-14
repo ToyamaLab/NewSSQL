@@ -1,8 +1,6 @@
-GENERATE HTML {
-'国・地域別スプレッドデュレーション構成'!
-[ggplot[x.name,(desc)x.salary]@{geom_bar="fill ='deeppink'"}]!
-}
-FROM "employee" x;
+GENERATE HTML
+    [ testconcat(i.name||'test') ]!
+FROM "employee" i
 
 
 /*GENERATE HTML

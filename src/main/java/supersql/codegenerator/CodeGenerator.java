@@ -1251,9 +1251,9 @@ public class CodeGenerator {
 		if (read_tfe instanceof Connector) {
 			//		if(read_tfe instanceof Connector && ((Connector) read_tfe).getDimension() == 1){
 			for(TFE tfe: ((Connector)read_tfe).tfes){
-				Log.out("break FncArg(tfe): " + ((Connector)read_tfe).tfes);
+				//Log.out("break FncArg(tfe): " + ((Connector)read_tfe).tfes);
 				fnc.addArg(makeFuncArg(tfe));
-				Log.out("break: get.Arg: " + fnc.getArg(0));
+				//Log.out("break: get.Arg: " + fnc.getArg(0));
 			}
 		}
 		else
