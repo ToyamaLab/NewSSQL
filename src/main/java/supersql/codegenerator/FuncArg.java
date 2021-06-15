@@ -1,6 +1,7 @@
 package supersql.codegenerator;
 
 import supersql.codegenerator.HTML.HTMLC0;
+import supersql.codegenerator.HTML.HTMLCONCAT;
 import supersql.codegenerator.HTML.HTMLFunction;
 import supersql.codegenerator.Mobile_HTML5.Mobile_HTML5Function;
 import supersql.codegenerator.Mobile_HTML5.Mobile_HTML5_dynamic;
