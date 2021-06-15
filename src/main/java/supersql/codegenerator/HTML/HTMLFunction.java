@@ -1921,7 +1921,9 @@ public class HTMLFunction extends Function implements Serializable{
 	public String work(ExtList data_info) {
 		this.setDataList(data_info);
 		 Log.out("FuncName= " + this.getFuncName());
-
+		 //add by li to fix concat in func 20210615
+		HTMLFunctionFlag = true;
+		//
 		// Log.out("filename= " + this.getAtt("filename"));
 		// Log.out("condition= " + this.getAtt("condition"));
 
