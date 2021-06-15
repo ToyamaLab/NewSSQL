@@ -16,3 +16,8 @@ out/
 META-INF/
 /.metadata/
 test_queries/tatsu/
+Datavisualize/
+Datavisualize的副本/
+testSpeech/
+test_queries/smtb/
+test_queries/li.sql
