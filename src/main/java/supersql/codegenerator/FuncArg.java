@@ -1,10 +1,12 @@
 package supersql.codegenerator;
 
+import supersql.codegenerator.HTML.HTMLC0;
 import supersql.codegenerator.HTML.HTMLFunction;
 import supersql.codegenerator.Mobile_HTML5.Mobile_HTML5Function;
 import supersql.codegenerator.Mobile_HTML5.Mobile_HTML5_dynamic;
 import supersql.codegenerator.Mobile_HTML5.Mobile_HTML5_stream;
 import supersql.codegenerator.infinitescroll.Infinite_dynamic;
+import supersql.common.Log;
 import supersql.extendclass.ExtList;
 
 
@@ -90,7 +92,6 @@ public class FuncArg {
 
 		}
 		else if (tfe instanceof Attribute) {
-
 			//20131118 dynamic
 			if(Mobile_HTML5_dynamic.dynamicDisplay){
 				return Mobile_HTML5_dynamic.dynamicFuncArgProcess(tfe, null, null);
@@ -147,6 +148,14 @@ public class FuncArg {
 ////			return null;
 //			return null;
 			if(HTMLFunction.HTMLFunctionFlag || Mobile_HTML5Function.Mobile_HTML5FunctionFlag){
+				// Concat対策
+				// C0かつその下がHTMLCONCATだったら
+				if (tfe instanceof HTMLC0 && tfe.makele0().getExtListString(1, 0).equals("HTMLCONCAT")) {
+					Log.out("[Found concat in SSQL Function]");
+					Log.out("[TFE le0]: " + tfe.makele0());
+					Log.out("[Data]: " + Data);
+					return ((HTMLC0) tfe).getConcatStr(Data);
+				}
 				return tfe.work(Data);
 			}
 			return null;
