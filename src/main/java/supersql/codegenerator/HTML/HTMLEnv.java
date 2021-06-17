@@ -926,24 +926,25 @@ public class HTMLEnv extends LocalEnv implements Serializable{
 					css = css.substring(css.indexOf(",")+1);
 				}
 			}
-		} else if (cssFile.length() == 0) {
-			if (GlobalEnv.isServlet()) {
-				cssFile.append("<link rel=\"stylesheet\" type=\"text/css\" href=\""
-						+ GlobalEnv.getFileDirectory() + "/default.css \">\n");
-			} else {
-				if (Utils.getOs().contains("Windows")) {
-					cssFile.append("<link rel=\"stylesheet\" type=\"text/css\" href=\"default.css\">\n");
-				} else {
-					// itc
-					if (GlobalEnv.isOpt())
-						//cssFile.append("<link rel=\"stylesheet\" type=\"text/css\" href=\"http://www.db.ics.keio.ac.jp/ssqlcss/default_opt.css\">\n");
-						cssFile.append("<link rel=\"stylesheet\" type=\"text/css\" href=\"jscss/default_opt.css\">\n");			//TODO jscss以下へ
-					else
-						//cssFile.append("<link rel=\"stylesheet\" type=\"text/css\" href=\"http://www.db.ics.keio.ac.jp/ssqlcss/default.css\">\n");
-						cssFile.append("<link rel=\"stylesheet\" type=\"text/css\" href=\"jscss/default.css\">\n");				//TODO jscss以下へ
-				}
-			}
-		}
+		} 
+//		else if (cssFile.length() == 0) {
+//			if (GlobalEnv.isServlet()) {
+//				cssFile.append("<link rel=\"stylesheet\" type=\"text/css\" href=\""
+//						+ GlobalEnv.getFileDirectory() + "/default.css \">\n");
+//			} else {
+//				if (Utils.getOs().contains("Windows")) {
+//					cssFile.append("<link rel=\"stylesheet\" type=\"text/css\" href=\"default.css\">\n");
+//				} else {
+//					// itc
+//					if (GlobalEnv.isOpt())
+//						//cssFile.append("<link rel=\"stylesheet\" type=\"text/css\" href=\"http://www.db.ics.keio.ac.jp/ssqlcss/default_opt.css\">\n");
+//						cssFile.append("<link rel=\"stylesheet\" type=\"text/css\" href=\"jscss/default_opt.css\">\n");			//TODO jscss以下へ
+//					else
+//						//cssFile.append("<link rel=\"stylesheet\" type=\"text/css\" href=\"http://www.db.ics.keio.ac.jp/ssqlcss/default.css\">\n");
+//						cssFile.append("<link rel=\"stylesheet\" type=\"text/css\" href=\"jscss/default.css\">\n");				//TODO jscss以下へ
+//				}
+//			}
+//		}
 
 		//added by goto 20130703  ex) jsfile=" a.js; b.js "
 		if (decos.containsKey("jsfile")) {
