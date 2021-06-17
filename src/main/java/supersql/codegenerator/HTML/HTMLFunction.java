@@ -50,14 +50,14 @@ public class HTMLFunction extends Function implements Serializable{
 
 	protected static String updateFile;
 	private boolean link1 = false; //added by goto 20161025 for link1/foreach1
-	
+
 	public static boolean HTMLFunctionFlag = false;
 
 	public static String createForm(DecorateList decos) {
 		new String();
 		String path = new String();
 		String form = new String();
-		
+
 		// System.out.println(this.getAtt("label"));
 		if (decos.containsKey("path")) {
 			path = decos.getStr("path").replaceAll("\"", "");
@@ -156,7 +156,7 @@ public class HTMLFunction extends Function implements Serializable{
 	private String createForm() {
 		String path = new String();
 		String form = new String();
-		
+
 		if (this.getAtt("path") != null && !this.getAtt("path").isEmpty()) {
 			path = this.getAtt("path").replaceAll("\"", "");
 		} else {
@@ -763,7 +763,7 @@ public class HTMLFunction extends Function implements Serializable{
 		}
 
 		htmlEnv.code.append(form);
-		
+
 		if (this.Args.get(0) instanceof FuncArg) {
 			// HTMLEnv.setSelectFlg(true,(String)this.decos.get("select"));
 			HTMLEnv.setFormValueString(att);
@@ -923,7 +923,7 @@ public class HTMLFunction extends Function implements Serializable{
 			} else {
 
 				if(!link1){
-					//added by goto 20161019 for new foreach 
+					//added by goto 20161019 for new foreach
 					filename = file;
 					//added by goto 20161109
 					if(!file.endsWith(".php") && !file.endsWith(".rb") && !file.endsWith(".erb") && !file.endsWith(".jsp"))
@@ -1051,7 +1051,7 @@ public class HTMLFunction extends Function implements Serializable{
 				htmlEnv.scriptNum++;
 			}
 		}
-		
+
 		if (this.Args.get(0) instanceof FuncArg) {
 			Log.out("ARGS are function");
 			FuncArg fa = this.Args.get(0);
@@ -1092,19 +1092,19 @@ public class HTMLFunction extends Function implements Serializable{
 			}
 			Incremental.outXMLData(htmlEnv.xmlDepth, "<"+form_type+" target='" + htmlEnv.linkUrl + "'" + tmp + ">\n");
 		}
-		
+
 		if (this.Args.get(0) instanceof FuncArg) {
 			Log.out("ARGS are function");
 			FuncArg fa = this.Args.get(0);
 			fa.workAtt();
 		} else
 			this.workAtt("default");
-		
+
 		// added by masato 20151124 for plink
 		if (htmlEnv.plinkFlag) {
 			Incremental.outXMLData(htmlEnv.xmlDepth, "</"+form_type+">\n");
 		}
-		
+
 
 		htmlEnv.plinkFlag = false;
 		return;
@@ -1150,6 +1150,28 @@ public class HTMLFunction extends Function implements Serializable{
 		htmlEnv.code.append(statement);
 	}
 
+	//20210604 yama Func_embed()
+	protected void Func_embed() {
+		String target1 = this.Args.get(0).getStr().trim().replaceAll("ssql$", "html");
+		String target2 = "300";
+		String target3 = "150";
+
+		if(decos.containsKey("width")) {
+			target2 = decos.getStr("width");
+		}
+
+		if(decos.containsKey("height")) {
+			target3 = decos.getStr("height");
+		}
+
+		if (this.Args.size() == 3) {
+			target2 = this.Args.get(1).getStr().trim();
+			target3 = this.Args.get(2).getStr().trim();
+		}
+
+		String statement = "<iframe src=" + target1 + " width=" + target2 + " height=" +target3 + " frameborder=\"0\" style=\"border: none\"></iframe>";
+		htmlEnv.code.append(statement);
+	}
 
 	protected void Func_imagefile() {
 		HTMLFunctionFlag = true;
@@ -1986,10 +2008,11 @@ public class HTMLFunction extends Function implements Serializable{
 			Log.out("testconcat:" + getArg(0).getStr());
 		}
 		// tk start//////////////////////////////////
-		else if (FuncName.equalsIgnoreCase("embed")) {
-			Log.out("[enter embed]");
-			Func_embed(data_info);
-		}
+		//202106 yama commentout
+		// else if (FuncName.equalsIgnoreCase("embed")) {
+		// 	Log.out("[enter embed]");
+		// 	Func_embed(data_info);
+		// }
 		// tk end////////////////////////////////////
 		else if (FuncName.equalsIgnoreCase("anchor")
 				|| FuncName.equalsIgnoreCase("a")) {
@@ -2003,11 +2026,13 @@ public class HTMLFunction extends Function implements Serializable{
 		// for educ2018
 		else if (FuncName.equalsIgnoreCase("echo")) {
 			Func_echo();
-		}
 		// for educ2018
 //		else if(FuncName.equalsIgnoreCase("shift_image")){
 //			Func_simage();
 //		}
+		} else if (FuncName.equalsIgnoreCase("embed")) {
+			Func_embed();
+		}
 
 		Log.out("TFEId = " + HTMLEnv.getClassID(this));
 		htmlEnv.append_css_def_td(HTMLEnv.getClassID(this), this.decos);
