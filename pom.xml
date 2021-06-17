@@ -126,11 +126,6 @@
 			<scope>system</scope>
 			<systemPath>${project.basedir}/lib/mssql-jdbc-8.2.2.jre8.jar</systemPath>
 		</dependency>
-		<dependency>
-			<groupId>org.jboss.openjdk-orb</groupId>
-			<artifactId>openjdk-orb</artifactId>
-			<version>8.1.1.Final</version>
-		</dependency>
 	</dependencies>
 	<build>
 		<plugins>
