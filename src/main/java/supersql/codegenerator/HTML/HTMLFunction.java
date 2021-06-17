@@ -1446,25 +1446,37 @@ public class HTMLFunction extends Function implements Serializable{
 	}
 
 	private String Func_line() {
-		String statement = "\n<hr";
+		String stmt = "\n<hr";
 		try{
 			//size
 			FuncArg fa1 = (FuncArg) this.Args.get(0);
-			statement += " size=\""+fa1.getStr()+"\"";
+			stmt += " size=\""+fa1.getStr()+"\"";
 			//color
 			FuncArg fa2 = (FuncArg) this.Args.get(1);
 			if(!fa2.getStr().equals(""))
-				statement += " color=\""+fa2.getStr()+"\"";
+				stmt += " color=\""+fa2.getStr()+"\"";
 			else
-				statement += " color=\"black\"";
+				stmt += " color=\"black\"";
 		}catch(Exception e){
-			statement += " color=\"black\"";
+			//default: 引数なしの場合
+			stmt += " size=\"1\"";
+			stmt += " color=\"black\"";
 		}
-		statement += ">\n";
+		
+		//<hr>はタグ内に指定されたcssしか効かないため、以下を追加
+		if (decos.containsKey("width"))
+			stmt += " width=\""+decos.getStr("width").replace("\"", "")+"\"";
+		if (decos.containsKey("height"))
+			stmt += " height=\""+decos.getStr("height").replace("\"", "")+"\"";
+		if (decos.containsKey("align"))
+			stmt += " align=\""+decos.getStr("align").replace("\"", "")+"\"";
+		else 
+			stmt += " align=\"left\"";
 
-		//    	// 各引数毎に処理した結果をHTMLに書きこむ
-		htmlEnv.code.append(statement);
-		return statement;
+		stmt += ">\n";
+
+		htmlEnv.code.append(stmt);
+		return stmt;
 	}
 	
 	private String Func_hspace() {
@@ -2004,7 +2016,7 @@ public class HTMLFunction extends Function implements Serializable{
 			Func_hidden();
 		} else if (FuncName.equalsIgnoreCase("session")) {
 			// Func_session(); not use
-		} else if(FuncName.equalsIgnoreCase("line")){
+		} else if(FuncName.equalsIgnoreCase("line") || FuncName.equalsIgnoreCase("hline")){
 			Func_line();
 		} else if(FuncName.equalsIgnoreCase("space") || FuncName.equalsIgnoreCase("hspace")){
 			Func_hspace();
