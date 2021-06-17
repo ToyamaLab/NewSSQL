@@ -23,6 +23,7 @@ import java.util.Date;
 import java.util.Hashtable;
 
 import org.antlr.v4.parse.ANTLRParser.wildcard_return;
+import org.antlr.v4.runtime.CommonToken;
 
 import supersql.codegenerator.Attribute;
 import supersql.codegenerator.CodeGenerator;
@@ -1465,6 +1466,29 @@ public class HTMLFunction extends Function implements Serializable{
 		htmlEnv.code.append(statement);
 		return statement;
 	}
+	
+	private String Func_hspace() {
+		return getSpaceStmt("width");
+	}
+	private String Func_vspace() {
+		return getSpaceStmt("height");
+	}
+	private String getSpaceStmt(String type) {
+		String stmt = "\n<div style=\""+type+":";
+		try{
+			//width or height
+			String arg1 = ((FuncArg) this.Args.get(0)).getStr();
+			stmt += arg1;
+			if (GlobalEnv.isNumber(arg1)) 
+				stmt += "px";
+		}catch(Exception e){
+			stmt += "10px";	//default: 引数なしの場合
+		}
+		stmt += ";\"></div>\n";
+		
+		htmlEnv.code.append(stmt);
+		return stmt;
+	}
 
 	// added by goto 20130308 start "anchor" anchor(), a(), url(), mail()
 	/**
@@ -1982,6 +2006,10 @@ public class HTMLFunction extends Function implements Serializable{
 			// Func_session(); not use
 		} else if(FuncName.equalsIgnoreCase("line")){
 			Func_line();
+		} else if(FuncName.equalsIgnoreCase("space") || FuncName.equalsIgnoreCase("hspace")){
+			Func_hspace();
+		} else if(FuncName.equalsIgnoreCase("vspace")){
+			Func_vspace();
 		} else if(FuncName.equalsIgnoreCase("testconcat")){
 			Log.out("testconcat:" + getArg(0).getStr());
 		}
