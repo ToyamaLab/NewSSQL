@@ -6,7 +6,6 @@ import java.util.Iterator;
 import java.util.StringTokenizer;
 
 import org.apache.bcel.verifier.exc.StaticCodeConstraintException;
-import org.omg.CORBA.PUBLIC_MEMBER;
 
 import supersql.common.Log;
 import supersql.extendclass.ExtHashSet;

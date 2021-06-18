@@ -1,4 +1,4 @@
-// Generated from query.g4 by ANTLR 4.5
+// Generated from query.g4 by ANTLR 4.8
 
 package supersql.parser;
 
@@ -16,7 +16,7 @@ import java.util.ArrayList;
 
 @SuppressWarnings({"all", "warnings", "unchecked", "unused", "cast"})
 public class queryParser extends Parser {
-	static { RuntimeMetaData.checkVersion("4.5", RuntimeMetaData.VERSION); }
+	static { RuntimeMetaData.checkVersion("4.8", RuntimeMetaData.VERSION); }
 
 	protected static final DFA[] _decisionToDFA;
 	protected static final PredictionContextCache _sharedContextCache =
@@ -60,52 +60,61 @@ public class queryParser extends Parser {
 		RULE_column_alias = 54, RULE_column_name = 55, RULE_table_alias = 56, 
 		RULE_index_name = 57, RULE_any_name = 58, RULE_sl = 59, RULE_signed_number = 60, 
 		RULE_raise_function = 61, RULE_error_message = 62;
-	public static final String[] ruleNames = {
-		"query", "root", "media", "operand", "attribute", "as_pair", "grouper", 
-		"composite_iterator", "exp", "t_exp", "concat_exp", "d_exp", "v_exp", 
-		"h_exp", "n_exp", "sorting", "function", "sqlfunc", "aggregate", "ggplot", 
-		"if_then_else", "arithmetics", "arith", "from_where", "error", "sql_stmt_list", 
-		"sql_stmt", "factored_select_stmt", "select_core", "where_clause", "result_column", 
-		"table_or_subquery", "keyword", "select_stmt", "select_or_values", "compound_operator", 
-		"join_clause", "join_operator", "join_constraint", "common_table_expression", 
-		"ordering_term", "expr", "literal_value", "unary_operator", "name", "type_name", 
-		"function_name", "ag_function_name", "ag_keyword", "gg_function_name", 
-		"gg_keyword", "collation_name", "database_name", "table_name", "column_alias", 
-		"column_name", "table_alias", "index_name", "any_name", "sl", "signed_number", 
-		"raise_function", "error_message"
-	};
+	private static String[] makeRuleNames() {
+		return new String[] {
+			"query", "root", "media", "operand", "attribute", "as_pair", "grouper", 
+			"composite_iterator", "exp", "t_exp", "concat_exp", "d_exp", "v_exp", 
+			"h_exp", "n_exp", "sorting", "function", "sqlfunc", "aggregate", "ggplot", 
+			"if_then_else", "arithmetics", "arith", "from_where", "error", "sql_stmt_list", 
+			"sql_stmt", "factored_select_stmt", "select_core", "where_clause", "result_column", 
+			"table_or_subquery", "keyword", "select_stmt", "select_or_values", "compound_operator", 
+			"join_clause", "join_operator", "join_constraint", "common_table_expression", 
+			"ordering_term", "expr", "literal_value", "unary_operator", "name", "type_name", 
+			"function_name", "ag_function_name", "ag_keyword", "gg_function_name", 
+			"gg_keyword", "collation_name", "database_name", "table_name", "column_alias", 
+			"column_name", "table_alias", "index_name", "any_name", "sl", "signed_number", 
+			"raise_function", "error_message"
+		};
+	}
+	public static final String[] ruleNames = makeRuleNames();
 
-	private static final String[] _LITERAL_NAMES = {
-		null, "'||'", "'$'", "'&'", "':'", "'*'", "'/'", "'+'", "'-'", "'\\'", 
-		"'<<'", "'>>'", "'|'", "'<'", "'<='", "'>'", "'>='", "'='", "'=='", "'!='", 
-		"'<>'", "'~'", null, null, null, null, null, null, null, null, null, null, 
-		null, null, null, null, null, null, null, null, null, null, null, null, 
-		null, null, null, null, null, null, null, null, null, null, null, null, 
-		null, null, null, null, null, null, null, null, null, null, null, null, 
-		null, null, null, null, null, null, null, null, null, null, null, null, 
-		null, null, null, null, null, null, null, null, null, null, null, null, 
-		null, "'?'", "','", "'!'", "'%'", "'#'", "'◯'", "'.'", "'('", "')'", "'['", 
-		"']'", "'{'", "'}'", "';'"
-	};
-	private static final String[] _SYMBOLIC_NAMES = {
-		null, null, null, null, null, null, null, null, null, null, null, null, 
-		null, null, null, null, null, null, null, null, null, null, "K_ABORT", 
-		"K_ADD", "K_ALL", "K_AND", "K_AS", "K_ASC", "K_BETWEEN", "K_BY", "K_CASE", 
-		"K_CAST", "K_COLLATE", "K_CROSS", "K_CURRENT_DATE", "K_CURRENT_TIME", 
-		"K_CURRENT_TIMESTAMP", "K_DESC", "K_DISTINCT", "K_ELSE", "K_END", "K_ESCAPE", 
-		"K_EXCEPT", "K_EXISTS", "K_FAIL", "K_FULL", "K_FROM", "K_GLOB", "K_GROUP", 
-		"K_HAVING", "K_IF", "K_IGNORE", "K_IN", "K_INDEXED", "K_INNER", "K_INTERSECT", 
-		"K_IS", "K_ISNULL", "K_JOIN", "K_LEFT", "K_LIKE", "K_LIMIT", "K_MATCH", 
-		"K_NATURAL", "K_NO", "K_NOT", "K_NOTNULL", "K_NULL", "K_OFFSET", "K_ON", 
-		"K_OR", "K_ORDER", "K_OUTER", "K_RAISE", "K_RECURSIVE", "K_REGEXP", "K_RIGHT", 
-		"K_ROLLBACK", "K_SELECT", "K_THEN", "K_UNION", "K_USING", "K_VALUES", 
-		"K_WHEN", "K_WHERE", "K_WITH", "K_GENERATE", "K_MAX", "K_MIN", "K_AVG", 
-		"K_COUNT", "K_SUM", "K_GGPLOT", "C0", "C1", "C2", "C3", "C4", "CIRCLE", 
-		"DOT", "OPEN_PARENTHESE", "CLOSE_PARENTHESE", "OPEN_BRACKET", "CLOSE_BRACKET", 
-		"OPEN_BRACE", "CLOSE_BRACE", "SEMICOLON", "DECORATOR", "NUMERIC_LITERAL", 
-		"BLOB_LITERAL", "BIND_PARAMETER", "IDENTIFIER", "STRING_LITERAL", "MULTI_LINE_COMMENT", 
-		"SINGLE_LINE_COMMENT", "WS", "UNEXPECTED_CHAR"
-	};
+	private static String[] makeLiteralNames() {
+		return new String[] {
+			null, "'||'", "'$'", "'&'", "':'", "'*'", "'/'", "'+'", "'-'", "'\\'", 
+			"'<<'", "'>>'", "'|'", "'<'", "'<='", "'>'", "'>='", "'='", "'=='", "'!='", 
+			"'<>'", "'~'", null, null, null, null, null, null, null, null, null, 
+			null, null, null, null, null, null, null, null, null, null, null, null, 
+			null, null, null, null, null, null, null, null, null, null, null, null, 
+			null, null, null, null, null, null, null, null, null, null, null, null, 
+			null, null, null, null, null, null, null, null, null, null, null, null, 
+			null, null, null, null, null, null, null, null, null, null, null, null, 
+			null, null, "'?'", "','", "'!'", "'%'", "'#'", "'\u25EF'", "'.'", "'('", 
+			"')'", "'['", "']'", "'{'", "'}'", "';'"
+		};
+	}
+	private static final String[] _LITERAL_NAMES = makeLiteralNames();
+	private static String[] makeSymbolicNames() {
+		return new String[] {
+			null, null, null, null, null, null, null, null, null, null, null, null, 
+			null, null, null, null, null, null, null, null, null, null, "K_ABORT", 
+			"K_ADD", "K_ALL", "K_AND", "K_AS", "K_ASC", "K_BETWEEN", "K_BY", "K_CASE", 
+			"K_CAST", "K_COLLATE", "K_CROSS", "K_CURRENT_DATE", "K_CURRENT_TIME", 
+			"K_CURRENT_TIMESTAMP", "K_DESC", "K_DISTINCT", "K_ELSE", "K_END", "K_ESCAPE", 
+			"K_EXCEPT", "K_EXISTS", "K_FAIL", "K_FULL", "K_FROM", "K_GLOB", "K_GROUP", 
+			"K_HAVING", "K_IF", "K_IGNORE", "K_IN", "K_INDEXED", "K_INNER", "K_INTERSECT", 
+			"K_IS", "K_ISNULL", "K_JOIN", "K_LEFT", "K_LIKE", "K_LIMIT", "K_MATCH", 
+			"K_NATURAL", "K_NO", "K_NOT", "K_NOTNULL", "K_NULL", "K_OFFSET", "K_ON", 
+			"K_OR", "K_ORDER", "K_OUTER", "K_RAISE", "K_RECURSIVE", "K_REGEXP", "K_RIGHT", 
+			"K_ROLLBACK", "K_SELECT", "K_THEN", "K_UNION", "K_USING", "K_VALUES", 
+			"K_WHEN", "K_WHERE", "K_WITH", "K_GENERATE", "K_MAX", "K_MIN", "K_AVG", 
+			"K_COUNT", "K_SUM", "K_GGPLOT", "C0", "C1", "C2", "C3", "C4", "CIRCLE", 
+			"DOT", "OPEN_PARENTHESE", "CLOSE_PARENTHESE", "OPEN_BRACKET", "CLOSE_BRACKET", 
+			"OPEN_BRACE", "CLOSE_BRACE", "SEMICOLON", "DECORATOR", "NUMERIC_LITERAL", 
+			"BLOB_LITERAL", "BIND_PARAMETER", "IDENTIFIER", "STRING_LITERAL", "MULTI_LINE_COMMENT", 
+			"SINGLE_LINE_COMMENT", "WS", "UNEXPECTED_CHAR"
+		};
+	}
+	private static final String[] _SYMBOLIC_NAMES = makeSymbolicNames();
 	public static final Vocabulary VOCABULARY = new VocabularyImpl(_LITERAL_NAMES, _SYMBOLIC_NAMES);
 
 	/**
@@ -155,6 +164,7 @@ public class queryParser extends Parser {
 		super(input);
 		_interp = new ParserATNSimulator(this,_ATN,_decisionToDFA,_sharedContextCache);
 	}
+
 	public static class QueryContext extends ParserRuleContext {
 		public MediaContext media() {
 			return getRuleContext(MediaContext.class,0);
@@ -191,6 +201,7 @@ public class queryParser extends Parser {
 			setState(127);
 			root();
 			setState(129);
+			_errHandler.sync(this);
 			_la = _input.LA(1);
 			if (_la==K_FROM || ((((_la - 78)) & ~0x3f) == 0 && ((1L << (_la - 78)) & ((1L << (K_SELECT - 78)) | (1L << (K_WITH - 78)) | (1L << (UNEXPECTED_CHAR - 78)))) != 0)) {
 				{
@@ -242,6 +253,7 @@ public class queryParser extends Parser {
 			enterOuterAlt(_localctx, 1);
 			{
 			setState(133);
+			_errHandler.sync(this);
 			switch ( getInterpreter().adaptivePredict(_input,1,_ctx) ) {
 			case 1:
 				{
@@ -257,6 +269,7 @@ public class queryParser extends Parser {
 				break;
 			}
 			setState(136);
+			_errHandler.sync(this);
 			_la = _input.LA(1);
 			if (_la==DECORATOR) {
 				{
@@ -384,10 +397,12 @@ public class queryParser extends Parser {
 			enterOuterAlt(_localctx, 1);
 			{
 			setState(169);
+			_errHandler.sync(this);
 			switch ( getInterpreter().adaptivePredict(_input,7,_ctx) ) {
 			case 1:
 				{
 				setState(142);
+				_errHandler.sync(this);
 				_la = _input.LA(1);
 				if (_la==OPEN_PARENTHESE) {
 					{
@@ -403,6 +418,7 @@ public class queryParser extends Parser {
 			case 2:
 				{
 				setState(146);
+				_errHandler.sync(this);
 				_la = _input.LA(1);
 				if (_la==OPEN_PARENTHESE) {
 					{
@@ -458,6 +474,7 @@ public class queryParser extends Parser {
 			case 9:
 				{
 				setState(159);
+				_errHandler.sync(this);
 				_la = _input.LA(1);
 				if (_la==OPEN_PARENTHESE) {
 					{
@@ -491,6 +508,7 @@ public class queryParser extends Parser {
 			case 13:
 				{
 				setState(166);
+				_errHandler.sync(this);
 				_la = _input.LA(1);
 				if (_la==OPEN_PARENTHESE) {
 					{
@@ -505,6 +523,7 @@ public class queryParser extends Parser {
 				break;
 			}
 			setState(172);
+			_errHandler.sync(this);
 			switch ( getInterpreter().adaptivePredict(_input,8,_ctx) ) {
 			case 1:
 				{
@@ -533,6 +552,7 @@ public class queryParser extends Parser {
 		public Table_aliasContext table_alias() {
 			return getRuleContext(Table_aliasContext.class,0);
 		}
+		public TerminalNode DOT() { return getToken(queryParser.DOT, 0); }
 		public AttributeContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
 		}
@@ -554,6 +574,7 @@ public class queryParser extends Parser {
 			enterOuterAlt(_localctx, 1);
 			{
 			setState(177);
+			_errHandler.sync(this);
 			switch ( getInterpreter().adaptivePredict(_input,9,_ctx) ) {
 			case 1:
 				{
@@ -615,6 +636,7 @@ public class queryParser extends Parser {
 			{
 			{
 			setState(184);
+			_errHandler.sync(this);
 			switch ( getInterpreter().adaptivePredict(_input,10,_ctx) ) {
 			case 1:
 				{
@@ -685,6 +707,7 @@ public class queryParser extends Parser {
 		enterRule(_localctx, 12, RULE_grouper);
 		try {
 			setState(206);
+			_errHandler.sync(this);
 			switch ( getInterpreter().adaptivePredict(_input,11,_ctx) ) {
 			case 1:
 				enterOuterAlt(_localctx, 1);
@@ -786,6 +809,7 @@ public class queryParser extends Parser {
 		enterRule(_localctx, 14, RULE_composite_iterator);
 		try {
 			setState(272);
+			_errHandler.sync(this);
 			switch ( getInterpreter().adaptivePredict(_input,21,_ctx) ) {
 			case 1:
 				enterOuterAlt(_localctx, 1);
@@ -799,6 +823,7 @@ public class queryParser extends Parser {
 				setState(211);
 				match(C1);
 				setState(224);
+				_errHandler.sync(this);
 				switch ( getInterpreter().adaptivePredict(_input,14,_ctx) ) {
 				case 1:
 					{
@@ -807,6 +832,7 @@ public class queryParser extends Parser {
 					setState(213);
 					match(C2);
 					setState(216);
+					_errHandler.sync(this);
 					switch ( getInterpreter().adaptivePredict(_input,12,_ctx) ) {
 					case 1:
 						{
@@ -826,6 +852,7 @@ public class queryParser extends Parser {
 					setState(219);
 					match(C3);
 					setState(222);
+					_errHandler.sync(this);
 					switch ( getInterpreter().adaptivePredict(_input,13,_ctx) ) {
 					case 1:
 						{
@@ -853,6 +880,7 @@ public class queryParser extends Parser {
 				setState(229);
 				match(C2);
 				setState(242);
+				_errHandler.sync(this);
 				switch ( getInterpreter().adaptivePredict(_input,17,_ctx) ) {
 				case 1:
 					{
@@ -861,6 +889,7 @@ public class queryParser extends Parser {
 					setState(231);
 					match(C1);
 					setState(234);
+					_errHandler.sync(this);
 					switch ( getInterpreter().adaptivePredict(_input,15,_ctx) ) {
 					case 1:
 						{
@@ -880,6 +909,7 @@ public class queryParser extends Parser {
 					setState(237);
 					match(C3);
 					setState(240);
+					_errHandler.sync(this);
 					switch ( getInterpreter().adaptivePredict(_input,16,_ctx) ) {
 					case 1:
 						{
@@ -907,6 +937,7 @@ public class queryParser extends Parser {
 				setState(247);
 				match(C3);
 				setState(260);
+				_errHandler.sync(this);
 				switch ( getInterpreter().adaptivePredict(_input,20,_ctx) ) {
 				case 1:
 					{
@@ -915,6 +946,7 @@ public class queryParser extends Parser {
 					setState(249);
 					match(C1);
 					setState(252);
+					_errHandler.sync(this);
 					switch ( getInterpreter().adaptivePredict(_input,18,_ctx) ) {
 					case 1:
 						{
@@ -934,6 +966,7 @@ public class queryParser extends Parser {
 					setState(255);
 					match(C2);
 					setState(258);
+					_errHandler.sync(this);
 					switch ( getInterpreter().adaptivePredict(_input,19,_ctx) ) {
 					case 1:
 						{
@@ -1077,6 +1110,7 @@ public class queryParser extends Parser {
 					setState(277);
 					match(C4);
 					setState(280);
+					_errHandler.sync(this);
 					switch ( getInterpreter().adaptivePredict(_input,22,_ctx) ) {
 					case 1:
 						{
@@ -1230,6 +1264,7 @@ public class queryParser extends Parser {
 					setState(295);
 					match(C3);
 					setState(298);
+					_errHandler.sync(this);
 					switch ( getInterpreter().adaptivePredict(_input,25,_ctx) ) {
 					case 1:
 						{
@@ -1314,6 +1349,7 @@ public class queryParser extends Parser {
 					setState(306);
 					match(C2);
 					setState(309);
+					_errHandler.sync(this);
 					switch ( getInterpreter().adaptivePredict(_input,27,_ctx) ) {
 					case 1:
 						{
@@ -1387,6 +1423,7 @@ public class queryParser extends Parser {
 			enterOuterAlt(_localctx, 1);
 			{
 			setState(318);
+			_errHandler.sync(this);
 			switch ( getInterpreter().adaptivePredict(_input,29,_ctx) ) {
 			case 1:
 				{
@@ -1411,6 +1448,7 @@ public class queryParser extends Parser {
 					setState(320);
 					match(C1);
 					setState(323);
+					_errHandler.sync(this);
 					switch ( getInterpreter().adaptivePredict(_input,30,_ctx) ) {
 					case 1:
 						{
@@ -1484,6 +1522,7 @@ public class queryParser extends Parser {
 			enterOuterAlt(_localctx, 1);
 			{
 			setState(332);
+			_errHandler.sync(this);
 			switch ( getInterpreter().adaptivePredict(_input,32,_ctx) ) {
 			case 1:
 				{
@@ -1508,6 +1547,7 @@ public class queryParser extends Parser {
 					setState(334);
 					match(C0);
 					setState(337);
+					_errHandler.sync(this);
 					switch ( getInterpreter().adaptivePredict(_input,33,_ctx) ) {
 					case 1:
 						{
@@ -1566,6 +1606,7 @@ public class queryParser extends Parser {
 		enterRule(_localctx, 30, RULE_sorting);
 		try {
 			setState(350);
+			_errHandler.sync(this);
 			switch ( getInterpreter().adaptivePredict(_input,35,_ctx) ) {
 			case 1:
 				enterOuterAlt(_localctx, 1);
@@ -1620,6 +1661,10 @@ public class queryParser extends Parser {
 		public ExpContext exp(int i) {
 			return getRuleContext(ExpContext.class,i);
 		}
+		public List<TerminalNode> C1() { return getTokens(queryParser.C1); }
+		public TerminalNode C1(int i) {
+			return getToken(queryParser.C1, i);
+		}
 		public FunctionContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
 		}
@@ -1643,6 +1688,7 @@ public class queryParser extends Parser {
 			{
 			{
 			setState(353);
+			_errHandler.sync(this);
 			_la = _input.LA(1);
 			if (_la==T__1) {
 				{
@@ -1657,6 +1703,7 @@ public class queryParser extends Parser {
 			match(OPEN_PARENTHESE);
 			{
 			setState(359);
+			_errHandler.sync(this);
 			switch ( getInterpreter().adaptivePredict(_input,37,_ctx) ) {
 			case 1:
 				{
@@ -1680,6 +1727,7 @@ public class queryParser extends Parser {
 				setState(361);
 				match(C1);
 				setState(364);
+				_errHandler.sync(this);
 				switch ( getInterpreter().adaptivePredict(_input,38,_ctx) ) {
 				case 1:
 					{
@@ -1735,6 +1783,10 @@ public class queryParser extends Parser {
 		public ExpContext exp(int i) {
 			return getRuleContext(ExpContext.class,i);
 		}
+		public List<TerminalNode> C1() { return getTokens(queryParser.C1); }
+		public TerminalNode C1(int i) {
+			return getToken(queryParser.C1, i);
+		}
 		public SqlfuncContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
 		}
@@ -1770,6 +1822,7 @@ public class queryParser extends Parser {
 				{
 				{
 				setState(378);
+				_errHandler.sync(this);
 				switch ( getInterpreter().adaptivePredict(_input,40,_ctx) ) {
 				case 1:
 					{
@@ -1793,6 +1846,7 @@ public class queryParser extends Parser {
 					setState(380);
 					match(C1);
 					setState(383);
+					_errHandler.sync(this);
 					switch ( getInterpreter().adaptivePredict(_input,41,_ctx) ) {
 					case 1:
 						{
@@ -1933,6 +1987,7 @@ public class queryParser extends Parser {
 			setState(403);
 			match(OPEN_BRACKET);
 			setState(405);
+			_errHandler.sync(this);
 			_la = _input.LA(1);
 			if (_la==OPEN_PARENTHESE) {
 				{
@@ -1952,6 +2007,7 @@ public class queryParser extends Parser {
 				setState(408);
 				match(C1);
 				setState(410);
+				_errHandler.sync(this);
 				_la = _input.LA(1);
 				if (_la==OPEN_PARENTHESE) {
 					{
@@ -2004,6 +2060,7 @@ public class queryParser extends Parser {
 			return getRuleContext(ExpContext.class,i);
 		}
 		public TerminalNode K_ELSE() { return getToken(queryParser.K_ELSE, 0); }
+		public TerminalNode C0() { return getToken(queryParser.C0, 0); }
 		public If_then_elseContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
 		}
@@ -2025,6 +2082,7 @@ public class queryParser extends Parser {
 			enterOuterAlt(_localctx, 1);
 			{
 			setState(441);
+			_errHandler.sync(this);
 			switch (_input.LA(1)) {
 			case K_IF:
 				{
@@ -2101,6 +2159,7 @@ public class queryParser extends Parser {
 			return getRuleContext(ArithmeticsContext.class,i);
 		}
 		public TerminalNode CLOSE_PARENTHESE() { return getToken(queryParser.CLOSE_PARENTHESE, 0); }
+		public TerminalNode C3() { return getToken(queryParser.C3, 0); }
 		public ArithContext arith() {
 			return getRuleContext(ArithContext.class,0);
 		}
@@ -2135,6 +2194,7 @@ public class queryParser extends Parser {
 			enterOuterAlt(_localctx, 1);
 			{
 			setState(451);
+			_errHandler.sync(this);
 			switch (_input.LA(1)) {
 			case OPEN_PARENTHESE:
 				{
@@ -2146,7 +2206,10 @@ public class queryParser extends Parser {
 				_la = _input.LA(1);
 				if ( !((((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << T__4) | (1L << T__5) | (1L << T__6) | (1L << T__7))) != 0) || _la==C3) ) {
 				_errHandler.recoverInline(this);
-				} else {
+				}
+				else {
+					if ( _input.LA(1)==Token.EOF ) matchedEOF = true;
+					_errHandler.reportMatch(this);
 					consume();
 				}
 				setState(447);
@@ -2254,7 +2317,10 @@ public class queryParser extends Parser {
 					_la = _input.LA(1);
 					if ( !((((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << T__4) | (1L << T__5) | (1L << T__6) | (1L << T__7))) != 0) || _la==C3) ) {
 					_errHandler.recoverInline(this);
-					} else {
+					}
+					else {
+						if ( _input.LA(1)==Token.EOF ) matchedEOF = true;
+						_errHandler.reportMatch(this);
 						consume();
 					}
 					setState(455);
@@ -2303,6 +2369,7 @@ public class queryParser extends Parser {
 		enterRule(_localctx, 44, RULE_arith);
 		try {
 			setState(463);
+			_errHandler.sync(this);
 			switch (_input.LA(1)) {
 			case K_ABORT:
 			case K_ALL:
@@ -2432,6 +2499,7 @@ public class queryParser extends Parser {
 			enterOuterAlt(_localctx, 1);
 			{
 			setState(467);
+			_errHandler.sync(this);
 			switch (_input.LA(1)) {
 			case K_FROM:
 			case K_SELECT:
@@ -2511,6 +2579,10 @@ public class queryParser extends Parser {
 		}
 		public Sql_stmtContext sql_stmt(int i) {
 			return getRuleContext(Sql_stmtContext.class,i);
+		}
+		public List<TerminalNode> SEMICOLON() { return getTokens(queryParser.SEMICOLON); }
+		public TerminalNode SEMICOLON(int i) {
+			return getToken(queryParser.SEMICOLON, i);
 		}
 		public Sql_stmt_listContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
@@ -2621,6 +2693,7 @@ public class queryParser extends Parser {
 			enterOuterAlt(_localctx, 1);
 			{
 			setState(492);
+			_errHandler.sync(this);
 			switch ( getInterpreter().adaptivePredict(_input,55,_ctx) ) {
 			case 1:
 				{
@@ -2684,6 +2757,10 @@ public class queryParser extends Parser {
 			return getRuleContext(ExprContext.class,i);
 		}
 		public TerminalNode K_RECURSIVE() { return getToken(queryParser.K_RECURSIVE, 0); }
+		public List<TerminalNode> C1() { return getTokens(queryParser.C1); }
+		public TerminalNode C1(int i) {
+			return getToken(queryParser.C1, i);
+		}
 		public TerminalNode K_OFFSET() { return getToken(queryParser.K_OFFSET, 0); }
 		public Factored_select_stmtContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
@@ -2707,12 +2784,14 @@ public class queryParser extends Parser {
 			enterOuterAlt(_localctx, 1);
 			{
 			setState(506);
+			_errHandler.sync(this);
 			_la = _input.LA(1);
 			if (_la==K_WITH) {
 				{
 				setState(494);
 				match(K_WITH);
 				setState(496);
+				_errHandler.sync(this);
 				switch ( getInterpreter().adaptivePredict(_input,56,_ctx) ) {
 				case 1:
 					{
@@ -2761,6 +2840,7 @@ public class queryParser extends Parser {
 				_la = _input.LA(1);
 			}
 			setState(527);
+			_errHandler.sync(this);
 			_la = _input.LA(1);
 			if (_la==K_ORDER) {
 				{
@@ -2790,6 +2870,7 @@ public class queryParser extends Parser {
 			}
 
 			setState(535);
+			_errHandler.sync(this);
 			_la = _input.LA(1);
 			if (_la==K_LIMIT) {
 				{
@@ -2798,6 +2879,7 @@ public class queryParser extends Parser {
 				setState(530);
 				expr(0);
 				setState(533);
+				_errHandler.sync(this);
 				_la = _input.LA(1);
 				if (_la==K_OFFSET || _la==C1) {
 					{
@@ -2805,7 +2887,10 @@ public class queryParser extends Parser {
 					_la = _input.LA(1);
 					if ( !(_la==K_OFFSET || _la==C1) ) {
 					_errHandler.recoverInline(this);
-					} else {
+					}
+					else {
+						if ( _input.LA(1)==Token.EOF ) matchedEOF = true;
+						_errHandler.reportMatch(this);
 						consume();
 					}
 					setState(532);
@@ -2850,6 +2935,10 @@ public class queryParser extends Parser {
 		public Join_clauseContext join_clause() {
 			return getRuleContext(Join_clauseContext.class,0);
 		}
+		public List<TerminalNode> C1() { return getTokens(queryParser.C1); }
+		public TerminalNode C1(int i) {
+			return getToken(queryParser.C1, i);
+		}
 		public TerminalNode K_DISTINCT() { return getToken(queryParser.K_DISTINCT, 0); }
 		public TerminalNode K_ALL() { return getToken(queryParser.K_ALL, 0); }
 		public Select_coreContext(ParserRuleContext parent, int invokingState) {
@@ -2874,12 +2963,14 @@ public class queryParser extends Parser {
 			enterOuterAlt(_localctx, 1);
 			{
 			setState(549);
+			_errHandler.sync(this);
 			_la = _input.LA(1);
 			if (_la==K_SELECT) {
 				{
 				setState(537);
 				match(K_SELECT);
 				setState(539);
+				_errHandler.sync(this);
 				switch ( getInterpreter().adaptivePredict(_input,64,_ctx) ) {
 				case 1:
 					{
@@ -2887,7 +2978,10 @@ public class queryParser extends Parser {
 					_la = _input.LA(1);
 					if ( !(_la==K_ALL || _la==K_DISTINCT) ) {
 					_errHandler.recoverInline(this);
-					} else {
+					}
+					else {
+						if ( _input.LA(1)==Token.EOF ) matchedEOF = true;
+						_errHandler.reportMatch(this);
 						consume();
 					}
 					}
@@ -2918,6 +3012,7 @@ public class queryParser extends Parser {
 			setState(551);
 			match(K_FROM);
 			setState(561);
+			_errHandler.sync(this);
 			switch ( getInterpreter().adaptivePredict(_input,68,_ctx) ) {
 			case 1:
 				{
@@ -2950,6 +3045,7 @@ public class queryParser extends Parser {
 			}
 			}
 			setState(564);
+			_errHandler.sync(this);
 			_la = _input.LA(1);
 			if (((((_la - 48)) & ~0x3f) == 0 && ((1L << (_la - 48)) & ((1L << (K_GROUP - 48)) | (1L << (K_VALUES - 48)) | (1L << (K_WHERE - 48)))) != 0)) {
 				{
@@ -2973,15 +3069,27 @@ public class queryParser extends Parser {
 
 	public static class Where_clauseContext extends ParserRuleContext {
 		public TerminalNode K_VALUES() { return getToken(queryParser.K_VALUES, 0); }
+		public List<TerminalNode> OPEN_PARENTHESE() { return getTokens(queryParser.OPEN_PARENTHESE); }
+		public TerminalNode OPEN_PARENTHESE(int i) {
+			return getToken(queryParser.OPEN_PARENTHESE, i);
+		}
 		public List<ExprContext> expr() {
 			return getRuleContexts(ExprContext.class);
 		}
 		public ExprContext expr(int i) {
 			return getRuleContext(ExprContext.class,i);
 		}
+		public List<TerminalNode> CLOSE_PARENTHESE() { return getTokens(queryParser.CLOSE_PARENTHESE); }
+		public TerminalNode CLOSE_PARENTHESE(int i) {
+			return getToken(queryParser.CLOSE_PARENTHESE, i);
+		}
 		public TerminalNode K_WHERE() { return getToken(queryParser.K_WHERE, 0); }
 		public TerminalNode K_GROUP() { return getToken(queryParser.K_GROUP, 0); }
 		public TerminalNode K_BY() { return getToken(queryParser.K_BY, 0); }
+		public List<TerminalNode> C1() { return getTokens(queryParser.C1); }
+		public TerminalNode C1(int i) {
+			return getToken(queryParser.C1, i);
+		}
 		public TerminalNode K_HAVING() { return getToken(queryParser.K_HAVING, 0); }
 		public Where_clauseContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
@@ -3003,11 +3111,13 @@ public class queryParser extends Parser {
 		int _la;
 		try {
 			setState(663);
+			_errHandler.sync(this);
 			switch ( getInterpreter().adaptivePredict(_input,84,_ctx) ) {
 			case 1:
 				enterOuterAlt(_localctx, 1);
 				{
 				setState(613);
+				_errHandler.sync(this);
 				switch (_input.LA(1)) {
 				case K_WHERE:
 					{
@@ -3018,6 +3128,7 @@ public class queryParser extends Parser {
 					expr(0);
 					}
 					setState(583);
+					_errHandler.sync(this);
 					_la = _input.LA(1);
 					if (_la==K_GROUP) {
 						{
@@ -3044,6 +3155,7 @@ public class queryParser extends Parser {
 							_la = _input.LA(1);
 						}
 						setState(581);
+						_errHandler.sync(this);
 						_la = _input.LA(1);
 						if (_la==K_HAVING) {
 							{
@@ -3132,11 +3244,13 @@ public class queryParser extends Parser {
 				enterOuterAlt(_localctx, 2);
 				{
 				setState(661);
+				_errHandler.sync(this);
 				switch (_input.LA(1)) {
 				case K_GROUP:
 				case K_WHERE:
 					{
 					setState(617);
+					_errHandler.sync(this);
 					_la = _input.LA(1);
 					if (_la==K_WHERE) {
 						{
@@ -3171,6 +3285,7 @@ public class queryParser extends Parser {
 						_la = _input.LA(1);
 					}
 					setState(631);
+					_errHandler.sync(this);
 					_la = _input.LA(1);
 					if (_la==K_HAVING) {
 						{
@@ -3270,6 +3385,7 @@ public class queryParser extends Parser {
 		public Table_nameContext table_name() {
 			return getRuleContext(Table_nameContext.class,0);
 		}
+		public TerminalNode DOT() { return getToken(queryParser.DOT, 0); }
 		public ExprContext expr() {
 			return getRuleContext(ExprContext.class,0);
 		}
@@ -3297,6 +3413,7 @@ public class queryParser extends Parser {
 		int _la;
 		try {
 			setState(677);
+			_errHandler.sync(this);
 			switch ( getInterpreter().adaptivePredict(_input,87,_ctx) ) {
 			case 1:
 				enterOuterAlt(_localctx, 1);
@@ -3322,10 +3439,12 @@ public class queryParser extends Parser {
 				setState(670);
 				expr(0);
 				setState(675);
+				_errHandler.sync(this);
 				_la = _input.LA(1);
 				if (_la==K_AS || _la==IDENTIFIER || _la==STRING_LITERAL) {
 					{
 					setState(672);
+					_errHandler.sync(this);
 					_la = _input.LA(1);
 					if (_la==K_AS) {
 						{
@@ -3361,6 +3480,7 @@ public class queryParser extends Parser {
 		public Database_nameContext database_name() {
 			return getRuleContext(Database_nameContext.class,0);
 		}
+		public TerminalNode DOT() { return getToken(queryParser.DOT, 0); }
 		public Table_aliasContext table_alias() {
 			return getRuleContext(Table_aliasContext.class,0);
 		}
@@ -3371,6 +3491,8 @@ public class queryParser extends Parser {
 		}
 		public TerminalNode K_NOT() { return getToken(queryParser.K_NOT, 0); }
 		public TerminalNode K_AS() { return getToken(queryParser.K_AS, 0); }
+		public TerminalNode OPEN_PARENTHESE() { return getToken(queryParser.OPEN_PARENTHESE, 0); }
+		public TerminalNode CLOSE_PARENTHESE() { return getToken(queryParser.CLOSE_PARENTHESE, 0); }
 		public List<Table_or_subqueryContext> table_or_subquery() {
 			return getRuleContexts(Table_or_subqueryContext.class);
 		}
@@ -3379,6 +3501,10 @@ public class queryParser extends Parser {
 		}
 		public Join_clauseContext join_clause() {
 			return getRuleContext(Join_clauseContext.class,0);
+		}
+		public List<TerminalNode> C1() { return getTokens(queryParser.C1); }
+		public TerminalNode C1(int i) {
+			return getToken(queryParser.C1, i);
 		}
 		public Select_stmtContext select_stmt() {
 			return getRuleContext(Select_stmtContext.class,0);
@@ -3403,11 +3529,13 @@ public class queryParser extends Parser {
 		int _la;
 		try {
 			setState(726);
+			_errHandler.sync(this);
 			switch ( getInterpreter().adaptivePredict(_input,98,_ctx) ) {
 			case 1:
 				enterOuterAlt(_localctx, 1);
 				{
 				setState(682);
+				_errHandler.sync(this);
 				switch ( getInterpreter().adaptivePredict(_input,88,_ctx) ) {
 				case 1:
 					{
@@ -3421,10 +3549,12 @@ public class queryParser extends Parser {
 				setState(684);
 				table_name();
 				setState(689);
+				_errHandler.sync(this);
 				switch ( getInterpreter().adaptivePredict(_input,90,_ctx) ) {
 				case 1:
 					{
 					setState(686);
+					_errHandler.sync(this);
 					switch ( getInterpreter().adaptivePredict(_input,89,_ctx) ) {
 					case 1:
 						{
@@ -3439,6 +3569,7 @@ public class queryParser extends Parser {
 					break;
 				}
 				setState(696);
+				_errHandler.sync(this);
 				switch (_input.LA(1)) {
 				case K_INDEXED:
 					{
@@ -3481,7 +3612,7 @@ public class queryParser extends Parser {
 				case SEMICOLON:
 					break;
 				default:
-					throw new NoViableAltException(this);
+					break;
 				}
 				}
 				break;
@@ -3491,6 +3622,7 @@ public class queryParser extends Parser {
 				setState(698);
 				match(OPEN_PARENTHESE);
 				setState(708);
+				_errHandler.sync(this);
 				switch ( getInterpreter().adaptivePredict(_input,93,_ctx) ) {
 				case 1:
 					{
@@ -3524,10 +3656,12 @@ public class queryParser extends Parser {
 				setState(710);
 				match(CLOSE_PARENTHESE);
 				setState(715);
+				_errHandler.sync(this);
 				switch ( getInterpreter().adaptivePredict(_input,95,_ctx) ) {
 				case 1:
 					{
 					setState(712);
+					_errHandler.sync(this);
 					switch ( getInterpreter().adaptivePredict(_input,94,_ctx) ) {
 					case 1:
 						{
@@ -3553,10 +3687,12 @@ public class queryParser extends Parser {
 				setState(719);
 				match(CLOSE_PARENTHESE);
 				setState(724);
+				_errHandler.sync(this);
 				switch ( getInterpreter().adaptivePredict(_input,97,_ctx) ) {
 				case 1:
 					{
 					setState(721);
+					_errHandler.sync(this);
 					switch ( getInterpreter().adaptivePredict(_input,96,_ctx) ) {
 					case 1:
 						{
@@ -3681,7 +3817,10 @@ public class queryParser extends Parser {
 			_la = _input.LA(1);
 			if ( !((((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << K_ABORT) | (1L << K_ALL) | (1L << K_AND) | (1L << K_AS) | (1L << K_ASC) | (1L << K_BETWEEN) | (1L << K_BY) | (1L << K_CASE) | (1L << K_CAST) | (1L << K_COLLATE) | (1L << K_CROSS) | (1L << K_CURRENT_DATE) | (1L << K_CURRENT_TIME) | (1L << K_CURRENT_TIMESTAMP) | (1L << K_DESC) | (1L << K_DISTINCT) | (1L << K_ELSE) | (1L << K_END) | (1L << K_ESCAPE) | (1L << K_EXCEPT) | (1L << K_EXISTS) | (1L << K_FAIL) | (1L << K_FULL) | (1L << K_FROM) | (1L << K_GLOB) | (1L << K_GROUP) | (1L << K_HAVING) | (1L << K_IF) | (1L << K_IGNORE) | (1L << K_IN) | (1L << K_INDEXED) | (1L << K_INNER) | (1L << K_INTERSECT) | (1L << K_IS) | (1L << K_ISNULL) | (1L << K_JOIN) | (1L << K_LEFT) | (1L << K_LIKE) | (1L << K_LIMIT) | (1L << K_MATCH) | (1L << K_NATURAL))) != 0) || ((((_la - 64)) & ~0x3f) == 0 && ((1L << (_la - 64)) & ((1L << (K_NO - 64)) | (1L << (K_NOT - 64)) | (1L << (K_NOTNULL - 64)) | (1L << (K_NULL - 64)) | (1L << (K_OFFSET - 64)) | (1L << (K_ON - 64)) | (1L << (K_OR - 64)) | (1L << (K_ORDER - 64)) | (1L << (K_OUTER - 64)) | (1L << (K_RAISE - 64)) | (1L << (K_RECURSIVE - 64)) | (1L << (K_REGEXP - 64)) | (1L << (K_RIGHT - 64)) | (1L << (K_ROLLBACK - 64)) | (1L << (K_SELECT - 64)) | (1L << (K_THEN - 64)) | (1L << (K_UNION - 64)) | (1L << (K_USING - 64)) | (1L << (K_VALUES - 64)) | (1L << (K_WHEN - 64)) | (1L << (K_WHERE - 64)) | (1L << (K_WITH - 64)) | (1L << (K_GENERATE - 64)) | (1L << (K_MAX - 64)) | (1L << (K_MIN - 64)) | (1L << (K_AVG - 64)) | (1L << (K_COUNT - 64)) | (1L << (K_SUM - 64)) | (1L << (K_GGPLOT - 64)))) != 0)) ) {
 			_errHandler.recoverInline(this);
-			} else {
+			}
+			else {
+				if ( _input.LA(1)==Token.EOF ) matchedEOF = true;
+				_errHandler.reportMatch(this);
 				consume();
 			}
 			}
@@ -3733,6 +3872,10 @@ public class queryParser extends Parser {
 			return getRuleContext(ExprContext.class,i);
 		}
 		public TerminalNode K_RECURSIVE() { return getToken(queryParser.K_RECURSIVE, 0); }
+		public List<TerminalNode> C1() { return getTokens(queryParser.C1); }
+		public TerminalNode C1(int i) {
+			return getToken(queryParser.C1, i);
+		}
 		public TerminalNode K_OFFSET() { return getToken(queryParser.K_OFFSET, 0); }
 		public Select_stmtContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
@@ -3756,12 +3899,14 @@ public class queryParser extends Parser {
 			enterOuterAlt(_localctx, 1);
 			{
 			setState(742);
+			_errHandler.sync(this);
 			_la = _input.LA(1);
 			if (_la==K_WITH) {
 				{
 				setState(730);
 				match(K_WITH);
 				setState(732);
+				_errHandler.sync(this);
 				switch ( getInterpreter().adaptivePredict(_input,99,_ctx) ) {
 				case 1:
 					{
@@ -3810,6 +3955,7 @@ public class queryParser extends Parser {
 				_la = _input.LA(1);
 			}
 			setState(763);
+			_errHandler.sync(this);
 			_la = _input.LA(1);
 			if (_la==K_ORDER) {
 				{
@@ -3839,6 +3985,7 @@ public class queryParser extends Parser {
 			}
 
 			setState(771);
+			_errHandler.sync(this);
 			_la = _input.LA(1);
 			if (_la==K_LIMIT) {
 				{
@@ -3847,6 +3994,7 @@ public class queryParser extends Parser {
 				setState(766);
 				expr(0);
 				setState(769);
+				_errHandler.sync(this);
 				_la = _input.LA(1);
 				if (_la==K_OFFSET || _la==C1) {
 					{
@@ -3854,7 +4002,10 @@ public class queryParser extends Parser {
 					_la = _input.LA(1);
 					if ( !(_la==K_OFFSET || _la==C1) ) {
 					_errHandler.recoverInline(this);
-					} else {
+					}
+					else {
+						if ( _input.LA(1)==Token.EOF ) matchedEOF = true;
+						_errHandler.reportMatch(this);
 						consume();
 					}
 					setState(768);
@@ -3899,6 +4050,10 @@ public class queryParser extends Parser {
 		public Join_clauseContext join_clause() {
 			return getRuleContext(Join_clauseContext.class,0);
 		}
+		public List<TerminalNode> C1() { return getTokens(queryParser.C1); }
+		public TerminalNode C1(int i) {
+			return getToken(queryParser.C1, i);
+		}
 		public TerminalNode K_DISTINCT() { return getToken(queryParser.K_DISTINCT, 0); }
 		public TerminalNode K_ALL() { return getToken(queryParser.K_ALL, 0); }
 		public Select_or_valuesContext(ParserRuleContext parent, int invokingState) {
@@ -3923,12 +4078,14 @@ public class queryParser extends Parser {
 			enterOuterAlt(_localctx, 1);
 			{
 			setState(785);
+			_errHandler.sync(this);
 			_la = _input.LA(1);
 			if (_la==K_SELECT) {
 				{
 				setState(773);
 				match(K_SELECT);
 				setState(775);
+				_errHandler.sync(this);
 				switch ( getInterpreter().adaptivePredict(_input,107,_ctx) ) {
 				case 1:
 					{
@@ -3936,7 +4093,10 @@ public class queryParser extends Parser {
 					_la = _input.LA(1);
 					if ( !(_la==K_ALL || _la==K_DISTINCT) ) {
 					_errHandler.recoverInline(this);
-					} else {
+					}
+					else {
+						if ( _input.LA(1)==Token.EOF ) matchedEOF = true;
+						_errHandler.reportMatch(this);
 						consume();
 					}
 					}
@@ -3967,6 +4127,7 @@ public class queryParser extends Parser {
 			setState(787);
 			match(K_FROM);
 			setState(797);
+			_errHandler.sync(this);
 			switch ( getInterpreter().adaptivePredict(_input,111,_ctx) ) {
 			case 1:
 				{
@@ -3999,6 +4160,7 @@ public class queryParser extends Parser {
 			}
 			}
 			setState(800);
+			_errHandler.sync(this);
 			_la = _input.LA(1);
 			if (((((_la - 48)) & ~0x3f) == 0 && ((1L << (_la - 48)) & ((1L << (K_GROUP - 48)) | (1L << (K_VALUES - 48)) | (1L << (K_WHERE - 48)))) != 0)) {
 				{
@@ -4044,6 +4206,7 @@ public class queryParser extends Parser {
 		enterRule(_localctx, 70, RULE_compound_operator);
 		try {
 			setState(807);
+			_errHandler.sync(this);
 			switch ( getInterpreter().adaptivePredict(_input,113,_ctx) ) {
 			case 1:
 				enterOuterAlt(_localctx, 1);
@@ -4146,6 +4309,7 @@ public class queryParser extends Parser {
 					setState(810);
 					join_operator();
 					setState(813);
+					_errHandler.sync(this);
 					switch ( getInterpreter().adaptivePredict(_input,114,_ctx) ) {
 					case 1:
 						{
@@ -4183,6 +4347,7 @@ public class queryParser extends Parser {
 	}
 
 	public static class Join_operatorContext extends ParserRuleContext {
+		public TerminalNode C1() { return getToken(queryParser.C1, 0); }
 		public TerminalNode K_JOIN() { return getToken(queryParser.K_JOIN, 0); }
 		public TerminalNode K_NATURAL() { return getToken(queryParser.K_NATURAL, 0); }
 		public TerminalNode K_LEFT() { return getToken(queryParser.K_LEFT, 0); }
@@ -4211,6 +4376,7 @@ public class queryParser extends Parser {
 		int _la;
 		try {
 			setState(843);
+			_errHandler.sync(this);
 			switch (_input.LA(1)) {
 			case C1:
 				enterOuterAlt(_localctx, 1);
@@ -4229,6 +4395,7 @@ public class queryParser extends Parser {
 				enterOuterAlt(_localctx, 2);
 				{
 				setState(824);
+				_errHandler.sync(this);
 				_la = _input.LA(1);
 				if (_la==K_NATURAL) {
 					{
@@ -4238,12 +4405,14 @@ public class queryParser extends Parser {
 				}
 
 				setState(840);
+				_errHandler.sync(this);
 				switch (_input.LA(1)) {
 				case K_LEFT:
 					{
 					setState(826);
 					match(K_LEFT);
 					setState(828);
+					_errHandler.sync(this);
 					_la = _input.LA(1);
 					if (_la==K_OUTER) {
 						{
@@ -4259,6 +4428,7 @@ public class queryParser extends Parser {
 					setState(830);
 					match(K_RIGHT);
 					setState(832);
+					_errHandler.sync(this);
 					_la = _input.LA(1);
 					if (_la==K_OUTER) {
 						{
@@ -4274,6 +4444,7 @@ public class queryParser extends Parser {
 					setState(834);
 					match(K_FULL);
 					setState(836);
+					_errHandler.sync(this);
 					_la = _input.LA(1);
 					if (_la==K_OUTER) {
 						{
@@ -4299,7 +4470,7 @@ public class queryParser extends Parser {
 				case K_JOIN:
 					break;
 				default:
-					throw new NoViableAltException(this);
+					break;
 				}
 				setState(842);
 				match(K_JOIN);
@@ -4326,11 +4497,17 @@ public class queryParser extends Parser {
 			return getRuleContext(ExprContext.class,0);
 		}
 		public TerminalNode K_USING() { return getToken(queryParser.K_USING, 0); }
+		public TerminalNode OPEN_PARENTHESE() { return getToken(queryParser.OPEN_PARENTHESE, 0); }
 		public List<Column_nameContext> column_name() {
 			return getRuleContexts(Column_nameContext.class);
 		}
 		public Column_nameContext column_name(int i) {
 			return getRuleContext(Column_nameContext.class,i);
+		}
+		public TerminalNode CLOSE_PARENTHESE() { return getToken(queryParser.CLOSE_PARENTHESE, 0); }
+		public List<TerminalNode> C1() { return getTokens(queryParser.C1); }
+		public TerminalNode C1(int i) {
+			return getToken(queryParser.C1, i);
 		}
 		public Join_constraintContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
@@ -4354,6 +4531,7 @@ public class queryParser extends Parser {
 			enterOuterAlt(_localctx, 1);
 			{
 			setState(859);
+			_errHandler.sync(this);
 			switch ( getInterpreter().adaptivePredict(_input,123,_ctx) ) {
 			case 1:
 				{
@@ -4410,14 +4588,26 @@ public class queryParser extends Parser {
 			return getRuleContext(Table_nameContext.class,0);
 		}
 		public TerminalNode K_AS() { return getToken(queryParser.K_AS, 0); }
+		public List<TerminalNode> OPEN_PARENTHESE() { return getTokens(queryParser.OPEN_PARENTHESE); }
+		public TerminalNode OPEN_PARENTHESE(int i) {
+			return getToken(queryParser.OPEN_PARENTHESE, i);
+		}
 		public Select_stmtContext select_stmt() {
 			return getRuleContext(Select_stmtContext.class,0);
+		}
+		public List<TerminalNode> CLOSE_PARENTHESE() { return getTokens(queryParser.CLOSE_PARENTHESE); }
+		public TerminalNode CLOSE_PARENTHESE(int i) {
+			return getToken(queryParser.CLOSE_PARENTHESE, i);
 		}
 		public List<Column_nameContext> column_name() {
 			return getRuleContexts(Column_nameContext.class);
 		}
 		public Column_nameContext column_name(int i) {
 			return getRuleContext(Column_nameContext.class,i);
+		}
+		public List<TerminalNode> C1() { return getTokens(queryParser.C1); }
+		public TerminalNode C1(int i) {
+			return getToken(queryParser.C1, i);
 		}
 		public Common_table_expressionContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
@@ -4443,6 +4633,7 @@ public class queryParser extends Parser {
 			setState(861);
 			table_name();
 			setState(873);
+			_errHandler.sync(this);
 			_la = _input.LA(1);
 			if (_la==OPEN_PARENTHESE) {
 				{
@@ -4526,6 +4717,7 @@ public class queryParser extends Parser {
 			setState(880);
 			expr(0);
 			setState(883);
+			_errHandler.sync(this);
 			_la = _input.LA(1);
 			if (_la==K_COLLATE) {
 				{
@@ -4537,6 +4729,7 @@ public class queryParser extends Parser {
 			}
 
 			setState(886);
+			_errHandler.sync(this);
 			_la = _input.LA(1);
 			if (_la==K_ASC || _la==K_DESC) {
 				{
@@ -4544,7 +4737,10 @@ public class queryParser extends Parser {
 				_la = _input.LA(1);
 				if ( !(_la==K_ASC || _la==K_DESC) ) {
 				_errHandler.recoverInline(this);
-				} else {
+				}
+				else {
+					if ( _input.LA(1)==Token.EOF ) matchedEOF = true;
+					_errHandler.reportMatch(this);
 					consume();
 				}
 				}
@@ -4564,15 +4760,6 @@ public class queryParser extends Parser {
 	}
 
 	public static class ExprContext extends ParserRuleContext {
-		public Unary_operatorContext unary_operator() {
-			return getRuleContext(Unary_operatorContext.class,0);
-		}
-		public List<ExprContext> expr() {
-			return getRuleContexts(ExprContext.class);
-		}
-		public ExprContext expr(int i) {
-			return getRuleContext(ExprContext.class,i);
-		}
 		public OperandContext operand() {
 			return getRuleContext(OperandContext.class,0);
 		}
@@ -4583,9 +4770,24 @@ public class queryParser extends Parser {
 		public Table_aliasContext table_alias() {
 			return getRuleContext(Table_aliasContext.class,0);
 		}
+		public List<TerminalNode> DOT() { return getTokens(queryParser.DOT); }
+		public TerminalNode DOT(int i) {
+			return getToken(queryParser.DOT, i);
+		}
 		public Database_nameContext database_name() {
 			return getRuleContext(Database_nameContext.class,0);
 		}
+		public Unary_operatorContext unary_operator() {
+			return getRuleContext(Unary_operatorContext.class,0);
+		}
+		public List<ExprContext> expr() {
+			return getRuleContexts(ExprContext.class);
+		}
+		public ExprContext expr(int i) {
+			return getRuleContext(ExprContext.class,i);
+		}
+		public TerminalNode OPEN_PARENTHESE() { return getToken(queryParser.OPEN_PARENTHESE, 0); }
+		public TerminalNode CLOSE_PARENTHESE() { return getToken(queryParser.CLOSE_PARENTHESE, 0); }
 		public TerminalNode K_CAST() { return getToken(queryParser.K_CAST, 0); }
 		public TerminalNode K_AS() { return getToken(queryParser.K_AS, 0); }
 		public Type_nameContext type_name() {
@@ -4610,6 +4812,7 @@ public class queryParser extends Parser {
 		public Raise_functionContext raise_function() {
 			return getRuleContext(Raise_functionContext.class,0);
 		}
+		public TerminalNode C3() { return getToken(queryParser.C3, 0); }
 		public TerminalNode K_IS() { return getToken(queryParser.K_IS, 0); }
 		public TerminalNode K_IN() { return getToken(queryParser.K_IN, 0); }
 		public TerminalNode K_LIKE() { return getToken(queryParser.K_LIKE, 0); }
@@ -4629,6 +4832,10 @@ public class queryParser extends Parser {
 		public TerminalNode K_NULL() { return getToken(queryParser.K_NULL, 0); }
 		public Table_nameContext table_name() {
 			return getRuleContext(Table_nameContext.class,0);
+		}
+		public List<TerminalNode> C1() { return getTokens(queryParser.C1); }
+		public TerminalNode C1(int i) {
+			return getToken(queryParser.C1, i);
 		}
 		public ExprContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
@@ -4661,53 +4868,56 @@ public class queryParser extends Parser {
 			enterOuterAlt(_localctx, 1);
 			{
 			setState(946);
+			_errHandler.sync(this);
 			switch ( getInterpreter().adaptivePredict(_input,135,_ctx) ) {
 			case 1:
 				{
 				setState(889);
-				unary_operator();
-				setState(890);
-				expr(20);
+				operand();
 				}
 				break;
 			case 2:
 				{
-				setState(892);
-				operand();
+				setState(890);
+				match(BIND_PARAMETER);
 				}
 				break;
 			case 3:
 				{
-				setState(893);
-				match(BIND_PARAMETER);
+				setState(899);
+				_errHandler.sync(this);
+				switch ( getInterpreter().adaptivePredict(_input,129,_ctx) ) {
+				case 1:
+					{
+					setState(894);
+					_errHandler.sync(this);
+					switch ( getInterpreter().adaptivePredict(_input,128,_ctx) ) {
+					case 1:
+						{
+						setState(891);
+						database_name();
+						setState(892);
+						match(DOT);
+						}
+						break;
+					}
+					setState(896);
+					table_alias();
+					setState(897);
+					match(DOT);
+					}
+					break;
+				}
+				setState(901);
+				column_name();
 				}
 				break;
 			case 4:
 				{
 				setState(902);
-				switch ( getInterpreter().adaptivePredict(_input,129,_ctx) ) {
-				case 1:
-					{
-					setState(897);
-					switch ( getInterpreter().adaptivePredict(_input,128,_ctx) ) {
-					case 1:
-						{
-						setState(894);
-						database_name();
-						setState(895);
-						match(DOT);
-						}
-						break;
-					}
-					setState(899);
-					table_alias();
-					setState(900);
-					match(DOT);
-					}
-					break;
-				}
-				setState(904);
-				column_name();
+				unary_operator();
+				setState(903);
+				expr(20);
 				}
 				break;
 			case 5:
@@ -4739,10 +4949,12 @@ public class queryParser extends Parser {
 			case 7:
 				{
 				setState(920);
+				_errHandler.sync(this);
 				_la = _input.LA(1);
 				if (_la==K_EXISTS || _la==K_NOT) {
 					{
 					setState(917);
+					_errHandler.sync(this);
 					_la = _input.LA(1);
 					if (_la==K_NOT) {
 						{
@@ -4769,6 +4981,7 @@ public class queryParser extends Parser {
 				setState(926);
 				match(K_CASE);
 				setState(928);
+				_errHandler.sync(this);
 				switch ( getInterpreter().adaptivePredict(_input,132,_ctx) ) {
 				case 1:
 					{
@@ -4798,6 +5011,7 @@ public class queryParser extends Parser {
 					_la = _input.LA(1);
 				} while ( _la==K_WHEN );
 				setState(941);
+				_errHandler.sync(this);
 				_la = _input.LA(1);
 				if (_la==K_ELSE) {
 					{
@@ -4829,6 +5043,7 @@ public class queryParser extends Parser {
 					_prevctx = _localctx;
 					{
 					setState(1046);
+					_errHandler.sync(this);
 					switch ( getInterpreter().adaptivePredict(_input,147,_ctx) ) {
 					case 1:
 						{
@@ -4852,7 +5067,10 @@ public class queryParser extends Parser {
 						_la = _input.LA(1);
 						if ( !((((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << T__4) | (1L << T__5) | (1L << T__8))) != 0) || _la==C3) ) {
 						_errHandler.recoverInline(this);
-						} else {
+						}
+						else {
+							if ( _input.LA(1)==Token.EOF ) matchedEOF = true;
+							_errHandler.reportMatch(this);
 							consume();
 						}
 						setState(953);
@@ -4869,7 +5087,10 @@ public class queryParser extends Parser {
 						_la = _input.LA(1);
 						if ( !(_la==T__6 || _la==T__7) ) {
 						_errHandler.recoverInline(this);
-						} else {
+						}
+						else {
+							if ( _input.LA(1)==Token.EOF ) matchedEOF = true;
+							_errHandler.reportMatch(this);
 							consume();
 						}
 						setState(956);
@@ -4886,7 +5107,10 @@ public class queryParser extends Parser {
 						_la = _input.LA(1);
 						if ( !((((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << T__2) | (1L << T__9) | (1L << T__10) | (1L << T__11))) != 0)) ) {
 						_errHandler.recoverInline(this);
-						} else {
+						}
+						else {
+							if ( _input.LA(1)==Token.EOF ) matchedEOF = true;
+							_errHandler.reportMatch(this);
 							consume();
 						}
 						setState(959);
@@ -4903,7 +5127,10 @@ public class queryParser extends Parser {
 						_la = _input.LA(1);
 						if ( !((((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << T__12) | (1L << T__13) | (1L << T__14) | (1L << T__15))) != 0)) ) {
 						_errHandler.recoverInline(this);
-						} else {
+						}
+						else {
+							if ( _input.LA(1)==Token.EOF ) matchedEOF = true;
+							_errHandler.reportMatch(this);
 							consume();
 						}
 						setState(962);
@@ -4917,6 +5144,7 @@ public class queryParser extends Parser {
 						setState(963);
 						if (!(precpred(_ctx, 14))) throw new FailedPredicateException(this, "precpred(_ctx, 14)");
 						setState(976);
+						_errHandler.sync(this);
 						switch ( getInterpreter().adaptivePredict(_input,136,_ctx) ) {
 						case 1:
 							{
@@ -5024,6 +5252,7 @@ public class queryParser extends Parser {
 						setState(986);
 						match(K_IS);
 						setState(988);
+						_errHandler.sync(this);
 						switch ( getInterpreter().adaptivePredict(_input,137,_ctx) ) {
 						case 1:
 							{
@@ -5043,6 +5272,7 @@ public class queryParser extends Parser {
 						setState(991);
 						if (!(precpred(_ctx, 5))) throw new FailedPredicateException(this, "precpred(_ctx, 5)");
 						setState(993);
+						_errHandler.sync(this);
 						_la = _input.LA(1);
 						if (_la==K_NOT) {
 							{
@@ -5080,6 +5310,7 @@ public class queryParser extends Parser {
 						setState(1003);
 						if (!(precpred(_ctx, 8))) throw new FailedPredicateException(this, "precpred(_ctx, 8)");
 						setState(1005);
+						_errHandler.sync(this);
 						_la = _input.LA(1);
 						if (_la==K_NOT) {
 							{
@@ -5092,12 +5323,16 @@ public class queryParser extends Parser {
 						_la = _input.LA(1);
 						if ( !(((((_la - 47)) & ~0x3f) == 0 && ((1L << (_la - 47)) & ((1L << (K_GLOB - 47)) | (1L << (K_LIKE - 47)) | (1L << (K_MATCH - 47)) | (1L << (K_REGEXP - 47)))) != 0)) ) {
 						_errHandler.recoverInline(this);
-						} else {
+						}
+						else {
+							if ( _input.LA(1)==Token.EOF ) matchedEOF = true;
+							_errHandler.reportMatch(this);
 							consume();
 						}
 						setState(1008);
 						expr(0);
 						setState(1011);
+						_errHandler.sync(this);
 						switch ( getInterpreter().adaptivePredict(_input,140,_ctx) ) {
 						case 1:
 							{
@@ -5117,6 +5352,7 @@ public class queryParser extends Parser {
 						setState(1013);
 						if (!(precpred(_ctx, 7))) throw new FailedPredicateException(this, "precpred(_ctx, 7)");
 						setState(1018);
+						_errHandler.sync(this);
 						switch (_input.LA(1)) {
 						case K_ISNULL:
 							{
@@ -5150,6 +5386,7 @@ public class queryParser extends Parser {
 						setState(1020);
 						if (!(precpred(_ctx, 4))) throw new FailedPredicateException(this, "precpred(_ctx, 4)");
 						setState(1022);
+						_errHandler.sync(this);
 						_la = _input.LA(1);
 						if (_la==K_NOT) {
 							{
@@ -5161,12 +5398,14 @@ public class queryParser extends Parser {
 						setState(1024);
 						match(K_IN);
 						setState(1044);
+						_errHandler.sync(this);
 						switch (_input.LA(1)) {
 						case OPEN_PARENTHESE:
 							{
 							setState(1025);
 							match(OPEN_PARENTHESE);
 							setState(1035);
+							_errHandler.sync(this);
 							switch ( getInterpreter().adaptivePredict(_input,144,_ctx) ) {
 							case 1:
 								{
@@ -5275,6 +5514,7 @@ public class queryParser extends Parser {
 						case STRING_LITERAL:
 							{
 							setState(1041);
+							_errHandler.sync(this);
 							switch ( getInterpreter().adaptivePredict(_input,145,_ctx) ) {
 							case 1:
 								{
@@ -5347,7 +5587,10 @@ public class queryParser extends Parser {
 			_la = _input.LA(1);
 			if ( !((((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << K_CURRENT_DATE) | (1L << K_CURRENT_TIME) | (1L << K_CURRENT_TIMESTAMP))) != 0) || ((((_la - 67)) & ~0x3f) == 0 && ((1L << (_la - 67)) & ((1L << (K_NULL - 67)) | (1L << (NUMERIC_LITERAL - 67)) | (1L << (BLOB_LITERAL - 67)) | (1L << (STRING_LITERAL - 67)))) != 0)) ) {
 			_errHandler.recoverInline(this);
-			} else {
+			}
+			else {
+				if ( _input.LA(1)==Token.EOF ) matchedEOF = true;
+				_errHandler.reportMatch(this);
 				consume();
 			}
 			}
@@ -5390,7 +5633,10 @@ public class queryParser extends Parser {
 			_la = _input.LA(1);
 			if ( !(((((_la - 7)) & ~0x3f) == 0 && ((1L << (_la - 7)) & ((1L << (T__6 - 7)) | (1L << (T__7 - 7)) | (1L << (T__20 - 7)) | (1L << (K_NOT - 7)))) != 0)) ) {
 			_errHandler.recoverInline(this);
-			} else {
+			}
+			else {
+				if ( _input.LA(1)==Token.EOF ) matchedEOF = true;
+				_errHandler.reportMatch(this);
 				consume();
 			}
 			}
@@ -5452,12 +5698,15 @@ public class queryParser extends Parser {
 		public NameContext name(int i) {
 			return getRuleContext(NameContext.class,i);
 		}
+		public TerminalNode OPEN_PARENTHESE() { return getToken(queryParser.OPEN_PARENTHESE, 0); }
 		public List<Signed_numberContext> signed_number() {
 			return getRuleContexts(Signed_numberContext.class);
 		}
 		public Signed_numberContext signed_number(int i) {
 			return getRuleContext(Signed_numberContext.class,i);
 		}
+		public TerminalNode CLOSE_PARENTHESE() { return getToken(queryParser.CLOSE_PARENTHESE, 0); }
+		public TerminalNode C1() { return getToken(queryParser.C1, 0); }
 		public Type_nameContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
 		}
@@ -5494,6 +5743,7 @@ public class queryParser extends Parser {
 				_la = _input.LA(1);
 			} while ( (((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << K_ABORT) | (1L << K_ALL) | (1L << K_AND) | (1L << K_AS) | (1L << K_ASC) | (1L << K_BETWEEN) | (1L << K_BY) | (1L << K_CASE) | (1L << K_CAST) | (1L << K_COLLATE) | (1L << K_CROSS) | (1L << K_CURRENT_DATE) | (1L << K_CURRENT_TIME) | (1L << K_CURRENT_TIMESTAMP) | (1L << K_DESC) | (1L << K_DISTINCT) | (1L << K_ELSE) | (1L << K_END) | (1L << K_ESCAPE) | (1L << K_EXCEPT) | (1L << K_EXISTS) | (1L << K_FAIL) | (1L << K_FULL) | (1L << K_FROM) | (1L << K_GLOB) | (1L << K_GROUP) | (1L << K_HAVING) | (1L << K_IF) | (1L << K_IGNORE) | (1L << K_IN) | (1L << K_INDEXED) | (1L << K_INNER) | (1L << K_INTERSECT) | (1L << K_IS) | (1L << K_ISNULL) | (1L << K_JOIN) | (1L << K_LEFT) | (1L << K_LIKE) | (1L << K_LIMIT) | (1L << K_MATCH) | (1L << K_NATURAL))) != 0) || ((((_la - 64)) & ~0x3f) == 0 && ((1L << (_la - 64)) & ((1L << (K_NO - 64)) | (1L << (K_NOT - 64)) | (1L << (K_NOTNULL - 64)) | (1L << (K_NULL - 64)) | (1L << (K_OFFSET - 64)) | (1L << (K_ON - 64)) | (1L << (K_OR - 64)) | (1L << (K_ORDER - 64)) | (1L << (K_OUTER - 64)) | (1L << (K_RAISE - 64)) | (1L << (K_RECURSIVE - 64)) | (1L << (K_REGEXP - 64)) | (1L << (K_RIGHT - 64)) | (1L << (K_ROLLBACK - 64)) | (1L << (K_SELECT - 64)) | (1L << (K_THEN - 64)) | (1L << (K_UNION - 64)) | (1L << (K_USING - 64)) | (1L << (K_VALUES - 64)) | (1L << (K_WHEN - 64)) | (1L << (K_WHERE - 64)) | (1L << (K_WITH - 64)) | (1L << (K_GENERATE - 64)) | (1L << (K_MAX - 64)) | (1L << (K_MIN - 64)) | (1L << (K_AVG - 64)) | (1L << (K_COUNT - 64)) | (1L << (K_SUM - 64)) | (1L << (K_GGPLOT - 64)) | (1L << (IDENTIFIER - 64)) | (1L << (STRING_LITERAL - 64)))) != 0) );
 			setState(1072);
+			_errHandler.sync(this);
 			switch ( getInterpreter().adaptivePredict(_input,150,_ctx) ) {
 			case 1:
 				{
@@ -5642,7 +5892,10 @@ public class queryParser extends Parser {
 			_la = _input.LA(1);
 			if ( !(((((_la - 87)) & ~0x3f) == 0 && ((1L << (_la - 87)) & ((1L << (K_MAX - 87)) | (1L << (K_MIN - 87)) | (1L << (K_AVG - 87)) | (1L << (K_COUNT - 87)) | (1L << (K_SUM - 87)))) != 0)) ) {
 			_errHandler.recoverInline(this);
-			} else {
+			}
+			else {
+				if ( _input.LA(1)==Token.EOF ) matchedEOF = true;
+				_errHandler.reportMatch(this);
 				consume();
 			}
 			}
@@ -5879,7 +6132,10 @@ public class queryParser extends Parser {
 			_la = _input.LA(1);
 			if ( !(_la==IDENTIFIER || _la==STRING_LITERAL) ) {
 			_errHandler.recoverInline(this);
-			} else {
+			}
+			else {
+				if ( _input.LA(1)==Token.EOF ) matchedEOF = true;
+				_errHandler.reportMatch(this);
 				consume();
 			}
 			}
@@ -6037,6 +6293,7 @@ public class queryParser extends Parser {
 		enterRule(_localctx, 116, RULE_any_name);
 		try {
 			setState(1101);
+			_errHandler.sync(this);
 			switch (_input.LA(1)) {
 			case K_ABORT:
 			case K_ALL:
@@ -6204,6 +6461,7 @@ public class queryParser extends Parser {
 			enterOuterAlt(_localctx, 1);
 			{
 			setState(1106);
+			_errHandler.sync(this);
 			_la = _input.LA(1);
 			if (_la==T__6 || _la==T__7) {
 				{
@@ -6211,7 +6469,10 @@ public class queryParser extends Parser {
 				_la = _input.LA(1);
 				if ( !(_la==T__6 || _la==T__7) ) {
 				_errHandler.recoverInline(this);
-				} else {
+				}
+				else {
+					if ( _input.LA(1)==Token.EOF ) matchedEOF = true;
+					_errHandler.reportMatch(this);
 					consume();
 				}
 				}
@@ -6234,7 +6495,10 @@ public class queryParser extends Parser {
 
 	public static class Raise_functionContext extends ParserRuleContext {
 		public TerminalNode K_RAISE() { return getToken(queryParser.K_RAISE, 0); }
+		public TerminalNode OPEN_PARENTHESE() { return getToken(queryParser.OPEN_PARENTHESE, 0); }
+		public TerminalNode CLOSE_PARENTHESE() { return getToken(queryParser.CLOSE_PARENTHESE, 0); }
 		public TerminalNode K_IGNORE() { return getToken(queryParser.K_IGNORE, 0); }
+		public TerminalNode C1() { return getToken(queryParser.C1, 0); }
 		public Error_messageContext error_message() {
 			return getRuleContext(Error_messageContext.class,0);
 		}
@@ -6267,6 +6531,7 @@ public class queryParser extends Parser {
 			setState(1111);
 			match(OPEN_PARENTHESE);
 			setState(1116);
+			_errHandler.sync(this);
 			switch (_input.LA(1)) {
 			case K_IGNORE:
 				{
@@ -6282,7 +6547,10 @@ public class queryParser extends Parser {
 				_la = _input.LA(1);
 				if ( !(((((_la - 22)) & ~0x3f) == 0 && ((1L << (_la - 22)) & ((1L << (K_ABORT - 22)) | (1L << (K_FAIL - 22)) | (1L << (K_ROLLBACK - 22)))) != 0)) ) {
 				_errHandler.recoverInline(this);
-				} else {
+				}
+				else {
+					if ( _input.LA(1)==Token.EOF ) matchedEOF = true;
+					_errHandler.reportMatch(this);
 					consume();
 				}
 				setState(1114);
@@ -6397,7 +6665,7 @@ public class queryParser extends Parser {
 	}
 
 	public static final String _serializedATN =
-		"\3\u0430\ud6d1\u8206\uad2d\u4417\uaef1\u8d80\uaadd\3v\u0465\4\2\t\2\4"+
+		"\3\u608b\ua72a\u8133\ub9ed\u417c\u3be7\u7786\u5964\3v\u0465\4\2\t\2\4"+
 		"\3\t\3\4\4\t\4\4\5\t\5\4\6\t\6\4\7\t\7\4\b\t\b\4\t\t\t\4\n\t\n\4\13\t"+
 		"\13\4\f\t\f\4\r\t\r\4\16\t\16\4\17\t\17\4\20\t\20\4\21\t\21\4\22\t\22"+
 		"\4\23\t\23\4\24\t\24\4\25\t\25\4\26\t\26\4\27\t\27\4\30\t\30\4\31\t\31"+
@@ -6466,8 +6734,8 @@ public class queryParser extends Parser {
 		"\u0347\n\'\3\'\3\'\5\'\u034b\n\'\3\'\5\'\u034e\n\'\3(\3(\3(\3(\3(\3(\3"+
 		"(\7(\u0357\n(\f(\16(\u035a\13(\3(\3(\5(\u035e\n(\3)\3)\3)\3)\3)\7)\u0365"+
 		"\n)\f)\16)\u0368\13)\3)\3)\5)\u036c\n)\3)\3)\3)\3)\3)\3*\3*\3*\5*\u0376"+
-		"\n*\3*\5*\u0379\n*\3+\3+\3+\3+\3+\3+\3+\3+\3+\5+\u0384\n+\3+\3+\3+\5+"+
-		"\u0389\n+\3+\3+\3+\3+\3+\3+\3+\3+\3+\3+\3+\3+\3+\5+\u0398\n+\3+\5+\u039b"+
+		"\n*\3*\5*\u0379\n*\3+\3+\3+\3+\3+\3+\5+\u0381\n+\3+\3+\3+\5+\u0386\n+"+
+		"\3+\3+\3+\3+\3+\3+\3+\3+\3+\3+\3+\3+\3+\3+\3+\3+\5+\u0398\n+\3+\5+\u039b"+
 		"\n+\3+\3+\3+\3+\3+\3+\5+\u03a3\n+\3+\3+\3+\3+\3+\6+\u03aa\n+\r+\16+\u03ab"+
 		"\3+\3+\5+\u03b0\n+\3+\3+\3+\5+\u03b5\n+\3+\3+\3+\3+\3+\3+\3+\3+\3+\3+"+
 		"\3+\3+\3+\3+\3+\3+\3+\3+\3+\3+\3+\3+\3+\3+\3+\3+\3+\3+\5+\u03d3\n+\3+"+
@@ -6483,11 +6751,11 @@ public class queryParser extends Parser {
 		"\36 \"$&(*,.\60\62\64\668:<>@BDFHJLNPRTVXZ\\^`bdfhjlnprtvxz|~\2\21\4\2"+
 		"\7\nbb\4\2FF``\4\2\32\32((\4\2\30\30\32^\4\2\35\35\'\'\5\2\7\b\13\13b"+
 		"b\3\2\t\n\4\2\5\5\f\16\3\2\17\22\6\2\61\61>>@@MM\6\2$&EEnorr\5\2\t\n\27"+
-		"\27CC\3\2Y]\3\2qr\5\2\30\30..OO\u04fb\2\u0080\3\2\2\2\4\u0087\3\2\2\2"+
-		"\6\u008c\3\2\2\2\b\u00ab\3\2\2\2\n\u00b3\3\2\2\2\f\u00ba\3\2\2\2\16\u00d0"+
-		"\3\2\2\2\20\u0112\3\2\2\2\22\u0114\3\2\2\2\24\u0116\3\2\2\2\26\u0121\3"+
-		"\2\2\2\30\u0128\3\2\2\2\32\u0133\3\2\2\2\34\u0140\3\2\2\2\36\u014e\3\2"+
-		"\2\2 \u0160\3\2\2\2\"\u0163\3\2\2\2$\u0177\3\2\2\2&\u018f\3\2\2\2(\u0194"+
+		"\27CC\3\2Y]\3\2qr\5\2\30\30..OO\2\u04fb\2\u0080\3\2\2\2\4\u0087\3\2\2"+
+		"\2\6\u008c\3\2\2\2\b\u00ab\3\2\2\2\n\u00b3\3\2\2\2\f\u00ba\3\2\2\2\16"+
+		"\u00d0\3\2\2\2\20\u0112\3\2\2\2\22\u0114\3\2\2\2\24\u0116\3\2\2\2\26\u0121"+
+		"\3\2\2\2\30\u0128\3\2\2\2\32\u0133\3\2\2\2\34\u0140\3\2\2\2\36\u014e\3"+
+		"\2\2\2 \u0160\3\2\2\2\"\u0163\3\2\2\2$\u0177\3\2\2\2&\u018f\3\2\2\2(\u0194"+
 		"\3\2\2\2*\u01bb\3\2\2\2,\u01c5\3\2\2\2.\u01d1\3\2\2\2\60\u01d5\3\2\2\2"+
 		"\62\u01d7\3\2\2\2\64\u01da\3\2\2\2\66\u01ee\3\2\2\28\u01fc\3\2\2\2:\u0227"+
 		"\3\2\2\2<\u0299\3\2\2\2>\u02a7\3\2\2\2@\u02d8\3\2\2\2B\u02da\3\2\2\2D"+
@@ -6751,37 +7019,37 @@ public class queryParser extends Parser {
 		"\2\2\2\u0372\u0375\5T+\2\u0373\u0374\7\"\2\2\u0374\u0376\5h\65\2\u0375"+
 		"\u0373\3\2\2\2\u0375\u0376\3\2\2\2\u0376\u0378\3\2\2\2\u0377\u0379\t\6"+
 		"\2\2\u0378\u0377\3\2\2\2\u0378\u0379\3\2\2\2\u0379S\3\2\2\2\u037a\u037b"+
-		"\b+\1\2\u037b\u037c\5X-\2\u037c\u037d\5T+\26\u037d\u03b5\3\2\2\2\u037e"+
-		"\u03b5\5\b\5\2\u037f\u03b5\7p\2\2\u0380\u0381\5j\66\2\u0381\u0382\7e\2"+
-		"\2\u0382\u0384\3\2\2\2\u0383\u0380\3\2\2\2\u0383\u0384\3\2\2\2\u0384\u0385"+
-		"\3\2\2\2\u0385\u0386\5r:\2\u0386\u0387\7e\2\2\u0387\u0389\3\2\2\2\u0388"+
-		"\u0383\3\2\2\2\u0388\u0389\3\2\2\2\u0389\u038a\3\2\2\2\u038a\u03b5\5p"+
-		"9\2\u038b\u038c\7f\2\2\u038c\u038d\5T+\2\u038d\u038e\7g\2\2\u038e\u03b5"+
-		"\3\2\2\2\u038f\u0390\7!\2\2\u0390\u0391\7f\2\2\u0391\u0392\5T+\2\u0392"+
-		"\u0393\7\34\2\2\u0393\u0394\5\\/\2\u0394\u0395\7g\2\2\u0395\u03b5\3\2"+
-		"\2\2\u0396\u0398\7C\2\2\u0397\u0396\3\2\2\2\u0397\u0398\3\2\2\2\u0398"+
-		"\u0399\3\2\2\2\u0399\u039b\7-\2\2\u039a\u0397\3\2\2\2\u039a\u039b\3\2"+
-		"\2\2\u039b\u039c\3\2\2\2\u039c\u039d\7f\2\2\u039d\u039e\5D#\2\u039e\u039f"+
-		"\7g\2\2\u039f\u03b5\3\2\2\2\u03a0\u03a2\7 \2\2\u03a1\u03a3\5T+\2\u03a2"+
-		"\u03a1\3\2\2\2\u03a2\u03a3\3\2\2\2\u03a3\u03a9\3\2\2\2\u03a4\u03a5\7U"+
-		"\2\2\u03a5\u03a6\5T+\2\u03a6\u03a7\7Q\2\2\u03a7\u03a8\5T+\2\u03a8\u03aa"+
-		"\3\2\2\2\u03a9\u03a4\3\2\2\2\u03aa\u03ab\3\2\2\2\u03ab\u03a9\3\2\2\2\u03ab"+
-		"\u03ac\3\2\2\2\u03ac\u03af\3\2\2\2\u03ad\u03ae\7)\2\2\u03ae\u03b0\5T+"+
-		"\2\u03af\u03ad\3\2\2\2\u03af\u03b0\3\2\2\2\u03b0\u03b1\3\2\2\2\u03b1\u03b2"+
-		"\7*\2\2\u03b2\u03b5\3\2\2\2\u03b3\u03b5\5|?\2\u03b4\u037a\3\2\2\2\u03b4"+
-		"\u037e\3\2\2\2\u03b4\u037f\3\2\2\2\u03b4\u0388\3\2\2\2\u03b4\u038b\3\2"+
-		"\2\2\u03b4\u038f\3\2\2\2\u03b4\u039a\3\2\2\2\u03b4\u03a0\3\2\2\2\u03b4"+
-		"\u03b3\3\2\2\2\u03b5\u041a\3\2\2\2\u03b6\u03b7\f\25\2\2\u03b7\u03b8\7"+
-		"\3\2\2\u03b8\u0419\5T+\26\u03b9\u03ba\f\24\2\2\u03ba\u03bb\t\7\2\2\u03bb"+
-		"\u0419\5T+\25\u03bc\u03bd\f\23\2\2\u03bd\u03be\t\b\2\2\u03be\u0419\5T"+
-		"+\24\u03bf\u03c0\f\22\2\2\u03c0\u03c1\t\t\2\2\u03c1\u0419\5T+\23\u03c2"+
-		"\u03c3\f\21\2\2\u03c3\u03c4\t\n\2\2\u03c4\u0419\5T+\22\u03c5\u03d2\f\20"+
-		"\2\2\u03c6\u03d3\7\23\2\2\u03c7\u03d3\7\24\2\2\u03c8\u03d3\7\25\2\2\u03c9"+
-		"\u03d3\7\26\2\2\u03ca\u03d3\7:\2\2\u03cb\u03cc\7:\2\2\u03cc\u03d3\7C\2"+
-		"\2\u03cd\u03d3\7\66\2\2\u03ce\u03d3\7>\2\2\u03cf\u03d3\7\61\2\2\u03d0"+
-		"\u03d3\7@\2\2\u03d1\u03d3\7M\2\2\u03d2\u03c6\3\2\2\2\u03d2\u03c7\3\2\2"+
-		"\2\u03d2\u03c8\3\2\2\2\u03d2\u03c9\3\2\2\2\u03d2\u03ca\3\2\2\2\u03d2\u03cb"+
-		"\3\2\2\2\u03d2\u03cd\3\2\2\2\u03d2\u03ce\3\2\2\2\u03d2\u03cf\3\2\2\2\u03d2"+
+		"\b+\1\2\u037b\u03b5\5\b\5\2\u037c\u03b5\7p\2\2\u037d\u037e\5j\66\2\u037e"+
+		"\u037f\7e\2\2\u037f\u0381\3\2\2\2\u0380\u037d\3\2\2\2\u0380\u0381\3\2"+
+		"\2\2\u0381\u0382\3\2\2\2\u0382\u0383\5r:\2\u0383\u0384\7e\2\2\u0384\u0386"+
+		"\3\2\2\2\u0385\u0380\3\2\2\2\u0385\u0386\3\2\2\2\u0386\u0387\3\2\2\2\u0387"+
+		"\u03b5\5p9\2\u0388\u0389\5X-\2\u0389\u038a\5T+\26\u038a\u03b5\3\2\2\2"+
+		"\u038b\u038c\7f\2\2\u038c\u038d\5T+\2\u038d\u038e\7g\2\2\u038e\u03b5\3"+
+		"\2\2\2\u038f\u0390\7!\2\2\u0390\u0391\7f\2\2\u0391\u0392\5T+\2\u0392\u0393"+
+		"\7\34\2\2\u0393\u0394\5\\/\2\u0394\u0395\7g\2\2\u0395\u03b5\3\2\2\2\u0396"+
+		"\u0398\7C\2\2\u0397\u0396\3\2\2\2\u0397\u0398\3\2\2\2\u0398\u0399\3\2"+
+		"\2\2\u0399\u039b\7-\2\2\u039a\u0397\3\2\2\2\u039a\u039b\3\2\2\2\u039b"+
+		"\u039c\3\2\2\2\u039c\u039d\7f\2\2\u039d\u039e\5D#\2\u039e\u039f\7g\2\2"+
+		"\u039f\u03b5\3\2\2\2\u03a0\u03a2\7 \2\2\u03a1\u03a3\5T+\2\u03a2\u03a1"+
+		"\3\2\2\2\u03a2\u03a3\3\2\2\2\u03a3\u03a9\3\2\2\2\u03a4\u03a5\7U\2\2\u03a5"+
+		"\u03a6\5T+\2\u03a6\u03a7\7Q\2\2\u03a7\u03a8\5T+\2\u03a8\u03aa\3\2\2\2"+
+		"\u03a9\u03a4\3\2\2\2\u03aa\u03ab\3\2\2\2\u03ab\u03a9\3\2\2\2\u03ab\u03ac"+
+		"\3\2\2\2\u03ac\u03af\3\2\2\2\u03ad\u03ae\7)\2\2\u03ae\u03b0\5T+\2\u03af"+
+		"\u03ad\3\2\2\2\u03af\u03b0\3\2\2\2\u03b0\u03b1\3\2\2\2\u03b1\u03b2\7*"+
+		"\2\2\u03b2\u03b5\3\2\2\2\u03b3\u03b5\5|?\2\u03b4\u037a\3\2\2\2\u03b4\u037c"+
+		"\3\2\2\2\u03b4\u0385\3\2\2\2\u03b4\u0388\3\2\2\2\u03b4\u038b\3\2\2\2\u03b4"+
+		"\u038f\3\2\2\2\u03b4\u039a\3\2\2\2\u03b4\u03a0\3\2\2\2\u03b4\u03b3\3\2"+
+		"\2\2\u03b5\u041a\3\2\2\2\u03b6\u03b7\f\25\2\2\u03b7\u03b8\7\3\2\2\u03b8"+
+		"\u0419\5T+\26\u03b9\u03ba\f\24\2\2\u03ba\u03bb\t\7\2\2\u03bb\u0419\5T"+
+		"+\25\u03bc\u03bd\f\23\2\2\u03bd\u03be\t\b\2\2\u03be\u0419\5T+\24\u03bf"+
+		"\u03c0\f\22\2\2\u03c0\u03c1\t\t\2\2\u03c1\u0419\5T+\23\u03c2\u03c3\f\21"+
+		"\2\2\u03c3\u03c4\t\n\2\2\u03c4\u0419\5T+\22\u03c5\u03d2\f\20\2\2\u03c6"+
+		"\u03d3\7\23\2\2\u03c7\u03d3\7\24\2\2\u03c8\u03d3\7\25\2\2\u03c9\u03d3"+
+		"\7\26\2\2\u03ca\u03d3\7:\2\2\u03cb\u03cc\7:\2\2\u03cc\u03d3\7C\2\2\u03cd"+
+		"\u03d3\7\66\2\2\u03ce\u03d3\7>\2\2\u03cf\u03d3\7\61\2\2\u03d0\u03d3\7"+
+		"@\2\2\u03d1\u03d3\7M\2\2\u03d2\u03c6\3\2\2\2\u03d2\u03c7\3\2\2\2\u03d2"+
+		"\u03c8\3\2\2\2\u03d2\u03c9\3\2\2\2\u03d2\u03ca\3\2\2\2\u03d2\u03cb\3\2"+
+		"\2\2\u03d2\u03cd\3\2\2\2\u03d2\u03ce\3\2\2\2\u03d2\u03cf\3\2\2\2\u03d2"+
 		"\u03d0\3\2\2\2\u03d2\u03d1\3\2\2\2\u03d3\u03d4\3\2\2\2\u03d4\u0419\5T"+
 		"+\21\u03d5\u03d6\f\17\2\2\u03d6\u03d7\7\33\2\2\u03d7\u0419\5T+\20\u03d8"+
 		"\u03d9\f\16\2\2\u03d9\u03da\7H\2\2\u03da\u0419\5T+\17\u03db\u03dc\f\b"+
@@ -6841,7 +7109,7 @@ public class queryParser extends Parser {
 		"\u02ba\u02c2\u02c6\u02ca\u02cd\u02d3\u02d6\u02d8\u02de\u02e5\u02e8\u02f0"+
 		"\u02fa\u02fd\u0303\u0305\u0309\u0310\u0313\u031b\u031f\u0322\u0329\u032f"+
 		"\u0335\u033a\u033e\u0342\u0346\u034a\u034d\u0358\u035d\u0366\u036b\u0375"+
-		"\u0378\u0383\u0388\u0397\u039a\u03a2\u03ab\u03af\u03b4\u03d2\u03de\u03e3"+
+		"\u0378\u0380\u0385\u0397\u039a\u03a2\u03ab\u03af\u03b4\u03d2\u03de\u03e3"+
 		"\u03ef\u03f5\u03fc\u0400\u040a\u040d\u0413\u0416\u0418\u041a\u0426\u0432"+
 		"\u044f\u0454\u045e";
 	public static final ATN _ATN =
