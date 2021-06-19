@@ -20,6 +20,11 @@
 #include <boost/accumulators/framework/parameters/sample.hpp>
 #include <boost/accumulators/statistics_fwd.hpp>
 #include <boost/accumulators/statistics/count.hpp>
+<<<<<<< HEAD
+=======
+#include <boost/serialization/vector.hpp>
+#include <boost/serialization/utility.hpp>
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 namespace boost { namespace accumulators
 {
@@ -204,6 +209,23 @@ namespace impl
             //return histogram;
             return make_iterator_range(this->histogram);
         }
+<<<<<<< HEAD
+=======
+    
+        // make this accumulator serializeable
+        // TODO split to save/load and check on parameters provided in ctor
+        template<class Archive>
+        void serialize(Archive & ar, const unsigned int file_version)
+        {
+            ar & num_cells;
+            ar & heights;
+            ar & actual_positions;
+            ar & desired_positions;
+            ar & positions_increments;
+            ar & histogram;
+            ar & is_dirty; 
+        }
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
     private:
         std::size_t num_cells;            // number of cells b

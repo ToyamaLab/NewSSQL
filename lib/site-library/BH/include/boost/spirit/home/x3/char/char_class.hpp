@@ -22,7 +22,11 @@ namespace boost { namespace spirit { namespace x3
     {
         typedef typename Encoding::char_type char_type;
 
+<<<<<<< HEAD
 #define BOOST_SPIRIT_X3_CLASSIFY(name)                                             \
+=======
+#define BOOST_SPIRIT_X3_CLASSIFY(name)                                          \
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
         template <typename Char>                                                \
         static bool                                                             \
         is(name##_tag, Char ch)                                                 \
@@ -63,13 +67,18 @@ namespace boost { namespace spirit { namespace x3
         template <typename Char, typename Context>
         bool test(Char ch, Context const& context) const
         {
+<<<<<<< HEAD
             return ((sizeof(Char) <= sizeof(char_type)) || encoding::ischar(ch))
+=======
+            return encoding::ischar(ch)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
                 && char_class_base<Encoding>::is(
                     get_case_compare<Encoding>(context).get_char_class_tag(tag()), ch);
         }
     };
 
 #define BOOST_SPIRIT_X3_CHAR_CLASS(encoding, name)                                 \
+<<<<<<< HEAD
     typedef char_class<char_encoding::encoding, name##_tag> name##_type;        \
     name##_type const name = name##_type();                                     \
     /***/
@@ -77,6 +86,15 @@ namespace boost { namespace spirit { namespace x3
 #define BOOST_SPIRIT_X3_CHAR_CLASSES(encoding)                                     \
     namespace encoding                                                          \
     {                                                                           \
+=======
+    typedef char_class<char_encoding::encoding, name##_tag> name##_type;           \
+    name##_type const name = name##_type();                                        \
+    /***/
+
+#define BOOST_SPIRIT_X3_CHAR_CLASSES(encoding)                                     \
+    namespace encoding                                                             \
+    {                                                                              \
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
         BOOST_SPIRIT_X3_CHAR_CLASS(encoding, alnum)                                \
         BOOST_SPIRIT_X3_CHAR_CLASS(encoding, alpha)                                \
         BOOST_SPIRIT_X3_CHAR_CLASS(encoding, digit)                                \
@@ -89,7 +107,11 @@ namespace boost { namespace spirit { namespace x3
         BOOST_SPIRIT_X3_CHAR_CLASS(encoding, space)                                \
         BOOST_SPIRIT_X3_CHAR_CLASS(encoding, blank)                                \
         BOOST_SPIRIT_X3_CHAR_CLASS(encoding, upper)                                \
+<<<<<<< HEAD
     }                                                                           \
+=======
+    }                                                                              \
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     /***/
 
     BOOST_SPIRIT_X3_CHAR_CLASSES(standard)

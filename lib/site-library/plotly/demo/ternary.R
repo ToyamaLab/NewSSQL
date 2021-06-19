@@ -51,7 +51,11 @@ plot_ly(
 
 plot_ly(
   df, a = ~clay, b = ~sand, c = ~silt, color = ~id, type = "scatterternary",
+<<<<<<< HEAD
   fill = "toself", mode = "lines", 
+=======
+  fill = "toself", mode = "lines"
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 ) %>%
   layout(
     annotations = label("Ternary Contour"), ternary = ternaryAxes

@@ -537,6 +537,7 @@ namespace std{ using ::type_info; }
 
 // ---------------------------------------------------------------------------//
 
+<<<<<<< HEAD
 //
 // Helper macro BOOST_STRINGIZE:
 // Converts the parameter X to a string after macro replacement
@@ -556,6 +557,12 @@ namespace std{ using ::type_info; }
 #define BOOST_JOIN( X, Y ) BOOST_DO_JOIN( X, Y )
 #define BOOST_DO_JOIN( X, Y ) BOOST_DO_JOIN2(X,Y)
 #define BOOST_DO_JOIN2( X, Y ) X##Y
+=======
+// Helper macro BOOST_STRINGIZE:
+// Helper macro BOOST_JOIN:
+
+#include <boost/config/helper_macros.hpp>
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 //
 // Set some default values for compiler/library/platform names.
@@ -702,6 +709,14 @@ namespace std{ using ::type_info; }
 #  define BOOST_NO_CXX11_NON_PUBLIC_DEFAULTED_FUNCTIONS
 #endif
 
+<<<<<<< HEAD
+=======
+// Lack of defaulted moves is implied by the lack of either rvalue references or any defaulted functions
+#if !defined(BOOST_NO_CXX11_DEFAULTED_MOVES) && (defined(BOOST_NO_CXX11_DEFAULTED_FUNCTIONS) || defined(BOOST_NO_CXX11_RVALUE_REFERENCES))
+#  define BOOST_NO_CXX11_DEFAULTED_MOVES
+#endif
+
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 // Defaulted and deleted function declaration helpers
 // These macros are intended to be inside a class definition.
 // BOOST_DEFAULTED_FUNCTION accepts the function declaration and its
@@ -953,6 +968,17 @@ namespace std{ using ::type_info; }
 //  ------------------ End of deprecated macros for 1.51 ---------------------------
 
 
+<<<<<<< HEAD
+=======
+//
+// Helper macro for marking types and methods final
+//
+#if !defined(BOOST_NO_CXX11_FINAL)
+#  define BOOST_FINAL final
+#else
+#  define BOOST_FINAL
+#endif
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 //
 // Helper macros BOOST_NOEXCEPT, BOOST_NOEXCEPT_IF, BOOST_NOEXCEPT_EXPR
@@ -997,11 +1023,44 @@ namespace std{ using ::type_info; }
 #endif
 
 //
+<<<<<<< HEAD
+=======
+// C++17 inline variables
+//
+#if !defined(BOOST_NO_CXX17_INLINE_VARIABLES)
+#define BOOST_INLINE_VARIABLE inline
+#else
+#define BOOST_INLINE_VARIABLE
+#endif
+
+//
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 // Unused variable/typedef workarounds:
 //
 #ifndef BOOST_ATTRIBUTE_UNUSED
 #  define BOOST_ATTRIBUTE_UNUSED
 #endif
+<<<<<<< HEAD
+=======
+//
+// [[nodiscard]]:
+//
+#ifdef __has_cpp_attribute
+// clang-6 accepts [[nodiscard]] with -std=c++14, but warns about it -pedantic
+#if __has_cpp_attribute(nodiscard) && !(defined(__clang__) && (__cplusplus < 201703L))
+# define BOOST_ATTRIBUTE_NODISCARD [[nodiscard]]
+#endif
+#if __has_cpp_attribute(no_unique_address) && !(defined(__GNUC__) && (__cplusplus < 201100))
+# define BOOST_ATTRIBUTE_NO_UNIQUE_ADDRESS [[no_unique_address]]
+#endif
+#endif
+#ifndef BOOST_ATTRIBUTE_NODISCARD
+# define BOOST_ATTRIBUTE_NODISCARD
+#endif
+#ifndef BOOST_ATTRIBUTE_NO_UNIQUE_ADDRESS
+# define BOOST_ATTRIBUTE_NO_UNIQUE_ADDRESS
+#endif
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 #define BOOST_STATIC_CONSTEXPR  static BOOST_CONSTEXPR_OR_CONST
 
@@ -1033,6 +1092,28 @@ namespace std{ using ::type_info; }
 #  define BOOST_NO_CXX11_FIXED_LENGTH_VARIADIC_TEMPLATE_EXPANSION_PACKS
 #endif
 
+<<<<<<< HEAD
+=======
+// This is a catch all case for obsolete compilers / std libs:
+#if !defined(_YVALS) && !defined(_CPPLIB_VER)  // msvc std lib already configured
+#if (!defined(__has_include) || (__cplusplus < 201700))
+#  define BOOST_NO_CXX17_HDR_OPTIONAL
+#  define BOOST_NO_CXX17_HDR_STRING_VIEW
+#  define BOOST_NO_CXX17_HDR_VARIANT
+#else
+#if !__has_include(<optional>)
+#  define BOOST_NO_CXX17_HDR_OPTIONAL
+#endif
+#if !__has_include(<string_view>)
+#  define BOOST_NO_CXX17_HDR_STRING_VIEW
+#endif
+#if !__has_include(<variant>)
+#  define BOOST_NO_CXX17_HDR_VARIANT
+#endif
+#endif
+#endif
+
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 //
 // Finish off with checks for macros that are depricated / no longer supported,
 // if any of these are set then it's very likely that much of Boost will no

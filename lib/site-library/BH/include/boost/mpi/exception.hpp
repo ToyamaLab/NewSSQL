@@ -15,6 +15,10 @@
 
 #include <boost/mpi/config.hpp>
 #include <exception>
+<<<<<<< HEAD
+=======
+#include <cassert>
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 #include <string>
 #include <boost/config.hpp>
 #include <boost/throw_exception.hpp>
@@ -94,6 +98,10 @@ class BOOST_MPI_DECL exception : public std::exception
 #define BOOST_MPI_CHECK_RESULT( MPIFunc, Args )                         \
  {                                                                      \
    int _check_result = MPIFunc Args;                                    \
+<<<<<<< HEAD
+=======
+   assert(_check_result == MPI_SUCCESS);                                \
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
    if (_check_result != MPI_SUCCESS)                                    \
      boost::throw_exception(boost::mpi::exception(#MPIFunc,   \
                                                              _check_result)); \
@@ -102,3 +110,7 @@ class BOOST_MPI_DECL exception : public std::exception
 } } // end namespace boost::mpi
 
 #endif // BOOST_MPI_EXCEPTION_HPP
+<<<<<<< HEAD
+=======
+
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce

@@ -38,6 +38,10 @@
 #include <algorithm> // for find_if
 #include <boost/config.hpp>
 #include <boost/assert.hpp>
+<<<<<<< HEAD
+=======
+#include <boost/type_traits/is_pointer.hpp>
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 #include <boost/detail/workaround.hpp>
 #include <boost/mpl/if.hpp>
 #include <boost/throw_exception.hpp>

@@ -21,7 +21,10 @@
 #include <boost/test/detail/global_typedef.hpp>
 #include <boost/test/detail/fwd_decl.hpp>
 
+<<<<<<< HEAD
 #include <boost/test/utils/trivial_singleton.hpp>
+=======
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 #include <boost/test/utils/class_properties.hpp>
 
 #include <boost/test/detail/suppress_warnings.hpp>
@@ -63,6 +66,10 @@ public:
                                                 (test_results)
                                                 (results_collect_helper) ) bool_prop;
 
+<<<<<<< HEAD
+=======
+    counter_prop    p_test_suites;              //!< Number of test suites
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     counter_prop    p_assertions_passed;        //!< Number of successful assertions
     counter_prop    p_assertions_failed;        //!< Number of failing assertions
     counter_prop    p_warnings_failed;          //!< Number of warnings
@@ -72,13 +79,31 @@ public:
     counter_prop    p_test_cases_failed;        //!< Number of failing test cases
     counter_prop    p_test_cases_skipped;       //!< Number of skipped test cases
     counter_prop    p_test_cases_aborted;       //!< Number of aborted test cases
+<<<<<<< HEAD
     counter_prop    p_duration_microseconds;    //!< Duration of the test in microseconds
     bool_prop       p_aborted;                  //!< Indicates that the test unit execution has been aborted
     bool_prop       p_skipped;                  //!< Indicates that the test unit execution has been skipped
+=======
+    counter_prop    p_test_cases_timed_out;     //!< Number of timed out test cases
+    counter_prop    p_test_suites_timed_out;    //!< Number of timed out test suites
+    counter_prop    p_duration_microseconds;    //!< Duration of the test in microseconds
+    bool_prop       p_aborted;                  //!< Indicates that the test unit execution has been aborted
+    bool_prop       p_skipped;                  //!< Indicates that the test unit execution has been skipped
+    bool_prop       p_timed_out;                //!< Indicates that the test unit has timed out
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
     /// Returns true if test unit passed
     bool            passed() const;
 
+<<<<<<< HEAD
+=======
+    /// Returns true if test unit skipped
+    ///
+    /// For test suites, this indicates if the test suite itself has been marked as
+    /// skipped, and not if the test suite contains any skipped test.
+    bool            skipped() const;
+
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     /// Returns true if the test unit was aborted (hard failure)
     bool            aborted() const;
 
@@ -109,7 +134,11 @@ public:
 /// of the test tree.
 ///
 /// @see boost::unit_test::test_observer
+<<<<<<< HEAD
 class BOOST_TEST_DECL results_collector_t : public test_observer, public singleton<results_collector_t> {
+=======
+class BOOST_TEST_DECL results_collector_t : public test_observer {
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 public:
 
     virtual void        test_start( counter_t );
@@ -118,6 +147,10 @@ public:
     virtual void        test_unit_finish( test_unit const&, unsigned long );
     virtual void        test_unit_skipped( test_unit const&, const_string );
     virtual void        test_unit_aborted( test_unit const& );
+<<<<<<< HEAD
+=======
+    virtual void        test_unit_timed_out( test_unit const& );
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
     virtual void        assertion_result( unit_test::assertion_result );
     virtual void        exception_caught( execution_exception const& );
@@ -129,7 +162,11 @@ public:
     /// @param[in] tu_id id of a test unit
     test_results const& results( test_unit_id tu_id ) const;
 
+<<<<<<< HEAD
 private:
+=======
+    /// Singleton pattern
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     BOOST_TEST_SINGLETON_CONS( results_collector_t )
 };
 

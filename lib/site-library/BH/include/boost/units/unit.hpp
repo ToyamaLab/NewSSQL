@@ -42,11 +42,19 @@ class unit
         typedef Dim                 dimension_type; 
         typedef System              system_type;
         
+<<<<<<< HEAD
         unit() { }
         unit(const this_type&) { }
         //~unit() { }  
        
         this_type& operator=(const this_type&) { return *this; }
+=======
+        BOOST_CONSTEXPR unit() { }
+        BOOST_CONSTEXPR unit(const this_type&) { }
+        //~unit() { }  
+       
+        BOOST_CXX14_CONSTEXPR this_type& operator=(const this_type&) { return *this; }
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
         
         // sun will ignore errors resulting from templates
         // instantiated in the return type of a function.
@@ -305,7 +313,11 @@ struct power_typeof_helper<unit<Dim,System>,static_rational<N,D> >
 { 
     typedef unit<typename static_power<Dim,static_rational<N,D> >::type,typename static_power<System, static_rational<N,D> >::type>     type; 
     
+<<<<<<< HEAD
     static type value(const unit<Dim,System>&)  
+=======
+    static BOOST_CONSTEXPR type value(const unit<Dim,System>&)  
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     { 
         return type();
     }
@@ -317,7 +329,11 @@ struct root_typeof_helper<unit<Dim,System>,static_rational<N,D> >
 { 
     typedef unit<typename static_root<Dim,static_rational<N,D> >::type,typename static_root<System, static_rational<N,D> >::type>      type; 
     
+<<<<<<< HEAD
     static type value(const unit<Dim,System>&)  
+=======
+    static BOOST_CONSTEXPR type value(const unit<Dim,System>&)  
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     { 
         return type();
     }
@@ -325,6 +341,10 @@ struct root_typeof_helper<unit<Dim,System>,static_rational<N,D> >
 
 /// unit runtime unary plus
 template<class Dim,class System>
+<<<<<<< HEAD
+=======
+BOOST_CONSTEXPR
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 typename unary_plus_typeof_helper< unit<Dim,System> >::type
 operator+(const unit<Dim,System>&)
 { 
@@ -335,6 +355,10 @@ operator+(const unit<Dim,System>&)
 
 /// unit runtime unary minus
 template<class Dim,class System>
+<<<<<<< HEAD
+=======
+BOOST_CONSTEXPR
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 typename unary_minus_typeof_helper< unit<Dim,System> >::type
 operator-(const unit<Dim,System>&)
 { 
@@ -348,6 +372,10 @@ template<class Dim1,
          class Dim2,
          class System1,
          class System2>
+<<<<<<< HEAD
+=======
+BOOST_CONSTEXPR
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 typename add_typeof_helper< unit<Dim1,System1>,
                             unit<Dim2,System2> >::type
 operator+(const unit<Dim1,System1>&,const unit<Dim2,System2>&)
@@ -366,6 +394,10 @@ template<class Dim1,
          class Dim2,
          class System1,
          class System2>
+<<<<<<< HEAD
+=======
+BOOST_CONSTEXPR
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 typename subtract_typeof_helper< unit<Dim1,System1>,
                                  unit<Dim2,System2> >::type
 operator-(const unit<Dim1,System1>&,const unit<Dim2,System2>&)
@@ -384,6 +416,10 @@ template<class Dim1,
          class Dim2,
          class System1,
          class System2>
+<<<<<<< HEAD
+=======
+BOOST_CONSTEXPR
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 typename multiply_typeof_helper< unit<Dim1,System1>,
                                  unit<Dim2,System2> >::type
 operator*(const unit<Dim1,System1>&,const unit<Dim2,System2>&)
@@ -399,6 +435,10 @@ template<class Dim1,
          class Dim2,
          class System1,
          class System2>
+<<<<<<< HEAD
+=======
+BOOST_CONSTEXPR
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 typename divide_typeof_helper< unit<Dim1,System1>,
                                unit<Dim2,System2> >::type
 operator/(const unit<Dim1,System1>&,const unit<Dim2,System2>&)
@@ -415,6 +455,10 @@ template<class Dim1,
          class System1,
          class System2>
 inline
+<<<<<<< HEAD
+=======
+BOOST_CONSTEXPR
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 bool 
 operator==(const unit<Dim1,System1>&,const unit<Dim2,System2>&)
 {
@@ -427,6 +471,10 @@ template<class Dim1,
          class System1,
          class System2>
 inline
+<<<<<<< HEAD
+=======
+BOOST_CONSTEXPR
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 bool 
 operator!=(const unit<Dim1,System1>&,const unit<Dim2,System2>&)
 {

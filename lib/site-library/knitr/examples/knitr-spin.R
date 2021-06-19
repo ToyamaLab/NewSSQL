@@ -4,8 +4,12 @@
 #' First we set up some options (you do not have to do this):
 
 #+ setup, include=FALSE
+<<<<<<< HEAD
 library(knitr)
 opts_chunk$set(fig.path = 'figure/silk-')
+=======
+knitr::opts_chunk$set(collapse = TRUE)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 #' The report begins here.
 

@@ -411,9 +411,14 @@ namespace boost { namespace spirit { namespace karma
 
             symbols& sym;
 
+<<<<<<< HEAD
         private:
             // silence MSVC warning C4512: assignment operator could not be generated
             adder& operator= (adder const&);
+=======
+            // silence MSVC warning C4512: assignment operator could not be generated
+            BOOST_DELETED_FUNCTION(adder& operator= (adder const&))
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
         };
 
         struct remover
@@ -444,9 +449,14 @@ namespace boost { namespace spirit { namespace karma
 
             symbols& sym;
 
+<<<<<<< HEAD
         private:
             // silence MSVC warning C4512: assignment operator could not be generated
             remover& operator= (remover const&);
+=======
+            // silence MSVC warning C4512: assignment operator could not be generated
+            BOOST_DELETED_FUNCTION(remover& operator= (remover const&))
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
         };
 
         adder add;
@@ -670,9 +680,14 @@ namespace boost { namespace spirit { namespace karma
 
             symbols& sym;
 
+<<<<<<< HEAD
         private:
             // silence MSVC warning C4512: assignment operator could not be generated
             adder& operator= (adder const&);
+=======
+            // silence MSVC warning C4512: assignment operator could not be generated
+            BOOST_DELETED_FUNCTION(adder& operator= (adder const&))
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
         };
 
         struct remover
@@ -703,9 +718,14 @@ namespace boost { namespace spirit { namespace karma
 
             symbols& sym;
 
+<<<<<<< HEAD
         private:
             // silence MSVC warning C4512: assignment operator could not be generated
             remover& operator= (remover const&);
+=======
+            // silence MSVC warning C4512: assignment operator could not be generated
+            BOOST_DELETED_FUNCTION(remover& operator= (remover const&))
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
         };
 
         adder add;

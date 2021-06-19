@@ -181,6 +181,7 @@ void_caster_primitive<Derived, Base>::void_caster_primitive() :
     void_caster( 
         & type_info_implementation<Derived>::type::get_const_instance(), 
         & type_info_implementation<Base>::type::get_const_instance(),
+<<<<<<< HEAD
         // note:I wanted to displace from 0 here, but at least one compiler
         // treated 0 by not shifting it at all.
         reinterpret_cast<std::ptrdiff_t>(
@@ -188,6 +189,16 @@ void_caster_primitive<Derived, Base>::void_caster_primitive() :
                 reinterpret_cast<Base *>(8)
             )
         ) - 8
+=======
+        /* note about displacement:
+         * displace 0: at least one compiler treated 0 by not shifting it at all
+         * displace by small value (8): caused ICE on certain mingw gcc versions */
+        reinterpret_cast<std::ptrdiff_t>(
+            static_cast<Derived *>(
+                reinterpret_cast<Base *>(1 << 20)
+            )
+        ) - (1 << 20)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     )
 {
     recursive_register();

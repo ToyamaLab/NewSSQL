@@ -15,6 +15,10 @@
 #define BOOST_ATOMIC_DETAIL_EXTRA_OPERATIONS_HPP_INCLUDED_
 
 #include <boost/atomic/detail/extra_ops_generic.hpp>
+<<<<<<< HEAD
+=======
+#include <boost/atomic/detail/extra_ops_emulated.hpp>
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 #if !defined(BOOST_ATOMIC_DETAIL_EXTRA_BACKEND_GENERIC)
 #include BOOST_ATOMIC_DETAIL_EXTRA_BACKEND_HEADER(boost/atomic/detail/extra_ops_)

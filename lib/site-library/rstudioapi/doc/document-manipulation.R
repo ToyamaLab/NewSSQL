@@ -1,7 +1,14 @@
+<<<<<<< HEAD
 ## ----setup---------------------------------------------------------------
 knitr::opts_chunk$set(eval = FALSE)
 
 ## ------------------------------------------------------------------------
+=======
+## ----setup--------------------------------------------------------------------
+knitr::opts_chunk$set(eval = FALSE)
+
+## -----------------------------------------------------------------------------
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 #  # construct the text to be inserted
 #  fmt <- "# This document was last modified on %s.\n"
 #  text <- sprintf(fmt, Sys.Date())
@@ -12,7 +19,11 @@ knitr::opts_chunk$set(eval = FALSE)
 #  range <- rstudioapi::document_range(c(1, 0), c(2, 0))
 #  rstudioapi::insertText(range, text)
 
+<<<<<<< HEAD
 ## ------------------------------------------------------------------------
+=======
+## -----------------------------------------------------------------------------
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 #  # get console editor id
 #  context <- rstudioapi::getConsoleEditorContext()
 #  id <- context$id
@@ -22,7 +33,11 @@ knitr::opts_chunk$set(eval = FALSE)
 #  
 #  # see also: `getActiveEditorContext()`, `getSourceEditorContext()`
 
+<<<<<<< HEAD
 ## ------------------------------------------------------------------------
+=======
+## -----------------------------------------------------------------------------
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 #  # put the cursor at the end of the document -- note that here,
 #  # `Inf` is automatically truncated to the actual length of the
 #  # document

@@ -21,7 +21,11 @@
 
 namespace boost { namespace graph {
 
+<<<<<<< HEAD
 class dimacs_exception : public std::exception {};
+=======
+class BOOST_SYMBOL_VISIBLE dimacs_exception : public std::exception {};
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 class dimacs_basic_reader {
 public:

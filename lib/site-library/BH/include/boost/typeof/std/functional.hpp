@@ -10,8 +10,15 @@
 
 #include BOOST_TYPEOF_INCREMENT_REGISTRATION_GROUP()
 
+<<<<<<< HEAD
 BOOST_TYPEOF_REGISTER_TEMPLATE(std::unary_function, 2)
 BOOST_TYPEOF_REGISTER_TEMPLATE(std::binary_function, 3)
+=======
+#ifndef BOOST_NO_CXX98_FUNCTION_BASE
+BOOST_TYPEOF_REGISTER_TEMPLATE(std::unary_function, 2)
+BOOST_TYPEOF_REGISTER_TEMPLATE(std::binary_function, 3)
+#endif//BOOST_NO_CXX98_FUNCTION_BASE
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 BOOST_TYPEOF_REGISTER_TEMPLATE(std::plus, 1)
 BOOST_TYPEOF_REGISTER_TEMPLATE(std::minus, 1)
 BOOST_TYPEOF_REGISTER_TEMPLATE(std::multiplies, 1)
@@ -30,6 +37,11 @@ BOOST_TYPEOF_REGISTER_TEMPLATE(std::logical_not, 1)
 BOOST_TYPEOF_REGISTER_TEMPLATE(std::unary_negate, 1)
 BOOST_TYPEOF_REGISTER_TEMPLATE(std::binary_negate, 1)
 
+<<<<<<< HEAD
+=======
+#ifndef BOOST_NO_CXX98_BINDERS
+
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 #if defined(__MWERKS__) && defined(_MSL_EXTENDED_BINDERS)
     BOOST_TYPEOF_REGISTER_TEMPLATE(std::binder1st, 2)
     BOOST_TYPEOF_REGISTER_TEMPLATE(std::binder2nd, 2)
@@ -52,4 +64,9 @@ BOOST_TYPEOF_REGISTER_TEMPLATE(std::mem_fun1_ref_t, 3)
     BOOST_TYPEOF_REGISTER_TEMPLATE(std::const_mem_fun1_ref_t, 3)
 #endif//BOOST_WORKAROUND(BOOST_DINKUMWARE_STDLIB, == 1)
 
+<<<<<<< HEAD
+=======
+#endif//BOOST_NO_CXX98_BINDERS
+
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 #endif//BOOST_TYPEOF_STD_functional_hpp_INCLUDED

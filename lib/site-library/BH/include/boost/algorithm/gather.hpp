@@ -23,6 +23,10 @@
 #include <algorithm>                // for std::stable_partition
 #include <functional>
 
+<<<<<<< HEAD
+=======
+#include <boost/config.hpp>
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 #include <boost/bind.hpp>           // for boost::bind
 #include <boost/range/begin.hpp>    // for boost::begin(range)
 #include <boost/range/end.hpp>      // for boost::end(range)

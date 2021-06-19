@@ -2,7 +2,11 @@
 // detail/impl/scheduler.ipp
 // ~~~~~~~~~~~~~~~~~~~~~~~~~
 //
+<<<<<<< HEAD
 // Copyright (c) 2003-2017 Christopher M. Kohlhoff (chris at kohlhoff dot com)
+=======
+// Copyright (c) 2003-2019 Christopher M. Kohlhoff (chris at kohlhoff dot com)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 //
 // Distributed under the Boost Software License, Version 1.0. (See accompanying
 // file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
@@ -23,6 +27,10 @@
 #include <boost/asio/detail/reactor.hpp>
 #include <boost/asio/detail/scheduler.hpp>
 #include <boost/asio/detail/scheduler_thread_info.hpp>
+<<<<<<< HEAD
+=======
+#include <boost/asio/detail/signal_blocker.hpp>
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 #include <boost/asio/detail/push_options.hpp>
 
@@ -30,6 +38,27 @@ namespace boost {
 namespace asio {
 namespace detail {
 
+<<<<<<< HEAD
+=======
+class scheduler::thread_function
+{
+public:
+  explicit thread_function(scheduler* s)
+    : this_(s)
+  {
+  }
+
+  void operator()()
+  {
+    boost::system::error_code ec;
+    this_->run(ec);
+  }
+
+private:
+  scheduler* this_;
+};
+
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 struct scheduler::task_cleanup
 {
   ~task_cleanup()
@@ -85,8 +114,13 @@ struct scheduler::work_cleanup
   thread_info* this_thread_;
 };
 
+<<<<<<< HEAD
 scheduler::scheduler(
     boost::asio::execution_context& ctx, int concurrency_hint)
+=======
+scheduler::scheduler(boost::asio::execution_context& ctx,
+    int concurrency_hint, bool own_thread)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
   : boost::asio::detail::execution_context_service_base<scheduler>(ctx),
     one_thread_(concurrency_hint == 1
         || !BOOST_ASIO_CONCURRENCY_HINT_IS_LOCKING(
@@ -100,17 +134,55 @@ scheduler::scheduler(
     outstanding_work_(0),
     stopped_(false),
     shutdown_(false),
+<<<<<<< HEAD
     concurrency_hint_(concurrency_hint)
 {
   BOOST_ASIO_HANDLER_TRACKING_INIT;
+=======
+    concurrency_hint_(concurrency_hint),
+    thread_(0)
+{
+  BOOST_ASIO_HANDLER_TRACKING_INIT;
+
+  if (own_thread)
+  {
+    ++outstanding_work_;
+    boost::asio::detail::signal_blocker sb;
+    thread_ = new boost::asio::detail::thread(thread_function(this));
+  }
+}
+
+scheduler::~scheduler()
+{
+  if (thread_)
+  {
+    thread_->join();
+    delete thread_;
+  }
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 }
 
 void scheduler::shutdown()
 {
   mutex::scoped_lock lock(mutex_);
   shutdown_ = true;
+<<<<<<< HEAD
   lock.unlock();
 
+=======
+  if (thread_)
+    stop_all_threads(lock);
+  lock.unlock();
+
+  // Join thread to ensure task operation is returned to queue.
+  if (thread_)
+  {
+    thread_->join();
+    delete thread_;
+    thread_ = 0;
+  }
+
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
   // Destroy handler objects.
   while (!op_queue_.empty())
   {

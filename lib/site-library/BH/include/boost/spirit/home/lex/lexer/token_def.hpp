@@ -24,10 +24,17 @@
 
 #include <boost/fusion/include/vector.hpp>
 #include <boost/mpl/if.hpp>
+<<<<<<< HEAD
 #include <boost/detail/iterator.hpp>
 #include <boost/type_traits/is_same.hpp>
 #include <boost/variant.hpp>
 
+=======
+#include <boost/type_traits/is_same.hpp>
+#include <boost/variant.hpp>
+
+#include <iterator> // for std::iterator_traits
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 #include <string>
 #include <cstdlib>
 
@@ -92,7 +99,11 @@ namespace boost { namespace spirit { namespace lex
 
             if (first != last) {
                 typedef typename 
+<<<<<<< HEAD
                     boost::detail::iterator_traits<Iterator>::value_type 
+=======
+                    std::iterator_traits<Iterator>::value_type 
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
                 token_type;
 
                 //  If the following assertion fires you probably forgot to  

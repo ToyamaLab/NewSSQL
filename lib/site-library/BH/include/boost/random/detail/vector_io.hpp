@@ -16,6 +16,10 @@
 #include <vector>
 #include <iosfwd>
 #include <istream>
+<<<<<<< HEAD
+=======
+#include <boost/io/ios_state.hpp>
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 namespace boost {
 namespace random {
@@ -52,12 +56,20 @@ void read_vector(std::basic_istream<CharT, Traits>& is, std::vector<T>& vec)
         is.setstate(std::ios_base::failbit);
         return;
     }
+<<<<<<< HEAD
+=======
+    boost::io::basic_ios_exception_saver<CharT, Traits> e(is, std::ios_base::goodbit);
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     T val;
     while(is >> std::ws >> val) {
         vec.push_back(val);
     }
     if(is.fail()) {
         is.clear();
+<<<<<<< HEAD
+=======
+        e.restore();
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
         if(!(is >> ch)) {
             return;
         }

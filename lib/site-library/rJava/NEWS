@@ -1,6 +1,93 @@
  NEWS/ChangeLog for rJava
 --------------------------
 
+<<<<<<< HEAD
+=======
+0.9-13	2020-07-06
+    o	increase default JVM stack size by adding -Xss2m to JVM parameters
+	unless -Xss is already specified in .jinit(). This is an
+	attempt to address stack overflow problems in Java 11 and higher
+	on some platforms which appear to use very small stack
+	sizes. (#224)
+
+    o	re-define EXTPTR_xx macros to avoid ABI breakage between R 4.0.0
+	and later R 4.0.x versions.
+
+    o	add missing C entry points to the symbol cache. (#221)
+
+    o	disable dynamic symbol lookup to catch any (inadvertent) use of
+	unregistered symbols.
+
+
+0.9-12	2020-03-23
+    o	rJava has a new option --enable-dynload which enables rJava to load
+	JVM dynamically at run-time. It is only supported on unix platforms
+	at this point and is enabled by default on macOS. When enabled,
+	rJava library does not link to JVM, but instead assumes that the
+	JVM library will be loaded into R before JVM functions are used.
+
+	The default initialization uses the following order to find JVM at
+	run-time:
+	- use JAVA_HOME (typically set by R CMD javareconf)
+	- call /usr/libexec/java_home (if JAVA_HOME is not set)
+	Find ${JAVA_HOME}[/jre]/lib/server/libjvm.{so|dylib}
+	If not found, Java cannot be loaded.
+
+	On Windows the order has not changed: getOption("java.home"),
+	JAVA_HOME environment variable and registry. However, if the
+	Java home setting is specified, it must be a valid directory,
+	otherwise a warning is issued (#209) and it is assumed to
+	be "" and thus the search continues in the registry.
+
+    o	convert class names from Java objects into JNI notation when
+	constructing method signatures. (#81)
+
+    o	fix a bug in .jfield() which prevented accessing static fields
+	if rJava class loader was not present yet (only affected
+	initialization).
+
+    o	modify boostrap to avoid reflection calls which are broken in
+	Java 12 (see #175 and https://bugs.openjdk.java.net/browse/JDK-8221530).
+
+    o	added .jgc() to run JVM garbage collector (#180)
+
+    o	fix filtered .jfields() to return actual values (#213)
+
+    o	.jfields() and .jmethods() now correctly filter results even for
+	as.obj=TRUE (#212). Filtering is done by retrieving the names and
+	applying the regular expression specified in `name'.
+
+
+0.9-11	2019-03-27
+    o	fix segfault if en exception is thrown during rJava initialization
+	(#177)
+
+    o	disable Java stack workaround if loaded from a JVM process (#130)
+
+    o	bump JVM target to 1.8 for JDK 12 and higher since such target is
+	no longer supported (#174).
+
+    o	fix HAVE_XRS detection (#168)
+
+    o	Windows: fix build if javah.exe is missing (#157)
+
+    o	Windows: detect JAVA_HOME correctly from registry even if the
+	key is using JDK instead Java Development Kit (#120)
+	
+    o	Windows: don't fail if `RuntimeLib` registry entry is missing (#163)
+
+
+0.9-10	2018-05-29
+    o	support builds with JDKs that are missing javah (#141)
+
+    o	detect JDKs that don't call themselves Java (such as openjdk)
+	(#146)
+
+    o	macOS: pre-load libjvm.dylib to avoid issues with incorrect ID
+	in Oracle's released binaries
+
+
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 0.9-9	2017-10-11
     o	add support for --disable-Xrs configure option in case java -Xrs
 	is so broken that it cannot even be tested - reportedly the case
@@ -16,8 +103,21 @@
 
     o	Process events on Widnows while in rniIndle. (#23)
 
+<<<<<<< HEAD
     o	Add a work-around for a bug in Oracle Java on Linux which causes
 	segfaults due to stack truncation. (#102)
+=======
+    o	Work around a bug of Oracle's Java on Linux which caps the stack of
+	R at 2M. (#102) The bug leads to segfaults in recursive
+	computations (not an R error as R doesn't know the stack size has
+	been reduced).  The workaround can be disabled via environment
+	variable RJAVA_JVM_STACK_WORKAROUND=0, which may produce better
+	results with memory access checkers (ASAN, valgrind), because the
+	workaround detects the new stack size by trying to access
+	inaccessible memory.  This JVM behavior was a workaround for an
+	issue in old Linux systems (JDK-4466587) and is going to be fixed in
+	Java 10.
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
     o	Work around a change in registry location on Windows for Oracle
 	Java 1.9. (#120)

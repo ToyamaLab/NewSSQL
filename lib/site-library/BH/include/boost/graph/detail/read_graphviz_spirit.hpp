@@ -5,6 +5,7 @@
 // http://www.boost.org/LICENSE_1_0.txt)
 
 //
+<<<<<<< HEAD
 // read_graphviz_spirit.hpp - 
 //   Initialize a model of the BGL's MutableGraph concept and an associated
 //  collection of property maps using a graph expressed in the GraphViz
@@ -12,6 +13,15 @@
 //
 //   Based on the grammar found at:
 //   http://www.graphviz.org/cvs/doc/info/lang.html
+=======
+// read_graphviz_spirit.hpp -
+//   Initialize a model of the BGL's MutableGraph concept and an associated
+//  collection of property maps using a graph expressed in the GraphViz
+// DOT Language.
+//
+//   Based on the grammar found at:
+//   https://web.archive.org/web/20041213234742/http://www.graphviz.org/cvs/doc/info/lang.html
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 //
 //   See documentation for this code at: 
 //     http://www.boost.org/libs/graph/doc/read_graphviz.html

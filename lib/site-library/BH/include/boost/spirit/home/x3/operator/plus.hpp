@@ -5,8 +5,13 @@
     Distributed under the Boost Software License, Version 1.0. (See accompanying
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 =============================================================================*/
+<<<<<<< HEAD
 #if !defined(SPIRIT_PLUS_MARCH_13_2007_0127PM)
 #define SPIRIT_PLUS_MARCH_13_2007_0127PM
+=======
+#if !defined(BOOST_SPIRIT_X3_PLUS_MARCH_13_2007_0127PM)
+#define BOOST_SPIRIT_X3_PLUS_MARCH_13_2007_0127PM
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 #include <boost/spirit/home/x3/core/parser.hpp>
 #include <boost/spirit/home/x3/support/traits/container_traits.hpp>

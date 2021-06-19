@@ -21,6 +21,10 @@ namespace std{
 
 #include <boost/mpi/datatype_fwd.hpp>
 #include <boost/mpi/exception.hpp>
+<<<<<<< HEAD
+=======
+#include <boost/mpi/detail/antiques.hpp>
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 #include <boost/throw_exception.hpp>
 #include <boost/assert.hpp>
 #include <boost/mpl/placeholders.hpp>
@@ -49,7 +53,11 @@ public:
      : is_committed(false),
        origin()
     {
+<<<<<<< HEAD
 #if defined(MPI_VERSION) && MPI_VERSION >= 2
+=======
+#if BOOST_MPI_VERSION >= 2
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
       BOOST_MPI_CHECK_RESULT(MPI_Get_address,(const_cast<void*>(orig), &origin));
 #else
       BOOST_MPI_CHECK_RESULT(MPI_Address,(const_cast<void*>(orig), &origin));
@@ -76,7 +84,11 @@ public:
     {
       if (!is_committed)
       {
+<<<<<<< HEAD
 #if defined(MPI_VERSION) && MPI_VERSION >= 2
+=======
+#if BOOST_MPI_VERSION >= 2
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
        BOOST_MPI_CHECK_RESULT(MPI_Type_create_struct,
                     (
                       addresses.size(),
@@ -119,7 +131,11 @@ private:
       // store address, type and length
 
       MPI_Aint a;
+<<<<<<< HEAD
 #if defined(MPI_VERSION) && MPI_VERSION >= 2
+=======
+#if BOOST_MPI_VERSION >= 2
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
      BOOST_MPI_CHECK_RESULT(MPI_Get_address,(const_cast<void*>(p), &a));
 #else
      BOOST_MPI_CHECK_RESULT(MPI_Address,(const_cast<void*>(p), &a));
@@ -129,6 +145,15 @@ private:
       lengths.push_back(l);
     }
 
+<<<<<<< HEAD
+=======
+    template <class T>
+    static T* get_data(std::vector<T>& v)
+    {
+      return v.empty() ? 0 : &(v[0]);
+    }
+
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     std::vector<MPI_Aint> addresses;
     std::vector<MPI_Datatype> types;
     std::vector<int> lengths;

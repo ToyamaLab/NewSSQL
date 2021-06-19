@@ -34,7 +34,11 @@ namespace boost { namespace accumulators { namespace impl
         template<typename Args>
         result_type result(Args const &args) const
         {
+<<<<<<< HEAD
             return this->extract_(args, args[parameter::keyword<Tag>::get() | 0]);
+=======
+            return this->extract_(args, args[parameter::keyword<Tag>::instance | 0]);
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
         }
 
     private:

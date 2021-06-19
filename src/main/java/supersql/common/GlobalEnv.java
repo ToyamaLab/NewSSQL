@@ -90,8 +90,14 @@ public class GlobalEnv {
 	private static String fileDirectory; //used by online
 
 	private static int tupleNum;
-
 	//chie end
+	
+	// goto 20200728  SQL Server
+	private static String sqlserver_instanceName;
+	private static String sqlserver_options;
+	
+	
+	
 
 	//swf��
 	public static String table_name;
@@ -245,7 +251,8 @@ public class GlobalEnv {
 	public static void getConfig() {
 		host = null;
 		db = null;
-		port="5432";
+		//port="5432";
+		port = null;
 		user = USER_HOME;
 		home = USER_HOME;
 		outdir = null;
@@ -253,6 +260,8 @@ public class GlobalEnv {
 		password = null;
 		encode = null;
 		optimizer = null;
+		sqlserver_instanceName = null;
+		sqlserver_options = null;
 		String config = getconfigfile(); // -cでconfigファイルを指定できる
 		String[] c_value;
 
@@ -277,8 +286,8 @@ public class GlobalEnv {
 		}
 
 
-		if (c_value[0] == null && c_value[1] == null && c_value[2] == null
-		&& c_value[3] == null) {
+		//if (c_value[0] == null && c_value[1] == null && c_value[2] == null && c_value[3] == null) {
+		if (c_value.length < 1) {
 			Log.err("No config file("+config+")");
 			return;
 		}
@@ -325,11 +334,18 @@ public class GlobalEnv {
 			//added by goto 20161217  for responsive
 			if (c_value[13] != null){
 				Responsive.setOption(c_value[13]);
-				Log.info("aaa"+c_value[13]);
+				Log.info("Responsive.setOption: "+c_value[13]);
 			}
 			if(c_value[15] != null){
 				port = c_value[15];
 			}
+			if(c_value[16] != null){
+				sqlserver_instanceName = c_value[16];	// goto 20200728  SQL Server
+			}
+			if(c_value[17] != null){
+				sqlserver_options = c_value[17];		// goto 20200728  SQL Server
+			}
+			
 		} catch (Exception ex) {
 		}
 
@@ -338,7 +354,8 @@ public class GlobalEnv {
 		Log.out("Config is {host=" + host + ", db=" + db + ", user=" + user +
 		", outdir=" + outdir + ", driver=" + driver + ", password=" + password +
 		", encode=" + encode + ", optimizer=" + optimizer +", embedtmp="+ embedtmp +
-		", "+Responsive.OPTION_NAME+"="+Responsive.getOption()+", port=" + port + " }");
+		", "+Responsive.OPTION_NAME+"="+Responsive.getOption()+", port=" + port + 
+		", sqlserver_instanceName=" + sqlserver_instanceName + ", sqlserver_options=" + sqlserver_options + " }");	
 		return;
 	}
 
@@ -360,7 +377,7 @@ public class GlobalEnv {
 	/**
 	* SuperSQLの基本的読み込み方法
 	*/
-	public static String getfilename() {
+	public static String getfilename() {	// /user/xx/test.ssql
 		String filename = seek("-f");
 		if(filename == null){// for embed ssql
 			return "";
@@ -373,6 +390,16 @@ public class GlobalEnv {
 			}
 			return seek("-f");
 		}
+	}
+	public static String getfilename2() {	// test.ssql
+		return new File(getfilename()).getName();
+	}
+	public static String getfilename3() {	// test
+		String fn = getfilename2();
+		if (fn.contains(".")) {
+			fn = fn.substring(0, fn.lastIndexOf("."));
+		}
+		return fn;
 	}
 
 	//added by goto 20141130
@@ -432,7 +459,11 @@ public class GlobalEnv {
 			if (db != null) {
 				ret = db;
 			} else {
-				ret = getusername();
+				if (getDriverName().equals("sqlserver")){	// goto 20200728  SQL Server
+					ret = "";
+				}else{
+					ret = getusername();
+				}
 			}
 		}
 		return ret;
@@ -446,6 +477,8 @@ public class GlobalEnv {
 		if (ret == null) {
 			if (host != null) {
 				ret = host;
+			} else {
+				ret = "";
 			}
 			//			else {
 			//				ret = "postgres.db.ics.keio.ac.jp";
@@ -457,10 +490,23 @@ public class GlobalEnv {
 	public static String getport() {
 		String ret = seek("-p");
 		if (ret == null) {
-			if (host != null) {
+			if (port != null) {
 				ret = port;
 			}else{
-				ret = "5432";
+				String driverName = getDriverName();
+				if(driverName.contains("postgres")){
+					ret = "5432";
+				}else if (driverName.equals("mysql")) {
+					ret = "3306";
+				}else if (driverName.equals("db2")) {
+					ret = "50000";
+				}else if (driverName.equals("hive")) {
+					ret = "10000";
+				}else if (driverName.equals("sqlserver")) {
+					ret = "1433";		// goto 20200728  SQL Server
+				}else{
+					ret = "5432";
+				}
 			}
 		}
 		return ret;
@@ -484,6 +530,7 @@ public class GlobalEnv {
 		if(getDriverName() != null)	driver = getDriverName();
 		if(gethost() != null)		host = gethost();
 		if(getdbname() != null)		db = getdbname();
+		if(getport() != null)		port = getport();
 
 		String ret = "jdbc:postgresql://" + host + ":" + port + "/" + db;
 		if (driver != null) {
@@ -511,16 +558,52 @@ public class GlobalEnv {
 				ret = "jdbc:hive2://" + host + ":10000/" + db;
 			}
 			//added by goto 20120518 end
+			
+			else if (driver.equals("sqlserver")){	// goto 20200728  SQL Server
+				// 接続URLの一般的な書式:		https://docs.microsoft.com/ja-jp/sql/connect/jdbc/building-the-connection-url?view=sql-server-ver15
+				// jdbc:sqlserver://[serverName[\instanceName][:portNumber]][;property=value[;property=value]]
+				ret = "jdbc:sqlserver://";
+				if(host != null && !host.equals("")){
+					String instanceName = getSQLServerInstanceName().trim();
+					String options = getSQLServerOptions().trim();
+
+					ret += host.trim();																			//serverName
+					if(instanceName != null && !instanceName.equals(""))	ret += "\\"+instanceName.trim();	//instanceName
+					if(port != null && !port.equals(""))					ret += ":"+port.trim();				//portNumber
+					if(db != null && !db.equals(""))						ret += ";databaseName="+db.trim();	//databaseName
+					if(options != null && !options.equals(""))				ret += ";"+options.trim();			//上記以外のオプション指定
+																												// -> 下記に書かれているものを ; 区切りで書く  e.g. sqlserver_options=accessToken=a;applicationName=a
+																												//    指定可能なオプション(プロパティ)一覧 https://docs.microsoft.com/ja-jp/sql/connect/jdbc/setting-the-connection-properties?view=sql-server-ver15
+//					if(getSQLServerProperty() != null){
+//						//複数の場合は ; 区切りで書く		e.g. value1;value2
+//						String[] properties = getSQLServerProperty().trim().split(";");
+//						for(String p : properties){
+//							ret += ";property="+p;																//property
+//						}
+//					}
+				}
+				// 指定可能なオプション(プロパティ)一覧： https://docs.microsoft.com/ja-jp/sql/connect/jdbc/setting-the-connection-properties?view=sql-server-ver15
+				// -> 50個以上あるため、optionsへ ; 区切りで記述できる形で実装
+				//if(getSQLServerSecurity() != null)		ret += ";integratedSecurity="+getSQLServerSecurity();			//integratedSecurity
+				//if(getSQLServerScheme() != null)			ret += ";integratedSecurity="+getSQLServerScheme();				//authenticationScheme
+				//if(getSQLServerApplicationName() != null)	ret += ";applicationName="+getSQLServerApplicationName();		//applicationName
+				
+				Log.out("SQL Server URL: "+ret);
+			}
+			
 		} else {
 			ret = "jdbc:postgresql://" + host + ":" + port + "/" + db;
 		}
 
 		return ret;
 	}
+	
+
+	
 
 	//��³����ɥ饤�ФΥѥ����
 	public static String getpassword() {
-		String ret = seek("-p");
+		String ret = seek("-password");
 		if (ret == null) {
 			if (password != null) {
 				ret = password;
@@ -562,7 +645,8 @@ public class GlobalEnv {
 
 	// add tbt 180718 to set multiple query
 	private static void setMulti() {
-		if (seek("-multiquery") != null) {
+		//if (seek("-multiquery") != null) {
+		if (seek("-singlequery") == null || seek("-multiquery") != null) {
 			GlobalEnv.setMultiQuery();
 		}
 		if(seek("-multigb") != null){
@@ -624,6 +708,14 @@ public class GlobalEnv {
 		}
 		return ret;
 	}
+	
+	// 20210416  new table border
+	public static boolean isUseOldTable(){
+		if(seek("-table1") != null || seek("-border1") != null || seek("-tableborder1") != null || 
+		   seek("-old_table") != null || seek("-old_border") != null || seek("-old_tableborder") != null)
+			return true;
+		return false;
+	}
 
 
 	// offline getConfigValue
@@ -635,7 +727,7 @@ public class GlobalEnv {
 		//(invokeServletPath and fileDirectory are not used in offline)
 		String con[] = { "host", "db", "user", "outdir", "embedtmp", "driver", "password", "encode", "optimizer",
 		"invokeServletPath","fileDirectory", "layout", "api_server_url", Responsive.OPTION_NAME,
-		"unity_module_dir", "port"};//module180426
+		"unity_module_dir", "port", "sqlserver_instance", "sqlserver_options"};//module180426
 		String c_value[] = new String[con.length];
 
 		try {
@@ -667,7 +759,7 @@ public class GlobalEnv {
 
 	//online getConfigValue
 	@SuppressWarnings("resource")
-	protected static String[] getConfigValue2(String config) {
+	protected static String[] getConfigValue2(String config) {	//未使用？
 
 		String line = new String();
 		String con[] = { "host", "db", "user", "outdir", "embedtmp", "driver", "password", "encode", "optimizer",
@@ -876,7 +968,16 @@ public class GlobalEnv {
 	}
 
 	public static String getDriverName(){
-		return seek("-driver");
+//		return seek("-driver");
+		String ret = seek("-driver");
+		if (ret == null) {
+			if (driver != null) {
+				ret = driver;
+			} else {
+				ret = "postgresql";
+			}
+		}
+		return ret;
 	}
 
 	public static String getDriver(){
@@ -901,8 +1002,11 @@ public class GlobalEnv {
 			ret = "org.sqlite.JDBC";
 		} else if (ret.equals("hive")){
 			ret = "org.apache.hive.jdbc.HiveDriver";
-		}
 		//added by goto 20120518 end
+		} else if (ret.equals("sqlserver")){	// goto 20200728  SQL Server
+			ret = "com.microsoft.sqlserver.jdbc.SQLServerDriver";
+		}
+		
 		return ret;
 	}
 
@@ -1027,7 +1131,11 @@ public class GlobalEnv {
 
 	// added by masato 20151128 for execute multiple query in ehtml or incremental
 	public static Integer getQueryNum(){
-		return Integer.parseInt(seek("-querynum"));
+		try {
+			return Integer.parseInt(seek("-querynum"));
+		} catch (Exception e) {
+			return 0;
+		}
 	}
 
 	// added by yusuke 20161109 for autocorrect
@@ -1036,6 +1144,43 @@ public class GlobalEnv {
 		return true;
 		return false;
 	}
+	
+	
+	// goto 20200728  SQL Server
+	public static String getSQLServerInstanceName() {
+		String ret = seek("-sqlserver_instance");
+		if (ret == null) {
+			if ( sqlserver_instanceName != null) {
+				ret = sqlserver_instanceName;
+			} else {
+				ret = "";
+			}
+		}
+		return ret;
+	}
+	public static String getSQLServerOptions() {
+		//e.g. sqlserver_options=accessToken=a;applicationName=a
+		String ret = seek("-sqlserver_options");
+		if (ret == null) {
+			if ( sqlserver_options != null) {
+				ret = sqlserver_options;
+			} else {
+				ret = "";
+			}
+		}
+		ret = ret.trim();
+		if((ret.startsWith("'") && ret.endsWith("'")) || (ret.startsWith("\"") && ret.endsWith("\""))){		
+			//クォーテーションありの場合   e.g. sqlserver_options='accessToken=a;applicationName=a'
+			ret = ret.substring(1, ret.length()-1);		//クォーテーションを削除
+		}
+		return ret;
+	}
+	
+	
+	
+	
+	
+	
 
 	//isNumber
 	public static boolean isNumber(String val) {
@@ -1177,15 +1322,14 @@ public class GlobalEnv {
 		}
 	}
 	//tbt add for centering
-	private static boolean centeringflag = false;
+//	private static boolean centeringflag = false;
 	private static String pos = new String();
-	public static void setCenteringflag() {
-		// TODO 自動生成されたメソッド・スタブ
-		centeringflag = true;
-	}
-	public static boolean getCenteringflag(){
-		return centeringflag;
-	}
+//	public static void setCenteringflag() {
+//		centeringflag = true;
+//	}
+//	public static boolean getCenteringflag(){
+//		return centeringflag;
+//	}
 
 	private static boolean detectcenteringflag = true;
 	public static void setDetectcenteringflag() {

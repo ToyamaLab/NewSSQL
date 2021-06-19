@@ -41,6 +41,10 @@
 
 #  define BOOST_NO_CXX11_HDR_CODECVT
 #  define BOOST_NO_CXX11_HDR_CONDITION_VARIABLE
+<<<<<<< HEAD
+=======
+#  define BOOST_NO_CXX11_HDR_EXCEPTION
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 #  define BOOST_NO_CXX11_HDR_INITIALIZER_LIST
 #  define BOOST_NO_CXX11_HDR_MUTEX
 #  define BOOST_NO_CXX11_HDR_RANDOM
@@ -87,11 +91,19 @@
 #endif
 
 // C++17 features
+<<<<<<< HEAD
 #if (_LIBCPP_VERSION < 3700) || (__cplusplus <= 201402L)
 #  define BOOST_NO_CXX17_STD_INVOKE
 #endif
 #if (_LIBCPP_VERSION < 4000) || (__cplusplus <= 201402L)
 #  define BOOST_NO_CXX17_STD_APPLY
+=======
+#if (_LIBCPP_VERSION < 4000) || (__cplusplus <= 201402L)
+#  define BOOST_NO_CXX17_STD_APPLY
+#  define BOOST_NO_CXX17_HDR_OPTIONAL
+#  define BOOST_NO_CXX17_HDR_STRING_VIEW
+#  define BOOST_NO_CXX17_HDR_VARIANT
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 #endif
 #if (_LIBCPP_VERSION > 4000) && (__cplusplus > 201402L) && !defined(_LIBCPP_ENABLE_CXX17_REMOVED_AUTO_PTR)
 #  define BOOST_NO_AUTO_PTR
@@ -104,6 +116,10 @@
 #endif
 
 #define BOOST_NO_CXX17_ITERATOR_TRAITS
+<<<<<<< HEAD
+=======
+#define BOOST_NO_CXX17_STD_INVOKE      // Invoke support is incomplete (no invoke_result)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 #if (_LIBCPP_VERSION <= 1101) && !defined(BOOST_NO_CXX11_THREAD_LOCAL)
 // This is a bit of a sledgehammer, because really it's just libc++abi that has no
@@ -113,6 +129,22 @@
 #  define BOOST_NO_CXX11_THREAD_LOCAL
 #endif
 
+<<<<<<< HEAD
+=======
+#if defined(__linux__) && (_LIBCPP_VERSION < 6000) && !defined(BOOST_NO_CXX11_THREAD_LOCAL)
+// After libc++-dev is installed on Trusty, clang++-libc++ almost works,
+// except uses of `thread_local` fail with undefined reference to
+// `__cxa_thread_atexit`.
+//
+// clang's libc++abi provides an implementation by deferring to the glibc
+// implementation, which may or may not be available (it is not on Trusty).
+// clang 4's libc++abi will provide an implementation if one is not in glibc
+// though, so thread local support should work with clang 4 and above as long
+// as libc++abi is linked in.
+#  define BOOST_NO_CXX11_THREAD_LOCAL
+#endif
+
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 #if defined(__has_include)
 #if !__has_include(<shared_mutex>)
 #  define BOOST_NO_CXX14_HDR_SHARED_MUTEX
@@ -123,4 +155,11 @@
 #  define BOOST_NO_CXX14_HDR_SHARED_MUTEX
 #endif
 
+<<<<<<< HEAD
+=======
+#if !defined(BOOST_NO_CXX14_HDR_SHARED_MUTEX) && (_LIBCPP_VERSION < 5000)
+#  define BOOST_NO_CXX14_HDR_SHARED_MUTEX
+#endif
+
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 //  --- end ---

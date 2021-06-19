@@ -2,11 +2,19 @@ all_output_formats      Determine all output formats for an R Markdown
                         document
 beamer_presentation     Convert to a Beamer presentation
 compile_notebook        Compiling R scripts to a notebook
+<<<<<<< HEAD
+=======
+context_document        Convert to a ConTeXt document
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 default_output_format   Determine the default output format for an R
                         Markdown document
 draft                   Create a new document based on a template
 find_external_resources
                         Find External Resource References
+<<<<<<< HEAD
+=======
+find_pandoc             Find the 'pandoc' executable
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 github_document         Convert to GitHub Flavored Markdown
 html-dependencies       Provide common HTML dependencies for R Markdown
                         formats
@@ -26,6 +34,10 @@ knit_params_ask         Run a shiny application asking for parameter
 knitr_options           Knitr options for an output format
 knitr_options_html      Knitr options for an HTML output format
 knitr_options_pdf       Knitr options for a PDF output format
+<<<<<<< HEAD
+=======
+latex-dependencies      Provide common LaTeX dependencies
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 latex_dependency        Define a LaTeX package dependency
 md_document             Convert to a markdown document
 metadata                The YAML metadata of the current R Markdown
@@ -41,6 +53,10 @@ pandoc_available        Check pandoc availability and version
 pandoc_citeproc_convert
                         Convert a bibliograpy file
 pandoc_convert          Convert a document with pandoc
+<<<<<<< HEAD
+=======
+pandoc_exec             Get the path of the pandoc executable
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 pandoc_options          Pandoc options for an output format
 pandoc_path_arg         Transform path for passing to pandoc
 pandoc_self_contained_html
@@ -51,6 +67,10 @@ parse_html_notebook     Parse an HTML Notebook
 pdf_document            Convert to a PDF/LaTeX document
 powerpoint_presentation
                         Convert to a PowerPoint presentation
+<<<<<<< HEAD
+=======
+publish_site            Publish an R Markdown Website
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 relative_to             Relative path utility function
 render                  Render R Markdown
 render_delayed          Delay Rendering for an Expression

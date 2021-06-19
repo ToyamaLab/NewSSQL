@@ -14,8 +14,13 @@
 #ifndef BOOST_GEOMETRY_GEOMETRIES_CONCEPTS_SEGMENT_CONCEPT_HPP
 #define BOOST_GEOMETRY_GEOMETRIES_CONCEPTS_SEGMENT_CONCEPT_HPP
 
+<<<<<<< HEAD
 
 #include <boost/concept_check.hpp>
+=======
+#include <boost/concept_check.hpp>
+#include <boost/core/ignore_unused.hpp>
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 #include <boost/geometry/geometries/concepts/point_concept.hpp>
 
@@ -106,7 +111,11 @@ class ConstSegment
         {
             const Geometry* s = 0;
             coordinate_type coord(geometry::get<Index, Dimension>(*s));
+<<<<<<< HEAD
             boost::ignore_unused_variable_warning(coord);
+=======
+            boost::ignore_unused(coord);
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
             dimension_checker<Index, Dimension + 1, DimensionCount>::apply();
         }
     };

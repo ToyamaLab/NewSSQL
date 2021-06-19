@@ -1,7 +1,11 @@
 ///////////////////////////////////////////////////////////////
 //  Copyright 2013 John Maddock. Distributed under the Boost
 //  Software License, Version 1.0. (See accompanying file
+<<<<<<< HEAD
 //  LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_
+=======
+//  LICENSE_1_0.txt or copy at https://www.boost.org/LICENSE_1_0.txt
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 #ifndef BOOST_MP_FLOAT128_HPP
 #define BOOST_MP_FLOAT128_HPP
@@ -12,6 +16,7 @@
 #include <boost/multiprecision/number.hpp>
 
 #if defined(BOOST_INTEL) && !defined(BOOST_MP_USE_FLOAT128) && !defined(BOOST_MP_USE_QUAD)
+<<<<<<< HEAD
 #  if defined(BOOST_INTEL_CXX_VERSION) && (BOOST_INTEL_CXX_VERSION >= 1310) && defined(__GNUC__)
 #    if (__GNUC__ > 4) || ((__GNUC__ == 4) && (__GNUC_MINOR__ >= 6))
 #      define BOOST_MP_USE_FLOAT128
@@ -32,6 +37,28 @@
 #endif
 #if defined(BOOST_MP_USE_FLOAT128) && defined(BOOST_MP_USE_QUAD)
 #  error "Oh dear, both BOOST_MP_USE_FLOAT128 and BOOST_MP_USE_QUAD are defined, which one should I be using?"
+=======
+#if defined(BOOST_INTEL_CXX_VERSION) && (BOOST_INTEL_CXX_VERSION >= 1310) && defined(__GNUC__)
+#if (__GNUC__ > 4) || ((__GNUC__ == 4) && (__GNUC_MINOR__ >= 6))
+#define BOOST_MP_USE_FLOAT128
+#endif
+#endif
+
+#ifndef BOOST_MP_USE_FLOAT128
+#define BOOST_MP_USE_QUAD
+#endif
+#endif
+
+#if defined(__GNUC__) && !defined(BOOST_MP_USE_FLOAT128) && !defined(BOOST_MP_USE_QUAD)
+#define BOOST_MP_USE_FLOAT128
+#endif
+
+#if !defined(BOOST_MP_USE_FLOAT128) && !defined(BOOST_MP_USE_QUAD)
+#error "Sorry compiler is neither GCC, not Intel, don't know how to configure this header."
+#endif
+#if defined(BOOST_MP_USE_FLOAT128) && defined(BOOST_MP_USE_QUAD)
+#error "Oh dear, both BOOST_MP_USE_FLOAT128 and BOOST_MP_USE_QUAD are defined, which one should I be using?"
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 #endif
 
 #if defined(BOOST_MP_USE_FLOAT128)
@@ -107,9 +134,15 @@ inline _Quad isinfq(_Quad v)
 
 #endif
 
+<<<<<<< HEAD
 namespace boost{
 namespace multiprecision{
 namespace backends{
+=======
+namespace boost {
+namespace multiprecision {
+namespace backends {
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 struct float128_backend;
 
@@ -117,15 +150,26 @@ struct float128_backend;
 
 using backends::float128_backend;
 
+<<<<<<< HEAD
 template<>
 struct number_category<backends::float128_backend> : public mpl::int_<number_kind_floating_point> {};
 #if defined(BOOST_MP_USE_QUAD)
 template<>
 struct number_category<float128_type> : public mpl::int_<number_kind_floating_point> {};
+=======
+template <>
+struct number_category<backends::float128_backend> : public mpl::int_<number_kind_floating_point>
+{};
+#if defined(BOOST_MP_USE_QUAD)
+template <>
+struct number_category<float128_type> : public mpl::int_<number_kind_floating_point>
+{};
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 #endif
 
 typedef number<float128_backend, et_off> float128;
 
+<<<<<<< HEAD
 namespace backends{
 
 struct float128_backend
@@ -142,19 +186,70 @@ public:
    BOOST_CONSTEXPR float128_backend() BOOST_NOEXCEPT : m_value(0) {}
    BOOST_CONSTEXPR float128_backend(const float128_backend& o) BOOST_NOEXCEPT : m_value(o.m_value) {}
    float128_backend& operator = (const float128_backend& o) BOOST_NOEXCEPT
+=======
+#ifndef BOOST_NO_CXX11_CONSTEXPR
+
+namespace quad_constants {
+constexpr __float128 quad_min = static_cast<__float128>(1) * static_cast<__float128>(DBL_MIN) * static_cast<__float128>(DBL_MIN) * static_cast<__float128>(DBL_MIN) * static_cast<__float128>(DBL_MIN) * static_cast<__float128>(DBL_MIN) * static_cast<__float128>(DBL_MIN) * static_cast<__float128>(DBL_MIN) * static_cast<__float128>(DBL_MIN) * static_cast<__float128>(DBL_MIN) * static_cast<__float128>(DBL_MIN) * static_cast<__float128>(DBL_MIN) * static_cast<__float128>(DBL_MIN) * static_cast<__float128>(DBL_MIN) * static_cast<__float128>(DBL_MIN) * static_cast<__float128>(DBL_MIN) * static_cast<__float128>(DBL_MIN) / 1073741824;
+
+constexpr __float128 quad_denorm_min = static_cast<__float128>(1) * static_cast<__float128>(DBL_MIN) * static_cast<__float128>(DBL_MIN) * static_cast<__float128>(DBL_MIN) * static_cast<__float128>(DBL_MIN) * static_cast<__float128>(DBL_MIN) * static_cast<__float128>(DBL_MIN) * static_cast<__float128>(DBL_MIN) * static_cast<__float128>(DBL_MIN) * static_cast<__float128>(DBL_MIN) * static_cast<__float128>(DBL_MIN) * static_cast<__float128>(DBL_MIN) * static_cast<__float128>(DBL_MIN) * static_cast<__float128>(DBL_MIN) * static_cast<__float128>(DBL_MIN) * static_cast<__float128>(DBL_MIN) * static_cast<__float128>(DBL_MIN) / 5.5751862996326557854e+42;
+
+constexpr double     dbl_mult = 8.9884656743115795386e+307;                                              // This has one bit set only.
+constexpr __float128 quad_max = (static_cast<__float128>(1) - 9.62964972193617926527988971292463659e-35) // This now has all bits sets to 1
+                                * static_cast<__float128>(dbl_mult) * static_cast<__float128>(dbl_mult) * static_cast<__float128>(dbl_mult) * static_cast<__float128>(dbl_mult) * static_cast<__float128>(dbl_mult) * static_cast<__float128>(dbl_mult) * static_cast<__float128>(dbl_mult) * static_cast<__float128>(dbl_mult) * static_cast<__float128>(dbl_mult) * static_cast<__float128>(dbl_mult) * static_cast<__float128>(dbl_mult) * static_cast<__float128>(dbl_mult) * static_cast<__float128>(dbl_mult) * static_cast<__float128>(dbl_mult) * static_cast<__float128>(dbl_mult) * static_cast<__float128>(dbl_mult) * 65536;
+} // namespace quad_constants
+
+#define BOOST_MP_QUAD_MIN boost::multiprecision::quad_constants::quad_min
+#define BOOST_MP_QUAD_DENORM_MIN boost::multiprecision::quad_constants::quad_denorm_min
+#define BOOST_MP_QUAD_MAX boost::multiprecision::quad_constants::quad_max
+
+#else
+
+#define BOOST_MP_QUAD_MIN 3.36210314311209350626267781732175260e-4932Q
+#define BOOST_MP_QUAD_DENORM_MIN 6.475175119438025110924438958227646552e-4966Q
+#define BOOST_MP_QUAD_MAX 1.18973149535723176508575932662800702e4932Q
+
+#endif
+
+namespace backends {
+
+struct float128_backend
+{
+   typedef mpl::list<signed char, short, int, long, boost::long_long_type> signed_types;
+   typedef mpl::list<unsigned char, unsigned short,
+                     unsigned int, unsigned long, boost::ulong_long_type>
+       unsigned_types;
+   typedef mpl::list<float, double, long double> float_types;
+   typedef int                                   exponent_type;
+
+ private:
+   float128_type m_value;
+
+ public:
+   BOOST_CONSTEXPR   float128_backend() BOOST_NOEXCEPT : m_value(0) {}
+   BOOST_CONSTEXPR   float128_backend(const float128_backend& o) BOOST_NOEXCEPT : m_value(o.m_value) {}
+   BOOST_MP_CXX14_CONSTEXPR float128_backend& operator=(const float128_backend& o) BOOST_NOEXCEPT
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
    {
       m_value = o.m_value;
       return *this;
    }
    template <class T>
    BOOST_CONSTEXPR float128_backend(const T& i, const typename enable_if_c<is_convertible<T, float128_type>::value>::type* = 0) BOOST_NOEXCEPT_IF(noexcept(std::declval<float128_type&>() = std::declval<const T&>()))
+<<<<<<< HEAD
       : m_value(i) {}
    template <class T>
    typename enable_if_c<is_arithmetic<T>::value || is_convertible<T, float128_type>::value, float128_backend&>::type operator = (const T& i) BOOST_NOEXCEPT_IF(noexcept(std::declval<float128_type&>() = std::declval<const T&>()))
+=======
+       : m_value(i) {}
+   template <class T>
+   BOOST_MP_CXX14_CONSTEXPR typename enable_if_c<is_arithmetic<T>::value || is_convertible<T, float128_type>::value, float128_backend&>::type operator=(const T& i) BOOST_NOEXCEPT_IF(noexcept(std::declval<float128_type&>() = std::declval<const T&>()))
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
    {
       m_value = i;
       return *this;
    }
+<<<<<<< HEAD
    float128_backend(long double const& f)
    {
       if(boost::math::isinf(f))
@@ -166,16 +261,37 @@ public:
    {
       if(boost::math::isinf(f))
          m_value = (f < 0) ? -1.0Q / 0.0Q : 1.0Q / 0.0Q;
+=======
+   BOOST_MP_CXX14_CONSTEXPR float128_backend(long double const& f) : m_value(f)
+   {
+      if (::fabsl(f) > LDBL_MAX)
+         m_value = (f < 0) ? -static_cast<__float128>(HUGE_VAL) : static_cast<__float128>(HUGE_VAL);
+   }
+   BOOST_MP_CXX14_CONSTEXPR float128_backend& operator=(long double const& f)
+   {
+      if (f > LDBL_MAX)
+         m_value = static_cast<__float128>(HUGE_VAL);
+      else if (-f > LDBL_MAX)
+         m_value = -static_cast<__float128>(HUGE_VAL);
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
       else
          m_value = f;
       return *this;
    }
+<<<<<<< HEAD
    float128_backend& operator = (const char* s)
+=======
+   float128_backend& operator=(const char* s)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
    {
 #ifndef BOOST_MP_USE_QUAD
       char* p_end;
       m_value = strtoflt128(s, &p_end);
+<<<<<<< HEAD
       if(p_end - s != (std::ptrdiff_t)std::strlen(s))
+=======
+      if (p_end - s != (std::ptrdiff_t)std::strlen(s))
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
       {
          BOOST_THROW_EXCEPTION(std::runtime_error("Unable to interpret input string as a floating point value"));
       }
@@ -184,6 +300,7 @@ public:
 #endif
       return *this;
    }
+<<<<<<< HEAD
    void swap(float128_backend& o) BOOST_NOEXCEPT
    {
       std::swap(m_value, o.value());
@@ -205,10 +322,37 @@ public:
       if(f & std::ios_base::scientific)
          format += "e";
       else if(f & std::ios_base::fixed)
+=======
+   BOOST_MP_CXX14_CONSTEXPR void swap(float128_backend& o) BOOST_NOEXCEPT
+   {
+      // We don't call std::swap here because it's no constexpr (yet):
+      float128_type t(o.value());
+      o.value() = m_value;
+      m_value = t;
+   }
+   std::string str(std::streamsize digits, std::ios_base::fmtflags f) const
+   {
+#ifndef BOOST_MP_USE_QUAD
+      char        buf[128];
+      std::string format = "%";
+      if (f & std::ios_base::showpos)
+         format += "+";
+      if (f & std::ios_base::showpoint)
+         format += "#";
+      format += ".*";
+      if (digits == 0)
+         digits = 36;
+      format += "Q";
+
+      if (f & std::ios_base::scientific)
+         format += "e";
+      else if (f & std::ios_base::fixed)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
          format += "f";
       else
          format += "g";
 
+<<<<<<< HEAD
       int v = quadmath_snprintf (buf, 100, format.c_str(), digits, m_value);
 
       if((v < 0) || (v >= 99))
@@ -217,6 +361,25 @@ public:
          buf2.reset(new char[v+3]);
          v = quadmath_snprintf (&buf2[0], v_max + 3, format.c_str(), digits, m_value);
          if(v >= v_max + 3)
+=======
+      int v;
+      if ((f & std::ios_base::scientific) && (f & std::ios_base::fixed))
+      {
+         v = quadmath_snprintf(buf, sizeof buf, "%Qa", m_value);
+      }
+      else
+      {
+         v = quadmath_snprintf(buf, sizeof buf, format.c_str(), digits, m_value);
+      }
+
+      if ((v < 0) || (v >= 127))
+      {
+         int                       v_max = v;
+         boost::scoped_array<char> buf2;
+         buf2.reset(new char[v + 3]);
+         v = quadmath_snprintf(&buf2[0], v_max + 3, format.c_str(), digits, m_value);
+         if (v >= v_max + 3)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
          {
             BOOST_THROW_EXCEPTION(std::runtime_error("Formatting of float128_type failed."));
          }
@@ -227,15 +390,24 @@ public:
       return boost::multiprecision::detail::convert_to_string(*this, digits ? digits : 37, f);
 #endif
    }
+<<<<<<< HEAD
    void negate() BOOST_NOEXCEPT
    {
       m_value = -m_value;
    }
    int compare(const float128_backend& o)const
+=======
+   BOOST_MP_CXX14_CONSTEXPR void negate() BOOST_NOEXCEPT
+   {
+      m_value = -m_value;
+   }
+   BOOST_MP_CXX14_CONSTEXPR int compare(const float128_backend& o) const
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
    {
       return m_value == o.m_value ? 0 : m_value < o.m_value ? -1 : 1;
    }
    template <class T>
+<<<<<<< HEAD
    int compare(const T& i)const
    {
       return m_value == i ? 0 : m_value < i ? -1 : 1;
@@ -245,87 +417,166 @@ public:
       return m_value;
    }
    const float128_type& value()const
+=======
+   BOOST_MP_CXX14_CONSTEXPR int compare(const T& i) const
+   {
+      return m_value == i ? 0 : m_value < i ? -1 : 1;
+   }
+   BOOST_MP_CXX14_CONSTEXPR float128_type& value()
+   {
+      return m_value;
+   }
+   BOOST_MP_CXX14_CONSTEXPR const float128_type& value() const
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
    {
       return m_value;
    }
 };
 
+<<<<<<< HEAD
 inline void eval_add(float128_backend& result, const float128_backend& a)
+=======
+inline BOOST_MP_CXX14_CONSTEXPR void eval_add(float128_backend& result, const float128_backend& a)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 {
    result.value() += a.value();
 }
 template <class A>
+<<<<<<< HEAD
 inline void eval_add(float128_backend& result, const A& a)
 {
    result.value() += a;
 }
 inline void eval_subtract(float128_backend& result, const float128_backend& a)
+=======
+inline BOOST_MP_CXX14_CONSTEXPR void eval_add(float128_backend& result, const A& a)
+{
+   result.value() += a;
+}
+inline BOOST_MP_CXX14_CONSTEXPR void eval_subtract(float128_backend& result, const float128_backend& a)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 {
    result.value() -= a.value();
 }
 template <class A>
+<<<<<<< HEAD
 inline void eval_subtract(float128_backend& result, const A& a)
 {
    result.value() -= a;
 }
 inline void eval_multiply(float128_backend& result, const float128_backend& a)
+=======
+inline BOOST_MP_CXX14_CONSTEXPR void eval_subtract(float128_backend& result, const A& a)
+{
+   result.value() -= a;
+}
+inline BOOST_MP_CXX14_CONSTEXPR void eval_multiply(float128_backend& result, const float128_backend& a)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 {
    result.value() *= a.value();
 }
 template <class A>
+<<<<<<< HEAD
 inline void eval_multiply(float128_backend& result, const A& a)
 {
    result.value() *= a;
 }
 inline void eval_divide(float128_backend& result, const float128_backend& a)
+=======
+inline BOOST_MP_CXX14_CONSTEXPR void eval_multiply(float128_backend& result, const A& a)
+{
+   result.value() *= a;
+}
+inline BOOST_MP_CXX14_CONSTEXPR void eval_divide(float128_backend& result, const float128_backend& a)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 {
    result.value() /= a.value();
 }
 template <class A>
+<<<<<<< HEAD
 inline void eval_divide(float128_backend& result, const A& a)
+=======
+inline BOOST_MP_CXX14_CONSTEXPR void eval_divide(float128_backend& result, const A& a)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 {
    result.value() /= a;
 }
 
+<<<<<<< HEAD
 inline void eval_add(float128_backend& result, const float128_backend& a, const float128_backend& b)
+=======
+inline BOOST_MP_CXX14_CONSTEXPR void eval_add(float128_backend& result, const float128_backend& a, const float128_backend& b)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 {
    result.value() = a.value() + b.value();
 }
 template <class A>
+<<<<<<< HEAD
 inline void eval_add(float128_backend& result, const float128_backend& a, const A& b)
 {
    result.value() = a.value() + b;
 }
 inline void eval_subtract(float128_backend& result, const float128_backend& a, const float128_backend& b)
+=======
+inline BOOST_MP_CXX14_CONSTEXPR void eval_add(float128_backend& result, const float128_backend& a, const A& b)
+{
+   result.value() = a.value() + b;
+}
+inline BOOST_MP_CXX14_CONSTEXPR void eval_subtract(float128_backend& result, const float128_backend& a, const float128_backend& b)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 {
    result.value() = a.value() - b.value();
 }
 template <class A>
+<<<<<<< HEAD
 inline void eval_subtract(float128_backend& result, const float128_backend& a, const A& b)
+=======
+inline BOOST_MP_CXX14_CONSTEXPR void eval_subtract(float128_backend& result, const float128_backend& a, const A& b)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 {
    result.value() = a.value() - b;
 }
 template <class A>
+<<<<<<< HEAD
 inline void eval_subtract(float128_backend& result, const A& a, const float128_backend& b)
 {
    result.value() = a - b.value();
 }
 inline void eval_multiply(float128_backend& result, const float128_backend& a, const float128_backend& b)
+=======
+inline BOOST_MP_CXX14_CONSTEXPR void eval_subtract(float128_backend& result, const A& a, const float128_backend& b)
+{
+   result.value() = a - b.value();
+}
+inline BOOST_MP_CXX14_CONSTEXPR void eval_multiply(float128_backend& result, const float128_backend& a, const float128_backend& b)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 {
    result.value() = a.value() * b.value();
 }
 template <class A>
+<<<<<<< HEAD
 inline void eval_multiply(float128_backend& result, const float128_backend& a, const A& b)
 {
    result.value() = a.value() * b;
 }
 inline void eval_divide(float128_backend& result, const float128_backend& a, const float128_backend& b)
+=======
+inline BOOST_MP_CXX14_CONSTEXPR void eval_multiply(float128_backend& result, const float128_backend& a, const A& b)
+{
+   result.value() = a.value() * b;
+}
+inline BOOST_MP_CXX14_CONSTEXPR void eval_divide(float128_backend& result, const float128_backend& a, const float128_backend& b)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 {
    result.value() = a.value() / b.value();
 }
 
 template <class R>
+<<<<<<< HEAD
 inline void eval_convert_to(R* result, const float128_backend& val)
+=======
+inline BOOST_MP_CXX14_CONSTEXPR void eval_convert_to(R* result, const float128_backend& val)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 {
    *result = static_cast<R>(val.value());
 }
@@ -352,6 +603,7 @@ inline void eval_sqrt(float128_backend& result, const float128_backend& arg)
 {
    result.value() = sqrtq(arg.value());
 }
+<<<<<<< HEAD
 inline int eval_fpclassify(const float128_backend& arg)
 {
    if(isnanq(arg.value()))
@@ -377,6 +629,70 @@ inline void eval_decrement(float128_backend& arg)
 {
    --arg.value();
 }
+=======
+#ifndef BOOST_MP_NO_CONSTEXPR_DETECTION
+inline BOOST_MP_CXX14_CONSTEXPR 
+#else
+inline
+#endif
+int eval_fpclassify(const float128_backend& arg)
+{
+   float128_type v = arg.value();
+#ifndef BOOST_MP_NO_CONSTEXPR_DETECTION
+   if (BOOST_MP_IS_CONST_EVALUATED(v))
+   {
+      if (v != v)
+         return FP_NAN;
+      if (v == 0)
+         return FP_ZERO;
+      float128_type t(v);
+      if (t < 0)
+         t = -t;
+      if (t > BOOST_MP_QUAD_MAX)
+         return FP_INFINITE;
+      if (t < BOOST_MP_QUAD_MIN)
+         return FP_SUBNORMAL;
+      return FP_NORMAL;
+   }
+   else
+#endif
+   {
+      if (isnanq(v))
+         return FP_NAN;
+      else if (isinfq(v))
+         return FP_INFINITE;
+      else if (v == 0)
+         return FP_ZERO;
+
+      float128_backend t(arg);
+      if (t.value() < 0)
+         t.negate();
+      if (t.value() < BOOST_MP_QUAD_MIN)
+         return FP_SUBNORMAL;
+      return FP_NORMAL;
+   }
+}
+#if defined(BOOST_GCC) && (__GNUC__ == 9)
+// See https://gcc.gnu.org/bugzilla/show_bug.cgi?id=91705
+inline BOOST_MP_CXX14_CONSTEXPR void eval_increment(float128_backend& arg)
+{
+   arg.value() = 1 + arg.value();
+}
+inline BOOST_MP_CXX14_CONSTEXPR void eval_decrement(float128_backend& arg)
+{
+   arg.value() = arg.value() - 1;
+}
+#else
+inline BOOST_MP_CXX14_CONSTEXPR void eval_increment(float128_backend& arg)
+{
+   ++arg.value();
+}
+inline BOOST_MP_CXX14_CONSTEXPR void eval_decrement(float128_backend& arg)
+{
+   --arg.value();
+}
+#endif
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 /*********************************************************************
 *
@@ -384,6 +700,7 @@ inline void eval_decrement(float128_backend& arg)
 *
 *********************************************************************/
 
+<<<<<<< HEAD
 inline void eval_abs(float128_backend& result, const float128_backend& arg)
 {
    result.value() = fabsq(arg.value());
@@ -391,6 +708,43 @@ inline void eval_abs(float128_backend& result, const float128_backend& arg)
 inline void eval_fabs(float128_backend& result, const float128_backend& arg)
 {
    result.value() = fabsq(arg.value());
+=======
+#ifndef BOOST_MP_NO_CONSTEXPR_DETECTION
+inline BOOST_MP_CXX14_CONSTEXPR void eval_abs(float128_backend& result, const float128_backend& arg)
+#else
+inline void eval_abs(float128_backend& result, const float128_backend& arg)
+#endif
+{
+   float128_type v(arg.value());
+#ifndef BOOST_MP_NO_CONSTEXPR_DETECTION
+   if (BOOST_MP_IS_CONST_EVALUATED(v))
+   {
+      result.value() = v < 0 ? -v : v;
+   }
+   else
+#endif
+   {
+      result.value() = fabsq(arg.value());
+   }
+}
+#ifndef BOOST_MP_NO_CONSTEXPR_DETECTION
+inline BOOST_MP_CXX14_CONSTEXPR void eval_fabs(float128_backend& result, const float128_backend& arg)
+#else
+inline void eval_fabs(float128_backend& result, const float128_backend& arg)
+#endif
+{
+   float128_type v(arg.value());
+#ifndef BOOST_MP_NO_CONSTEXPR_DETECTION
+   if (BOOST_MP_IS_CONST_EVALUATED(v))
+   {
+      result.value() = v < 0 ? -v : v;
+   }
+   else
+#endif
+   {
+      result.value() = fabsq(arg.value());
+   }
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 }
 
 /*********************************************************************
@@ -482,23 +836,39 @@ inline void eval_atan2(float128_backend& result, const float128_backend& a, cons
 {
    result.value() = atan2q(a.value(), b.value());
 }
+<<<<<<< HEAD
+=======
+#ifndef BOOST_MP_USE_QUAD
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 inline void eval_multiply_add(float128_backend& result, const float128_backend& a, const float128_backend& b, const float128_backend& c)
 {
    result.value() = fmaq(a.value(), b.value(), c.value());
 }
+<<<<<<< HEAD
 
+=======
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 inline int eval_signbit BOOST_PREVENT_MACRO_SUBSTITUTION(const float128_backend& arg)
 {
    return ::signbitq(arg.value());
 }
+<<<<<<< HEAD
 
 inline std::size_t hash_value(const float128_backend& val)
 {
    return  boost::hash_value(static_cast<double>(val.value()));
+=======
+#endif
+
+inline std::size_t hash_value(const float128_backend& val)
+{
+   return boost::hash_value(static_cast<double>(val.value()));
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 }
 
 } // namespace backends
 
+<<<<<<< HEAD
    template<boost::multiprecision::expression_template_option ExpressionTemplates>
    inline boost::multiprecision::number<float128_backend, ExpressionTemplates> asinh BOOST_PREVENT_MACRO_SUBSTITUTION(const boost::multiprecision::number<float128_backend, ExpressionTemplates>& arg)
    {
@@ -564,27 +934,113 @@ inline std::size_t hash_value(const float128_backend& val)
    {
       result.value() = remquoq(a.value(), b.value(), pi);
    }
+=======
+template <boost::multiprecision::expression_template_option ExpressionTemplates>
+inline boost::multiprecision::number<float128_backend, ExpressionTemplates> asinh BOOST_PREVENT_MACRO_SUBSTITUTION(const boost::multiprecision::number<float128_backend, ExpressionTemplates>& arg)
+{
+   return asinhq(arg.backend().value());
+}
+template <boost::multiprecision::expression_template_option ExpressionTemplates>
+inline boost::multiprecision::number<float128_backend, ExpressionTemplates> acosh BOOST_PREVENT_MACRO_SUBSTITUTION(const boost::multiprecision::number<float128_backend, ExpressionTemplates>& arg)
+{
+   return acoshq(arg.backend().value());
+}
+template <boost::multiprecision::expression_template_option ExpressionTemplates>
+inline boost::multiprecision::number<float128_backend, ExpressionTemplates> atanh BOOST_PREVENT_MACRO_SUBSTITUTION(const boost::multiprecision::number<float128_backend, ExpressionTemplates>& arg)
+{
+   return atanhq(arg.backend().value());
+}
+template <boost::multiprecision::expression_template_option ExpressionTemplates>
+inline boost::multiprecision::number<float128_backend, ExpressionTemplates> cbrt BOOST_PREVENT_MACRO_SUBSTITUTION(const boost::multiprecision::number<float128_backend, ExpressionTemplates>& arg)
+{
+   return cbrtq(arg.backend().value());
+}
+template <boost::multiprecision::expression_template_option ExpressionTemplates>
+inline boost::multiprecision::number<float128_backend, ExpressionTemplates> erf BOOST_PREVENT_MACRO_SUBSTITUTION(const boost::multiprecision::number<float128_backend, ExpressionTemplates>& arg)
+{
+   return erfq(arg.backend().value());
+}
+template <boost::multiprecision::expression_template_option ExpressionTemplates>
+inline boost::multiprecision::number<float128_backend, ExpressionTemplates> erfc BOOST_PREVENT_MACRO_SUBSTITUTION(const boost::multiprecision::number<float128_backend, ExpressionTemplates>& arg)
+{
+   return erfcq(arg.backend().value());
+}
+template <boost::multiprecision::expression_template_option ExpressionTemplates>
+inline boost::multiprecision::number<float128_backend, ExpressionTemplates> expm1 BOOST_PREVENT_MACRO_SUBSTITUTION(const boost::multiprecision::number<float128_backend, ExpressionTemplates>& arg)
+{
+   return expm1q(arg.backend().value());
+}
+template <boost::multiprecision::expression_template_option ExpressionTemplates>
+inline boost::multiprecision::number<float128_backend, ExpressionTemplates> lgamma BOOST_PREVENT_MACRO_SUBSTITUTION(const boost::multiprecision::number<float128_backend, ExpressionTemplates>& arg)
+{
+   return lgammaq(arg.backend().value());
+}
+template <boost::multiprecision::expression_template_option ExpressionTemplates>
+inline boost::multiprecision::number<float128_backend, ExpressionTemplates> tgamma BOOST_PREVENT_MACRO_SUBSTITUTION(const boost::multiprecision::number<float128_backend, ExpressionTemplates>& arg)
+{
+   return tgammaq(arg.backend().value());
+}
+template <boost::multiprecision::expression_template_option ExpressionTemplates>
+inline boost::multiprecision::number<float128_backend, ExpressionTemplates> log1p BOOST_PREVENT_MACRO_SUBSTITUTION(const boost::multiprecision::number<float128_backend, ExpressionTemplates>& arg)
+{
+   return log1pq(arg.backend().value());
+}
+
+#ifndef BOOST_MP_USE_QUAD
+template <multiprecision::expression_template_option ExpressionTemplates>
+inline boost::multiprecision::number<boost::multiprecision::backends::float128_backend, ExpressionTemplates> copysign BOOST_PREVENT_MACRO_SUBSTITUTION(const boost::multiprecision::number<boost::multiprecision::backends::float128_backend, ExpressionTemplates>& a, const boost::multiprecision::number<boost::multiprecision::backends::float128_backend, ExpressionTemplates>& b)
+{
+   return ::copysignq(a.backend().value(), b.backend().value());
+}
+
+inline void eval_remainder(float128_backend& result, const float128_backend& a, const float128_backend& b)
+{
+   result.value() = remainderq(a.value(), b.value());
+}
+inline void eval_remainder(float128_backend& result, const float128_backend& a, const float128_backend& b, int* pi)
+{
+   result.value() = remquoq(a.value(), b.value(), pi);
+}
+#endif
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 } // namespace multiprecision
 
 namespace math {
 
+<<<<<<< HEAD
    using boost::multiprecision::signbit;
    using boost::multiprecision::copysign;
+=======
+using boost::multiprecision::copysign;
+using boost::multiprecision::signbit;
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 } // namespace math
 
 } // namespace boost
 
+<<<<<<< HEAD
 namespace boost{ 
 namespace archive{
+=======
+namespace boost {
+namespace archive {
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 class binary_oarchive;
 class binary_iarchive;
 
+<<<<<<< HEAD
 }
    
 namespace serialization{ namespace float128_detail{
+=======
+} // namespace archive
+
+namespace serialization {
+namespace float128_detail {
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 template <class Archive>
 void do_serialize(Archive& ar, boost::multiprecision::backends::float128_backend& val, const mpl::false_&, const mpl::false_&)
@@ -592,7 +1048,11 @@ void do_serialize(Archive& ar, boost::multiprecision::backends::float128_backend
    // saving
    // non-binary
    std::string s(val.str(0, std::ios_base::scientific));
+<<<<<<< HEAD
    ar & s;
+=======
+   ar&         boost::make_nvp("value", s);
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 }
 template <class Archive>
 void do_serialize(Archive& ar, boost::multiprecision::backends::float128_backend& val, const mpl::true_&, const mpl::false_&)
@@ -600,7 +1060,11 @@ void do_serialize(Archive& ar, boost::multiprecision::backends::float128_backend
    // loading
    // non-binary
    std::string s;
+<<<<<<< HEAD
    ar & s;
+=======
+   ar&         boost::make_nvp("value", s);
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
    val = s.c_str();
 }
 
@@ -619,27 +1083,44 @@ void do_serialize(Archive& ar, boost::multiprecision::backends::float128_backend
    ar.load_binary(&val, sizeof(val));
 }
 
+<<<<<<< HEAD
 } // detail
+=======
+} // namespace float128_detail
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 template <class Archive>
 void serialize(Archive& ar, boost::multiprecision::backends::float128_backend& val, unsigned int /*version*/)
 {
+<<<<<<< HEAD
    typedef typename Archive::is_loading load_tag;
+=======
+   typedef typename Archive::is_loading                                                                                                                            load_tag;
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
    typedef typename mpl::bool_<boost::is_same<Archive, boost::archive::binary_oarchive>::value || boost::is_same<Archive, boost::archive::binary_iarchive>::value> binary_tag;
 
    float128_detail::do_serialize(ar, val, load_tag(), binary_tag());
 }
 
+<<<<<<< HEAD
 } // namepsace archive
 
 } // namespace boost
 
 namespace std{
+=======
+} // namespace serialization
+
+} // namespace boost
+
+namespace std {
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 template <boost::multiprecision::expression_template_option ExpressionTemplates>
 class numeric_limits<boost::multiprecision::number<boost::multiprecision::backends::float128_backend, ExpressionTemplates> >
 {
    typedef boost::multiprecision::number<boost::multiprecision::backends::float128_backend, ExpressionTemplates> number_type;
+<<<<<<< HEAD
 public:
    BOOST_STATIC_CONSTEXPR bool is_specialized = true;
    static number_type (min)() BOOST_NOEXCEPT { return 3.36210314311209350626267781732175260e-4932Q; }
@@ -673,6 +1154,42 @@ public:
    BOOST_STATIC_CONSTEXPR bool traps = false;
    BOOST_STATIC_CONSTEXPR bool tinyness_before = false;
    BOOST_STATIC_CONSTEXPR float_round_style round_style = round_to_nearest;
+=======
+
+ public:
+   BOOST_STATIC_CONSTEXPR bool is_specialized = true;
+   static BOOST_MP_CXX14_CONSTEXPR number_type(min)() BOOST_NOEXCEPT { return BOOST_MP_QUAD_MIN; }
+   static BOOST_MP_CXX14_CONSTEXPR number_type(max)() BOOST_NOEXCEPT { return BOOST_MP_QUAD_MAX; }
+   static BOOST_MP_CXX14_CONSTEXPR number_type          lowest() BOOST_NOEXCEPT { return -(max)(); }
+   BOOST_STATIC_CONSTEXPR int  digits       = 113;
+   BOOST_STATIC_CONSTEXPR int  digits10     = 33;
+   BOOST_STATIC_CONSTEXPR int  max_digits10 = 36;
+   BOOST_STATIC_CONSTEXPR bool is_signed    = true;
+   BOOST_STATIC_CONSTEXPR bool is_integer   = false;
+   BOOST_STATIC_CONSTEXPR bool is_exact     = false;
+   BOOST_STATIC_CONSTEXPR int  radix        = 2;
+   static BOOST_MP_CXX14_CONSTEXPR number_type          epsilon() { return 1.92592994438723585305597794258492732e-34; /* this double value has only one bit set and so is exact */ }
+   static BOOST_MP_CXX14_CONSTEXPR number_type          round_error() { return 0.5; }
+   BOOST_STATIC_CONSTEXPR int  min_exponent                  = -16381;
+   BOOST_STATIC_CONSTEXPR int  min_exponent10                = min_exponent * 301L / 1000L;
+   BOOST_STATIC_CONSTEXPR int  max_exponent                  = 16384;
+   BOOST_STATIC_CONSTEXPR int  max_exponent10                = max_exponent * 301L / 1000L;
+   BOOST_STATIC_CONSTEXPR bool has_infinity                  = true;
+   BOOST_STATIC_CONSTEXPR bool has_quiet_NaN                 = true;
+   BOOST_STATIC_CONSTEXPR bool has_signaling_NaN             = false;
+   BOOST_STATIC_CONSTEXPR float_denorm_style has_denorm      = denorm_present;
+   BOOST_STATIC_CONSTEXPR bool               has_denorm_loss = true;
+   static BOOST_MP_CXX14_CONSTEXPR number_type                        infinity() { return HUGE_VAL; /* conversion from double infinity OK */ }
+   static BOOST_MP_CXX14_CONSTEXPR number_type                        quiet_NaN() { return number_type("nan"); }
+   static BOOST_MP_CXX14_CONSTEXPR number_type                        signaling_NaN() { return 0; }
+   static BOOST_MP_CXX14_CONSTEXPR number_type                        denorm_min() { return BOOST_MP_QUAD_DENORM_MIN; }
+   BOOST_STATIC_CONSTEXPR bool               is_iec559       = true;
+   BOOST_STATIC_CONSTEXPR bool               is_bounded      = true;
+   BOOST_STATIC_CONSTEXPR bool               is_modulo       = false;
+   BOOST_STATIC_CONSTEXPR bool               traps           = false;
+   BOOST_STATIC_CONSTEXPR bool               tinyness_before = false;
+   BOOST_STATIC_CONSTEXPR float_round_style round_style      = round_to_nearest;
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 };
 
 template <boost::multiprecision::expression_template_option ExpressionTemplates>
@@ -693,7 +1210,10 @@ BOOST_CONSTEXPR_OR_CONST bool numeric_limits<boost::multiprecision::number<boost
 template <boost::multiprecision::expression_template_option ExpressionTemplates>
 BOOST_CONSTEXPR_OR_CONST int numeric_limits<boost::multiprecision::number<boost::multiprecision::backends::float128_backend, ExpressionTemplates> >::radix;
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 template <boost::multiprecision::expression_template_option ExpressionTemplates>
 BOOST_CONSTEXPR_OR_CONST int numeric_limits<boost::multiprecision::number<boost::multiprecision::backends::float128_backend, ExpressionTemplates> >::min_exponent;
 template <boost::multiprecision::expression_template_option ExpressionTemplates>
@@ -730,5 +1250,8 @@ BOOST_CONSTEXPR_OR_CONST float_denorm_style numeric_limits<boost::multiprecision
 
 } // namespace std
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 #endif

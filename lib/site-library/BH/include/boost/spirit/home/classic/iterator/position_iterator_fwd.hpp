@@ -10,7 +10,11 @@
 #define BOOST_SPIRIT_POSITION_ITERATOR_FWD_HPP
 
 #include <string>
+<<<<<<< HEAD
 #include <boost/detail/iterator.hpp> // for boost::detail::iterator_traits
+=======
+#include <iterator> // for std::iterator_traits
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 #include <boost/spirit/home/classic/namespace.hpp>
 #include <boost/spirit/home/classic/core/nil.hpp>
 
@@ -32,7 +36,11 @@ BOOST_SPIRIT_CLASSIC_NAMESPACE_BEGIN
         typename ForwardIteratorT,
         typename PositionT = file_position_base<
             std::basic_string<
+<<<<<<< HEAD
                 typename boost::detail::iterator_traits<ForwardIteratorT>::value_type
+=======
+                typename std::iterator_traits<ForwardIteratorT>::value_type
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
             > 
         >,
         typename SelfT = nil_t
@@ -44,7 +52,11 @@ BOOST_SPIRIT_CLASSIC_NAMESPACE_BEGIN
         typename ForwardIteratorT,
         typename PositionT = file_position_base<
             std::basic_string<
+<<<<<<< HEAD
                 typename boost::detail::iterator_traits<ForwardIteratorT>::value_type
+=======
+                typename std::iterator_traits<ForwardIteratorT>::value_type
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
             > 
         >
     >

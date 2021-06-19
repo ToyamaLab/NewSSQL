@@ -22,6 +22,10 @@
 #include <boost/accumulators/statistics_fwd.hpp>
 #include <boost/accumulators/statistics/count.hpp>
 #include <boost/accumulators/statistics/parameters/quantile_probability.hpp>
+<<<<<<< HEAD
+=======
+#include <boost/serialization/boost_array.hpp>
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 namespace boost { namespace accumulators
 {
@@ -61,7 +65,11 @@ namespace impl
 
         template<typename Args>
         p_square_quantile_impl(Args const &args)
+<<<<<<< HEAD
           : p(is_same<Impl, for_median>::value ? 0.5 : args[quantile_probability | 0.5])
+=======
+          : p(is_same<Impl, for_median>::value ? float_type(0.5) : args[quantile_probability | float_type(0.5)])
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
           , heights()
           , actual_positions()
           , desired_positions()
@@ -69,6 +77,7 @@ namespace impl
         {
             for(std::size_t i = 0; i < 5; ++i)
             {
+<<<<<<< HEAD
                 this->actual_positions[i] = i + 1.;
             }
 
@@ -83,6 +92,23 @@ namespace impl
             this->positions_increments[2] = this->p;
             this->positions_increments[3] = (1. + this->p) / 2.;
             this->positions_increments[4] = 1.;
+=======
+                this->actual_positions[i] = i + float_type(1.);
+            }
+
+            this->desired_positions[0] = float_type(1.);
+            this->desired_positions[1] = float_type(1.) + float_type(2.) * this->p;
+            this->desired_positions[2] = float_type(1.) + float_type(4.) * this->p;
+            this->desired_positions[3] = float_type(3.) + float_type(2.) * this->p;
+            this->desired_positions[4] = float_type(5.);
+
+
+            this->positions_increments[0] = float_type(0.);
+            this->positions_increments[1] = this->p / float_type(2.);
+            this->positions_increments[2] = this->p;
+            this->positions_increments[3] = (float_type(1.) + this->p) / float_type(2.);
+            this->positions_increments[4] = float_type(1.);
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
         }
 
         template<typename Args>
@@ -156,7 +182,11 @@ namespace impl
                     float_type hp = (this->heights[i + 1] - this->heights[i]) / dp;
                     float_type hm = (this->heights[i - 1] - this->heights[i]) / dm;
 
+<<<<<<< HEAD
                     if((d >= 1. && dp > 1.) || (d <= -1. && dm < -1.))
+=======
+                    if((d >= float_type(1.) && dp > float_type(1.)) || (d <= float_type(-1.) && dm < float_type(-1.)))
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
                     {
                         short sign_d = static_cast<short>(d / std::abs(d));
 
@@ -171,11 +201,19 @@ namespace impl
                         else
                         {
                             // use linear formula
+<<<<<<< HEAD
                             if(d > 0)
                             {
                                 this->heights[i] += hp;
                             }
                             if(d < 0)
+=======
+                            if(d > float_type(0))
+                            {
+                                this->heights[i] += hp;
+                            }
+                            if(d < float_type(0))
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
                             {
                                 this->heights[i] -= hm;
                             }
@@ -191,6 +229,21 @@ namespace impl
             return this->heights[2];
         }
 
+<<<<<<< HEAD
+=======
+        // make this accumulator serializeable
+        // TODO: do we need to split to load/save and verify that P did not change?
+        template<class Archive>
+        void serialize(Archive & ar, const unsigned int file_version)
+        { 
+            ar & p;
+            ar & heights;
+            ar & actual_positions;
+            ar & desired_positions;
+            ar & positions_increments;
+        }
+
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     private:
         float_type p;                    // the quantile probability p
         array_type heights;              // q_i

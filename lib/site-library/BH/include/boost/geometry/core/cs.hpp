@@ -4,10 +4,18 @@
 // Copyright (c) 2008-2014 Bruno Lalande, Paris, France.
 // Copyright (c) 2009-2014 Mateusz Loskot, London, UK.
 
+<<<<<<< HEAD
 // This file was modified by Oracle on 2014.
 // Modifications copyright (c) 2014, Oracle and/or its affiliates.
 
 // Contributed and/or modified by Menelaos Karavelas, on behalf of Oracle
+=======
+// This file was modified by Oracle on 2014, 2018.
+// Modifications copyright (c) 2014-2018, Oracle and/or its affiliates.
+
+// Contributed and/or modified by Menelaos Karavelas, on behalf of Oracle
+// Contributed and/or modified by Adam Wulkiewicz, on behalf of Oracle
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 // Parts of Boost.Geometry are redesigned from Geodan's Geographic Library
 // (geolib/GGL), copyright (c) 1995-2010 Geodan, Amsterdam, the Netherlands.
@@ -22,7 +30,10 @@
 #include <cstddef>
 
 #include <boost/mpl/assert.hpp>
+<<<<<<< HEAD
 #include <boost/type_traits/integral_constant.hpp>
+=======
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 #include <boost/geometry/core/coordinate_system.hpp>
 #include <boost/geometry/core/tags.hpp>
@@ -56,7 +67,11 @@ namespace core_detail
 {
 
 template <typename DegreeOrRadian>
+<<<<<<< HEAD
 struct coordinate_system_units
+=======
+struct define_angular_units
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 {
     BOOST_MPL_ASSERT_MSG
         ((false),
@@ -65,13 +80,21 @@ struct coordinate_system_units
 };
 
 template <>
+<<<<<<< HEAD
 struct coordinate_system_units<geometry::degree>
+=======
+struct define_angular_units<geometry::degree>
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 {
     typedef geometry::degree units;
 };
 
 template <>
+<<<<<<< HEAD
 struct coordinate_system_units<geometry::radian>
+=======
+struct define_angular_units<geometry::radian>
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 {
     typedef geometry::radian units;
 };
@@ -107,12 +130,17 @@ known as lat,long or lo,la or phi,lambda
 */
 template<typename DegreeOrRadian>
 struct geographic
+<<<<<<< HEAD
 {
     typedef typename core_detail::coordinate_system_units
         <
             DegreeOrRadian
         >::units units;
 };
+=======
+    : core_detail::define_angular_units<DegreeOrRadian>
+{};
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 
 
@@ -136,12 +164,17 @@ struct geographic
 */
 template<typename DegreeOrRadian>
 struct spherical
+<<<<<<< HEAD
 {
     typedef typename core_detail::coordinate_system_units
         <
             DegreeOrRadian
         >::units units;
 };
+=======
+    : core_detail::define_angular_units<DegreeOrRadian>
+{};
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 
 /*!
@@ -156,12 +189,17 @@ struct spherical
 */
 template<typename DegreeOrRadian>
 struct spherical_equatorial
+<<<<<<< HEAD
 {
     typedef typename core_detail::coordinate_system_units
         <
             DegreeOrRadian
         >::units units;
 };
+=======
+    : core_detail::define_angular_units<DegreeOrRadian>
+{};
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 
 
@@ -174,12 +212,24 @@ struct spherical_equatorial
 */
 template<typename DegreeOrRadian>
 struct polar
+<<<<<<< HEAD
 {
     typedef typename core_detail::coordinate_system_units
         <
             DegreeOrRadian
         >::units units;
 };
+=======
+    : core_detail::define_angular_units<DegreeOrRadian>
+{};
+
+
+/*!
+\brief Undefined coordinate system
+\ingroup cs
+*/
+struct undefined {};
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 
 } // namespace cs
@@ -227,9 +277,24 @@ struct cs_tag<cs::cartesian>
 };
 
 
+<<<<<<< HEAD
 #endif // DOXYGEN_NO_TRAITS_SPECIALIZATIONS
 } // namespace traits
 
+=======
+template <>
+struct cs_tag<cs::undefined>
+{
+    typedef cs_undefined_tag type;
+};
+
+#endif // DOXYGEN_NO_TRAITS_SPECIALIZATIONS
+
+
+} // namespace traits
+
+
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 /*!
 \brief Meta-function returning coordinate system tag (cs family) of any geometry
 \tparam Geometry \tparam_geometry
@@ -245,6 +310,7 @@ struct cs_tag
 };
 
 
+<<<<<<< HEAD
 /*!
 \brief Meta-function to verify if a coordinate system is radian
 \tparam CoordinateSystem Any coordinate system.
@@ -263,6 +329,99 @@ struct is_radian< CoordinateSystem<degree> > : boost::false_type
 };
 
 #endif // DOXYGEN_NO_SPECIALIZATIONS
+=======
+namespace traits
+{
+
+// cartesian or undefined
+template <typename CoordinateSystem>
+struct cs_angular_units
+{
+    typedef geometry::radian type;
+};
+
+#ifndef DOXYGEN_NO_TRAITS_SPECIALIZATIONS
+
+template<typename DegreeOrRadian>
+struct cs_angular_units<cs::geographic<DegreeOrRadian> >
+{
+    typedef DegreeOrRadian type;
+};
+
+template<typename DegreeOrRadian>
+struct cs_angular_units<cs::spherical<DegreeOrRadian> >
+{
+    typedef DegreeOrRadian type;
+};
+
+template<typename DegreeOrRadian>
+struct cs_angular_units<cs::spherical_equatorial<DegreeOrRadian> >
+{
+    typedef DegreeOrRadian type;
+};
+
+#endif // DOXYGEN_NO_TRAITS_SPECIALIZATIONS
+
+
+} // namespace traits
+
+
+#ifndef DOXYGEN_NO_DETAIL
+namespace detail
+{
+
+template <typename Geometry>
+struct cs_angular_units
+{
+    typedef typename traits::cs_angular_units
+        <
+            typename geometry::coordinate_system<Geometry>::type
+        >::type type;
+};
+
+
+template <typename Units, typename CsTag>
+struct cs_tag_to_coordinate_system
+{
+    BOOST_MPL_ASSERT_MSG((false),
+                         NOT_IMPLEMENTED_FOR_THIS_COORDINATE_SYSTEM,
+                         (types<CsTag>));
+};
+
+template <typename Units>
+struct cs_tag_to_coordinate_system<Units, cs_undefined_tag>
+{
+    typedef cs::undefined type;
+};
+
+template <typename Units>
+struct cs_tag_to_coordinate_system<Units, cartesian_tag>
+{
+    typedef cs::cartesian type;
+};
+
+template <typename Units>
+struct cs_tag_to_coordinate_system<Units, spherical_equatorial_tag>
+{
+    typedef cs::spherical_equatorial<Units> type;
+};
+
+template <typename Units>
+struct cs_tag_to_coordinate_system<Units, spherical_polar_tag>
+{
+    typedef cs::spherical<Units> type;
+};
+
+template <typename Units>
+struct cs_tag_to_coordinate_system<Units, geographic_tag>
+{
+    typedef cs::geographic<Units> type;
+};
+
+} // namespace detail
+#endif // DOXYGEN_NO_DETAIL
+
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 }} // namespace boost::geometry
 

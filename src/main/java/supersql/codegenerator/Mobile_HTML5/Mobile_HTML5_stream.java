@@ -8,6 +8,7 @@ import java.util.Iterator;
 import supersql.codegenerator.Asc_Desc;
 import supersql.codegenerator.Asc_Desc.AscDesc;
 import supersql.codegenerator.DecorateList;
+import supersql.codegenerator.Ehtml;
 import supersql.codegenerator.ITFE;
 import supersql.codegenerator.LinkForeach;
 import supersql.codegenerator.Compiler.Compiler_Dynamic;
@@ -241,6 +242,7 @@ public class Mobile_HTML5_stream {
 
       streamAttributeFlg = true;
       streamPHPfileName = html_env.getFileName2()+"_SSQLstream_"+streamCount+".php";
+      //Log.info("streamPHPfileName = "+streamPHPfileName);
 
       if(decos.containsKey("row")){
         streamRow = Integer.parseInt(decos.getStr("row").replace("\"", ""));

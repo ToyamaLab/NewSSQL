@@ -2,7 +2,11 @@
 // detail/impl/win_iocp_handle_service.ipp
 // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 //
+<<<<<<< HEAD
 // Copyright (c) 2003-2017 Christopher M. Kohlhoff (chris at kohlhoff dot com)
+=======
+// Copyright (c) 2003-2019 Christopher M. Kohlhoff (chris at kohlhoff dot com)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 // Copyright (c) 2008 Rep Invariant Systems, Inc. (info@repinvariant.com)
 //
 // Distributed under the Boost Software License, Version 1.0. (See accompanying
@@ -66,10 +70,16 @@ public:
   }
 };
 
+<<<<<<< HEAD
 win_iocp_handle_service::win_iocp_handle_service(
     boost::asio::io_context& io_context)
   : service_base<win_iocp_handle_service>(io_context),
     iocp_service_(boost::asio::use_service<win_iocp_io_context>(io_context)),
+=======
+win_iocp_handle_service::win_iocp_handle_service(execution_context& context)
+  : execution_context_service_base<win_iocp_handle_service>(context),
+    iocp_service_(boost::asio::use_service<win_iocp_io_context>(context)),
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     mutex_(),
     impl_list_(0)
 {
@@ -244,7 +254,12 @@ boost::system::error_code win_iocp_handle_service::cancel(
   {
     // The version of Windows supports cancellation from any thread.
     typedef BOOL (WINAPI* cancel_io_ex_t)(HANDLE, LPOVERLAPPED);
+<<<<<<< HEAD
     cancel_io_ex_t cancel_io_ex = (cancel_io_ex_t)cancel_io_ex_ptr;
+=======
+    cancel_io_ex_t cancel_io_ex = reinterpret_cast<cancel_io_ex_t>(
+        reinterpret_cast<void*>(cancel_io_ex_ptr));
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     if (!cancel_io_ex(impl.handle_, 0))
     {
       DWORD last_error = ::GetLastError();

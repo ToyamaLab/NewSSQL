@@ -20,6 +20,10 @@
 
 // Boost.Test
 #include <boost/test/utils/named_params.hpp>
+<<<<<<< HEAD
+=======
+#include <boost/test/detail/global_typedef.hpp>
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 #include <boost/test/detail/suppress_warnings.hpp>
 

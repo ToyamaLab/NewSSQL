@@ -11,12 +11,21 @@
 #ifndef BOOST_COMPUTE_ALGORITHM_TRANSFORM_HPP
 #define BOOST_COMPUTE_ALGORITHM_TRANSFORM_HPP
 
+<<<<<<< HEAD
+=======
+#include <boost/static_assert.hpp>
+
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 #include <boost/compute/system.hpp>
 #include <boost/compute/command_queue.hpp>
 #include <boost/compute/algorithm/copy.hpp>
 #include <boost/compute/iterator/transform_iterator.hpp>
 #include <boost/compute/iterator/zip_iterator.hpp>
 #include <boost/compute/functional/detail/unpack.hpp>
+<<<<<<< HEAD
+=======
+#include <boost/compute/type_traits/is_device_iterator.hpp>
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 namespace boost {
 namespace compute {
@@ -39,6 +48,11 @@ inline OutputIterator transform(InputIterator first,
                                 UnaryOperator op,
                                 command_queue &queue = system::default_queue())
 {
+<<<<<<< HEAD
+=======
+    BOOST_STATIC_ASSERT(is_device_iterator<InputIterator>::value);
+    BOOST_STATIC_ASSERT(is_device_iterator<OutputIterator>::value);
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     return copy(
                ::boost::compute::make_transform_iterator(first, op),
                ::boost::compute::make_transform_iterator(last, op),
@@ -59,13 +73,25 @@ inline OutputIterator transform(InputIterator1 first1,
                                 BinaryOperator op,
                                 command_queue &queue = system::default_queue())
 {
+<<<<<<< HEAD
+=======
+    BOOST_STATIC_ASSERT(is_device_iterator<InputIterator1>::value);
+    BOOST_STATIC_ASSERT(is_device_iterator<InputIterator2>::value);
+    BOOST_STATIC_ASSERT(is_device_iterator<OutputIterator>::value);
+
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     typedef typename std::iterator_traits<InputIterator1>::difference_type difference_type;
 
     difference_type n = std::distance(first1, last1);
 
     return transform(
+<<<<<<< HEAD
                make_zip_iterator(boost::make_tuple(first1, first2)),
                make_zip_iterator(boost::make_tuple(last1, first2 + n)),
+=======
+               ::boost::compute::make_zip_iterator(boost::make_tuple(first1, first2)),
+               ::boost::compute::make_zip_iterator(boost::make_tuple(last1, first2 + n)),
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
                result,
                detail::unpack(op),
                queue

@@ -1,5 +1,11 @@
 ---
 title: "dplyr compatibility"
+<<<<<<< HEAD
+=======
+description: >
+  A guide for package authors who need to work with multiple versions
+  of dplyr.
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{dplyr compatibility}
@@ -65,7 +71,11 @@ Sometimes it's not possible to avoid `importFrom()`. For example you might be im
 
 ### Database code moves to dbplyr
 
+<<<<<<< HEAD
 Almost all database related code has been moved out of dplyr and into a new package, [dbplyr](http://github.com/hadley/dbplyr/). This makes dplyr simpler, and will make it easier to release fixes for bugs that only affect databases.  If you've implemented a database backend for dplyr, please read the [backend news](https://github.com/hadley/dbplyr/blob/master/NEWS.md#backends) on the backend.
+=======
+Almost all database related code has been moved out of dplyr and into a new package, [dbplyr](https://github.com/tidyverse/dbplyr/). This makes dplyr simpler, and will make it easier to release fixes for bugs that only affect databases.  If you've implemented a database backend for dplyr, please read the [backend news](https://github.com/tidyverse/dbplyr/blob/master/NEWS.md#backends) on the backend.
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 Depending on what generics you use, and what generics you provide methods for you, you may need to write some conditional code. To help make this easier we've written `wrap_dbplyr_obj()` which will write the helper code for you:
 
@@ -108,7 +118,11 @@ sym <- quote(cyl)
 select(mtcars, !! sym)
 
 call <- quote(mean(cyl))
+<<<<<<< HEAD
 summarise(mtcars, !! call)
+=======
+summarise(mtcars, cyl = !! call)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 ```
 
 Transforming objects into quosures is generally straightforward. To
@@ -160,16 +174,27 @@ fun <- rlang::sym("my_call")
 quo((!!fun)(!!! syms))
 ```
 
+<<<<<<< HEAD
 Or create the call with `lang()`:
 
 ```{r}
 call <- rlang::lang("my_call", !!! syms)
+=======
+Or create the call with `call2()`:
+
+```{r}
+call <- rlang::call2("my_call", !!! syms)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 call
 
 rlang::as_quosure(call)
 
 # Or equivalently:
+<<<<<<< HEAD
 quo(!! rlang::lang("my_call", !!! syms))
+=======
+quo(!! rlang::call2("my_call", !!! syms))
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 ```
 
 Note that idioms based on `interp()` should now generally be avoided
@@ -193,7 +218,11 @@ quosures.
 #### For package authors
 
 For package authors, rlang provides a
+<<<<<<< HEAD
 [compatibility file](https://github.com/hadley/rlang/blob/master/R/compat-lazyeval.R) that
+=======
+[compatibility file](https://github.com/r-lib/rlang/blob/master/R/compat-lazyeval.R) that
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 you can copy to your package. `compat_lazy()` and `compat_lazy_dots()`
 turn lazy-able objects into proper quosures. This helps providing an
 underscored version to your users for backward compatibility. For
@@ -280,7 +309,11 @@ mutate_at(starwars, vars(height, mass), as.character)
 summarise_at(mtcars, vars(starts_with("d")), mean)
 ```
 
+<<<<<<< HEAD
 Note that intead of a `vars()` selection, you can also supply
+=======
+Note that instead of a `vars()` selection, you can also supply
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 character vectors of column names:
 
 ```{r, eval = FALSE}

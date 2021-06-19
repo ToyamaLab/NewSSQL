@@ -78,7 +78,11 @@ public:
       static const bool value = same_type || is_convertible<P1, const_node_ptr>::value;
    };
 
+<<<<<<< HEAD
    base_t base() const
+=======
+   BOOST_INTRUSIVE_FORCEINLINE base_t base() const
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
    {  return static_cast<const base_t&>(*this); }
 
    BOOST_INTRUSIVE_FORCEINLINE key_nodeptr_comp(KeyTypeKeyCompare kcomp, const ValueTraits *traits)

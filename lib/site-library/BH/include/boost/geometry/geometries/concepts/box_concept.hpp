@@ -15,11 +15,18 @@
 #ifndef BOOST_GEOMETRY_GEOMETRIES_CONCEPTS_BOX_CONCEPT_HPP
 #define BOOST_GEOMETRY_GEOMETRIES_CONCEPTS_BOX_CONCEPT_HPP
 
+<<<<<<< HEAD
 
 #include <cstddef>
 
 #include <boost/concept_check.hpp>
 
+=======
+#include <cstddef>
+
+#include <boost/concept_check.hpp>
+#include <boost/core/ignore_unused.hpp>
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 #include <boost/geometry/core/access.hpp>
 #include <boost/geometry/core/coordinate_dimension.hpp>
@@ -109,7 +116,11 @@ class ConstBox
         {
             const Geometry* b = 0;
             coordinate_type coord(geometry::get<Index, Dimension>(*b));
+<<<<<<< HEAD
             boost::ignore_unused_variable_warning(coord);
+=======
+            boost::ignore_unused(coord);
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
             dimension_checker<Index, Dimension + 1, DimensionCount>::apply();
         }
     };

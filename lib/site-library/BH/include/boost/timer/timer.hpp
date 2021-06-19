@@ -11,7 +11,10 @@
 #include <boost/config/warning_disable.hpp>
 
 #include <boost/timer/config.hpp>
+<<<<<<< HEAD
 //#include <boost/chrono/chrono.hpp>
+=======
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 #include <boost/cstdint.hpp>
 #include <string>
 #include <cstring>

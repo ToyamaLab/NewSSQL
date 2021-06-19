@@ -2,18 +2,37 @@
 
 S3method(as_factor,character)
 S3method(as_factor,factor)
+<<<<<<< HEAD
+=======
+S3method(as_factor,logical)
+S3method(as_factor,numeric)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 export("%>%")
 export(as_factor)
 export(fct_anon)
 export(fct_c)
 export(fct_collapse)
 export(fct_count)
+<<<<<<< HEAD
+=======
+export(fct_cross)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 export(fct_drop)
 export(fct_expand)
 export(fct_explicit_na)
 export(fct_infreq)
 export(fct_inorder)
+<<<<<<< HEAD
 export(fct_lump)
+=======
+export(fct_inseq)
+export(fct_lump)
+export(fct_lump_lowfreq)
+export(fct_lump_min)
+export(fct_lump_n)
+export(fct_lump_prop)
+export(fct_match)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 export(fct_other)
 export(fct_recode)
 export(fct_relabel)
@@ -25,10 +44,18 @@ export(fct_shift)
 export(fct_shuffle)
 export(fct_unify)
 export(fct_unique)
+<<<<<<< HEAD
+=======
+export(first2)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 export(last2)
 export(lvls_expand)
 export(lvls_reorder)
 export(lvls_revalue)
 export(lvls_union)
+<<<<<<< HEAD
+=======
+import(rlang)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 importFrom(magrittr,"%>%")
 importFrom(stats,median)

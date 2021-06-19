@@ -5,8 +5,13 @@
 // Copyright (c) 2009-2014 Mateusz Loskot, London, UK.
 // Copyright (c) 2013-2014 Adam Wulkiewicz, Lodz, Poland.
 
+<<<<<<< HEAD
 // This file was modified by Oracle on 2013-2017.
 // Modifications copyright (c) 2013-2017, Oracle and/or its affiliates.
+=======
+// This file was modified by Oracle on 2013-2019.
+// Modifications copyright (c) 2013-2019, Oracle and/or its affiliates.
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 // Contributed and/or modified by Vissarion Fysikopoulos, on behalf of Oracle
 // Contributed and/or modified by Menelaos Karavelas, on behalf of Oracle
@@ -35,6 +40,10 @@
 
 #include <boost/geometry/algorithms/detail/assign_indexed_point.hpp>
 
+<<<<<<< HEAD
+=======
+#include <boost/geometry/strategies/cartesian/point_in_box.hpp>
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 #include <boost/geometry/strategies/disjoint.hpp>
 
 
@@ -246,6 +255,7 @@ struct disjoint_segment_box_impl
 // other strategies that are used are intersection and covered_by strategies.
 struct segment_box
 {
+<<<<<<< HEAD
     template <typename Segment, typename Box>
     struct point_in_geometry_strategy
         : services::default_strategy
@@ -262,6 +272,13 @@ struct segment_box
         typedef typename point_in_geometry_strategy<Segment, Box>::type strategy_type;
 
         return strategy_type();
+=======
+    typedef covered_by::cartesian_point_box disjoint_point_box_strategy_type;
+
+    static inline disjoint_point_box_strategy_type get_disjoint_point_box_strategy()
+    {
+        return disjoint_point_box_strategy_type();
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     }
 
     template <typename Segment, typename Box>

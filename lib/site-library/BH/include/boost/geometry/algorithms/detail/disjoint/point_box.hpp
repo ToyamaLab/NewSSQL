@@ -5,8 +5,13 @@
 // Copyright (c) 2009-2015 Mateusz Loskot, London, UK.
 // Copyright (c) 2013-2015 Adam Wulkiewicz, Lodz, Poland
 
+<<<<<<< HEAD
 // This file was modified by Oracle on 2013-2017.
 // Modifications copyright (c) 2013-2017, Oracle and/or its affiliates.
+=======
+// This file was modified by Oracle on 2013-2018.
+// Modifications copyright (c) 2013-2018, Oracle and/or its affiliates.
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 // Contributed and/or modified by Adam Wulkiewicz, on behalf of Oracle
 // Contributed and/or modified by Menelaos Karavelas, on behalf of Oracle
@@ -41,6 +46,7 @@ namespace detail { namespace disjoint
 /*!
     \brief Internal utility function to detect if point/box are disjoint
  */
+<<<<<<< HEAD
 template <typename Point, typename Box>
 inline bool disjoint_point_box(Point const& point, Box const& box)
 {
@@ -51,6 +57,13 @@ inline bool disjoint_point_box(Point const& point, Box const& box)
 
     // ! covered_by(point, box)
     return ! strategy_type::apply(point, box);
+=======
+template <typename Point, typename Box, typename Strategy>
+inline bool disjoint_point_box(Point const& point, Box const& box, Strategy const& )
+{
+    // ! covered_by(point, box)
+    return ! Strategy::apply(point, box);
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 }
 
 

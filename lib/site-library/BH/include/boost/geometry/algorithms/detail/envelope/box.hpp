@@ -4,8 +4,13 @@
 // Copyright (c) 2008-2015 Bruno Lalande, Paris, France.
 // Copyright (c) 2009-2015 Mateusz Loskot, London, UK.
 
+<<<<<<< HEAD
 // This file was modified by Oracle on 2015, 2016, 2017.
 // Modifications copyright (c) 2015-2017, Oracle and/or its affiliates.
+=======
+// This file was modified by Oracle on 2015-2018.
+// Modifications copyright (c) 2015-2018, Oracle and/or its affiliates.
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 // Contributed and/or modified by Vissarion Fysikopoulos, on behalf of Oracle
 // Contributed and/or modified by Menelaos Karavelas, on behalf of Oracle
@@ -18,6 +23,7 @@
 #ifndef BOOST_GEOMETRY_ALGORITHMS_DETAIL_ENVELOPE_BOX_HPP
 #define BOOST_GEOMETRY_ALGORITHMS_DETAIL_ENVELOPE_BOX_HPP
 
+<<<<<<< HEAD
 #include <cstddef>
 
 #include <boost/geometry/core/cs.hpp>
@@ -32,11 +38,20 @@
 #include <boost/geometry/algorithms/detail/envelope/transform_units.hpp>
 
 #include <boost/geometry/algorithms/dispatch/envelope.hpp>
+=======
+
+#include <boost/geometry/core/tags.hpp>
+
+// For backward compatibility
+#include <boost/geometry/strategies/cartesian/envelope_box.hpp>
+#include <boost/geometry/strategies/spherical/envelope_box.hpp>
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 
 namespace boost { namespace geometry
 {
 
+<<<<<<< HEAD
 #ifndef DOXYGEN_NO_DETAIL
 namespace detail { namespace envelope
 {
@@ -113,10 +128,26 @@ struct envelope_box
             <
                 max_corner, 0, dimension<BoxIn>::value
             >::apply(box_in, mbr);
+=======
+
+#ifndef DOXYGEN_NO_DISPATCH
+namespace dispatch
+{
+
+
+template <typename Box>
+struct envelope<Box, box_tag>
+{
+    template<typename BoxIn, typename BoxOut, typename Strategy>
+    static inline void apply(BoxIn const& box_in, BoxOut& mbr, Strategy const& )
+    {
+        Strategy::apply(box_in, mbr);
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     }
 };
 
 
+<<<<<<< HEAD
 struct envelope_box_on_spheroid
 {
     template <typename BoxIn, typename BoxOut, typename Strategy>
@@ -171,6 +202,8 @@ struct envelope<Box, box_tag, geographic_tag>
 {};
 
 
+=======
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 } // namespace dispatch
 #endif // DOXYGEN_NO_DISPATCH
 

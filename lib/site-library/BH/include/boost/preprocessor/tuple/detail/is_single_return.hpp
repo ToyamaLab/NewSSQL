@@ -20,9 +20,15 @@
 # include <boost/preprocessor/control/iif.hpp>
 # include <boost/preprocessor/facilities/is_1.hpp>
 # include <boost/preprocessor/tuple/size.hpp>
+<<<<<<< HEAD
 # define BOOST_PP_TUPLE_IS_SINGLE_RETURN(sr,nsr,tuple)	\
 	BOOST_PP_IIF(BOOST_PP_IS_1(BOOST_PP_TUPLE_SIZE(tuple)),sr,nsr) \
 	/**/
+=======
+# define BOOST_PP_TUPLE_IS_SINGLE_RETURN(sr,nsr,tuple)  \
+    BOOST_PP_IIF(BOOST_PP_IS_1(BOOST_PP_TUPLE_SIZE(tuple)),sr,nsr) \
+    /**/
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 # endif /* BOOST_PP_VARIADICS && BOOST_PP_VARIADICS_MSVC */
 #
 # endif /* BOOST_PREPROCESSOR_TUPLE_DETAIL_IS_SINGLE_RETURN_HPP */

@@ -17,6 +17,10 @@
 #include <boost/throw_exception.hpp>
 #include <boost/date_time/compiler_config.hpp>
 #include <boost/date_time/c_time.hpp>
+<<<<<<< HEAD
+=======
+#include <boost/numeric/conversion/cast.hpp>
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 namespace boost {
 namespace date_time {
@@ -42,12 +46,23 @@ namespace date_time {
       }
       date_duration_type dd = t.date() - time_t_start_day;
       time_duration_type td = t.time_of_day();
+<<<<<<< HEAD
       std::time_t t2 = static_cast<std::time_t>(dd.days())*86400 +
                        static_cast<std::time_t>(td.hours())*3600 +
                        static_cast<std::time_t>(td.minutes())*60 +
                        td.seconds();
       std::tm tms, *tms_ptr;
       tms_ptr = c_time::localtime(&t2, &tms);
+=======
+      uint64_t t2 = static_cast<uint64_t>(dd.days())*86400 +
+                    static_cast<uint64_t>(td.hours())*3600 +
+                    static_cast<uint64_t>(td.minutes())*60 +
+                    td.seconds();
+      // detect y2038 issue and throw instead of proceed with bad time
+      std::time_t tv = boost::numeric_cast<std::time_t>(t2);
+      std::tm tms, *tms_ptr;
+      tms_ptr = c_time::localtime(&tv, &tms);
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
       date_type d(static_cast<unsigned short>(tms_ptr->tm_year + 1900),
                   static_cast<unsigned short>(tms_ptr->tm_mon + 1),
                   static_cast<unsigned short>(tms_ptr->tm_mday));

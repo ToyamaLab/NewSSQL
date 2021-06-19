@@ -48,7 +48,11 @@ struct print
 {
 #if defined(__clang__)
 # pragma clang diagnostic push
+<<<<<<< HEAD
   // # pragma clang diagnostic ignored "-Wc++11-extensions"
+=======
+  //# pragma clang diagnostic ignored "-Wc++11-extensions"
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     const int m_x = 1 / (sizeof(T) - sizeof(T));
 # pragma clang diagnostic pop
 #elif defined(BOOST_MSVC)

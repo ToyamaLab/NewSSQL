@@ -12,6 +12,10 @@
 #ifndef BOOST_ALGORITHM_IS_PARTITIONED_HPP
 #define BOOST_ALGORITHM_IS_PARTITIONED_HPP
 
+<<<<<<< HEAD
+=======
+#include <boost/config.hpp>
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 #include <boost/range/begin.hpp>
 #include <boost/range/end.hpp>
 
@@ -26,7 +30,11 @@ namespace boost { namespace algorithm {
 /// \param p        The predicate to test the values with
 /// \note           This function is part of the C++2011 standard library.
 template <typename InputIterator, typename UnaryPredicate>
+<<<<<<< HEAD
 bool is_partitioned ( InputIterator first, InputIterator last, UnaryPredicate p )
+=======
+BOOST_CXX14_CONSTEXPR bool is_partitioned ( InputIterator first, InputIterator last, UnaryPredicate p )
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 {
 //  Run through the part that satisfy the predicate
     for ( ; first != last; ++first )
@@ -47,7 +55,11 @@ bool is_partitioned ( InputIterator first, InputIterator last, UnaryPredicate p 
 /// \param p        The predicate to test the values with
 ///
 template <typename Range, typename UnaryPredicate>
+<<<<<<< HEAD
 bool is_partitioned ( const Range &r, UnaryPredicate p )
+=======
+BOOST_CXX14_CONSTEXPR bool is_partitioned ( const Range &r, UnaryPredicate p )
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 {
     return boost::algorithm::is_partitioned (boost::begin(r), boost::end(r), p);
 }

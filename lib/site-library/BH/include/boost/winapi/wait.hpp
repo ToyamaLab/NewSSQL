@@ -20,7 +20,11 @@
 extern "C" {
 
 #if BOOST_WINAPI_PARTITION_APP || BOOST_WINAPI_PARTITION_SYSTEM
+<<<<<<< HEAD
 BOOST_SYMBOL_IMPORT boost::winapi::DWORD_ WINAPI
+=======
+BOOST_SYMBOL_IMPORT boost::winapi::DWORD_ BOOST_WINAPI_WINAPI_CC
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 WaitForSingleObjectEx(
     boost::winapi::HANDLE_ hHandle,
     boost::winapi::DWORD_ dwMilliseconds,
@@ -29,7 +33,11 @@ WaitForSingleObjectEx(
 
 #if BOOST_WINAPI_PARTITION_DESKTOP || BOOST_WINAPI_PARTITION_SYSTEM
 #if BOOST_USE_WINAPI_VERSION >= BOOST_WINAPI_VERSION_NT4
+<<<<<<< HEAD
 BOOST_SYMBOL_IMPORT boost::winapi::DWORD_ WINAPI
+=======
+BOOST_SYMBOL_IMPORT boost::winapi::DWORD_ BOOST_WINAPI_WINAPI_CC
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 SignalObjectAndWait(
     boost::winapi::HANDLE_ hObjectToSignal,
     boost::winapi::HANDLE_ hObjectToWaitOn,
@@ -39,19 +47,31 @@ SignalObjectAndWait(
 #endif
 
 #if BOOST_WINAPI_PARTITION_APP_SYSTEM
+<<<<<<< HEAD
 BOOST_SYMBOL_IMPORT boost::winapi::DWORD_ WINAPI
+=======
+BOOST_SYMBOL_IMPORT boost::winapi::DWORD_ BOOST_WINAPI_WINAPI_CC
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 WaitForSingleObject(
     boost::winapi::HANDLE_ hHandle,
     boost::winapi::DWORD_ dwMilliseconds);
 
+<<<<<<< HEAD
 BOOST_SYMBOL_IMPORT boost::winapi::DWORD_ WINAPI
+=======
+BOOST_SYMBOL_IMPORT boost::winapi::DWORD_ BOOST_WINAPI_WINAPI_CC
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 WaitForMultipleObjects(
     boost::winapi::DWORD_ nCount,
     boost::winapi::HANDLE_ const* lpHandles,
     boost::winapi::BOOL_ bWaitAll,
     boost::winapi::DWORD_ dwMilliseconds);
 
+<<<<<<< HEAD
 BOOST_SYMBOL_IMPORT boost::winapi::DWORD_ WINAPI
+=======
+BOOST_SYMBOL_IMPORT boost::winapi::DWORD_ BOOST_WINAPI_WINAPI_CC
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 WaitForMultipleObjectsEx(
     boost::winapi::DWORD_ nCount,
     boost::winapi::HANDLE_ const* lpHandles,
@@ -83,6 +103,7 @@ using ::WaitForSingleObject;
 
 #if defined( BOOST_USE_WINDOWS_H )
 
+<<<<<<< HEAD
 const DWORD_ INFINITE_ = INFINITE;
 const DWORD_ WAIT_ABANDONED_ = WAIT_ABANDONED;
 const DWORD_ WAIT_OBJECT_0_ = WAIT_OBJECT_0;
@@ -106,6 +127,31 @@ const DWORD_ wait_timeout = WAIT_TIMEOUT_;
 const DWORD_ wait_failed = WAIT_FAILED_;
 
 const DWORD_ max_non_infinite_wait = (DWORD_)0xFFFFFFFE;
+=======
+BOOST_CONSTEXPR_OR_CONST DWORD_ INFINITE_ = INFINITE;
+BOOST_CONSTEXPR_OR_CONST DWORD_ WAIT_ABANDONED_ = WAIT_ABANDONED;
+BOOST_CONSTEXPR_OR_CONST DWORD_ WAIT_OBJECT_0_ = WAIT_OBJECT_0;
+BOOST_CONSTEXPR_OR_CONST DWORD_ WAIT_TIMEOUT_ = WAIT_TIMEOUT;
+BOOST_CONSTEXPR_OR_CONST DWORD_ WAIT_FAILED_ = WAIT_FAILED;
+
+#else // defined( BOOST_USE_WINDOWS_H )
+
+BOOST_CONSTEXPR_OR_CONST DWORD_ INFINITE_ = (DWORD_)0xFFFFFFFF;
+BOOST_CONSTEXPR_OR_CONST DWORD_ WAIT_ABANDONED_ = 0x00000080L;
+BOOST_CONSTEXPR_OR_CONST DWORD_ WAIT_OBJECT_0_ = 0x00000000L;
+BOOST_CONSTEXPR_OR_CONST DWORD_ WAIT_TIMEOUT_ = 0x00000102L;
+BOOST_CONSTEXPR_OR_CONST DWORD_ WAIT_FAILED_ = (DWORD_)0xFFFFFFFF;
+
+#endif // defined( BOOST_USE_WINDOWS_H )
+
+BOOST_CONSTEXPR_OR_CONST DWORD_ infinite = INFINITE_;
+BOOST_CONSTEXPR_OR_CONST DWORD_ wait_abandoned = WAIT_ABANDONED_;
+BOOST_CONSTEXPR_OR_CONST DWORD_ wait_object_0 = WAIT_OBJECT_0_;
+BOOST_CONSTEXPR_OR_CONST DWORD_ wait_timeout = WAIT_TIMEOUT_;
+BOOST_CONSTEXPR_OR_CONST DWORD_ wait_failed = WAIT_FAILED_;
+
+BOOST_CONSTEXPR_OR_CONST DWORD_ max_non_infinite_wait = (DWORD_)0xFFFFFFFE;
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 }
 }

@@ -51,8 +51,15 @@
 #ifdef BOOST_MSVC
 #pragma warning(push)
 #pragma warning(disable:4786)
+<<<<<<< HEAD
 #pragma warning(disable:4800)
 #endif
+=======
+#if BOOST_MSVC < 1910
+#pragma warning(disable:4800)
+#endif
+#endif
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 namespace boost{ 
 

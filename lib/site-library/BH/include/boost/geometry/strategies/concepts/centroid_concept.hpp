@@ -17,7 +17,11 @@
 
 
 #include <boost/concept_check.hpp>
+<<<<<<< HEAD
 
+=======
+#include <boost/core/ignore_unused.hpp>
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 namespace boost { namespace geometry { namespace concepts
 {
@@ -58,8 +62,12 @@ class CentroidStrategy
             point_type *c = 0;
             bool r = str->result(*st, *c);
 
+<<<<<<< HEAD
             boost::ignore_unused_variable_warning(str);
             boost::ignore_unused_variable_warning(r);
+=======
+            boost::ignore_unused(str, r);
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
         }
     };
 

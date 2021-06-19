@@ -23,6 +23,14 @@
 #include <boost/config.hpp>
 #endif
 
+<<<<<<< HEAD
+=======
+// MSVC-12 ICEs when variadic templates are enabled.
+#if    !defined(BOOST_NO_CXX11_VARIADIC_TEMPLATES) && (!defined(BOOST_MSVC) || BOOST_MSVC >= 1900)
+   #define BOOST_INTRUSIVE_VARIADIC_TEMPLATES
+#endif
+
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 #if    !defined(BOOST_NO_CXX11_RVALUE_REFERENCES) && !defined(BOOST_NO_CXX11_VARIADIC_TEMPLATES)
    #define BOOST_INTRUSIVE_PERFECT_FORWARDING
 #endif
@@ -34,7 +42,11 @@
 #define BOOST_INTRUSIVE_I ,
 #define BOOST_INTRUSIVE_DOCIGN(T1) T1
 
+<<<<<<< HEAD
 #define BOOST_INTRUSIVE_DISABLE_FORCEINLINE
+=======
+//#define BOOST_INTRUSIVE_DISABLE_FORCEINLINE
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 #if defined(BOOST_INTRUSIVE_DISABLE_FORCEINLINE)
    #define BOOST_INTRUSIVE_FORCEINLINE inline

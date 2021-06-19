@@ -80,6 +80,7 @@ compiler_log_formatter::log_finish( std::ostream& ostr )
 //____________________________________________________________________________//
 
 void
+<<<<<<< HEAD
 compiler_log_formatter::log_build_info( std::ostream& output )
 {
     output  << "Platform: " << BOOST_PLATFORM            << '\n'
@@ -88,6 +89,18 @@ compiler_log_formatter::log_build_info( std::ostream& output )
             << "Boost   : " << BOOST_VERSION/100000      << "."
                             << BOOST_VERSION/100 % 1000  << "."
                             << BOOST_VERSION % 100       << std::endl;
+=======
+compiler_log_formatter::log_build_info( std::ostream& output, bool log_build_info )
+{
+    if(log_build_info) {
+        output  << "Platform: " << BOOST_PLATFORM            << '\n'
+                << "Compiler: " << BOOST_COMPILER            << '\n'
+                << "STL     : " << BOOST_STDLIB              << '\n'
+                << "Boost   : " << BOOST_VERSION/100000      << "."
+                                << BOOST_VERSION/100 % 1000  << "."
+                                << BOOST_VERSION % 100       << std::endl;
+    }
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 }
 
 //____________________________________________________________________________//
@@ -182,6 +195,7 @@ compiler_log_formatter::log_entry_start( std::ostream& output, log_entry_data co
     switch( let ) {
         case BOOST_UTL_ET_INFO:
             print_prefix( output, entry_data.m_file_name, entry_data.m_line_num );
+<<<<<<< HEAD
             if( m_color_output )
                 output << setcolor( term_attr::BRIGHT, term_color::GREEN );
             output << "info: ";
@@ -194,18 +208,37 @@ compiler_log_formatter::log_entry_start( std::ostream& output, log_entry_data co
             print_prefix( output, entry_data.m_file_name, entry_data.m_line_num );
             if( m_color_output )
                 output << setcolor( term_attr::BRIGHT, term_color::YELLOW );
+=======
+            output << setcolor( m_color_output, term_attr::BRIGHT, term_color::GREEN );
+            output << "info: ";
+            break;
+        case BOOST_UTL_ET_MESSAGE:
+            output << setcolor( m_color_output, term_attr::BRIGHT, term_color::CYAN );
+            break;
+        case BOOST_UTL_ET_WARNING:
+            print_prefix( output, entry_data.m_file_name, entry_data.m_line_num );
+            output << setcolor( m_color_output, term_attr::BRIGHT, term_color::YELLOW );
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
             output << "warning: in \"" << test_phase_identifier() << "\": ";
             break;
         case BOOST_UTL_ET_ERROR:
             print_prefix( output, entry_data.m_file_name, entry_data.m_line_num );
+<<<<<<< HEAD
             if( m_color_output )
                 output << setcolor( term_attr::BRIGHT, term_color::RED );
+=======
+            output << setcolor( m_color_output, term_attr::BRIGHT, term_color::RED );
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
             output << "error: in \"" << test_phase_identifier() << "\": ";
             break;
         case BOOST_UTL_ET_FATAL_ERROR:
             print_prefix( output, entry_data.m_file_name, entry_data.m_line_num );
+<<<<<<< HEAD
             if( m_color_output )
                 output << setcolor( term_attr::UNDERLINE, term_color::RED );
+=======
+            output << setcolor( m_color_output, term_attr::UNDERLINE, term_color::RED );
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
             output << "fatal error: in \"" << test_phase_identifier() << "\": ";
             break;
     }
@@ -233,7 +266,11 @@ void
 compiler_log_formatter::log_entry_finish( std::ostream& output )
 {
     if( m_color_output )
+<<<<<<< HEAD
         output << utils::setcolor();
+=======
+        output << utils::setcolor(m_color_output);
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
     output << std::endl;
 }
@@ -282,7 +319,11 @@ compiler_log_formatter::entry_context_finish( std::ostream& output, log_level l 
 //____________________________________________________________________________//
 
 void
+<<<<<<< HEAD
 compiler_log_formatter::log_entry_context( std::ostream& output, log_level l, const_string context_descr )
+=======
+compiler_log_formatter::log_entry_context( std::ostream& output, log_level /*l*/, const_string context_descr )
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 {
     output << "\n    " << context_descr;
 }

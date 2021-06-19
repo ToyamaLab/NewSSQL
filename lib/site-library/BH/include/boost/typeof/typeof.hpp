@@ -14,8 +14,14 @@
 #endif
 
 #include <boost/config.hpp>
+<<<<<<< HEAD
 
 #if !defined(BOOST_NO_CXX11_DECLTYPE) && !defined(BOOST_NO_CXX11_TEMPLATE_ALIASES) && !defined(BOOST_TYPEOF_EMULATION)
+=======
+#include <boost/config/workaround.hpp>
+
+#if !BOOST_WORKAROUND(BOOST_MSVC, <= 1900) && !defined(BOOST_NO_CXX11_DECLTYPE) && !defined(BOOST_NO_CXX11_TEMPLATE_ALIASES) && !defined(BOOST_TYPEOF_EMULATION)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 #   define BOOST_TYPEOF_DECLTYPE
 #   ifndef BOOST_TYPEOF_NATIVE
 #       define BOOST_TYPEOF_NATIVE

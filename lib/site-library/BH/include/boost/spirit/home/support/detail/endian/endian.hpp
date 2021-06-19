@@ -34,9 +34,19 @@
 #endif
 
 #include <boost/config.hpp>
+<<<<<<< HEAD
 #include <boost/detail/endian.hpp>
 #define BOOST_MINIMAL_INTEGER_COVER_OPERATORS
 #define BOOST_NO_IO_COVER_OPERATORS
+=======
+#include <boost/predef/other/endian.h>
+#ifndef BOOST_MINIMAL_INTEGER_COVER_OPERATORS
+#define BOOST_MINIMAL_INTEGER_COVER_OPERATORS
+#endif
+#ifndef BOOST_NO_IO_COVER_OPERATORS
+#define BOOST_NO_IO_COVER_OPERATORS
+#endif
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 #include <boost/spirit/home/support/detail/endian/cover_operators.hpp>
 #undef  BOOST_NO_IO_COVER_OPERATORS
 #undef  BOOST_MINIMAL_INTEGER_COVER_OPERATORS
@@ -52,10 +62,17 @@
 #   error Platforms with CHAR_BIT != 8 are not supported
 # endif
 
+<<<<<<< HEAD
 # define BOOST_ENDIAN_DEFAULT_CONSTRUCT {}          // C++03
 
 # if defined(BOOST_ENDIAN_FORCE_PODNESS)
 #   define BOOST_ENDIAN_NO_CTORS
+=======
+# define BOOST_SPIRIT_ENDIAN_DEFAULT_CONSTRUCT {}          // C++03
+
+# if defined(BOOST_ENDIAN_NO_CTORS) || defined(BOOST_ENDIAN_FORCE_PODNESS)
+#   define BOOST_SPIRIT_ENDIAN_NO_CTORS
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 # endif
 
 
@@ -315,8 +332,13 @@ namespace boost { namespace spirit
         BOOST_STATIC_ASSERT( (n_bits/8)*8 == n_bits );
       public:
         typedef T value_type;
+<<<<<<< HEAD
 #     ifndef BOOST_ENDIAN_NO_CTORS
         endian() BOOST_ENDIAN_DEFAULT_CONSTRUCT
+=======
+#     ifndef BOOST_SPIRIT_ENDIAN_NO_CTORS
+        endian() BOOST_SPIRIT_ENDIAN_DEFAULT_CONSTRUCT
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
         explicit endian(T val)
         {
 #       ifdef BOOST_ENDIAN_LOG
@@ -347,8 +369,13 @@ namespace boost { namespace spirit
         BOOST_STATIC_ASSERT( (n_bits/8)*8 == n_bits );
       public:
         typedef T value_type;
+<<<<<<< HEAD
 #     ifndef BOOST_ENDIAN_NO_CTORS
         endian() BOOST_ENDIAN_DEFAULT_CONSTRUCT
+=======
+#     ifndef BOOST_SPIRIT_ENDIAN_NO_CTORS
+        endian() BOOST_SPIRIT_ENDIAN_DEFAULT_CONSTRUCT
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
         explicit endian(T val)
         {
 #       ifdef BOOST_ENDIAN_LOG
@@ -379,15 +406,25 @@ namespace boost { namespace spirit
         BOOST_STATIC_ASSERT( (n_bits/8)*8 == n_bits );
       public:
         typedef T value_type;
+<<<<<<< HEAD
 #   ifndef BOOST_ENDIAN_NO_CTORS
         endian() BOOST_ENDIAN_DEFAULT_CONSTRUCT
 #     ifdef BOOST_BIG_ENDIAN
+=======
+#   ifndef BOOST_SPIRIT_ENDIAN_NO_CTORS
+        endian() BOOST_SPIRIT_ENDIAN_DEFAULT_CONSTRUCT
+#     if BOOST_ENDIAN_BIG_BYTE
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
         explicit endian(T val)    { detail::store_big_endian<T, n_bits/8>(m_value, val); }
 #     else
         explicit endian(T val)    { detail::store_little_endian<T, n_bits/8>(m_value, val); }
 #     endif
 #   endif
+<<<<<<< HEAD
 #   ifdef BOOST_BIG_ENDIAN
+=======
+#   if BOOST_ENDIAN_BIG_BYTE
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
         endian & operator=(T val) { detail::store_big_endian<T, n_bits/8>(m_value, val); return *this; }
         operator T() const        { return detail::load_big_endian<T, n_bits/8>(m_value); }
 #   else
@@ -410,15 +447,25 @@ namespace boost { namespace spirit
         BOOST_STATIC_ASSERT( sizeof(T) == n_bits/8 );
       public:
         typedef T value_type;
+<<<<<<< HEAD
 #   ifndef BOOST_ENDIAN_NO_CTORS
         endian() BOOST_ENDIAN_DEFAULT_CONSTRUCT
 #     ifdef BOOST_BIG_ENDIAN
+=======
+#   ifndef BOOST_SPIRIT_ENDIAN_NO_CTORS
+        endian() BOOST_SPIRIT_ENDIAN_DEFAULT_CONSTRUCT
+#     if BOOST_ENDIAN_BIG_BYTE
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
         endian(T val) : m_value(val) { }
 #     else
         explicit endian(T val)    { detail::store_big_endian<T, sizeof(T)>(&m_value, val); }
 #     endif
 #   endif
+<<<<<<< HEAD
 #   ifdef BOOST_BIG_ENDIAN
+=======
+#   if BOOST_ENDIAN_BIG_BYTE
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
         endian & operator=(T val) { m_value = val; return *this; }
         operator T() const        { return m_value; }
 #   else
@@ -438,15 +485,25 @@ namespace boost { namespace spirit
         BOOST_STATIC_ASSERT( sizeof(T) == n_bits/8 );
       public:
         typedef T value_type;
+<<<<<<< HEAD
 #   ifndef BOOST_ENDIAN_NO_CTORS
         endian() BOOST_ENDIAN_DEFAULT_CONSTRUCT
 #     ifdef BOOST_LITTLE_ENDIAN
+=======
+#   ifndef BOOST_SPIRIT_ENDIAN_NO_CTORS
+        endian() BOOST_SPIRIT_ENDIAN_DEFAULT_CONSTRUCT
+#     if BOOST_ENDIAN_LITTLE_BYTE
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
         endian(T val) : m_value(val) { }
 #     else
         explicit endian(T val)    { detail::store_little_endian<T, sizeof(T)>(&m_value, val); }
 #     endif
 #   endif
+<<<<<<< HEAD
 #   ifdef BOOST_LITTLE_ENDIAN
+=======
+#   if BOOST_ENDIAN_LITTLE_BYTE
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
         endian & operator=(T val) { m_value = val; return *this; }
         operator T() const        { return m_value; }
     #else
@@ -519,10 +576,13 @@ namespace boost { namespace spirit
     typedef endian< endianness::native, uint_least64_t, 56 >     unative56_t;
     typedef endian< endianness::native, uint_least64_t, 64 >     unative64_t;
 
+<<<<<<< HEAD
 #define BOOST_HAS_INT16_T
 #define BOOST_HAS_INT32_T
 #define BOOST_HAS_INT64_T
 
+=======
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
   //  These types only present if platform has exact size integers:
   //     aligned big endian signed integer types
   //     aligned big endian unsigned integer types
@@ -532,35 +592,60 @@ namespace boost { namespace spirit
   //     aligned native endian typedefs are not provided because
   //     <cstdint> types are superior for this use case
 
+<<<<<<< HEAD
 # if defined(BOOST_HAS_INT16_T)
+=======
+#ifdef INT16_MAX
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     typedef endian< endianness::big, int16_t, 16, alignment::aligned >      aligned_big16_t;
     typedef endian< endianness::big, uint16_t, 16, alignment::aligned >     aligned_ubig16_t;
     typedef endian< endianness::little, int16_t, 16, alignment::aligned >   aligned_little16_t;
     typedef endian< endianness::little, uint16_t, 16, alignment::aligned >  aligned_ulittle16_t;
+<<<<<<< HEAD
 # endif
 
 # if defined(BOOST_HAS_INT32_T)
+=======
+#endif
+
+#ifdef INT32_MAX
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     typedef endian< endianness::big, int32_t, 32, alignment::aligned >      aligned_big32_t;
     typedef endian< endianness::big, uint32_t, 32, alignment::aligned >     aligned_ubig32_t;
     typedef endian< endianness::little, int32_t, 32, alignment::aligned >   aligned_little32_t;
     typedef endian< endianness::little, uint32_t, 32, alignment::aligned >  aligned_ulittle32_t;
+<<<<<<< HEAD
 # endif
 
 # if defined(BOOST_HAS_INT64_T)
+=======
+#endif
+
+#ifdef INT64_MAX
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     typedef endian< endianness::big, int64_t, 64, alignment::aligned >      aligned_big64_t;
     typedef endian< endianness::big, uint64_t, 64, alignment::aligned >     aligned_ubig64_t;
     typedef endian< endianness::little, int64_t, 64, alignment::aligned >   aligned_little64_t;
     typedef endian< endianness::little, uint64_t, 64, alignment::aligned >  aligned_ulittle64_t;
+<<<<<<< HEAD
 # endif
+=======
+#endif
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
   } // namespace endian
 }} // namespace boost::spirit
 
+<<<<<<< HEAD
 // import the namespace above into boost::endian
 namespace boost { namespace endian
 {
     using namespace boost::spirit::endian;
 }}
+=======
+#undef BOOST_SPIRIT_ENDIAN_DEFAULT_CONSTRUCT
+#undef BOOST_SPIRIT_ENDIAN_NO_CTORS
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 #if defined(__BORLANDC__) || defined( __CODEGEARC__)
 # pragma pack(pop)

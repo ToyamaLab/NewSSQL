@@ -1,5 +1,9 @@
 Package: rlang
+<<<<<<< HEAD
 Version: 0.2.2
+=======
+Version: 0.4.7
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 Title: Functions for Base Types and Core R and 'Tidyverse' Features
 Description: A toolbox for working with base types, core R features
   like the condition system, and core 'Tidyverse' features like tidy
@@ -12,6 +16,7 @@ Authors@R: c(
 License: GPL-3
 LazyData: true
 ByteCompile: true
+<<<<<<< HEAD
 Depends: R (>= 3.1.0)
 Suggests: crayon, knitr, methods, pillar, rmarkdown (>= 0.2.65),
         testthat, covr
@@ -20,10 +25,27 @@ URL: http://rlang.tidyverse.org, https://github.com/r-lib/rlang
 BugReports: https://github.com/r-lib/rlang/issues
 NeedsCompilation: yes
 Packaged: 2018-08-14 17:56:07 UTC; lionel
+=======
+Biarch: true
+Depends: R (>= 3.2.0)
+Suggests: cli, covr, crayon, glue, magrittr, methods, pillar,
+        rmarkdown, testthat (>= 2.3.0), vctrs (>= 0.2.3), withr
+Encoding: UTF-8
+RoxygenNote: 7.1.1
+URL: http://rlang.r-lib.org, https://github.com/r-lib/rlang
+BugReports: https://github.com/r-lib/rlang/issues
+NeedsCompilation: yes
+Packaged: 2020-07-09 12:06:27 UTC; lionel
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 Author: Lionel Henry [aut, cre],
   Hadley Wickham [aut],
   RStudio [cph]
 Maintainer: Lionel Henry <lionel@rstudio.com>
 Repository: CRAN
+<<<<<<< HEAD
 Date/Publication: 2018-08-16 18:20:03 UTC
 Built: R 3.5.1; x86_64-apple-darwin17.6.0; 2018-08-18 07:12:45 UTC; unix
+=======
+Date/Publication: 2020-07-09 23:00:18 UTC
+Built: R 4.0.2; x86_64-apple-darwin17.7.0; 2020-08-27 07:44:09 UTC; unix
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce

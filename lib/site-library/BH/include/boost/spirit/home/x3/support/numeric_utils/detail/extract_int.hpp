@@ -23,7 +23,10 @@
 #include <boost/preprocessor/control/if.hpp>
 #include <boost/preprocessor/seq/elem.hpp>
 
+<<<<<<< HEAD
 #include <boost/detail/iterator.hpp>
+=======
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 #include <boost/utility/enable_if.hpp>
 
 #include <boost/type_traits/is_integral.hpp>
@@ -34,6 +37,11 @@
 #include <boost/mpl/and.hpp>
 #include <boost/limits.hpp>
 
+<<<<<<< HEAD
+=======
+#include <iterator> // for std::iterator_traits
+
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 #if !defined(SPIRIT_NUMERICS_LOOP_UNROLL)
 # define SPIRIT_NUMERICS_LOOP_UNROLL 3
 #endif
@@ -52,6 +60,12 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
     template <typename T, unsigned Radix>
     struct digits_traits;
 
+<<<<<<< HEAD
+=======
+    template <int Digits, unsigned Radix>
+    struct digits2_to_n;
+
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 // lookup table for log2(x) : 2 <= x <= 36
 #define BOOST_SPIRIT_X3_LOG2 (#error)(#error)                                   \
         (1000000)(1584960)(2000000)(2321920)(2584960)(2807350)                  \
@@ -63,11 +77,18 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
     /***/
 
 #define BOOST_PP_LOCAL_MACRO(Radix)                                             \
+<<<<<<< HEAD
     template <typename T> struct digits_traits<T, Radix>                        \
     {                                                                           \
         typedef std::numeric_limits<T> numeric_limits_type;                     \
         BOOST_STATIC_CONSTANT(int, value = static_cast<int>(                    \
             (numeric_limits_type::digits * 1000000) /                           \
+=======
+    template <int Digits> struct digits2_to_n<Digits, Radix>                    \
+    {                                                                           \
+        BOOST_STATIC_CONSTANT(int, value = static_cast<int>(                    \
+            (Digits * 1000000) /                                                \
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
                 BOOST_PP_SEQ_ELEM(Radix, BOOST_SPIRIT_X3_LOG2)));               \
     };                                                                          \
     /***/
@@ -77,6 +98,21 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
 
 #undef BOOST_SPIRIT_X3_LOG2
 
+<<<<<<< HEAD
+=======
+    template <typename T, unsigned Radix>
+    struct digits_traits : digits2_to_n<std::numeric_limits<T>::digits, Radix>
+    {
+        static_assert(std::numeric_limits<T>::radix == 2, "");
+    };
+
+    template <typename T>
+    struct digits_traits<T, 10>
+    {
+        static int constexpr value = std::numeric_limits<T>::digits10;
+    };
+
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     ///////////////////////////////////////////////////////////////////////////
     //
     //  Traits class for radix specific number conversion
@@ -97,19 +133,31 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
         template <typename Char>
         inline static bool is_valid(Char ch)
         {
+<<<<<<< HEAD
             if (Radix <= 10)
                 return (ch >= '0' && ch <= static_cast<Char>('0' + Radix -1));
             return (ch >= '0' && ch <= '9')
                 || (ch >= 'a' && ch <= static_cast<Char>('a' + Radix -10 -1))
                 || (ch >= 'A' && ch <= static_cast<Char>('A' + Radix -10 -1));
+=======
+            return (ch >= '0' && ch <= (Radix > 10 ? '9' : static_cast<Char>('0' + Radix -1)))
+                || (Radix > 10 && ch >= 'a' && ch <= static_cast<Char>('a' + Radix -10 -1))
+                || (Radix > 10 && ch >= 'A' && ch <= static_cast<Char>('A' + Radix -10 -1));
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
         }
 
         template <typename Char>
         inline static unsigned digit(Char ch)
         {
+<<<<<<< HEAD
             if (Radix <= 10 || (ch >= '0' && ch <= '9'))
                 return ch - '0';
             return char_encoding::ascii::tolower(ch) - 'a' + 10;
+=======
+            return (Radix <= 10 || (ch >= '0' && ch <= '9'))
+                ? ch - '0'
+                : char_encoding::ascii::tolower(ch) - 'a' + 10;
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
         }
     };
 
@@ -132,6 +180,7 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
         inline static bool add(T& n, Char ch, mpl::true_) // checked add
         {
             // Ensure n *= Radix will not overflow
+<<<<<<< HEAD
             static T const max = (std::numeric_limits<T>::max)();
             static T const val = max / Radix;
             if (n > val)
@@ -145,6 +194,21 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
                 return false;
 
             n += static_cast<T>(digit);
+=======
+            T const max = (std::numeric_limits<T>::max)();
+            T const val = max / Radix;
+            if (n > val)
+                return false;
+
+            T tmp = n * Radix;
+
+            // Ensure n += digit will not overflow
+            const int digit = radix_traits<Radix>::digit(ch);
+            if (tmp > max - digit)
+                return false;
+
+            n = tmp + static_cast<T>(digit);
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
             return true;
         }
     };
@@ -163,6 +227,7 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
         inline static bool add(T& n, Char ch, mpl::true_) // checked subtract
         {
             // Ensure n *= Radix will not underflow
+<<<<<<< HEAD
             static T const min = (std::numeric_limits<T>::min)();
             static T const val = (min + 1) / T(Radix);
             if (n < val)
@@ -176,6 +241,21 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
                 return false;
 
             n -= static_cast<T>(digit);
+=======
+            T const min = (std::numeric_limits<T>::min)();
+            T const val = min / T(Radix);
+            if (n < val)
+                return false;
+
+            T tmp = n * Radix;
+
+            // Ensure n -= digit will not underflow
+            int const digit = radix_traits<Radix>::digit(ch);
+            if (tmp < min + digit)
+                return false;
+
+            n = tmp - static_cast<T>(digit);
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
             return true;
         }
     };
@@ -190,7 +270,11 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
         inline static bool
         call(Char ch, std::size_t count, T& n, mpl::true_)
         {
+<<<<<<< HEAD
             static std::size_t const
+=======
+            std::size_t constexpr
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
                 overflow_free = digits_traits<T, Radix>::value - 1;
 
             if (count < overflow_free)
@@ -296,7 +380,11 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
             typedef radix_traits<Radix> radix_check;
             typedef int_extractor<Radix, Accumulator, MaxDigits> extractor;
             typedef typename
+<<<<<<< HEAD
                 boost::detail::iterator_traits<Iterator>::value_type
+=======
+                std::iterator_traits<Iterator>::value_type
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
             char_type;
 
             Iterator it = first;
@@ -394,7 +482,11 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
             typedef radix_traits<Radix> radix_check;
             typedef int_extractor<Radix, Accumulator, -1> extractor;
             typedef typename
+<<<<<<< HEAD
                 boost::detail::iterator_traits<Iterator>::value_type
+=======
+                std::iterator_traits<Iterator>::value_type
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
             char_type;
 
             Iterator it = first;
@@ -474,6 +566,7 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
     };
 
 #undef SPIRIT_NUMERIC_INNER_LOOP
+<<<<<<< HEAD
 
     ///////////////////////////////////////////////////////////////////////////
     // Cast an signed integer to an unsigned integer
@@ -503,6 +596,8 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
             return n;
         }
     };
+=======
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 }}}}
 
 #endif

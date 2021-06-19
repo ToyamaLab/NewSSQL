@@ -1,6 +1,7 @@
 Package: htmltools
 Type: Package
 Title: Tools for HTML
+<<<<<<< HEAD
 Version: 0.3.6
 Date: 2017-04-26
 Author: RStudio, Inc.
@@ -9,10 +10,26 @@ Description: Tools for HTML generation and output.
 Depends: R (>= 2.14.1)
 Imports: utils, digest, Rcpp
 Suggests: markdown, testthat
+=======
+Version: 0.5.0
+Authors@R: c(
+  person("Joe", "Cheng", role = "aut", email = "joe@rstudio.com"),
+  person("Carson", "Sievert", role = c("aut", "cre"), email = "carson@rstudio.com", comment = c(ORCID = "0000-0002-4958-2844")),
+  person("Winston", "Chang", role = "aut", email = "winston@rstudio.com"),
+  person("Yihui", "Xie", role = "aut", email = "yihui@rstudio.com"),
+  person("Jeff", "Allen", role = "aut", email = "jeff@rstudio.com"),
+  person(family = "RStudio", role = "cph")
+ )
+Description: Tools for HTML generation and output.
+Depends: R (>= 2.14.1)
+Imports: utils, digest, grDevices, base64enc, rlang
+Suggests: markdown, testthat, withr, Cairo, ragg
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 Enhances: knitr
 License: GPL (>= 2)
 URL: https://github.com/rstudio/htmltools
 BugReports: https://github.com/rstudio/htmltools/issues
+<<<<<<< HEAD
 RoxygenNote: 6.0.1
 LinkingTo: Rcpp
 NeedsCompilation: yes
@@ -20,3 +37,22 @@ Packaged: 2017-04-27 00:04:32 UTC; jcheng
 Repository: CRAN
 Date/Publication: 2017-04-28 07:41:46 UTC
 Built: R 3.5.1; x86_64-apple-darwin17.6.0; 2018-08-21 07:38:34 UTC; unix
+=======
+RoxygenNote: 7.1.0.9000
+Encoding: UTF-8
+Collate: 'colors.R' 'html_dependency.R' 'html_escape.R' 'html_print.R'
+        'images.R' 'known_tags.R' 'shim.R' 'utils.R' 'tags.R'
+        'template.R'
+NeedsCompilation: yes
+Packaged: 2020-06-15 14:46:19 UTC; cpsievert
+Author: Joe Cheng [aut],
+  Carson Sievert [aut, cre] (<https://orcid.org/0000-0002-4958-2844>),
+  Winston Chang [aut],
+  Yihui Xie [aut],
+  Jeff Allen [aut],
+  RStudio [cph]
+Maintainer: Carson Sievert <carson@rstudio.com>
+Repository: CRAN
+Date/Publication: 2020-06-16 14:10:10 UTC
+Built: R 4.0.2; x86_64-apple-darwin17.7.0; 2020-08-27 07:44:49 UTC; unix
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce

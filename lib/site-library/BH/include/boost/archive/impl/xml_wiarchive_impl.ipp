@@ -20,13 +20,20 @@ namespace std{
 
 #include <boost/assert.hpp>
 #include <algorithm> // std::copy
+<<<<<<< HEAD
 #include <exception> // uncaught exception
+=======
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 #include <boost/detail/workaround.hpp> // Dinkumware and RogueWave
 #if BOOST_WORKAROUND(BOOST_DINKUMWARE_STDLIB, == 1)
 #include <boost/archive/dinkumware.hpp>
 #endif
 
 #include <boost/io/ios_state.hpp>
+<<<<<<< HEAD
+=======
+#include <boost/core/uncaught_exceptions.hpp>
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 #include <boost/core/no_exceptions_support.hpp>
 #include <boost/serialization/string.hpp>
 
@@ -176,7 +183,11 @@ xml_wiarchive_impl<Archive>::xml_wiarchive_impl(
 template<class Archive>
 BOOST_WARCHIVE_DECL
 xml_wiarchive_impl<Archive>::~xml_wiarchive_impl(){
+<<<<<<< HEAD
     if(std::uncaught_exception())
+=======
+    if(boost::core::uncaught_exceptions() > 0)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
         return;
     if(0 == (this->get_flags() & no_header)){
         gimpl->windup(is);

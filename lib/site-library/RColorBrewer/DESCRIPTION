@@ -14,4 +14,8 @@ Packaged: 2014-12-06 23:59:42 UTC; neuwirth
 NeedsCompilation: no
 Repository: CRAN
 Date/Publication: 2014-12-07 08:28:55
+<<<<<<< HEAD
 Built: R 3.5.1; ; 2018-08-18 07:12:33 UTC; unix
+=======
+Built: R 4.0.2; ; 2020-08-27 07:28:45 UTC; unix
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce

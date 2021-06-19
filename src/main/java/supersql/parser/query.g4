@@ -39,9 +39,9 @@ operand :
   | grouper
   | composite_iterator
   | if_then_else
-  | NUMERIC_LITERAL
   | (sorting)?aggregate
   | arithmetics
+  | NUMERIC_LITERAL
   | sl
   | (sorting)?ggplot
   )(DECORATOR)?
@@ -86,7 +86,14 @@ grouper :
     exp
     CLOSE_BRACKET
     C3
+    |
+    C4
+    |
+    CIRCLE
   ;
+
+  /**grouper is [exp], | ! | % | # | ◯ */
+  
   /**grouper is [exp], | ! | % */
 
 
@@ -155,12 +162,42 @@ composite_iterator  :
   |
   NUMERIC_LITERAL C2 (NUMERIC_LITERAL C1)?
   )//[]%2, or []%2,3! or []%2! or []%2!3,
+  //;
+   
+  |
+  OPEN_BRACKET
+  exp
+  CLOSE_BRACKET
+  C4
+
+  |
+  OPEN_BRACKET
+  exp
+  CLOSE_BRACKET
+  CIRCLE
+
+
+//Merged by li 20210531
+/*|
+//composite_iterator :
+OPEN_BRACKET
+exp
+CLOSE_BRACKET
+{List<String> groupersList = new ArrayList<>();}
+(grouper_token=(C1|C2|C3|C4|CIRCLE) NUMERIC_LITERAL {groupersList.add($grouper_token.text);})+
+grouper_token=(C1|C2|C3|C4|CIRCLE) {groupersList.add($grouper_token.text);}
+{Set<String> groupersSet = new HashSet<>(groupersList); if(groupersList.size() != groupersSet.size()){throw new RuntimeException("Two identical connectors used in composite connector at line " + $grouper_token.line);}}
+*/
+;
+
+
+exp : 
+  t_exp
   ;
 
-//tbt fixed 180806
-//ad join_exp and fixed n_exp
-exp :
+t_exp :
   d_exp
+  (C4 (d_exp | operand) )*
   ;
 
 concat_exp :
@@ -187,6 +224,7 @@ n_exp :
   (operand | concat_exp)
     (C0 (operand | concat_exp) )*
     ;
+  
 //tbt end
 
 sorting :
@@ -254,9 +292,11 @@ aggregate :
 ggplot :
 	gg_function_name
 	OPEN_BRACKET
+	(sorting)?
     attribute
     (
     C1
+    (sorting)?
     attribute
     )*
     CLOSE_BRACKET
@@ -621,7 +661,7 @@ index_name
 any_name
   : keyword
   | IDENTIFIER
-//  | STRING_LITERAL
+  | STRING_LITERAL
 //  | '(' any_name ')'
   ;
 
@@ -723,6 +763,8 @@ C0  : '?' ;
 C1  : ',' ;
 C2  : '!' ;
 C3  : '%' ;
+C4  : '#' ;
+CIRCLE  : '◯';
 DOT : '.' ;
 OPEN_PARENTHESE : '(' ;
 CLOSE_PARENTHESE  : ')' ;
@@ -776,10 +818,9 @@ DECORATOR :
   '}'
       ;
 
-//tbt fixed 180807
-//ALLOW negative number
+
 NUMERIC_LITERAL
-  :[-]?(DIGIT+('.'DIGIT+)?)([eE][+-]?DIGIT+)?
+  :(DIGIT+('.'DIGIT+)?)([eE][+-]?DIGIT+)?
   | '.' DIGIT+ ( E [-+]? DIGIT+ )?
   ;
 
@@ -812,7 +853,7 @@ UNEXPECTED_CHAR
   : .
   ;
 
-fragment DIGIT : [0-9];
+fragment DIGIT : [-]?[0-9]('.'[0-9])?;
 fragment A : [aA];  fragment B : [bB];
 fragment C : [cC];  fragment D : [dD];
 fragment E : [eE];  fragment F : [fF];

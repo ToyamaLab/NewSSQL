@@ -19,6 +19,11 @@
 #define BOOST_NUMERIC_ODEINT_ALGEBRA_MULTI_ARRAY_ALGEBRA_HPP_DEFINED
 
 
+<<<<<<< HEAD
+=======
+#include <boost/multi_array.hpp>
+
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 #include <boost/numeric/odeint/algebra/detail/for_each.hpp>
 #include <boost/numeric/odeint/algebra/detail/norm_inf.hpp>
 #include <boost/numeric/odeint/algebra/norm_result_type.hpp>
@@ -121,7 +126,11 @@ struct multi_array_algebra
     {
         detail::for_each15( s1.data() , s1.data() + s1.num_elements() , s2.data() , s3.data() , s4.data() , s5.data() , s6.data() , s7.data() , s8.data() , s9.data() , s10.data() , s11.data() , s12.data() , s13.data() , s14.data() , s15.data() , op );
     }
+<<<<<<< HEAD
     
+=======
+
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     template< typename S >
     static typename norm_result_type<S>::type norm_inf( const S &s )
     {
@@ -129,6 +138,7 @@ struct multi_array_algebra
     }
 };
 
+<<<<<<< HEAD
 // template< class T , size_t N >
 // struct algebra_dispatcher< boost::array< T , N > >
 // {
@@ -138,6 +148,13 @@ struct multi_array_algebra
 
 
 
+=======
+template< class T , size_t N >
+struct algebra_dispatcher< boost::multi_array< T , N > >
+{
+    typedef multi_array_algebra algebra_type;
+};
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 
 } // namespace odeint

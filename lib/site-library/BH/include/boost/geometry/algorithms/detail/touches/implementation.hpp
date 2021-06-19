@@ -5,8 +5,13 @@
 // Copyright (c) 2009-2015 Mateusz Loskot, London, UK.
 // Copyright (c) 2013-2015 Adam Wulkiewicz, Lodz, Poland.
 
+<<<<<<< HEAD
 // This file was modified by Oracle on 2013, 2014, 2015, 2017.
 // Modifications copyright (c) 2013-2017, Oracle and/or its affiliates.
+=======
+// This file was modified by Oracle on 2013, 2014, 2015, 2017, 2019.
+// Modifications copyright (c) 2013-2019, Oracle and/or its affiliates.
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 // Contributed and/or modified by Adam Wulkiewicz, on behalf of Oracle
 
@@ -254,6 +259,7 @@ struct areal_areal
                              Geometry2 const& geometry2,
                              IntersectionStrategy const& strategy)
     {
+<<<<<<< HEAD
         typedef detail::no_rescale_policy rescale_policy_type;
         typedef typename geometry::point_type<Geometry1>::type point_type;
         typedef detail::overlay::turn_info
@@ -265,12 +271,23 @@ struct areal_areal
         std::deque<turn_info> turns;
         detail::touches::areal_interrupt_policy policy;
         rescale_policy_type robust_policy;
+=======
+        typedef typename geometry::point_type<Geometry1>::type point_type;
+        typedef detail::overlay::turn_info<point_type> turn_info;
+
+        std::deque<turn_info> turns;
+        detail::touches::areal_interrupt_policy policy;
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
         boost::geometry::get_turns
                 <
                     detail::overlay::do_reverse<geometry::point_order<Geometry1>::value>::value,
                     detail::overlay::do_reverse<geometry::point_order<Geometry2>::value>::value,
                     detail::overlay::assign_null_policy
+<<<<<<< HEAD
                 >(geometry1, geometry2, strategy, robust_policy, turns, policy);
+=======
+                >(geometry1, geometry2, strategy, detail::no_rescale_policy(), turns, policy);
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
         return policy.result()
             && ! geometry::detail::touches::rings_containing(geometry1, geometry2, strategy)
@@ -298,8 +315,13 @@ namespace dispatch {
 
 // P/P
 
+<<<<<<< HEAD
 template <typename Geometry1, typename Geometry2, typename Tag2>
 struct touches<Geometry1, Geometry2, point_tag, Tag2, pointlike_tag, pointlike_tag, false>
+=======
+template <typename Geometry1, typename Geometry2>
+struct touches<Geometry1, Geometry2, point_tag, point_tag, pointlike_tag, pointlike_tag, false>
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 {
     template <typename Strategy>
     static inline bool apply(Geometry1 const& , Geometry2 const& , Strategy const&)
@@ -308,8 +330,23 @@ struct touches<Geometry1, Geometry2, point_tag, Tag2, pointlike_tag, pointlike_t
     }
 };
 
+<<<<<<< HEAD
 template <typename Geometry1, typename Geometry2, typename Tag2>
 struct touches<Geometry1, Geometry2, multi_point_tag, Tag2, pointlike_tag, pointlike_tag, false>
+=======
+template <typename Geometry1, typename Geometry2>
+struct touches<Geometry1, Geometry2, point_tag, multi_point_tag, pointlike_tag, pointlike_tag, false>
+{
+    template <typename Strategy>
+    static inline bool apply(Geometry1 const& , Geometry2 const& , Strategy const&)
+    {
+        return false;
+    }
+};
+
+template <typename Geometry1, typename Geometry2>
+struct touches<Geometry1, Geometry2, multi_point_tag, multi_point_tag, pointlike_tag, pointlike_tag, false>
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 {
     template <typename Strategy>
     static inline bool apply(Geometry1 const&, Geometry2 const&, Strategy const&)
@@ -318,7 +355,11 @@ struct touches<Geometry1, Geometry2, multi_point_tag, Tag2, pointlike_tag, point
     }
 };
 
+<<<<<<< HEAD
 // P/*
+=======
+// P/L P/A
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 template <typename Point, typename Geometry, typename Tag2, typename CastedTag2>
 struct touches<Point, Geometry, point_tag, Tag2, pointlike_tag, CastedTag2, false>
@@ -335,6 +376,11 @@ struct touches<MultiPoint, MultiGeometry, multi_point_tag, Tag2, pointlike_tag, 
         >
 {};
 
+<<<<<<< HEAD
+=======
+// L/P A/P
+
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 template <typename Geometry, typename MultiPoint, typename Tag1, typename CastedTag1>
 struct touches<Geometry, MultiPoint, Tag1, multi_point_tag, CastedTag1, pointlike_tag, false>
     : detail::relate::relate_impl
@@ -427,6 +473,7 @@ struct self_touches
             <
                 Geometry, Geometry
             >::type strategy_type;
+<<<<<<< HEAD
         typedef detail::no_rescale_policy rescale_policy_type;
         typedef typename geometry::point_type<Geometry>::type point_type;
         typedef detail::overlay::turn_info
@@ -434,6 +481,10 @@ struct self_touches
                 point_type,
                 typename segment_ratio_type<point_type, rescale_policy_type>::type
             > turn_info;
+=======
+        typedef typename geometry::point_type<Geometry>::type point_type;
+        typedef detail::overlay::turn_info<point_type> turn_info;
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
         typedef detail::overlay::get_turn_info
         <
@@ -443,12 +494,19 @@ struct self_touches
         std::deque<turn_info> turns;
         detail::touches::areal_interrupt_policy policy;
         strategy_type strategy;
+<<<<<<< HEAD
         rescale_policy_type robust_policy;
+=======
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
         // TODO: skip_adjacent should be set to false
         detail::self_get_turn_points::get_turns
         <
             false, policy_type
+<<<<<<< HEAD
         >::apply(geometry, strategy, robust_policy, turns, policy, 0, true);
+=======
+        >::apply(geometry, strategy, detail::no_rescale_policy(), turns, policy, 0, true);
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
         return policy.result();
     }

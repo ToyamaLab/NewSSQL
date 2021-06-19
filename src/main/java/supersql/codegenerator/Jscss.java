@@ -47,19 +47,20 @@ public class Jscss implements Serializable {
 		// modified by masato 20151118 little change for eHTML
 		// TODO 別ファイルに
 		String f = "";
-		if(Ehtml.flag || Incremental.flag){
+		if(Ehtml.flag || Incremental.flag || Ehtml.isEhtml2()){
 			f = "ssqlResult" + GlobalEnv.getQueryNum();
-		} else if ((Ehtml.flag || Incremental.flag) && !GlobalEnv.getoutfilename().isEmpty()) {
+		} else if ((Ehtml.flag || Incremental.flag || Ehtml.isEhtml2()) && !GlobalEnv.getoutfilename().isEmpty()) {
 			f = GlobalEnv.getoutfilename();
 		} else {
 			f = new File(GlobalEnv.getfilename()).getName().toString();
 		} 
 		if(f.contains("."))
 			f = f.substring(0, f.lastIndexOf("."));
-		if(Ehtml.flag || Incremental.flag) {
+		if(Ehtml.flag || Incremental.flag || Ehtml.isEhtml2()) {
 			String fileName = GlobalEnv.getoutfilename();
 			String phpFileName = fileName.substring(fileName.lastIndexOf(GlobalEnv.OS_FS), fileName.lastIndexOf("."));
-			return generateCssFileDir+((x==0)? "/":fs ) + phpFileName + ((x==0)? "/":fs ) + f +".css";
+//			return generateCssFileDir+((x==0)? "/":fs ) + phpFileName + ((x==0)? "/":fs ) + f +".css";		// <- NG: jscss//
+			return generateCssFileDir + phpFileName + ((x==0)? "/":fs ) + f +".css";
 		}
 		else return generateCssFileDir+((x==0)? "/":fs )+f+".css";
 		
@@ -74,10 +75,14 @@ public class Jscss implements Serializable {
 		// add 20141204 masato for ehtml
 		if (media.equalsIgnoreCase("html") || media.equalsIgnoreCase("ehtml") || media.equalsIgnoreCase("web"))
 			from = new File(ep+fs+"jscss"+fs+"forHTML"+fs+"jscss");
-		else if (media.equalsIgnoreCase("mobile_html5") || media.equalsIgnoreCase("bhtml") || media.equalsIgnoreCase("html_bootstrap") || Sass.isBootstrapFlg() || Compiler.isCompiler)
+		else if (media.equalsIgnoreCase("mobile_html5") || 
+				 media.equalsIgnoreCase("bhtml") || media.equalsIgnoreCase("html_bootstrap") || 
+				 Sass.isBootstrapFlg() || 
+				 Compiler.isCompiler)
 			from = new File(ep+fs+"jscss");
 		
-		if (!directoryCopy(from, new File(outdirPath)))
+		if (!Ehtml.flag && !Ehtml.isEhtml2() &&	// TODO
+				!directoryCopy(from, new File(outdirPath)))
 			Log.err("<<Warning>> Copy JSCSS failed.");
 	}
 	
@@ -148,15 +153,46 @@ public class Jscss implements Serializable {
 			css = WebEnv.commonCSS() + WebEnv.css + WebEnv.cssTableInput(WebEnv.cssClass);
 		else if (media.equals("bhtml") || media.equals("html_bootstrap") || Sass.isBootstrapFlg()) // 20160603 bootstrap
 			css = Mobile_HTML5Env.commonCSS() + Mobile_HTML5Env.css + Sass.compile();
-		String outputCssFileName = outdirPath+fs+fs+getGenerateCssFileName(1);
+		String outputCssFileName = outdirPath+fs+getGenerateCssFileName(1);
+		Log.out( Mobile_HTML5Env.commonCSS());
 		
-		if(!createFile(outputCssFileName, css))
-			Log.err("<<Warning>> Generate CSS failed.");
+		if (Ehtml.isEhtml2() && Ehtml.outType==1) {
+//			css = css.replace("html{", Ehtml.getID(1)+" {")
+//					 .replace("body{", Ehtml.getID(1)+" {");
+			css = css.replace(".TFE", Ehtml.getID(1)+" .TFE");		//TODO Mobile_HTML5Env.java:"TFE"
+		}
+		
+		if (!Responsive.saveOrCopyCSS(outputCssFileName, css)){
+			// 通常のCSS生成処理
+			Log.info("outputCssFileName = "+outputCssFileName+"\n");
+			if(!createFile(outputCssFileName, css))
+				Log.err("<<Warning>> Generate CSS failed.");
+		}
+		
 	}
+//	//get a CSS contents for the generated HTML
+//	public static String getCssContents() {
+//		String css = "";
+//		if(media.equals("html") || media.equals("ehtml"))
+//			css = HTMLEnv.commonCSS() + HTMLEnv.css;
+//		else if(media.equals("mobile_html5") || Compiler.isCompiler)
+//			css = Mobile_HTML5Env.commonCSS() + Mobile_HTML5Env.css;
+//		else if (media.equals("web"))
+//			css = WebEnv.commonCSS() + WebEnv.css + WebEnv.cssTableInput(WebEnv.cssClass);
+//		else if (media.equals("bhtml") || media.equals("html_bootstrap") || Sass.isBootstrapFlg()) // 20160603 bootstrap
+//			css = Mobile_HTML5Env.commonCSS() + Mobile_HTML5Env.css + Sass.compile();
+//		
+//		if (Ehtml.isEhtml2() && Ehtml.outType==1) {
+//			css = css.replace("html{", Ehtml.getID(1)+" {")
+//					 .replace("body{", Ehtml.getID(1)+" {");
+//		}
+//		
+//		return css;
+//	}
 	
 	//createFile
 	//create a new file to the fileName directory 
-	private static boolean createFile(String fileName, String content) {
+	public static boolean createFile(String fileName, String content) {
 
 		if(flag || Ehtml.flag){
 			File file = new File(fileName.substring(0, fileName.lastIndexOf(GlobalEnv.OS_FS)));

@@ -5,8 +5,13 @@
 // Copyright (c) 2009-2015 Mateusz Loskot, London, UK.
 // Copyright (c) 2014-2015 Samuel Debionne, Grenoble, France.
 
+<<<<<<< HEAD
 // This file was modified by Oracle on 2015, 2016, 2017.
 // Modifications copyright (c) 2015-2017, Oracle and/or its affiliates.
+=======
+// This file was modified by Oracle on 2015, 2016, 2017, 2018.
+// Modifications copyright (c) 2015-2018, Oracle and/or its affiliates.
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 // Contributed and/or modified by Vissarion Fysikopoulos, on behalf of Oracle
 // Contributed and/or modified by Menelaos Karavelas, on behalf of Oracle
@@ -48,8 +53,13 @@ template
 >
 struct indexed_loop
 {
+<<<<<<< HEAD
     template <typename Box, typename Geometry, typename Strategy>
     static inline void apply(Box& box, Geometry const& source, Strategy const& strategy)
+=======
+    template <typename Box, typename Geometry>
+    static inline void apply(Box& box, Geometry const& source)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     {
         typedef typename select_coordinate_type
                 <
@@ -75,7 +85,11 @@ struct indexed_loop
         indexed_loop
             <
                 Index, Dimension + 1, DimensionCount
+<<<<<<< HEAD
             >::apply(box, source, strategy);
+=======
+            >::apply(box, source);
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     }
 };
 
@@ -86,8 +100,13 @@ struct indexed_loop
         Index, DimensionCount, DimensionCount
     >
 {
+<<<<<<< HEAD
     template <typename Box, typename Geometry, typename Strategy>
     static inline void apply(Box&, Geometry const&, Strategy const&) {}
+=======
+    template <typename Box, typename Geometry>
+    static inline void apply(Box&, Geometry const&) {}
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 };
 
 
@@ -96,20 +115,33 @@ struct indexed_loop
 template <std::size_t Dimension, std::size_t DimensionCount>
 struct expand_indexed
 {
+<<<<<<< HEAD
     template <typename Box, typename Geometry, typename Strategy>
     static inline void apply(Box& box,
                              Geometry const& geometry,
                              Strategy const& strategy)
+=======
+    template <typename Box, typename Geometry>
+    static inline void apply(Box& box, Geometry const& geometry)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     {
         indexed_loop
             <
                 0, Dimension, DimensionCount
+<<<<<<< HEAD
             >::apply(box, geometry, strategy);
+=======
+            >::apply(box, geometry);
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
         indexed_loop
             <
                 1, Dimension, DimensionCount
+<<<<<<< HEAD
             >::apply(box, geometry, strategy);
+=======
+            >::apply(box, geometry);
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     }
 };
 

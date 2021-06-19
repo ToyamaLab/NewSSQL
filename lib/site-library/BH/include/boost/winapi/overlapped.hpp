@@ -32,7 +32,11 @@ typedef struct BOOST_MAY_ALIAS _OVERLAPPED {
     ULONG_PTR_ Internal;
     ULONG_PTR_ InternalHigh;
     union {
+<<<<<<< HEAD
         struct {
+=======
+        BOOST_WINAPI_DETAIL_EXTENSION struct {
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
             DWORD_ Offset;
             DWORD_ OffsetHigh;
         };

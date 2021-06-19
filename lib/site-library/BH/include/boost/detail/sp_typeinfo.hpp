@@ -18,6 +18,12 @@
 //  http://www.boost.org/LICENSE_1_0.txt)
 
 #include <boost/core/typeinfo.hpp>
+<<<<<<< HEAD
+=======
+#include <boost/config/header_deprecated.hpp>
+
+BOOST_HEADER_DEPRECATED( "<boost/core/typeinfo.hpp>" )
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 namespace boost
 {

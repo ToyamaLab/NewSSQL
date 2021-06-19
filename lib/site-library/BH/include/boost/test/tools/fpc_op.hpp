@@ -20,6 +20,10 @@
 
 // Boost
 #include <boost/type_traits/common_type.hpp>
+<<<<<<< HEAD
+=======
+#include <boost/type_traits/is_arithmetic.hpp>
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 #include <boost/utility/enable_if.hpp>
 
 #include <boost/test/detail/suppress_warnings.hpp>
@@ -108,10 +112,17 @@ inline assertion_result
 compare_fpv( Lhs const& lhs, Rhs const& rhs, op::EQ<Lhs,Rhs>* )
 {
     if( lhs == 0 ) {
+<<<<<<< HEAD
         return compare_fpv_near_zero( rhs, (op::EQ<Lhs,Rhs>*)0 );
     }
     else if( rhs == 0) {
         return compare_fpv_near_zero( lhs, (op::EQ<Lhs,Rhs>*)0 );
+=======
+        return compare_fpv_near_zero<FPT>( rhs, (op::EQ<Lhs,Rhs>*)0 );
+    }
+    else if( rhs == 0) {
+        return compare_fpv_near_zero<FPT>( lhs, (op::EQ<Lhs,Rhs>*)0 );
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     }
     else {
         fpc::close_at_tolerance<FPT> P( fpc_tolerance<FPT>(), fpc::FPC_STRONG );
@@ -131,10 +142,17 @@ inline assertion_result
 compare_fpv( Lhs const& lhs, Rhs const& rhs, op::NE<Lhs,Rhs>* )
 {
     if( lhs == 0 ) {
+<<<<<<< HEAD
         return compare_fpv_near_zero( rhs, (op::NE<Lhs,Rhs>*)0 );
     }
     else if( rhs == 0 ) {
         return compare_fpv_near_zero( lhs, (op::NE<Lhs,Rhs>*)0 );
+=======
+        return compare_fpv_near_zero<FPT>( rhs, (op::NE<Lhs,Rhs>*)0 );
+    }
+    else if( rhs == 0 ) {
+        return compare_fpv_near_zero<FPT>( lhs, (op::NE<Lhs,Rhs>*)0 );
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     }
     else {
         fpc::close_at_tolerance<FPT> P( fpc_tolerance<FPT>(), fpc::FPC_WEAK );
@@ -154,7 +172,16 @@ compare_fpv( Lhs const& lhs, Rhs const& rhs, op::NE<Lhs,Rhs>* )
 template<typename Lhs,typename Rhs>                                     \
 struct name<Lhs,Rhs,typename boost::enable_if_c<                        \
     (fpc::tolerance_based<Lhs>::value &&                                \
+<<<<<<< HEAD
      fpc::tolerance_based<Rhs>::value)>::type> {                        \
+=======
+     fpc::tolerance_based<Rhs>::value) ||                               \
+    (fpc::tolerance_based<Lhs>::value &&                                \
+     boost::is_arithmetic<Rhs>::value) ||                               \
+    (boost::is_arithmetic<Lhs>::value &&                                \
+     fpc::tolerance_based<Rhs>::value)                                  \
+     >::type> {                                                         \
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 public:                                                                 \
     typedef typename common_type<Lhs,Rhs>::type FPT;                    \
     typedef name<Lhs,Rhs> OP;                                           \
@@ -170,7 +197,15 @@ public:                                                                 \
     static assertion_result                                             \
     eval( Lhs const& lhs, Rhs const& rhs )                              \
     {                                                                   \
+<<<<<<< HEAD
         if( fpc_tolerance<FPT>() == FPT(0) )                            \
+=======
+        if( fpc_tolerance<FPT>() == FPT(0)                              \
+            || (std::numeric_limits<Lhs>::has_infinity                  \
+                && (lhs == std::numeric_limits<Lhs>::infinity()))       \
+            || (std::numeric_limits<Rhs>::has_infinity                  \
+                && (rhs == std::numeric_limits<Rhs>::infinity())))      \
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
         {                                                               \
             return eval_direct( lhs, rhs );                             \
         }                                                               \
@@ -207,4 +242,7 @@ BOOST_TEST_FOR_EACH_COMP_OP( DEFINE_FPV_COMPARISON )
 #include <boost/test/detail/enable_warnings.hpp>
 
 #endif // BOOST_TEST_TOOLS_FPC_OP_HPP_050915GER
+<<<<<<< HEAD
 
+=======
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce

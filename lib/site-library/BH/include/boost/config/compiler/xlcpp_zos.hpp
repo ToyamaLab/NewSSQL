@@ -153,6 +153,10 @@
 #define BOOST_NO_CXX17_STRUCTURED_BINDINGS
 #define BOOST_NO_CXX17_INLINE_VARIABLES
 #define BOOST_NO_CXX17_FOLD_EXPRESSIONS
+<<<<<<< HEAD
+=======
+#define BOOST_NO_CXX17_IF_CONSTEXPR
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 // -------------------------------------
 

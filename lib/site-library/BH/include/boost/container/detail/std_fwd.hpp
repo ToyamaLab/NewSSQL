@@ -32,6 +32,12 @@ class allocator;
 template<class T>
 struct less;
 
+<<<<<<< HEAD
+=======
+template<class T>
+struct equal_to;
+
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 template<class T1, class T2>
 struct pair;
 

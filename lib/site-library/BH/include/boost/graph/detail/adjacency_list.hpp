@@ -267,7 +267,11 @@ namespace boost {
         : Base(static_cast< Base const& >(x)), m_property(const_cast<self&>(x).m_property) { }
       self& operator=(const self& x) {
         // NOTE: avoid 'Base::operator=(x);' broken on SGI MIPSpro (bug 55771 of Mozilla).
+<<<<<<< HEAD
         static_cast<Base&>(*this) = static_cast< Base const& >(x); 
+=======
+        static_cast<Base&>(*this) = static_cast< Base const& >(x);
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
         m_property = const_cast<self&>(x).m_property;
         return *this;
       }
@@ -277,7 +281,11 @@ namespace boost {
         : Base(static_cast< Base&& >(x)), m_property(std::move(x.m_property)) { }
       self& operator=(self&& x) {
         // NOTE: avoid 'Base::operator=(x);' broken on SGI MIPSpro (bug 55771 of Mozilla).
+<<<<<<< HEAD
         static_cast<Base&>(*this) = static_cast< Base&& >(x); 
+=======
+        static_cast<Base&>(*this) = static_cast< Base&& >(x);
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
         m_property = std::move(x.m_property);
         return *this;
       }
@@ -289,7 +297,15 @@ namespace boost {
       // invalidation for add_edge() with EdgeList=vecS. Instead we
       // hold a pointer to the property. std::auto_ptr is not
       // a perfect fit for the job, but it is darn close.
+<<<<<<< HEAD
       std::auto_ptr<Property> m_property;
+=======
+#ifdef BOOST_NO_AUTO_PTR
+      std::unique_ptr<Property> m_property;
+#else
+      std::auto_ptr<Property> m_property;
+#endif
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     };
 #else
     template <class Vertex, class Property>
@@ -2047,16 +2063,26 @@ namespace boost {
           if ((*ei).get_target() > u)
             --(*ei).get_target();
       }
+<<<<<<< HEAD
+=======
+
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
       template <class EdgeList, class vertex_descriptor>
       inline void
       reindex_edge_list(EdgeList& el, vertex_descriptor u,
                         boost::disallow_parallel_edge_tag)
       {
+<<<<<<< HEAD
         typename EdgeList::iterator ei = el.begin(), e_end = el.end();
         while (ei != e_end) {
           typename EdgeList::value_type ce = *ei;
           ++ei;
           if (ce.get_target() > u) {
+=======
+        for(typename EdgeList::iterator ei = el.begin(); ei != el.end(); ++ei) {
+          if (ei->get_target() > u) {
+            typename EdgeList::value_type ce = *ei;
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
             el.erase(ce);
             --ce.get_target();
             el.insert(ce);

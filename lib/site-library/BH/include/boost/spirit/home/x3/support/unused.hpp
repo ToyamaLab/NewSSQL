@@ -8,6 +8,7 @@
 #if !defined(BOOST_SPIRIT_X3_UNUSED_APRIL_16_2006_0616PM)
 #define BOOST_SPIRIT_X3_UNUSED_APRIL_16_2006_0616PM
 
+<<<<<<< HEAD
 #include <ostream>
 #include <istream>
 #include <boost/mpl/identity.hpp>
@@ -16,15 +17,22 @@
 # pragma warning(push)
 # pragma warning(disable: 4522) // multiple assignment operators specified warning
 #endif
+=======
+#include <iosfwd>
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 ///////////////////////////////////////////////////////////////////////////////
 namespace boost { namespace spirit { namespace x3
 {
     struct unused_type
     {
+<<<<<<< HEAD
         unused_type()
         {
         }
+=======
+        unused_type() = default;
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
         template <typename T>
         unused_type(T const&)
@@ -45,6 +53,7 @@ namespace boost { namespace spirit { namespace x3
             return *this;
         }
 
+<<<<<<< HEAD
         unused_type const&
         operator=(unused_type const&) const
         {
@@ -57,6 +66,8 @@ namespace boost { namespace spirit { namespace x3
             return *this;
         }
 
+=======
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
         // unused_type can also masquerade as an empty context (see context.hpp)
 
         template <typename ID>
@@ -79,8 +90,11 @@ namespace boost { namespace spirit { namespace x3
     }
 }}}
 
+<<<<<<< HEAD
 #if defined(BOOST_MSVC)
 # pragma warning(pop)
 #endif
 
+=======
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 #endif

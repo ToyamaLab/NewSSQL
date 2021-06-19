@@ -61,7 +61,13 @@ extern "C" __declspec(dllimport) void __stdcall EnterCriticalSection(::_RTL_CRIT
 extern "C" __declspec(dllimport) void __stdcall LeaveCriticalSection(::_RTL_CRITICAL_SECTION *);
 extern "C" __declspec(dllimport) void __stdcall DeleteCriticalSection(::_RTL_CRITICAL_SECTION *);
 
+<<<<<<< HEAD
 #else
+=======
+typedef ::_RTL_CRITICAL_SECTION rtl_critical_section;
+
+#else // #ifndef BOOST_USE_WINDOWS_H
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 typedef ::CRITICAL_SECTION critical_section;
 
@@ -74,6 +80,11 @@ using ::EnterCriticalSection;
 using ::LeaveCriticalSection;
 using ::DeleteCriticalSection;
 
+<<<<<<< HEAD
+=======
+typedef ::CRITICAL_SECTION rtl_critical_section;
+
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 #endif // #ifndef BOOST_USE_WINDOWS_H
 
 class lightweight_mutex
@@ -90,15 +101,25 @@ public:
     lightweight_mutex()
     {
 #if BOOST_PLAT_WINDOWS_RUNTIME
+<<<<<<< HEAD
         boost::detail::InitializeCriticalSectionEx(reinterpret_cast< ::_RTL_CRITICAL_SECTION* >(&cs_), 4000, 0);
 #else
         boost::detail::InitializeCriticalSection(reinterpret_cast< ::_RTL_CRITICAL_SECTION* >(&cs_));
+=======
+        boost::detail::InitializeCriticalSectionEx(reinterpret_cast< rtl_critical_section* >(&cs_), 4000, 0);
+#else
+        boost::detail::InitializeCriticalSection(reinterpret_cast< rtl_critical_section* >(&cs_));
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 #endif
     }
 
     ~lightweight_mutex()
     {
+<<<<<<< HEAD
         boost::detail::DeleteCriticalSection(reinterpret_cast< ::_RTL_CRITICAL_SECTION* >(&cs_));
+=======
+        boost::detail::DeleteCriticalSection(reinterpret_cast< rtl_critical_section* >(&cs_));
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     }
 
     class scoped_lock;
@@ -117,12 +138,20 @@ public:
 
         explicit scoped_lock(lightweight_mutex & m): m_(m)
         {
+<<<<<<< HEAD
             boost::detail::EnterCriticalSection(reinterpret_cast< ::_RTL_CRITICAL_SECTION* >(&m_.cs_));
+=======
+            boost::detail::EnterCriticalSection(reinterpret_cast< rtl_critical_section* >(&m_.cs_));
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
         }
 
         ~scoped_lock()
         {
+<<<<<<< HEAD
             boost::detail::LeaveCriticalSection(reinterpret_cast< ::_RTL_CRITICAL_SECTION* >(&m_.cs_));
+=======
+            boost::detail::LeaveCriticalSection(reinterpret_cast< rtl_critical_section* >(&m_.cs_));
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
         }
     };
 };

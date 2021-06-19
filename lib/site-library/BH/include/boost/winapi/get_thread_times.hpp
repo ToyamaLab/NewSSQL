@@ -20,7 +20,11 @@
 
 #if !defined( BOOST_USE_WINDOWS_H )
 extern "C" {
+<<<<<<< HEAD
 BOOST_SYMBOL_IMPORT boost::winapi::BOOL_ WINAPI
+=======
+BOOST_SYMBOL_IMPORT boost::winapi::BOOL_ BOOST_WINAPI_WINAPI_CC
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 GetThreadTimes(
     boost::winapi::HANDLE_ hThread,
     ::_FILETIME* lpCreationTime,

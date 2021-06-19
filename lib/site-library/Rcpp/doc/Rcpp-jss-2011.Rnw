@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 %% use JSS class -- use 'nojss' to turn off header
 \documentclass[shortnames,nojss,article]{jss}
 \usepackage{booktabs,flafter,thumbpdf}
@@ -1077,3 +1078,16 @@ ideas for new or extended features via the \code{rcpp-devel} mailing list.
 %%% mode: latex
 %%% TeX-master: t
 %%% End:
+=======
+\documentclass{article}
+\usepackage{pdfpages}
+%\VignetteIndexEntry{Rcpp-JSS-2011}
+%\VignetteKeywords{Rcpp, foreign function interface, .Call, C++, R}
+%\VignettePackage{Rcpp}
+%\VignetteEncoding{UTF-8}
+
+\begin{document}
+\includepdf[pages=-, fitpaper=true]{pdf/Rcpp-jss-2011.pdf}
+\end{document}
+
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce

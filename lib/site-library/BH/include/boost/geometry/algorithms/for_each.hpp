@@ -109,6 +109,14 @@ struct fe_range_per_segment_with_closure
         typedef typename boost::range_iterator<Range>::type iterator_type;
 
         iterator_type it = boost::begin(range);
+<<<<<<< HEAD
+=======
+        if (it == boost::end(range))
+        {
+            return;
+        }
+
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
         iterator_type previous = it++;
         while(it != boost::end(range))
         {

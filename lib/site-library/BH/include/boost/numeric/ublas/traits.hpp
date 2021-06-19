@@ -32,10 +32,24 @@
 #include <boost/type_traits/is_integral.hpp>
 #include <boost/type_traits/is_unsigned.hpp>
 #include <boost/mpl/and.hpp>
+<<<<<<< HEAD
 
 // anonymous namespace to avoid ADL issues
 namespace {
   template<class T> T boost_numeric_ublas_sqrt (const T& t) {
+=======
+#include <boost/mpl/if.hpp>
+#include <boost/typeof/typeof.hpp>
+
+
+// anonymous namespace to avoid ADL issues
+namespace {
+  template<class T>
+    typename boost::mpl::if_c<boost::is_integral<T>::value,
+                              double,
+                              T>::type
+  boost_numeric_ublas_sqrt (const T& t) {
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     using namespace std;
     // we'll find either std::sqrt or else another version via ADL:
     return sqrt (t);
@@ -46,7 +60,12 @@ inline typename boost::disable_if<
     boost::is_unsigned<T>, T >::type
     boost_numeric_ublas_abs (const T &t ) {
         using namespace std;
+<<<<<<< HEAD
         return abs( t );
+=======
+        // force a type conversion back to T for char and short types
+        return static_cast<T>(abs( t ));
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     }
 
 template<typename T>
@@ -140,6 +159,7 @@ namespace boost { namespace numeric { namespace ublas {
       return in1 / R (in2);
     }
 
+<<<<<<< HEAD
     // Use Joel de Guzman's return type deduction
     // uBLAS assumes a common return type for all binary arithmetic operators
     template<class X, class Y>
@@ -158,6 +178,12 @@ namespace boost { namespace numeric { namespace ublas {
         typedef typename mpl::at_c<
             typename base_type::types, index>::type id;
         typedef typename id::type promote_type;
+=======
+    // uBLAS assumes a common return type for all binary arithmetic operators
+    template<class X, class Y>
+    struct promote_traits {
+        typedef BOOST_TYPEOF_TPL(X() + Y()) promote_type;
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     };
 
 

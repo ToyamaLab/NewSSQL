@@ -14,7 +14,11 @@
 #include <boost/config.hpp>
 #include <boost/mpi/datatype.hpp>
 #include <boost/mpi/exception.hpp>
+<<<<<<< HEAD
 #include <boost/assert.hpp>
+=======
+#include <boost/mpi/detail/antiques.hpp>
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 #include <boost/serialization/array.hpp>
 #include <vector>
 #include <boost/mpi/detail/antiques.hpp>

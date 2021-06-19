@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 /* Copyright 2003-2017 Joaquin M Lopez Munoz.
+=======
+/* Copyright 2003-2018 Joaquin M Lopez Munoz.
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
  * Distributed under the Boost Software License, Version 1.0.
  * (See accompanying file LICENSE_1_0.txt or copy at
  * http://www.boost.org/LICENSE_1_0.txt)
@@ -16,7 +20,11 @@
 #include <boost/config.hpp> /* keep it first to prevent nasty warns in MSVC */
 #include <algorithm>
 #include <boost/call_traits.hpp>
+<<<<<<< HEAD
 #include <boost/detail/allocator_utilities.hpp>
+=======
+#include <boost/core/addressof.hpp>
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 #include <boost/detail/no_exceptions_support.hpp>
 #include <boost/detail/workaround.hpp>
 #include <boost/foreach_fwd.hpp>
@@ -26,6 +34,10 @@
 #include <boost/mpl/if.hpp>
 #include <boost/mpl/push_front.hpp>
 #include <boost/multi_index/detail/access_specifier.hpp>
+<<<<<<< HEAD
+=======
+#include <boost/multi_index/detail/allocator_traits.hpp>
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 #include <boost/multi_index/detail/auto_space.hpp>
 #include <boost/multi_index/detail/bucket_array.hpp>
 #include <boost/multi_index/detail/do_not_copy_elements_tag.hpp>
@@ -101,6 +113,7 @@ class hashed_index:
 #pragma parse_mfunc_templ off
 #endif
 
+<<<<<<< HEAD
   typedef typename SuperMeta::type                   super;
 
 protected:
@@ -114,10 +127,26 @@ private:
   typedef typename node_impl_type::base_pointer      node_impl_base_pointer;
   typedef bucket_array<
     typename super::final_allocator_type>            bucket_array_type;
+=======
+  typedef typename SuperMeta::type               super;
+
+protected:
+  typedef hashed_index_node<
+    typename super::node_type,Category>          node_type;
+
+private:
+  typedef typename node_type::node_alg           node_alg;
+  typedef typename node_type::impl_type          node_impl_type;
+  typedef typename node_impl_type::pointer       node_impl_pointer;
+  typedef typename node_impl_type::base_pointer  node_impl_base_pointer;
+  typedef bucket_array<
+    typename super::final_allocator_type>        bucket_array_type;
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 public:
   /* types */
 
+<<<<<<< HEAD
   typedef typename KeyFromValue::result_type         key_type;
   typedef typename node_type::value_type             value_type;
   typedef KeyFromValue                               key_from_value;
@@ -132,12 +161,34 @@ public:
   typedef typename allocator_type::const_reference   const_reference;
   typedef std::size_t                                size_type;      
   typedef std::ptrdiff_t                             difference_type;
+=======
+  typedef typename KeyFromValue::result_type     key_type;
+  typedef typename node_type::value_type         value_type;
+  typedef KeyFromValue                           key_from_value;
+  typedef Hash                                   hasher;
+  typedef Pred                                   key_equal;
+  typedef typename super::final_allocator_type   allocator_type;
+
+private:
+  typedef allocator_traits<allocator_type>       alloc_traits;
+
+public:
+  typedef typename alloc_traits::pointer         pointer;
+  typedef typename alloc_traits::const_pointer   const_pointer;
+  typedef value_type&                            reference;
+  typedef const value_type&                      const_reference;
+  typedef typename alloc_traits::size_type       size_type;
+  typedef typename alloc_traits::difference_type difference_type;
+  typedef tuple<size_type,
+    key_from_value,hasher,key_equal>             ctor_args;
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 #if defined(BOOST_MULTI_INDEX_ENABLE_SAFE_MODE)
   typedef safe_mode::safe_iterator<
     hashed_index_iterator<
       node_type,bucket_array_type,
       hashed_index_global_iterator_tag>,
+<<<<<<< HEAD
     hashed_index>                                    iterator;
 #else
   typedef hashed_index_iterator<
@@ -153,6 +204,23 @@ public:
   typedef local_iterator                             const_local_iterator;
 
   typedef TagList                                    tag_list;
+=======
+    hashed_index>                                iterator;
+#else
+  typedef hashed_index_iterator<
+    node_type,bucket_array_type,
+    hashed_index_global_iterator_tag>            iterator;
+#endif
+
+  typedef iterator                               const_iterator;
+
+  typedef hashed_index_iterator<
+    node_type,bucket_array_type,
+    hashed_index_local_iterator_tag>             local_iterator;
+  typedef local_iterator                         const_local_iterator;
+
+  typedef TagList                                tag_list;
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 protected:
   typedef typename super::final_node_type     final_node_type;
@@ -238,12 +306,20 @@ public:
 
   iterator iterator_to(const value_type& x)
   {
+<<<<<<< HEAD
     return make_iterator(node_from_value<node_type>(&x));
+=======
+    return make_iterator(node_from_value<node_type>(boost::addressof(x)));
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
   }
 
   const_iterator iterator_to(const value_type& x)const
   {
+<<<<<<< HEAD
     return make_iterator(node_from_value<node_type>(&x));
+=======
+    return make_iterator(node_from_value<node_type>(boost::addressof(x)));
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
   }
 
   /* modifiers */
@@ -518,7 +594,15 @@ public:
 
   /* bucket interface */
 
+<<<<<<< HEAD
   size_type bucket_count()const BOOST_NOEXCEPT{return buckets.size();}
+=======
+  size_type bucket_count()const BOOST_NOEXCEPT
+  {
+    return static_cast<size_type>(buckets.size());
+  }
+
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
   size_type max_bucket_count()const BOOST_NOEXCEPT{return static_cast<size_type>(-1);}
 
   size_type bucket_size(size_type n)const
@@ -533,7 +617,11 @@ public:
 
   size_type bucket(key_param_type k)const
   {
+<<<<<<< HEAD
     return buckets.position(hash_(k));
+=======
+    return static_cast<size_type>(buckets.position(hash_(k)));
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
   }
 
   local_iterator begin(size_type n)
@@ -563,12 +651,22 @@ public:
 
   local_iterator local_iterator_to(const value_type& x)
   {
+<<<<<<< HEAD
     return make_local_iterator(node_from_value<node_type>(&x));
+=======
+    return make_local_iterator(
+      node_from_value<node_type>(boost::addressof(x)));
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
   }
 
   const_local_iterator local_iterator_to(const value_type& x)const
   {
+<<<<<<< HEAD
     return make_local_iterator(node_from_value<node_type>(&x));
+=======
+    return make_local_iterator(
+      node_from_value<node_type>(boost::addressof(x)));
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
   }
 
   /* hash policy */
@@ -1060,7 +1158,11 @@ BOOST_MULTI_INDEX_PROTECTED_IF_MEMBER_TEMPLATE_FRIENDS:
       if(it!=it_last){
         for(const_iterator scan=it;scan!=it_last;++scan){
           if(std::find(it,scan,*scan)!=scan)continue;
+<<<<<<< HEAD
           std::ptrdiff_t matches=std::count(it2,it2_last,*scan);
+=======
+          difference_type matches=std::count(it2,it2_last,*scan);
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
           if(matches==0||matches!=std::count(scan,it_last,*scan))return false;
         }
         it=it_last;

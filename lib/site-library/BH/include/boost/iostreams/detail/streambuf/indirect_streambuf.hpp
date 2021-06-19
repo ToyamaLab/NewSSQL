@@ -16,9 +16,15 @@
 #include <algorithm>                             // min, max.
 #include <cassert>
 #include <exception>
+<<<<<<< HEAD
 #include <typeinfo>
 #include <boost/config.hpp>                      // Member template friends.
 #include <boost/detail/workaround.hpp>
+=======
+#include <boost/config.hpp>                      // Member template friends.
+#include <boost/detail/workaround.hpp>
+#include <boost/core/typeinfo.hpp>
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 #include <boost/iostreams/constants.hpp>
 #include <boost/iostreams/detail/adapter/concept_adapter.hpp>
 #include <boost/iostreams/detail/buffer.hpp>
@@ -94,7 +100,11 @@ protected:
     // Declared in linked_streambuf.
     void set_next(streambuf_type* next);
     void close_impl(BOOST_IOS::openmode m);
+<<<<<<< HEAD
     const std::type_info& component_type() const { return typeid(T); }
+=======
+    const boost::core::typeinfo& component_type() const { return BOOST_CORE_TYPEID(T); }
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     void* component_impl() { return component(); }
 private:
 

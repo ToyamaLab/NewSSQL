@@ -13,7 +13,11 @@
 #include <stdexcept>
 #include <boost/config.hpp>
 #include <boost/throw_exception.hpp>
+<<<<<<< HEAD
 #include <boost/mpl/if.hpp>
+=======
+#include <boost/type_traits/conditional.hpp>
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 #include <boost/type_traits/is_base_of.hpp>
 
 namespace boost {
@@ -95,8 +99,13 @@ namespace CV {
       }
     };
 
+<<<<<<< HEAD
     typedef typename mpl::if_<
       is_base_of< std::exception, exception_type >,
+=======
+    typedef typename conditional<
+      is_base_of< std::exception, exception_type >::value,
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
       exception_type,
       exception_wrapper
     >::type actual_exception_type;

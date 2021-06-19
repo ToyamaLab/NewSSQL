@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 Encoding: UTF-8
 Package: withr
 Title: Run Code 'With' Temporarily Modified Global State
@@ -31,6 +32,59 @@ Collate: 'local_.R' 'with_.R' 'collate.R' 'connection.R' 'db.R'
 VignetteBuilder: knitr
 NeedsCompilation: no
 Packaged: 2018-03-15 13:59:37 UTC; jhester
+=======
+Package: withr
+Title: Run Code 'With' Temporarily Modified Global State
+Version: 2.2.0
+Authors@R: 
+    c(person(given = "Jim",
+             family = "Hester",
+             role = c("aut", "cre"),
+             email = "james.f.hester@gmail.com"),
+      person(given = "Kirill",
+             family = "Müller",
+             role = "aut",
+             email = "krlmlr+r@mailbox.org"),
+      person(given = "Kevin",
+             family = "Ushey",
+             role = "aut",
+             email = "kevinushey@gmail.com"),
+      person(given = "Hadley",
+             family = "Wickham",
+             role = "aut",
+             email = "hadley@rstudio.com"),
+      person(given = "Winston",
+             family = "Chang",
+             role = "aut"),
+      person(given = "Richard",
+             family = "Cotton",
+             role = "ctb"),
+      person(given = "RStudio",
+             role = "cph"))
+Description: A set of functions to run code 'with' safely and
+    temporarily modified global state. Many of these functions were
+    originally a part of the 'devtools' package, this provides a simple
+    package with limited dependencies to provide access to these
+    functions.
+License: GPL (>= 2)
+URL: http://withr.r-lib.org, http://github.com/r-lib/withr#readme
+BugReports: http://github.com/r-lib/withr/issues
+Depends: R (>= 3.2.0)
+Imports: graphics, grDevices, stats
+Suggests: covr, DBI, knitr, lattice, methods, rmarkdown, RSQLite,
+        testthat (>= 2.1.0)
+VignetteBuilder: knitr
+Encoding: UTF-8
+LazyData: true
+RoxygenNote: 7.1.0
+Collate: 'local_.R' 'with_.R' 'collate.R' 'connection.R' 'db.R'
+        'defer.R' 'wrap.R' 'devices.R' 'dir.R' 'env.R' 'file.R'
+        'libpaths.R' 'locale.R' 'makevars.R' 'namespace.R' 'options.R'
+        'par.R' 'path.R' 'rng.R' 'seed.R' 'sink.R' 'tempfile.R'
+        'timezone.R' 'torture.R' 'utils.R' 'with.R'
+NeedsCompilation: no
+Packaged: 2020-04-20 21:18:04 UTC; jhester
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 Author: Jim Hester [aut, cre],
   Kirill Müller [aut],
   Kevin Ushey [aut],
@@ -40,5 +94,10 @@ Author: Jim Hester [aut, cre],
   RStudio [cph]
 Maintainer: Jim Hester <james.f.hester@gmail.com>
 Repository: CRAN
+<<<<<<< HEAD
 Date/Publication: 2018-03-15 22:39:56 UTC
 Built: R 3.5.1; ; 2018-08-18 07:12:52 UTC; unix
+=======
+Date/Publication: 2020-04-20 22:10:02 UTC
+Built: R 4.0.2; ; 2020-08-27 07:29:41 UTC; unix
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce

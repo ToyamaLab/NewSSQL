@@ -21,7 +21,11 @@
 
 #if !defined( BOOST_USE_WINDOWS_H ) && BOOST_WINAPI_PARTITION_DESKTOP && !defined( BOOST_NO_ANSI_APIS )
 extern "C" {
+<<<<<<< HEAD
 BOOST_SYMBOL_IMPORT boost::winapi::HANDLE_ WINAPI CreateNamedPipeA(
+=======
+BOOST_SYMBOL_IMPORT boost::winapi::HANDLE_ BOOST_WINAPI_WINAPI_CC CreateNamedPipeA(
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     boost::winapi::LPCSTR_ lpName,
     boost::winapi::DWORD_ dwOpenMode,
     boost::winapi::DWORD_ dwPipeMode,
@@ -36,15 +40,23 @@ BOOST_SYMBOL_IMPORT boost::winapi::HANDLE_ WINAPI CreateNamedPipeA(
 #if !defined( BOOST_USE_WINDOWS_H )
 extern "C" {
 
+<<<<<<< HEAD
 BOOST_SYMBOL_IMPORT boost::winapi::BOOL_ WINAPI ImpersonateNamedPipeClient(
     boost::winapi::HANDLE_ hNamedPipe);
 
 BOOST_SYMBOL_IMPORT boost::winapi::BOOL_ WINAPI CreatePipe(
+=======
+BOOST_SYMBOL_IMPORT boost::winapi::BOOL_ BOOST_WINAPI_WINAPI_CC ImpersonateNamedPipeClient(
+    boost::winapi::HANDLE_ hNamedPipe);
+
+BOOST_SYMBOL_IMPORT boost::winapi::BOOL_ BOOST_WINAPI_WINAPI_CC CreatePipe(
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     boost::winapi::PHANDLE_ hReadPipe,
     boost::winapi::PHANDLE_ hWritePipe,
     _SECURITY_ATTRIBUTES* lpPipeAttributes,
     boost::winapi::DWORD_ nSize);
 
+<<<<<<< HEAD
 BOOST_SYMBOL_IMPORT boost::winapi::BOOL_ WINAPI ConnectNamedPipe(
     boost::winapi::HANDLE_ hNamedPipe,
     _OVERLAPPED* lpOverlapped);
@@ -53,12 +65,26 @@ BOOST_SYMBOL_IMPORT boost::winapi::BOOL_ WINAPI DisconnectNamedPipe(
     boost::winapi::HANDLE_ hNamedPipe);
 
 BOOST_SYMBOL_IMPORT boost::winapi::BOOL_ WINAPI SetNamedPipeHandleState(
+=======
+BOOST_SYMBOL_IMPORT boost::winapi::BOOL_ BOOST_WINAPI_WINAPI_CC ConnectNamedPipe(
+    boost::winapi::HANDLE_ hNamedPipe,
+    _OVERLAPPED* lpOverlapped);
+
+BOOST_SYMBOL_IMPORT boost::winapi::BOOL_ BOOST_WINAPI_WINAPI_CC DisconnectNamedPipe(
+    boost::winapi::HANDLE_ hNamedPipe);
+
+BOOST_SYMBOL_IMPORT boost::winapi::BOOL_ BOOST_WINAPI_WINAPI_CC SetNamedPipeHandleState(
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     boost::winapi::HANDLE_ hNamedPipe,
     boost::winapi::LPDWORD_ lpMode,
     boost::winapi::LPDWORD_ lpMaxCollectionCount,
     boost::winapi::LPDWORD_ lpCollectDataTimeout);
 
+<<<<<<< HEAD
 BOOST_SYMBOL_IMPORT boost::winapi::BOOL_ WINAPI PeekNamedPipe(
+=======
+BOOST_SYMBOL_IMPORT boost::winapi::BOOL_ BOOST_WINAPI_WINAPI_CC PeekNamedPipe(
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     boost::winapi::HANDLE_ hNamedPipe,
     boost::winapi::LPVOID_ lpBuffer,
     boost::winapi::DWORD_ nBufferSize,
@@ -66,7 +92,11 @@ BOOST_SYMBOL_IMPORT boost::winapi::BOOL_ WINAPI PeekNamedPipe(
     boost::winapi::LPDWORD_ lpTotalBytesAvail,
     boost::winapi::LPDWORD_ lpBytesLeftThisMessage);
 
+<<<<<<< HEAD
 BOOST_SYMBOL_IMPORT boost::winapi::BOOL_ WINAPI TransactNamedPipe(
+=======
+BOOST_SYMBOL_IMPORT boost::winapi::BOOL_ BOOST_WINAPI_WINAPI_CC TransactNamedPipe(
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     boost::winapi::HANDLE_ hNamedPipe,
     boost::winapi::LPVOID_ lpInBuffer,
     boost::winapi::DWORD_ nInBufferSize,
@@ -76,12 +106,20 @@ BOOST_SYMBOL_IMPORT boost::winapi::BOOL_ WINAPI TransactNamedPipe(
     _OVERLAPPED* lpOverlapped);
 
 #if !defined( BOOST_NO_ANSI_APIS )
+<<<<<<< HEAD
 BOOST_SYMBOL_IMPORT boost::winapi::BOOL_ WINAPI WaitNamedPipeA(
+=======
+BOOST_SYMBOL_IMPORT boost::winapi::BOOL_ BOOST_WINAPI_WINAPI_CC WaitNamedPipeA(
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     boost::winapi::LPCSTR_ lpNamedPipeName,
     boost::winapi::DWORD_ nTimeOut);
 #endif // !defined( BOOST_NO_ANSI_APIS )
 
+<<<<<<< HEAD
 BOOST_SYMBOL_IMPORT boost::winapi::HANDLE_ WINAPI CreateNamedPipeW(
+=======
+BOOST_SYMBOL_IMPORT boost::winapi::HANDLE_ BOOST_WINAPI_WINAPI_CC CreateNamedPipeW(
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     boost::winapi::LPCWSTR_ lpName,
     boost::winapi::DWORD_ dwOpenMode,
     boost::winapi::DWORD_ dwPipeMode,
@@ -91,19 +129,31 @@ BOOST_SYMBOL_IMPORT boost::winapi::HANDLE_ WINAPI CreateNamedPipeW(
     boost::winapi::DWORD_ nDefaultTimeOut,
     _SECURITY_ATTRIBUTES* lpSecurityAttributes);
 
+<<<<<<< HEAD
 BOOST_SYMBOL_IMPORT boost::winapi::BOOL_ WINAPI WaitNamedPipeW(
+=======
+BOOST_SYMBOL_IMPORT boost::winapi::BOOL_ BOOST_WINAPI_WINAPI_CC WaitNamedPipeW(
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     boost::winapi::LPCWSTR_ lpNamedPipeName,
     boost::winapi::DWORD_ nTimeOut);
 
 #if BOOST_USE_WINAPI_VERSION >= BOOST_WINAPI_VERSION_WIN6
 #if !defined( BOOST_NO_ANSI_APIS )
+<<<<<<< HEAD
 BOOST_SYMBOL_IMPORT boost::winapi::BOOL_ WINAPI GetNamedPipeClientComputerNameA(
+=======
+BOOST_SYMBOL_IMPORT boost::winapi::BOOL_ BOOST_WINAPI_WINAPI_CC GetNamedPipeClientComputerNameA(
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     boost::winapi::HANDLE_ Pipe,
     boost::winapi::LPSTR_ ClientComputerName,
     boost::winapi::ULONG_ ClientComputerNameLength);
 #endif // !defined( BOOST_NO_ANSI_APIS )
 
+<<<<<<< HEAD
 BOOST_SYMBOL_IMPORT boost::winapi::BOOL_ WINAPI GetNamedPipeClientComputerNameW(
+=======
+BOOST_SYMBOL_IMPORT boost::winapi::BOOL_ BOOST_WINAPI_WINAPI_CC GetNamedPipeClientComputerNameW(
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     boost::winapi::HANDLE_ Pipe,
     boost::winapi::LPWSTR_ ClientComputerName,
     boost::winapi::ULONG_ ClientComputerNameLength);
@@ -117,6 +167,7 @@ namespace winapi {
 
 #if defined( BOOST_USE_WINDOWS_H )
 
+<<<<<<< HEAD
 const DWORD_ PIPE_ACCESS_DUPLEX_ = PIPE_ACCESS_DUPLEX;
 const DWORD_ PIPE_ACCESS_INBOUND_ = PIPE_ACCESS_INBOUND;
 const DWORD_ PIPE_ACCESS_OUTBOUND_ = PIPE_ACCESS_OUTBOUND;
@@ -156,12 +207,58 @@ const DWORD_ PIPE_UNLIMITED_INSTANCES_ = 255u;
 const DWORD_ NMPWAIT_USE_DEFAULT_WAIT_ = 0x00000000;
 const DWORD_ NMPWAIT_NOWAIT_ = 0x00000001;
 const DWORD_ NMPWAIT_WAIT_FOREVER_ = 0xFFFFFFFF;
+=======
+BOOST_CONSTEXPR_OR_CONST DWORD_ PIPE_ACCESS_DUPLEX_ = PIPE_ACCESS_DUPLEX;
+BOOST_CONSTEXPR_OR_CONST DWORD_ PIPE_ACCESS_INBOUND_ = PIPE_ACCESS_INBOUND;
+BOOST_CONSTEXPR_OR_CONST DWORD_ PIPE_ACCESS_OUTBOUND_ = PIPE_ACCESS_OUTBOUND;
+
+BOOST_CONSTEXPR_OR_CONST DWORD_ PIPE_TYPE_BYTE_ = PIPE_TYPE_BYTE;
+BOOST_CONSTEXPR_OR_CONST DWORD_ PIPE_TYPE_MESSAGE_ = PIPE_TYPE_MESSAGE;
+
+BOOST_CONSTEXPR_OR_CONST DWORD_ PIPE_READMODE_BYTE_ = PIPE_READMODE_BYTE;
+BOOST_CONSTEXPR_OR_CONST DWORD_ PIPE_READMODE_MESSAGE_ = PIPE_READMODE_MESSAGE;
+
+BOOST_CONSTEXPR_OR_CONST DWORD_ PIPE_WAIT_ = PIPE_WAIT;
+BOOST_CONSTEXPR_OR_CONST DWORD_ PIPE_NOWAIT_ = PIPE_NOWAIT;
+
+BOOST_CONSTEXPR_OR_CONST DWORD_ PIPE_UNLIMITED_INSTANCES_ = PIPE_UNLIMITED_INSTANCES;
+
+BOOST_CONSTEXPR_OR_CONST DWORD_ NMPWAIT_USE_DEFAULT_WAIT_ = NMPWAIT_USE_DEFAULT_WAIT;
+BOOST_CONSTEXPR_OR_CONST DWORD_ NMPWAIT_NOWAIT_ = NMPWAIT_NOWAIT;
+BOOST_CONSTEXPR_OR_CONST DWORD_ NMPWAIT_WAIT_FOREVER_ = NMPWAIT_WAIT_FOREVER;
+
+#else // defined( BOOST_USE_WINDOWS_H )
+
+BOOST_CONSTEXPR_OR_CONST DWORD_ PIPE_ACCESS_DUPLEX_ = 0x00000003;
+BOOST_CONSTEXPR_OR_CONST DWORD_ PIPE_ACCESS_INBOUND_ = 0x00000001;
+BOOST_CONSTEXPR_OR_CONST DWORD_ PIPE_ACCESS_OUTBOUND_ = 0x00000002;
+
+BOOST_CONSTEXPR_OR_CONST DWORD_ PIPE_TYPE_BYTE_ = 0x00000000;
+BOOST_CONSTEXPR_OR_CONST DWORD_ PIPE_TYPE_MESSAGE_ = 0x00000004;
+
+BOOST_CONSTEXPR_OR_CONST DWORD_ PIPE_READMODE_BYTE_ = 0x00000000;
+BOOST_CONSTEXPR_OR_CONST DWORD_ PIPE_READMODE_MESSAGE_ = 0x00000002;
+
+BOOST_CONSTEXPR_OR_CONST DWORD_ PIPE_WAIT_ = 0x00000000;
+BOOST_CONSTEXPR_OR_CONST DWORD_ PIPE_NOWAIT_ = 0x00000001;
+
+BOOST_CONSTEXPR_OR_CONST DWORD_ PIPE_UNLIMITED_INSTANCES_ = 255u;
+
+BOOST_CONSTEXPR_OR_CONST DWORD_ NMPWAIT_USE_DEFAULT_WAIT_ = 0x00000000;
+BOOST_CONSTEXPR_OR_CONST DWORD_ NMPWAIT_NOWAIT_ = 0x00000001;
+BOOST_CONSTEXPR_OR_CONST DWORD_ NMPWAIT_WAIT_FOREVER_ = 0xFFFFFFFF;
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 #endif // defined( BOOST_USE_WINDOWS_H )
 
 // These constants are not defined in Windows SDK prior to 7.0A
+<<<<<<< HEAD
 const DWORD_ PIPE_ACCEPT_REMOTE_CLIENTS_ = 0x00000000;
 const DWORD_ PIPE_REJECT_REMOTE_CLIENTS_ = 0x00000008;
+=======
+BOOST_CONSTEXPR_OR_CONST DWORD_ PIPE_ACCEPT_REMOTE_CLIENTS_ = 0x00000000;
+BOOST_CONSTEXPR_OR_CONST DWORD_ PIPE_REJECT_REMOTE_CLIENTS_ = 0x00000008;
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 using ::ImpersonateNamedPipeClient;
 using ::DisconnectNamedPipe;

@@ -1,4 +1,4 @@
 GENERATE HTML
-[sa.dept@{width=100}, [cross_tab([i.name@{width=100}],,{[st.city@{width=101}]!! [sa.date@{width=101}]!}, sum[sa.quantity]@{width=97})@{side_width=100}]!]!
+[sa.credit@{width=100}, [cross_tab([i.name@{width=100}],,{[st.state@{width=101}]!! [sa.date@{width=101}]!}, sum[sa.quantity]@{width=97})@{side_width=100}]!]!
 FROM store st, item i, sale sa
 WHERE st.id = sa.store AND sa.item = i.id

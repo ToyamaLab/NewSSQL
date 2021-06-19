@@ -37,8 +37,15 @@ namespace boost { namespace spirit
 ///////////////////////////////////////////////////////////////////////////////
 namespace boost { namespace spirit { namespace repository { namespace qi
 {
+<<<<<<< HEAD
     using repository::flush_multi_pass_type;
     using repository::flush_multi_pass;
+=======
+#ifndef BOOST_SPIRIT_NO_PREDEFINED_TERMINALS
+    using repository::flush_multi_pass;
+#endif
+    using repository::flush_multi_pass_type;
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
     ///////////////////////////////////////////////////////////////////////////
     // for a flush_multi_pass_parser generated parser

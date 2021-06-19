@@ -1,7 +1,14 @@
+<<<<<<< HEAD
 ## ----setup, include=FALSE------------------------------------------------
 knitr::opts_chunk$set(eval = FALSE)
 
 ## ------------------------------------------------------------------------
+=======
+## ----setup, include=FALSE-----------------------------------------------------
+knitr::opts_chunk$set(eval = FALSE)
+
+## -----------------------------------------------------------------------------
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 #  # Start a command with results displayed in a terminal buffer
 #  termId <- rstudioapi::terminalExecute("ping rstudio.com")
 #  
@@ -19,7 +26,11 @@ knitr::opts_chunk$set(eval = FALSE)
 #  # Delete the buffer and close the session in the IDE
 #  rstudioapi::terminalKill(termId)
 
+<<<<<<< HEAD
 ## ------------------------------------------------------------------------
+=======
+## -----------------------------------------------------------------------------
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 #  # start an interactive terminal using the shell selected in
 #  # RStudio global options
 #  myTerm <- rstudioapi::terminalCreate()

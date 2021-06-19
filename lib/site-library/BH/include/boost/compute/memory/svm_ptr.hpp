@@ -126,7 +126,11 @@ public:
         return m_ptr - other.m_ptr;
     }
 
+<<<<<<< HEAD
     context& get_context() const
+=======
+    const context& get_context() const
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     {
         return m_context;
     }

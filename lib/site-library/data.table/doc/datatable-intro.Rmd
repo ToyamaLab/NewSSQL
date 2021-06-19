@@ -38,7 +38,11 @@ Briefly, if you are interested in reducing *programming* and *compute* time trem
 
 ## Data {#data}
 
+<<<<<<< HEAD
 In this vignette, we will use [NYC-flights14](https://github.com/arunsrinivasan/flights/wiki/NYC-Flights-2014-data) data. It contains On-Time flights data from the [Bureau of Transporation Statistics](http://www.transtats.bts.gov/DL_SelectFields.asp?Table_ID=236) for all the flights that departed from New York City airports in 2014 (inspired by [nycflights13](https://github.com/hadley/nycflights13)). The data is available only for Jan-Oct'14.
+=======
+In this vignette, we will use [NYC-flights14](https://raw.githubusercontent.com/Rdatatable/data.table/master/vignettes/flights14.csv) data obtained by [flights](https://github.com/arunsrinivasan/flights) package (available on GitHub only). It contains On-Time flights data from the [Bureau of Transporation Statistics](http://www.transtats.bts.gov) for all the flights that departed from New York City airports in 2014 (inspired by [nycflights13](https://github.com/hadley/nycflights13)). The data is available only for Jan-Oct'14.
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 We can use `data.table`'s fast-and-friendly file reader `fread` to load `flights` directly as follows:
 
@@ -47,7 +51,16 @@ options(width = 100L)
 ```
 
 ```{r}
+<<<<<<< HEAD
 flights <- fread("flights14.csv")
+=======
+input <- if (file.exists("flights14.csv")) {
+   "flights14.csv"
+} else {
+  "https://raw.githubusercontent.com/Rdatatable/data.table/master/vignettes/flights14.csv"
+}
+flights <- fread(input)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 flights
 dim(flights)
 ```
@@ -125,11 +138,19 @@ head(ans)
 
 #### {.bs-callout .bs-callout-info}
 
+<<<<<<< HEAD
 * Within the frame of a `data.table`, columns can be referred to *as if they are variables*, much like in SQL or Stata. Therefore, we simply refer to `dest` and `month` as if they are variables. We do not need to add the prefix `flights$` each time. Nevertheless, using `flights$dest` and `flights$month` would work just fine.
 
 * The *row indices* that satisfy the condition `origin == "JFK" & month == 6L` are computed, and since there is nothing else left to do, all columns from `flights` at rows corresponding to those *row indices* are simply returned as a `data.table`.
 
 * A comma after the condition in `i` is not required. But `flights[dest == "JFK" & month == 6L, ]` would work just fine. In `data.frame`s, however, the comma is necessary.
+=======
+* Within the frame of a `data.table`, columns can be referred to *as if they are variables*, much like in SQL or Stata. Therefore, we simply refer to `origin` and `month` as if they are variables. We do not need to add the prefix `flights$` each time. Nevertheless, using `flights$origin` and `flights$month` would work just fine.
+
+* The *row indices* that satisfy the condition `origin == "JFK" & month == 6L` are computed, and since there is nothing else left to do, all columns from `flights` at rows corresponding to those *row indices* are simply returned as a `data.table`.
+
+* A comma after the condition in `i` is not required. But `flights[origin == "JFK" & month == 6L, ]` would work just fine. In `data.frame`s, however, the comma is necessary.
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 #### -- Get the first two rows from `flights`. {#subset-rows-integer}
 

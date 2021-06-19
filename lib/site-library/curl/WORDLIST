@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 async
 Async
 CTRL
@@ -7,10 +8,37 @@ gzip
 hostname
 http
 https
+=======
+AppVeyor
+async
+Async
+auth
+CentOS
+config
+CTRL
+CURLOPT
+dev
+dns
+DNS
+enum
+ENUM
+enums
+env
+ESC
+Github
+gzip
+hardcode
+homebrew
+hostname
+http
+https
+HTTPS
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 httpuv
 httr
 ip
 ipv
+<<<<<<< HEAD
 knitr
 libcurl
 Libcurl
@@ -26,4 +54,30 @@ triggerd
 VignetteEncoding
 VignetteEngine
 VignetteIndexEntry
+=======
+libcurl
+Libcurl
+libssh
+libssl
+netscape
+openssl
+OpenSSL
+OSX
+preconfigured
+proxying
+rb
+RHEL
+Rtools
+Schannel
+sftp
+slist
+smtp
+SMTP
+SMTPS
+ssl
+SSL
+STARTTLS
+TLS
+webservers
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 zlib

@@ -2,7 +2,11 @@
 // dispatch.hpp
 // ~~~~~~~~~~~~
 //
+<<<<<<< HEAD
 // Copyright (c) 2003-2017 Christopher M. Kohlhoff (chris at kohlhoff dot com)
+=======
+// Copyright (c) 2003-2019 Christopher M. Kohlhoff (chris at kohlhoff dot com)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 //
 // Distributed under the Boost Software License, Version 1.0. (See accompanying
 // file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
@@ -29,8 +33,13 @@ namespace asio {
 /// Submits a completion token or function object for execution.
 /**
  * This function submits an object for execution using the object's associated
+<<<<<<< HEAD
  * executor. The function object is queued for execution, and is never called
  * from the current thread prior to returning from <tt>dispatch()</tt>.
+=======
+ * executor. The function object may be called from the current thread prior to
+ * returning from <tt>dispatch()</tt>. Otherwise, it is queued for execution.
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
  *
  * This function has the following effects:
  *
@@ -50,15 +59,25 @@ namespace asio {
  *
  * @li Returns <tt>result.get()</tt>.
  */
+<<<<<<< HEAD
 template <typename CompletionToken>
 BOOST_ASIO_INITFN_RESULT_TYPE(CompletionToken, void()) dispatch(
+=======
+template <BOOST_ASIO_COMPLETION_TOKEN_FOR(void()) CompletionToken>
+BOOST_ASIO_INITFN_AUTO_RESULT_TYPE(CompletionToken, void()) dispatch(
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     BOOST_ASIO_MOVE_ARG(CompletionToken) token);
 
 /// Submits a completion token or function object for execution.
 /**
  * This function submits an object for execution using the specified executor.
+<<<<<<< HEAD
  * The function object is queued for execution, and is never called from the
  * current thread prior to returning from <tt>dispatch()</tt>.
+=======
+ * The function object may be called from the current thread prior to returning
+ * from <tt>dispatch()</tt>. Otherwise, it is queued for execution.
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
  *
  * This function has the following effects:
  *
@@ -84,9 +103,19 @@ BOOST_ASIO_INITFN_RESULT_TYPE(CompletionToken, void()) dispatch(
  *
  * @li Returns <tt>result.get()</tt>.
  */
+<<<<<<< HEAD
 template <typename Executor, typename CompletionToken>
 BOOST_ASIO_INITFN_RESULT_TYPE(CompletionToken, void()) dispatch(
     const Executor& ex, BOOST_ASIO_MOVE_ARG(CompletionToken) token,
+=======
+template <typename Executor,
+    BOOST_ASIO_COMPLETION_TOKEN_FOR(void()) CompletionToken
+      BOOST_ASIO_DEFAULT_COMPLETION_TOKEN_TYPE(Executor)>
+BOOST_ASIO_INITFN_AUTO_RESULT_TYPE(CompletionToken, void()) dispatch(
+    const Executor& ex,
+    BOOST_ASIO_MOVE_ARG(CompletionToken) token
+      BOOST_ASIO_DEFAULT_COMPLETION_TOKEN(Executor),
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     typename enable_if<is_executor<Executor>::value>::type* = 0);
 
 /// Submits a completion token or function object for execution.
@@ -94,9 +123,21 @@ BOOST_ASIO_INITFN_RESULT_TYPE(CompletionToken, void()) dispatch(
  * @returns <tt>dispatch(ctx.get_executor(),
  * forward<CompletionToken>(token))</tt>.
  */
+<<<<<<< HEAD
 template <typename ExecutionContext, typename CompletionToken>
 BOOST_ASIO_INITFN_RESULT_TYPE(CompletionToken, void()) dispatch(
     ExecutionContext& ctx, BOOST_ASIO_MOVE_ARG(CompletionToken) token,
+=======
+template <typename ExecutionContext,
+    BOOST_ASIO_COMPLETION_TOKEN_FOR(void()) CompletionToken
+      BOOST_ASIO_DEFAULT_COMPLETION_TOKEN_TYPE(
+        typename ExecutionContext::executor_type)>
+BOOST_ASIO_INITFN_AUTO_RESULT_TYPE(CompletionToken, void()) dispatch(
+    ExecutionContext& ctx,
+    BOOST_ASIO_MOVE_ARG(CompletionToken) token
+      BOOST_ASIO_DEFAULT_COMPLETION_TOKEN(
+        typename ExecutionContext::executor_type),
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     typename enable_if<is_convertible<
       ExecutionContext&, execution_context&>::value>::type* = 0);
 

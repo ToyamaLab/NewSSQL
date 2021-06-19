@@ -47,6 +47,11 @@ struct cas_based_operations :
 {
     typedef typename Base::storage_type storage_type;
 
+<<<<<<< HEAD
+=======
+    static BOOST_CONSTEXPR_OR_CONST bool full_cas_based = true;
+
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     static BOOST_FORCEINLINE storage_type fetch_add(storage_type volatile& storage, storage_type v, memory_order order) BOOST_NOEXCEPT
     {
         storage_type old_val;

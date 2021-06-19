@@ -29,6 +29,10 @@
 #include <boost/utility/enable_if.hpp>
 #include <boost/utility/result_of.hpp>
 #include <boost/ref.hpp>
+<<<<<<< HEAD
+=======
+#include <boost/config.hpp>
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 #include <boost/spirit/home/support/utree/detail/utree_detail1.hpp>
 
@@ -43,7 +47,11 @@ namespace boost { namespace spirit
 {
     //[utree_exceptions
     /*` All exceptions thrown by utree are derived from utree_exception. */
+<<<<<<< HEAD
     struct utree_exception : std::exception {};
+=======
+    struct BOOST_SYMBOL_VISIBLE utree_exception : std::exception {};
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
     /*`The `bad_type_exception` is thrown whenever somebody calls a member 
        function, which applies to certain stored utree_type's only, but this 
@@ -143,9 +151,15 @@ namespace boost { namespace spirit
             msg = oss.str();
         }
 
+<<<<<<< HEAD
         virtual ~bad_type_exception() throw() {}
 
         virtual char const* what() const throw()
+=======
+        virtual ~bad_type_exception() BOOST_NOEXCEPT_OR_NOTHROW {}
+
+        virtual char const* what() const BOOST_NOEXCEPT_OR_NOTHROW
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
         { return msg.c_str(); }
     };
     
@@ -155,9 +169,15 @@ namespace boost { namespace spirit
 
         empty_exception(char const* error) : msg(error) {}
         
+<<<<<<< HEAD
         virtual ~empty_exception() throw() {}
 
         virtual char const* what() const throw()
+=======
+        virtual ~empty_exception() BOOST_NOEXCEPT_OR_NOTHROW {}
+
+        virtual char const* what() const BOOST_NOEXCEPT_OR_NOTHROW
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
         { return msg; }
     };
 

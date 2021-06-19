@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 ---
 title: "Tidy bootstrapping"
 date: "`r Sys.Date()`"
@@ -136,3 +137,26 @@ ggplot(splines_aug, aes(x, y)) +
 ```
 
 
+=======
+---
+title: "Tidy bootstrapping"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Tidy bootstrapping}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  message = FALSE
+)
+```
+
+# Tidy bootstrapping
+
+This vignette is now an [article](https://www.tidymodels.org/learn/statistics/bootstrap/) on the {tidymodels} website.
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce

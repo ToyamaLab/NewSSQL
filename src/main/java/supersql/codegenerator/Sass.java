@@ -393,8 +393,8 @@ public class Sass {
 			sb.append(sass);
 			writtenSassClassid.clear();
 
+//			Log.ehtmlInfo("sb = "+sb);
 //			Log.info(sb);
-			
 //			Log.info(HTMLCheckMap);
 
 			URI inputFile = new File(outdirPath+fs+"jscss"+fs+"forBootstrap"+fs+"_bootstrap.scss").toURI();
@@ -403,9 +403,90 @@ public class Sass {
 			Compiler compiler = new Compiler();
 			Options options = new Options();
 
-			Output output = compiler.compileString(sb.toString(), inputFile, outputFile, options);
+			Output output = null;
+			
+			
+			String contents_id = Ehtml.getID(1);		//TODO add number
+//			String contents_id = ".container-fluid";
+			if (Ehtml.isEhtml2() && Ehtml.outType==1) {
+				// Specify class name (Nested sass)
+//				String a1 = sb.toString() +
+//					"\n" +
+//					"#ssql_body_contents {" +
+//					" @include 'jscss/ssql/ssqlResult1.css'; " +
+//					"}\n";
+//				output = compiler.compileString(a1, inputFile, outputFile, options);
 
-			r = output.getCss();
+				
+//				output = compiler.compileString(sb.toString(), inputFile, outputFile, options);
+				
+				
+//				String c = sb.toString();
+//				String s = ".TFE";
+////				String s = "// Reset and dependencies";
+//				String c1 = c.substring(0, c.indexOf(s));
+//				String c2 = c.substring(c.indexOf(s), c.length());
+//				c = "#ssql_body_contents {\n"+c1+"}\n\n"+c2;
+////				c = ""+c1+""+c2;
+//				Log.ehtmlInfo("c = \n"+c);
+//				output = compiler.compileString(c, inputFile, outputFile, options);
+				
+				
+				
+				Output output1, output2;
+				String r1, r2;
+				output1 = compiler.compileString(contents_id+" {"+sb.toString()+"}", inputFile, outputFile, options);
+				output2 = compiler.compileString(""+sb.toString()+"", inputFile, outputFile, options);
+				r1 = output1.getCss();
+				r2 = output2.getCss();
+				
+				String substring_name = ".TFE";		//TODO -> ".ssql_body_contents1_TFE"
+//				String substring_name = "."+Ehtml.getTFE_ID();		// e.g. ".ssql_body_contents1_TFE"
+				r = r1.substring(0, r1.indexOf(contents_id+" "+substring_name)) 
+				  + r2.substring(r2.indexOf(substring_name), r2.length());
+				
+				
+//				output = compiler.compileString(".bootstrap-scope {"+sb.toString()+"}", inputFile, outputFile, options);
+////				output = compiler.compileString(""+sb.toString()+"", inputFile, outputFile, options);
+//				r = output.getCss();
+
+			} else {
+				output = compiler.compileString(sb.toString(), inputFile, outputFile, options);
+//				output = compiler.compileString(contents_id+" {"+sb.toString()+"}", inputFile, outputFile, options);
+//				System.out.println(contents_id+" {"+sb.toString()+"}");
+				r = output.getCss();
+				
+//				Output output1, output2;
+//				String r1, r2;
+//				output1 = compiler.compileString(contents_id+" {"+sb.toString()+"}", inputFile, outputFile, options);
+//				output2 = compiler.compileString(""+sb.toString()+"", inputFile, outputFile, options);
+//				r1 = output1.getCss();
+//				r2 = output2.getCss();
+//				
+//				r = r1.substring(0, r1.indexOf(contents_id+" .TFE")) 
+//				  + r2.substring(r2.indexOf(".TFE"), r2.length());
+			}
+//			r = output.getCss();
+			
+//			if (Ehtml.isEhtml2() && Ehtml.outType==1) {
+//				r = r.replace(contents_id+" html {", contents_id+" {")
+//					     .replace(contents_id+" body {", contents_id+" {")
+//					     .replace(contents_id+" *", contents_id+"");
+			if (Ehtml.isEhtml2() && Ehtml.outType==1) {
+//				r = r.replace(contents_id+" html {", contents_id+" {")
+//					     .replace(contents_id+" body {", contents_id+" {")
+//					     .replace(contents_id+" *", contents_id+"");
+				
+//				r = r.replaceAll(contents_id+" html \\{*\\}", "\n")
+//					 .replaceAll(contents_id+" body \\{*\\}", "\n");	//TODO
+				
+				r = r.replace(contents_id+" * {", contents_id+" {");
+				
+				//r = r.replace(".TFE", contents_id+" .TFE");		//TODO Mobile_HTML5Env.java:"TFE"
+			}
+			
+//			Log.ehtmlInfo(r);
+//			Log.info(r);
 
 		} catch (CompilationException e) {
 			err.println("Compile failed");

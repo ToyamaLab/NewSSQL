@@ -739,11 +739,19 @@ namespace boost { namespace numeric { namespace ublas {
             }
             BOOST_UBLAS_INLINE
             value_type dereference (packed_random_access_iterator_tag) const {
+<<<<<<< HEAD
                 value_type t1 = value_type/*zero*/();
                 if (it1_ != it1_end_)
                     if (it1_.index () == i_)
                         t1 = *it1_;
                 value_type t2 = value_type/*zero*/();
+=======
+                typename E1::value_type t1 = typename E1::value_type/*zero*/();
+                if (it1_ != it1_end_)
+                    if (it1_.index () == i_)
+                        t1 = *it1_;
+                typename E2::value_type t2 = typename E2::value_type/*zero*/();
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
                 if (it2_ != it2_end_)
                     if (it2_.index () == i_)
                         t2 = *it2_;
@@ -811,6 +819,7 @@ namespace boost { namespace numeric { namespace ublas {
             }
             BOOST_UBLAS_INLINE
             value_type dereference (sparse_bidirectional_iterator_tag) const {
+<<<<<<< HEAD
                 value_type t1 = value_type/*zero*/();
                 if (it1_ != it1_end_)
                     if (it1_.index () == i_)
@@ -820,6 +829,17 @@ namespace boost { namespace numeric { namespace ublas {
                     if (it2_.index () == i_)
                         t2 = *it2_;
                 return functor_type::apply (t1, t2);
+=======
+                typename E1::value_type t1 = typename E1::value_type/*zero*/();
+                if (it1_ != it1_end_)
+                    if (it1_.index () == i_)
+                        t1 = *it1_;
+                typename E2::value_type t2 = typename E2::value_type/*zero*/();
+                if (it2_ != it2_end_)
+                    if (it2_.index () == i_)
+                        t2 = *it2_;
+                return static_cast<value_type>(functor_type::apply (t1, t2));
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
             }
 
         public: 
@@ -1235,7 +1255,11 @@ namespace boost { namespace numeric { namespace ublas {
     // (t * v) [i] = t * v [i]
     template<class T1, class E2>
     BOOST_UBLAS_INLINE
+<<<<<<< HEAD
     typename enable_if< is_convertible<T1, typename E2::value_type >,    
+=======
+    typename boost::enable_if< is_convertible<T1, typename E2::value_type >,
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     typename vector_binary_scalar1_traits<const T1, E2, scalar_multiplies<T1, typename E2::value_type> >::result_type
     >::type
     operator * (const T1 &e1,
@@ -1478,7 +1502,11 @@ namespace boost { namespace numeric { namespace ublas {
     // (v * t) [i] = v [i] * t
     template<class E1, class T2>
     BOOST_UBLAS_INLINE
+<<<<<<< HEAD
     typename enable_if< is_convertible<T2, typename E1::value_type >,    
+=======
+    typename boost::enable_if< is_convertible<T2, typename E1::value_type >,
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     typename vector_binary_scalar2_traits<E1, const T2, scalar_multiplies<typename E1::value_type, T2> >::result_type
     >::type
     operator * (const vector_expression<E1> &e1,
@@ -1490,7 +1518,11 @@ namespace boost { namespace numeric { namespace ublas {
     // (v / t) [i] = v [i] / t
     template<class E1, class T2>
     BOOST_UBLAS_INLINE
+<<<<<<< HEAD
     typename enable_if< is_convertible<T2, typename E1::value_type >,    
+=======
+    typename boost::enable_if< is_convertible<T2, typename E1::value_type >,
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     typename vector_binary_scalar2_traits<E1, const T2, scalar_divides<typename E1::value_type, T2> >::result_type
     >::type
     operator / (const vector_expression<E1> &e1,
@@ -1609,6 +1641,19 @@ namespace boost { namespace numeric { namespace ublas {
         return expression_type (e ());
     }
 
+<<<<<<< HEAD
+=======
+    // real: norm_2_square v = sum(v [i] * v [i])
+    // complex: norm_2_square v = sum(v [i] * conj (v [i]))
+    template<class E>
+    BOOST_UBLAS_INLINE
+    typename vector_scalar_unary_traits<E, vector_norm_2_square<E> >::result_type
+    norm_2_square (const vector_expression<E> &e) {
+        typedef typename vector_scalar_unary_traits<E, vector_norm_2_square<E> >::expression_type expression_type;
+        return expression_type (e ());
+    }
+
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     // real: norm_inf v = maximum (abs (v [i]))
     // complex: norm_inf v = maximum (maximum (abs (real (v [i])), abs (imag (v [i]))))
     template<class E>

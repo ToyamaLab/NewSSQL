@@ -15,7 +15,10 @@
 
 #include <boost/endian/conversion.hpp>
 #include <boost/endian/arithmetic.hpp>
+<<<<<<< HEAD
 #include <boost/fusion/include/at.hpp>
+=======
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 #include <boost/mpl/or.hpp>
 #include <boost/type_traits/is_integral.hpp>
 #include <boost/type_traits/is_enum.hpp>
@@ -37,7 +40,11 @@ namespace boost { namespace spirit { namespace x3
 
         template <typename Iterator, typename Context, typename Attribute>
         bool parse(Iterator& first, Iterator const& last
+<<<<<<< HEAD
           , Context& context, unused_type, Attribute& attr_param) const
+=======
+          , Context const& context, unused_type, Attribute& attr_param) const
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
         {
             x3::skip_over(first, last, context);
 
@@ -69,7 +76,11 @@ namespace boost { namespace spirit { namespace x3
 
         template <typename Iterator, typename Context, typename Attribute>
         bool parse(Iterator& first, Iterator const& last
+<<<<<<< HEAD
           , Context& context, unused_type, Attribute& attr_param) const
+=======
+          , Context const& context, unused_type, Attribute& attr_param) const
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
         {
             x3::skip_over(first, last, context);
 

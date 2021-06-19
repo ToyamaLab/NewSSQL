@@ -17,7 +17,10 @@
 #include <boost/intrusive/intrusive_fwd.hpp>
 #include <boost/intrusive/link_mode.hpp>
 #include <boost/intrusive/pack_options.hpp>
+<<<<<<< HEAD
 #include <boost/intrusive/detail/mpl.hpp>
+=======
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 #if defined(BOOST_HAS_PRAGMA_ONCE)
 #  pragma once
@@ -70,6 +73,18 @@ BOOST_INTRUSIVE_OPTION_TYPE(compare, Compare, Compare, compare)
 //!that will return the key from a value_type of an associative container
 BOOST_INTRUSIVE_OPTION_TYPE(key_of_value, KeyOfValue, KeyOfValue, key_of_value)
 
+<<<<<<< HEAD
+=======
+//!This option setter specifies a function object
+//!that specifies the type of the priority of a treap
+//!container and an operator to obtain it from a value type.
+//!
+//!This function object must the define a `type` member typedef and
+//!a member with signature `type [const&] operator()(const value_type &) const`
+//!that will return the priority from a value_type of a treap container
+BOOST_INTRUSIVE_OPTION_TYPE(priority_of_value, PrioOfValue, PrioOfValue, priority_of_value)
+
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 //!This option setter for scapegoat containers specifies if
 //!the intrusive scapegoat container should use a non-variable
 //!alpha value that does not need floating-point operations.

@@ -1,0 +1,7 @@
+GENERATE HTML
+  cross_tab(
+    [st.state],,
+    [d.name, [i.name]!]!,
+    sum[sa.quantity]@{tableborder=0})@{side_width=202, null_value='購買なし', tableborder=1}
+FROM store st, item i, sale sa, dept d
+WHERE st.id = sa.store AND sa.item = i.id AND d.id = i.dept

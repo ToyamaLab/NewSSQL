@@ -1,5 +1,9 @@
 DBI-package             DBI: R Database Interface
 DBIConnection-class     DBIConnection class
+<<<<<<< HEAD
+=======
+DBIConnector-class      DBIConnector class
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 DBIDriver-class         DBIDriver class
 DBIObject-class         DBIObject class
 DBIResult-class         DBIResult class
@@ -17,12 +21,19 @@ dbConnect               Create a connection to a DBMS
 dbCreateTable           Create a table in the database
 dbDataType              Determine the SQL data type of an object
 dbDisconnect            Disconnect (close) a connection
+<<<<<<< HEAD
 dbDriver                Load and unload database drivers
+=======
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 dbExecute               Execute an update statement, query number of
                         rows affected, and then close result set
 dbExistsTable           Does a table exist?
 dbFetch                 Fetch records from a previously executed query
+<<<<<<< HEAD
 dbGetException          Get DBMS exceptions
+=======
+dbGetConnectArgs        Get connection arguments
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 dbGetInfo               Get DBMS metadata
 dbGetQuery              Send query, retrieve results and then clear
                         result set
@@ -32,10 +43,15 @@ dbGetStatement          Get the statement associated with a result set
 dbHasCompleted          Completion status
 dbIsReadOnly            Is this DBMS object read only?
 dbIsValid               Is this DBMS object still valid?
+<<<<<<< HEAD
 dbListConnections       List currently open connections
 dbListFields            List field names of a remote table
 dbListObjects           List remote objects
 dbListResults           A list of all pending results
+=======
+dbListFields            List field names of a remote table
+dbListObjects           List remote objects
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 dbListTables            List remote tables
 dbQuoteIdentifier       Quote identifiers
 dbQuoteLiteral          Quote literal values
@@ -48,7 +64,10 @@ dbSendStatement         Execute a data manipulation statement on a
 dbUnquoteIdentifier     Unquote identifiers
 dbWithTransaction       Self-contained SQL transactions
 dbWriteTable            Copy data frames to database tables
+<<<<<<< HEAD
 make.db.names           Make R identifiers into legal SQL identifiers
+=======
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 rownames                Convert row names back and forth between
                         columns
 sqlAppendTable          Compose query to insert rows into a table

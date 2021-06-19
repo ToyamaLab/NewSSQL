@@ -1,6 +1,10 @@
 // Boost.Geometry (aka GGL, Generic Geometry Library)
 
+<<<<<<< HEAD
 // Copyright (c) 2015-2017, Oracle and/or its affiliates.
+=======
+// Copyright (c) 2015-2018, Oracle and/or its affiliates.
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 // Contributed and/or modified by Vissarion Fysikopoulos, on behalf of Oracle
 // Contributed and/or modified by Menelaos Karavelas, on behalf of Oracle
@@ -20,17 +24,31 @@
 
 #include <boost/range.hpp>
 
+<<<<<<< HEAD
+=======
+#include <boost/geometry/algorithms/detail/convert_point_to_point.hpp>
+#include <boost/geometry/algorithms/detail/max_interval_gap.hpp>
+#include <boost/geometry/algorithms/detail/expand/indexed.hpp>
+
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 #include <boost/geometry/core/access.hpp>
 #include <boost/geometry/core/assert.hpp>
 #include <boost/geometry/core/coordinate_system.hpp>
 #include <boost/geometry/core/coordinate_type.hpp>
 
 #include <boost/geometry/util/math.hpp>
+<<<<<<< HEAD
 #include <boost/geometry/util/range.hpp>
 
 #include <boost/geometry/algorithms/detail/convert_point_to_point.hpp>
 #include <boost/geometry/algorithms/detail/max_interval_gap.hpp>
 #include <boost/geometry/algorithms/detail/expand/indexed.hpp>
+=======
+#include <boost/geometry/util/normalize_spheroidal_coordinates.hpp>
+#include <boost/geometry/util/range.hpp>
+
+#include <boost/geometry/views/detail/indexed_point_view.hpp>
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 
 namespace boost { namespace geometry
@@ -151,10 +169,15 @@ struct envelope_range_of_longitudes
 template <std::size_t Dimension, std::size_t DimensionCount>
 struct envelope_range_of_boxes_by_expansion
 {
+<<<<<<< HEAD
     template <typename RangeOfBoxes, typename Box, typename Strategy>
     static inline void apply(RangeOfBoxes const& range_of_boxes,
                              Box& mbr,
                              Strategy const& strategy)
+=======
+    template <typename RangeOfBoxes, typename Box>
+    static inline void apply(RangeOfBoxes const& range_of_boxes, Box& mbr)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     {
         typedef typename boost::range_value<RangeOfBoxes>::type box_type;
 
@@ -198,14 +221,22 @@ struct envelope_range_of_boxes_by_expansion
                     min_corner,
                     Dimension,
                     DimensionCount
+<<<<<<< HEAD
                 >::apply(mbr, *it, strategy);
+=======
+                >::apply(mbr, *it);
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
             detail::expand::indexed_loop
                 <
                     max_corner,
                     Dimension,
                     DimensionCount
+<<<<<<< HEAD
                 >::apply(mbr, *it, strategy);
+=======
+                >::apply(mbr, *it);
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
         }
     }
 
@@ -225,16 +256,25 @@ struct envelope_range_of_boxes
         }
     };
 
+<<<<<<< HEAD
     template <typename RangeOfBoxes, typename Box, typename Strategy>
     static inline void apply(RangeOfBoxes const& range_of_boxes,
                              Box& mbr,
                              Strategy const& strategy)
+=======
+    template <typename RangeOfBoxes, typename Box>
+    static inline void apply(RangeOfBoxes const& range_of_boxes, Box& mbr)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     {
         // boxes in the range are assumed to be normalized already
 
         typedef typename boost::range_value<RangeOfBoxes>::type box_type;
         typedef typename coordinate_type<box_type>::type coordinate_type;
+<<<<<<< HEAD
         typedef typename coordinate_system<box_type>::type::units units_type;
+=======
+        typedef typename detail::cs_angular_units<box_type>::type units_type;
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
         typedef typename boost::range_iterator
             <
                 RangeOfBoxes const
@@ -272,6 +312,14 @@ struct envelope_range_of_boxes
              it != boost::end(range_of_boxes);
              ++it)
         {
+<<<<<<< HEAD
+=======
+            if (is_inverse_spheroidal_coordinates(*it))
+            {
+                continue;
+            }
+
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
             coordinate_type lat_min = geometry::get<min_corner, 1>(*it);
             coordinate_type lat_max = geometry::get<max_corner, 1>(*it);
             if (math::equals(lat_min, constants::max_latitude())
@@ -321,7 +369,11 @@ struct envelope_range_of_boxes
         envelope_range_of_boxes_by_expansion
             <
                 2, dimension<Box>::value
+<<<<<<< HEAD
             >::apply(range_of_boxes, mbr, strategy);
+=======
+            >::apply(range_of_boxes, mbr);
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     }
 };
 

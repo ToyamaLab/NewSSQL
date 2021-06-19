@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 /* Copyright 2003-2013 Joaquin M Lopez Munoz.
+=======
+/* Copyright 2003-2018 Joaquin M Lopez Munoz.
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
  * Distributed under the Boost Software License, Version 1.0.
  * (See accompanying file LICENSE_1_0.txt or copy at
  * http://www.boost.org/LICENSE_1_0.txt)
@@ -14,7 +18,10 @@
 #endif
 
 #include <boost/config.hpp> /* keep it first to prevent nasty warns in MSVC */
+<<<<<<< HEAD
 #include <cstddef>
+=======
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 #include <iterator>
 
 namespace boost{
@@ -32,7 +39,11 @@ class duplicates_iterator
 {
 public:
   typedef typename Node::value_type        value_type;
+<<<<<<< HEAD
   typedef std::ptrdiff_t                   difference_type;
+=======
+  typedef typename Node::difference_type   difference_type;
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
   typedef const typename Node::value_type* pointer;
   typedef const typename Node::value_type& reference;
   typedef std::forward_iterator_tag        iterator_category;

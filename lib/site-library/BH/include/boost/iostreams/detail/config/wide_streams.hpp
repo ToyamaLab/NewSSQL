@@ -44,8 +44,12 @@
 //------------------Locale support--------------------------------------------//
 
 #ifndef BOOST_IOSTREAMS_NO_LOCALE
+<<<<<<< HEAD
 # if defined(BOOST_NO_STD_LOCALE) || \
      defined(__CYGWIN__) && \
+=======
+# if defined(BOOST_NO_STD_LOCALE) && \
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
      ( !defined(__MSL_CPP__) || defined(_MSL_NO_WCHART_CPP_SUPPORT) ) \
      /**/
 #  define BOOST_IOSTREAMS_NO_LOCALE

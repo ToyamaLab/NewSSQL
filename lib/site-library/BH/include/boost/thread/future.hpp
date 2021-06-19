@@ -15,7 +15,20 @@
 
 //#define BOOST_THREAD_CONTINUATION_SYNC
 
+<<<<<<< HEAD
 #ifndef BOOST_NO_EXCEPTIONS
+=======
+#ifdef BOOST_NO_EXCEPTIONS
+namespace boost
+{
+namespace detail {
+struct shared_state_base {
+    void notify_deferred() {}
+};
+}
+}
+#else
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 #include <boost/thread/condition_variable.hpp>
 #include <boost/thread/detail/move.hpp>
@@ -109,6 +122,10 @@ namespace boost
     namespace executors {
         class executor;
     }
+<<<<<<< HEAD
+=======
+    using executors::executor;
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 #endif
     typedef shared_ptr<executor> executor_ptr_type;
 
@@ -159,7 +176,11 @@ namespace boost
             boost::function<void()> callback;
             // This declaration should be only included conditionally, but is included to maintain the same layout.
             continuations_type continuations;
+<<<<<<< HEAD
             executor_ptr_type ex;
+=======
+            executor_ptr_type ex_;
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
             // This declaration should be only included conditionally, but is included to maintain the same layout.
             virtual void launch_continuation()
@@ -173,43 +194,79 @@ namespace boost
                 is_constructed(false),
                 policy_(launch::none),
                 continuations(),
+<<<<<<< HEAD
                 ex()
             {}
 
             shared_state_base(exceptional_ptr const& ex_):
                 exception(ex_.ptr_),
+=======
+                ex_()
+            {}
+
+            shared_state_base(exceptional_ptr const& ex):
+                exception(ex.ptr_),
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
                 done(true),
                 is_valid_(true),
                 is_deferred_(false),
                 is_constructed(false),
                 policy_(launch::none),
                 continuations(),
+<<<<<<< HEAD
                 ex()
+=======
+                ex_()
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
             {}
 
 
             virtual ~shared_state_base()
             {
             }
+<<<<<<< HEAD
             executor_ptr_type get_executor()
             {
               return ex;
+=======
+
+            bool is_done()
+            {
+                return done;
+            }
+
+            executor_ptr_type get_executor()
+            {
+              return ex_;
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
             }
 
             void set_executor_policy(executor_ptr_type aex)
             {
               set_executor();
+<<<<<<< HEAD
               ex = aex;
+=======
+              ex_ = aex;
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
             }
             void set_executor_policy(executor_ptr_type aex, boost::lock_guard<boost::mutex>&)
             {
               set_executor();
+<<<<<<< HEAD
               ex = aex;
+=======
+              ex_ = aex;
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
             }
             void set_executor_policy(executor_ptr_type aex, boost::unique_lock<boost::mutex>&)
             {
               set_executor();
+<<<<<<< HEAD
               ex = aex;
+=======
+              ex_ = aex;
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
             }
 
             bool valid(boost::unique_lock<boost::mutex>&) { return is_valid_; }
@@ -262,6 +319,13 @@ namespace boost
                 external_waiters.erase(it);
             }
 
+<<<<<<< HEAD
+=======
+#if 0
+            // this inline definition results in ODR. See https://github.com/boostorg/thread/issues/193
+            // to avoid it, we define the function on the derived templates using the macro BOOST_THREAD_DO_CONTINUATION
+#define BOOST_THREAD_DO_CONTINUATION
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 #if defined BOOST_THREAD_PROVIDES_FUTURE_CONTINUATION
             void do_continuation(boost::unique_lock<boost::mutex>& lock)
             {
@@ -279,6 +343,34 @@ namespace boost
             {
             }
 #endif
+<<<<<<< HEAD
+=======
+
+#else
+#if defined BOOST_THREAD_PROVIDES_FUTURE_CONTINUATION
+#define BOOST_THREAD_DO_CONTINUATION \
+            void do_continuation(boost::unique_lock<boost::mutex>& lock) \
+            { \
+                if (! this->continuations.empty()) { \
+                  continuations_type the_continuations = this->continuations; \
+                  this->continuations.clear(); \
+                  relocker rlk(lock); \
+                  for (continuations_type::iterator it = the_continuations.begin(); it != the_continuations.end(); ++it) { \
+                    (*it)->launch_continuation(); \
+                  } \
+                } \
+            }
+#else
+#define BOOST_THREAD_DO_CONTINUATION \
+            void do_continuation(boost::unique_lock<boost::mutex>&) \
+            { \
+            }
+#endif
+
+            virtual void do_continuation(boost::unique_lock<boost::mutex>&) = 0;
+#endif
+
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 #if defined BOOST_THREAD_PROVIDES_FUTURE_CONTINUATION
             virtual void set_continuation_ptr(continuation_ptr_type continuation, boost::unique_lock<boost::mutex>& lock)
             {
@@ -348,10 +440,14 @@ namespace boost
                 is_deferred_=false;
                 execute(lk);
               }
+<<<<<<< HEAD
               while(!done)
               {
                   waiters.wait(lk);
               }
+=======
+              waiters.wait(lk, boost::bind(&shared_state_base::is_done, boost::ref(*this)));
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
               if(rethrow && exception)
               {
                   boost::rethrow_exception(exception);
@@ -370,6 +466,20 @@ namespace boost
             }
 
 #if defined BOOST_THREAD_USES_DATETIME
+<<<<<<< HEAD
+=======
+            template<typename Duration>
+            bool timed_wait(Duration const& rel_time)
+            {
+                boost::unique_lock<boost::mutex> lock(this->mutex);
+                if (is_deferred_)
+                    return false;
+
+                do_callback(lock);
+                return waiters.timed_wait(lock, rel_time, boost::bind(&shared_state_base::is_done, boost::ref(*this)));
+            }
+
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
             bool timed_wait_until(boost::system_time const& target_time)
             {
                 boost::unique_lock<boost::mutex> lock(this->mutex);
@@ -377,6 +487,7 @@ namespace boost
                     return false;
 
                 do_callback(lock);
+<<<<<<< HEAD
                 while(!done)
                 {
                     bool const success=waiters.timed_wait(lock,target_time);
@@ -386,6 +497,9 @@ namespace boost
                     }
                 }
                 return true;
+=======
+                return waiters.timed_wait(lock, target_time, boost::bind(&shared_state_base::is_done, boost::ref(*this)));
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
             }
 #endif
 #ifdef BOOST_THREAD_USES_CHRONO
@@ -398,6 +512,7 @@ namespace boost
               if (is_deferred_)
                   return future_status::deferred;
               do_callback(lock);
+<<<<<<< HEAD
               while(!done)
               {
                   cv_status const st=waiters.wait_until(lock,abs_time);
@@ -405,6 +520,11 @@ namespace boost
                   {
                     return future_status::timeout;
                   }
+=======
+              if(!waiters.wait_until(lock, abs_time, boost::bind(&shared_state_base::is_done, boost::ref(*this))))
+              {
+                  return future_status::timeout;
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
               }
               return future_status::ready;
             }
@@ -546,10 +666,15 @@ namespace boost
               detail::shared_state_base(ex), result()
             {}
 
+<<<<<<< HEAD
 
             ~shared_state()
             {
             }
+=======
+            // locating this definition on the template avoid the ODR issue. See https://github.com/boostorg/thread/issues/193
+            BOOST_THREAD_DO_CONTINUATION
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
             void mark_finished_with_result_internal(source_reference_type result_, boost::unique_lock<boost::mutex>& lock)
             {
@@ -732,9 +857,14 @@ namespace boost
               detail::shared_state_base(ex), result(0)
             {}
 
+<<<<<<< HEAD
             ~shared_state()
             {
             }
+=======
+            // locating this definition on the template avoid the ODR issue. See https://github.com/boostorg/thread/issues/193
+            BOOST_THREAD_DO_CONTINUATION
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
             void mark_finished_with_result_internal(source_reference_type result_, boost::unique_lock<boost::mutex>& lock)
             {
@@ -811,6 +941,12 @@ namespace boost
               detail::shared_state_base(ex)
             {}
 
+<<<<<<< HEAD
+=======
+            // locating this definition on the template avoid the ODR issue. See https://github.com/boostorg/thread/issues/193
+            BOOST_THREAD_DO_CONTINUATION
+
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
             void mark_finished_with_result_internal(boost::unique_lock<boost::mutex>& lock)
             {
                 mark_finished_internal(lock);
@@ -899,10 +1035,14 @@ namespace boost
             join();
 #elif defined BOOST_THREAD_ASYNC_FUTURE_WAITS
             unique_lock<boost::mutex> lk(this->mutex);
+<<<<<<< HEAD
             while(!this->done)
             {
               this->waiters.wait(lk);
             }
+=======
+            this->waiters.wait(lk, boost::bind(&shared_state_base::is_done, boost::ref(*this)));
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 #endif
           }
 
@@ -1007,10 +1147,15 @@ namespace boost
         template<typename Rp, typename Fp>
         struct future_deferred_shared_state: shared_state<Rp>
         {
+<<<<<<< HEAD
           typedef shared_state<Rp> base_type;
           Fp func_;
 
         public:
+=======
+          Fp func_;
+
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
           explicit future_deferred_shared_state(BOOST_THREAD_FWD_REF(Fp) f)
           : func_(boost::move(f))
           {
@@ -1035,10 +1180,15 @@ namespace boost
         template<typename Rp, typename Fp>
         struct future_deferred_shared_state<Rp&,Fp>: shared_state<Rp&>
         {
+<<<<<<< HEAD
           typedef shared_state<Rp&> base_type;
           Fp func_;
 
         public:
+=======
+          Fp func_;
+
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
           explicit future_deferred_shared_state(BOOST_THREAD_FWD_REF(Fp) f)
           : func_(boost::move(f))
           {
@@ -1060,10 +1210,15 @@ namespace boost
         template<typename Fp>
         struct future_deferred_shared_state<void,Fp>: shared_state<void>
         {
+<<<<<<< HEAD
           typedef shared_state<void> base_type;
           Fp func_;
 
         public:
+=======
+          Fp func_;
+
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
           explicit future_deferred_shared_state(BOOST_THREAD_FWD_REF(Fp) f)
           : func_(boost::move(f))
           {
@@ -1091,7 +1246,10 @@ namespace boost
         public:
             typedef std::vector<int>::size_type count_type;
         private:
+<<<<<<< HEAD
             struct registered_waiter;
+=======
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
             struct registered_waiter
             {
                 boost::shared_ptr<detail::shared_state_base> future_;
@@ -1452,7 +1610,15 @@ namespace boost
         template<typename Duration>
         bool timed_wait(Duration const& rel_time) const
         {
+<<<<<<< HEAD
             return timed_wait_until(boost::get_system_time()+rel_time);
+=======
+            if(!future_)
+            {
+                boost::throw_exception(future_uninitialized());
+            }
+            return future_->timed_wait(rel_time);
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
         }
 
         bool timed_wait_until(boost::system_time const& abs_time) const
@@ -3155,7 +3321,11 @@ namespace boost
             }
         };
 
+<<<<<<< HEAD
 #if defined(BOOST_THREAD_RVALUE_REFERENCES_DONT_MATCH_FUNTION_PTR)
+=======
+#if defined(BOOST_THREAD_RVALUE_REFERENCES_DONT_MATCH_FUNCTION_PTR)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 #if defined BOOST_THREAD_PROVIDES_SIGNATURE_PACKAGED_TASK
 #if defined(BOOST_THREAD_PROVIDES_VARIADIC_THREAD)
@@ -3497,7 +3667,11 @@ namespace boost
         {}
 
         // construction and destruction
+<<<<<<< HEAD
 #if defined(BOOST_THREAD_RVALUE_REFERENCES_DONT_MATCH_FUNTION_PTR)
+=======
+#if defined(BOOST_THREAD_RVALUE_REFERENCES_DONT_MATCH_FUNCTION_PTR)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 #if defined BOOST_THREAD_PROVIDES_SIGNATURE_PACKAGED_TASK
   #if defined(BOOST_THREAD_PROVIDES_VARIADIC_THREAD)
@@ -3587,7 +3761,11 @@ namespace boost
 #endif
 
 #if defined BOOST_THREAD_PROVIDES_FUTURE_CTOR_ALLOCATORS
+<<<<<<< HEAD
 #if defined(BOOST_THREAD_RVALUE_REFERENCES_DONT_MATCH_FUNTION_PTR)
+=======
+#if defined(BOOST_THREAD_RVALUE_REFERENCES_DONT_MATCH_FUNCTION_PTR)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
         template <class Allocator>
         packaged_task(boost::allocator_arg_t, Allocator a, R(*f)())
         {
@@ -3608,7 +3786,11 @@ namespace boost
           task = task_ptr(::new(a2.allocate(1)) task_shared_state_type(f), D(a2, 1) );
           future_obtained = false;
         }
+<<<<<<< HEAD
 #endif // BOOST_THREAD_RVALUE_REFERENCES_DONT_MATCH_FUNTION_PTR
+=======
+#endif // BOOST_THREAD_RVALUE_REFERENCES_DONT_MATCH_FUNCTION_PTR
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 #if ! defined BOOST_NO_CXX11_RVALUE_REFERENCES
         template <class F, class Allocator>
@@ -3825,7 +4007,11 @@ namespace detail
     // future<R> async(launch policy, F&&, ArgTypes&&...);
     ////////////////////////////////
 
+<<<<<<< HEAD
 #if defined BOOST_THREAD_RVALUE_REFERENCES_DONT_MATCH_FUNTION_PTR
+=======
+#if defined BOOST_THREAD_RVALUE_REFERENCES_DONT_MATCH_FUNCTION_PTR
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 #if defined(BOOST_THREAD_PROVIDES_VARIADIC_THREAD)
   template <class R, class... ArgTypes>
@@ -3884,7 +4070,11 @@ namespace detail
     }
   }
 #endif
+<<<<<<< HEAD
 #endif // defined(BOOST_THREAD_RVALUE_REFERENCES_DONT_MATCH_FUNTION_PTR)
+=======
+#endif // defined(BOOST_THREAD_RVALUE_REFERENCES_DONT_MATCH_FUNCTION_PTR)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 #if defined(BOOST_THREAD_PROVIDES_VARIADIC_THREAD)
 
@@ -4113,7 +4303,11 @@ namespace detail {
 //#if ! defined(BOOST_NO_CXX11_VARIADIC_TEMPLATES)
 #if defined(BOOST_THREAD_PROVIDES_INVOKE) && ! defined(BOOST_NO_CXX11_VARIADIC_TEMPLATES) && ! defined(BOOST_NO_CXX11_HDR_TUPLE)
 
+<<<<<<< HEAD
 #if defined BOOST_THREAD_RVALUE_REFERENCES_DONT_MATCH_FUNTION_PTR
+=======
+#if defined BOOST_THREAD_RVALUE_REFERENCES_DONT_MATCH_FUNCTION_PTR
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
   template <class Executor, class R, class... ArgTypes>
   BOOST_THREAD_FUTURE<R>
@@ -4129,7 +4323,11 @@ namespace detail {
         )
     ));
   }
+<<<<<<< HEAD
 #endif // defined BOOST_THREAD_RVALUE_REFERENCES_DONT_MATCH_FUNTION_PTR
+=======
+#endif // defined BOOST_THREAD_RVALUE_REFERENCES_DONT_MATCH_FUNCTION_PTR
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
   template <class Executor, class F, class ...ArgTypes>
   BOOST_THREAD_FUTURE<typename boost::result_of<typename decay<F>::type(
@@ -4148,7 +4346,11 @@ namespace detail {
   }
 
 #else // ! defined(BOOST_NO_CXX11_VARIADIC_TEMPLATES)
+<<<<<<< HEAD
 #if defined BOOST_THREAD_RVALUE_REFERENCES_DONT_MATCH_FUNTION_PTR
+=======
+#if defined BOOST_THREAD_RVALUE_REFERENCES_DONT_MATCH_FUNCTION_PTR
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
   template <class Executor, class R>
   BOOST_THREAD_FUTURE<R>
@@ -4178,7 +4380,11 @@ namespace detail {
         )
     ));
   }
+<<<<<<< HEAD
 #endif // defined BOOST_THREAD_RVALUE_REFERENCES_DONT_MATCH_FUNTION_PTR
+=======
+#endif // defined BOOST_THREAD_RVALUE_REFERENCES_DONT_MATCH_FUNCTION_PTR
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
   template <class Executor, class F>
   BOOST_THREAD_FUTURE<typename boost::result_of<typename decay<F>::type()>::type>
@@ -4234,7 +4440,11 @@ namespace detail {
   // future<R> async(F&&, ArgTypes&&...);
   ////////////////////////////////
 
+<<<<<<< HEAD
 #if defined BOOST_THREAD_RVALUE_REFERENCES_DONT_MATCH_FUNTION_PTR
+=======
+#if defined BOOST_THREAD_RVALUE_REFERENCES_DONT_MATCH_FUNCTION_PTR
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
   #if defined(BOOST_THREAD_PROVIDES_VARIADIC_THREAD)
   template <class R, class... ArgTypes>
   BOOST_THREAD_FUTURE<R>
@@ -4956,6 +5166,13 @@ namespace detail {
       return BOOST_THREAD_MAKE_RV_REF((boost::detail::make_future_deferred_continuation_shared_state<BOOST_THREAD_FUTURE<R>, future_type>(
                   lock, boost::move(*this), boost::forward<F>(func)
               )));
+<<<<<<< HEAD
+=======
+    } else if (underlying_cast<int>(policy) & int(launch::sync)) {
+      return BOOST_THREAD_MAKE_RV_REF((boost::detail::make_future_sync_continuation_shared_state<BOOST_THREAD_FUTURE<R>, future_type>(
+                  lock, boost::move(*this), boost::forward<F>(func)
+              )));
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 #ifdef BOOST_THREAD_PROVIDES_EXECUTORS
     } else if (underlying_cast<int>(policy) & int(launch::executor)) {
       assert(this->future_->get_executor());
@@ -4976,6 +5193,13 @@ namespace detail {
           return BOOST_THREAD_MAKE_RV_REF((boost::detail::make_future_deferred_continuation_shared_state<BOOST_THREAD_FUTURE<R>, future_type>(
                       lock, boost::move(*this), boost::forward<F>(func)
                   )));
+<<<<<<< HEAD
+=======
+        } else if (underlying_cast<int>(policy_) & int(launch::sync)) {
+          return BOOST_THREAD_MAKE_RV_REF((boost::detail::make_future_sync_continuation_shared_state<BOOST_THREAD_FUTURE<R>, future_type>(
+                      lock, boost::move(*this), boost::forward<F>(func)
+                  )));
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 #ifdef BOOST_THREAD_PROVIDES_EXECUTORS
         } else if (underlying_cast<int>(policy_) & int(launch::executor)) {
           assert(this->future_->get_executor());

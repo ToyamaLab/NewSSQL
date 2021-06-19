@@ -2,7 +2,11 @@
 //
 // R-tree nodes based on Boost.Variant, storing static-size containers
 //
+<<<<<<< HEAD
 // Copyright (c) 2011-2014 Adam Wulkiewicz, Lodz, Poland.
+=======
+// Copyright (c) 2011-2018 Adam Wulkiewicz, Lodz, Poland.
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 //
 // Use, modification and distribution is subject to the Boost Software License,
 // Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
@@ -80,6 +84,7 @@ struct visitor<Value, Parameters, Box, Allocators, node_variant_static_tag, IsVi
 
 template <typename Allocator, typename Value, typename Parameters, typename Box>
 class allocators<Allocator, Value, Parameters, Box, node_variant_static_tag>
+<<<<<<< HEAD
     : public Allocator::template rebind<
         typename node<
             Value, Parameters, Box,
@@ -91,11 +96,34 @@ class allocators<Allocator, Value, Parameters, Box, node_variant_static_tag>
     typedef typename Allocator::template rebind<
         Value
     >::other value_allocator_type;
+=======
+    : public detail::rtree::node_alloc
+        <
+            Allocator, Value, Parameters, Box, node_variant_static_tag
+        >::type
+{
+    typedef detail::rtree::node_alloc
+        <
+            Allocator, Value, Parameters, Box, node_variant_static_tag
+        > node_alloc;
+
+public:
+    typedef typename node_alloc::type node_allocator_type;
+    typedef typename node_alloc::traits::pointer node_pointer;
+
+private:
+    typedef typename boost::container::allocator_traits
+        <
+            node_allocator_type
+        >::template rebind_alloc<Value> value_allocator_type;
+    typedef boost::container::allocator_traits<value_allocator_type> value_allocator_traits;
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 public:
     typedef Allocator allocator_type;
 
     typedef Value value_type;
+<<<<<<< HEAD
     typedef value_type & reference;
     typedef const value_type & const_reference;
     typedef typename value_allocator_type::size_type size_type;
@@ -110,6 +138,14 @@ public:
     typedef typename Allocator::template rebind<
         typename node<Value, Parameters, Box, allocators, node_variant_static_tag>::type
     >::other node_allocator_type;
+=======
+    typedef typename value_allocator_traits::reference reference;
+    typedef typename value_allocator_traits::const_reference const_reference;
+    typedef typename value_allocator_traits::size_type size_type;
+    typedef typename value_allocator_traits::difference_type difference_type;
+    typedef typename value_allocator_traits::pointer pointer;
+    typedef typename value_allocator_traits::const_pointer const_pointer;
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
     inline allocators()
         : node_allocator_type()

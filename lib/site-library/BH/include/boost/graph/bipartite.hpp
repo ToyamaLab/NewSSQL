@@ -32,7 +32,11 @@ namespace boost {
      */
 
     template <typename Vertex>
+<<<<<<< HEAD
     struct bipartite_visitor_error: std::exception
+=======
+    struct BOOST_SYMBOL_VISIBLE bipartite_visitor_error: std::exception
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     {
       std::pair <Vertex, Vertex> witnesses;
 
@@ -212,7 +216,11 @@ namespace boost {
           detail::colorize_bipartition (partition_map), std::make_pair (detail::check_bipartition (partition_map),
               put_property (partition_map, color_traits <partition_color_t>::white (), on_start_vertex ()))))));
     }
+<<<<<<< HEAD
     catch (detail::bipartite_visitor_error <vertex_descriptor_t> error)
+=======
+    catch (const detail::bipartite_visitor_error <vertex_descriptor_t>&)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     {
       return false;
     }
@@ -299,7 +307,11 @@ namespace boost {
               std::make_pair (put_property (partition_map, color_traits <partition_color_t>::white (),
                   on_start_vertex ()), record_predecessors (predecessor_map, on_tree_edge ())))))));
     }
+<<<<<<< HEAD
     catch (detail::bipartite_visitor_error <vertex_descriptor_t> error)
+=======
+    catch (const detail::bipartite_visitor_error <vertex_descriptor_t>& error)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     {
       typedef std::vector <vertex_descriptor_t> path_t;
 

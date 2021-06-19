@@ -11,6 +11,11 @@
 #ifndef BOOST_COMPUTE_ALGORITHM_UNIQUE_COPY_HPP
 #define BOOST_COMPUTE_ALGORITHM_UNIQUE_COPY_HPP
 
+<<<<<<< HEAD
+=======
+#include <boost/static_assert.hpp>
+
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 #include <boost/compute/command_queue.hpp>
 #include <boost/compute/lambda.hpp>
 #include <boost/compute/system.hpp>
@@ -21,6 +26,10 @@
 #include <boost/compute/detail/iterator_range_size.hpp>
 #include <boost/compute/detail/meta_kernel.hpp>
 #include <boost/compute/functional/operator.hpp>
+<<<<<<< HEAD
+=======
+#include <boost/compute/type_traits/is_device_iterator.hpp>
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 namespace boost {
 namespace compute {
@@ -137,6 +146,12 @@ inline OutputIterator unique_copy(InputIterator first,
                                   BinaryPredicate op,
                                   command_queue &queue = system::default_queue())
 {
+<<<<<<< HEAD
+=======
+    BOOST_STATIC_ASSERT(is_device_iterator<InputIterator>::value);
+    BOOST_STATIC_ASSERT(is_device_iterator<OutputIterator>::value);
+
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     size_t count = detail::iterator_range_size(first, last);
     if(count < 32){
         return detail::serial_unique_copy(first, last, result, op, queue);
@@ -153,6 +168,12 @@ inline OutputIterator unique_copy(InputIterator first,
                                   OutputIterator result,
                                   command_queue &queue = system::default_queue())
 {
+<<<<<<< HEAD
+=======
+    BOOST_STATIC_ASSERT(is_device_iterator<InputIterator>::value);
+    BOOST_STATIC_ASSERT(is_device_iterator<OutputIterator>::value);
+
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     typedef typename std::iterator_traits<InputIterator>::value_type value_type;
 
     return ::boost::compute::unique_copy(

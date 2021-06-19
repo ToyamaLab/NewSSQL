@@ -23,7 +23,11 @@
 
 #include <boost/detail/workaround.hpp>
 
+<<<<<<< HEAD
 #if BOOST_WORKAROUND(BOOST_MSVC, < 1300) || BOOST_WORKAROUND(__BORLANDC__, BOOST_TESTED_AT(0x582))
+=======
+#if BOOST_WORKAROUND(__BORLANDC__, BOOST_TESTED_AT(0x582))
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 #  include<boost/numeric/conversion/detail/old_numeric_cast.hpp>
 

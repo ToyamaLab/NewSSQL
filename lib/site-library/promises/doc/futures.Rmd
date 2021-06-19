@@ -61,7 +61,11 @@ Besides variables, `future()` also tries to automatically infer what R packages 
 
 Again, this is especially important for multisession, because multicore will inherit all of the attached packages of the parent process.
 
+<<<<<<< HEAD
 ###Native resources
+=======
+### Native resources
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 Future code blocks cannot use resources such as database connections and network sockets that were created in the parent process. This is true regardless of what future implementation you use! Even if it seems to work with a simple test, you are asking for crashes or worse by sharing these kinds of resources across processes.
 

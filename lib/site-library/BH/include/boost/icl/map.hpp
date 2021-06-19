@@ -22,7 +22,11 @@ Copyright (c) 2007-2011: Joachim Faulhaber
 #endif
 
 #include <string>
+<<<<<<< HEAD
 #include <boost/call_traits.hpp> 
+=======
+#include <boost/call_traits.hpp>
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 #include <boost/icl/detail/notate.hpp>
 #include <boost/icl/detail/design_config.hpp>
 #include <boost/icl/detail/concept_check.hpp>
@@ -32,10 +36,17 @@ Copyright (c) 2007-2011: Joachim Faulhaber
 #include <boost/icl/type_traits/is_total.hpp>
 #include <boost/icl/type_traits/is_element_container.hpp>
 #include <boost/icl/type_traits/has_inverse.hpp>
+<<<<<<< HEAD
 #include <boost/icl/type_traits/to_string.hpp>
 
 #include <boost/icl/associative_element_container.hpp>
 #include <boost/icl/functors.hpp>
+=======
+
+#include <boost/icl/associative_element_container.hpp>
+#include <boost/icl/functors.hpp>
+#include <boost/icl/type_traits/to_string.hpp>
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 namespace boost{namespace icl
 {
@@ -46,7 +57,11 @@ struct partial_absorber
     enum { is_total = false };
 };
 
+<<<<<<< HEAD
 template<> 
+=======
+template<>
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 inline std::string type_to_string<partial_absorber>::apply() { return "@0"; }
 
 struct partial_enricher
@@ -55,7 +70,11 @@ struct partial_enricher
     enum { is_total = false };
 };
 
+<<<<<<< HEAD
 template<> 
+=======
+template<>
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 inline std::string type_to_string<partial_enricher>::apply() { return "e0"; }
 
 struct total_absorber
@@ -64,7 +83,11 @@ struct total_absorber
     enum { is_total = true };
 };
 
+<<<<<<< HEAD
 template<> 
+=======
+template<>
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 inline std::string type_to_string<total_absorber>::apply() { return "^0"; }
 
 struct total_enricher
@@ -73,12 +96,17 @@ struct total_enricher
     enum { is_total = true };
 };
 
+<<<<<<< HEAD
 template<> 
+=======
+template<>
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 inline std::string type_to_string<total_enricher>::apply() { return "e^0"; }
 
 
 
 /** \brief Addable, subractable and intersectable maps */
+<<<<<<< HEAD
 template 
 <
     typename DomainT, 
@@ -90,6 +118,19 @@ template
     ICL_ALLOC   Alloc   = std::allocator 
 >
 class map: private ICL_IMPL_SPACE::map<DomainT, CodomainT, ICL_COMPARE_DOMAIN(Compare,DomainT), 
+=======
+template
+<
+    typename DomainT,
+    typename CodomainT,
+    class Traits = icl::partial_absorber,
+    ICL_COMPARE Compare = ICL_COMPARE_INSTANCE(ICL_COMPARE_DEFAULT, DomainT),
+    ICL_COMBINE Combine = ICL_COMBINE_INSTANCE(icl::inplace_plus, CodomainT),
+    ICL_SECTION Section = ICL_SECTION_INSTANCE(icl::inter_section, CodomainT),
+    ICL_ALLOC   Alloc   = std::allocator
+>
+class map: private ICL_IMPL_SPACE::map<DomainT, CodomainT, ICL_COMPARE_DOMAIN(Compare,DomainT),
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
                                        Alloc<std::pair<const DomainT, CodomainT> > >
 {
 public:
@@ -117,7 +158,11 @@ public:
     typedef typename inverse<codomain_combine >::type   inverse_codomain_combine;
     typedef typename mpl::if_
         <has_set_semantics<codomain_type>
+<<<<<<< HEAD
         , ICL_SECTION_CODOMAIN(Section,CodomainT)     
+=======
+        , ICL_SECTION_CODOMAIN(Section,CodomainT)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
         , codomain_combine
         >::type                                         codomain_intersect;
     typedef typename inverse<codomain_intersect>::type  inverse_codomain_intersect;
@@ -129,10 +174,17 @@ public:
 
     BOOST_STATIC_CONSTANT(bool, _total   = (Traits::is_total));
     BOOST_STATIC_CONSTANT(bool, _absorbs = (Traits::absorbs_identities));
+<<<<<<< HEAD
     BOOST_STATIC_CONSTANT(bool, 
         total_invertible = (mpl::and_<is_total<type>, has_inverse<codomain_type> >::value));
 
     typedef on_absorbtion<type,codomain_combine,Traits::absorbs_identities> 
+=======
+    BOOST_STATIC_CONSTANT(bool,
+        total_invertible = (mpl::and_<is_total<type>, has_inverse<codomain_type> >::value));
+
+    typedef on_absorbtion<type,codomain_combine,Traits::absorbs_identities>
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
                                                         on_identity_absorbtion;
 
 public:
@@ -148,11 +200,19 @@ public:
     typedef typename base_type::const_reverse_iterator  const_reverse_iterator;
 
 public:
+<<<<<<< HEAD
     BOOST_STATIC_CONSTANT(bool, 
         is_total_invertible = (   Traits::is_total 
                                && has_inverse<codomain_type>::value));
 
     BOOST_STATIC_CONSTANT(int, fineness = 4); 
+=======
+    BOOST_STATIC_CONSTANT(bool,
+        is_total_invertible = (   Traits::is_total
+                               && has_inverse<codomain_type>::value));
+
+    BOOST_STATIC_CONSTANT(int, fineness = 4);
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 public:
     //==========================================================================
@@ -170,11 +230,19 @@ public:
 
     template <class InputIterator>
     map(InputIterator first, InputIterator past)
+<<<<<<< HEAD
         : base_type(first,past){} 
 
     template <class InputIterator>
     map(InputIterator first, InputIterator past, const key_compare& comp)
         : base_type(first,past,comp) 
+=======
+        : base_type(first,past){}
+
+    template <class InputIterator>
+    map(InputIterator first, InputIterator past, const key_compare& comp)
+        : base_type(first,past,comp)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     {}
 
     map(const map& src)
@@ -187,8 +255,13 @@ public:
     }
 
     explicit map(const element_type& key_value_pair): base_type::map()
+<<<<<<< HEAD
     { 
         insert(key_value_pair); 
+=======
+    {
+        insert(key_value_pair);
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     }
 
 #   ifndef BOOST_ICL_NO_CXX11_RVALUE_REFERENCES
@@ -205,6 +278,7 @@ public:
         BOOST_CONCEPT_ASSERT((EqualComparableConcept<CodomainT>));
     }
 
+<<<<<<< HEAD
     map& operator = (map src) 
     { 
         base_type::operator=(boost::move(src));
@@ -218,6 +292,21 @@ public:
         base_type::operator=(src);
         return *this; 
     } 
+=======
+    map& operator = (map src)
+    {
+        base_type::operator=(boost::move(src));
+        return *this;
+    }
+    //==========================================================================
+#   else
+
+    map& operator = (const map& src)
+    {
+        base_type::operator=(src);
+        return *this;
+    }
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 #   endif // BOOST_ICL_NO_CXX11_RVALUE_REFERENCES
 
@@ -254,10 +343,17 @@ public:
     //==========================================================================
 
     template<class SubObject>
+<<<<<<< HEAD
     bool contains(const SubObject& sub)const 
     { return icl::contains(*this, sub); }
 
     bool within(const map& super)const 
+=======
+    bool contains(const SubObject& sub)const
+    { return icl::contains(*this, sub); }
+
+    bool within(const map& super)const
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     { return icl::contains(super, *this); }
 
     //==========================================================================
@@ -275,7 +371,11 @@ public:
     /** Total select function. */
     codomain_type operator()(const domain_type& key)const
     {
+<<<<<<< HEAD
         const_iterator it = find(key); 
+=======
+        const_iterator it = find(key);
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
         return it==end() ? identity_element<codomain_type>::value()
                          : it->second;
     }
@@ -283,6 +383,7 @@ public:
     //==========================================================================
     //= Addition
     //==========================================================================
+<<<<<<< HEAD
     /** \c add inserts \c value_pair into the map if it's key does 
         not exist in the map.    
         If \c value_pairs's key value exists in the map, it's data
@@ -290,13 +391,28 @@ public:
     map& add(const value_type& value_pair) 
     { 
         return _add<codomain_combine>(value_pair); 
+=======
+    /** \c add inserts \c value_pair into the map if it's key does
+        not exist in the map.
+        If \c value_pairs's key value exists in the map, it's data
+        value is added to the data value already found in the map. */
+    map& add(const value_type& value_pair)
+    {
+        return _add<codomain_combine>(value_pair);
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     }
 
     /** \c add add \c value_pair into the map using \c prior as a hint to
         insert \c value_pair after the position \c prior is pointing to. */
+<<<<<<< HEAD
     iterator add(iterator prior, const value_type& value_pair) 
     { 
         return _add<codomain_combine>(prior, value_pair); 
+=======
+    iterator add(iterator prior, const value_type& value_pair)
+    {
+        return _add<codomain_combine>(prior, value_pair);
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     }
 
     //==========================================================================
@@ -322,15 +438,26 @@ public:
     //==========================================================================
     std::pair<iterator,bool> insert(const value_type& value_pair)
     {
+<<<<<<< HEAD
         if(on_identity_absorbtion::is_absorbable(value_pair.second)) 
+=======
+        if(on_identity_absorbtion::is_absorbable(value_pair.second))
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
             return std::pair<iterator,bool>(end(),true);
         else
             return base_type::insert(value_pair);
     }
+<<<<<<< HEAD
     
     iterator insert(iterator prior, const value_type& value_pair)
     {
         if(on_identity_absorbtion::is_absorbable(value_pair.second)) 
+=======
+
+    iterator insert(iterator prior, const value_type& value_pair)
+    {
+        if(on_identity_absorbtion::is_absorbable(value_pair.second))
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
             return end();
         else
             return base_type::insert(prior, value_pair);
@@ -346,7 +473,11 @@ public:
 
     /** With <tt>key_value_pair = (k,v)</tt> set value \c v for key \c k */
     map& set(const element_type& key_value_pair)
+<<<<<<< HEAD
     { 
+=======
+    {
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
         return icl::set_at(*this, key_value_pair);
     }
 
@@ -354,7 +485,11 @@ public:
         Erase only if, the exact value content \c val is stored for the given key. */
     size_type erase(const element_type& key_value_pair)
     {
+<<<<<<< HEAD
         return icl::erase(*this, key_value_pair); 
+=======
+        return icl::erase(*this, key_value_pair);
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     }
 
     //==========================================================================
@@ -400,7 +535,11 @@ private:
         if(it_ != end())
         {
             section.template _add<codomain_combine  >(*it_);
+<<<<<<< HEAD
             section.template _add<codomain_intersect>(operand); 
+=======
+            section.template _add<codomain_intersect>(operand);
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
         }
     }
 
@@ -441,7 +580,11 @@ private:
     template<class Type>
     struct on_definedness<Type, true>
     {
+<<<<<<< HEAD
         static void add_intersection(Type& section, const Type& object, 
+=======
+        static void add_intersection(Type& section, const Type& object,
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
                                      const element_type& operand)
         { object.total_add_intersection(section, operand); }
     };
@@ -449,7 +592,11 @@ private:
     template<class Type>
     struct on_definedness<Type, false>
     {
+<<<<<<< HEAD
         static void add_intersection(Type& section, const Type& object, 
+=======
+        static void add_intersection(Type& section, const Type& object,
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
                                      const element_type& operand)
         { object.partial_add_intersection(section, operand); }
     };
@@ -465,7 +612,11 @@ private:
     template<class Type>
     struct on_codomain_model<Type, false, false>
     {                // !codomain_is_set, !absorbs_identities
+<<<<<<< HEAD
         static void subtract(Type&, typename Type::iterator it_, 
+=======
+        static void subtract(Type&, typename Type::iterator it_,
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
                               const typename Type::codomain_type& )
         { (*it_).second = identity_element<typename Type::codomain_type>::value(); }
     };
@@ -473,7 +624,11 @@ private:
     template<class Type>
     struct on_codomain_model<Type, false, true>
     {                // !codomain_is_set, absorbs_identities
+<<<<<<< HEAD
         static void subtract(Type& object, typename Type::iterator       it_, 
+=======
+        static void subtract(Type& object, typename Type::iterator       it_,
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
                                      const typename Type::codomain_type&     )
         { object.erase(it_); }
     };
@@ -482,10 +637,17 @@ private:
     struct on_codomain_model<Type, true, false>
     {               // !codomain_is_set, !absorbs_identities
         typedef typename Type::inverse_codomain_intersect inverse_codomain_intersect;
+<<<<<<< HEAD
         static void subtract(Type&, typename Type::iterator       it_, 
                               const typename Type::codomain_type& co_value)
         { 
             inverse_codomain_intersect()((*it_).second, co_value); 
+=======
+        static void subtract(Type&, typename Type::iterator       it_,
+                              const typename Type::codomain_type& co_value)
+        {
+            inverse_codomain_intersect()((*it_).second, co_value);
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
         }
     };
 
@@ -493,10 +655,17 @@ private:
     struct on_codomain_model<Type, true, true>
     {               // !codomain_is_set, absorbs_identities
         typedef typename Type::inverse_codomain_intersect inverse_codomain_intersect;
+<<<<<<< HEAD
         static void subtract(Type& object, typename Type::iterator       it_, 
                                      const typename Type::codomain_type& co_value)
         { 
             inverse_codomain_intersect()((*it_).second, co_value); 
+=======
+        static void subtract(Type& object, typename Type::iterator       it_,
+                                     const typename Type::codomain_type& co_value)
+        {
+            inverse_codomain_intersect()((*it_).second, co_value);
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
             if((*it_).second == identity_element<codomain_type>::value())
                 object.erase(it_);
         }
@@ -522,7 +691,11 @@ private:
         typedef typename Type::codomain_type codomain_type;
 
         static void flip(Type& object, const element_type& operand)
+<<<<<<< HEAD
         { 
+=======
+        {
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
             object.add(operand);
             ICL_FORALL(typename Type, it_, object)
                 (*it_).second = identity_element<codomain_type>::value();
@@ -588,7 +761,11 @@ map<DomainT,CodomainT,Traits,Compare,Combine,Section,Alloc>&
     if(on_absorbtion_::is_absorbable(co_val))
         return *this;
 
+<<<<<<< HEAD
     std::pair<iterator,bool> insertion 
+=======
+    std::pair<iterator,bool> insertion
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
         = base_type::insert(value_type(addend.first, version<Combiner>()(co_val)));
 
     if(!insertion.second)
@@ -616,8 +793,13 @@ typename map<DomainT,CodomainT,Traits,Compare,Combine,Section,Alloc>::iterator
     if(on_absorbtion_::is_absorbable(co_val))
         return end();
 
+<<<<<<< HEAD
     iterator inserted_ 
         = base_type::insert(prior_, 
+=======
+    iterator inserted_
+        = base_type::insert(prior_,
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
                             value_type(addend.first, Combiner::identity_element()));
     Combiner()((*inserted_).second, addend.second);
 
@@ -658,30 +840,54 @@ map<DomainT,CodomainT,Traits,Compare,Combine,Section,Alloc>&
 //-----------------------------------------------------------------------------
 template <class DomainT, class CodomainT, class Traits, ICL_COMPARE Compare, ICL_COMBINE Combine, ICL_SECTION Section, ICL_ALLOC Alloc>
 struct is_map<icl::map<DomainT,CodomainT,Traits,Compare,Combine,Section,Alloc> >
+<<<<<<< HEAD
 { 
     typedef is_map<icl::map<DomainT,CodomainT,Traits,Compare,Combine,Section,Alloc> > type;
     BOOST_STATIC_CONSTANT(bool, value = true); 
+=======
+{
+    typedef is_map<icl::map<DomainT,CodomainT,Traits,Compare,Combine,Section,Alloc> > type;
+    BOOST_STATIC_CONSTANT(bool, value = true);
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 };
 
 template <class DomainT, class CodomainT, class Traits, ICL_COMPARE Compare, ICL_COMBINE Combine, ICL_SECTION Section, ICL_ALLOC Alloc>
 struct has_inverse<icl::map<DomainT,CodomainT,Traits,Compare,Combine,Section,Alloc> >
+<<<<<<< HEAD
 { 
     typedef has_inverse<icl::map<DomainT,CodomainT,Traits,Compare,Combine,Section,Alloc> > type;
     BOOST_STATIC_CONSTANT(bool, value = (has_inverse<CodomainT>::value)); 
+=======
+{
+    typedef has_inverse<icl::map<DomainT,CodomainT,Traits,Compare,Combine,Section,Alloc> > type;
+    BOOST_STATIC_CONSTANT(bool, value = (has_inverse<CodomainT>::value));
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 };
 
 template <class DomainT, class CodomainT, class Traits, ICL_COMPARE Compare, ICL_COMBINE Combine, ICL_SECTION Section, ICL_ALLOC Alloc>
 struct absorbs_identities<icl::map<DomainT,CodomainT,Traits,Compare,Combine,Section,Alloc> >
+<<<<<<< HEAD
 { 
     typedef absorbs_identities type;
     BOOST_STATIC_CONSTANT(int, value = Traits::absorbs_identities); 
+=======
+{
+    typedef absorbs_identities type;
+    BOOST_STATIC_CONSTANT(int, value = Traits::absorbs_identities);
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 };
 
 template <class DomainT, class CodomainT, class Traits, ICL_COMPARE Compare, ICL_COMBINE Combine, ICL_SECTION Section, ICL_ALLOC Alloc>
 struct is_total<icl::map<DomainT,CodomainT,Traits,Compare,Combine,Section,Alloc> >
+<<<<<<< HEAD
 { 
     typedef is_total type;
     BOOST_STATIC_CONSTANT(int, value = Traits::is_total); 
+=======
+{
+    typedef is_total type;
+    BOOST_STATIC_CONSTANT(int, value = Traits::is_total);
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 };
 
 template <class DomainT, class CodomainT, class Traits, ICL_COMPARE Compare, ICL_COMBINE Combine, ICL_SECTION Section, ICL_ALLOC Alloc>
@@ -691,7 +897,11 @@ struct type_to_string<icl::map<DomainT,CodomainT,Traits,Compare,Combine,Section,
     {
         return "map<"+ type_to_string<DomainT>::apply()  + ","
                      + type_to_string<CodomainT>::apply() + ","
+<<<<<<< HEAD
                      + type_to_string<Traits>::apply() +">"; 
+=======
+                     + type_to_string<Traits>::apply() +">";
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     }
 };
 
@@ -700,4 +910,7 @@ struct type_to_string<icl::map<DomainT,CodomainT,Traits,Compare,Combine,Section,
 }} // namespace icl boost
 
 #endif // BOOST_ICL_MAP_HPP_JOFA_070519
+<<<<<<< HEAD
 
+=======
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce

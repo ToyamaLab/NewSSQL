@@ -1,4 +1,4 @@
-// Generated from src/main/java/supersql/parser/query.g4 by ANTLR 4.5
+// Generated from query.g4 by ANTLR 4.5
 
 package supersql.parser;
 
@@ -103,6 +103,16 @@ public interface queryListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitExp(queryParser.ExpContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link queryParser#t_exp}.
+	 * @param ctx the parse tree
+	 */
+	void enterT_exp(queryParser.T_expContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link queryParser#t_exp}.
+	 * @param ctx the parse tree
+	 */
+	void exitT_exp(queryParser.T_expContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link queryParser#concat_exp}.
 	 * @param ctx the parse tree

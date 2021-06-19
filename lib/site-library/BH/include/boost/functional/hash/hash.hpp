@@ -1,4 +1,5 @@
 
+<<<<<<< HEAD
 // Copyright 2005-2014 Daniel James.
 // Distributed under the Boost Software License, Version 1.0. (See accompanying
 // file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
@@ -593,3 +594,10 @@ namespace boost
     && !defined(BOOST_FUNCTIONAL_HASH_EXTENSIONS_HPP)
 #include <boost/functional/hash/extensions.hpp>
 #endif
+=======
+// Copyright 2005-2009 Daniel James.
+// Distributed under the Boost Software License, Version 1.0. (See accompanying
+// file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
+
+#include <boost/container_hash/hash.hpp>
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce

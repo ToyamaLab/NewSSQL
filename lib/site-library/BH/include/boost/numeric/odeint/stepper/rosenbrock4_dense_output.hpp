@@ -41,7 +41,12 @@ class rosenbrock4_dense_output
 public:
 
     typedef ControlledStepper controlled_stepper_type;
+<<<<<<< HEAD
     typedef typename controlled_stepper_type::stepper_type stepper_type;
+=======
+    typedef typename unwrap_reference< controlled_stepper_type >::type unwrapped_controlled_stepper_type;
+    typedef typename unwrapped_controlled_stepper_type::stepper_type stepper_type;
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     typedef typename stepper_type::value_type value_type;
     typedef typename stepper_type::state_type state_type;
     typedef typename stepper_type::wrapped_state_type wrapped_state_type;
@@ -54,7 +59,11 @@ public:
     typedef rosenbrock4_dense_output< ControlledStepper > dense_output_stepper_type;
 
     rosenbrock4_dense_output( const controlled_stepper_type &stepper = controlled_stepper_type() )
+<<<<<<< HEAD
     : m_stepper( stepper ) ,
+=======
+    : m_stepper( stepper ) , 
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
       m_x1() , m_x2() , 
       m_current_state_x1( true ) ,
       m_t() , m_t_old() , m_dt()
@@ -75,16 +84,28 @@ public:
     template< class System >
     std::pair< time_type , time_type > do_step( System system )
     {
+<<<<<<< HEAD
+=======
+        unwrapped_controlled_stepper_type &stepper = m_stepper;
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
         failed_step_checker fail_checker;  // to throw a runtime_error if step size adjustment fails
         controlled_step_result res = fail;
         m_t_old = m_t;
         do
         {
+<<<<<<< HEAD
             res = m_stepper.try_step( system , get_current_state() , m_t , get_old_state() , m_dt );
             fail_checker();  // check for overflow of failed steps
         }
         while( res == fail );
         m_stepper.stepper().prepare_dense_output();
+=======
+            res = stepper.try_step( system , get_current_state() , m_t , get_old_state() , m_dt );
+            fail_checker();  // check for overflow of failed steps
+        }
+        while( res == fail );
+        stepper.stepper().prepare_dense_output();
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
         this->toggle_current_state();
         return std::make_pair( m_t_old , m_t );
     }
@@ -96,20 +117,35 @@ public:
     template< class StateOut >
     void calc_state( time_type t , StateOut &x )
     {
+<<<<<<< HEAD
         m_stepper.stepper().calc_state( t , x , get_old_state() , m_t_old , get_current_state() , m_t );
+=======
+        unwrapped_controlled_stepper_type &stepper = m_stepper;
+        stepper.stepper().calc_state( t , x , get_old_state() , m_t_old , get_current_state() , m_t );
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     }
 
     template< class StateOut >
     void calc_state( time_type t , const StateOut &x )
     {
+<<<<<<< HEAD
         m_stepper.stepper().calc_state( t , x , get_old_state() , m_t_old , get_current_state() , m_t );
+=======
+        unwrapped_controlled_stepper_type &stepper = m_stepper;
+        stepper.stepper().calc_state( t , x , get_old_state() , m_t_old , get_current_state() , m_t );
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     }
 
 
     template< class StateType >
     void adjust_size( const StateType &x )
     {
+<<<<<<< HEAD
         m_stepper.adjust_size( x );
+=======
+        unwrapped_controlled_stepper_type &stepper = m_stepper;
+        stepper.adjust_size( x );
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
         resize_impl( x );
     }
 

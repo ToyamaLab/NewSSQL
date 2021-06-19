@@ -2,8 +2,13 @@
 
 // Copyright (c) 2007-2012 Barend Gehrels, Amsterdam, the Netherlands.
 
+<<<<<<< HEAD
 // This file was modified by Oracle on 2017.
 // Modifications copyright (c) 2017, Oracle and/or its affiliates.
+=======
+// This file was modified by Oracle on 2017, 2019.
+// Modifications copyright (c) 2017, 2019, Oracle and/or its affiliates.
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 // Contributed and/or modified by Adam Wulkiewicz, on behalf of Oracle
 
@@ -39,7 +44,12 @@ namespace boost { namespace geometry
 template
 <
     typename Point = void,
+<<<<<<< HEAD
     int Dimension = -1
+=======
+    int Dimension = -1,
+    typename CSTag = void
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 >
 struct less
 {
@@ -53,6 +63,50 @@ struct less
             <
                 strategy::compare::less,
                 Point, Point,
+<<<<<<< HEAD
+=======
+                Dimension,
+                CSTag, CSTag
+            >::type strategy_type;
+
+        return strategy_type::apply(left, right);
+    }
+};
+
+template <int Dimension, typename CSTag>
+struct less<void, Dimension, CSTag>
+{
+    typedef bool result_type;
+
+    template <typename Point1, typename Point2>
+    inline bool operator()(Point1 const& left, Point2 const& right) const
+    {
+        typedef typename strategy::compare::services::default_strategy
+            <
+                strategy::compare::less,
+                Point1, Point2,
+                Dimension,
+                CSTag, CSTag
+            >::type strategy_type;
+
+        return strategy_type::apply(left, right);
+    }
+};
+
+template <typename Point, int Dimension>
+struct less<Point, Dimension, void>
+{
+    typedef Point first_argument_type;
+    typedef Point second_argument_type;
+    typedef bool result_type;
+
+    inline bool operator()(Point const& left, Point const& right) const
+    {
+        typedef typename strategy::compare::services::default_strategy
+            <
+                strategy::compare::less,
+                Point, Point,
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
                 Dimension
             >::type strategy_type;
 
@@ -61,8 +115,15 @@ struct less
 };
 
 template <int Dimension>
+<<<<<<< HEAD
 struct less<void, Dimension>
 {
+=======
+struct less<void, Dimension, void>
+{
+    typedef bool result_type;
+
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     template <typename Point1, typename Point2>
     inline bool operator()(Point1 const& left, Point2 const& right) const
     {
@@ -87,7 +148,12 @@ struct less<void, Dimension>
 template
 <
     typename Point = void,
+<<<<<<< HEAD
     int Dimension = -1
+=======
+    int Dimension = -1,
+    typename CSTag = void
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 >
 struct greater
 {
@@ -101,6 +167,50 @@ struct greater
             <
                 strategy::compare::greater,
                 Point, Point,
+<<<<<<< HEAD
+=======
+                Dimension,
+                CSTag, CSTag
+            >::type strategy_type;
+
+        return strategy_type::apply(left, right);
+    }
+};
+
+template <int Dimension, typename CSTag>
+struct greater<void, Dimension, CSTag>
+{
+    typedef bool result_type;
+
+    template <typename Point1, typename Point2>
+    bool operator()(Point1 const& left, Point2 const& right) const
+    {
+        typedef typename strategy::compare::services::default_strategy
+            <
+                strategy::compare::greater,
+                Point1, Point2,
+                Dimension,
+                CSTag, CSTag
+            >::type strategy_type;
+
+        return strategy_type::apply(left, right);
+    }
+};
+
+template <typename Point, int Dimension>
+struct greater<Point, Dimension, void>
+{
+    typedef Point first_argument_type;
+    typedef Point second_argument_type;
+    typedef bool result_type;
+
+    bool operator()(Point const& left, Point const& right) const
+    {
+        typedef typename strategy::compare::services::default_strategy
+            <
+                strategy::compare::greater,
+                Point, Point,
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
                 Dimension
             >::type strategy_type;
 
@@ -109,8 +219,15 @@ struct greater
 };
 
 template <int Dimension>
+<<<<<<< HEAD
 struct greater<void, Dimension>
 {
+=======
+struct greater<void, Dimension, void>
+{
+    typedef bool result_type;
+
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     template <typename Point1, typename Point2>
     bool operator()(Point1 const& left, Point2 const& right) const
     {
@@ -137,7 +254,12 @@ struct greater<void, Dimension>
 template
 <
     typename Point,
+<<<<<<< HEAD
     int Dimension = -1
+=======
+    int Dimension = -1,
+    typename CSTag = void
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 >
 struct equal_to
 {
@@ -151,6 +273,50 @@ struct equal_to
             <
                 strategy::compare::equal_to,
                 Point, Point,
+<<<<<<< HEAD
+=======
+                Dimension,
+                CSTag, CSTag
+            >::type strategy_type;
+
+        return strategy_type::apply(left, right);
+    }
+};
+
+template <int Dimension, typename CSTag>
+struct equal_to<void, Dimension, CSTag>
+{
+    typedef bool result_type;
+
+    template <typename Point1, typename Point2>
+    bool operator()(Point1 const& left, Point2 const& right) const
+    {
+        typedef typename strategy::compare::services::default_strategy
+            <
+                strategy::compare::equal_to,
+                Point1, Point2,
+                Dimension,
+                CSTag, CSTag
+            >::type strategy_type;
+
+        return strategy_type::apply(left, right);
+    }
+};
+
+template <typename Point, int Dimension>
+struct equal_to<Point, Dimension, void>
+{
+    typedef Point first_argument_type;
+    typedef Point second_argument_type;
+    typedef bool result_type;
+
+    bool operator()(Point const& left, Point const& right) const
+    {
+        typedef typename strategy::compare::services::default_strategy
+            <
+                strategy::compare::equal_to,
+                Point, Point,
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
                 Dimension
             >::type strategy_type;
 
@@ -159,8 +325,15 @@ struct equal_to
 };
 
 template <int Dimension>
+<<<<<<< HEAD
 struct equal_to<void, Dimension>
 {
+=======
+struct equal_to<void, Dimension, void>
+{
+    typedef bool result_type;
+
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     template <typename Point1, typename Point2>
     bool operator()(Point1 const& left, Point2 const& right) const
     {

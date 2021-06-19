@@ -235,6 +235,10 @@ namespace boost { using std::min; using std::max; }
 #  define BOOST_NO_CXX11_HDR_ATOMIC
 #  define BOOST_NO_CXX11_STD_ALIGN
 #  define BOOST_NO_CXX11_ADDRESSOF
+<<<<<<< HEAD
+=======
+#  define BOOST_NO_CXX11_HDR_EXCEPTION
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 #if defined(__has_include)
 #if !__has_include(<shared_mutex>)

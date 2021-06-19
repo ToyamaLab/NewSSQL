@@ -37,14 +37,24 @@ template<class InputIterator, class Size, class OutputIterator>
 inline OutputIterator copy_n(InputIterator first,
                              Size count,
                              OutputIterator result,
+<<<<<<< HEAD
                              command_queue &queue = system::default_queue())
+=======
+                             command_queue &queue = system::default_queue(),
+                             const wait_list &events = wait_list())
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 {
     typedef typename std::iterator_traits<InputIterator>::difference_type difference_type;
 
     return ::boost::compute::copy(first,
                                   first + static_cast<difference_type>(count),
                                   result,
+<<<<<<< HEAD
                                   queue);
+=======
+                                  queue,
+                                  events);
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 }
 
 } // end compute namespace

@@ -19,11 +19,19 @@
             typename boost::type_of::encode_type<\
             typename boost::type_of::push_back<\
             V\
+<<<<<<< HEAD
             , boost::mpl::size_t<ID> >::type\
             , T>::type\
             type;\
     };\
     template<class Iter> struct decode_type_impl<boost::mpl::size_t<ID>, Iter>\
+=======
+            , boost::type_of::constant<std::size_t,ID> >::type\
+            , T>::type\
+            type;\
+    };\
+    template<class Iter> struct decode_type_impl<boost::type_of::constant<std::size_t,ID>, Iter>\
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     {\
         typedef boost::type_of::decode_type<Iter> d1;\
         typedef Fun(typename d1::type) type;\
@@ -94,13 +102,22 @@ BOOST_TYPEOF_END_ENCODE_NS
             typename boost::type_of::push_back<\
             typename boost::type_of::push_back<\
             V\
+<<<<<<< HEAD
             , boost::mpl::size_t<ID> >::type\
             , boost::mpl::size_t<N> >::type\
+=======
+            , boost::type_of::constant<std::size_t,ID> >::type\
+            , boost::type_of::constant<std::size_t,N> >::type\
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
             , T>::type\
         type;\
     };\
     template<class Iter>\
+<<<<<<< HEAD
     struct decode_type_impl<boost::mpl::size_t<ID>, Iter>\
+=======
+    struct decode_type_impl<boost::type_of::constant<std::size_t,ID>, Iter>\
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     {\
         enum{n = Iter::type::value};\
         typedef boost::type_of::decode_type<typename Iter::next> d;\

@@ -47,6 +47,14 @@ class list_iterator
    typedef typename types_t::node                           node;
    typedef typename types_t::node_ptr                       node_ptr;
    typedef typename types_t::const_value_traits_ptr         const_value_traits_ptr;
+<<<<<<< HEAD
+=======
+   class nat;
+   typedef typename
+      detail::if_c< IsConst
+                  , list_iterator<value_traits, false>
+                  , nat>::type                              nonconst_iterator;
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
    public:
    typedef typename types_t::iterator_type::difference_type    difference_type;
@@ -62,6 +70,7 @@ class list_iterator
       : members_(nodeptr, traits_ptr)
    {}
 
+<<<<<<< HEAD
    BOOST_INTRUSIVE_FORCEINLINE list_iterator(list_iterator<ValueTraits, false> const& other)
       :  members_(other.pointed_node(), other.get_value_traits())
    {}
@@ -71,6 +80,24 @@ class list_iterator
 
    BOOST_INTRUSIVE_FORCEINLINE list_iterator &operator=(const node_ptr &node)
    {  members_.nodeptr_ = node;  return static_cast<list_iterator&>(*this);  }
+=======
+   BOOST_INTRUSIVE_FORCEINLINE list_iterator(const list_iterator &other)
+      :  members_(other.pointed_node(), other.get_value_traits())
+   {}
+
+   BOOST_INTRUSIVE_FORCEINLINE list_iterator(const nonconst_iterator &other)
+      :  members_(other.pointed_node(), other.get_value_traits())
+   {}
+
+   BOOST_INTRUSIVE_FORCEINLINE list_iterator &operator=(const list_iterator &other)
+   {  members_.nodeptr_ = other.members_.nodeptr_;  return *this;  }
+
+   BOOST_INTRUSIVE_FORCEINLINE node_ptr pointed_node() const
+   { return members_.nodeptr_; }
+
+   BOOST_INTRUSIVE_FORCEINLINE list_iterator &operator=(const node_ptr &node)
+   {  members_.nodeptr_ = node;  return *this;  }
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
    BOOST_INTRUSIVE_FORCEINLINE const_value_traits_ptr get_value_traits() const
    {  return members_.get_ptr(); }
@@ -115,7 +142,11 @@ class list_iterator
    BOOST_INTRUSIVE_FORCEINLINE pointer operator->() const
    { return this->operator_arrow(detail::bool_<stateful_value_traits>()); }
 
+<<<<<<< HEAD
    list_iterator<ValueTraits, false> unconst() const
+=======
+   BOOST_INTRUSIVE_FORCEINLINE list_iterator<ValueTraits, false> unconst() const
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
    {  return list_iterator<ValueTraits, false>(this->pointed_node(), this->get_value_traits());   }
 
    private:

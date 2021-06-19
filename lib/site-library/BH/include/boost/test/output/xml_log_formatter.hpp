@@ -39,7 +39,11 @@ public:
     // Formatter interface
     void    log_start( std::ostream&, counter_t test_cases_amount );
     void    log_finish( std::ostream& );
+<<<<<<< HEAD
     void    log_build_info( std::ostream& );
+=======
+    void    log_build_info( std::ostream&, bool );
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
     void    test_unit_start( std::ostream&, test_unit const& tu );
     void    test_unit_finish( std::ostream&, test_unit const& tu, unsigned long elapsed );

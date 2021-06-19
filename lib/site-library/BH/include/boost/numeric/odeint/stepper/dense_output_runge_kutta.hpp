@@ -126,7 +126,11 @@ public:
         m_t_old = m_t;
         m_t += m_dt;
         toggle_current_state();
+<<<<<<< HEAD
         return std::make_pair( m_t_old , m_dt );
+=======
+        return std::make_pair( m_t_old , m_t );
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     }
 
     /*

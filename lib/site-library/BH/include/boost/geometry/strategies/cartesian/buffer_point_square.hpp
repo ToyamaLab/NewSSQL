@@ -1,5 +1,16 @@
 // Boost.Geometry (aka GGL, Generic Geometry Library)
+<<<<<<< HEAD
 // Copyright (c) 2012-2014 Barend Gehrels, Amsterdam, the Netherlands.
+=======
+
+// Copyright (c) 2012-2014 Barend Gehrels, Amsterdam, the Netherlands.
+
+// This file was modified by Oracle on 2018.
+// Modifications copyright (c) 2018, Oracle and/or its affiliates.
+
+// Contributed and/or modified by Adam Wulkiewicz, on behalf of Oracle
+
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 // Use, modification and distribution is subject to the Boost Software License,
 // Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
 // http://www.boost.org/LICENSE_1_0.txt)
@@ -9,12 +20,20 @@
 
 #include <cstddef>
 
+<<<<<<< HEAD
 #include <boost/range.hpp>
 
 #include <boost/geometry/util/math.hpp>
 
 #include <boost/geometry/strategies/buffer.hpp>
 
+=======
+#include <boost/range/value_type.hpp>
+
+#include <boost/geometry/core/access.hpp>
+#include <boost/geometry/strategies/buffer.hpp>
+#include <boost/geometry/util/math.hpp>
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 namespace boost { namespace geometry
 {
@@ -39,6 +58,10 @@ namespace strategy { namespace buffer
 [heading See also]
 \* [link geometry.reference.algorithms.buffer.buffer_7_with_strategies buffer (with strategies)]
 \* [link geometry.reference.strategies.strategy_buffer_point_circle point_circle]
+<<<<<<< HEAD
+=======
+\* [link geometry.reference.strategies.strategy_buffer_geographic_point_circle geographic_point_circle]
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 }
  */
 class point_square

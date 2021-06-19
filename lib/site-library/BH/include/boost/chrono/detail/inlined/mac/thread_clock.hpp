@@ -58,21 +58,37 @@ namespace boost { namespace chrono {
         mach_msg_type_number_t count = THREAD_BASIC_INFO_COUNT;
         if ( thread_info(port, THREAD_BASIC_INFO, (thread_info_t)&info, &count) != KERN_SUCCESS )
         {
+<<<<<<< HEAD
             if (BOOST_CHRONO_IS_THROWS(ec))
+=======
+            if (::boost::chrono::is_throws(ec))
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
             {
                 boost::throw_exception(
                         system::system_error(
                                 EINVAL,
+<<<<<<< HEAD
                                 BOOST_CHRONO_SYSTEM_CATEGORY,
+=======
+                                ::boost::system::system_category(),
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
                                 "chrono::thread_clock" ));
             }
             else
             {
+<<<<<<< HEAD
                 ec.assign( errno, BOOST_CHRONO_SYSTEM_CATEGORY );
                 return time_point();
             }
         }
         if (!BOOST_CHRONO_IS_THROWS(ec))
+=======
+                ec.assign( errno, ::boost::system::system_category() );
+                return time_point();
+            }
+        }
+        if (!::boost::chrono::is_throws(ec))
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
         {
             ec.clear();
         }

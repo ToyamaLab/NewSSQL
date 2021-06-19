@@ -73,17 +73,29 @@ process_real_cpu_clock::time_point process_real_cpu_clock::now(
     clock_t c = ::times( &tm );
     if ( c == clock_t(-1) ) // error
     {
+<<<<<<< HEAD
         if (BOOST_CHRONO_IS_THROWS(ec))
+=======
+        if (::boost::chrono::is_throws(ec))
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
         {
             boost::throw_exception(
                     system::system_error(
                             errno,
+<<<<<<< HEAD
                             BOOST_CHRONO_SYSTEM_CATEGORY,
+=======
+                            ::boost::system::system_category(),
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
                             "chrono::process_real_cpu_clock" ));
         }
         else
         {
+<<<<<<< HEAD
             ec.assign( errno, BOOST_CHRONO_SYSTEM_CATEGORY );
+=======
+            ec.assign( errno, ::boost::system::system_category() );
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
             return time_point();
         }
     }
@@ -91,7 +103,11 @@ process_real_cpu_clock::time_point process_real_cpu_clock::now(
     {
         if ( chrono_detail::tick_factor() != -1 )
         {
+<<<<<<< HEAD
             if (!BOOST_CHRONO_IS_THROWS(ec))
+=======
+            if (!::boost::chrono::is_throws(ec))
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
             {
                 ec.clear();
             }
@@ -100,17 +116,29 @@ process_real_cpu_clock::time_point process_real_cpu_clock::now(
         }
         else
         {
+<<<<<<< HEAD
             if (BOOST_CHRONO_IS_THROWS(ec))
+=======
+            if (::boost::chrono::is_throws(ec))
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
             {
                 boost::throw_exception(
                         system::system_error(
                                 errno,
+<<<<<<< HEAD
                                 BOOST_CHRONO_SYSTEM_CATEGORY,
+=======
+                                ::boost::system::system_category(),
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
                                 "chrono::process_real_cpu_clock" ));
             }
             else
             {
+<<<<<<< HEAD
                 ec.assign( errno, BOOST_CHRONO_SYSTEM_CATEGORY );
+=======
+                ec.assign( errno, ::boost::system::system_category() );
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
                 return time_point();
             }
         }
@@ -149,17 +177,29 @@ process_user_cpu_clock::time_point process_user_cpu_clock::now(
     clock_t c = ::times( &tm );
     if ( c == clock_t(-1) ) // error
     {
+<<<<<<< HEAD
         if (BOOST_CHRONO_IS_THROWS(ec))
+=======
+        if (::boost::chrono::is_throws(ec))
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
         {
             boost::throw_exception(
                     system::system_error(
                             errno,
+<<<<<<< HEAD
                             BOOST_CHRONO_SYSTEM_CATEGORY,
+=======
+                            ::boost::system::system_category(),
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
                             "chrono::process_user_cpu_clock" ));
         }
         else
         {
+<<<<<<< HEAD
             ec.assign( errno, BOOST_CHRONO_SYSTEM_CATEGORY );
+=======
+            ec.assign( errno, ::boost::system::system_category() );
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
             return time_point();
         }
     }
@@ -167,7 +207,11 @@ process_user_cpu_clock::time_point process_user_cpu_clock::now(
     {
         if ( chrono_detail::tick_factor() != -1 )
         {
+<<<<<<< HEAD
             if (!BOOST_CHRONO_IS_THROWS(ec))
+=======
+            if (!::boost::chrono::is_throws(ec))
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
             {
                 ec.clear();
             }
@@ -176,17 +220,29 @@ process_user_cpu_clock::time_point process_user_cpu_clock::now(
         }
         else
         {
+<<<<<<< HEAD
             if (BOOST_CHRONO_IS_THROWS(ec))
+=======
+            if (::boost::chrono::is_throws(ec))
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
             {
                 boost::throw_exception(
                         system::system_error(
                                 errno,
+<<<<<<< HEAD
                                 BOOST_CHRONO_SYSTEM_CATEGORY,
+=======
+                                ::boost::system::system_category(),
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
                                 "chrono::process_user_cpu_clock" ));
             }
             else
             {
+<<<<<<< HEAD
                 ec.assign( errno, BOOST_CHRONO_SYSTEM_CATEGORY );
+=======
+                ec.assign( errno, ::boost::system::system_category() );
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
                 return time_point();
             }
         }
@@ -226,17 +282,29 @@ process_system_cpu_clock::time_point process_system_cpu_clock::now(
     clock_t c = ::times( &tm );
     if ( c == clock_t(-1) ) // error
     {
+<<<<<<< HEAD
         if (BOOST_CHRONO_IS_THROWS(ec))
+=======
+        if (::boost::chrono::is_throws(ec))
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
         {
             boost::throw_exception(
                     system::system_error(
                             errno,
+<<<<<<< HEAD
                             BOOST_CHRONO_SYSTEM_CATEGORY,
+=======
+                            ::boost::system::system_category(),
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
                             "chrono::process_system_cpu_clock" ));
         }
         else
         {
+<<<<<<< HEAD
             ec.assign( errno, BOOST_CHRONO_SYSTEM_CATEGORY );
+=======
+            ec.assign( errno, ::boost::system::system_category() );
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
             return time_point();
         }
     }
@@ -244,7 +312,11 @@ process_system_cpu_clock::time_point process_system_cpu_clock::now(
     {
         if ( chrono_detail::tick_factor() != -1 )
         {
+<<<<<<< HEAD
             if (!BOOST_CHRONO_IS_THROWS(ec))
+=======
+            if (!::boost::chrono::is_throws(ec))
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
             {
                 ec.clear();
             }
@@ -253,17 +325,29 @@ process_system_cpu_clock::time_point process_system_cpu_clock::now(
         }
         else
         {
+<<<<<<< HEAD
             if (BOOST_CHRONO_IS_THROWS(ec))
+=======
+            if (::boost::chrono::is_throws(ec))
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
             {
                 boost::throw_exception(
                         system::system_error(
                                 errno,
+<<<<<<< HEAD
                                 BOOST_CHRONO_SYSTEM_CATEGORY,
+=======
+                                ::boost::system::system_category(),
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
                                 "chrono::process_system_cpu_clock" ));
             }
             else
             {
+<<<<<<< HEAD
                 ec.assign( errno, BOOST_CHRONO_SYSTEM_CATEGORY );
+=======
+                ec.assign( errno, ::boost::system::system_category() );
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
                 return time_point();
             }
         }
@@ -306,17 +390,29 @@ process_cpu_clock::time_point process_cpu_clock::now(
     clock_t c = ::times( &tm );
     if ( c == clock_t(-1) ) // error
     {
+<<<<<<< HEAD
         if (BOOST_CHRONO_IS_THROWS(ec))
+=======
+        if (::boost::chrono::is_throws(ec))
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
         {
             boost::throw_exception(
                     system::system_error(
                             errno,
+<<<<<<< HEAD
                             BOOST_CHRONO_SYSTEM_CATEGORY,
+=======
+                            ::boost::system::system_category(),
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
                             "chrono::process_clock" ));
         }
         else
         {
+<<<<<<< HEAD
             ec.assign( errno, BOOST_CHRONO_SYSTEM_CATEGORY );
+=======
+            ec.assign( errno, ::boost::system::system_category() );
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
             return time_point();
         }
     }
@@ -332,17 +428,29 @@ process_cpu_clock::time_point process_cpu_clock::now(
         }
         else
         {
+<<<<<<< HEAD
             if (BOOST_CHRONO_IS_THROWS(ec))
+=======
+            if (::boost::chrono::is_throws(ec))
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
             {
                 boost::throw_exception(
                         system::system_error(
                                 errno,
+<<<<<<< HEAD
                                 BOOST_CHRONO_SYSTEM_CATEGORY,
+=======
+                                ::boost::system::system_category(),
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
                                 "chrono::process_clock" ));
             }
             else
             {
+<<<<<<< HEAD
                 ec.assign( errno, BOOST_CHRONO_SYSTEM_CATEGORY );
+=======
+                ec.assign( errno, ::boost::system::system_category() );
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
                 return time_point();
             }
         }

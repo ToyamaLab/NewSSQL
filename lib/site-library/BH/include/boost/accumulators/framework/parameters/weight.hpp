@@ -8,14 +8,22 @@
 #ifndef BOOST_ACCUMULATORS_FRAMEWORK_PARAMETERS_WEIGHT_HPP_EAN_31_10_2005
 #define BOOST_ACCUMULATORS_FRAMEWORK_PARAMETERS_WEIGHT_HPP_EAN_31_10_2005
 
+<<<<<<< HEAD
 #include <boost/parameter/keyword.hpp>
+=======
+#include <boost/parameter/name.hpp>
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 #include <boost/accumulators/accumulators_fwd.hpp>
 
 namespace boost { namespace accumulators
 {
 
 // The weight of a single sample
+<<<<<<< HEAD
 BOOST_PARAMETER_KEYWORD(tag, weight)
+=======
+BOOST_PARAMETER_NAME((weight, tag) weight)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 BOOST_ACCUMULATORS_IGNORE_GLOBAL(weight)
 
 }} // namespace boost::accumulators

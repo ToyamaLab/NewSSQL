@@ -2,7 +2,11 @@
 // detail/impl/win_iocp_io_context.ipp
 // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 //
+<<<<<<< HEAD
 // Copyright (c) 2003-2017 Christopher M. Kohlhoff (chris at kohlhoff dot com)
+=======
+// Copyright (c) 2003-2019 Christopher M. Kohlhoff (chris at kohlhoff dot com)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 //
 // Distributed under the Boost Software License, Version 1.0. (See accompanying
 // file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
@@ -24,6 +28,10 @@
 #include <boost/asio/detail/handler_alloc_helpers.hpp>
 #include <boost/asio/detail/handler_invoke_helpers.hpp>
 #include <boost/asio/detail/limits.hpp>
+<<<<<<< HEAD
+=======
+#include <boost/asio/detail/thread.hpp>
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 #include <boost/asio/detail/throw_error.hpp>
 #include <boost/asio/detail/win_iocp_io_context.hpp>
 
@@ -33,6 +41,25 @@ namespace boost {
 namespace asio {
 namespace detail {
 
+<<<<<<< HEAD
+=======
+struct win_iocp_io_context::thread_function
+{
+  explicit thread_function(win_iocp_io_context* s)
+    : this_(s)
+  {
+  }
+
+  void operator()()
+  {
+    boost::system::error_code ec;
+    this_->run(ec);
+  }
+
+  win_iocp_io_context* this_;
+};
+
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 struct win_iocp_io_context::work_finished_on_block_exit
 {
   ~work_finished_on_block_exit()
@@ -63,7 +90,11 @@ struct win_iocp_io_context::timer_thread_function
 };
 
 win_iocp_io_context::win_iocp_io_context(
+<<<<<<< HEAD
     boost::asio::execution_context& ctx, int concurrency_hint)
+=======
+    boost::asio::execution_context& ctx, int concurrency_hint, bool own_thread)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
   : execution_context_service_base<win_iocp_io_context>(ctx),
     iocp_(),
     outstanding_work_(0),
@@ -85,6 +116,24 @@ win_iocp_io_context::win_iocp_io_context(
         boost::asio::error::get_system_category());
     boost::asio::detail::throw_error(ec, "iocp");
   }
+<<<<<<< HEAD
+=======
+
+  if (own_thread)
+  {
+    ::InterlockedIncrement(&outstanding_work_);
+    thread_.reset(new boost::asio::detail::thread(thread_function(this)));
+  }
+}
+
+win_iocp_io_context::~win_iocp_io_context()
+{
+  if (thread_.get())
+  {
+    thread_->join();
+    thread_.reset();
+  }
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 }
 
 void win_iocp_io_context::shutdown()
@@ -98,6 +147,16 @@ void win_iocp_io_context::shutdown()
     ::SetWaitableTimer(waitable_timer_.handle, &timeout, 1, 0, 0, FALSE);
   }
 
+<<<<<<< HEAD
+=======
+  if (thread_.get())
+  {
+    thread_->join();
+    thread_.reset();
+    ::InterlockedDecrement(&outstanding_work_);
+  }
+
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
   while (::InterlockedExchangeAdd(&outstanding_work_, 0) > 0)
   {
     op_queue<win_iocp_operation> ops;

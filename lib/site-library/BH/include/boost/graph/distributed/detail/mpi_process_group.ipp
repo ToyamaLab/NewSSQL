@@ -839,10 +839,26 @@ all_gather(const mpi_process_group& pg, InputIterator first,
                              &sizes[0], 1, MPI_INT,
                              communicator(pg));
   BOOST_ASSERT(result == MPI_SUCCESS);
+<<<<<<< HEAD
 
   // Adjust sizes based on the number of bytes
   std::transform(sizes.begin(), sizes.end(), sizes.begin(),
                  std::bind2nd(std::multiplies<int>(), sizeof(T)));
+=======
+  (void)result;
+
+  // Adjust sizes based on the number of bytes
+  //
+  // std::transform(sizes.begin(), sizes.end(), sizes.begin(),
+  //               std::bind2nd(std::multiplies<int>(), sizeof(T)));
+  //
+  // std::bind2nd has been removed from C++17
+
+  for( std::size_t i = 0, n = sizes.size(); i < n; ++i )
+  {
+    sizes[ i ] *= sizeof( T );
+  }
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
   // Compute displacements
   std::vector<int> displacements;
@@ -880,6 +896,10 @@ process_subgroup(const mpi_process_group& pg,
   MPI_Group current_group;
   int result = MPI_Comm_group(communicator(pg), &current_group);
   BOOST_ASSERT(result == MPI_SUCCESS);
+<<<<<<< HEAD
+=======
+  (void)result;
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
   MPI_Group new_group;
   result = MPI_Group_incl(current_group, ranks.size(), &ranks[0], &new_group);

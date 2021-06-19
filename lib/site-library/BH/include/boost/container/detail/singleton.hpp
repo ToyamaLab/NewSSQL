@@ -69,7 +69,11 @@
 
 namespace boost {
 namespace container {
+<<<<<<< HEAD
 namespace container_detail {
+=======
+namespace dtl {
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 // T must be: no-throw default constructible and no-throw destructible
 template <typename T>
@@ -112,7 +116,11 @@ template <typename T>
 typename singleton_default<T>::object_creator
 singleton_default<T>::create_object;
 
+<<<<<<< HEAD
 } // namespace container_detail
+=======
+} // namespace dtl
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 } // namespace container
 } // namespace boost
 

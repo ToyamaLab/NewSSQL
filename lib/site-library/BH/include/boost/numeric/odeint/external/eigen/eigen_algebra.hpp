@@ -25,6 +25,7 @@
 // from odeint
 // (that is, it lets odeint treat the eigen matrices correctly, knowing
 // how to add, multiply, compute the norm, etc)
+<<<<<<< HEAD
 
 namespace Eigen {
 
@@ -42,10 +43,27 @@ operator+(const typename Eigen::MatrixBase<D> &m,
                typename Eigen::internal::traits<D>::Scalar>,
           const D >(m.derived(),Eigen::internal::scalar_add_op<
                     typename Eigen::internal::traits<D>::Scalar>(s));
+=======
+namespace Eigen {
+
+template<typename D>
+inline const
+typename Eigen::CwiseBinaryOp<
+    internal::scalar_sum_op<typename internal::traits<D>::Scalar>,
+    typename DenseBase<D>::ConstantReturnType,
+    const D>
+operator+(const typename Eigen::MatrixBase<D> &m,
+          const typename Eigen::internal::traits<D>::Scalar &s) {
+    return CwiseBinaryOp<
+        internal::scalar_sum_op<typename internal::traits<D>::Scalar>,
+        typename DenseBase<D>::ConstantReturnType,
+        const D>(DenseBase<D>::Constant(m.rows(), m.cols(), s), m.derived());
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 }
 
 template<typename D>
 inline const
+<<<<<<< HEAD
 typename Eigen::CwiseUnaryOp<
           typename Eigen::internal::scalar_add_op<
                typename Eigen::internal::traits<D>::Scalar>,
@@ -61,6 +79,20 @@ const typename Eigen::MatrixBase<D> &m) {
 
 
 
+=======
+typename Eigen::CwiseBinaryOp<
+    internal::scalar_sum_op<typename internal::traits<D>::Scalar>,
+    typename DenseBase<D>::ConstantReturnType,
+    const D>
+operator+(const typename Eigen::internal::traits<D>::Scalar &s,
+          const typename Eigen::MatrixBase<D> &m) {
+    return CwiseBinaryOp<
+        internal::scalar_sum_op<typename internal::traits<D>::Scalar>,
+        typename DenseBase<D>::ConstantReturnType,
+        const D>(DenseBase<D>::Constant(m.rows(), m.cols(), s), m.derived());
+}
+
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 template<typename D1,typename D2>
 inline const
 typename Eigen::CwiseBinaryOp<
@@ -82,6 +114,7 @@ abs( const Eigen::MatrixBase< D > &m ) {
     return m.cwiseAbs();
 }
 
+<<<<<<< HEAD
 
 
 } // end Eigen namespace
@@ -90,6 +123,11 @@ abs( const Eigen::MatrixBase< D > &m ) {
 
 
 
+=======
+} // end Eigen namespace
+
+
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 namespace boost {
 namespace numeric {
 namespace odeint {

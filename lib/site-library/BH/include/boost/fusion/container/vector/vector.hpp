@@ -168,9 +168,21 @@ namespace boost { namespace fusion
                 : elem(std::forward<U>(rhs))
             {}
 
+<<<<<<< HEAD
             T elem;
         };
 
+=======
+            using elem_type = T;
+            T elem;
+        };
+
+        // placed outside of vector_data due to GCC < 6 bug
+        template <std::size_t J, typename U>
+        static inline BOOST_FUSION_GPU_ENABLED
+        store<J, U> store_at_impl(store<J, U>*);
+
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
         template <typename I, typename ...T>
         struct vector_data;
 
@@ -231,6 +243,7 @@ namespace boost { namespace fusion
                 assign(std::forward<Sequence>(seq), detail::index_sequence<M...>());
             }
 
+<<<<<<< HEAD
             template <std::size_t N, typename U>
             static BOOST_CXX14_CONSTEXPR BOOST_FUSION_GPU_ENABLED
             U& at_detail(store<N, U>* this_)
@@ -250,13 +263,31 @@ namespace boost { namespace fusion
             auto at_impl(J) -> decltype(at_detail<J::value>(this))
             {
                 return at_detail<J::value>(this);
+=======
+        private:
+            template <std::size_t J>
+            using store_at = decltype(store_at_impl<J>(static_cast<vector_data*>(nullptr)));
+
+        public:
+            template <typename J>
+            BOOST_CXX14_CONSTEXPR BOOST_FUSION_GPU_ENABLED
+            typename store_at<J::value>::elem_type& at_impl(J)
+            {
+                return store_at<J::value>::elem;
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
             }
 
             template <typename J>
             BOOST_CONSTEXPR BOOST_FUSION_GPU_ENABLED
+<<<<<<< HEAD
             auto at_impl(J) const -> decltype(at_detail<J::value>(this))
             {
                 return at_detail<J::value>(this);
+=======
+            typename store_at<J::value>::elem_type const& at_impl(J) const
+            {
+                return store_at<J::value>::elem;
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
             }
         };
     } // namespace boost::fusion::vector_detail

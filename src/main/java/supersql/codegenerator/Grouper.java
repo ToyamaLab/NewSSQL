@@ -2,11 +2,13 @@ package supersql.codegenerator;
 
 import java.io.Serializable;
 
+
+import org.apache.log4j.net.SyslogAppender;
 import supersql.common.Log;
 import supersql.extendclass.ExtList;
 
 public class Grouper extends Operator implements Serializable{
-
+	
     public TFE tfe; // 引数TFE
 
     public Grouper() {
@@ -50,7 +52,7 @@ public class Grouper extends Operator implements Serializable{
 
         ExtList outsch = new ExtList();
         outsch.add(tfe.makesch());
-        //  Log.out("Grp outsch:"+outsch);
+//          Log.out("Grp outsch:"+outsch);
 
         return outsch;
     }
@@ -100,6 +102,7 @@ public class Grouper extends Operator implements Serializable{
         ExtList subdata = (ExtList) (data.get(dindex));
         if (tfe instanceof Connector || tfe instanceof Attribute
                 || tfe instanceof Function || tfe instanceof IfCondition || tfe instanceof Decorator) {
+        	Log.out("In Grouper.java subdata to be work: " + subdata);
         	tfe.work(subdata);
         } else {
             tfe.work((ExtList) subdata.get(0));

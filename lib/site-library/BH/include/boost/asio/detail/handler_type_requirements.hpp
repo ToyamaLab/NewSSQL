@@ -2,7 +2,11 @@
 // detail/handler_type_requirements.hpp
 // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 //
+<<<<<<< HEAD
 // Copyright (c) 2003-2017 Christopher M. Kohlhoff (chris at kohlhoff dot com)
+=======
+// Copyright (c) 2003-2019 Christopher M. Kohlhoff (chris at kohlhoff dot com)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 //
 // Distributed under the Boost Software License, Version 1.0. (See accompanying
 // file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
@@ -128,7 +132,11 @@ struct handler_type_requirements
 {
 };
 
+<<<<<<< HEAD
 #define BOOST_ASIO_COMPLETION_HANDLER_CHECK( \
+=======
+#define BOOST_ASIO_LEGACY_COMPLETION_HANDLER_CHECK( \
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     handler_type, handler) \
   \
   typedef BOOST_ASIO_HANDLER_TYPE(handler_type, \
@@ -493,7 +501,11 @@ struct handler_type_requirements
 
 #else // !defined(BOOST_ASIO_ENABLE_HANDLER_TYPE_REQUIREMENTS)
 
+<<<<<<< HEAD
 #define BOOST_ASIO_COMPLETION_HANDLER_CHECK( \
+=======
+#define BOOST_ASIO_LEGACY_COMPLETION_HANDLER_CHECK( \
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     handler_type, handler) \
   typedef int BOOST_ASIO_UNUSED_TYPEDEF
 

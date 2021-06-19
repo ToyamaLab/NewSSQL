@@ -8,6 +8,11 @@
 #define BOOST_THREAD_EXECUTORS_WORK_HPP
 
 #include <boost/thread/detail/config.hpp>
+<<<<<<< HEAD
+=======
+#if defined BOOST_THREAD_PROVIDES_FUTURE_CONTINUATION && defined BOOST_THREAD_PROVIDES_EXECUTORS && defined BOOST_THREAD_USES_MOVE
+
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 #include <boost/thread/detail/nullary_function.hpp>
 #include <boost/thread/csbl/functional.hpp>
 
@@ -26,5 +31,9 @@ namespace boost
   }
 } // namespace boost
 
+<<<<<<< HEAD
 
+=======
+#endif
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 #endif //  BOOST_THREAD_EXECUTORS_WORK_HPP

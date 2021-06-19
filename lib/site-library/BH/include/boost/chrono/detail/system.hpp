@@ -10,10 +10,18 @@
 
 #include <boost/system/error_code.hpp>
 
+<<<<<<< HEAD
 #define BOOST_CHRONO_SYSTEM_CATEGORY boost::system::system_category()
 
 #define BOOST_CHRONO_THROWS boost::throws()
 #define BOOST_CHRONO_IS_THROWS(EC) (&EC==&boost::throws())
+=======
+namespace boost {
+namespace chrono {
+    inline bool is_throws(system::error_code  & ec) { return (&ec==&boost::throws()); }
+}
+}
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 #endif
 #endif

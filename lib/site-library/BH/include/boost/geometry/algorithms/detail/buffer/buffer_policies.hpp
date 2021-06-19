@@ -2,8 +2,13 @@
 
 // Copyright (c) 2012-2014 Barend Gehrels, Amsterdam, the Netherlands.
 
+<<<<<<< HEAD
 // This file was modified by Oracle on 2017.
 // Modifications copyright (c) 2017, Oracle and/or its affiliates.
+=======
+// This file was modified by Oracle on 2017, 2018.
+// Modifications copyright (c) 2017-2018, Oracle and/or its affiliates.
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 // Contributed and/or modified by Adam Wulkiewicz, on behalf of Oracle
 
 // Use, modification and distribution is subject to the Boost Software License,
@@ -13,10 +18,13 @@
 #ifndef BOOST_GEOMETRY_ALGORITHMS_DETAIL_BUFFER_BUFFER_POLICIES_HPP
 #define BOOST_GEOMETRY_ALGORITHMS_DETAIL_BUFFER_BUFFER_POLICIES_HPP
 
+<<<<<<< HEAD
 #if ! defined(BOOST_GEOMETRY_NO_ROBUSTNESS)
 #  define BOOST_GEOMETRY_BUFFER_USE_SIDE_OF_INTERSECTION
 #endif
 
+=======
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 #include <cstddef>
 
 #include <boost/range.hpp>
@@ -26,6 +34,10 @@
 
 #include <boost/geometry/algorithms/covered_by.hpp>
 #include <boost/geometry/algorithms/detail/overlay/backtrack_check_si.hpp>
+<<<<<<< HEAD
+=======
+#include <boost/geometry/algorithms/detail/overlay/traversal_info.hpp>
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 #include <boost/geometry/algorithms/detail/overlay/turn_info.hpp>
 
 #include <boost/geometry/strategies/buffer.hpp>
@@ -127,6 +139,13 @@ public :
     void visit_traverse_reject(Turns const& , Turn const& , Operation const& ,
             detail::overlay::traverse_error_type )
     {}
+<<<<<<< HEAD
+=======
+
+    template <typename Rings>
+    void visit_generated_rings(Rings const& )
+    {}
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 };
 
 
@@ -177,9 +196,13 @@ struct buffer_turn_info
 
     intersection_location_type location;
 
+<<<<<<< HEAD
 #if defined(BOOST_GEOMETRY_BUFFER_USE_SIDE_OF_INTERSECTION)
     robust_point_type rob_pi, rob_pj, rob_qi, rob_qj;
 #endif
+=======
+    robust_point_type rob_pi, rob_pj, rob_qi, rob_qj;
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
     std::size_t count_within;
 
@@ -189,9 +212,13 @@ struct buffer_turn_info
 
     std::size_t count_on_offsetted;
     std::size_t count_on_helper;
+<<<<<<< HEAD
 #if ! defined(BOOST_GEOMETRY_BUFFER_USE_SIDE_OF_INTERSECTION)
     std::size_t count_within_near_offsetted;
 #endif
+=======
+    std::size_t count_within_near_offsetted;
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
     bool remove_on_multi;
 
@@ -208,9 +235,13 @@ struct buffer_turn_info
         , count_in_original(0)
         , count_on_offsetted(0)
         , count_on_helper(0)
+<<<<<<< HEAD
 #if ! defined(BOOST_GEOMETRY_BUFFER_USE_SIDE_OF_INTERSECTION)
         , count_within_near_offsetted(0)
 #endif
+=======
+        , count_within_near_offsetted(0)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
         , remove_on_multi(false)
         , count_on_occupied(0)
         , count_on_multi(0)

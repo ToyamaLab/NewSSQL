@@ -2,7 +2,11 @@
 // detail/resolver_service.hpp
 // ~~~~~~~~~~~~~~~~~~~~~~~~~~~
 //
+<<<<<<< HEAD
 // Copyright (c) 2003-2017 Christopher M. Kohlhoff (chris at kohlhoff dot com)
+=======
+// Copyright (c) 2003-2019 Christopher M. Kohlhoff (chris at kohlhoff dot com)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 //
 // Distributed under the Boost Software License, Version 1.0. (See accompanying
 // file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
@@ -35,7 +39,11 @@ namespace detail {
 
 template <typename Protocol>
 class resolver_service :
+<<<<<<< HEAD
   public service_base<resolver_service<Protocol> >,
+=======
+  public execution_context_service_base<resolver_service<Protocol> >,
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
   public resolver_service_base
 {
 public:
@@ -53,9 +61,15 @@ public:
   typedef boost::asio::ip::basic_resolver_results<Protocol> results_type;
 
   // Constructor.
+<<<<<<< HEAD
   resolver_service(boost::asio::io_context& io_context)
     : service_base<resolver_service<Protocol> >(io_context),
       resolver_service_base(io_context)
+=======
+  resolver_service(execution_context& context)
+    : execution_context_service_base<resolver_service<Protocol> >(context),
+      resolver_service_base(context)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
   {
   }
 
@@ -66,7 +80,11 @@ public:
   }
 
   // Perform any fork-related housekeeping.
+<<<<<<< HEAD
   void notify_fork(boost::asio::io_context::fork_event fork_ev)
+=======
+  void notify_fork(execution_context::fork_event fork_ev)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
   {
     this->base_notify_fork(fork_ev);
   }
@@ -86,6 +104,7 @@ public:
   }
 
   // Asynchronously resolve a query to a list of entries.
+<<<<<<< HEAD
   template <typename Handler>
   void async_resolve(implementation_type& impl,
       const query_type& query, Handler& handler)
@@ -97,6 +116,19 @@ public:
     p.p = new (p.v) op(impl, query, io_context_impl_, handler);
 
     BOOST_ASIO_HANDLER_CREATION((io_context_impl_.context(),
+=======
+  template <typename Handler, typename IoExecutor>
+  void async_resolve(implementation_type& impl, const query_type& query,
+      Handler& handler, const IoExecutor& io_ex)
+  {
+    // Allocate and construct an operation to wrap the handler.
+    typedef resolve_query_op<Protocol, Handler, IoExecutor> op;
+    typename op::ptr p = { boost::asio::detail::addressof(handler),
+      op::ptr::allocate(handler), 0 };
+    p.p = new (p.v) op(impl, query, scheduler_, handler, io_ex);
+
+    BOOST_ASIO_HANDLER_CREATION((scheduler_.context(),
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
           *p.p, "resolver", &impl, 0, "async_resolve"));
 
     start_resolve_op(p.p);
@@ -118,6 +150,7 @@ public:
   }
 
   // Asynchronously resolve an endpoint to a list of entries.
+<<<<<<< HEAD
   template <typename Handler>
   void async_resolve(implementation_type& impl,
       const endpoint_type& endpoint, Handler& handler)
@@ -129,6 +162,19 @@ public:
     p.p = new (p.v) op(impl, endpoint, io_context_impl_, handler);
 
     BOOST_ASIO_HANDLER_CREATION((io_context_impl_.context(),
+=======
+  template <typename Handler, typename IoExecutor>
+  void async_resolve(implementation_type& impl, const endpoint_type& endpoint,
+      Handler& handler, const IoExecutor& io_ex)
+  {
+    // Allocate and construct an operation to wrap the handler.
+    typedef resolve_endpoint_op<Protocol, Handler, IoExecutor> op;
+    typename op::ptr p = { boost::asio::detail::addressof(handler),
+      op::ptr::allocate(handler), 0 };
+    p.p = new (p.v) op(impl, endpoint, scheduler_, handler, io_ex);
+
+    BOOST_ASIO_HANDLER_CREATION((scheduler_.context(),
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
           *p.p, "resolver", &impl, 0, "async_resolve"));
 
     start_resolve_op(p.p);

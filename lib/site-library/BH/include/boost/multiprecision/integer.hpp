@@ -1,7 +1,11 @@
 ///////////////////////////////////////////////////////////////
 //  Copyright 2012 John Maddock. Distributed under the Boost
 //  Software License, Version 1.0. (See accompanying file
+<<<<<<< HEAD
 //  LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_
+=======
+//  LICENSE_1_0.txt or copy at https://www.boost.org/LICENSE_1_0.txt
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 #ifndef BOOST_MP_INTEGER_HPP
 #define BOOST_MP_INTEGER_HPP
@@ -9,42 +13,73 @@
 #include <boost/multiprecision/cpp_int.hpp>
 #include <boost/multiprecision/detail/bitscan.hpp>
 
+<<<<<<< HEAD
 namespace boost{
 namespace multiprecision{
 
 template <class Integer, class I2>
 typename enable_if_c<is_integral<Integer>::value && is_integral<I2>::value, Integer&>::type
    multiply(Integer& result, const I2& a, const I2& b)
+=======
+namespace boost {
+namespace multiprecision {
+
+template <class Integer, class I2>
+inline BOOST_MP_CXX14_CONSTEXPR typename enable_if_c<is_integral<Integer>::value && is_integral<I2>::value, Integer&>::type
+multiply(Integer& result, const I2& a, const I2& b)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 {
    return result = static_cast<Integer>(a) * static_cast<Integer>(b);
 }
 template <class Integer, class I2>
+<<<<<<< HEAD
 typename enable_if_c<is_integral<Integer>::value && is_integral<I2>::value, Integer&>::type
    add(Integer& result, const I2& a, const I2& b)
+=======
+inline BOOST_MP_CXX14_CONSTEXPR typename enable_if_c<is_integral<Integer>::value && is_integral<I2>::value, Integer&>::type
+add(Integer& result, const I2& a, const I2& b)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 {
    return result = static_cast<Integer>(a) + static_cast<Integer>(b);
 }
 template <class Integer, class I2>
+<<<<<<< HEAD
 typename enable_if_c<is_integral<Integer>::value && is_integral<I2>::value, Integer&>::type
    subtract(Integer& result, const I2& a, const I2& b)
+=======
+inline BOOST_MP_CXX14_CONSTEXPR typename enable_if_c<is_integral<Integer>::value && is_integral<I2>::value, Integer&>::type
+subtract(Integer& result, const I2& a, const I2& b)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 {
    return result = static_cast<Integer>(a) - static_cast<Integer>(b);
 }
 
 template <class Integer>
+<<<<<<< HEAD
 typename enable_if_c<is_integral<Integer>::value>::type divide_qr(const Integer& x, const Integer& y, Integer& q, Integer& r)
+=======
+inline BOOST_MP_CXX14_CONSTEXPR typename enable_if_c<is_integral<Integer>::value>::type divide_qr(const Integer& x, const Integer& y, Integer& q, Integer& r)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 {
    q = x / y;
    r = x % y;
 }
 
 template <class I1, class I2>
+<<<<<<< HEAD
 typename enable_if_c<is_integral<I1>::value && is_integral<I2>::value, I2>::type integer_modulus(const I1& x, I2 val)
+=======
+inline BOOST_MP_CXX14_CONSTEXPR typename enable_if_c<is_integral<I1>::value && is_integral<I2>::value, I2>::type integer_modulus(const I1& x, I2 val)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 {
    return static_cast<I2>(x % val);
 }
 
+<<<<<<< HEAD
 namespace detail{
+=======
+namespace detail {
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 //
 // Figure out the kind of integer that has twice as many bits as some builtin
 // integer type I.  Use a native type if we can (including types which may not
@@ -55,6 +90,7 @@ template <class I>
 struct double_integer
 {
    static const unsigned int_t_digits =
+<<<<<<< HEAD
       2 * sizeof(I) <= sizeof(boost::long_long_type) ? std::numeric_limits<I>::digits * 2 : 1;
 
    typedef typename mpl::if_c<
@@ -90,6 +126,39 @@ typename enable_if_c<is_integral<I1>::value && is_unsigned<I2>::value && is_inte
    while(b > 0)
    {
       if(b & 1)
+=======
+       2 * sizeof(I) <= sizeof(boost::long_long_type) ? std::numeric_limits<I>::digits * 2 : 1;
+
+   typedef typename mpl::if_c<
+       2 * sizeof(I) <= sizeof(boost::long_long_type),
+       typename mpl::if_c<
+           is_signed<I>::value,
+           typename boost::int_t<int_t_digits>::least,
+           typename boost::uint_t<int_t_digits>::least>::type,
+       typename mpl::if_c<
+           2 * sizeof(I) <= sizeof(double_limb_type),
+           typename mpl::if_c<
+               is_signed<I>::value,
+               signed_double_limb_type,
+               double_limb_type>::type,
+           number<cpp_int_backend<sizeof(I) * CHAR_BIT * 2, sizeof(I) * CHAR_BIT * 2, (is_signed<I>::value ? signed_magnitude : unsigned_magnitude), unchecked, void> > >::type>::type type;
+};
+
+} // namespace detail
+
+template <class I1, class I2, class I3>
+BOOST_MP_CXX14_CONSTEXPR typename enable_if_c<is_integral<I1>::value && is_unsigned<I2>::value && is_integral<I3>::value, I1>::type
+powm(const I1& a, I2 b, I3 c)
+{
+   typedef typename detail::double_integer<I1>::type double_type;
+
+   I1          x(1), y(a);
+   double_type result(0);
+
+   while (b > 0)
+   {
+      if (b & 1)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
       {
          multiply(result, x, y);
          x = integer_modulus(result, c);
@@ -102,10 +171,17 @@ typename enable_if_c<is_integral<I1>::value && is_unsigned<I2>::value && is_inte
 }
 
 template <class I1, class I2, class I3>
+<<<<<<< HEAD
 inline typename enable_if_c<is_integral<I1>::value && is_signed<I2>::value && is_integral<I3>::value, I1>::type
    powm(const I1& a, I2 b, I3 c)
 {
    if(b < 0)
+=======
+inline BOOST_MP_CXX14_CONSTEXPR typename enable_if_c<is_integral<I1>::value && is_signed<I2>::value && is_integral<I3>::value, I1>::type
+powm(const I1& a, I2 b, I3 c)
+{
+   if (b < 0)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
    {
       BOOST_THROW_EXCEPTION(std::runtime_error("powm requires a positive exponent."));
    }
@@ -113,11 +189,19 @@ inline typename enable_if_c<is_integral<I1>::value && is_signed<I2>::value && is
 }
 
 template <class Integer>
+<<<<<<< HEAD
 typename enable_if_c<is_integral<Integer>::value, unsigned>::type lsb(const Integer& val)
 {
    if(val <= 0)
    {
       if(val == 0)
+=======
+BOOST_MP_CXX14_CONSTEXPR typename enable_if_c<is_integral<Integer>::value, unsigned>::type lsb(const Integer& val)
+{
+   if (val <= 0)
+   {
+      if (val == 0)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
       {
          BOOST_THROW_EXCEPTION(std::range_error("No bits were set in the operand."));
       }
@@ -130,11 +214,19 @@ typename enable_if_c<is_integral<Integer>::value, unsigned>::type lsb(const Inte
 }
 
 template <class Integer>
+<<<<<<< HEAD
 typename enable_if_c<is_integral<Integer>::value, unsigned>::type msb(Integer val)
 {
    if(val <= 0)
    {
       if(val == 0)
+=======
+BOOST_MP_CXX14_CONSTEXPR typename enable_if_c<is_integral<Integer>::value, unsigned>::type msb(Integer val)
+{
+   if (val <= 0)
+   {
+      if (val == 0)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
       {
          BOOST_THROW_EXCEPTION(std::range_error("No bits were set in the operand."));
       }
@@ -147,54 +239,94 @@ typename enable_if_c<is_integral<Integer>::value, unsigned>::type msb(Integer va
 }
 
 template <class Integer>
+<<<<<<< HEAD
 typename enable_if_c<is_integral<Integer>::value, bool>::type bit_test(const Integer& val, unsigned index)
 {
    Integer mask = 1;
    if(index >= sizeof(Integer) * CHAR_BIT)
       return 0;
    if(index)
+=======
+BOOST_MP_CXX14_CONSTEXPR typename enable_if_c<is_integral<Integer>::value, bool>::type bit_test(const Integer& val, unsigned index)
+{
+   Integer mask = 1;
+   if (index >= sizeof(Integer) * CHAR_BIT)
+      return 0;
+   if (index)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
       mask <<= index;
    return val & mask ? true : false;
 }
 
 template <class Integer>
+<<<<<<< HEAD
 typename enable_if_c<is_integral<Integer>::value, Integer&>::type bit_set(Integer& val, unsigned index)
 {
    Integer mask = 1;
    if(index >= sizeof(Integer) * CHAR_BIT)
       return val;
    if(index)
+=======
+BOOST_MP_CXX14_CONSTEXPR typename enable_if_c<is_integral<Integer>::value, Integer&>::type bit_set(Integer& val, unsigned index)
+{
+   Integer mask = 1;
+   if (index >= sizeof(Integer) * CHAR_BIT)
+      return val;
+   if (index)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
       mask <<= index;
    val |= mask;
    return val;
 }
 
 template <class Integer>
+<<<<<<< HEAD
 typename enable_if_c<is_integral<Integer>::value, Integer&>::type bit_unset(Integer& val, unsigned index)
 {
    Integer mask = 1;
    if(index >= sizeof(Integer) * CHAR_BIT)
       return val;
    if(index)
+=======
+BOOST_MP_CXX14_CONSTEXPR typename enable_if_c<is_integral<Integer>::value, Integer&>::type bit_unset(Integer& val, unsigned index)
+{
+   Integer mask = 1;
+   if (index >= sizeof(Integer) * CHAR_BIT)
+      return val;
+   if (index)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
       mask <<= index;
    val &= ~mask;
    return val;
 }
 
 template <class Integer>
+<<<<<<< HEAD
 typename enable_if_c<is_integral<Integer>::value, Integer&>::type bit_flip(Integer& val, unsigned index)
 {
    Integer mask = 1;
    if(index >= sizeof(Integer) * CHAR_BIT)
       return val;
    if(index)
+=======
+BOOST_MP_CXX14_CONSTEXPR typename enable_if_c<is_integral<Integer>::value, Integer&>::type bit_flip(Integer& val, unsigned index)
+{
+   Integer mask = 1;
+   if (index >= sizeof(Integer) * CHAR_BIT)
+      return val;
+   if (index)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
       mask <<= index;
    val ^= mask;
    return val;
 }
 
 template <class Integer>
+<<<<<<< HEAD
 typename enable_if_c<is_integral<Integer>::value, Integer>::type sqrt(const Integer& x, Integer& r)
+=======
+BOOST_MP_CXX14_CONSTEXPR typename enable_if_c<is_integral<Integer>::value, Integer>::type sqrt(const Integer& x, Integer& r)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 {
    //
    // This is slow bit-by-bit integer square root, see for example
@@ -204,20 +336,34 @@ typename enable_if_c<is_integral<Integer>::value, Integer>::type sqrt(const Inte
    // at some point.
    //
    Integer s = 0;
+<<<<<<< HEAD
    if(x == 0)
+=======
+   if (x == 0)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
    {
       r = 0;
       return s;
    }
    int g = msb(x);
+<<<<<<< HEAD
    if(g == 0)
+=======
+   if (g == 0)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
    {
       r = 1;
       return s;
    }
+<<<<<<< HEAD
    
    Integer t = 0;
    r = x;
+=======
+
+   Integer t = 0;
+   r         = x;
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
    g /= 2;
    bit_set(s, g);
    bit_set(t, 2 * g);
@@ -228,18 +374,27 @@ typename enable_if_c<is_integral<Integer>::value, Integer>::type sqrt(const Inte
       t = s;
       t <<= g + 1;
       bit_set(t, 2 * g);
+<<<<<<< HEAD
       if(t <= r)
+=======
+      if (t <= r)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
       {
          bit_set(s, g);
          r -= t;
       }
       --g;
+<<<<<<< HEAD
    }
    while(g >= 0);
+=======
+   } while (g >= 0);
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
    return s;
 }
 
 template <class Integer>
+<<<<<<< HEAD
 typename enable_if_c<is_integral<Integer>::value, Integer>::type sqrt(const Integer& x)
 {
    Integer r;
@@ -247,5 +402,14 @@ typename enable_if_c<is_integral<Integer>::value, Integer>::type sqrt(const Inte
 }
 
 }} // namespaces
+=======
+BOOST_MP_CXX14_CONSTEXPR typename enable_if_c<is_integral<Integer>::value, Integer>::type sqrt(const Integer& x)
+{
+   Integer r(0);
+   return sqrt(x, r);
+}
+
+}} // namespace boost::multiprecision
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 #endif

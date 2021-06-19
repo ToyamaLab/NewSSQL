@@ -20,7 +20,11 @@ Copyright (c) 1999-2006: Cortex Software GmbH, Kantstrasse 57, Berlin
 #endif
 
 #include <limits>
+<<<<<<< HEAD
 #include <boost/next_prior.hpp> 
+=======
+#include <boost/next_prior.hpp>
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 #include <boost/icl/associative_interval_container.hpp>
 #include <boost/icl/type_traits/interval_type_default.hpp>
 #include <boost/icl/interval.hpp>
@@ -40,6 +44,7 @@ namespace boost{namespace icl
 {
 
 /** \brief Implements a set as a set of intervals (base class) */
+<<<<<<< HEAD
 template 
 <
     typename             SubType,
@@ -48,6 +53,16 @@ template
     ICL_INTERVAL(ICL_COMPARE) Interval = ICL_INTERVAL_INSTANCE(ICL_INTERVAL_DEFAULT, DomainT, Compare),
     ICL_ALLOC   Alloc    = std::allocator
 > 
+=======
+template
+<
+    typename             SubType,
+    typename             DomainT,
+    ICL_COMPARE Compare  = ICL_COMPARE_INSTANCE(ICL_COMPARE_DEFAULT, DomainT),
+    ICL_INTERVAL(ICL_COMPARE) Interval = ICL_INTERVAL_INSTANCE(ICL_INTERVAL_DEFAULT, DomainT, Compare),
+    ICL_ALLOC   Alloc    = std::allocator
+>
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 class interval_base_set
 {
 public:
@@ -115,7 +130,11 @@ public:
     /// allocator type of the corresponding element set
     typedef Alloc<DomainT> domain_allocator_type;
 
+<<<<<<< HEAD
     /// Container type for the implementation 
+=======
+    /// Container type for the implementation
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     typedef typename ICL_IMPL_SPACE::set<interval_type,key_compare,allocator_type> ImplSetT;
 
     /// key type of the implementing container
@@ -144,6 +163,7 @@ public:
     typedef typename ImplSetT::const_reverse_iterator const_reverse_iterator;
 
     /// element iterator: Depreciated, see documentation.
+<<<<<<< HEAD
     typedef boost::icl::element_iterator<iterator> element_iterator; 
     /// element const iterator: Depreciated, see documentation.
     typedef boost::icl::element_iterator<const_iterator> element_const_iterator; 
@@ -153,6 +173,17 @@ public:
     typedef boost::icl::element_iterator<const_reverse_iterator> element_const_reverse_iterator; 
 
     BOOST_STATIC_CONSTANT(int, fineness = 0); 
+=======
+    typedef boost::icl::element_iterator<iterator> element_iterator;
+    /// element const iterator: Depreciated, see documentation.
+    typedef boost::icl::element_iterator<const_iterator> element_const_iterator;
+    /// element reverse iterator: Depreciated, see documentation.
+    typedef boost::icl::element_iterator<reverse_iterator> element_reverse_iterator;
+    /// element const reverse iterator: Depreciated, see documentation.
+    typedef boost::icl::element_iterator<const_reverse_iterator> element_const_reverse_iterator;
+
+    BOOST_STATIC_CONSTANT(int, fineness = 0);
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 public:
     //==========================================================================
@@ -181,20 +212,34 @@ public:
     }
 
     /** Move assignment operator */
+<<<<<<< HEAD
     interval_base_set& operator = (interval_base_set src) 
     {                           //call by value sice 'src' is a "sink value"
         this->_set = boost::move(src._set);
         return *this; 
+=======
+    interval_base_set& operator = (interval_base_set src)
+    {                           //call by value sice 'src' is a "sink value"
+        this->_set = boost::move(src._set);
+        return *this;
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     }
 
     //==========================================================================
 #   else
 
     /** Copy assignment operator */
+<<<<<<< HEAD
     interval_base_set& operator = (const interval_base_set& src) 
     { 
         this->_set = src._set;
         return *this; 
+=======
+    interval_base_set& operator = (const interval_base_set& src)
+    {
+        this->_set = src._set;
+        return *this;
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     }
 
 #   endif // BOOST_ICL_NO_CXX11_RVALUE_REFERENCES
@@ -220,9 +265,15 @@ public:
     }
 
     /** Size of the iteration over this container */
+<<<<<<< HEAD
     std::size_t iterative_size()const 
     { 
         return _set.size(); 
+=======
+    std::size_t iterative_size()const
+    {
+        return _set.size();
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     }
 
     //==========================================================================
@@ -231,15 +282,26 @@ public:
 
     /** Find the interval, that contains element \c key_value */
     const_iterator find(const element_type& key_value)const
+<<<<<<< HEAD
     { 
         return icl::find(*this, key_value);
         //CL return this->_set.find(icl::singleton<segment_type>(key)); 
+=======
+    {
+        return icl::find(*this, key_value);
+        //CL return this->_set.find(icl::singleton<segment_type>(key));
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     }
 
     /** Find the first interval, that collides with interval \c key_interval */
     const_iterator find(const interval_type& key_interval)const
+<<<<<<< HEAD
     { 
         return this->_set.find(key_interval); 
+=======
+    {
+        return this->_set.find(key_interval);
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     }
 
     //==========================================================================
@@ -247,23 +309,39 @@ public:
     //==========================================================================
 
     /** Add a single element \c key to the set */
+<<<<<<< HEAD
     SubType& add(const element_type& key) 
+=======
+    SubType& add(const element_type& key)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     {
         return icl::add(*that(), key);
     }
 
     /** Add an interval of elements \c inter_val to the set */
+<<<<<<< HEAD
     SubType& add(const segment_type& inter_val) 
+=======
+    SubType& add(const segment_type& inter_val)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     {
         _add(inter_val);
         return *that();
     }
 
+<<<<<<< HEAD
     /** Add an interval of elements \c inter_val to the set. Iterator 
         \c prior_ is a hint to the position \c inter_val can be 
         inserted after. */
     iterator add(iterator prior_, const segment_type& inter_val) 
     { 
+=======
+    /** Add an interval of elements \c inter_val to the set. Iterator
+        \c prior_ is a hint to the position \c inter_val can be
+        inserted after. */
+    iterator add(iterator prior_, const segment_type& inter_val)
+    {
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
         return _add(prior_, inter_val);
     }
 
@@ -272,18 +350,28 @@ public:
     //==========================================================================
 
     /** Subtract a single element \c key from the set */
+<<<<<<< HEAD
     SubType& subtract(const element_type& key) 
     { 
+=======
+    SubType& subtract(const element_type& key)
+    {
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
         return icl::subtract(*that(), key);
     }
 
     /** Subtract an interval of elements \c inter_val from the set */
+<<<<<<< HEAD
     SubType& subtract(const segment_type& inter_val); 
+=======
+    SubType& subtract(const segment_type& inter_val);
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
     //==========================================================================
     //= Insertion
     //==========================================================================
     /** Insert an element \c key into the set */
+<<<<<<< HEAD
     SubType& insert(const element_type& key) 
     { 
         return add(key); 
@@ -301,6 +389,25 @@ public:
     iterator insert(iterator prior_, const segment_type& inter_val) 
     { 
         return add(prior_, inter_val); 
+=======
+    SubType& insert(const element_type& key)
+    {
+        return add(key);
+    }
+
+    /** Insert an interval of elements \c inter_val to the set */
+    SubType& insert(const segment_type& inter_val)
+    {
+        return add(inter_val);
+    }
+
+    /** Insert an interval of elements \c inter_val to the set. Iterator
+        \c prior_ is a hint to the position \c inter_val can be
+        inserted after. */
+    iterator insert(iterator prior_, const segment_type& inter_val)
+    {
+        return add(prior_, inter_val);
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     }
 
 
@@ -309,6 +416,7 @@ public:
     //= Erasure
     //==========================================================================
     /** Erase an element \c key from the set */
+<<<<<<< HEAD
     SubType& erase(const element_type& key) 
     { 
         return subtract(key); 
@@ -318,18 +426,39 @@ public:
     SubType& erase(const segment_type& inter_val) 
     { 
         return subtract(inter_val); 
+=======
+    SubType& erase(const element_type& key)
+    {
+        return subtract(key);
+    }
+
+    /** Erase an interval of elements \c inter_val from the set */
+    SubType& erase(const segment_type& inter_val)
+    {
+        return subtract(inter_val);
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     }
 
     /** Erase the interval that iterator \c position points to. */
     void erase(iterator position)
+<<<<<<< HEAD
     { 
         _set.erase(position); 
+=======
+    {
+        _set.erase(position);
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     }
 
     /** Erase all intervals in the range <tt>[first,past)</tt> of iterators. */
     void erase(iterator first, iterator past)
+<<<<<<< HEAD
     { 
         _set.erase(first, past); 
+=======
+    {
+        _set.erase(first, past);
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     }
 
     //==========================================================================
@@ -373,6 +502,7 @@ public:
     { return _set.upper_bound(interval); }
 
     std::pair<iterator,iterator> equal_range(const key_type& interval)
+<<<<<<< HEAD
     { 
         return std::pair<iterator,iterator>
             (_set.lower_bound(interval), _set.upper_bound(interval)); 
@@ -383,6 +513,18 @@ public:
     { 
         return std::pair<const_iterator,const_iterator>
             (_set.lower_bound(interval), _set.upper_bound(interval)); 
+=======
+    {
+        return std::pair<iterator,iterator>
+            (_set.lower_bound(interval), _set.upper_bound(interval));
+    }
+
+    std::pair<const_iterator,const_iterator>
+        equal_range(const key_type& interval)const
+    {
+        return std::pair<const_iterator,const_iterator>
+            (_set.lower_bound(interval), _set.upper_bound(interval));
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     }
 
 private:
@@ -437,7 +579,11 @@ inline void interval_base_set<SubType,DomainT,Compare,Interval,Alloc>
     if(!icl::is_empty(lead_gap))
         //           [lead_gap--- . . .
         // [prior_)           [-- it_ ...
+<<<<<<< HEAD
         this->_set.insert(prior(it_), lead_gap);
+=======
+        this->_set.insert(cyclic_prior(*this, it_), lead_gap);
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
     // . . . --------- . . . addend interval
     //      [-- it_ --)      has a common part with the first overval
@@ -470,7 +616,11 @@ inline void interval_base_set<SubType,DomainT,Compare,Interval,Alloc>
         //          [lead_gap--- . . .
         // [prior_)          [-- it_ ...
         this->_set.insert(prior_, lead_gap);
+<<<<<<< HEAD
     
+=======
+
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     interval_type end_gap = left_subtract(inter_val, cur_itv);
     if(!icl::is_empty(end_gap))
         // [---------------end_gap)
@@ -495,12 +645,20 @@ inline void interval_base_set<SubType,DomainT,Compare,Interval,Alloc>
 //= Addition
 //==============================================================================
 template <class SubType, class DomainT, ICL_COMPARE Compare, ICL_INTERVAL(ICL_COMPARE) Interval, ICL_ALLOC Alloc>
+<<<<<<< HEAD
 inline typename interval_base_set<SubType,DomainT,Compare,Interval,Alloc>::iterator 
+=======
+inline typename interval_base_set<SubType,DomainT,Compare,Interval,Alloc>::iterator
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     interval_base_set<SubType,DomainT,Compare,Interval,Alloc>
     ::_add(const segment_type& addend)
 {
     typedef typename interval_base_set<SubType,DomainT,Compare,Interval,Alloc>::iterator iterator;
+<<<<<<< HEAD
     if(icl::is_empty(addend)) 
+=======
+    if(icl::is_empty(addend))
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
         return this->_set.end();
 
     std::pair<iterator,bool> insertion = this->_set.insert(addend);
@@ -515,7 +673,11 @@ inline typename interval_base_set<SubType,DomainT,Compare,Interval,Alloc>::itera
 }
 
 template <class SubType, class DomainT, ICL_COMPARE Compare, ICL_INTERVAL(ICL_COMPARE) Interval, ICL_ALLOC Alloc>
+<<<<<<< HEAD
 inline typename interval_base_set<SubType,DomainT,Compare,Interval,Alloc>::iterator 
+=======
+inline typename interval_base_set<SubType,DomainT,Compare,Interval,Alloc>::iterator
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     interval_base_set<SubType,DomainT,Compare,Interval,Alloc>
     ::_add(iterator prior_, const segment_type& addend)
 {
@@ -541,11 +703,19 @@ template <class SubType, class DomainT, ICL_COMPARE Compare, ICL_INTERVAL(ICL_CO
 inline SubType& interval_base_set<SubType,DomainT,Compare,Interval,Alloc>
     ::subtract(const segment_type& minuend)
 {
+<<<<<<< HEAD
     if(icl::is_empty(minuend)) 
         return *that();
 
     std::pair<iterator, iterator> exterior = equal_range(minuend);
     if(exterior.first == exterior.second) 
+=======
+    if(icl::is_empty(minuend))
+        return *that();
+
+    std::pair<iterator, iterator> exterior = equal_range(minuend);
+    if(exterior.first == exterior.second)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
         return *that();
 
     iterator first_ = exterior.first;
@@ -553,7 +723,11 @@ inline SubType& interval_base_set<SubType,DomainT,Compare,Interval,Alloc>
     iterator last_  = prior(end_);
 
     interval_type left_resid = right_subtract(*first_, minuend);
+<<<<<<< HEAD
     interval_type right_resid; 
+=======
+    interval_type right_resid;
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     if(first_ != end_)
         right_resid = left_subtract(*last_ , minuend);
 
@@ -574,17 +748,29 @@ inline SubType& interval_base_set<SubType,DomainT,Compare,Interval,Alloc>
 template<class SubType,
          class DomainT, ICL_COMPARE Compare, ICL_INTERVAL(ICL_COMPARE)  Interval, ICL_ALLOC Alloc>
 struct is_set<icl::interval_base_set<SubType,DomainT,Compare,Interval,Alloc> >
+<<<<<<< HEAD
 { 
     typedef is_set<icl::interval_base_set<SubType,DomainT,Compare,Interval,Alloc> > type;
     BOOST_STATIC_CONSTANT(bool, value = true); 
+=======
+{
+    typedef is_set<icl::interval_base_set<SubType,DomainT,Compare,Interval,Alloc> > type;
+    BOOST_STATIC_CONSTANT(bool, value = true);
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 };
 
 template<class SubType,
          class DomainT, ICL_COMPARE Compare, ICL_INTERVAL(ICL_COMPARE)  Interval, ICL_ALLOC Alloc>
 struct is_interval_container<icl::interval_base_set<SubType,DomainT,Compare,Interval,Alloc> >
+<<<<<<< HEAD
 { 
     typedef is_interval_container<icl::interval_base_set<SubType,DomainT,Compare,Interval,Alloc> > type;
     BOOST_STATIC_CONSTANT(bool, value = true); 
+=======
+{
+    typedef is_interval_container<icl::interval_base_set<SubType,DomainT,Compare,Interval,Alloc> > type;
+    BOOST_STATIC_CONSTANT(bool, value = true);
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 };
 
 
@@ -592,5 +778,8 @@ struct is_interval_container<icl::interval_base_set<SubType,DomainT,Compare,Inte
 }} // namespace icl boost
 
 #endif
+<<<<<<< HEAD
 
 
+=======
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce

@@ -149,6 +149,7 @@ namespace boost {
           {
             return;
           }
+<<<<<<< HEAD
           if(iter == end)
           {
             if(callable_iter != end)
@@ -164,6 +165,13 @@ namespace boost {
           for(;iter != end; ++iter)
           {
             cache->tracked_ptrs.clear();
+=======
+  
+          for(;iter != end; ++iter)
+          {
+            cache->tracked_ptrs.clear();
+            lock_type lock(**iter);
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
             (*iter)->nolock_grab_tracked_objects(lock, std::back_inserter(cache->tracked_ptrs));
             if((*iter)->nolock_nograb_connected())
             {
@@ -178,9 +186,20 @@ namespace boost {
               break;
             }
           }
+<<<<<<< HEAD
           if(iter == end)
           {
             set_callable_iter(lock, end);
+=======
+          
+          if(iter == end)
+          {
+            if(callable_iter != end)
+            {
+              lock_type lock(**callable_iter);
+              set_callable_iter(lock, end);
+            }
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
           }
         }
 

@@ -2,7 +2,11 @@
 // detail/impl/strand_executor_service.ipp
 // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 //
+<<<<<<< HEAD
 // Copyright (c) 2003-2017 Christopher M. Kohlhoff (chris at kohlhoff dot com)
+=======
+// Copyright (c) 2003-2019 Christopher M. Kohlhoff (chris at kohlhoff dot com)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 //
 // Distributed under the Boost Software License, Version 1.0. (See accompanying
 // file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
@@ -41,8 +45,16 @@ void strand_executor_service::shutdown()
   strand_impl* impl = impl_list_;
   while (impl)
   {
+<<<<<<< HEAD
     ops.push(impl->waiting_queue_);
     ops.push(impl->ready_queue_);
+=======
+    impl->mutex_->lock();
+    impl->shutdown_ = true;
+    ops.push(impl->waiting_queue_);
+    ops.push(impl->ready_queue_);
+    impl->mutex_->unlock();
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     impl = impl->next_;
   }
 }
@@ -52,6 +64,10 @@ strand_executor_service::create_implementation()
 {
   implementation_type new_impl(new strand_impl);
   new_impl->locked_ = false;
+<<<<<<< HEAD
+=======
+  new_impl->shutdown_ = false;
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
   boost::asio::detail::mutex::scoped_lock lock(mutex_);
 
@@ -93,7 +109,17 @@ bool strand_executor_service::enqueue(const implementation_type& impl,
     scheduler_operation* op)
 {
   impl->mutex_->lock();
+<<<<<<< HEAD
   if (impl->locked_)
+=======
+  if (impl->shutdown_)
+  {
+    impl->mutex_->unlock();
+    op->destroy();
+    return false;
+  }
+  else if (impl->locked_)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
   {
     // Some other function already holds the strand lock. Enqueue for later.
     impl->waiting_queue_.push(op);

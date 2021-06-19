@@ -20,6 +20,7 @@
 extern "C" {
 
 #if BOOST_WINAPI_PARTITION_DESKTOP_SYSTEM
+<<<<<<< HEAD
 BOOST_SYMBOL_IMPORT boost::winapi::DWORD_ WINAPI
 GetProcessHeaps(boost::winapi::DWORD_ NumberOfHeaps, boost::winapi::PHANDLE_ ProcessHeaps);
 #endif // BOOST_WINAPI_PARTITION_DESKTOP_SYSTEM
@@ -28,18 +29,36 @@ BOOST_SYMBOL_IMPORT boost::winapi::HANDLE_ WINAPI
 GetProcessHeap(BOOST_WINAPI_DETAIL_VOID);
 
 BOOST_SYMBOL_IMPORT boost::winapi::LPVOID_ WINAPI
+=======
+BOOST_SYMBOL_IMPORT boost::winapi::DWORD_ BOOST_WINAPI_WINAPI_CC
+GetProcessHeaps(boost::winapi::DWORD_ NumberOfHeaps, boost::winapi::PHANDLE_ ProcessHeaps);
+#endif // BOOST_WINAPI_PARTITION_DESKTOP_SYSTEM
+
+BOOST_SYMBOL_IMPORT boost::winapi::HANDLE_ BOOST_WINAPI_WINAPI_CC
+GetProcessHeap(BOOST_WINAPI_DETAIL_VOID);
+
+BOOST_SYMBOL_IMPORT boost::winapi::LPVOID_ BOOST_WINAPI_WINAPI_CC
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 HeapAlloc(
     boost::winapi::HANDLE_ hHeap,
     boost::winapi::DWORD_ dwFlags,
     boost::winapi::SIZE_T_ dwBytes);
 
+<<<<<<< HEAD
 BOOST_SYMBOL_IMPORT boost::winapi::BOOL_ WINAPI
+=======
+BOOST_SYMBOL_IMPORT boost::winapi::BOOL_ BOOST_WINAPI_WINAPI_CC
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 HeapFree(
     boost::winapi::HANDLE_ hHeap,
     boost::winapi::DWORD_ dwFlags,
     boost::winapi::LPVOID_ lpMem);
 
+<<<<<<< HEAD
 BOOST_SYMBOL_IMPORT boost::winapi::LPVOID_ WINAPI
+=======
+BOOST_SYMBOL_IMPORT boost::winapi::LPVOID_ BOOST_WINAPI_WINAPI_CC
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 HeapReAlloc(
     boost::winapi::HANDLE_ hHeap,
     boost::winapi::DWORD_ dwFlags,
@@ -47,13 +66,21 @@ HeapReAlloc(
     boost::winapi::SIZE_T_ dwBytes);
 
 #if BOOST_WINAPI_PARTITION_APP_SYSTEM
+<<<<<<< HEAD
 BOOST_SYMBOL_IMPORT boost::winapi::HANDLE_ WINAPI
+=======
+BOOST_SYMBOL_IMPORT boost::winapi::HANDLE_ BOOST_WINAPI_WINAPI_CC
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 HeapCreate(
     boost::winapi::DWORD_ flOptions,
     boost::winapi::SIZE_T_ dwInitialSize,
     boost::winapi::SIZE_T_ dwMaximumSize);
 
+<<<<<<< HEAD
 BOOST_SYMBOL_IMPORT boost::winapi::BOOL_ WINAPI
+=======
+BOOST_SYMBOL_IMPORT boost::winapi::BOOL_ BOOST_WINAPI_WINAPI_CC
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 HeapDestroy(boost::winapi::HANDLE_ hHeap);
 #endif // BOOST_WINAPI_PARTITION_APP_SYSTEM
 

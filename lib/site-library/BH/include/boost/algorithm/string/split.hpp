@@ -61,7 +61,15 @@ namespace boost {
         template< typename SequenceSequenceT, typename Range1T, typename Range2T >
         inline SequenceSequenceT& find_all(
             SequenceSequenceT& Result,
+<<<<<<< HEAD
             Range1T& Input,
+=======
+#if !defined(BOOST_NO_CXX11_RVALUE_REFERENCES)
+            Range1T&& Input,
+#else
+            Range1T& Input,
+#endif
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
             const Range2T& Search)
         {
             return ::boost::algorithm::iter_find(
@@ -96,7 +104,15 @@ namespace boost {
         template< typename SequenceSequenceT, typename Range1T, typename Range2T >
         inline SequenceSequenceT& ifind_all(
             SequenceSequenceT& Result,
+<<<<<<< HEAD
             Range1T& Input,
+=======
+#if !defined(BOOST_NO_CXX11_RVALUE_REFERENCES)
+            Range1T&& Input,
+#else
+            Range1T& Input,
+#endif
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
             const Range2T& Search,
             const std::locale& Loc=std::locale() )
         {
@@ -139,7 +155,15 @@ namespace boost {
         template< typename SequenceSequenceT, typename RangeT, typename PredicateT >
         inline SequenceSequenceT& split(
             SequenceSequenceT& Result,
+<<<<<<< HEAD
             RangeT& Input,
+=======
+#if !defined(BOOST_NO_CXX11_RVALUE_REFERENCES)
+            RangeT&& Input,
+#else
+            RangeT& Input,
+#endif
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
             PredicateT Pred,
             token_compress_mode_type eCompress=token_compress_off )
         {

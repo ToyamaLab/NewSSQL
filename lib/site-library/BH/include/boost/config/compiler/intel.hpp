@@ -45,12 +45,24 @@
 
 #undef BOOST_GCC_VERSION
 #undef BOOST_GCC_CXX11
+<<<<<<< HEAD
+=======
+#undef BOOST_GCC
+#undef BOOST_FALLTHROUGH
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 // Broken in all versions up to 17 (newer versions not tested)
 #if (__INTEL_COMPILER <= 1700) && !defined(BOOST_NO_CXX14_CONSTEXPR)
 #  define BOOST_NO_CXX14_CONSTEXPR
 #endif
 
+<<<<<<< HEAD
+=======
+#if (__INTEL_COMPILER >= 1800) && (__cplusplus >= 201703)
+#  define BOOST_FALLTHROUGH [[fallthrough]]
+#endif
+
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 #endif // defined(_MSC_VER)
 
 #undef BOOST_COMPILER
@@ -557,7 +569,11 @@ template<> struct assert_intrinsic_wchar_t<unsigned short> {};
 //      We don't emit this warning any more, since we have so few
 //      defect macros set anyway (just the one).
 //
+<<<<<<< HEAD
 //#     pragma message("Unknown compiler version - please run the configure tests and report the results")
+=======
+//#     pragma message("boost: Unknown compiler version - please run the configure tests and report the results")
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 #  endif
 #endif
 

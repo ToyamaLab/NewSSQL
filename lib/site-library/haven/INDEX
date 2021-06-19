@@ -10,6 +10,10 @@ read_xpt                Read and write SAS transport files
 tagged_na               "Tagged" missing values
 zap_empty               Convert empty strings into missing values.
 zap_formats             Remove format attributes
+<<<<<<< HEAD
+=======
+zap_label               Zap label
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 zap_labels              Zap labels
 zap_missing             Zap special missings to regular R missings
 zap_widths              Remove display width attributes

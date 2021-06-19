@@ -57,6 +57,7 @@ struct xtime
 
 };
 
+<<<<<<< HEAD
 inline xtime get_xtime(boost::system_time const& abs_time)
 {
     xtime res;
@@ -68,6 +69,19 @@ inline xtime get_xtime(boost::system_time const& abs_time)
 }
 
 inline int xtime_get(struct xtime* xtp, int clock_type)
+=======
+inline ::boost::xtime get_xtime(boost::system_time const& abs_time)
+{
+    ::boost::xtime res;
+    boost::posix_time::time_duration const time_since_epoch=abs_time-boost::posix_time::from_time_t(0);
+
+    res.sec=static_cast< ::boost::xtime::xtime_sec_t>(time_since_epoch.total_seconds());
+    res.nsec=static_cast< ::boost::xtime::xtime_nsec_t>(time_since_epoch.fractional_seconds()*(1000000000/time_since_epoch.ticks_per_second()));
+    return res;
+}
+
+inline int xtime_get(struct ::boost::xtime* xtp, int clock_type)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 {
     if (clock_type == TIME_UTC_)
     {
@@ -78,7 +92,11 @@ inline int xtime_get(struct xtime* xtp, int clock_type)
 }
 
 
+<<<<<<< HEAD
 inline int xtime_cmp(const xtime& xt1, const xtime& xt2)
+=======
+inline int xtime_cmp(const ::boost::xtime& xt1, const ::boost::xtime& xt2)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 {
     if (xt1.sec == xt2.sec)
         return (int)(xt1.nsec - xt2.nsec);

@@ -1,10 +1,17 @@
 // Boost.Geometry (aka GGL, Generic Geometry Library)
 
 // Copyright (c) 2007-2015 Barend Gehrels, Amsterdam, the Netherlands.
+<<<<<<< HEAD
 // Copyright (c) 2013-2015 Adam Wulkiewicz, Lodz, Poland
 
 // This file was modified by Oracle on 2015, 2017.
 // Modifications copyright (c) 2015-2017, Oracle and/or its affiliates.
+=======
+// Copyright (c) 2013-2017 Adam Wulkiewicz, Lodz, Poland
+
+// This file was modified by Oracle on 2015, 2017, 2019.
+// Modifications copyright (c) 2015-2019, Oracle and/or its affiliates.
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 // Contributed and/or modified by Menelaos Karavelas, on behalf of Oracle
 // Contributed and/or modified by Adam Wulkiewicz, on behalf of Oracle
@@ -49,6 +56,10 @@
 
 #include <boost/geometry/policies/robustness/segment_ratio_type.hpp>
 
+<<<<<<< HEAD
+=======
+#include <boost/geometry/util/condition.hpp>
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 #ifdef BOOST_GEOMETRY_DEBUG_ASSEMBLE
 #  include <boost/geometry/io/dsv/write.hpp>
@@ -88,6 +99,13 @@ struct overlay_null_visitor
     template <typename Turns, typename Turn, typename Operation>
     void visit_traverse_reject(Turns const& , Turn const& , Operation const& , traverse_error_type )
     {}
+<<<<<<< HEAD
+=======
+
+    template <typename Rings>
+    void visit_generated_rings(Rings const& )
+    {}
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 };
 
 template
@@ -120,6 +138,15 @@ inline void get_ring_turn_info(TurnInfoMap& turn_info_map, Turns const& turns, C
         bool cluster_checked = false;
         bool has_blocked = false;
 
+<<<<<<< HEAD
+=======
+        if (is_self_turn<OverlayType>(turn) && turn.discarded)
+        {
+            // Discarded self-turns don't count as traversed
+            continue;
+        }
+
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
         for (typename boost::range_iterator<container_type const>::type
                 op_it = boost::begin(turn.operations);
             op_it != boost::end(turn.operations);
@@ -135,9 +162,15 @@ inline void get_ring_turn_info(TurnInfoMap& turn_info_map, Turns const& turns, C
 
             if (! is_self_turn<OverlayType>(turn)
                 && (
+<<<<<<< HEAD
                     (target_operation == operation_union
                       && op.enriched.count_left > 0)
                   || (target_operation == operation_intersection
+=======
+                    (BOOST_GEOMETRY_CONDITION(target_operation == operation_union)
+                      && op.enriched.count_left > 0)
+                  || (BOOST_GEOMETRY_CONDITION(target_operation == operation_intersection)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
                       && op.enriched.count_right <= 2)))
             {
                 // Avoid including untraversed rings which have polygons on
@@ -205,7 +238,11 @@ inline OutputIterator return_if_one_input_is_empty(Geometry1 const& geometry1,
             typename Strategy::template area_strategy
                 <
                     point_type1
+<<<<<<< HEAD
                 >::type::return_type
+=======
+                >::type::template result_type<point_type1>::type
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
         > properties;
 
 // Silence warning C4127: conditional expression is constant
@@ -233,7 +270,11 @@ inline OutputIterator return_if_one_input_is_empty(Geometry1 const& geometry1,
 
     select_rings<OverlayType>(geometry1, geometry2, empty, all_of_one_of_them, strategy);
     ring_container_type rings;
+<<<<<<< HEAD
     assign_parents(geometry1, geometry2, rings, all_of_one_of_them, strategy);
+=======
+    assign_parents<OverlayType>(geometry1, geometry2, rings, all_of_one_of_them, strategy);
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     return add_rings<GeometryOut>(all_of_one_of_them, geometry1, geometry2, rings, out,
                                   strategy.template get_area_strategy<point_type1>());
 }
@@ -276,7 +317,11 @@ struct overlay
         typedef detail::overlay::traversal_turn_info
         <
             point_type,
+<<<<<<< HEAD
             typename geometry::segment_ratio_type<point_type, RobustPolicy>::type
+=======
+            typename segment_ratio_type<point_type, RobustPolicy>::type
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
         > turn_info;
         typedef std::deque<turn_info> turn_container_type;
 
@@ -306,6 +351,7 @@ std::cout << "get turns" << std::endl;
 
         visitor.visit_turns(1, turns);
 
+<<<<<<< HEAD
 #ifdef BOOST_GEOMETRY_INCLUDE_SELF_TURNS
         if (needs_self_turns<Geometry1>::apply(geometry1))
         {
@@ -316,6 +362,23 @@ std::cout << "get turns" << std::endl;
         {
             self_get_turn_points::self_turns<Reverse2, assign_null_policy>(geometry2,
                 strategy, robust_policy, turns, policy, 1);
+=======
+#if ! defined(BOOST_GEOMETRY_NO_SELF_TURNS)
+        if (! turns.empty() || OverlayType == overlay_dissolve)
+        {
+            // Calculate self turns if the output contains turns already,
+            // and if necessary (e.g.: multi-geometry, polygon with interior rings)
+            if (needs_self_turns<Geometry1>::apply(geometry1))
+            {
+                self_get_turn_points::self_turns<Reverse1, assign_null_policy>(geometry1,
+                    strategy, robust_policy, turns, policy, 0);
+            }
+            if (needs_self_turns<Geometry2>::apply(geometry2))
+            {
+                self_get_turn_points::self_turns<Reverse2, assign_null_policy>(geometry2,
+                    strategy, robust_policy, turns, policy, 1);
+            }
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
         }
 #endif
 
@@ -323,6 +386,7 @@ std::cout << "get turns" << std::endl;
 #ifdef BOOST_GEOMETRY_DEBUG_ASSEMBLE
 std::cout << "enrich" << std::endl;
 #endif
+<<<<<<< HEAD
         typename Strategy::side_strategy_type side_strategy = strategy.get_side_strategy();
         cluster_type clusters;
         std::map<ring_identifier, ring_turn_info> turn_info_per_ring;
@@ -331,6 +395,14 @@ std::cout << "enrich" << std::endl;
                 clusters, geometry1, geometry2,
                     robust_policy,
                     side_strategy);
+=======
+
+        cluster_type clusters;
+        std::map<ring_identifier, ring_turn_info> turn_info_per_ring;
+
+        geometry::enrich_intersection_points<Reverse1, Reverse2, OverlayType>(
+            turns, clusters, geometry1, geometry2, robust_policy, strategy);
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
         visitor.visit_turns(2, turns);
 
@@ -362,7 +434,11 @@ std::cout << "traverse" << std::endl;
         typedef ring_properties
             <
                 point_type,
+<<<<<<< HEAD
                 typename area_strategy_type::return_type
+=======
+                typename area_strategy_type::template result_type<point_type>::type
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
             > properties;
 
         // Select all rings which are NOT touched by any intersection point
@@ -385,7 +461,12 @@ std::cout << "traverse" << std::endl;
             }
         }
 
+<<<<<<< HEAD
         assign_parents(geometry1, geometry2, rings, selected_ring_properties, strategy);
+=======
+        assign_parents<OverlayType>(geometry1, geometry2,
+            rings, selected_ring_properties, strategy);
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
         // NOTE: There is no need to check result area for union because
         // as long as the polygons in the input are valid the resulting

@@ -25,6 +25,7 @@
 
 #include <boost/mpi/config.hpp>
 #include <boost/archive/detail/auto_link_archive.hpp>
+<<<<<<< HEAD
 #include <boost/mpi/packed_iarchive.hpp>
 #include <boost/mpi/packed_oarchive.hpp>
 #include <boost/mpi/detail/forward_skeleton_iarchive.hpp>
@@ -357,6 +358,12 @@ private:
   packed_oarchive skeleton_archive_;
 };
 
+=======
+#include <boost/mpi/skeleton_and_content_types.hpp>
+
+namespace boost { namespace mpi {
+
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 namespace detail {
   typedef boost::mpi::detail::forward_skeleton_oarchive<boost::mpi::packed_skeleton_oarchive,boost::mpi::packed_oarchive> type1;
   typedef boost::mpi::detail::forward_skeleton_iarchive<boost::mpi::packed_skeleton_iarchive,boost::mpi::packed_iarchive> type2;

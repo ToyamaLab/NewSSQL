@@ -3,6 +3,10 @@
 // Copyright (c) 2007-2012 Barend Gehrels, Amsterdam, the Netherlands.
 // Copyright (c) 2008-2012 Bruno Lalande, Paris, France.
 // Copyright (c) 2009-2012 Mateusz Loskot, London, UK.
+<<<<<<< HEAD
+=======
+// Copyright (c) 2017 Adam Wulkiewicz, Lodz, Poland.
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 // This file was modified by Oracle on 2015.
 // Modifications copyright (c) 2015 Oracle and/or its affiliates.
@@ -23,6 +27,10 @@
 #include <cstddef>
 
 #include <boost/geometry/algorithms/assign.hpp>
+<<<<<<< HEAD
+=======
+#include <boost/geometry/algorithms/detail/signed_size_type.hpp>
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 #include <boost/geometry/arithmetic/arithmetic.hpp>
 #include <boost/geometry/core/coordinate_type.hpp>
 #include <boost/geometry/core/point_type.hpp>
@@ -53,7 +61,11 @@ private :
     class sum
     {
         friend class average;
+<<<<<<< HEAD
         std::size_t count;
+=======
+        signed_size_type count;
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
         PointCentroid centroid;
 
     public :

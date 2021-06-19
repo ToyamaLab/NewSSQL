@@ -17,6 +17,7 @@
 #ifdef BOOST_MSVC
 
    #pragma warning (push)
+<<<<<<< HEAD
    //
    //'function' : resolved overload was found by argument-dependent lookup
    //A function found by argument-dependent lookup (Koenig lookup) was eventually
@@ -35,15 +36,30 @@
    #pragma warning (disable : 4675)
    #pragma warning (disable : 4996)
    #pragma warning (disable : 4503)
+=======
+   #pragma warning (disable : 4275) // non DLL-interface classkey "identifier" used as base for DLL-interface classkey "identifier"
+   #pragma warning (disable : 4251) // "identifier" : class "type" needs to have dll-interface to be used by clients of class "type2"
+   #pragma warning (disable : 4675) // "method" should be declared "static" and have exactly one parameter
+   #pragma warning (disable : 4996) // "function": was declared deprecated
+   #pragma warning (disable : 4503) // "identifier" : decorated name length exceeded, name was truncated
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
    #pragma warning (disable : 4284) // odd return type for operator->
    #pragma warning (disable : 4244) // possible loss of data
    #pragma warning (disable : 4521) ////Disable "multiple copy constructors specified"
    #pragma warning (disable : 4127) //conditional expression is constant
+<<<<<<< HEAD
    #pragma warning (disable : 4146)
    #pragma warning (disable : 4267) //conversion from 'X' to 'Y', possible loss of data
    #pragma warning (disable : 4541) //'typeid' used on polymorphic type 'boost::exception' with /GR-
    #pragma warning (disable : 4512) //'typeid' used on polymorphic type 'boost::exception' with /GR-
    #pragma warning (disable : 4522)
+=======
+   #pragma warning (disable : 4146) // unary minus operator applied to unsigned type, result still unsigned
+   #pragma warning (disable : 4267) //conversion from 'X' to 'Y', possible loss of data
+   #pragma warning (disable : 4541) //'typeid' used on polymorphic type 'boost::exception' with /GR-
+   #pragma warning (disable : 4512) //'typeid' used on polymorphic type 'boost::exception' with /GR-
+   #pragma warning (disable : 4522) // "class" : multiple assignment operators specified
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
    #pragma warning (disable : 4706) //assignment within conditional expression
    #pragma warning (disable : 4710) // function not inlined
    #pragma warning (disable : 4714) // "function": marked as __forceinline not inlined

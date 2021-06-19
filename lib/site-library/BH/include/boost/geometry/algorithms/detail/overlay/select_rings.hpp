@@ -21,7 +21,10 @@
 
 #include <boost/geometry/core/tags.hpp>
 
+<<<<<<< HEAD
 #include <boost/geometry/algorithms/area.hpp>
+=======
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 #include <boost/geometry/algorithms/covered_by.hpp>
 #include <boost/geometry/algorithms/detail/interior_iterator.hpp>
 #include <boost/geometry/algorithms/detail/ring_identifier.hpp>

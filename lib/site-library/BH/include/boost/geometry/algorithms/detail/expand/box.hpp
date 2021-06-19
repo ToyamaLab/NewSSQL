@@ -5,8 +5,13 @@
 // Copyright (c) 2009-2015 Mateusz Loskot, London, UK.
 // Copyright (c) 2014-2015 Samuel Debionne, Grenoble, France.
 
+<<<<<<< HEAD
 // This file was modified by Oracle on 2015, 2016, 2017.
 // Modifications copyright (c) 2015-2017, Oracle and/or its affiliates.
+=======
+// This file was modified by Oracle on 2015, 2016, 2017, 2018.
+// Modifications copyright (c) 2015-2018, Oracle and/or its affiliates.
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 // Contributed and/or modified by Vissarion Fysikopoulos, on behalf of Oracle
 // Contributed and/or modified by Menelaos Karavelas, on behalf of Oracle
@@ -19,6 +24,7 @@
 #ifndef BOOST_GEOMETRY_ALGORITHMS_DETAIL_EXPAND_BOX_HPP
 #define BOOST_GEOMETRY_ALGORITHMS_DETAIL_EXPAND_BOX_HPP
 
+<<<<<<< HEAD
 #include <cstddef>
 #include <algorithm>
 
@@ -34,11 +40,22 @@
 #include <boost/geometry/algorithms/detail/expand/indexed.hpp>
 
 #include <boost/geometry/algorithms/dispatch/expand.hpp>
+=======
+
+#include <boost/geometry/algorithms/dispatch/expand.hpp>
+
+#include <boost/geometry/core/tags.hpp>
+
+// For backward compatibility
+#include <boost/geometry/strategies/cartesian/expand_box.hpp>
+#include <boost/geometry/strategies/spherical/expand_box.hpp>
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 
 namespace boost { namespace geometry
 {
 
+<<<<<<< HEAD
 #ifndef DOXYGEN_NO_DETAIL
 namespace detail { namespace expand
 {
@@ -65,6 +82,8 @@ struct box_on_spheroid
 }} // namespace detail::expand
 #endif // DOXYGEN_NO_DETAIL
 
+=======
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 #ifndef DOXYGEN_NO_DISPATCH
 namespace dispatch
 {
@@ -73,12 +92,17 @@ namespace dispatch
 // Box + box -> new box containing two input boxes
 template
 <
+<<<<<<< HEAD
     typename BoxOut, typename BoxIn,
     typename CSTagOut, typename CSTag
+=======
+    typename BoxOut, typename BoxIn
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 >
 struct expand
     <
         BoxOut, BoxIn,
+<<<<<<< HEAD
         box_tag, box_tag,
         CSTagOut, CSTag
     >
@@ -126,6 +150,20 @@ struct expand
         geographic_tag, geographic_tag
     > : detail::expand::box_on_spheroid
 {};
+=======
+        box_tag, box_tag
+    >
+{
+    template <typename Strategy>
+    static inline void apply(BoxOut& box_out,
+                             BoxIn const& box_in,
+                             Strategy const& )
+    {
+        Strategy::apply(box_out, box_in);
+    }
+};
+
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 
 } // namespace dispatch

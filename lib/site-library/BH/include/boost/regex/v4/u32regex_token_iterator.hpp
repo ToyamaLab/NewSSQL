@@ -155,6 +155,7 @@ private:
 
 template <class BidirectionalIterator>
 class u32regex_token_iterator 
+<<<<<<< HEAD
 #ifndef BOOST_NO_STD_ITERATOR
    : public std::iterator<
          std::forward_iterator_tag, 
@@ -163,6 +164,8 @@ class u32regex_token_iterator
          const sub_match<BidirectionalIterator>*,
          const sub_match<BidirectionalIterator>& >         
 #endif
+=======
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 {
 private:
    typedef u32regex_token_iterator_implementation<BidirectionalIterator> impl;
@@ -275,7 +278,11 @@ inline u32regex_token_iterator<const wchar_t*> make_u32regex_token_iterator(cons
    return u32regex_token_iterator<const wchar_t*>(p, p+std::wcslen(p), e, submatch, m);
 }
 #endif
+<<<<<<< HEAD
 #if !defined(U_WCHAR_IS_UTF16) && (U_SIZEOF_WCHAR_T != 2)
+=======
+#if !defined(BOOST_REGEX_UCHAR_IS_WCHAR_T)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 inline u32regex_token_iterator<const UChar*> make_u32regex_token_iterator(const UChar* p, const u32regex& e, int submatch = 0, regex_constants::match_flag_type m = regex_constants::match_default)
 {
    return u32regex_token_iterator<const UChar*>(p, p+u_strlen(p), e, submatch, m);
@@ -305,7 +312,11 @@ inline u32regex_token_iterator<const wchar_t*> make_u32regex_token_iterator(cons
    return u32regex_token_iterator<const wchar_t*>(p, p+std::wcslen(p), e, submatch, m);
 }
 #endif
+<<<<<<< HEAD
 #if !defined(U_WCHAR_IS_UTF16) && (U_SIZEOF_WCHAR_T != 2)
+=======
+#if !defined(BOOST_REGEX_UCHAR_IS_WCHAR_T)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 template <std::size_t N>
 inline u32regex_token_iterator<const UChar*> make_u32regex_token_iterator(const UChar* p, const u32regex& e, const int (&submatch)[N], regex_constants::match_flag_type m = regex_constants::match_default)
 {

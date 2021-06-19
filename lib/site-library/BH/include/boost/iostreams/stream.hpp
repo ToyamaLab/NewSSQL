@@ -56,6 +56,15 @@ struct stream_traits {
             >::type stream_tag;
 };
 
+<<<<<<< HEAD
+=======
+#if defined(BOOST_MSVC) && (BOOST_MSVC == 1700)
+# pragma warning(push)
+// https://connect.microsoft.com/VisualStudio/feedback/details/733720/
+# pragma warning(disable: 4250)
+#endif
+
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 // By encapsulating initialization in a base, we can define the macro
 // BOOST_IOSTREAMS_DEFINE_FORWARDING_FUNCTIONS to generate constructors
 // without base member initializer lists.
@@ -84,6 +93,13 @@ public:
     stream_base() : pbase_type(), stream_type(&member) { }
 };
 
+<<<<<<< HEAD
+=======
+#if defined(BOOST_MSVC) && (BOOST_MSVC == 1700)
+# pragma warning(pop)
+#endif
+
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 } } } // End namespaces detail, iostreams, boost.
 
 #ifdef BOOST_IOSTREAMS_BROKEN_OVERLOAD_RESOLUTION
@@ -92,6 +108,15 @@ public:
 
 namespace boost { namespace iostreams {
 
+<<<<<<< HEAD
+=======
+#if defined(BOOST_MSVC) && (BOOST_MSVC == 1700)
+# pragma warning(push)
+// https://connect.microsoft.com/VisualStudio/feedback/details/733720/
+# pragma warning(disable: 4250)
+#endif
+
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 //
 // Template name: stream.
 // Description: A iostream which reads from and writes to an instance of a
@@ -144,6 +169,13 @@ private:
     }
 };
 
+<<<<<<< HEAD
+=======
+#if defined(BOOST_MSVC) && (BOOST_MSVC == 1700)
+# pragma warning(pop)
+#endif
+
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 } } // End namespaces iostreams, boost.
 
 #endif // #ifdef BOOST_IOSTREAMS_BROKEN_OVERLOAD_RESOLUTION

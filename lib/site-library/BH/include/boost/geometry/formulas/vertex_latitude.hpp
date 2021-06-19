@@ -12,11 +12,21 @@
 #ifndef BOOST_GEOMETRY_FORMULAS_MAXIMUM_LATITUDE_HPP
 #define BOOST_GEOMETRY_FORMULAS_MAXIMUM_LATITUDE_HPP
 
+<<<<<<< HEAD
 #include <boost/geometry/core/srs.hpp>
 #include <boost/geometry/formulas/flattening.hpp>
 #include <boost/geometry/formulas/spherical.hpp>
 #include <boost/mpl/assert.hpp>
 
+=======
+
+#include <boost/geometry/formulas/flattening.hpp>
+#include <boost/geometry/formulas/spherical.hpp>
+
+#include <boost/mpl/assert.hpp>
+
+
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 namespace boost { namespace geometry { namespace formula
 {
 

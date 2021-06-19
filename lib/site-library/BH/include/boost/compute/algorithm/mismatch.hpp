@@ -14,6 +14,11 @@
 #include <iterator>
 #include <utility>
 
+<<<<<<< HEAD
+=======
+#include <boost/static_assert.hpp>
+
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 #include <boost/compute/system.hpp>
 #include <boost/compute/functional.hpp>
 #include <boost/compute/command_queue.hpp>
@@ -21,6 +26,10 @@
 #include <boost/compute/iterator/transform_iterator.hpp>
 #include <boost/compute/iterator/zip_iterator.hpp>
 #include <boost/compute/functional/detail/unpack.hpp>
+<<<<<<< HEAD
+=======
+#include <boost/compute/type_traits/is_device_iterator.hpp>
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 namespace boost {
 namespace compute {
@@ -37,6 +46,11 @@ mismatch(InputIterator1 first1,
          InputIterator2 first2,
          command_queue &queue = system::default_queue())
 {
+<<<<<<< HEAD
+=======
+    BOOST_STATIC_ASSERT(is_device_iterator<InputIterator1>::value);
+    BOOST_STATIC_ASSERT(is_device_iterator<InputIterator2>::value);
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     typedef typename std::iterator_traits<InputIterator1>::value_type value_type;
 
     ::boost::compute::equal_to<value_type> op;
@@ -75,6 +89,11 @@ mismatch(InputIterator1 first1,
          InputIterator2 last2,
          command_queue &queue = system::default_queue())
 {
+<<<<<<< HEAD
+=======
+    BOOST_STATIC_ASSERT(is_device_iterator<InputIterator1>::value);
+    BOOST_STATIC_ASSERT(is_device_iterator<InputIterator2>::value);
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     if(std::distance(first1, last1) < std::distance(first2, last2)){
         return ::boost::compute::mismatch(first1, last1, first2, queue);
     }

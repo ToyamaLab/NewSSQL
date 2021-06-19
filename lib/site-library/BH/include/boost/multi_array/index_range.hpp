@@ -107,6 +107,15 @@ namespace multi_array {
 
     index stride() const { return stride_; }
 
+<<<<<<< HEAD
+=======
+    size_type size(index idx) const
+    {
+      return (start_ == from_start() || finish_ == to_end())
+        ? idx : ((finish_ - start_) / stride_);
+    }
+
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     void set_index_range(index start, index finish, index stride=1)
     {
       start_ = start;

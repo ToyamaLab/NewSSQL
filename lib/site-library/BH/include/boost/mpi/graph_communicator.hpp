@@ -28,7 +28,10 @@
 // Headers required to implement graph topologies
 #include <boost/graph/graph_traits.hpp>
 #include <boost/graph/properties.hpp>
+<<<<<<< HEAD
 #include <boost/property_map/property_map.hpp>
+=======
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 #include <boost/iterator/counting_iterator.hpp>
 #include <boost/graph/iteration_macros.hpp>
 #include <boost/shared_array.hpp>

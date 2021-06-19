@@ -10,6 +10,10 @@ http://www.boost.org/LICENSE_1_0.txt)
 
 #include <boost/predef/version_number.h>
 
+<<<<<<< HEAD
 #define BOOST_PREDEF_VERSION BOOST_VERSION_NUMBER(1,7,0)
+=======
+#define BOOST_PREDEF_VERSION BOOST_VERSION_NUMBER(1,10,0)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 #endif

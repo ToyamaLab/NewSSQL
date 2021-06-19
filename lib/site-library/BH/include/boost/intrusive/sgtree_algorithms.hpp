@@ -65,8 +65,13 @@ class sgtree_algorithms
    public:
    typedef typename NodeTraits::node            node;
    typedef NodeTraits                           node_traits;
+<<<<<<< HEAD
    typedef typename NodeTraits::node_ptr        node_ptr;
    typedef typename NodeTraits::const_node_ptr  const_node_ptr;
+=======
+   typedef typename NodeTraits::node_ptr       node_ptr;
+   typedef typename NodeTraits::const_node_ptr const_node_ptr;
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
    /// @cond
    private:
@@ -86,6 +91,7 @@ class sgtree_algorithms
 
    #ifdef BOOST_INTRUSIVE_DOXYGEN_INVOKED
    //! @copydoc ::boost::intrusive::bstree_algorithms::get_header(const const_node_ptr&)
+<<<<<<< HEAD
    static node_ptr get_header(const const_node_ptr & n);
 
    //! @copydoc ::boost::intrusive::bstree_algorithms::begin_node
@@ -137,6 +143,59 @@ class sgtree_algorithms
    //! @copydoc ::boost::intrusive::bstree_algorithms::erase(const node_ptr&,const node_ptr&)
    template<class AlphaByMaxSize>
    static node_ptr erase(const node_ptr & header, const node_ptr & z, std::size_t tree_size, std::size_t &max_tree_size, AlphaByMaxSize alpha_by_maxsize)
+=======
+   static node_ptr get_header(const_node_ptr n);
+
+   //! @copydoc ::boost::intrusive::bstree_algorithms::begin_node
+   static node_ptr begin_node(const_node_ptr header);
+
+   //! @copydoc ::boost::intrusive::bstree_algorithms::end_node
+   static node_ptr end_node(const_node_ptr header);
+
+   //! @copydoc ::boost::intrusive::bstree_algorithms::swap_tree
+   static void swap_tree(node_ptr header1, node_ptr header2);
+
+   //! @copydoc ::boost::intrusive::bstree_algorithms::swap_nodes(node_ptr,node_ptr)
+   static void swap_nodes(node_ptr node1, node_ptr node2);
+
+   //! @copydoc ::boost::intrusive::bstree_algorithms::swap_nodes(node_ptr,node_ptr,node_ptr,node_ptr)
+   static void swap_nodes(node_ptr node1, node_ptr header1, node_ptr node2, node_ptr header2);
+
+   //! @copydoc ::boost::intrusive::bstree_algorithms::replace_node(node_ptr,node_ptr)
+   static void replace_node(node_ptr node_to_be_replaced, node_ptr new_node);
+
+   //! @copydoc ::boost::intrusive::bstree_algorithms::replace_node(node_ptr,node_ptr,node_ptr)
+   static void replace_node(node_ptr node_to_be_replaced, node_ptr header, node_ptr new_node);
+
+   //Unlink is not possible since tree metadata is needed to update the tree
+   //!static void unlink(node_ptr node);
+
+   //! @copydoc ::boost::intrusive::bstree_algorithms::unlink_leftmost_without_rebalance
+   static node_ptr unlink_leftmost_without_rebalance(node_ptr header);
+
+   //! @copydoc ::boost::intrusive::bstree_algorithms::unique(const const_node_ptr&)
+   static bool unique(const_node_ptr node);
+
+   //! @copydoc ::boost::intrusive::bstree_algorithms::size(const const_node_ptr&)
+   static std::size_t size(const_node_ptr header);
+
+   //! @copydoc ::boost::intrusive::bstree_algorithms::next_node(const node_ptr&)
+   static node_ptr next_node(node_ptr node);
+
+   //! @copydoc ::boost::intrusive::bstree_algorithms::prev_node(const node_ptr&)
+   static node_ptr prev_node(node_ptr node);
+
+   //! @copydoc ::boost::intrusive::bstree_algorithms::init(node_ptr)
+   static void init(node_ptr node);
+
+   //! @copydoc ::boost::intrusive::bstree_algorithms::init_header(node_ptr)
+   static void init_header(node_ptr header);
+   #endif   //#ifdef BOOST_INTRUSIVE_DOXYGEN_INVOKED
+
+   //! @copydoc ::boost::intrusive::bstree_algorithms::erase(node_ptr,node_ptr)
+   template<class AlphaByMaxSize>
+   static node_ptr erase(node_ptr header, node_ptr z, std::size_t tree_size, std::size_t &max_tree_size, AlphaByMaxSize alpha_by_maxsize)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
    {
       bstree_algo::erase(header, z);
       --tree_size;
@@ -149,6 +208,7 @@ class sgtree_algorithms
    }
 
    #ifdef BOOST_INTRUSIVE_DOXYGEN_INVOKED
+<<<<<<< HEAD
    //! @copydoc ::boost::intrusive::bstree_algorithms::clone(const const_node_ptr&,const node_ptr&,Cloner,Disposer)
    template <class Cloner, class Disposer>
    static void clone
@@ -157,35 +217,66 @@ class sgtree_algorithms
    //! @copydoc ::boost::intrusive::bstree_algorithms::clear_and_dispose(const node_ptr&,Disposer)
    template<class Disposer>
    static void clear_and_dispose(const node_ptr & header, Disposer disposer);
+=======
+   //! @copydoc ::boost::intrusive::bstree_algorithms::clone(const const_node_ptr&,node_ptr,Cloner,Disposer)
+   template <class Cloner, class Disposer>
+   static void clone
+      (const_node_ptr source_header, node_ptr target_header, Cloner cloner, Disposer disposer);
+
+   //! @copydoc ::boost::intrusive::bstree_algorithms::clear_and_dispose(const node_ptr&,Disposer)
+   template<class Disposer>
+   static void clear_and_dispose(node_ptr header, Disposer disposer);
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
    //! @copydoc ::boost::intrusive::bstree_algorithms::lower_bound(const const_node_ptr&,const KeyType&,KeyNodePtrCompare)
    template<class KeyType, class KeyNodePtrCompare>
    static node_ptr lower_bound
+<<<<<<< HEAD
       (const const_node_ptr & header, const KeyType &key, KeyNodePtrCompare comp);
+=======
+      (const_node_ptr header, const KeyType &key, KeyNodePtrCompare comp);
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
    //! @copydoc ::boost::intrusive::bstree_algorithms::upper_bound(const const_node_ptr&,const KeyType&,KeyNodePtrCompare)
    template<class KeyType, class KeyNodePtrCompare>
    static node_ptr upper_bound
+<<<<<<< HEAD
       (const const_node_ptr & header, const KeyType &key, KeyNodePtrCompare comp);
+=======
+      (const_node_ptr header, const KeyType &key, KeyNodePtrCompare comp);
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
    //! @copydoc ::boost::intrusive::bstree_algorithms::find(const const_node_ptr&, const KeyType&,KeyNodePtrCompare)
    template<class KeyType, class KeyNodePtrCompare>
    static node_ptr find
+<<<<<<< HEAD
       (const const_node_ptr & header, const KeyType &key, KeyNodePtrCompare comp);
+=======
+      (const_node_ptr header, const KeyType &key, KeyNodePtrCompare comp);
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
    //! @copydoc ::boost::intrusive::bstree_algorithms::equal_range(const const_node_ptr&,const KeyType&,KeyNodePtrCompare)
    template<class KeyType, class KeyNodePtrCompare>
    static std::pair<node_ptr, node_ptr> equal_range
+<<<<<<< HEAD
       (const const_node_ptr & header, const KeyType &key, KeyNodePtrCompare comp);
+=======
+      (const_node_ptr header, const KeyType &key, KeyNodePtrCompare comp);
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
    //! @copydoc ::boost::intrusive::bstree_algorithms::bounded_range(const const_node_ptr&,const KeyType&,const KeyType&,KeyNodePtrCompare,bool,bool)
    template<class KeyType, class KeyNodePtrCompare>
    static std::pair<node_ptr, node_ptr> bounded_range
+<<<<<<< HEAD
       (const const_node_ptr & header, const KeyType &lower_key, const KeyType &upper_key, KeyNodePtrCompare comp
+=======
+      (const_node_ptr header, const KeyType &lower_key, const KeyType &upper_key, KeyNodePtrCompare comp
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
       , bool left_closed, bool right_closed);
 
    //! @copydoc ::boost::intrusive::bstree_algorithms::count(const const_node_ptr&,const KeyType&,KeyNodePtrCompare)
    template<class KeyType, class KeyNodePtrCompare>
+<<<<<<< HEAD
    static std::size_t count(const const_node_ptr & header, const KeyType &key, KeyNodePtrCompare comp);
 
    #endif   //#ifdef BOOST_INTRUSIVE_DOXYGEN_INVOKED
@@ -194,6 +285,16 @@ class sgtree_algorithms
    template<class NodePtrCompare, class H_Alpha>
    static node_ptr insert_equal_upper_bound
       (const node_ptr & h, const node_ptr & new_node, NodePtrCompare comp
+=======
+   static std::size_t count(const_node_ptr header, const KeyType &key, KeyNodePtrCompare comp);
+
+   #endif   //#ifdef BOOST_INTRUSIVE_DOXYGEN_INVOKED
+
+   //! @copydoc ::boost::intrusive::bstree_algorithms::insert_equal_upper_bound(node_ptr,node_ptr,NodePtrCompare)
+   template<class NodePtrCompare, class H_Alpha>
+   static node_ptr insert_equal_upper_bound
+      (node_ptr h, node_ptr new_node, NodePtrCompare comp
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
       ,std::size_t tree_size, H_Alpha h_alpha, std::size_t &max_tree_size)
    {
       std::size_t depth;
@@ -202,10 +303,17 @@ class sgtree_algorithms
       return new_node;
    }
 
+<<<<<<< HEAD
    //! @copydoc ::boost::intrusive::bstree_algorithms::insert_equal_lower_bound(const node_ptr&,const node_ptr&,NodePtrCompare)
    template<class NodePtrCompare, class H_Alpha>
    static node_ptr insert_equal_lower_bound
       (const node_ptr & h, const node_ptr & new_node, NodePtrCompare comp
+=======
+   //! @copydoc ::boost::intrusive::bstree_algorithms::insert_equal_lower_bound(node_ptr,node_ptr,NodePtrCompare)
+   template<class NodePtrCompare, class H_Alpha>
+   static node_ptr insert_equal_lower_bound
+      (node_ptr h, node_ptr new_node, NodePtrCompare comp
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
       ,std::size_t tree_size, H_Alpha h_alpha, std::size_t &max_tree_size)
    {
       std::size_t depth;
@@ -214,10 +322,17 @@ class sgtree_algorithms
       return new_node;
    }
 
+<<<<<<< HEAD
    //! @copydoc ::boost::intrusive::bstree_algorithms::insert_equal(const node_ptr&,const node_ptr&,const node_ptr&,NodePtrCompare)
    template<class NodePtrCompare, class H_Alpha>
    static node_ptr insert_equal
       (const node_ptr & header, const node_ptr & hint, const node_ptr & new_node, NodePtrCompare comp
+=======
+   //! @copydoc ::boost::intrusive::bstree_algorithms::insert_equal(node_ptr,node_ptr,node_ptr,NodePtrCompare)
+   template<class NodePtrCompare, class H_Alpha>
+   static node_ptr insert_equal
+      (node_ptr header, node_ptr hint, node_ptr new_node, NodePtrCompare comp
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
       ,std::size_t tree_size, H_Alpha h_alpha, std::size_t &max_tree_size)
    {
       std::size_t depth;
@@ -226,10 +341,17 @@ class sgtree_algorithms
       return new_node;
    }
 
+<<<<<<< HEAD
    //! @copydoc ::boost::intrusive::bstree_algorithms::insert_before(const node_ptr&,const node_ptr&,const node_ptr&)
    template<class H_Alpha>
    static node_ptr insert_before
       (const node_ptr & header, const node_ptr & pos, const node_ptr & new_node
+=======
+   //! @copydoc ::boost::intrusive::bstree_algorithms::insert_before(node_ptr,node_ptr,node_ptr)
+   template<class H_Alpha>
+   static node_ptr insert_before
+      (node_ptr header, node_ptr pos, node_ptr new_node
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
       ,std::size_t tree_size, H_Alpha h_alpha, std::size_t &max_tree_size)
    {
       std::size_t depth;
@@ -238,9 +360,15 @@ class sgtree_algorithms
       return new_node;
    }
 
+<<<<<<< HEAD
    //! @copydoc ::boost::intrusive::bstree_algorithms::push_back(const node_ptr&,const node_ptr&)
    template<class H_Alpha>
    static void push_back(const node_ptr & header, const node_ptr & new_node
+=======
+   //! @copydoc ::boost::intrusive::bstree_algorithms::push_back(node_ptr,node_ptr)
+   template<class H_Alpha>
+   static void push_back(node_ptr header, node_ptr new_node
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
          ,std::size_t tree_size, H_Alpha h_alpha, std::size_t &max_tree_size)
    {
       std::size_t depth;
@@ -248,9 +376,15 @@ class sgtree_algorithms
       rebalance_after_insertion(new_node, depth, tree_size+1, h_alpha, max_tree_size);
    }
 
+<<<<<<< HEAD
    //! @copydoc ::boost::intrusive::bstree_algorithms::push_front(const node_ptr&,const node_ptr&)
    template<class H_Alpha>
    static void push_front(const node_ptr & header, const node_ptr & new_node
+=======
+   //! @copydoc ::boost::intrusive::bstree_algorithms::push_front(node_ptr,node_ptr)
+   template<class H_Alpha>
+   static void push_front(node_ptr header, node_ptr new_node
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
          ,std::size_t tree_size, H_Alpha h_alpha, std::size_t &max_tree_size)
    {
       std::size_t depth;
@@ -261,7 +395,11 @@ class sgtree_algorithms
    //! @copydoc ::boost::intrusive::bstree_algorithms::insert_unique_check(const const_node_ptr&,const KeyType&,KeyNodePtrCompare,insert_commit_data&)
    template<class KeyType, class KeyNodePtrCompare>
    static std::pair<node_ptr, bool> insert_unique_check
+<<<<<<< HEAD
       (const const_node_ptr & header,  const KeyType &key
+=======
+      (const_node_ptr header,  const KeyType &key
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
       ,KeyNodePtrCompare comp, insert_commit_data &commit_data)
    {
       std::size_t depth;
@@ -274,7 +412,11 @@ class sgtree_algorithms
    //! @copydoc ::boost::intrusive::bstree_algorithms::insert_unique_check(const const_node_ptr&,const node_ptr&,const KeyType&,KeyNodePtrCompare,insert_commit_data&)
    template<class KeyType, class KeyNodePtrCompare>
    static std::pair<node_ptr, bool> insert_unique_check
+<<<<<<< HEAD
       (const const_node_ptr & header, const node_ptr &hint, const KeyType &key
+=======
+      (const_node_ptr header, node_ptr hint, const KeyType &key
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
       ,KeyNodePtrCompare comp, insert_commit_data &commit_data)
    {
       std::size_t depth;
@@ -285,18 +427,30 @@ class sgtree_algorithms
       return ret;
    }
 
+<<<<<<< HEAD
    //! @copydoc ::boost::intrusive::bstree_algorithms::insert_unique_commit(const node_ptr&,const node_ptr&,const insert_commit_data&)
    template<class H_Alpha>
    BOOST_INTRUSIVE_FORCEINLINE static void insert_unique_commit
       (const node_ptr & header, const node_ptr & new_value, const insert_commit_data &commit_data
+=======
+   //! @copydoc ::boost::intrusive::bstree_algorithms::insert_unique_commit(node_ptr,node_ptr,const insert_commit_data&)
+   template<class H_Alpha>
+   BOOST_INTRUSIVE_FORCEINLINE static void insert_unique_commit
+      (node_ptr header, node_ptr new_value, const insert_commit_data &commit_data
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
       ,std::size_t tree_size, H_Alpha h_alpha, std::size_t &max_tree_size)
    {  return insert_commit(header, new_value, commit_data, tree_size, h_alpha, max_tree_size);  }
 
    //! @copydoc ::boost::intrusive::bstree_algorithms::transfer_unique
    template<class NodePtrCompare, class H_Alpha, class AlphaByMaxSize>
    static bool transfer_unique
+<<<<<<< HEAD
       ( const node_ptr & header1, NodePtrCompare comp, std::size_t tree1_size, std::size_t &max_tree1_size
       , const node_ptr &header2, const node_ptr & z,   std::size_t tree2_size, std::size_t &max_tree2_size
+=======
+      ( node_ptr header1, NodePtrCompare comp, std::size_t tree1_size, std::size_t &max_tree1_size
+      , node_ptr header2, node_ptr z,   std::size_t tree2_size, std::size_t &max_tree2_size
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
       ,H_Alpha h_alpha, AlphaByMaxSize alpha_by_maxsize)
    {
       insert_commit_data commit_data;
@@ -311,8 +465,13 @@ class sgtree_algorithms
    //! @copydoc ::boost::intrusive::bstree_algorithms::transfer_equal
    template<class NodePtrCompare, class H_Alpha, class AlphaByMaxSize>
    static void transfer_equal
+<<<<<<< HEAD
       ( const node_ptr & header1, NodePtrCompare comp, std::size_t tree1_size, std::size_t &max_tree1_size
       , const node_ptr &header2, const node_ptr & z,   std::size_t tree2_size, std::size_t &max_tree2_size
+=======
+      ( node_ptr header1, NodePtrCompare comp, std::size_t tree1_size, std::size_t &max_tree1_size
+      , node_ptr header2, node_ptr z,   std::size_t tree2_size, std::size_t &max_tree2_size
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
       ,H_Alpha h_alpha, AlphaByMaxSize alpha_by_maxsize)
    {
       insert_commit_data commit_data;
@@ -323,6 +482,7 @@ class sgtree_algorithms
 
    #ifdef BOOST_INTRUSIVE_DOXYGEN_INVOKED
    //! @copydoc ::boost::intrusive::bstree_algorithms::is_header
+<<<<<<< HEAD
    static bool is_header(const const_node_ptr & p);
 
    //! @copydoc ::boost::intrusive::bstree_algorithms::is_header
@@ -330,6 +490,15 @@ class sgtree_algorithms
 
    //! @copydoc ::boost::intrusive::bstree_algorithms::rebalance_subtree
    static node_ptr rebalance_subtree(const node_ptr & old_root)
+=======
+   static bool is_header(const_node_ptr p);
+
+   //! @copydoc ::boost::intrusive::bstree_algorithms::is_header
+   static void rebalance(node_ptr header);
+
+   //! @copydoc ::boost::intrusive::bstree_algorithms::rebalance_subtree
+   static node_ptr rebalance_subtree(node_ptr old_root)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
    #endif   //#ifdef BOOST_INTRUSIVE_DOXYGEN_INVOKED
 
    /// @cond
@@ -337,7 +506,11 @@ class sgtree_algorithms
 
    template<class KeyType, class KeyNodePtrCompare>
    static void insert_equal_upper_bound_check
+<<<<<<< HEAD
       (const node_ptr & header,  const KeyType &key
+=======
+      (node_ptr header,  const KeyType &key
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
       ,KeyNodePtrCompare comp, insert_commit_data &commit_data)
    {
       std::size_t depth;
@@ -347,7 +520,11 @@ class sgtree_algorithms
 
    template<class H_Alpha>
    static void insert_commit
+<<<<<<< HEAD
       (const node_ptr & header, const node_ptr & new_value, const insert_commit_data &commit_data
+=======
+      (node_ptr header, node_ptr new_value, const insert_commit_data &commit_data
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
       ,std::size_t tree_size, H_Alpha h_alpha, std::size_t &max_tree_size)
    {
       bstree_algo::insert_unique_commit(header, new_value, commit_data);
@@ -356,7 +533,11 @@ class sgtree_algorithms
 
    template<class H_Alpha>
    static void rebalance_after_insertion
+<<<<<<< HEAD
       (const node_ptr &x, std::size_t depth
+=======
+      (node_ptr x, std::size_t depth
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
       , std::size_t tree_size, H_Alpha h_alpha, std::size_t &max_tree_size)
    {
       if(tree_size > max_tree_size)

@@ -7,10 +7,46 @@
 \newcommand{\ghit}{\href{https://github.com/eddelbuettel/bh/issues/#1}{##1}}
 \newcommand{\ghpr}{\href{https://github.com/eddelbuettel/bh/pull/#1}{##1}}
 
+<<<<<<< HEAD
 \section{Changes in version 1.66.0-1 (2018-02-12)}{
   \itemize{
     \item Upgraded to \boost 1.66.0 (plus the few local tweaks)
     \item Added Boost \boostPkg{compute}) (as requested in \ghit{16})
+=======
+\section{Changes in version 1.72.0-2 (2019-12-16)}{
+  \itemize{
+    \item Bugfix release correction numeric/odeint/stepper/... renaming
+  }
+}
+
+\section{Changes in version 1.72.0-1 (2019-12-15)}{
+  \itemize{
+    \item Upgraded to \boost 1.72.0 (plus the few local tweaks) (\ghpr{65})
+    \item Applied the standard minimal patch with required changes, as
+    well as the newer changeset for diagnostics pragma suppression.
+    \item No longer install \boostPkg{filesystem} _explicitly_ though
+    some files are carried in (\ghit{55})
+    \item Added \boostPkg{mp11} (as requested in \ghit{62})
+    \item Added \boostPkg{polygon} (as requested in \ghit{63})
+  }
+}
+
+\section{Changes in version 1.69.0-1 (2019-01-07)}{
+  \itemize{
+    \item Upgraded to \boost 1.69.0 (plus the few local tweaks)
+    \item Applied the standard minimal patch with required changes, as
+    well as the newer changeset for diagnostics pragma suppression.
+    \item Following a pre-release in December, maintainers of three
+    packages affected by the 1.66 to 1.69 were contacted, and changes
+    were prepared.
+  }
+}
+
+\section{Changes in version 1.66.0-1 (2018-02-12)}{
+  \itemize{
+    \item Upgraded to \boost 1.66.0 (plus the few local tweaks)
+    \item Added Boost \boostPkg{compute} (as requested in \ghit{16})
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
   }
 }
     
@@ -20,8 +56,13 @@
     upstream source with several minor tweaks (as before)
     \item Fourth tweak corrects a misplaced curly brace (see the
     Boost ublas GitHub repo and its issue #40)
+<<<<<<< HEAD
     \item Added Boost \boostPkg{align}) (as requested in \ghit{32})
     \item Added Boost \boostPkg{sort}) (as requested in \ghit{35})
+=======
+    \item Added Boost \boostPkg{align} (as requested in \ghit{32})
+    \item Added Boost \boostPkg{sort} (as requested in \ghit{35})
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     \item Added Boost \boostPkg{multiprecision} by fixing a script typo
     (as requested in \ghit{42})
     \item Updated Travis CI support via newer \code{run.sh}

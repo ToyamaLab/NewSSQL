@@ -24,36 +24,66 @@
 
 namespace boost {
 namespace container {
+<<<<<<< HEAD
 namespace container_detail {
 
 template<class AllocatorType>
 inline void swap_alloc(AllocatorType &, AllocatorType &, container_detail::false_type)
+=======
+namespace dtl {
+
+template<class AllocatorType>
+inline void swap_alloc(AllocatorType &, AllocatorType &, dtl::false_type)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
    BOOST_NOEXCEPT_OR_NOTHROW
 {}
 
 template<class AllocatorType>
+<<<<<<< HEAD
 inline void swap_alloc(AllocatorType &l, AllocatorType &r, container_detail::true_type)
 {  boost::adl_move_swap(l, r);   }
 
 template<class AllocatorType>
 inline void assign_alloc(AllocatorType &, const AllocatorType &, container_detail::false_type)
+=======
+inline void swap_alloc(AllocatorType &l, AllocatorType &r, dtl::true_type)
+{  boost::adl_move_swap(l, r);   }
+
+template<class AllocatorType>
+inline void assign_alloc(AllocatorType &, const AllocatorType &, dtl::false_type)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
    BOOST_NOEXCEPT_OR_NOTHROW
 {}
 
 template<class AllocatorType>
+<<<<<<< HEAD
 inline void assign_alloc(AllocatorType &l, const AllocatorType &r, container_detail::true_type)
 {  l = r;   }
 
 template<class AllocatorType>
 inline void move_alloc(AllocatorType &, AllocatorType &, container_detail::false_type)
+=======
+inline void assign_alloc(AllocatorType &l, const AllocatorType &r, dtl::true_type)
+{  l = r;   }
+
+template<class AllocatorType>
+inline void move_alloc(AllocatorType &, AllocatorType &, dtl::false_type)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
    BOOST_NOEXCEPT_OR_NOTHROW
 {}
 
 template<class AllocatorType>
+<<<<<<< HEAD
 inline void move_alloc(AllocatorType &l, AllocatorType &r, container_detail::true_type)
 {  l = ::boost::move(r);   }
 
 }  //namespace container_detail {
+=======
+inline void move_alloc(AllocatorType &l, AllocatorType &r, dtl::true_type)
+{  l = ::boost::move(r);   }
+
+}  //namespace dtl {
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 }  //namespace container {
 }  //namespace boost {
 

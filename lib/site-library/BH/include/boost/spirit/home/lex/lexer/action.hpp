@@ -51,9 +51,14 @@ namespace boost { namespace spirit { namespace lex
         Subject subject;
         Action f;
 
+<<<<<<< HEAD
     private:
         // silence MSVC warning C4512: assignment operator could not be generated
         action& operator= (action const&);
+=======
+        // silence MSVC warning C4512: assignment operator could not be generated
+        BOOST_DELETED_FUNCTION(action& operator= (action const&))
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     };
 
 }}}

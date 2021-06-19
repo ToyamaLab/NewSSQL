@@ -13,10 +13,16 @@
 // Also need to undefine the Free macro
 #undef Free
 #include <windows.h>
+<<<<<<< HEAD
+=======
+#else // _WIN32
+#include <pthread.h>
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 #endif // _WIN32
 
 namespace later {
 
+<<<<<<< HEAD
 inline void later(void (*func)(void*), void* data, double secs) {
   // This function works by retrieving the later::execLaterNative function
   // pointer using R_GetCCallable the first time it's called (per compilation
@@ -27,14 +33,45 @@ inline void later(void (*func)(void*), void* data, double secs) {
   // main thread. We accomplish this using a statically initialized object,
   // in later_api.h. Therefore, any other packages wanting to call
   // execLaterNative need to use later_api.h, not later.h.
+=======
+// This is the version of the later API provided by this file. Ideally, this
+// should match the version of the API provided by the later DLL that is
+// installed on the user's system. However, since this file is compiled into
+// other packages (like httpuv and promises), it is possible that there will
+// be a mismatch. In the future we will be able to compare at runtime it to
+// the result from apiVersion(), with:
+//
+// int (*dll_api_version)() = (int (*)()) R_GetCCallable("later", "apiVersion");
+// if (LATER_H_API_VERSION != (*dll_api_version)()) { ... }
+#define LATER_H_API_VERSION 2
+#define GLOBAL_LOOP 0
+
+
+inline void later(void (*func)(void*), void* data, double secs, int loop_id) {
+  // This function works by retrieving the later::execLaterNative2 function
+  // pointer using R_GetCCallable the first time it's called (per compilation
+  // unit, since it's inline). execLaterNative2 is designed to be safe to call
+  // from any thread, but R_GetCCallable is only safe to call from R's main
+  // thread (otherwise you get stack imbalance warnings or worse). Therefore,
+  // we have to ensure that the first call to execLaterNative2 happens on the
+  // main thread. We accomplish this using a statically initialized object,
+  // in later_api.h. Therefore, any other packages wanting to call
+  // execLaterNative2 need to use later_api.h, not later.h.
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
   //
   // You may wonder why we used the filenames later_api.h/later.h instead of
   // later.h/later_impl.h; it's because Rcpp treats $PACKAGE.h files
   // specially by including them in RcppExports.cpp, and we definitely
   // do not want the static initialization to happen there.
+<<<<<<< HEAD
   
   // The function type for the real execLaterNative
   typedef void (*elnfun)(void (*func)(void*), void*, double);
+=======
+
+  // The function type for the real execLaterNative2
+  typedef void (*elnfun)(void (*func)(void*), void*, double, int);
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
   static elnfun eln = NULL;
   if (!eln) {
     // Initialize if necessary
@@ -42,6 +79,7 @@ inline void later(void (*func)(void*), void* data, double secs) {
       // We're not initialized but someone's trying to actually schedule
       // some code to be executed!
       REprintf(
+<<<<<<< HEAD
         "Warning: later::execLaterNative called in uninitialized state. "
         "If you're using <later.h>, please switch to <later_api.h>.\n"
       );
@@ -49,21 +87,47 @@ inline void later(void (*func)(void*), void* data, double secs) {
     eln = (elnfun)R_GetCCallable("later", "execLaterNative");
   }
   
+=======
+        "Warning: later::execLaterNative2 called in uninitialized state. "
+        "If you're using <later.h>, please switch to <later_api.h>.\n"
+      );
+    }
+    eln = (elnfun)R_GetCCallable("later", "execLaterNative2");
+  }
+
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
   // We didn't want to execute anything, just initialize
   if (!func) {
     return;
   }
+<<<<<<< HEAD
   
   eln(func, data, secs);
 }
 
+=======
+
+  eln(func, data, secs, loop_id);
+}
+
+inline void later(void (*func)(void*), void* data, double secs) {
+  later(func, data, secs, GLOBAL_LOOP);
+}
+
+
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 class BackgroundTask {
 
 public:
   BackgroundTask() {}
   virtual ~BackgroundTask() {}
+<<<<<<< HEAD
   
   // Start executing the task  
+=======
+
+  // Start executing the task
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
   void begin() {
 #ifndef _WIN32
     pthread_attr_t attr;
@@ -91,7 +155,11 @@ protected:
   // to be passed into or out of the Execute method must be
   // included as fields on the Task subclass object.
   virtual void execute() = 0;
+<<<<<<< HEAD
   
+=======
+
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
   // A short task that runs on the main R thread after the
   // background task has completed. It's safe to access the
   // R runtime and R data structures from here.
@@ -105,14 +173,22 @@ private:
     later(&BackgroundTask::result_callback, task, 0);
     return NULL;
   }
+<<<<<<< HEAD
   
+=======
+
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 #ifdef _WIN32
   static DWORD WINAPI task_main_win(LPVOID lpParameter) {
     task_main(lpParameter);
     return 1;
   }
 #endif
+<<<<<<< HEAD
   
+=======
+
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
   static void result_callback(void* data) {
     BackgroundTask* task = reinterpret_cast<BackgroundTask*>(data);
     // TODO: Error handling

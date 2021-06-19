@@ -26,6 +26,10 @@
 
 #include <boost/geometry/algorithms/is_empty.hpp>
 
+<<<<<<< HEAD
+=======
+#include <boost/geometry/algorithms/detail/envelope/areal.hpp>
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 #include <boost/geometry/algorithms/detail/envelope/box.hpp>
 #include <boost/geometry/algorithms/detail/envelope/linear.hpp>
 #include <boost/geometry/algorithms/detail/envelope/multipoint.hpp>
@@ -35,6 +39,7 @@
 
 #include <boost/geometry/algorithms/dispatch/envelope.hpp>
 
+<<<<<<< HEAD
 
 namespace boost { namespace geometry
 {
@@ -104,4 +109,6 @@ struct envelope<MultiPolygon, multi_polygon_tag>
 
 }} // namespace boost::geometry
 
+=======
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 #endif // BOOST_GEOMETRY_ALGORITHMS_DETAIL_ENVELOPE_IMPLEMENTATION_HPP

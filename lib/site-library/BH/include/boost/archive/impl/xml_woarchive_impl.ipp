@@ -13,7 +13,10 @@
 #include <string>
 #include <algorithm> // std::copy
 #include <locale>
+<<<<<<< HEAD
 #include <exception>
+=======
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 #include <cstring> // strlen
 #include <cstdlib> // mbtowc
@@ -32,6 +35,11 @@ namespace std{
 } // namespace std
 #endif
 
+<<<<<<< HEAD
+=======
+#include <boost/core/uncaught_exceptions.hpp>
+
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 #include <boost/archive/xml_woarchive.hpp>
 #include <boost/archive/detail/utf8_codecvt_facet.hpp>
 
@@ -139,7 +147,11 @@ xml_woarchive_impl<Archive>::xml_woarchive_impl(
 template<class Archive>
 BOOST_WARCHIVE_DECL
 xml_woarchive_impl<Archive>::~xml_woarchive_impl(){
+<<<<<<< HEAD
     if(std::uncaught_exception())
+=======
+    if(boost::core::uncaught_exceptions() > 0)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
         return;
     if(0 == (this->get_flags() & no_header)){
         os << L"</boost_serialization>";

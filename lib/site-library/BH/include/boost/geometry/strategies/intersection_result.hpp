@@ -13,12 +13,18 @@
 #ifndef BOOST_GEOMETRY_STRATEGIES_INTERSECTION_RESULT_HPP
 #define BOOST_GEOMETRY_STRATEGIES_INTERSECTION_RESULT_HPP
 
+<<<<<<< HEAD
 #if defined(HAVE_MATRIX_AS_STRING)
 #include <string>
 #endif
 
 #include <cstddef>
 
+=======
+#include <cstddef>
+
+#include <boost/geometry/policies/robustness/segment_ratio.hpp>
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 
 namespace boost { namespace geometry
@@ -57,7 +63,15 @@ struct fraction_type
 \brief return-type for segment-intersection
 \note Set in intersection_points.hpp, from segment_intersection_info
 */
+<<<<<<< HEAD
 template <typename Point, typename SegmentRatio>
+=======
+template
+<
+    typename Point,
+    typename SegmentRatio = segment_ratio<typename coordinate_type<Point>::type>
+>
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 struct segment_intersection_points
 {
     std::size_t count; // The number of intersection points

@@ -3,8 +3,13 @@
 // Copyright (c) 2011-2015 Barend Gehrels, Amsterdam, the Netherlands.
 // Copyright (c) 2017 Adam Wulkiewicz, Lodz, Poland.
 
+<<<<<<< HEAD
 // This file was modified by Oracle on 2015, 2017.
 // Modifications copyright (c) 2015-2017 Oracle and/or its affiliates.
+=======
+// This file was modified by Oracle on 2015, 2017, 2018, 2019.
+// Modifications copyright (c) 2015-2019 Oracle and/or its affiliates.
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 // Contributed and/or modified by Menelaos Karavelas, on behalf of Oracle
 // Contributed and/or modified by Adam Wulkiewicz, on behalf of Oracle
@@ -19,6 +24,11 @@
 #include <cstddef>
 #include <vector>
 #include <boost/range.hpp>
+<<<<<<< HEAD
+=======
+#include <boost/type_traits/is_integral.hpp>
+
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 #include <boost/geometry/core/access.hpp>
 #include <boost/geometry/core/coordinate_type.hpp>
 #include <boost/geometry/algorithms/assign.hpp>
@@ -30,15 +40,44 @@ namespace boost { namespace geometry
 namespace detail { namespace partition
 {
 
+<<<<<<< HEAD
+=======
+template <typename T, bool IsIntegral = boost::is_integral<T>::value>
+struct divide_interval
+{
+    static inline T apply(T const& mi, T const& ma)
+    {
+        static T const two = 2;
+        return (mi + ma) / two;
+    }
+};
+
+template <typename T>
+struct divide_interval<T, true>
+{
+    static inline T apply(T const& mi, T const& ma)
+    {
+        // avoid overflow
+        return mi / 2 + ma / 2 + (mi % 2 + ma % 2) / 2;
+    }
+};
+
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 template <int Dimension, typename Box>
 inline void divide_box(Box const& box, Box& lower_box, Box& upper_box)
 {
     typedef typename coordinate_type<Box>::type ctype;
 
     // Divide input box into two parts, e.g. left/right
+<<<<<<< HEAD
     ctype two = 2;
     ctype mid = (geometry::get<min_corner, Dimension>(box)
             + geometry::get<max_corner, Dimension>(box)) / two;
+=======
+    ctype mid = divide_interval<ctype>::apply(
+                    geometry::get<min_corner, Dimension>(box),
+                    geometry::get<max_corner, Dimension>(box));
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
     lower_box = box;
     upper_box = box;
@@ -765,7 +804,11 @@ public:
                              std::size_t min_elements)
     {
         return apply(forward_range1, forward_range2, visitor,
+<<<<<<< HEAD
                      expand_policy1, overlaps_policy1, expand_policy2, overlaps_policy1,
+=======
+                     expand_policy1, overlaps_policy1, expand_policy2, overlaps_policy2,
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
                      min_elements, detail::partition::visit_no_policy());
     }
 

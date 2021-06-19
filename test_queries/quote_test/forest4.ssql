@@ -1,0 +1,4 @@
+GENERATE HTML {
+   [e.manager, e.id, e.salary]!
+}
+from employee e

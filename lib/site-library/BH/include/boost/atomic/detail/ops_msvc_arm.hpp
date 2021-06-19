@@ -54,6 +54,10 @@ namespace detail {
 
 struct msvc_arm_operations_base
 {
+<<<<<<< HEAD
+=======
+    static BOOST_CONSTEXPR_OR_CONST bool full_cas_based = false;
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     static BOOST_CONSTEXPR_OR_CONST bool is_always_lock_free = true;
 
     static BOOST_FORCEINLINE void hardware_full_fence() BOOST_NOEXCEPT
@@ -65,7 +69,11 @@ struct msvc_arm_operations_base
     {
         BOOST_ATOMIC_DETAIL_COMPILER_BARRIER();
 
+<<<<<<< HEAD
         if ((order & memory_order_release) != 0)
+=======
+        if ((static_cast< unsigned int >(order) & static_cast< unsigned int >(memory_order_release)) != 0u)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
             hardware_full_fence();
 
         BOOST_ATOMIC_DETAIL_COMPILER_BARRIER();
@@ -85,7 +93,11 @@ struct msvc_arm_operations_base
     {
         BOOST_ATOMIC_DETAIL_COMPILER_BARRIER();
 
+<<<<<<< HEAD
         if ((order & (memory_order_consume | memory_order_acquire)) != 0)
+=======
+        if ((static_cast< unsigned int >(order) & (static_cast< unsigned int >(memory_order_consume) | static_cast< unsigned int >(memory_order_acquire))) != 0u)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
             hardware_full_fence();
 
         BOOST_ATOMIC_DETAIL_COMPILER_BARRIER();
@@ -94,6 +106,7 @@ struct msvc_arm_operations_base
     static BOOST_FORCEINLINE BOOST_CONSTEXPR memory_order cas_common_order(memory_order success_order, memory_order failure_order) BOOST_NOEXCEPT
     {
         // Combine order flags together and promote memory_order_consume to memory_order_acquire
+<<<<<<< HEAD
         return static_cast< memory_order >(((failure_order | success_order) & ~memory_order_consume) | (((failure_order | success_order) & memory_order_consume) << 1u));
     }
 };
@@ -103,6 +116,22 @@ struct msvc_arm_operations :
     public msvc_arm_operations_base
 {
     typedef T storage_type;
+=======
+        return static_cast< memory_order >(((static_cast< unsigned int >(failure_order) | static_cast< unsigned int >(success_order)) & ~static_cast< unsigned int >(memory_order_consume))
+            | (((static_cast< unsigned int >(failure_order) | static_cast< unsigned int >(success_order)) & static_cast< unsigned int >(memory_order_consume)) << 1u));
+    }
+};
+
+template< std::size_t Size, bool Signed, typename Derived >
+struct msvc_arm_operations :
+    public msvc_arm_operations_base
+{
+    typedef typename make_storage_type< Size >::type storage_type;
+    typedef typename make_storage_type< Size >::aligned aligned_storage_type;
+
+    static BOOST_CONSTEXPR_OR_CONST std::size_t storage_size = Size;
+    static BOOST_CONSTEXPR_OR_CONST bool is_signed = Signed;
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
     static BOOST_FORCEINLINE storage_type fetch_sub(storage_type volatile& storage, storage_type v, memory_order order) BOOST_NOEXCEPT
     {
@@ -129,6 +158,7 @@ struct msvc_arm_operations :
 
 template< bool Signed >
 struct operations< 1u, Signed > :
+<<<<<<< HEAD
     public msvc_arm_operations< typename make_storage_type< 1u, Signed >::type, operations< 1u, Signed > >
 {
     typedef msvc_arm_operations< typename make_storage_type< 1u, Signed >::type, operations< 1u, Signed > > base_type;
@@ -137,6 +167,12 @@ struct operations< 1u, Signed > :
 
     static BOOST_CONSTEXPR_OR_CONST std::size_t storage_size = 1u;
     static BOOST_CONSTEXPR_OR_CONST bool is_signed = Signed;
+=======
+    public msvc_arm_operations< 1u, Signed, operations< 1u, Signed > >
+{
+    typedef msvc_arm_operations< 1u, Signed, operations< 1u, Signed > > base_type;
+    typedef typename base_type::storage_type storage_type;
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
     static BOOST_FORCEINLINE void store(storage_type volatile& storage, storage_type v, memory_order order) BOOST_NOEXCEPT
     {
@@ -298,6 +334,7 @@ struct operations< 1u, Signed > :
 
 template< bool Signed >
 struct operations< 2u, Signed > :
+<<<<<<< HEAD
     public msvc_arm_operations< typename make_storage_type< 2u, Signed >::type, operations< 2u, Signed > >
 {
     typedef msvc_arm_operations< typename make_storage_type< 2u, Signed >::type, operations< 2u, Signed > > base_type;
@@ -306,6 +343,12 @@ struct operations< 2u, Signed > :
 
     static BOOST_CONSTEXPR_OR_CONST std::size_t storage_size = 2u;
     static BOOST_CONSTEXPR_OR_CONST bool is_signed = Signed;
+=======
+    public msvc_arm_operations< 2u, Signed, operations< 2u, Signed > >
+{
+    typedef msvc_arm_operations< 2u, Signed, operations< 2u, Signed > > base_type;
+    typedef typename base_type::storage_type storage_type;
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
     static BOOST_FORCEINLINE void store(storage_type volatile& storage, storage_type v, memory_order order) BOOST_NOEXCEPT
     {
@@ -467,6 +510,7 @@ struct operations< 2u, Signed > :
 
 template< bool Signed >
 struct operations< 4u, Signed > :
+<<<<<<< HEAD
     public msvc_arm_operations< typename make_storage_type< 4u, Signed >::type, operations< 4u, Signed > >
 {
     typedef msvc_arm_operations< typename make_storage_type< 4u, Signed >::type, operations< 4u, Signed > > base_type;
@@ -475,6 +519,12 @@ struct operations< 4u, Signed > :
 
     static BOOST_CONSTEXPR_OR_CONST std::size_t storage_size = 4u;
     static BOOST_CONSTEXPR_OR_CONST bool is_signed = Signed;
+=======
+    public msvc_arm_operations< 4u, Signed, operations< 4u, Signed > >
+{
+    typedef msvc_arm_operations< 4u, Signed, operations< 4u, Signed > > base_type;
+    typedef typename base_type::storage_type storage_type;
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
     static BOOST_FORCEINLINE void store(storage_type volatile& storage, storage_type v, memory_order order) BOOST_NOEXCEPT
     {
@@ -636,6 +686,7 @@ struct operations< 4u, Signed > :
 
 template< bool Signed >
 struct operations< 8u, Signed > :
+<<<<<<< HEAD
     public msvc_arm_operations< typename make_storage_type< 8u, Signed >::type, operations< 8u, Signed > >
 {
     typedef msvc_arm_operations< typename make_storage_type< 8u, Signed >::type, operations< 8u, Signed > > base_type;
@@ -644,6 +695,12 @@ struct operations< 8u, Signed > :
 
     static BOOST_CONSTEXPR_OR_CONST std::size_t storage_size = 8u;
     static BOOST_CONSTEXPR_OR_CONST bool is_signed = Signed;
+=======
+    public msvc_arm_operations< 8u, Signed, operations< 8u, Signed > >
+{
+    typedef msvc_arm_operations< 8u, Signed, operations< 8u, Signed > > base_type;
+    typedef typename base_type::storage_type storage_type;
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
     static BOOST_FORCEINLINE void store(storage_type volatile& storage, storage_type v, memory_order order) BOOST_NOEXCEPT
     {

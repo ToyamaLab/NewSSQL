@@ -33,7 +33,13 @@
 
 #ifdef BOOST_MSVC
 #  pragma warning(push)
+<<<<<<< HEAD
 #  pragma warning(disable: 4800)
+=======
+#if BOOST_MSVC < 1910
+#pragma warning(disable:4800)
+#endif
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 #endif
 
 namespace boost{

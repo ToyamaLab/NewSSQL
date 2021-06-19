@@ -25,7 +25,11 @@
 //
 
 #include <boost/config.hpp>
+<<<<<<< HEAD
 #include <boost/predef.h>
+=======
+#include <boost/predef/platform/windows_runtime.h>
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 #if BOOST_PLAT_WINDOWS_RUNTIME
 #include <thread>
@@ -60,6 +64,7 @@ namespace detail
 {
 
 #if !defined( BOOST_USE_WINDOWS_H ) && !BOOST_PLAT_WINDOWS_RUNTIME
+<<<<<<< HEAD
 #if !BOOST_COMP_CLANG || !defined __MINGW32__
   extern "C" void __stdcall Sleep( unsigned long ms );
 #else
@@ -73,6 +78,27 @@ namespace detail
 #endif
 
 inline void yield( unsigned k )
+=======
+
+#if defined(__clang__) && defined(__x86_64__)
+// clang x64 warns that __stdcall is ignored
+# define BOOST_SP_STDCALL
+#else
+# define BOOST_SP_STDCALL __stdcall
+#endif
+
+#if defined(__LP64__) // Cygwin 64
+  extern "C" __declspec(dllimport) void BOOST_SP_STDCALL Sleep( unsigned int ms );
+#else
+  extern "C" __declspec(dllimport) void BOOST_SP_STDCALL Sleep( unsigned long ms );
+#endif
+
+#undef BOOST_SP_STDCALL
+
+#endif // !defined( BOOST_USE_WINDOWS_H ) && !BOOST_PLAT_WINDOWS_RUNTIME
+
+inline void yield( unsigned k ) BOOST_NOEXCEPT
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 {
     if( k < 4 )
     {

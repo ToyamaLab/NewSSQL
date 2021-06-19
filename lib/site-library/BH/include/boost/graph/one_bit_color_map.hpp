@@ -16,6 +16,10 @@
 
 #include <boost/property_map/property_map.hpp>
 #include <boost/graph/properties.hpp>
+<<<<<<< HEAD
+=======
+#include <boost/graph/detail/mpi_include.hpp>
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 #include <boost/shared_array.hpp>
 #include <boost/config.hpp>
 #include <boost/assert.hpp>
@@ -97,8 +101,14 @@ make_one_bit_color_map(std::size_t n, const IndexMap& index_map)
 
 } // end namespace boost
 
+<<<<<<< HEAD
 #endif // BOOST_ONE_BIT_COLOR_MAP_HPP
 
 #ifdef BOOST_GRAPH_USE_MPI
 #  include <boost/graph/distributed/one_bit_color_map.hpp>
 #endif
+=======
+#include BOOST_GRAPH_MPI_INCLUDE(<boost/graph/distributed/one_bit_color_map.hpp>)
+
+#endif // BOOST_ONE_BIT_COLOR_MAP_HPP
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce

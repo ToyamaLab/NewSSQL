@@ -14,6 +14,11 @@ config                  Set the default configuration for plotly
 embed_notebook          Embed a plot as an iframe into a Jupyter
                         Notebook
 event_data              Access plotly user input event data in shiny
+<<<<<<< HEAD
+=======
+event_register          Register a shiny input value
+event_unregister        Un-register a shiny input value
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 export                  Export a plotly graph to a static file
 geom2trace              Convert a "basic" geoms to a plotly.js trace.
 get_figure              Request a figure object
@@ -37,7 +42,11 @@ last_plot               Retrieve the last plot to be modified or
 layout                  Modify the layout of a plotly visualization
 mic                     Mic data
 offline                 Plotly Offline
+<<<<<<< HEAD
 orca                    Static image export via orca
+=======
+orca                    Static image exporting
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 partial_bundle          Use a partial bundle of plotly.js
 plot_dendro             Plot an interactive dendrogram
 plot_geo                Initiate a plotly-geo object
@@ -57,7 +66,11 @@ print.api_grid          Print a plotly grid object
 print.api_grid_local    Print a plotly grid object
 print.api_plot          Print a plot on plotly's platform
 rangeslider             Add a range slider to the x-axis
+<<<<<<< HEAD
 raster2uri              Convert a raster object to a data URI
+=======
+raster2uri              Encode a raster object as a data URI
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 remove_typedarray_polyfill
                         Remove TypedArray polyfill
 res_mn                  Minnesotan Indian Reservation Lands

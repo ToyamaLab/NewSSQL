@@ -11,10 +11,19 @@
 #ifndef BOOST_COMPUTE_ALGORITHM_FIND_IF_NOT_HPP
 #define BOOST_COMPUTE_ALGORITHM_FIND_IF_NOT_HPP
 
+<<<<<<< HEAD
+=======
+#include <boost/static_assert.hpp>
+
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 #include <boost/compute/system.hpp>
 #include <boost/compute/functional.hpp>
 #include <boost/compute/command_queue.hpp>
 #include <boost/compute/algorithm/find_if.hpp>
+<<<<<<< HEAD
+=======
+#include <boost/compute/type_traits/is_device_iterator.hpp>
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 namespace boost {
 namespace compute {
@@ -31,6 +40,10 @@ inline InputIterator find_if_not(InputIterator first,
                                  UnaryPredicate predicate,
                                  command_queue &queue = system::default_queue())
 {
+<<<<<<< HEAD
+=======
+    BOOST_STATIC_ASSERT(is_device_iterator<InputIterator>::value);
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     return ::boost::compute::find_if(
                first,
                last,

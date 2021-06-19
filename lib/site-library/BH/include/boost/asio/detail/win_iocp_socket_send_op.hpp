@@ -2,7 +2,11 @@
 // detail/win_iocp_socket_send_op.hpp
 // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 //
+<<<<<<< HEAD
 // Copyright (c) 2003-2017 Christopher M. Kohlhoff (chris at kohlhoff dot com)
+=======
+// Copyright (c) 2003-2019 Christopher M. Kohlhoff (chris at kohlhoff dot com)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 //
 // Distributed under the Boost Software License, Version 1.0. (See accompanying
 // file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
@@ -35,13 +39,18 @@ namespace boost {
 namespace asio {
 namespace detail {
 
+<<<<<<< HEAD
 template <typename ConstBufferSequence, typename Handler>
+=======
+template <typename ConstBufferSequence, typename Handler, typename IoExecutor>
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 class win_iocp_socket_send_op : public operation
 {
 public:
   BOOST_ASIO_DEFINE_HANDLER_PTR(win_iocp_socket_send_op);
 
   win_iocp_socket_send_op(socket_ops::weak_cancel_token_type cancel_token,
+<<<<<<< HEAD
       const ConstBufferSequence& buffers, Handler& handler)
     : operation(&win_iocp_socket_send_op::do_complete),
       cancel_token_(cancel_token),
@@ -49,6 +58,17 @@ public:
       handler_(BOOST_ASIO_MOVE_CAST(Handler)(handler))
   {
     handler_work<Handler>::start(handler_);
+=======
+      const ConstBufferSequence& buffers, Handler& handler,
+      const IoExecutor& io_ex)
+    : operation(&win_iocp_socket_send_op::do_complete),
+      cancel_token_(cancel_token),
+      buffers_(buffers),
+      handler_(BOOST_ASIO_MOVE_CAST(Handler)(handler)),
+      io_executor_(io_ex)
+  {
+    handler_work<Handler, IoExecutor>::start(handler_, io_executor_);
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
   }
 
   static void do_complete(void* owner, operation* base,
@@ -60,7 +80,11 @@ public:
     // Take ownership of the operation object.
     win_iocp_socket_send_op* o(static_cast<win_iocp_socket_send_op*>(base));
     ptr p = { boost::asio::detail::addressof(o->handler_), o, o };
+<<<<<<< HEAD
     handler_work<Handler> w(o->handler_);
+=======
+    handler_work<Handler, IoExecutor> w(o->handler_, o->io_executor_);
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
     BOOST_ASIO_HANDLER_COMPLETION((*o));
 
@@ -100,6 +124,10 @@ private:
   socket_ops::weak_cancel_token_type cancel_token_;
   ConstBufferSequence buffers_;
   Handler handler_;
+<<<<<<< HEAD
+=======
+  IoExecutor io_executor_;
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 };
 
 } // namespace detail

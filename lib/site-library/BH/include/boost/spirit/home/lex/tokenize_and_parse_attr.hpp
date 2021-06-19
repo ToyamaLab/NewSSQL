@@ -57,6 +57,7 @@ namespace boost { namespace spirit { namespace lex
         return compile<qi::domain>(expr).parse(
             iter, lex.end(), unused, unused, attr);
     }
+<<<<<<< HEAD
 
     ///////////////////////////////////////////////////////////////////////////
     template <typename Iterator, typename Lexer, typename ParserExpr
@@ -105,6 +106,8 @@ namespace boost { namespace spirit { namespace lex
           , skip_flag::postskip, BOOST_PP_ENUM_PARAMS(N, attr));
     }
 
+=======
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 }}}
 
 #undef BOOST_SPIRIT_QI_ATTRIBUTE_REFERENCE

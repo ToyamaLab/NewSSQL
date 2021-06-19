@@ -19,6 +19,10 @@ http://www.boost.org/LICENSE_1_0.txt)
 #include <boost/predef/architecture/mips.h>
 #include <boost/predef/architecture/parisc.h>
 #include <boost/predef/architecture/ppc.h>
+<<<<<<< HEAD
+=======
+#include <boost/predef/architecture/ptx.h>
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 #include <boost/predef/architecture/pyramid.h>
 #include <boost/predef/architecture/rs6k.h>
 #include <boost/predef/architecture/sparc.h>

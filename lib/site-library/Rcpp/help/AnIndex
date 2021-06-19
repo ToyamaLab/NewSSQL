@@ -26,6 +26,10 @@ exportAttribute	exportAttribute
 exposeClass	exposeClass
 formals<-,C++Function-method	formals
 formals<--methods	formals
+<<<<<<< HEAD
+=======
+getRcppVersion	getRcppVersion
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 initialize,Module-method	Module-class
 interfacesAttribute	interfacesAttribute
 LdFlags	RcppLdFlags

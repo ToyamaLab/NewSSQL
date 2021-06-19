@@ -22,7 +22,10 @@
 #include <boost/test/detail/fwd_decl.hpp>
 
 #include <boost/test/utils/wrap_stringstream.hpp>
+<<<<<<< HEAD
 #include <boost/test/utils/trivial_singleton.hpp>
+=======
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 #include <boost/test/utils/lazy_ostream.hpp>
 
 // Boost
@@ -109,7 +112,11 @@ private:
 /// @see
 /// - boost::unit_test::test_observer
 /// - boost::unit_test::unit_test_log_formatter
+<<<<<<< HEAD
 class BOOST_TEST_DECL unit_test_log_t : public test_observer, public singleton<unit_test_log_t> {
+=======
+class BOOST_TEST_DECL unit_test_log_t : public test_observer {
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 public:
     // test_observer interface implementation
     virtual void        test_start( counter_t test_cases_amount );
@@ -120,6 +127,10 @@ public:
     virtual void        test_unit_finish( test_unit const&, unsigned long elapsed );
     virtual void        test_unit_skipped( test_unit const&, const_string );
     virtual void        test_unit_aborted( test_unit const& );
+<<<<<<< HEAD
+=======
+    virtual void        test_unit_timed_out( test_unit const& );
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
     virtual void        exception_caught( execution_exception const& ex );
 
@@ -137,6 +148,16 @@ public:
     //! @par Since Boost 1.62
     void                set_stream( output_format, std::ostream& );
 
+<<<<<<< HEAD
+=======
+    //! Returns a pointer to the stream associated to specific logger
+    //!
+    //! @note Returns a null pointer if the format is not found
+    //! @par Since Boost 1.67
+    std::ostream*       get_stream( output_format ) const;
+
+
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     //! Sets the threshold level for all loggers/formatters.
     //!
     //! This will override the log level of all loggers, whether enabled or not.
@@ -214,6 +235,10 @@ private:
     void                log_entry_context( log_level l );
     void                clear_entry_context();
 
+<<<<<<< HEAD
+=======
+    // Singleton
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     BOOST_TEST_SINGLETON_CONS( unit_test_log_t )
 }; // unit_test_log_t
 
@@ -237,7 +262,11 @@ BOOST_TEST_SINGLETON_INST( unit_test_log )
    (::boost::unit_test::unit_test_log                           \
         << ::boost::unit_test::log::begin(                      \
                 "boost.test framework",                         \
+<<<<<<< HEAD
                 __LINE__ ))                                     \
+=======
+                0 ))                                     \
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
              ( ::boost::unit_test::log_messages )               \
     << BOOST_TEST_LAZY_MSG( M )                                 \
 /**/

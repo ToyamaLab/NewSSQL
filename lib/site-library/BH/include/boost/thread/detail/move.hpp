@@ -350,12 +350,28 @@ namespace boost
 #endif
 
 #ifndef BOOST_NO_CXX11_RVALUE_REFERENCES
+<<<<<<< HEAD
       template <class T>
       typename decay<T>::type
       decay_copy(T&& t)
       {
           return boost::forward<T>(t);
       }
+=======
+  template <class T>
+  typename decay<T>::type
+  decay_copy(T&& t)
+  {
+      return boost::forward<T>(t);
+  }
+  typedef void (*void_fct_ptr)();
+
+//  inline void_fct_ptr
+//  decay_copy(void (&t)())
+//  {
+//      return &t;
+//  }
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 #else
   template <class T>
   typename decay<T>::type

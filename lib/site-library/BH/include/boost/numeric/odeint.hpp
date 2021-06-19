@@ -51,6 +51,12 @@
 
 #include <boost/numeric/odeint/stepper/adams_bashforth_moulton.hpp>
 
+<<<<<<< HEAD
+=======
+#include <boost/numeric/odeint/stepper/adaptive_adams_bashforth_moulton.hpp>
+#include <boost/numeric/odeint/stepper/controlled_adams_bashforth_moulton.hpp>
+
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 #include <boost/numeric/odeint/stepper/implicit_euler.hpp>
 #include <boost/numeric/odeint/stepper/rosenbrock4.hpp>
 #include <boost/numeric/odeint/stepper/rosenbrock4_controller.hpp>

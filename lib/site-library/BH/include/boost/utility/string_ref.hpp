@@ -1,5 +1,9 @@
 /*
    Copyright (c) Marshall Clow 2012-2015.
+<<<<<<< HEAD
+=======
+   Copyright (c) Glen Joseph Fernandes 2019 (glenjofe@gmail.com)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
    Distributed under the Boost Software License, Version 1.0. (See accompanying
    file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
@@ -17,6 +21,10 @@
 
 #include <boost/config.hpp>
 #include <boost/detail/workaround.hpp>
+<<<<<<< HEAD
+=======
+#include <boost/utility/ostream_string.hpp>
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 #include <boost/utility/string_ref_fwd.hpp>
 #include <boost/throw_exception.hpp>
 
@@ -181,6 +189,10 @@ namespace boost {
             }
 
         size_type find(basic_string_ref s) const {
+<<<<<<< HEAD
+=======
+            if (s.empty()) return 0;
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
             const_iterator iter = std::search ( this->cbegin (), this->cend (),
                                                 s.cbegin (), s.cend (), traits::eq );
             return iter == this->cend () ? npos : std::distance ( this->cbegin (), iter );
@@ -193,6 +205,10 @@ namespace boost {
             }
 
         size_type rfind(basic_string_ref s) const {
+<<<<<<< HEAD
+=======
+            if (s.empty()) return 0;
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
             const_reverse_iterator iter = std::search ( this->crbegin (), this->crend (),
                                                 s.crbegin (), s.crend (), traits::eq );
             return iter == this->crend () ? npos : (std::distance(iter, this->crend()) - s.size());
@@ -419,6 +435,7 @@ namespace boost {
         return basic_string_ref<charT, traits>(x) >= y;
         }
 
+<<<<<<< HEAD
     namespace detail {
 
         template<class charT, class traits>
@@ -451,10 +468,13 @@ namespace boost {
 
         } // namespace detail
 
+=======
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     // Inserter
     template<class charT, class traits>
     inline std::basic_ostream<charT, traits>&
     operator<<(std::basic_ostream<charT, traits>& os, const basic_string_ref<charT,traits>& str) {
+<<<<<<< HEAD
         if (os.good()) {
             const std::size_t size = str.size();
             const std::size_t w = static_cast< std::size_t >(os.width());
@@ -465,6 +485,9 @@ namespace boost {
             os.width(0);
             }
         return os;
+=======
+        return boost::ostream_string(os, str.data(), str.size());
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
         }
 
 #if 0

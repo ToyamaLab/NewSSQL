@@ -10,6 +10,10 @@
 #define BOOST_THREAD_EXECUTORS_EXECUTOR_HPP
 
 #include <boost/thread/detail/config.hpp>
+<<<<<<< HEAD
+=======
+#if defined BOOST_THREAD_PROVIDES_FUTURE_CONTINUATION && defined BOOST_THREAD_PROVIDES_EXECUTORS && defined BOOST_THREAD_USES_MOVE
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 #include <boost/thread/detail/delete.hpp>
 #include <boost/thread/detail/move.hpp>
@@ -146,3 +150,7 @@ namespace boost
 #include <boost/config/abi_suffix.hpp>
 
 #endif
+<<<<<<< HEAD
+=======
+#endif
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce

@@ -12,11 +12,20 @@ aes_	aes_
 aes_all	aes_all
 aes_auto	aes_auto
 aes_colour_fill_alpha	aes_colour_fill_alpha
+<<<<<<< HEAD
+=======
+aes_eval	aes_eval
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 aes_group_order	aes_group_order
 aes_linetype_size_shape	aes_linetype_size_shape
 aes_position	aes_position
 aes_q	aes_
 aes_string	aes_
+<<<<<<< HEAD
+=======
+after_scale	aes_eval
+after_stat	aes_eval
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 alpha	reexports
 annotate	annotate
 annotation_custom	annotation_custom
@@ -30,6 +39,11 @@ autolayer	autolayer
 autoplot	autoplot
 AxisSecondary	ggplot2-ggproto
 benchplot	benchplot
+<<<<<<< HEAD
+=======
+bidirection	bidirection
+binned_scale	binned_scale
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 borders	borders
 calc_element	calc_element
 color	aes_colour_fill_alpha
@@ -75,6 +89,10 @@ draw_key_polygon	draw_key
 draw_key_rect	draw_key
 draw_key_smooth	draw_key
 draw_key_text	draw_key
+<<<<<<< HEAD
+=======
+draw_key_timeseries	draw_key
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 draw_key_vline	draw_key
 draw_key_vpath	draw_key
 dup_axis	sec_axis
@@ -84,7 +102,13 @@ element_blank	element
 element_grob	element_grob
 element_line	element
 element_rect	element
+<<<<<<< HEAD
 element_text	element
+=======
+element_render	element_render
+element_text	element
+el_def	register_theme_elements
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 enexpr	tidyeval
 enexprs	tidyeval
 enquo	tidyeval
@@ -92,7 +116,12 @@ enquos	tidyeval
 ensym	tidyeval
 ensyms	tidyeval
 expand_limits	expand_limits
+<<<<<<< HEAD
 expand_scale	expand_scale
+=======
+expand_scale	expansion
+expansion	expansion
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 expr	tidyeval
 exprs	tidyeval
 Facet	ggplot2-ggproto
@@ -105,6 +134,11 @@ facet_wrap	facet_wrap
 faithfuld	faithfuld
 fill	aes_colour_fill_alpha
 find_panel	find_panel
+<<<<<<< HEAD
+=======
+flipped_names	bidirection
+flip_data	bidirection
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 format.ggproto	print.ggproto
 fortify	fortify
 fortify-multcomp	fortify-multcomp
@@ -131,14 +165,26 @@ GeomBlank	ggplot2-ggproto
 GeomBoxplot	ggplot2-ggproto
 GeomCol	ggplot2-ggproto
 GeomContour	ggplot2-ggproto
+<<<<<<< HEAD
+=======
+GeomContourFilled	ggplot2-ggproto
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 GeomCrossbar	ggplot2-ggproto
 GeomCurve	ggplot2-ggproto
 GeomCustomAnn	ggplot2-ggproto
 GeomDensity	ggplot2-ggproto
 GeomDensity2d	ggplot2-ggproto
+<<<<<<< HEAD
 GeomDotplot	ggplot2-ggproto
 GeomErrorbar	ggplot2-ggproto
 GeomErrorbarh	ggplot2-ggproto
+=======
+GeomDensity2dFilled	ggplot2-ggproto
+GeomDotplot	ggplot2-ggproto
+GeomErrorbar	ggplot2-ggproto
+GeomErrorbarh	ggplot2-ggproto
+GeomFunction	ggplot2-ggproto
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 GeomHex	ggplot2-ggproto
 GeomHline	ggplot2-ggproto
 GeomLabel	ggplot2-ggproto
@@ -173,16 +219,30 @@ geom_blank	geom_blank
 geom_boxplot	geom_boxplot
 geom_col	geom_bar
 geom_contour	geom_contour
+<<<<<<< HEAD
+=======
+geom_contour_filled	geom_contour
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 geom_count	geom_count
 geom_crossbar	geom_linerange
 geom_curve	geom_segment
 geom_density	geom_density
 geom_density2d	geom_density_2d
+<<<<<<< HEAD
 geom_density_2d	geom_density_2d
+=======
+geom_density2d_filled	geom_density_2d
+geom_density_2d	geom_density_2d
+geom_density_2d_filled	geom_density_2d
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 geom_dotplot	geom_dotplot
 geom_errorbar	geom_linerange
 geom_errorbarh	geom_errorbarh
 geom_freqpoly	geom_histogram
+<<<<<<< HEAD
+=======
+geom_function	geom_function
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 geom_hex	geom_hex
 geom_histogram	geom_histogram
 geom_hline	geom_abline
@@ -204,6 +264,11 @@ geom_ribbon	geom_ribbon
 geom_rug	geom_rug
 geom_segment	geom_segment
 geom_sf	ggsf
+<<<<<<< HEAD
+=======
+geom_sf_label	ggsf
+geom_sf_text	ggsf
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 geom_smooth	geom_smooth
 geom_spoke	geom_spoke
 geom_step	geom_path
@@ -211,6 +276,10 @@ geom_text	geom_text
 geom_tile	geom_tile
 geom_violin	geom_violin
 geom_vline	geom_abline
+<<<<<<< HEAD
+=======
+get_element_tree	register_theme_elements
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 ggplot	ggplot
 ggplot2	ggplot2-package
 ggplot2-ggproto	ggplot2-ggproto
@@ -227,13 +296,29 @@ gg_dep	gg_dep
 group	aes_group_order
 guide-exts	guide-exts
 guides	guides
+<<<<<<< HEAD
 guide_colorbar	guide_colourbar
 guide_colourbar	guide_colourbar
+=======
+guide_axis	guide_axis
+guide_bins	guide_bins
+guide_colorbar	guide_colourbar
+guide_colorsteps	guide_coloursteps
+guide_colourbar	guide_colourbar
+guide_coloursteps	guide_coloursteps
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 guide_gengrob	guide-exts
 guide_geom	guide-exts
 guide_legend	guide_legend
 guide_merge	guide-exts
+<<<<<<< HEAD
 guide_train	guide-exts
+=======
+guide_none	guide_none
+guide_train	guide-exts
+guide_transform	guide-exts
+has_flipped_aes	bidirection
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 hmisc	hmisc
 is.Coord	is.Coord
 is.facet	is.facet
@@ -255,6 +340,10 @@ layer	layer
 layer_data	ggplot_build
 layer_grob	ggplot_build
 layer_scales	ggplot_build
+<<<<<<< HEAD
+=======
+layer_sf	layer_sf
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 Layout	ggplot2-ggproto
 limits	limits
 lims	lims
@@ -272,6 +361,10 @@ median_hilow	hmisc
 merge_element	merge_element
 merge_element.default	merge_element
 merge_element.element	merge_element
+<<<<<<< HEAD
+=======
+merge_element.element_blank	merge_element
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 midwest	midwest
 mpg	mpg
 msleep	msleep
@@ -304,12 +397,24 @@ quo	tidyeval
 quos	tidyeval
 quo_name	tidyeval
 reexports	reexports
+<<<<<<< HEAD
+=======
+register_theme_elements	register_theme_elements
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 rel	element
 remove_missing	remove_missing
 render_axes	render_axes
 render_strips	render_strips
+<<<<<<< HEAD
 resolution	resolution
 Scale	ggplot2-ggproto
+=======
+reset_theme_settings	register_theme_elements
+resolution	resolution
+Scale	ggplot2-ggproto
+ScaleBinned	ggplot2-ggproto
+ScaleBinnedPosition	ggplot2-ggproto
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 ScaleContinuous	ggplot2-ggproto
 ScaleContinuousDate	ggplot2-ggproto
 ScaleContinuousDatetime	ggplot2-ggproto
@@ -319,6 +424,10 @@ ScaleDiscrete	ggplot2-ggproto
 ScaleDiscreteIdentity	ggplot2-ggproto
 ScaleDiscretePosition	ggplot2-ggproto
 scale_alpha	scale_alpha
+<<<<<<< HEAD
+=======
+scale_alpha_binned	scale_alpha
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 scale_alpha_continuous	scale_alpha
 scale_alpha_date	scale_alpha
 scale_alpha_datetime	scale_alpha
@@ -326,10 +435,21 @@ scale_alpha_discrete	scale_alpha
 scale_alpha_identity	scale_identity
 scale_alpha_manual	scale_manual
 scale_alpha_ordinal	scale_alpha
+<<<<<<< HEAD
 scale_color_brewer	scale_brewer
 scale_color_continuous	scale_gradient
 scale_color_discrete	scale_hue
 scale_color_distiller	scale_brewer
+=======
+scale_color_binned	scale_colour_continuous
+scale_color_brewer	scale_brewer
+scale_color_continuous	scale_colour_continuous
+scale_color_date	scale_gradient
+scale_color_datetime	scale_gradient
+scale_color_discrete	scale_hue
+scale_color_distiller	scale_brewer
+scale_color_fermenter	scale_brewer
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 scale_color_gradient	scale_gradient
 scale_color_gradient2	scale_gradient
 scale_color_gradientn	scale_gradient
@@ -337,14 +457,30 @@ scale_color_grey	scale_grey
 scale_color_hue	scale_hue
 scale_color_identity	scale_identity
 scale_color_manual	scale_manual
+<<<<<<< HEAD
 scale_color_viridis_c	scale_viridis
 scale_color_viridis_d	scale_viridis
+=======
+scale_color_ordinal	scale_viridis
+scale_color_steps	scale_steps
+scale_color_steps2	scale_steps
+scale_color_stepsn	scale_steps
+scale_color_viridis_c	scale_viridis
+scale_color_viridis_d	scale_viridis
+scale_colour_binned	scale_colour_continuous
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 scale_colour_brewer	scale_brewer
 scale_colour_continuous	scale_colour_continuous
 scale_colour_date	scale_gradient
 scale_colour_datetime	scale_gradient
+<<<<<<< HEAD
 scale_colour_discrete	scale_hue
 scale_colour_distiller	scale_brewer
+=======
+scale_colour_discrete	scale_colour_discrete
+scale_colour_distiller	scale_brewer
+scale_colour_fermenter	scale_brewer
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 scale_colour_gradient	scale_gradient
 scale_colour_gradient2	scale_gradient
 scale_colour_gradientn	scale_gradient
@@ -353,17 +489,34 @@ scale_colour_hue	scale_hue
 scale_colour_identity	scale_identity
 scale_colour_manual	scale_manual
 scale_colour_ordinal	scale_viridis
+<<<<<<< HEAD
+=======
+scale_colour_steps	scale_steps
+scale_colour_steps2	scale_steps
+scale_colour_stepsn	scale_steps
+scale_colour_viridis_b	scale_viridis
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 scale_colour_viridis_c	scale_viridis
 scale_colour_viridis_d	scale_viridis
 scale_continuous_identity	scale_identity
 scale_discrete_identity	scale_identity
 scale_discrete_manual	scale_manual
+<<<<<<< HEAD
+=======
+scale_fill_binned	scale_colour_continuous
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 scale_fill_brewer	scale_brewer
 scale_fill_continuous	scale_colour_continuous
 scale_fill_date	scale_gradient
 scale_fill_datetime	scale_gradient
+<<<<<<< HEAD
 scale_fill_discrete	scale_hue
 scale_fill_distiller	scale_brewer
+=======
+scale_fill_discrete	scale_colour_discrete
+scale_fill_distiller	scale_brewer
+scale_fill_fermenter	scale_brewer
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 scale_fill_gradient	scale_gradient
 scale_fill_gradient2	scale_gradient
 scale_fill_gradientn	scale_gradient
@@ -372,15 +525,30 @@ scale_fill_hue	scale_hue
 scale_fill_identity	scale_identity
 scale_fill_manual	scale_manual
 scale_fill_ordinal	scale_viridis
+<<<<<<< HEAD
 scale_fill_viridis_c	scale_viridis
 scale_fill_viridis_d	scale_viridis
 scale_linetype	scale_linetype
+=======
+scale_fill_steps	scale_steps
+scale_fill_steps2	scale_steps
+scale_fill_stepsn	scale_steps
+scale_fill_viridis_b	scale_viridis
+scale_fill_viridis_c	scale_viridis
+scale_fill_viridis_d	scale_viridis
+scale_linetype	scale_linetype
+scale_linetype_binned	scale_linetype
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 scale_linetype_continuous	scale_linetype
 scale_linetype_discrete	scale_linetype
 scale_linetype_identity	scale_identity
 scale_linetype_manual	scale_manual
 scale_radius	scale_size
 scale_shape	scale_shape
+<<<<<<< HEAD
+=======
+scale_shape_binned	scale_shape
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 scale_shape_continuous	scale_shape
 scale_shape_discrete	scale_shape
 scale_shape_identity	scale_identity
@@ -388,6 +556,11 @@ scale_shape_manual	scale_manual
 scale_shape_ordinal	scale_shape
 scale_size	scale_size
 scale_size_area	scale_size
+<<<<<<< HEAD
+=======
+scale_size_binned	scale_size
+scale_size_binned_area	scale_size
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 scale_size_continuous	scale_size
 scale_size_date	scale_size
 scale_size_datetime	scale_size
@@ -396,6 +569,10 @@ scale_size_identity	scale_identity
 scale_size_manual	scale_manual
 scale_size_ordinal	scale_size
 scale_type	scale_type
+<<<<<<< HEAD
+=======
+scale_x_binned	scale_binned
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 scale_x_continuous	scale_continuous
 scale_x_date	scale_date
 scale_x_datetime	scale_date
@@ -404,6 +581,10 @@ scale_x_log10	scale_continuous
 scale_x_reverse	scale_continuous
 scale_x_sqrt	scale_continuous
 scale_x_time	scale_date
+<<<<<<< HEAD
+=======
+scale_y_binned	scale_binned
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 scale_y_continuous	scale_continuous
 scale_y_date	scale_date
 scale_y_datetime	scale_date
@@ -418,17 +599,32 @@ set_last_plot	set_last_plot
 shape	aes_linetype_size_shape
 should_stop	should_stop
 size	aes_linetype_size_shape
+<<<<<<< HEAD
 Stat	ggplot2-ggproto
 stat	stat
+=======
+stage	aes_eval
+standardise_aes_names	standardise_aes_names
+Stat	ggplot2-ggproto
+stat	aes_eval
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 StatBin	ggplot2-ggproto
 StatBin2d	ggplot2-ggproto
 StatBindot	ggplot2-ggproto
 StatBinhex	ggplot2-ggproto
 StatBoxplot	ggplot2-ggproto
 StatContour	ggplot2-ggproto
+<<<<<<< HEAD
 StatCount	ggplot2-ggproto
 StatDensity	ggplot2-ggproto
 StatDensity2d	ggplot2-ggproto
+=======
+StatContourFilled	ggplot2-ggproto
+StatCount	ggplot2-ggproto
+StatDensity	ggplot2-ggproto
+StatDensity2d	ggplot2-ggproto
+StatDensity2dFilled	ggplot2-ggproto
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 StatEcdf	ggplot2-ggproto
 StatEllipse	ggplot2-ggproto
 StatFunction	ggplot2-ggproto
@@ -437,6 +633,10 @@ StatQq	ggplot2-ggproto
 StatQqLine	ggplot2-ggproto
 StatQuantile	ggplot2-ggproto
 StatSf	ggsf
+<<<<<<< HEAD
+=======
+StatSfCoordinates	stat_sf_coordinates
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 StatSmooth	ggplot2-ggproto
 StatSum	ggplot2-ggproto
 StatSummary	ggplot2-ggproto
@@ -452,6 +652,7 @@ stat_bin_2d	geom_bin2d
 stat_bin_hex	geom_hex
 stat_boxplot	geom_boxplot
 stat_contour	geom_contour
+<<<<<<< HEAD
 stat_count	geom_bar
 stat_density	geom_density
 stat_density2d	geom_density_2d
@@ -459,11 +660,27 @@ stat_density_2d	geom_density_2d
 stat_ecdf	stat_ecdf
 stat_ellipse	stat_ellipse
 stat_function	stat_function
+=======
+stat_contour_filled	geom_contour
+stat_count	geom_bar
+stat_density	geom_density
+stat_density2d	geom_density_2d
+stat_density2d_filled	geom_density_2d
+stat_density_2d	geom_density_2d
+stat_density_2d_filled	geom_density_2d
+stat_ecdf	stat_ecdf
+stat_ellipse	stat_ellipse
+stat_function	geom_function
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 stat_identity	stat_identity
 stat_qq	geom_qq
 stat_qq_line	geom_qq
 stat_quantile	geom_quantile
 stat_sf	ggsf
+<<<<<<< HEAD
+=======
+stat_sf_coordinates	stat_sf_coordinates
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 stat_smooth	geom_smooth
 stat_spoke	geom_spoke
 stat_sum	geom_count

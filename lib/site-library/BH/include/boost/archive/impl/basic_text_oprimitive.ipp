@@ -10,7 +10,10 @@
 
 #include <cstddef> // NULL
 #include <algorithm> // std::copy
+<<<<<<< HEAD
 #include <exception> // std::uncaught_exception
+=======
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 #include <boost/config.hpp>
 #if defined(BOOST_NO_STDC_NAMESPACE)
 namespace std{ 
@@ -18,6 +21,11 @@ namespace std{
 } // namespace std
 #endif
 
+<<<<<<< HEAD
+=======
+#include <boost/core/uncaught_exceptions.hpp>
+
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 #include <boost/archive/basic_text_oprimitive.hpp>
 
 #include <boost/archive/iterators/base64_from_binary.hpp>
@@ -106,7 +114,11 @@ basic_text_oprimitive<OStream>::basic_text_oprimitive(
 template<class OStream>
 BOOST_ARCHIVE_OR_WARCHIVE_DECL
 basic_text_oprimitive<OStream>::~basic_text_oprimitive(){
+<<<<<<< HEAD
     if(std::uncaught_exception())
+=======
+    if(boost::core::uncaught_exceptions() > 0)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
         return;
     os << std::endl;
 }

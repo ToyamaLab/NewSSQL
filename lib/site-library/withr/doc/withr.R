@@ -1,11 +1,19 @@
+<<<<<<< HEAD
 ## ----setup, include = FALSE----------------------------------------------
+=======
+## ----setup, include = FALSE---------------------------------------------------
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>"
 )
 library(withr)
 
+<<<<<<< HEAD
 ## ------------------------------------------------------------------------
+=======
+## -----------------------------------------------------------------------------
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 par("col" = "black")
 my_plot <- function(new) {
   old <- par(col = "red", pch = 19)
@@ -15,7 +23,11 @@ my_plot <- function(new) {
 my_plot()
 par("col")
 
+<<<<<<< HEAD
 ## ---- error = TRUE-------------------------------------------------------
+=======
+## ---- error = TRUE------------------------------------------------------------
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 par("col" = "black")
 my_plot <- function(new) {
   old <- par(col = "red", pch = 19)
@@ -25,7 +37,11 @@ my_plot <- function(new) {
 my_plot()
 par("col")
 
+<<<<<<< HEAD
 ## ---- error = TRUE-------------------------------------------------------
+=======
+## ---- error = TRUE------------------------------------------------------------
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 par("col" = "black")
 my_plot <- function(new) {
   old <- par(col = "red", pch = 19)
@@ -42,7 +58,11 @@ options(test = 1)
 }
 getOption("test")
 
+<<<<<<< HEAD
 ## ------------------------------------------------------------------------
+=======
+## -----------------------------------------------------------------------------
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 par("col" = "black")
 my_plot <- function(new) {
   with_par(list(col = "red", pch = 19),
@@ -53,7 +73,11 @@ my_plot <- function(new) {
 my_plot()
 par("col")
 
+<<<<<<< HEAD
 ## ------------------------------------------------------------------------
+=======
+## -----------------------------------------------------------------------------
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 par("col" = "black")
 my_plot <- function(new) {
   local_par(list(col = "red", pch = 19))

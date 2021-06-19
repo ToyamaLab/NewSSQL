@@ -4,8 +4,13 @@
     Distributed under the Boost Software License, Version 1.0. (See accompanying
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 =============================================================================*/
+<<<<<<< HEAD
 #if !defined(SPIRIT_SEQUENCE_JAN_06_2013_1015AM)
 #define SPIRIT_SEQUENCE_JAN_06_2013_1015AM
+=======
+#if !defined(BOOST_SPIRIT_X3_SEQUENCE_JAN_06_2013_1015AM)
+#define BOOST_SPIRIT_X3_SEQUENCE_JAN_06_2013_1015AM
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 #include <boost/spirit/home/x3/support/traits/attribute_of.hpp>
 #include <boost/spirit/home/x3/core/parser.hpp>

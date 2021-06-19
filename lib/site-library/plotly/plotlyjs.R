@@ -26,9 +26,21 @@ file.copy(
   file.path("inst/htmlwidgets/lib/plotlyjs/locales", sub("^plotly-locale-", "", basename(locales))),
   overwrite = TRUE
 )
+<<<<<<< HEAD
 # update the plot schema
 Schema <- jsonlite::fromJSON(Sys.glob("*plotly.js*/dist/plot-schema.json"))
 devtools::use_data(Schema, overwrite = T, internal = T)
+=======
+# update typed array polyfill
+download.file(
+  "https://raw.githubusercontent.com/plotly/plotly.js/master/dist/extras/typedarray.min.js",
+  "inst/htmlwidgets/lib/typedarray/typedarray.min.js"
+)
+
+# update the plot schema
+Schema <- jsonlite::fromJSON(Sys.glob("*plotly.js*/dist/plot-schema.json"))
+usethis::use_data(Schema, overwrite = T, internal = T)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 # clean-up and bump HTML dependency version
 unlink("*plotly.js*", recursive = T)

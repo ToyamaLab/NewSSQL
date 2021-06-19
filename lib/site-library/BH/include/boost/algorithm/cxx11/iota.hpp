@@ -12,6 +12,10 @@
 #ifndef BOOST_ALGORITHM_IOTA_HPP
 #define BOOST_ALGORITHM_IOTA_HPP
 
+<<<<<<< HEAD
+=======
+#include <boost/config.hpp>
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 #include <boost/range/begin.hpp>
 #include <boost/range/end.hpp>
 
@@ -25,7 +29,11 @@ namespace boost { namespace algorithm {
 /// \param value    The initial value of the sequence to be generated
 /// \note           This function is part of the C++2011 standard library.
 template <typename ForwardIterator, typename T>
+<<<<<<< HEAD
 void iota ( ForwardIterator first, ForwardIterator last, T value )
+=======
+BOOST_CXX14_CONSTEXPR void iota ( ForwardIterator first, ForwardIterator last, T value )
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 {
     for ( ; first != last; ++first, ++value )
         *first = value;
@@ -38,7 +46,11 @@ void iota ( ForwardIterator first, ForwardIterator last, T value )
 /// \param value    The initial value of the sequence to be generated
 ///
 template <typename Range, typename T>
+<<<<<<< HEAD
 void iota ( Range &r, T value )
+=======
+BOOST_CXX14_CONSTEXPR void iota ( Range &r, T value )
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 {
     boost::algorithm::iota (boost::begin(r), boost::end(r), value);
 }
@@ -52,7 +64,11 @@ void iota ( Range &r, T value )
 /// \param n        The number of items to write
 ///
 template <typename OutputIterator, typename T>
+<<<<<<< HEAD
 OutputIterator iota_n ( OutputIterator out, T value, std::size_t n )
+=======
+BOOST_CXX14_CONSTEXPR OutputIterator iota_n ( OutputIterator out, T value, std::size_t n )
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 {
     for ( ; n > 0; --n, ++value )
         *out++ = value;

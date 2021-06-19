@@ -90,7 +90,11 @@ namespace boost { namespace spirit { namespace karma { namespace detail
             component; // suppresses warning: C4100: 'component' : unreferenced formal parameter
 #endif
             return call(component, sink, ctx, d, attr
+<<<<<<< HEAD
               , spirit::traits::not_is_variant<Attribute, karma::domain>());
+=======
+              , spirit::traits::not_is_variant_or_variant_in_optional<Attribute, karma::domain>());
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
         }
 
         template <typename OutputIterator, typename Context, typename Delimiter>
@@ -191,9 +195,14 @@ namespace boost { namespace spirit { namespace karma { namespace detail
         Delimiter const& delim;
         Attribute const& attr;
 
+<<<<<<< HEAD
     private:
         // silence MSVC warning C4512: assignment operator could not be generated
         alternative_generate_function& operator= (alternative_generate_function const&);
+=======
+        // silence MSVC warning C4512: assignment operator could not be generated
+        BOOST_DELETED_FUNCTION(alternative_generate_function& operator= (alternative_generate_function const&))
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     };
 
     // specialization for strict alternatives
@@ -241,9 +250,14 @@ namespace boost { namespace spirit { namespace karma { namespace detail
         Attribute const& attr;
         bool failed;
 
+<<<<<<< HEAD
     private:
         // silence MSVC warning C4512: assignment operator could not be generated
         alternative_generate_function& operator= (alternative_generate_function const&);
+=======
+        // silence MSVC warning C4512: assignment operator could not be generated
+        BOOST_DELETED_FUNCTION(alternative_generate_function& operator= (alternative_generate_function const&))
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     };
 }}}}
 

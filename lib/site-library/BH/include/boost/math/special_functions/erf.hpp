@@ -17,6 +17,19 @@
 #include <boost/math/policies/error_handling.hpp>
 #include <boost/math/tools/big_constant.hpp>
 
+<<<<<<< HEAD
+=======
+#if defined(__GNUC__) && defined(BOOST_MATH_USE_FLOAT128)
+//
+// This is the only way we can avoid
+// warning: non-standard suffix on floating constant [-Wpedantic]
+// when building with -Wall -pedantic.  Neither __extension__
+// nor #pragma dianostic ignored work :(
+//
+#pragma GCC system_header
+#endif
+
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 namespace boost{ namespace math{
 
 namespace detail
@@ -182,6 +195,12 @@ T erf_imp(T z, bool invert, const Policy& pol, const mpl::int_<53>& t)
 
    BOOST_MATH_INSTRUMENT_CODE("53-bit precision erf_imp called");
 
+<<<<<<< HEAD
+=======
+   if ((boost::math::isnan)(z))
+      return policies::raise_denorm_error("boost::math::erf<%1%>(%1%)", "Expected a finite argument but got %1%", z, pol);
+
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
    if(z < 0)
    {
       if(!invert)
@@ -305,7 +324,18 @@ T erf_imp(T z, bool invert, const Policy& pol, const mpl::int_<53>& t)
             BOOST_MATH_BIG_CONSTANT(T, 53, 0.00410369723978904575884),
          };
          result = Y + tools::evaluate_polynomial(P, T(z - 1.5)) / tools::evaluate_polynomial(Q, T(z - 1.5));
+<<<<<<< HEAD
          result *= exp(-z * z) / z;
+=======
+         T hi, lo;
+         int expon;
+         hi = floor(ldexp(frexp(z, &expon), 26));
+         hi = ldexp(hi, expon - 26);
+         lo = z - hi;
+         T sq = z * z;
+         T err_sqr = ((hi * hi - sq) + 2 * hi * lo) + lo * lo;
+         result *= exp(-sq) * exp(-err_sqr) / z;
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
       }
       else if(z < 4.5f)
       {
@@ -331,7 +361,18 @@ T erf_imp(T z, bool invert, const Policy& pol, const mpl::int_<53>& t)
             BOOST_MATH_BIG_CONSTANT(T, 53, 0.000479411269521714493907),
          };
          result = Y + tools::evaluate_polynomial(P, T(z - 3.5)) / tools::evaluate_polynomial(Q, T(z - 3.5));
+<<<<<<< HEAD
          result *= exp(-z * z) / z;
+=======
+         T hi, lo;
+         int expon;
+         hi = floor(ldexp(frexp(z, &expon), 26));
+         hi = ldexp(hi, expon - 26);
+         lo = z - hi;
+         T sq = z * z;
+         T err_sqr = ((hi * hi - sq) + 2 * hi * lo) + lo * lo;
+         result *= exp(-sq) * exp(-err_sqr) / z;
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
       }
       else
       {
@@ -359,7 +400,18 @@ T erf_imp(T z, bool invert, const Policy& pol, const mpl::int_<53>& t)
             BOOST_MATH_BIG_CONSTANT(T, 53, 5.48409182238641741584),
          };
          result = Y + tools::evaluate_polynomial(P, T(1 / z)) / tools::evaluate_polynomial(Q, T(1 / z));
+<<<<<<< HEAD
          result *= exp(-z * z) / z;
+=======
+         T hi, lo;
+         int expon;
+         hi = floor(ldexp(frexp(z, &expon), 26));
+         hi = ldexp(hi, expon - 26);
+         lo = z - hi;
+         T sq = z * z;
+         T err_sqr = ((hi * hi - sq) + 2 * hi * lo) + lo * lo;
+         result *= exp(-sq) * exp(-err_sqr) / z;
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
       }
    }
    else
@@ -477,7 +529,18 @@ T erf_imp(T z, bool invert, const Policy& pol, const mpl::int_<64>& t)
             BOOST_MATH_BIG_CONSTANT(T, 64, 0.00279220237309449026796),
          };
          result = Y + tools::evaluate_polynomial(P, T(z - 0.5f)) / tools::evaluate_polynomial(Q, T(z - 0.5f));
+<<<<<<< HEAD
          result *= exp(-z * z) / z;
+=======
+         T hi, lo;
+         int expon;
+         hi = floor(ldexp(frexp(z, &expon), 32));
+         hi = ldexp(hi, expon - 32);
+         lo = z - hi;
+         T sq = z * z;
+         T err_sqr = ((hi * hi - sq) + 2 * hi * lo) + lo * lo;
+         result *= exp(-sq) * exp(-err_sqr) / z;
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
       }
       else if(z < 2.5)
       {
@@ -505,7 +568,18 @@ T erf_imp(T z, bool invert, const Policy& pol, const mpl::int_<64>& t)
             BOOST_MATH_BIG_CONSTANT(T, 64, 0.000897871370778031611439),
          };
          result = Y + tools::evaluate_polynomial(P, T(z - 1.5f)) / tools::evaluate_polynomial(Q, T(z - 1.5f));
+<<<<<<< HEAD
          result *= exp(-z * z) / z;
+=======
+         T hi, lo;
+         int expon;
+         hi = floor(ldexp(frexp(z, &expon), 32));
+         hi = ldexp(hi, expon - 32);
+         lo = z - hi;
+         T sq = z * z;
+         T err_sqr = ((hi * hi - sq) + 2 * hi * lo) + lo * lo;
+         result *= exp(-sq) * exp(-err_sqr) / z;
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
       }
       else if(z < 4.5)
       {
@@ -533,7 +607,18 @@ T erf_imp(T z, bool invert, const Policy& pol, const mpl::int_<64>& t)
             BOOST_MATH_BIG_CONSTANT(T, 64, 0.804149464190309799804e-4),
          };
          result = Y + tools::evaluate_polynomial(P, T(z - 3.5f)) / tools::evaluate_polynomial(Q, T(z - 3.5f));
+<<<<<<< HEAD
          result *= exp(-z * z) / z;
+=======
+         T hi, lo;
+         int expon;
+         hi = floor(ldexp(frexp(z, &expon), 32));
+         hi = ldexp(hi, expon - 32);
+         lo = z - hi;
+         T sq = z * z;
+         T err_sqr = ((hi * hi - sq) + 2 * hi * lo) + lo * lo;
+         result *= exp(-sq) * exp(-err_sqr) / z;
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
       }
       else
       {
@@ -565,7 +650,18 @@ T erf_imp(T z, bool invert, const Policy& pol, const mpl::int_<64>& t)
             BOOST_MATH_BIG_CONSTANT(T, 64, 30.8365511891224291717),
          };
          result = Y + tools::evaluate_polynomial(P, T(1 / z)) / tools::evaluate_polynomial(Q, T(1 / z));
+<<<<<<< HEAD
          result *= exp(-z * z) / z;
+=======
+         T hi, lo;
+         int expon;
+         hi = floor(ldexp(frexp(z, &expon), 32));
+         hi = ldexp(hi, expon - 32);
+         lo = z - hi;
+         T sq = z * z;
+         T err_sqr = ((hi * hi - sq) + 2 * hi * lo) + lo * lo;
+         result *= exp(-sq) * exp(-err_sqr) / z;
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
       }
    }
    else
@@ -693,7 +789,18 @@ T erf_imp(T z, bool invert, const Policy& pol, const mpl::int_<113>& t)
             BOOST_MATH_BIG_CONSTANT(T, 113, 0.270666232259029102353426738909226413e-10),
          };
          result = Y + tools::evaluate_polynomial(P, T(z - 0.5f)) / tools::evaluate_polynomial(Q, T(z - 0.5f));
+<<<<<<< HEAD
          result *= exp(-z * z) / z;
+=======
+         T hi, lo;
+         int expon;
+         hi = floor(ldexp(frexp(z, &expon), 56));
+         hi = ldexp(hi, expon - 56);
+         lo = z - hi;
+         T sq = z * z;
+         T err_sqr = ((hi * hi - sq) + 2 * hi * lo) + lo * lo;
+         result *= exp(-sq) * exp(-err_sqr) / z;
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
       }
       else if(z < 1.5)
       {
@@ -727,7 +834,18 @@ T erf_imp(T z, bool invert, const Policy& pol, const mpl::int_<113>& t)
             BOOST_MATH_BIG_CONSTANT(T, 113, 0.123749319840299552925421880481085392e-4),
          };
          result = Y + tools::evaluate_polynomial(P, T(z - 1.0f)) / tools::evaluate_polynomial(Q, T(z - 1.0f));
+<<<<<<< HEAD
          result *= exp(-z * z) / z;
+=======
+         T hi, lo;
+         int expon;
+         hi = floor(ldexp(frexp(z, &expon), 56));
+         hi = ldexp(hi, expon - 56);
+         lo = z - hi;
+         T sq = z * z;
+         T err_sqr = ((hi * hi - sq) + 2 * hi * lo) + lo * lo;
+         result *= exp(-sq) * exp(-err_sqr) / z;
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
       }
       else if(z < 2.25)
       {
@@ -762,7 +880,18 @@ T erf_imp(T z, bool invert, const Policy& pol, const mpl::int_<113>& t)
             BOOST_MATH_BIG_CONSTANT(T, 113, 0.18647774409821470950544212696270639e-12),
          };
          result = Y + tools::evaluate_polynomial(P, T(z - 1.5f)) / tools::evaluate_polynomial(Q, T(z - 1.5f));
+<<<<<<< HEAD
          result *= exp(-z * z) / z;
+=======
+         T hi, lo;
+         int expon;
+         hi = floor(ldexp(frexp(z, &expon), 56));
+         hi = ldexp(hi, expon - 56);
+         lo = z - hi;
+         T sq = z * z;
+         T err_sqr = ((hi * hi - sq) + 2 * hi * lo) + lo * lo;
+         result *= exp(-sq) * exp(-err_sqr) / z;
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
       }
       else if (z < 3)
       {
@@ -796,7 +925,18 @@ T erf_imp(T z, bool invert, const Policy& pol, const mpl::int_<113>& t)
             BOOST_MATH_BIG_CONSTANT(T, 113, 0.192093541425429248675532015101904262e-5),
          };
          result = Y + tools::evaluate_polynomial(P, T(z - 2.25f)) / tools::evaluate_polynomial(Q, T(z - 2.25f));
+<<<<<<< HEAD
          result *= exp(-z * z) / z;
+=======
+         T hi, lo;
+         int expon;
+         hi = floor(ldexp(frexp(z, &expon), 56));
+         hi = ldexp(hi, expon - 56);
+         lo = z - hi;
+         T sq = z * z;
+         T err_sqr = ((hi * hi - sq) + 2 * hi * lo) + lo * lo;
+         result *= exp(-sq) * exp(-err_sqr) / z;
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
       }
       else if(z < 3.5)
       {
@@ -828,7 +968,18 @@ T erf_imp(T z, bool invert, const Policy& pol, const mpl::int_<113>& t)
             BOOST_MATH_BIG_CONSTANT(T, 113, 0.407763415954267700941230249989140046e-5),
          };
          result = Y + tools::evaluate_polynomial(P, T(z - 3.0f)) / tools::evaluate_polynomial(Q, T(z - 3.0f));
+<<<<<<< HEAD
          result *= exp(-z * z) / z;
+=======
+         T hi, lo;
+         int expon;
+         hi = floor(ldexp(frexp(z, &expon), 56));
+         hi = ldexp(hi, expon - 56);
+         lo = z - hi;
+         T sq = z * z;
+         T err_sqr = ((hi * hi - sq) + 2 * hi * lo) + lo * lo;
+         result *= exp(-sq) * exp(-err_sqr) / z;
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
       }
       else if(z < 5.5)
       {
@@ -864,7 +1015,18 @@ T erf_imp(T z, bool invert, const Policy& pol, const mpl::int_<113>& t)
             BOOST_MATH_BIG_CONSTANT(T, 113, 0.11005507545746069573608988651927452e-7),
          };
          result = Y + tools::evaluate_polynomial(P, T(z - 4.5f)) / tools::evaluate_polynomial(Q, T(z - 4.5f));
+<<<<<<< HEAD
          result *= exp(-z * z) / z;
+=======
+         T hi, lo;
+         int expon;
+         hi = floor(ldexp(frexp(z, &expon), 56));
+         hi = ldexp(hi, expon - 56);
+         lo = z - hi;
+         T sq = z * z;
+         T err_sqr = ((hi * hi - sq) + 2 * hi * lo) + lo * lo;
+         result *= exp(-sq) * exp(-err_sqr) / z;
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
       }
       else if(z < 7.5)
       {
@@ -898,7 +1060,18 @@ T erf_imp(T z, bool invert, const Policy& pol, const mpl::int_<113>& t)
             BOOST_MATH_BIG_CONSTANT(T, 113, 0.997637501418963696542159244436245077e-8),
          };
          result = Y + tools::evaluate_polynomial(P, T(z - 6.5f)) / tools::evaluate_polynomial(Q, T(z - 6.5f));
+<<<<<<< HEAD
          result *= exp(-z * z) / z;
+=======
+         T hi, lo;
+         int expon;
+         hi = floor(ldexp(frexp(z, &expon), 56));
+         hi = ldexp(hi, expon - 56);
+         lo = z - hi;
+         T sq = z * z;
+         T err_sqr = ((hi * hi - sq) + 2 * hi * lo) + lo * lo;
+         result *= exp(-sq) * exp(-err_sqr) / z;
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
       }
       else if(z < 11.5)
       {
@@ -932,7 +1105,18 @@ T erf_imp(T z, bool invert, const Policy& pol, const mpl::int_<113>& t)
             BOOST_MATH_BIG_CONSTANT(T, 113, 0.356615210500531410114914617294694857e-6),
          };
          result = Y + tools::evaluate_polynomial(P, T(z / 2 - 4.75f)) / tools::evaluate_polynomial(Q, T(z / 2 - 4.75f));
+<<<<<<< HEAD
          result *= exp(-z * z) / z;
+=======
+         T hi, lo;
+         int expon;
+         hi = floor(ldexp(frexp(z, &expon), 56));
+         hi = ldexp(hi, expon - 56);
+         lo = z - hi;
+         T sq = z * z;
+         T err_sqr = ((hi * hi - sq) + 2 * hi * lo) + lo * lo;
+         result *= exp(-sq) * exp(-err_sqr) / z;
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
       }
       else
       {
@@ -970,7 +1154,18 @@ T erf_imp(T z, bool invert, const Policy& pol, const mpl::int_<113>& t)
             BOOST_MATH_BIG_CONSTANT(T, 113, 72.7415265778588087243442792401576737),
          };
          result = Y + tools::evaluate_polynomial(P, T(1 / z)) / tools::evaluate_polynomial(Q, T(1 / z));
+<<<<<<< HEAD
          result *= exp(-z * z) / z;
+=======
+         T hi, lo;
+         int expon;
+         hi = floor(ldexp(frexp(z, &expon), 56));
+         hi = ldexp(hi, expon - 56);
+         lo = z - hi;
+         T sq = z * z;
+         T err_sqr = ((hi * hi - sq) + 2 * hi * lo) + lo * lo;
+         result *= exp(-sq) * exp(-err_sqr) / z;
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
       }
    }
    else

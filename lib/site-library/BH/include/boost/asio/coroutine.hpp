@@ -2,7 +2,11 @@
 // coroutine.hpp
 // ~~~~~~~~~~~~~
 //
+<<<<<<< HEAD
 // Copyright (c) 2003-2017 Christopher M. Kohlhoff (chris at kohlhoff dot com)
+=======
+// Copyright (c) 2003-2019 Christopher M. Kohlhoff (chris at kohlhoff dot com)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 //
 // Distributed under the Boost Software License, Version 1.0. (See accompanying
 // file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
@@ -206,7 +210,11 @@ class coroutine_ref;
  * {
  *   do
  *   {
+<<<<<<< HEAD
  *     socket_.reset(new tcp::socket(io_context_));
+=======
+ *     socket_.reset(new tcp::socket(my_context_));
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
  *     yield acceptor->async_accept(*socket_, *this);
  *     fork server(*this)();
  *   } while (is_parent());
@@ -228,7 +236,11 @@ class coroutine_ref;
  * Note that @c fork doesn't do the actual forking by itself. It is the
  * application's responsibility to create a clone of the coroutine and call it.
  * The clone can be called immediately, as above, or scheduled for delayed
+<<<<<<< HEAD
  * execution using something like io_context::post().
+=======
+ * execution using something like boost::asio::post().
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
  *
  * @par Alternate macro names
  *

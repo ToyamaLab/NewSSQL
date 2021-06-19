@@ -1,3 +1,30 @@
+<<<<<<< HEAD
+=======
+		 CHANGES IN mime VERSION 0.9
+
+MINOR CHANGES
+
+  o Added the MIME type for .jsonp files (thanks, @clabornd, #11).
+
+		 CHANGES IN mime VERSION 0.8
+
+MINOR CHANGES
+
+  o Added the MIME type for .scss files (thanks, @cpsievert, #10).
+
+		 CHANGES IN mime VERSION 0.7
+
+MINOR CHANGES
+
+  o Added more types for .Rnw, .Rproj, and .yml files (thanks, @beanumber, #9).
+
+		 CHANGES IN mime VERSION 0.6
+
+MINOR CHANGES
+
+  o Updated the MIME types from Ubuntu 18.04.
+
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 		 CHANGES IN mime VERSION 0.5
 
 MAJOR CHANGES

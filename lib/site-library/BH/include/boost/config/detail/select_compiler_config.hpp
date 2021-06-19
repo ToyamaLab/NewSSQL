@@ -39,8 +39,12 @@
 //  Intel
 #   define BOOST_COMPILER_CONFIG "boost/config/compiler/intel.hpp"
 
+<<<<<<< HEAD
 #elif defined __clang__ && !defined(__CUDACC__) && !defined(__ibmxl__)
 // when using clang and cuda at same time, you want to appear as gcc
+=======
+#elif defined __clang__ && !defined(__ibmxl__)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 //  Clang C++ emulates GCC, so it has to appear early.
 #   define BOOST_COMPILER_CONFIG "boost/config/compiler/clang.hpp"
 

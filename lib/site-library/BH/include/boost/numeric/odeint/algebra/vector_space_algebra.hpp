@@ -30,7 +30,11 @@ namespace odeint {
 /*
  * This class template has to be overload in order to call vector_space_algebra::norm_inf
  */
+<<<<<<< HEAD
 template< class State > struct vector_space_norm_inf;
+=======
+template< class State, class Enabler = void > struct vector_space_norm_inf;
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 /*
  * Example: instantiation for sole doubles and complex

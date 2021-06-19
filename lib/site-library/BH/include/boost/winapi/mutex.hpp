@@ -18,14 +18,22 @@
 #if !defined( BOOST_USE_WINDOWS_H ) && BOOST_WINAPI_PARTITION_APP_SYSTEM
 extern "C" {
 #if !defined( BOOST_NO_ANSI_APIS )
+<<<<<<< HEAD
 BOOST_SYMBOL_IMPORT boost::winapi::HANDLE_ WINAPI
+=======
+BOOST_SYMBOL_IMPORT boost::winapi::HANDLE_ BOOST_WINAPI_WINAPI_CC
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 CreateMutexA(
     ::_SECURITY_ATTRIBUTES* lpMutexAttributes,
     boost::winapi::BOOL_ bInitialOwner,
     boost::winapi::LPCSTR_ lpName);
 #endif
 
+<<<<<<< HEAD
 BOOST_SYMBOL_IMPORT boost::winapi::HANDLE_ WINAPI
+=======
+BOOST_SYMBOL_IMPORT boost::winapi::HANDLE_ BOOST_WINAPI_WINAPI_CC
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 CreateMutexW(
     ::_SECURITY_ATTRIBUTES* lpMutexAttributes,
     boost::winapi::BOOL_ bInitialOwner,
@@ -37,7 +45,11 @@ CreateMutexW(
 extern "C" {
 #if !defined( BOOST_NO_ANSI_APIS )
 #if BOOST_USE_WINAPI_VERSION >= BOOST_WINAPI_VERSION_WIN6
+<<<<<<< HEAD
 BOOST_SYMBOL_IMPORT boost::winapi::HANDLE_ WINAPI
+=======
+BOOST_SYMBOL_IMPORT boost::winapi::HANDLE_ BOOST_WINAPI_WINAPI_CC
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 CreateMutexExA(
     ::_SECURITY_ATTRIBUTES* lpMutexAttributes,
     boost::winapi::LPCSTR_ lpName,
@@ -45,7 +57,11 @@ CreateMutexExA(
     boost::winapi::DWORD_ dwDesiredAccess);
 #endif
 
+<<<<<<< HEAD
 BOOST_SYMBOL_IMPORT boost::winapi::HANDLE_ WINAPI
+=======
+BOOST_SYMBOL_IMPORT boost::winapi::HANDLE_ BOOST_WINAPI_WINAPI_CC
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 OpenMutexA(
     boost::winapi::DWORD_ dwDesiredAccess,
     boost::winapi::BOOL_ bInheritHandle,
@@ -53,7 +69,11 @@ OpenMutexA(
 #endif // !defined( BOOST_NO_ANSI_APIS )
 
 #if BOOST_USE_WINAPI_VERSION >= BOOST_WINAPI_VERSION_WIN6
+<<<<<<< HEAD
 BOOST_SYMBOL_IMPORT boost::winapi::HANDLE_ WINAPI
+=======
+BOOST_SYMBOL_IMPORT boost::winapi::HANDLE_ BOOST_WINAPI_WINAPI_CC
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 CreateMutexExW(
     ::_SECURITY_ATTRIBUTES* lpMutexAttributes,
     boost::winapi::LPCWSTR_ lpName,
@@ -61,13 +81,21 @@ CreateMutexExW(
     boost::winapi::DWORD_ dwDesiredAccess);
 #endif
 
+<<<<<<< HEAD
 BOOST_SYMBOL_IMPORT boost::winapi::HANDLE_ WINAPI
+=======
+BOOST_SYMBOL_IMPORT boost::winapi::HANDLE_ BOOST_WINAPI_WINAPI_CC
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 OpenMutexW(
     boost::winapi::DWORD_ dwDesiredAccess,
     boost::winapi::BOOL_ bInheritHandle,
     boost::winapi::LPCWSTR_ lpName);
 
+<<<<<<< HEAD
 BOOST_SYMBOL_IMPORT boost::winapi::BOOL_ WINAPI
+=======
+BOOST_SYMBOL_IMPORT boost::winapi::BOOL_ BOOST_WINAPI_WINAPI_CC
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 ReleaseMutex(boost::winapi::HANDLE_ hMutex);
 } // extern "C"
 #endif
@@ -83,26 +111,47 @@ using ::ReleaseMutex;
 
 #if defined( BOOST_USE_WINDOWS_H )
 
+<<<<<<< HEAD
 const DWORD_ MUTEX_ALL_ACCESS_ = MUTEX_ALL_ACCESS;
 const DWORD_ MUTEX_MODIFY_STATE_ = MUTEX_MODIFY_STATE;
 #if BOOST_USE_WINAPI_VERSION >= BOOST_WINAPI_VERSION_WIN6
 const DWORD_ CREATE_MUTEX_INITIAL_OWNER_ = CREATE_MUTEX_INITIAL_OWNER;
+=======
+BOOST_CONSTEXPR_OR_CONST DWORD_ MUTEX_ALL_ACCESS_ = MUTEX_ALL_ACCESS;
+BOOST_CONSTEXPR_OR_CONST DWORD_ MUTEX_MODIFY_STATE_ = MUTEX_MODIFY_STATE;
+#if BOOST_USE_WINAPI_VERSION >= BOOST_WINAPI_VERSION_WIN6
+BOOST_CONSTEXPR_OR_CONST DWORD_ CREATE_MUTEX_INITIAL_OWNER_ = CREATE_MUTEX_INITIAL_OWNER;
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 #endif
 
 #else // defined( BOOST_USE_WINDOWS_H )
 
+<<<<<<< HEAD
 const DWORD_ MUTEX_ALL_ACCESS_ = 0x001F0001;
 const DWORD_ MUTEX_MODIFY_STATE_ = 0x00000001;
 #if BOOST_USE_WINAPI_VERSION >= BOOST_WINAPI_VERSION_WIN6
 const DWORD_ CREATE_MUTEX_INITIAL_OWNER_ = 0x00000001;
+=======
+BOOST_CONSTEXPR_OR_CONST DWORD_ MUTEX_ALL_ACCESS_ = 0x001F0001;
+BOOST_CONSTEXPR_OR_CONST DWORD_ MUTEX_MODIFY_STATE_ = 0x00000001;
+#if BOOST_USE_WINAPI_VERSION >= BOOST_WINAPI_VERSION_WIN6
+BOOST_CONSTEXPR_OR_CONST DWORD_ CREATE_MUTEX_INITIAL_OWNER_ = 0x00000001;
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 #endif
 
 #endif // defined( BOOST_USE_WINDOWS_H )
 
+<<<<<<< HEAD
 const DWORD_ mutex_all_access = MUTEX_ALL_ACCESS_;
 const DWORD_ mutex_modify_state = MUTEX_MODIFY_STATE_;
 #if BOOST_USE_WINAPI_VERSION >= BOOST_WINAPI_VERSION_WIN6
 const DWORD_ create_mutex_initial_owner = CREATE_MUTEX_INITIAL_OWNER_;
+=======
+BOOST_CONSTEXPR_OR_CONST DWORD_ mutex_all_access = MUTEX_ALL_ACCESS_;
+BOOST_CONSTEXPR_OR_CONST DWORD_ mutex_modify_state = MUTEX_MODIFY_STATE_;
+#if BOOST_USE_WINAPI_VERSION >= BOOST_WINAPI_VERSION_WIN6
+BOOST_CONSTEXPR_OR_CONST DWORD_ create_mutex_initial_owner = CREATE_MUTEX_INITIAL_OWNER_;
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 #endif
 
 #if !defined( BOOST_NO_ANSI_APIS )

@@ -2,6 +2,14 @@
 
 // Copyright (c) 2015-2016 Barend Gehrels, Amsterdam, the Netherlands.
 
+<<<<<<< HEAD
+=======
+// This file was modified by Oracle on 2018.
+// Modifications copyright (c) 2018 Oracle and/or its affiliates.
+
+// Contributed and/or modified by Adam Wulkiewicz, on behalf of Oracle
+
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 // Use, modification and distribution is subject to the Boost Software License,
 // Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
 // http://www.boost.org/LICENSE_1_0.txt)
@@ -10,6 +18,10 @@
 #define BOOST_GEOMETRY_ALGORITHMS_DETAIL_OVERLAY_TRAVERSAL_SWITCH_DETECTOR_HPP
 
 #include <cstddef>
+<<<<<<< HEAD
+=======
+#include <map>
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 #include <boost/range.hpp>
 
@@ -20,6 +32,10 @@
 #include <boost/geometry/algorithms/detail/overlay/turn_info.hpp>
 #include <boost/geometry/core/access.hpp>
 #include <boost/geometry/core/assert.hpp>
+<<<<<<< HEAD
+=======
+#include <boost/geometry/util/condition.hpp>
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 namespace boost { namespace geometry
 {
@@ -48,6 +64,16 @@ template
 >
 struct traversal_switch_detector
 {
+<<<<<<< HEAD
+=======
+    static const operation_type target_operation
+            = operation_from_overlay<OverlayType>::value;
+    static const operation_type opposite_operation
+            = target_operation == operation_union
+            ? operation_intersection
+            : operation_union;
+
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     enum isolation_type
     {
         isolation_unknown = -1,
@@ -119,6 +145,7 @@ struct traversal_switch_detector
     {
     }
 
+<<<<<<< HEAD
     bool inspect_difference(set_type& turn_id_difference,
             set_type const& turn_ids,
             set_type const& other_turn_ids) const
@@ -146,6 +173,8 @@ struct traversal_switch_detector
         return true;
     }
 
+=======
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     bool one_connection_to_another_region(region_properties const& region) const
     {
         // For example:
@@ -224,12 +253,92 @@ struct traversal_switch_detector
         return true;
     }
 
+<<<<<<< HEAD
     bool has_only_isolated_children(region_properties const& region) const
     {
         bool first_with_turn = true;
         bool first_with_multiple = true;
         signed_size_type first_turn_id = 0;
         signed_size_type first_multiple_region_id = 0;
+=======
+    bool ii_turn_connects_two_regions(region_properties const& region,
+            region_properties const& connected_region,
+            signed_size_type turn_index) const
+    {
+        turn_type const& turn = m_turns[turn_index];
+        if (! turn.both(operation_intersection))
+        {
+            return false;
+        }
+
+        signed_size_type const id0 = turn.operations[0].enriched.region_id;
+        signed_size_type const id1 = turn.operations[1].enriched.region_id;
+
+        return (id0 == region.region_id && id1 == connected_region.region_id)
+            || (id1 == region.region_id && id0 == connected_region.region_id);
+    }
+
+
+    bool isolated_multiple_connection(region_properties const& region,
+            region_properties const& connected_region) const
+    {
+        if (connected_region.isolated != isolation_multiple)
+        {
+            return false;
+        }
+
+        // First step: compare turns of regions with turns of connected region
+        set_type turn_ids = region.unique_turn_ids;
+        for (set_iterator sit = connected_region.unique_turn_ids.begin();
+             sit != connected_region.unique_turn_ids.end(); ++sit)
+        {
+            turn_ids.erase(*sit);
+        }
+
+        // There should be one connection (turn or cluster) left
+        if (turn_ids.size() != 1)
+        {
+            return false;
+        }
+
+        for (set_iterator sit = connected_region.unique_turn_ids.begin();
+             sit != connected_region.unique_turn_ids.end(); ++sit)
+        {
+            signed_size_type const id_or_index = *sit;
+            if (id_or_index >= 0)
+            {
+                if (! ii_turn_connects_two_regions(region, connected_region, id_or_index))
+                {
+                    return false;
+                }
+            }
+            else
+            {
+                signed_size_type const cluster_id = -id_or_index;
+                typename Clusters::const_iterator it = m_clusters.find(cluster_id);
+                if (it != m_clusters.end())
+                {
+                    cluster_info const& cinfo = it->second;
+                    for (set_iterator cit = cinfo.turn_indices.begin();
+                         cit != cinfo.turn_indices.end(); ++cit)
+                    {
+                        if (! ii_turn_connects_two_regions(region, connected_region, *cit))
+                        {
+                            return false;
+                        }
+                    }
+                }
+            }
+        }
+
+        return true;
+    }
+
+    bool has_only_isolated_children(region_properties const& region) const
+    {
+        bool first_with_turn = true;
+        signed_size_type first_turn_id = 0;
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
         for (typename connection_map::const_iterator it = region.connected_region_counts.begin();
              it != region.connected_region_counts.end(); ++it)
@@ -246,6 +355,7 @@ struct traversal_switch_detector
 
             region_properties const& connected_region = mit->second;
 
+<<<<<<< HEAD
             bool const multiple = connected_region.isolated == isolation_multiple;
 
             if (cprop.count != 1)
@@ -278,11 +388,23 @@ struct traversal_switch_detector
                 if (diff.size() > 1)
                 {
                     // For now:
+=======
+            if (cprop.count != 1)
+            {
+                // If there are more connections, check their isolation
+                if (! isolated_multiple_connection(region, connected_region))
+                {
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
                     return false;
                 }
             }
 
+<<<<<<< HEAD
             if (connected_region.isolated != isolation_yes && ! multiple)
+=======
+            if (connected_region.isolated != isolation_yes
+                && connected_region.isolated != isolation_multiple)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
             {
                 signed_size_type const unique_turn_id = *cprop.unique_turn_ids.begin();
                 if (first_with_turn)
@@ -296,6 +418,10 @@ struct traversal_switch_detector
                 }
             }
         }
+<<<<<<< HEAD
+=======
+
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
         // If there is only one connection (with a 'parent'), and all other
         // connections are itself isolated, it is isolated
         return true;
@@ -381,6 +507,15 @@ struct traversal_switch_detector
             {
                 turn_type& turn = m_turns[*sit];
 
+<<<<<<< HEAD
+=======
+                if (! acceptable(turn))
+                {
+                    // No assignment necessary
+                    continue;
+                }
+
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
                 for (int i = 0; i < 2; i++)
                 {
                     turn_operation_type& op = turn.operations[i];
@@ -441,12 +576,28 @@ struct traversal_switch_detector
         }
     }
 
+<<<<<<< HEAD
     inline bool connects_same_region(turn_type const& turn) const
     {
         if (turn.discarded)
         {
             // Discarded turns don't connect same region (otherwise discarded colocated uu turn
             // could make a connection)
+=======
+    inline bool acceptable(turn_type const& turn) const
+    {
+        // Discarded turns don't connect rings to the same region
+        // Also xx are not relevant
+        // (otherwise discarded colocated uu turn could make a connection)
+        return ! turn.discarded
+            && ! turn.both(operation_blocked);
+    }
+
+    inline bool connects_same_region(turn_type const& turn) const
+    {
+        if (! acceptable(turn))
+        {
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
             return false;
         }
 
@@ -456,7 +607,11 @@ struct traversal_switch_detector
             return ! (turn.both(operation_union) || turn.both(operation_intersection));
         }
 
+<<<<<<< HEAD
         if (operation_from_overlay<OverlayType>::value == operation_union)
+=======
+        if (BOOST_GEOMETRY_CONDITION(target_operation == operation_union))
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
         {
             // It is a cluster, check zones
             // (assigned by sort_by_side/handle colocations) of both operations
@@ -540,7 +695,11 @@ struct traversal_switch_detector
     void iterate()
     {
 #if defined(BOOST_GEOMETRY_DEBUG_TRAVERSAL_SWITCH_DETECTOR)
+<<<<<<< HEAD
         std::cout << "SWITCH BEGIN ITERATION" << std::endl;
+=======
+        std::cout << "BEGIN ITERATION GETTING REGION_IDS" << std::endl;
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 #endif
 
         // Collect turns per ring
@@ -552,7 +711,11 @@ struct traversal_switch_detector
             turn_type const& turn = m_turns[turn_index];
 
             if (turn.discarded
+<<<<<<< HEAD
                     && operation_from_overlay<OverlayType>::value == operation_intersection)
+=======
+                && BOOST_GEOMETRY_CONDITION(target_operation == operation_intersection))
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
             {
                 // Discarded turn (union currently still needs it to determine regions)
                 continue;
@@ -580,6 +743,7 @@ struct traversal_switch_detector
             assign_isolation();
         }
 
+<<<<<<< HEAD
         // Now that all regions are filled, assign switch_source property
         // Iterate through all clusters
         for (typename Clusters::iterator it = m_clusters.begin(); it != m_clusters.end(); ++it)
@@ -638,6 +802,10 @@ struct traversal_switch_detector
 
 #if defined(BOOST_GEOMETRY_DEBUG_TRAVERSAL_SWITCH_DETECTOR)
         std::cout << "SWITCH END ITERATION" << std::endl;
+=======
+#if defined(BOOST_GEOMETRY_DEBUG_TRAVERSAL_SWITCH_DETECTOR)
+        std::cout << "END ITERATION GETTIN REGION_IDS" << std::endl;
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
         for (std::size_t turn_index = 0; turn_index < m_turns.size(); ++turn_index)
         {
@@ -646,15 +814,24 @@ struct traversal_switch_detector
             if ((turn.both(operation_union) || turn.both(operation_intersection))
                  && ! turn.is_clustered())
             {
+<<<<<<< HEAD
                 std::cout << "UU/II SWITCH RESULT "
                              << turn_index << " -> "
                           << turn.switch_source << std::endl;
+=======
+                std::cout << "UU/II RESULT "
+                             << turn_index << " -> "
+                          << turn.operations[0].enriched.region_id
+                          << " " << turn.operations[1].enriched.region_id
+                          << std::endl;
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
             }
         }
 
         for (typename Clusters::const_iterator it = m_clusters.begin(); it != m_clusters.end(); ++it)
         {
             cluster_info const& cinfo = it->second;
+<<<<<<< HEAD
             if (cinfo.open_count > 1)
             {
                 std::cout << "CL SWITCH RESULT " << it->first
@@ -665,6 +842,10 @@ struct traversal_switch_detector
                 std::cout << "CL SWITCH RESULT " << it->first
                           << " is not registered as open" << std::endl;
             }
+=======
+            std::cout << "CL RESULT " << it->first
+                         << " -> " << cinfo.open_count << std::endl;
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
         }
 #endif
 

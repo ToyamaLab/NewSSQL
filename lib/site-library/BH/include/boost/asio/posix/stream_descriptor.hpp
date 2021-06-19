@@ -2,7 +2,11 @@
 // posix/stream_descriptor.hpp
 // ~~~~~~~~~~~~~~~~~~~~~~~~~~~
 //
+<<<<<<< HEAD
 // Copyright (c) 2003-2017 Christopher M. Kohlhoff (chris at kohlhoff dot com)
+=======
+// Copyright (c) 2003-2019 Christopher M. Kohlhoff (chris at kohlhoff dot com)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 //
 // Distributed under the Boost Software License, Version 1.0. (See accompanying
 // file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
@@ -16,19 +20,27 @@
 #endif // defined(_MSC_VER) && (_MSC_VER >= 1200)
 
 #include <boost/asio/detail/config.hpp>
+<<<<<<< HEAD
 #include <boost/asio/posix/descriptor.hpp>
+=======
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 #if defined(BOOST_ASIO_HAS_POSIX_STREAM_DESCRIPTOR) \
   || defined(GENERATING_DOCUMENTATION)
 
+<<<<<<< HEAD
 #if defined(BOOST_ASIO_ENABLE_OLD_SERVICES)
 # include <boost/asio/posix/basic_stream_descriptor.hpp>
 #endif // defined(BOOST_ASIO_ENABLE_OLD_SERVICES)
+=======
+#include <boost/asio/posix/basic_stream_descriptor.hpp>
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 namespace boost {
 namespace asio {
 namespace posix {
 
+<<<<<<< HEAD
 #if defined(BOOST_ASIO_ENABLE_OLD_SERVICES)
 // Typedef for the typical usage of a stream-oriented descriptor.
 typedef basic_stream_descriptor<> stream_descriptor;
@@ -351,6 +363,10 @@ public:
   }
 };
 #endif // defined(BOOST_ASIO_ENABLE_OLD_SERVICES)
+=======
+/// Typedef for the typical usage of a stream-oriented descriptor.
+typedef basic_stream_descriptor<> stream_descriptor;
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 } // namespace posix
 } // namespace asio

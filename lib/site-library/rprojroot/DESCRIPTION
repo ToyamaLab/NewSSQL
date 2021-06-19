@@ -26,4 +26,8 @@ Author: Kirill Müller [aut, cre]
 Maintainer: Kirill Müller <krlmlr+r@mailbox.org>
 Repository: CRAN
 Date/Publication: 2018-01-03 15:36:24 UTC
+<<<<<<< HEAD
 Built: R 3.5.1; ; 2018-08-21 07:41:01 UTC; unix
+=======
+Built: R 4.0.2; ; 2020-08-27 07:44:29 UTC; unix
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce

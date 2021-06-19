@@ -114,11 +114,19 @@ class static_rational
             (::boost::mpl::divides<D_type, den_type>::value)
         >  type;
                                  
+<<<<<<< HEAD
         static integer_type numerator()      { return Numerator; }
         static integer_type denominator()    { return Denominator; }
         
         // INTERNAL ONLY
         static_rational() { }
+=======
+        static BOOST_CONSTEXPR integer_type numerator()     { return Numerator; }
+        static BOOST_CONSTEXPR integer_type denominator()   { return Denominator; }
+        
+        // INTERNAL ONLY
+        BOOST_CONSTEXPR static_rational() { }
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
         //~static_rational() { }
 };
 #else
@@ -127,19 +135,32 @@ class static_rational
 {
     private:
 
+<<<<<<< HEAD
         static const integer_type   nabs = static_abs<N>::value,
                                     dabs = static_abs<D>::value;
         
         /// greatest common divisor of N and D
         // need cast to signed because static_gcd returns unsigned long
         static const integer_type   den = 
+=======
+        BOOST_STATIC_CONSTEXPR integer_type nabs = static_abs<N>::value,
+                                            dabs = static_abs<D>::value;
+        
+        /// greatest common divisor of N and D
+        // need cast to signed because static_gcd returns unsigned long
+        BOOST_STATIC_CONSTEXPR integer_type den = 
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
             static_cast<integer_type>(boost::integer::static_gcd<nabs,dabs>::value) * ((D < 0) ? -1 : 1);
         
     public: 
         // for mpl arithmetic support
         typedef detail::static_rational_tag tag;
         
+<<<<<<< HEAD
         static const integer_type   Numerator = N/den,
+=======
+        BOOST_STATIC_CONSTEXPR integer_type Numerator = N/den,
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
             Denominator = D/den;
         
         /// INTERNAL ONLY
@@ -148,11 +169,19 @@ class static_rational
         /// static_rational<N,D> reduced by GCD
         typedef static_rational<Numerator,Denominator>  type;
                                  
+<<<<<<< HEAD
         static integer_type numerator()      { return Numerator; }
         static integer_type denominator()    { return Denominator; }
         
         // INTERNAL ONLY
         static_rational() { }
+=======
+        static BOOST_CONSTEXPR integer_type numerator()     { return Numerator; }
+        static BOOST_CONSTEXPR integer_type denominator()   { return Denominator; }
+        
+        // INTERNAL ONLY
+        BOOST_CONSTEXPR static_rational() { }
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
         //~static_rational() { }   
 };
 #endif
@@ -178,7 +207,11 @@ template<integer_type N> class static_rational<N,0>;
 
 /// get decimal value of @c static_rational
 template<class T,integer_type N,integer_type D>
+<<<<<<< HEAD
 inline typename divide_typeof_helper<T,T>::type 
+=======
+inline BOOST_CONSTEXPR typename divide_typeof_helper<T,T>::type 
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 value(const static_rational<N,D>&)
 {
     return T(N)/T(D);

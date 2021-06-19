@@ -287,7 +287,11 @@ namespace boost{ namespace math{
   {
     using namespace boost::math::constants;
 
+<<<<<<< HEAD
     const RealType delta2 = static_cast<RealType>(1) / (static_cast<RealType>(1)+static_cast<RealType>(1)/(dist.shape()*dist.shape()));
+=======
+    const RealType delta2 = dist.shape() != 0 ? static_cast<RealType>(1) / (static_cast<RealType>(1)+static_cast<RealType>(1)/(dist.shape()*dist.shape())) : static_cast<RealType>(0);
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     //const RealType inv_delta2 = static_cast<RealType>(1)+static_cast<RealType>(1)/(dist.shape()*dist.shape());
 
     RealType variance = dist.scale()*dist.scale()*(static_cast<RealType>(1)-two_div_pi<RealType>()*delta2);
@@ -592,7 +596,11 @@ namespace boost{ namespace math{
 
     static const RealType factor = pi_minus_three<RealType>()*static_cast<RealType>(2);
 
+<<<<<<< HEAD
     const RealType delta2 = static_cast<RealType>(1) / (static_cast<RealType>(1)+static_cast<RealType>(1)/(dist.shape()*dist.shape()));
+=======
+    const RealType delta2 = dist.shape() != 0 ? static_cast<RealType>(1) / (static_cast<RealType>(1)+static_cast<RealType>(1)/(dist.shape()*dist.shape())) : static_cast<RealType>(0);
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
     const RealType x = static_cast<RealType>(1)-two_div_pi<RealType>()*delta2;
     const RealType y = two_div_pi<RealType>() * delta2;

@@ -1,8 +1,15 @@
+<<<<<<< HEAD
 // -*- mode: C++; c-indent-level: 4; c-basic-offset: 4; indent-tabs-mode: nil; -*-
 //
 // XPtr.h: Rcpp R/C++ interface class library -- smart external pointers
 //
 // Copyright (C) 2009 - 2017  Dirk Eddelbuettel and Romain Francois
+=======
+//
+// XPtr.h: Rcpp R/C++ interface class library -- smart external pointers
+//
+// Copyright (C) 2009 - 2020  Dirk Eddelbuettel and Romain Francois
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 //
 // This file is part of Rcpp.
 //
@@ -27,18 +34,39 @@
 namespace Rcpp {
 
 template <typename T>
+<<<<<<< HEAD
 void standard_delete_finalizer(T* obj) {
+=======
+void standard_delete_finalizer(T* obj) {												// #nocov start
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     delete obj;
 }
 
 template <typename T, void Finalizer(T*) >
 void finalizer_wrapper(SEXP p) {
+<<<<<<< HEAD
     if (TYPEOF(p) == EXTPTRSXP) {
         T* ptr = (T*) R_ExternalPtrAddr(p);
         RCPP_DEBUG_3("finalizer_wrapper<%s>(SEXP p = <%p>). ptr = %p", DEMANGLE(T), p, ptr)
         Finalizer(ptr);
     }
 }
+=======
+    if (TYPEOF(p) != EXTPTRSXP)
+        return;
+
+    T* ptr = (T*) R_ExternalPtrAddr(p);
+    RCPP_DEBUG_3("finalizer_wrapper<%s>(SEXP p = <%p>). ptr = %p", DEMANGLE(T), p, ptr)
+
+    if (ptr == NULL)
+        return;
+
+    // Clear before finalizing to avoid behavior like access of freed memory
+    R_ClearExternalPtr(p);
+
+    Finalizer(ptr);
+}																						// #nocov end
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 template <
     typename T,
@@ -63,6 +91,7 @@ public:
      *
      * @param xp external pointer to wrap
      */
+<<<<<<< HEAD
     explicit XPtr(SEXP x, SEXP tag = R_NilValue, SEXP prot = R_NilValue) {
         if (TYPEOF(x) != EXTPTRSXP) {
             const char* fmt = "Expecting an external pointer: [type=%s].";
@@ -71,6 +100,20 @@ public:
 
         Storage::set__(x);
         R_SetExternalPtrTag( x, tag);
+=======
+    explicit XPtr(SEXP x) { checked_set(x); };
+
+    /**
+     * constructs a XPtr wrapping the external pointer (EXTPTRSXP SEXP)
+     *
+     * @param xp external pointer to wrap
+     * @param tag tag to assign to external pointer
+     * @param prot protected data to assign to external pointer
+     */
+    explicit XPtr(SEXP x, SEXP tag, SEXP prot) {
+        checked_set(x);
+        R_SetExternalPtrTag(x, tag);
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
         R_SetExternalPtrProtected(x, prot);
     };
 
@@ -90,7 +133,11 @@ public:
         RCPP_DEBUG_2("XPtr(T* p = <%p>, bool set_delete_finalizer = %s, SEXP tag = R_NilValue, SEXP prot = R_NilValue)", p, (set_delete_finalizer ? "true" : "false"))
         Storage::set__(R_MakeExternalPtr((void*)p , tag, prot));
         if (set_delete_finalizer) {
+<<<<<<< HEAD
             setDeleteFinalizer();
+=======
+            setDeleteFinalizer();												// #nocov
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
         }
     }
 
@@ -130,7 +177,11 @@ public:
     inline T* checked_get() const {
         T* ptr = get();
         if (ptr == NULL)
+<<<<<<< HEAD
             throw ::Rcpp::exception("external pointer is not valid");
+=======
+            throw ::Rcpp::exception("external pointer is not valid");									// #nocov
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
         return ptr;
     }
 
@@ -150,10 +201,17 @@ public:
         return checked_get();
     }
 
+<<<<<<< HEAD
     void setDeleteFinalizer() {
         R_RegisterCFinalizerEx(Storage::get__(), finalizer_wrapper<T,Finalizer>,
                                (Rboolean) finalizeOnExit);
     }
+=======
+    void setDeleteFinalizer() {																			// #nocov start
+        R_RegisterCFinalizerEx(Storage::get__(), finalizer_wrapper<T,Finalizer>,
+                               (Rboolean) finalizeOnExit);
+    }																									// #nocov end
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
     /**
      * Release the external pointer (if any) immediately. This will cause
@@ -170,10 +228,16 @@ public:
             // Call the finalizer -- note that this implies that finalizers
             // need to be ready for a NULL external pointer value (our
             // default C++ finalizer is since delete NULL is a no-op).
+<<<<<<< HEAD
             finalizer_wrapper<T,Finalizer>(Storage::get__());
 
             // Clear the external pointer
             R_ClearExternalPtr(Storage::get__());
+=======
+            // This clears the external pointer just before calling the finalizer,
+            // to avoid interesting behavior with co-dependent finalizers.
+            finalizer_wrapper<T,Finalizer>(Storage::get__());
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
         }
     }
 
@@ -182,6 +246,19 @@ public:
     }
 
     void update(SEXP) {}
+<<<<<<< HEAD
+=======
+
+private:
+    inline void checked_set(SEXP x) {
+        if (TYPEOF(x) != EXTPTRSXP) {
+            const char* fmt = "Expecting an external pointer: [type=%s].";						// #nocov
+            throw ::Rcpp::not_compatible(fmt, Rf_type2char(TYPEOF(x)));							// #nocov
+        }
+        Storage::set__(x);
+    }
+
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 };
 
 } // namespace Rcpp

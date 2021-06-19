@@ -286,6 +286,7 @@ namespace boost { namespace spirit { namespace karma
             if (f)
             {
                 // Create an attribute if none is supplied.
+<<<<<<< HEAD
                 typedef traits::make_attribute<attr_type, Attribute>
                     make_attribute;
                 typedef traits::transform_attribute<
@@ -295,6 +296,13 @@ namespace boost { namespace spirit { namespace karma
                 typename transform::type attr_ =
                     traits::pre_transform<domain, attr_type>(
                         make_attribute::call(attr));
+=======
+                typedef traits::transform_attribute<
+                    Attribute const, attr_type, domain>
+                transform;
+
+                typename transform::type attr_ = transform::pre(attr);
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
                 // If you are seeing a compilation error here, you are probably
                 // trying to use a rule or a grammar which has inherited
@@ -326,6 +334,7 @@ namespace boost { namespace spirit { namespace karma
             if (f)
             {
                 // Create an attribute if none is supplied.
+<<<<<<< HEAD
                 typedef traits::make_attribute<attr_type, Attribute>
                     make_attribute;
                 typedef traits::transform_attribute<
@@ -335,6 +344,13 @@ namespace boost { namespace spirit { namespace karma
                 typename transform::type attr_ =
                     traits::pre_transform<domain, attr_type>(
                         make_attribute::call(attr));
+=======
+                typedef traits::transform_attribute<
+                    Attribute const, attr_type, domain>
+                transform;
+
+                typename transform::type attr_ = transform::pre(attr);
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
                 // If you are seeing a compilation error here, you are probably
                 // trying to use a rule or a grammar which has inherited

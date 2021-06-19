@@ -40,7 +40,11 @@ system_clock::now(system::error_code & ec)
 {
     timeval tv;
     gettimeofday(&tv, 0);
+<<<<<<< HEAD
     if (!BOOST_CHRONO_IS_THROWS(ec))
+=======
+    if (!::boost::chrono::is_throws(ec))
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     {
         ec.clear();
     }
@@ -89,7 +93,11 @@ BOOST_CHRONO_STATIC
 steady_clock::rep
 steady_simplified_ec(system::error_code & ec)
 {
+<<<<<<< HEAD
     if (!BOOST_CHRONO_IS_THROWS(ec))
+=======
+    if (!::boost::chrono::is_throws(ec))
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     {
         ec.clear();
     }
@@ -131,21 +139,37 @@ steady_full_ec(system::error_code & ec)
     const double factor = chrono_detail::compute_steady_factor(err);
     if (err != 0)
     {
+<<<<<<< HEAD
         if (BOOST_CHRONO_IS_THROWS(ec))
+=======
+        if (::boost::chrono::is_throws(ec))
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
         {
             boost::throw_exception(
                     system::system_error(
                             err,
+<<<<<<< HEAD
                             BOOST_CHRONO_SYSTEM_CATEGORY,
+=======
+                            ::boost::system::system_category(),
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
                             "chrono::steady_clock" ));
         }
         else
         {
+<<<<<<< HEAD
             ec.assign( errno, BOOST_CHRONO_SYSTEM_CATEGORY );
             return steady_clock::rep();
         }
     }
     if (!BOOST_CHRONO_IS_THROWS(ec))
+=======
+            ec.assign( errno, ::boost::system::system_category() );
+            return steady_clock::rep();
+        }
+    }
+    if (!::boost::chrono::is_throws(ec))
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     {
         ec.clear();
     }
@@ -217,21 +241,37 @@ steady_clock::now(system::error_code & ec)
     chrono_detail::FP_ec fp = chrono_detail::init_steady_clock_ec(err);
     if ( err != 0  )
     {
+<<<<<<< HEAD
         if (BOOST_CHRONO_IS_THROWS(ec))
+=======
+        if (::boost::chrono::is_throws(ec))
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
         {
             boost::throw_exception(
                     system::system_error(
                             err,
+<<<<<<< HEAD
                             BOOST_CHRONO_SYSTEM_CATEGORY,
+=======
+                            ::boost::system::system_category(),
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
                             "chrono::steady_clock" ));
         }
         else
         {
+<<<<<<< HEAD
             ec.assign( err, BOOST_CHRONO_SYSTEM_CATEGORY );
             return time_point();
         }
     }
     if (!BOOST_CHRONO_IS_THROWS(ec))
+=======
+            ec.assign( err, ::boost::system::system_category() );
+            return time_point();
+        }
+    }
+    if (!::boost::chrono::is_throws(ec))
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     {
         ec.clear();
     }

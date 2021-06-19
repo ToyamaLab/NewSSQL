@@ -72,6 +72,16 @@ class new_allocator<void>
    new_allocator(const new_allocator &) BOOST_NOEXCEPT_OR_NOTHROW
    {}
 
+<<<<<<< HEAD
+=======
+   //!Copy assignment operator from other new_allocator.
+   //!Never throws
+   new_allocator& operator=(const new_allocator &) BOOST_NOEXCEPT_OR_NOTHROW
+   {
+       return *this;
+   }
+
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
    //!Constructor from related new_allocator.
    //!Never throws
    template<class T2>
@@ -130,6 +140,16 @@ class new_allocator
    new_allocator(const new_allocator &) BOOST_NOEXCEPT_OR_NOTHROW
    {}
 
+<<<<<<< HEAD
+=======
+   //!Copy assignment operator from other new_allocator.
+   //!Never throws
+   new_allocator& operator=(const new_allocator &) BOOST_NOEXCEPT_OR_NOTHROW
+   {
+       return *this;
+   }
+
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
    //!Constructor from related new_allocator.
    //!Never throws
    template<class T2>
@@ -140,7 +160,12 @@ class new_allocator
    //!Throws std::bad_alloc if there is no enough memory
    pointer allocate(size_type count)
    {
+<<<<<<< HEAD
       if(BOOST_UNLIKELY(count > this->max_size()))
+=======
+      const std::size_t max_count = std::size_t(-1)/(2*sizeof(T));
+      if(BOOST_UNLIKELY(count > max_count))
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
          throw_bad_alloc();
       return static_cast<T*>(::operator new(count*sizeof(T)));
    }
@@ -153,7 +178,11 @@ class new_allocator
    //!Returns the maximum number of elements that could be allocated.
    //!Never throws
    size_type max_size() const BOOST_NOEXCEPT_OR_NOTHROW
+<<<<<<< HEAD
    {  return size_type(-1)/sizeof(T);   }
+=======
+   {  return std::size_t(-1)/(2*sizeof(T));   }
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
    //!Swaps two allocators, does nothing
    //!because this new_allocator is stateless

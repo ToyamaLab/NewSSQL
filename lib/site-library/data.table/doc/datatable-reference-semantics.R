@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 ## ---- echo = FALSE, message = FALSE--------------------------------------
+=======
+## ---- echo = FALSE, message = FALSE---------------------------------------------------------------
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 require(data.table)
 knitr::opts_chunk$set(
   comment = "#",

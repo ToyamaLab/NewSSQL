@@ -112,7 +112,11 @@ struct constructible_with_allocator_prefix
 
 #ifndef BOOST_CONTAINER_DOXYGEN_INVOKED
 
+<<<<<<< HEAD
 namespace container_detail {
+=======
+namespace dtl {
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 template<typename T, typename Allocator>
 struct uses_allocator_imp
@@ -130,8 +134,13 @@ struct uses_allocator_imp
 
    // Match this function if T::allocator_type exists and it's type is `erased_type`.
    template <class U, class V>
+<<<<<<< HEAD
    static typename container_detail::enable_if
       < container_detail::is_same<typename U::allocator_type, erased_type>
+=======
+   static typename dtl::enable_if
+      < dtl::is_same<typename U::allocator_type, erased_type>
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
       , yes_type
       >::type  test(const V&);
 
@@ -145,7 +154,11 @@ struct uses_allocator_imp
    static const bool value = sizeof(test<T>(alloc)) == sizeof(yes_type);
 };
 
+<<<<<<< HEAD
 }  //namespace container_detail {
+=======
+}  //namespace dtl {
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 #endif   //#ifndef BOOST_CONTAINER_DOXYGEN_INVOKED
 
@@ -161,7 +174,11 @@ struct uses_allocator_imp
 //! is an alias `erased_type`. False otherwise.
 template <typename T, typename Allocator>
 struct uses_allocator
+<<<<<<< HEAD
    : container_detail::uses_allocator_imp<T, Allocator>
+=======
+   : dtl::uses_allocator_imp<T, Allocator>
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 {};
 
 }} //namespace boost::container

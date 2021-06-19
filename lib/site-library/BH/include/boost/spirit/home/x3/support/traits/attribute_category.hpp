@@ -11,11 +11,20 @@
 #include <boost/mpl/identity.hpp>
 #include <boost/mpl/logical.hpp>
 #include <boost/mpl/eval_if.hpp>
+<<<<<<< HEAD
 #include <boost/fusion/include/copy.hpp>
 #include <boost/fusion/include/is_sequence.hpp>
 #include <boost/fusion/support/category_of.hpp>
 #include <boost/spirit/home/x3/support/traits/is_variant.hpp>
 #include <boost/spirit/home/x3/support/traits/container_traits.hpp>
+=======
+#include <boost/fusion/include/is_sequence.hpp>
+#include <boost/fusion/support/category_of.hpp>
+#include <boost/spirit/home/x3/support/traits/is_variant.hpp>
+#include <boost/spirit/home/x3/support/traits/is_range.hpp>
+#include <boost/spirit/home/x3/support/traits/container_traits.hpp>
+#include <boost/spirit/home/x3/support/traits/optional_traits.hpp>
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 namespace boost { namespace spirit { namespace x3
 {
@@ -31,6 +40,10 @@ namespace boost { namespace spirit { namespace x3 { namespace traits
     struct associative_attribute {};
     struct variant_attribute {};
     struct optional_attribute {};
+<<<<<<< HEAD
+=======
+    struct range_attribute {};
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
     template <typename T, typename Enable = void>
     struct attribute_category
@@ -46,21 +59,38 @@ namespace boost { namespace spirit { namespace x3 { namespace traits
 
     template <typename T>
     struct attribute_category< T
+<<<<<<< HEAD
 	, typename enable_if<
 	      typename mpl::eval_if< 
 		  fusion::traits::is_sequence<T>
 		  , fusion::traits::is_associative<T>
 		  , mpl::false_
 		  >::type >::type >
+=======
+    , typename enable_if<
+          typename mpl::eval_if<
+          fusion::traits::is_sequence<T>
+          , fusion::traits::is_associative<T>
+          , mpl::false_
+          >::type >::type >
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
         : mpl::identity<associative_attribute> {};
 
     template <typename T>
     struct attribute_category< T
+<<<<<<< HEAD
 	, typename enable_if<
 	      mpl::and_<
 		  fusion::traits::is_sequence<T>
 		  , mpl::not_<fusion::traits::is_associative<T> > 
 		  > >::type >
+=======
+    , typename enable_if<
+          mpl::and_<
+          fusion::traits::is_sequence<T>
+          , mpl::not_<fusion::traits::is_associative<T> >
+          > >::type >
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
         : mpl::identity<tuple_attribute> {};
 
     template <typename T>
@@ -70,7 +100,26 @@ namespace boost { namespace spirit { namespace x3 { namespace traits
 
     template <typename T>
     struct attribute_category<T,
+<<<<<<< HEAD
         typename enable_if<traits::is_container<T>>::type>
+=======
+        typename enable_if<traits::is_optional<T>>::type>
+        : mpl::identity<optional_attribute> {};
+
+    template <typename T>
+    struct attribute_category<T,
+        typename enable_if<traits::is_range<T>>::type>
+        : mpl::identity<range_attribute> {};
+
+    template <typename T>
+    struct attribute_category< T
+    , typename enable_if<
+          mpl::and_<
+          traits::is_container<T>
+          , mpl::not_<fusion::traits::is_sequence<T> >
+          , mpl::not_<traits::is_range<T> >
+          > >::type >
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
         : mpl::identity<container_attribute> {};
 
 }}}}

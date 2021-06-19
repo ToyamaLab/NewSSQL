@@ -21,8 +21,13 @@
 #include <boost/preprocessor/tuple/elem.hpp>
 #include <boost/mpl/if.hpp>
 #include <boost/type_traits/is_const.hpp>
+<<<<<<< HEAD
 #include <boost/type_traits/add_const.hpp>
 #include <boost/type_traits/remove_const.hpp>
+=======
+#include <boost/type_traits/remove_const.hpp>
+#include <boost/type_traits/remove_reference.hpp>
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 #include <boost/typeof/typeof.hpp>
 
@@ -83,6 +88,7 @@
     typedef                                                                     \
         BOOST_PP_EXPR_IF(BOOST_FUSION_ADAPT_IS_TPL(TEMPLATE_PARAMS_SEQ),        \
                          typename)                                              \
+<<<<<<< HEAD
         boost::remove_const<                                                    \
           BOOST_PP_EXPR_IF(BOOST_FUSION_ADAPT_IS_TPL(TEMPLATE_PARAMS_SEQ),      \
                            typename) \
@@ -97,6 +103,10 @@
                            typename) \
           deduced_attr_type::type                                               \
     >::type const_type;
+=======
+        deduced_attr_type::type type;                                           \
+    typedef type const_type;
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 #define BOOST_FUSION_ADT_ATTRIBUTE_GIVENTYPE(                                   \
     NAME_SEQ, ATTRIBUTE, ATTRIBUTE_TUPLE_SIZE, PREFIX, TEMPLATE_PARAMS_SEQ)     \

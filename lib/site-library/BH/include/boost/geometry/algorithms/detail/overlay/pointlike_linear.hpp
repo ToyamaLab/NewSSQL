@@ -2,7 +2,11 @@
 
 // Copyright (c) 2017 Adam Wulkiewicz, Lodz, Poland.
 
+<<<<<<< HEAD
 // Copyright (c) 2015-2017, Oracle and/or its affiliates.
+=======
+// Copyright (c) 2015-2019, Oracle and/or its affiliates.
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 // Contributed and/or modified by Menelaos Karavelas, on behalf of Oracle
 // Contributed and/or modified by Adam Wulkiewicz, on behalf of Oracle
@@ -128,12 +132,20 @@ class multipoint_linear_point
 {
 private:
     // structs for partition -- start
+<<<<<<< HEAD
+=======
+    template <typename ExpandPointStrategy>
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     struct expand_box_point
     {
         template <typename Box, typename Point>
         static inline void apply(Box& total, Point const& point)
         {
+<<<<<<< HEAD
             geometry::expand(total, point);
+=======
+            geometry::expand(total, point, ExpandPointStrategy());
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
         }
     };
 
@@ -148,18 +160,31 @@ private:
         inline void apply(Box& total, Segment const& segment) const
         {
             geometry::expand(total,
+<<<<<<< HEAD
                              geometry::return_envelope<Box>(segment, m_strategy));
+=======
+                             geometry::return_envelope<Box>(segment, m_strategy),
+                             m_strategy.get_box_expand_strategy());
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
         }
 
         EnvelopeStrategy const& m_strategy;
     };
 
+<<<<<<< HEAD
+=======
+    template <typename DisjointPointBoxStrategy>
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     struct overlaps_box_point
     {
         template <typename Box, typename Point>
         static inline bool apply(Box const& box, Point const& point)
         {
+<<<<<<< HEAD
             return ! geometry::disjoint(point, box);
+=======
+            return ! geometry::disjoint(point, box, DisjointPointBoxStrategy());
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
         }
     };
 
@@ -239,6 +264,11 @@ private:
 
         typedef typename Strategy::envelope_strategy_type envelope_strategy_type;
         typedef typename Strategy::disjoint_strategy_type disjoint_strategy_type;
+<<<<<<< HEAD
+=======
+        typedef typename Strategy::disjoint_point_box_strategy_type disjoint_point_box_strategy_type;
+        typedef typename Strategy::expand_point_strategy_type expand_point_strategy_type;
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
         // TODO: disjoint Segment/Box may be called in partition multiple times
         // possibly for non-cartesian segments which could be slow. We should consider
@@ -252,8 +282,13 @@ private:
                         typename boost::range_value<MultiPoint>::type
                     >
             >::apply(multipoint, segment_range(linear), item_visitor,
+<<<<<<< HEAD
                      expand_box_point(),
                      overlaps_box_point(),
+=======
+                     expand_box_point<expand_point_strategy_type>(),
+                     overlaps_box_point<disjoint_point_box_strategy_type>(),
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
                      expand_box_segment<envelope_strategy_type>(strategy.get_envelope_strategy()),
                      overlaps_box_segment<disjoint_strategy_type>(strategy.get_disjoint_strategy()));
 

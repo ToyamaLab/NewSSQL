@@ -84,6 +84,7 @@
   BOOST_TTI_DETAIL_TRAIT_CTMF_INVOKE(trait,name) \
   template<class BOOST_TTI_DETAIL_TP_T,class BOOST_TTI_DETAIL_TP_R,class BOOST_TTI_DETAIL_TP_FS,class BOOST_TTI_DETAIL_TP_TAG> \
   struct BOOST_PP_CAT(trait,_detail_call_types) : \
+<<<<<<< HEAD
 	boost::mpl::eval_if \
 		< \
  		boost::is_class<BOOST_TTI_DETAIL_TP_T>, \
@@ -96,6 +97,20 @@
  			>, \
  		boost::mpl::false_ \
 		> \
+=======
+    boost::mpl::eval_if \
+        < \
+        boost::is_class<BOOST_TTI_DETAIL_TP_T>, \
+        BOOST_PP_CAT(trait,_detail_ctmf_invoke) \
+            < \
+            BOOST_TTI_DETAIL_TP_T, \
+            BOOST_TTI_DETAIL_TP_R, \
+            BOOST_TTI_DETAIL_TP_FS, \
+            BOOST_TTI_DETAIL_TP_TAG \
+            >, \
+        boost::mpl::false_ \
+        > \
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     { \
     }; \
 /**/

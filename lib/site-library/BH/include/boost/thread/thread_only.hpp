@@ -23,7 +23,11 @@
 #if defined BOOST_THREAD_PROVIDES_INTERRUPTIONS
 #include <boost/thread/detail/thread_interruption.hpp>
 #endif
+<<<<<<< HEAD
 #include <boost/thread/v2/thread.hpp>
+=======
+#include <boost/thread/condition_variable.hpp>
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 
 #endif

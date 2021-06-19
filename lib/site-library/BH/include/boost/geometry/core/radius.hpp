@@ -223,8 +223,13 @@ template <typename Geometry, std::size_t Dimension>
 struct radius_access<srs_sphere_tag, Geometry, Dimension, boost::false_type>
     : detail::radius_access<srs_sphere_tag, Geometry, Dimension>
 {
+<<<<<<< HEAD
     BOOST_STATIC_ASSERT(Dimension == 0);
     //BOOST_STATIC_ASSERT(Dimension < 3);
+=======
+    //BOOST_STATIC_ASSERT(Dimension == 0);
+    BOOST_STATIC_ASSERT(Dimension < 3);
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 };
 
 template <typename Geometry>
@@ -237,8 +242,13 @@ template <typename Geometry, std::size_t Dimension>
 struct radius_access<srs_spheroid_tag, Geometry, Dimension, boost::false_type>
     : detail::radius_access<srs_spheroid_tag, Geometry, Dimension>
 {
+<<<<<<< HEAD
     BOOST_STATIC_ASSERT(Dimension == 0 || Dimension == 2);
     //BOOST_STATIC_ASSERT(Dimension < 3);
+=======
+    //BOOST_STATIC_ASSERT(Dimension == 0 || Dimension == 2);
+    BOOST_STATIC_ASSERT(Dimension < 3);
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 };
 
 } // namespace core_dispatch

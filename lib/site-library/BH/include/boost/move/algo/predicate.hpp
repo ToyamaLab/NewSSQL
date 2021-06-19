@@ -28,15 +28,39 @@ struct antistable
       : m_comp(comp)
    {}
 
+<<<<<<< HEAD
+=======
+   antistable(const antistable & other)
+      : m_comp(other.m_comp)
+   {}
+
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
    template<class U, class V>
    bool operator()(const U &u, const V & v)
    {  return !m_comp(v, u);  }
 
+<<<<<<< HEAD
+=======
+   const Comp &get() const
+   {  return m_comp; }
+
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
    private:
    antistable & operator=(const antistable &);
    Comp &m_comp;
 };
 
+<<<<<<< HEAD
+=======
+template<class Comp>
+Comp unantistable(Comp comp)
+{   return comp;  }
+
+template<class Comp>
+Comp unantistable(antistable<Comp> comp)
+{   return comp.get();  }
+
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 template <class Comp>
 class negate
 {

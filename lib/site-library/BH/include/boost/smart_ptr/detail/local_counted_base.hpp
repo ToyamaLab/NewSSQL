@@ -27,7 +27,11 @@ namespace boost
 namespace detail
 {
 
+<<<<<<< HEAD
 class local_counted_base
+=======
+class BOOST_SYMBOL_VISIBLE local_counted_base
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 {
 private:
 
@@ -89,7 +93,11 @@ public:
     }
 };
 
+<<<<<<< HEAD
 class local_counted_impl: public local_counted_base
+=======
+class BOOST_SYMBOL_VISIBLE local_counted_impl: public local_counted_base
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 {
 private:
 
@@ -101,13 +109,21 @@ private:
 
 public:
 
+<<<<<<< HEAD
     explicit local_counted_impl( shared_count const& pn ): pn_( pn )
+=======
+    explicit local_counted_impl( shared_count const& pn ) BOOST_SP_NOEXCEPT: pn_( pn )
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     {
     }
 
 #if !defined( BOOST_NO_CXX11_RVALUE_REFERENCES )
 
+<<<<<<< HEAD
     explicit local_counted_impl( shared_count && pn ): pn_( std::move(pn) )
+=======
+    explicit local_counted_impl( shared_count && pn ) BOOST_SP_NOEXCEPT: pn_( std::move(pn) )
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     {
     }
 
@@ -124,7 +140,11 @@ public:
     }
 };
 
+<<<<<<< HEAD
 class local_counted_impl_em: public local_counted_base
+=======
+class BOOST_SYMBOL_VISIBLE local_counted_impl_em: public local_counted_base
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 {
 public:
 

@@ -30,9 +30,12 @@ namespace boost { namespace spirit { namespace result_of
     template <typename T, typename Attribute>
     struct attribute_as;
 
+<<<<<<< HEAD
     template <typename Exposed, typename Transformed, typename Domain>
     struct pre_transform;
 
+=======
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     template <typename T>
     struct optional_value;
 

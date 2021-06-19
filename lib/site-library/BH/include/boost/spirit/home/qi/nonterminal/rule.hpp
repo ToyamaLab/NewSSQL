@@ -12,10 +12,18 @@
 #endif
 
 #include <boost/assert.hpp>
+<<<<<<< HEAD
+=======
+#include <boost/static_assert.hpp>
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 #include <boost/config.hpp>
 #include <boost/function.hpp>
 #include <boost/mpl/vector.hpp>
 #include <boost/type_traits/add_reference.hpp>
+<<<<<<< HEAD
+=======
+#include <boost/type_traits/is_convertible.hpp>
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 #include <boost/type_traits/is_same.hpp>
 
 #include <boost/fusion/include/vector.hpp>
@@ -275,12 +283,24 @@ namespace boost { namespace spirit { namespace qi
           , Context& /*context*/, Skipper const& skipper
           , Attribute& attr_param) const
         {
+<<<<<<< HEAD
+=======
+            BOOST_STATIC_ASSERT_MSG((is_same<skipper_type, unused_type>::value ||
+                !is_same<Skipper, unused_type>::value),
+                "The rule was instantiated with a skipper type but you have not pass any. "
+                "Did you use `parse` instead of `phrase_parse`?");
+            BOOST_STATIC_ASSERT_MSG(
+                (is_convertible<Skipper const&, skipper_type>::value),
+                "The passed skipper is not compatible/convertible to one "
+                "that the rule was instantiated with");
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
             if (f)
             {
                 // do a preskip if this is an implied lexeme
                 if (is_same<skipper_type, unused_type>::value)
                     qi::skip_over(first, last, skipper);
 
+<<<<<<< HEAD
                 typedef traits::make_attribute<attr_type, Attribute> make_attribute;
 
                 // do down-stream transformation, provides attribute for
@@ -291,6 +311,15 @@ namespace boost { namespace spirit { namespace qi
 
                 typename make_attribute::type made_attr = make_attribute::call(attr_param);
                 typename transform::type attr_ = transform::pre(made_attr);
+=======
+                // do down-stream transformation, provides attribute for
+                // rhs parser
+                typedef traits::transform_attribute<
+                    Attribute, attr_type, domain>
+                transform;
+
+                typename transform::type attr_ = transform::pre(attr_param);
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
                 // If you are seeing a compilation error here, you are probably
                 // trying to use a rule or a grammar which has inherited
@@ -305,12 +334,20 @@ namespace boost { namespace spirit { namespace qi
                 {
                     // do up-stream transformation, this integrates the results
                     // back into the original attribute value, if appropriate
+<<<<<<< HEAD
                     traits::post_transform(attr_param, attr_);
+=======
+                    transform::post(attr_param, attr_);
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
                     return true;
                 }
 
                 // inform attribute transformation of failed rhs
+<<<<<<< HEAD
                 traits::fail_transform(attr_param, attr_);
+=======
+                transform::fail(attr_param);
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
             }
             return false;
         }
@@ -321,12 +358,24 @@ namespace boost { namespace spirit { namespace qi
           , Context& caller_context, Skipper const& skipper
           , Attribute& attr_param, Params const& params) const
         {
+<<<<<<< HEAD
+=======
+            BOOST_STATIC_ASSERT_MSG((is_same<skipper_type, unused_type>::value ||
+                !is_same<Skipper, unused_type>::value),
+                "The rule was instantiated with a skipper type but you have not pass any. "
+                "Did you use `parse` instead of `phrase_parse`?");
+            BOOST_STATIC_ASSERT_MSG(
+                (is_convertible<Skipper const&, skipper_type>::value),
+                "The passed skipper is not compatible/convertible to one "
+                "that the rule was instantiated with");
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
             if (f)
             {
                 // do a preskip if this is an implied lexeme
                 if (is_same<skipper_type, unused_type>::value)
                     qi::skip_over(first, last, skipper);
 
+<<<<<<< HEAD
                 typedef traits::make_attribute<attr_type, Attribute> make_attribute;
 
                 // do down-stream transformation, provides attribute for
@@ -337,6 +386,15 @@ namespace boost { namespace spirit { namespace qi
 
                 typename make_attribute::type made_attr = make_attribute::call(attr_param);
                 typename transform::type attr_ = transform::pre(made_attr);
+=======
+                // do down-stream transformation, provides attribute for
+                // rhs parser
+                typedef traits::transform_attribute<
+                    Attribute, attr_type, domain>
+                transform;
+
+                typename transform::type attr_ = transform::pre(attr_param);
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
                 // If you are seeing a compilation error here, you are probably
                 // trying to use a rule or a grammar which has inherited
@@ -351,12 +409,20 @@ namespace boost { namespace spirit { namespace qi
                 {
                     // do up-stream transformation, this integrates the results
                     // back into the original attribute value, if appropriate
+<<<<<<< HEAD
                     traits::post_transform(attr_param, attr_);
+=======
+                    transform::post(attr_param, attr_);
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
                     return true;
                 }
 
                 // inform attribute transformation of failed rhs
+<<<<<<< HEAD
                 traits::fail_transform(attr_param, attr_);
+=======
+                transform::fail(attr_param);
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
             }
             return false;
         }

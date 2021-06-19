@@ -1,6 +1,14 @@
 readr-package	readr-package
+<<<<<<< HEAD
 callback	callback
 ChunkCallback	callback
+=======
+AccumulateCallback	callback
+as.col_spec	as.col_spec
+callback	callback
+ChunkCallback	callback
+clipboard	clipboard
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 cols	cols
 cols_condense	spec
 cols_only	cols
@@ -23,6 +31,10 @@ date_names_lang	date_names
 date_names_langs	date_names
 default_locale	locale
 format_csv	format_delim
+<<<<<<< HEAD
+=======
+format_csv2	format_delim
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 format_delim	format_delim
 format_tsv	format_delim
 fwf_cols	read_fwf
@@ -33,6 +45,20 @@ guess_encoding	encoding
 guess_parser	parse_guess
 ListCallback	callback
 locale	locale
+<<<<<<< HEAD
+=======
+melt_csv	melt_delim
+melt_csv2	melt_delim
+melt_csv2_chunked	melt_delim_chunked
+melt_csv_chunked	melt_delim_chunked
+melt_delim	melt_delim
+melt_delim_chunked	melt_delim_chunked
+melt_fwf	melt_fwf
+melt_table	melt_table
+melt_table2	melt_table
+melt_tsv	melt_delim
+melt_tsv_chunked	melt_delim_chunked
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 output_column	output_column
 parse_character	parse_atomic
 parse_date	parse_datetime
@@ -60,18 +86,30 @@ read_fwf	read_fwf
 read_lines	read_lines
 read_lines_chunked	read_lines_chunked
 read_lines_raw	read_lines
+<<<<<<< HEAD
+=======
+read_lines_raw_chunked	read_lines_chunked
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 read_log	read_log
 read_rds	read_rds
 read_table	read_table
 read_table2	read_table
 read_tsv	read_delim
 read_tsv_chunked	read_delim_chunked
+<<<<<<< HEAD
+=======
+show_progress	show_progress
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 SideEffectChunkCallback	callback
 spec	spec
 spec_csv	spec_delim
 spec_csv2	spec_delim
 spec_delim	spec_delim
 spec_table	spec_delim
+<<<<<<< HEAD
+=======
+spec_table2	spec_delim
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 spec_tsv	spec_delim
 stop_for_problems	problems
 tokenize	tokenize
@@ -85,8 +123,15 @@ tokenizer_tsv	Tokenizers
 tokenizer_ws	Tokenizers
 type_convert	type_convert
 write_csv	write_delim
+<<<<<<< HEAD
 write_delim	write_delim
 write_excel_csv	write_delim
+=======
+write_csv2	write_delim
+write_delim	write_delim
+write_excel_csv	write_delim
+write_excel_csv2	write_delim
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 write_file	read_file
 write_lines	read_lines
 write_rds	read_rds

@@ -26,4 +26,8 @@ struct name {\
 #define BOOST_TYPEOF_REGISTER_TYPE(x)
 #define BOOST_TYPEOF_REGISTER_TEMPLATE(x, params)
 
+<<<<<<< HEAD
 #endif
+=======
+#endif
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce

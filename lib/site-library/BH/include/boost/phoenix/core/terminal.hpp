@@ -9,7 +9,10 @@
 #define BOOST_PHOENIX_CORE_TERMINAL_HPP
 
 #include <boost/phoenix/core/limits.hpp>
+<<<<<<< HEAD
 #include <boost/call_traits.hpp>
+=======
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 #include <boost/is_placeholder.hpp>
 #include <boost/phoenix/core/actor.hpp>
 #include <boost/phoenix/core/meta_grammar.hpp>
@@ -58,9 +61,13 @@ namespace boost { namespace phoenix
     {
         template <typename T, template <typename> class Actor = actor>
         struct terminal
+<<<<<<< HEAD
             : proto::terminal<
                 T//typename call_traits<T>::value_type
             >
+=======
+            : proto::terminal<T>
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
         {
             typedef
                 proto::basic_expr<
@@ -72,7 +79,11 @@ namespace boost { namespace phoenix
                 base_type;
             typedef Actor<base_type> type;
             
+<<<<<<< HEAD
             static const type make(typename call_traits<T>::param_type t)
+=======
+            static const type make(T const& t)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
             {
             // ?? Should the next line be Actor not actor which is the default?
                 actor<base_type> const e = {base_type::make(t)};

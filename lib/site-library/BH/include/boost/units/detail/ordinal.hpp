@@ -26,11 +26,19 @@ struct ordinal_tag {};
 template<int N>
 struct ordinal {
     typedef detail::ordinal_tag tag;
+<<<<<<< HEAD
     static const long value = N;
 };
 
 template<int N>
 const long ordinal<N>::value;
+=======
+    BOOST_STATIC_CONSTEXPR long value = N;
+};
+
+template<int N>
+BOOST_CONSTEXPR_OR_CONST long ordinal<N>::value;
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 }
 

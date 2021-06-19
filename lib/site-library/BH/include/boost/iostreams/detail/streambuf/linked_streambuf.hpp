@@ -12,8 +12,13 @@
 # pragma once
 #endif
 
+<<<<<<< HEAD
 #include <typeinfo>
 #include <boost/config.hpp>                        // member template friends.
+=======
+#include <boost/config.hpp>                        // member template friends.
+#include <boost/core/typeinfo.hpp>
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 #include <boost/iostreams/detail/char_traits.hpp>
 #include <boost/iostreams/detail/ios.hpp>          // openmode.
 #include <boost/iostreams/detail/streambuf.hpp>
@@ -91,7 +96,11 @@ protected:
     virtual bool auto_close() const = 0;
     virtual void set_auto_close(bool) = 0;
     virtual bool strict_sync() = 0;
+<<<<<<< HEAD
     virtual const std::type_info& component_type() const = 0;
+=======
+    virtual const boost::core::typeinfo& component_type() const = 0;
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     virtual void* component_impl() = 0;
 #ifndef BOOST_NO_MEMBER_TEMPLATE_FRIENDS
     private:

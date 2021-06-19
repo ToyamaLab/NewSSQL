@@ -77,6 +77,7 @@ namespace gregorian {
     typename std::basic_istream<CharT, Traits>::sentry strm_sentry(is, false); 
     if (strm_sentry) {
       try {
+<<<<<<< HEAD
         typedef typename date_time::date_input_facet<date, CharT> date_input_facet;
         
         std::istreambuf_iterator<CharT,Traits> sit(is), str_end;
@@ -85,6 +86,16 @@ namespace gregorian {
         }
         else {
           date_input_facet* f = new date_input_facet();
+=======
+        typedef typename date_time::date_input_facet<date, CharT> date_input_facet_local;
+        
+        std::istreambuf_iterator<CharT,Traits> sit(is), str_end;
+        if(std::has_facet<date_input_facet_local>(is.getloc())) {
+          std::use_facet<date_input_facet_local>(is.getloc()).get(sit, str_end, is, d);
+        }
+        else {
+          date_input_facet_local* f = new date_input_facet_local();
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
           std::locale l = std::locale(is.getloc(), f);
           is.imbue(l);
           f->get(sit, str_end, is, d);
@@ -138,6 +149,7 @@ namespace gregorian {
     typename std::basic_istream<CharT, Traits>::sentry strm_sentry(is, false); 
     if (strm_sentry) {
       try {
+<<<<<<< HEAD
         typedef typename date_time::date_input_facet<date, CharT> date_input_facet;
         
         std::istreambuf_iterator<CharT,Traits> sit(is), str_end;
@@ -146,6 +158,16 @@ namespace gregorian {
         }
         else {
           date_input_facet* f = new date_input_facet();
+=======
+        typedef typename date_time::date_input_facet<date, CharT> date_input_facet_local;
+        
+        std::istreambuf_iterator<CharT,Traits> sit(is), str_end;
+        if(std::has_facet<date_input_facet_local>(is.getloc())) {
+          std::use_facet<date_input_facet_local>(is.getloc()).get(sit, str_end, is, dd);
+        }
+        else {
+          date_input_facet_local* f = new date_input_facet_local();
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
           std::locale l = std::locale(is.getloc(), f);
           is.imbue(l);
           f->get(sit, str_end, is, dd);
@@ -202,6 +224,7 @@ namespace gregorian {
     typename std::basic_istream<CharT, Traits>::sentry strm_sentry(is, false); 
     if (strm_sentry) {
       try {
+<<<<<<< HEAD
         typedef typename date_time::date_input_facet<date, CharT> date_input_facet;
 
         std::istreambuf_iterator<CharT,Traits> sit(is), str_end;
@@ -210,6 +233,16 @@ namespace gregorian {
         }
         else {
           date_input_facet* f = new date_input_facet();
+=======
+        typedef typename date_time::date_input_facet<date, CharT> date_input_facet_local;
+
+        std::istreambuf_iterator<CharT,Traits> sit(is), str_end;
+        if(std::has_facet<date_input_facet_local>(is.getloc())) {
+          std::use_facet<date_input_facet_local>(is.getloc()).get(sit, str_end, is, dp);
+        }
+        else {
+          date_input_facet_local* f = new date_input_facet_local();
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
           std::locale l = std::locale(is.getloc(), f);
           is.imbue(l);
           f->get(sit, str_end, is, dp);
@@ -261,6 +294,7 @@ namespace gregorian {
     typename std::basic_istream<CharT, Traits>::sentry strm_sentry(is, false); 
     if (strm_sentry) {
       try {
+<<<<<<< HEAD
         typedef typename date_time::date_input_facet<date, CharT> date_input_facet;
 
         std::istreambuf_iterator<CharT,Traits> sit(is), str_end;
@@ -269,6 +303,16 @@ namespace gregorian {
         }
         else {
           date_input_facet* f = new date_input_facet();
+=======
+        typedef typename date_time::date_input_facet<date, CharT> date_input_facet_local;
+
+        std::istreambuf_iterator<CharT,Traits> sit(is), str_end;
+        if(std::has_facet<date_input_facet_local>(is.getloc())) {
+          std::use_facet<date_input_facet_local>(is.getloc()).get(sit, str_end, is, m);
+        }
+        else {
+          date_input_facet_local* f = new date_input_facet_local();
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
           std::locale l = std::locale(is.getloc(), f);
           is.imbue(l);
           f->get(sit, str_end, is, m);
@@ -318,6 +362,7 @@ namespace gregorian {
     typename std::basic_istream<CharT, Traits>::sentry strm_sentry(is, false); 
     if (strm_sentry) {
       try {
+<<<<<<< HEAD
         typedef typename date_time::date_input_facet<date, CharT> date_input_facet;
 
         std::istreambuf_iterator<CharT,Traits> sit(is), str_end;
@@ -326,6 +371,16 @@ namespace gregorian {
         }
         else {
           date_input_facet* f = new date_input_facet();
+=======
+        typedef typename date_time::date_input_facet<date, CharT> date_input_facet_local;
+
+        std::istreambuf_iterator<CharT,Traits> sit(is), str_end;
+        if(std::has_facet<date_input_facet_local>(is.getloc())) {
+          std::use_facet<date_input_facet_local>(is.getloc()).get(sit, str_end, is, wd);
+        }
+        else {
+          date_input_facet_local* f = new date_input_facet_local();
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
           std::locale l = std::locale(is.getloc(), f);
           is.imbue(l);
           f->get(sit, str_end, is, wd);
@@ -359,6 +414,7 @@ namespace gregorian {
     typename std::basic_istream<CharT, Traits>::sentry strm_sentry(is, false); 
     if (strm_sentry) {
       try {
+<<<<<<< HEAD
         typedef typename date_time::date_input_facet<date, CharT> date_input_facet;
 
         std::istreambuf_iterator<CharT,Traits> sit(is), str_end;
@@ -367,6 +423,16 @@ namespace gregorian {
         }
         else {
           date_input_facet* f = new date_input_facet();
+=======
+        typedef typename date_time::date_input_facet<date, CharT> date_input_facet_local;
+
+        std::istreambuf_iterator<CharT,Traits> sit(is), str_end;
+        if(std::has_facet<date_input_facet_local>(is.getloc())) {
+          std::use_facet<date_input_facet_local>(is.getloc()).get(sit, str_end, is, gd);
+        }
+        else {
+          date_input_facet_local* f = new date_input_facet_local();
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
           std::locale l = std::locale(is.getloc(), f);
           is.imbue(l);
           f->get(sit, str_end, is, gd);
@@ -400,6 +466,7 @@ namespace gregorian {
     typename std::basic_istream<CharT, Traits>::sentry strm_sentry(is, false); 
     if (strm_sentry) {
       try {
+<<<<<<< HEAD
         typedef typename date_time::date_input_facet<date, CharT> date_input_facet;
 
         std::istreambuf_iterator<CharT,Traits> sit(is), str_end;
@@ -408,6 +475,16 @@ namespace gregorian {
         }
         else {
           date_input_facet* f = new date_input_facet();
+=======
+        typedef typename date_time::date_input_facet<date, CharT> date_input_facet_local;
+
+        std::istreambuf_iterator<CharT,Traits> sit(is), str_end;
+        if(std::has_facet<date_input_facet_local>(is.getloc())) {
+          std::use_facet<date_input_facet_local>(is.getloc()).get(sit, str_end, is, gy);
+        }
+        else {
+          date_input_facet_local* f = new date_input_facet_local();
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
           std::locale l = std::locale(is.getloc(), f);
           is.imbue(l);
           f->get(sit, str_end, is, gy);
@@ -458,6 +535,7 @@ namespace gregorian {
     typename std::basic_istream<CharT, Traits>::sentry strm_sentry(is, false); 
     if (strm_sentry) {
       try {
+<<<<<<< HEAD
         typedef typename date_time::date_input_facet<date, CharT> date_input_facet;
 
         std::istreambuf_iterator<CharT,Traits> sit(is), str_end;
@@ -466,6 +544,16 @@ namespace gregorian {
         }
         else {
           date_input_facet* f = new date_input_facet();
+=======
+        typedef typename date_time::date_input_facet<date, CharT> date_input_facet_local;
+
+        std::istreambuf_iterator<CharT,Traits> sit(is), str_end;
+        if(std::has_facet<date_input_facet_local>(is.getloc())) {
+          std::use_facet<date_input_facet_local>(is.getloc()).get(sit, str_end, is, pd);
+        }
+        else {
+          date_input_facet_local* f = new date_input_facet_local();
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
           std::locale l = std::locale(is.getloc(), f);
           is.imbue(l);
           f->get(sit, str_end, is, pd);
@@ -515,6 +603,7 @@ namespace gregorian {
     typename std::basic_istream<CharT, Traits>::sentry strm_sentry(is, false); 
     if (strm_sentry) {
       try {
+<<<<<<< HEAD
         typedef typename date_time::date_input_facet<date, CharT> date_input_facet;
 
         std::istreambuf_iterator<CharT,Traits> sit(is), str_end;
@@ -523,6 +612,16 @@ namespace gregorian {
         }
         else {
           date_input_facet* f = new date_input_facet();
+=======
+        typedef typename date_time::date_input_facet<date, CharT> date_input_facet_local;
+
+        std::istreambuf_iterator<CharT,Traits> sit(is), str_end;
+        if(std::has_facet<date_input_facet_local>(is.getloc())) {
+          std::use_facet<date_input_facet_local>(is.getloc()).get(sit, str_end, is, nday);
+        }
+        else {
+          date_input_facet_local* f = new date_input_facet_local();
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
           std::locale l = std::locale(is.getloc(), f);
           is.imbue(l);
           f->get(sit, str_end, is, nday);
@@ -573,6 +672,7 @@ namespace gregorian {
     typename std::basic_istream<CharT, Traits>::sentry strm_sentry(is, false); 
     if (strm_sentry) {
       try {
+<<<<<<< HEAD
         typedef typename date_time::date_input_facet<date, CharT> date_input_facet;
 
         std::istreambuf_iterator<CharT,Traits> sit(is), str_end;
@@ -581,6 +681,16 @@ namespace gregorian {
         }
         else {
           date_input_facet* f = new date_input_facet();
+=======
+        typedef typename date_time::date_input_facet<date, CharT> date_input_facet_local;
+
+        std::istreambuf_iterator<CharT,Traits> sit(is), str_end;
+        if(std::has_facet<date_input_facet_local>(is.getloc())) {
+          std::use_facet<date_input_facet_local>(is.getloc()).get(sit, str_end, is, fkd);
+        }
+        else {
+          date_input_facet_local* f = new date_input_facet_local();
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
           std::locale l = std::locale(is.getloc(), f);
           is.imbue(l);
           f->get(sit, str_end, is, fkd);
@@ -631,6 +741,7 @@ namespace gregorian {
     typename std::basic_istream<CharT, Traits>::sentry strm_sentry(is, false); 
     if (strm_sentry) {
       try {
+<<<<<<< HEAD
         typedef typename date_time::date_input_facet<date, CharT> date_input_facet;
 
         std::istreambuf_iterator<CharT,Traits> sit(is), str_end;
@@ -639,6 +750,16 @@ namespace gregorian {
         }
         else {
           date_input_facet* f = new date_input_facet();
+=======
+        typedef typename date_time::date_input_facet<date, CharT> date_input_facet_local;
+
+        std::istreambuf_iterator<CharT,Traits> sit(is), str_end;
+        if(std::has_facet<date_input_facet_local>(is.getloc())) {
+          std::use_facet<date_input_facet_local>(is.getloc()).get(sit, str_end, is, lkd);
+        }
+        else {
+          date_input_facet_local* f = new date_input_facet_local();
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
           std::locale l = std::locale(is.getloc(), f);
           is.imbue(l);
           f->get(sit, str_end, is, lkd);
@@ -690,6 +811,7 @@ namespace gregorian {
     typename std::basic_istream<CharT, Traits>::sentry strm_sentry(is, false); 
     if (strm_sentry) {
       try {
+<<<<<<< HEAD
         typedef typename date_time::date_input_facet<date, CharT> date_input_facet;
 
         std::istreambuf_iterator<CharT,Traits> sit(is), str_end;
@@ -698,6 +820,16 @@ namespace gregorian {
         }
         else {
           date_input_facet* f = new date_input_facet();
+=======
+        typedef typename date_time::date_input_facet<date, CharT> date_input_facet_local;
+
+        std::istreambuf_iterator<CharT,Traits> sit(is), str_end;
+        if(std::has_facet<date_input_facet_local>(is.getloc())) {
+          std::use_facet<date_input_facet_local>(is.getloc()).get(sit, str_end, is, fka);
+        }
+        else {
+          date_input_facet_local* f = new date_input_facet_local();
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
           std::locale l = std::locale(is.getloc(), f);
           is.imbue(l);
           f->get(sit, str_end, is, fka);
@@ -749,6 +881,7 @@ namespace gregorian {
     typename std::basic_istream<CharT, Traits>::sentry strm_sentry(is, false); 
     if (strm_sentry) {
       try {
+<<<<<<< HEAD
         typedef typename date_time::date_input_facet<date, CharT> date_input_facet;
 
         std::istreambuf_iterator<CharT,Traits> sit(is), str_end;
@@ -757,6 +890,16 @@ namespace gregorian {
         }
         else {
           date_input_facet* f = new date_input_facet();
+=======
+        typedef typename date_time::date_input_facet<date, CharT> date_input_facet_local;
+
+        std::istreambuf_iterator<CharT,Traits> sit(is), str_end;
+        if(std::has_facet<date_input_facet_local>(is.getloc())) {
+          std::use_facet<date_input_facet_local>(is.getloc()).get(sit, str_end, is, fkb);
+        }
+        else {
+          date_input_facet_local* f = new date_input_facet_local();
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
           std::locale l = std::locale(is.getloc(), f);
           is.imbue(l);
           f->get(sit, str_end, is, fkb);

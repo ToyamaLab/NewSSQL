@@ -2,7 +2,11 @@
 // windows/stream_handle.hpp
 // ~~~~~~~~~~~~~~~~~~~~~~~~~
 //
+<<<<<<< HEAD
 // Copyright (c) 2003-2017 Christopher M. Kohlhoff (chris at kohlhoff dot com)
+=======
+// Copyright (c) 2003-2019 Christopher M. Kohlhoff (chris at kohlhoff dot com)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 //
 // Distributed under the Boost Software License, Version 1.0. (See accompanying
 // file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
@@ -16,21 +20,29 @@
 #endif // defined(_MSC_VER) && (_MSC_VER >= 1200)
 
 #include <boost/asio/detail/config.hpp>
+<<<<<<< HEAD
 #include <boost/asio/windows/overlapped_handle.hpp>
+=======
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 #if defined(BOOST_ASIO_HAS_WINDOWS_STREAM_HANDLE) \
   || defined(GENERATING_DOCUMENTATION)
 
+<<<<<<< HEAD
 #if defined(BOOST_ASIO_ENABLE_OLD_SERVICES)
 # include <boost/asio/windows/basic_stream_handle.hpp>
 #endif // defined(BOOST_ASIO_ENABLE_OLD_SERVICES)
 
 #include <boost/asio/detail/push_options.hpp>
+=======
+#include <boost/asio/windows/basic_stream_handle.hpp>
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 namespace boost {
 namespace asio {
 namespace windows {
 
+<<<<<<< HEAD
 #if defined(BOOST_ASIO_ENABLE_OLD_SERVICES)
 // Typedef for the typical usage of a stream-oriented handle.
 typedef basic_stream_handle<> stream_handle;
@@ -351,13 +363,20 @@ public:
   }
 };
 #endif // defined(BOOST_ASIO_ENABLE_OLD_SERVICES)
+=======
+/// Typedef for the typical usage of a stream-oriented handle.
+typedef basic_stream_handle<> stream_handle;
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 } // namespace windows
 } // namespace asio
 } // namespace boost
 
+<<<<<<< HEAD
 #include <boost/asio/detail/pop_options.hpp>
 
+=======
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 #endif // defined(BOOST_ASIO_HAS_WINDOWS_STREAM_HANDLE)
        //   || defined(GENERATING_DOCUMENTATION)
 

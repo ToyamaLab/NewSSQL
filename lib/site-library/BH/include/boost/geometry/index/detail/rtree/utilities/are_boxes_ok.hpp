@@ -4,6 +4,13 @@
 //
 // Copyright (c) 2011-2015 Adam Wulkiewicz, Lodz, Poland.
 //
+<<<<<<< HEAD
+=======
+// This file was modified by Oracle on 2019.
+// Modifications copyright (c) 2019 Oracle and/or its affiliates.
+// Contributed and/or modified by Adam Wulkiewicz, on behalf of Oracle
+//
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 // Use, modification and distribution is subject to the Boost Software License,
 // Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
 // http://www.boost.org/LICENSE_1_0.txt)
@@ -22,12 +29,23 @@ template <typename Value, typename Options, typename Translator, typename Box, t
 class are_boxes_ok
     : public rtree::visitor<Value, typename Options::parameters_type, Box, Allocators, typename Options::node_tag, true>::type
 {
+<<<<<<< HEAD
     typedef typename rtree::internal_node<Value, typename Options::parameters_type, Box, Allocators, typename Options::node_tag>::type internal_node;
     typedef typename rtree::leaf<Value, typename Options::parameters_type, Box, Allocators, typename Options::node_tag>::type leaf;
 
 public:
     are_boxes_ok(Translator const& tr, bool exact_match)
         : result(false), m_tr(tr), m_is_root(true), m_exact_match(exact_match)
+=======
+    typedef typename Options::parameters_type parameters_type;
+
+    typedef typename rtree::internal_node<Value, parameters_type, Box, Allocators, typename Options::node_tag>::type internal_node;
+    typedef typename rtree::leaf<Value, parameters_type, Box, Allocators, typename Options::node_tag>::type leaf;
+
+public:
+    are_boxes_ok(parameters_type const& parameters, Translator const& tr, bool exact_match)
+        : result(false), m_parameters(parameters), m_tr(tr), m_is_root(true), m_exact_match(exact_match)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     {}
 
     void operator()(internal_node const& n)
@@ -60,7 +78,12 @@ public:
         m_box = box_bckup;
         m_is_root = is_root_bckup;
 
+<<<<<<< HEAD
         Box box_exp = rtree::elements_box<Box>(elements.begin(), elements.end(), m_tr);
+=======
+        Box box_exp = rtree::elements_box<Box>(elements.begin(), elements.end(), m_tr,
+                                               index::detail::get_strategy(m_parameters));
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
         
         if ( m_exact_match )
             result = m_is_root || geometry::equals(box_exp, m_box);
@@ -82,7 +105,12 @@ public:
                 return;
             }
         
+<<<<<<< HEAD
             Box box_exp = rtree::values_box<Box>(elements.begin(), elements.end(), m_tr);
+=======
+            Box box_exp = rtree::values_box<Box>(elements.begin(), elements.end(), m_tr,
+                                                 index::detail::get_strategy(m_parameters));
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
             if ( m_exact_match )
                 result = geometry::equals(box_exp, m_box);
@@ -96,6 +124,10 @@ public:
     bool result;
 
 private:
+<<<<<<< HEAD
+=======
+    parameters_type const& m_parameters;
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     Translator const& m_tr;
     Box m_box;
     bool m_is_root;
@@ -116,7 +148,11 @@ bool are_boxes_ok(Rtree const& tree, bool exact_match = true)
         typename RTV::translator_type,
         typename RTV::box_type,
         typename RTV::allocators_type
+<<<<<<< HEAD
     > v(rtv.translator(), exact_match);
+=======
+    > v(tree.parameters(), rtv.translator(), exact_match);
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     
     rtv.apply_visitor(v);
 

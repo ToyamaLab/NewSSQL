@@ -1,9 +1,16 @@
 // Boost.Geometry (aka GGL, Generic Geometry Library)
 
 // Copyright (c) 2007-2012 Barend Gehrels, Amsterdam, the Netherlands.
+<<<<<<< HEAD
 
 // This file was modified by Oracle on 2017.
 // Modifications copyright (c) 2017 Oracle and/or its affiliates.
+=======
+// Copyright (c) 2017 Adam Wulkiewicz, Lodz, Poland.
+
+// This file was modified by Oracle on 2017, 2018, 2019.
+// Modifications copyright (c) 2017-2019 Oracle and/or its affiliates.
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 // Contributed and/or modified by Adam Wulkiewicz, on behalf of Oracle
 
 // Use, modification and distribution is subject to the Boost Software License,
@@ -15,7 +22,10 @@
 
 #include <boost/range.hpp>
 
+<<<<<<< HEAD
 #include <boost/geometry/algorithms/area.hpp>
+=======
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 #include <boost/geometry/algorithms/envelope.hpp>
 #include <boost/geometry/algorithms/expand.hpp>
 #include <boost/geometry/algorithms/detail/partition.hpp>
@@ -125,24 +135,45 @@ struct ring_info_helper
 };
 
 
+<<<<<<< HEAD
+=======
+template <typename BoxExpandStrategy>
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 struct ring_info_helper_get_box
 {
     template <typename Box, typename InputItem>
     static inline void apply(Box& total, InputItem const& item)
     {
+<<<<<<< HEAD
         geometry::expand(total, item.envelope);
     }
 };
 
+=======
+        geometry::expand(total, item.envelope, BoxExpandStrategy());
+    }
+};
+
+template <typename DisjointBoxBoxStrategy>
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 struct ring_info_helper_ovelaps_box
 {
     template <typename Box, typename InputItem>
     static inline bool apply(Box const& box, InputItem const& item)
     {
+<<<<<<< HEAD
         return ! geometry::detail::disjoint::disjoint_box_box(box, item.envelope);
     }
 };
 
+=======
+        return ! geometry::detail::disjoint::disjoint_box_box(
+                    box, item.envelope, DisjointBoxBoxStrategy());
+    }
+};
+
+// Segments intersection Strategy
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 template
 <
     typename Geometry1,
@@ -188,7 +219,12 @@ struct assign_visitor
         {
             ring_info_type& inner_in_map = m_ring_map[inner.id];
 
+<<<<<<< HEAD
             if (geometry::covered_by(inner_in_map.point, outer.envelope)
+=======
+            if (geometry::covered_by(inner_in_map.point, outer.envelope,
+                                     typename Strategy::disjoint_point_box_strategy_type())
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
                && within_selected_input(inner_in_map, inner.id, outer.id,
                                         m_geometry1, m_geometry2, m_collection,
                                         m_strategy)
@@ -210,10 +246,16 @@ struct assign_visitor
 };
 
 
+<<<<<<< HEAD
 
 
 template
 <
+=======
+template
+<
+    overlay_type OverlayType,
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     typename Geometry1, typename Geometry2,
     typename RingCollection,
     typename RingMap,
@@ -223,10 +265,20 @@ inline void assign_parents(Geometry1 const& geometry1,
             Geometry2 const& geometry2,
             RingCollection const& collection,
             RingMap& ring_map,
+<<<<<<< HEAD
             Strategy const& strategy,
             bool check_for_orientation = false,
             bool discard_double_negative = false)
 {
+=======
+            Strategy const& strategy)
+{
+    static bool const is_difference = OverlayType == overlay_difference;
+    static bool const is_buffer = OverlayType == overlay_buffer;
+    static bool const is_dissolve = OverlayType == overlay_dissolve;
+    static bool const check_for_orientation = is_buffer || is_dissolve;
+
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     typedef typename geometry::tag<Geometry1>::type tag1;
     typedef typename geometry::tag<Geometry2>::type tag2;
 
@@ -236,7 +288,11 @@ inline void assign_parents(Geometry1 const& geometry1,
     typedef typename Strategy::template area_strategy
         <
             point_type
+<<<<<<< HEAD
         >::type::return_type area_result_type;
+=======
+        >::type::template result_type<point_type>::type area_result_type;
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
     typedef typename RingMap::iterator map_iterator_type;
 
@@ -293,12 +349,21 @@ inline void assign_parents(Geometry1 const& geometry1,
                 return;
             }
 
+<<<<<<< HEAD
             if (count_positive == 1)
+=======
+            if (count_positive == 1 && ! is_difference && ! is_dissolve)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
             {
                 // Optimization for one outer ring
                 // -> assign this as parent to all others (all interior rings)
                 // In unions, this is probably the most occuring case and gives
                 //    a dramatic improvement (factor 5 for star_comb testcase)
+<<<<<<< HEAD
+=======
+                // In difference or other cases where interior rings might be
+                // located outside the outer ring, this cannot be done
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
                 ring_identifier id_of_positive = vector[index_positive].id;
                 ring_info_type& outer = ring_map[id_of_positive];
                 index = 0;
@@ -323,11 +388,27 @@ inline void assign_parents(Geometry1 const& geometry1,
                 Strategy
             > visitor(geometry1, geometry2, collection, ring_map, strategy, check_for_orientation);
 
+<<<<<<< HEAD
         geometry::partition
             <
                 box_type
             >::apply(vector, visitor, ring_info_helper_get_box(),
                      ring_info_helper_ovelaps_box());
+=======
+        typedef ring_info_helper_get_box
+            <
+                typename Strategy::expand_box_strategy_type
+            > expand_box_type;
+        typedef ring_info_helper_ovelaps_box
+            <
+                typename Strategy::disjoint_box_box_strategy_type
+            > overlaps_box_type;
+
+        geometry::partition
+            <
+                box_type
+            >::apply(vector, visitor, expand_box_type(), overlaps_box_type());
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     }
 
     if (check_for_orientation)
@@ -346,13 +427,21 @@ inline void assign_parents(Geometry1 const& geometry1,
                 bool const pos = math::larger(info.get_area(), 0);
                 bool const parent_pos = math::larger(parent.area, 0);
 
+<<<<<<< HEAD
                 bool const double_neg = discard_double_negative && ! pos && ! parent_pos;
+=======
+                bool const double_neg = is_dissolve && ! pos && ! parent_pos;
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
                 if ((pos && parent_pos) || double_neg)
                 {
                     // Discard positive inner ring with positive parent
                     // Also, for some cases (dissolve), negative inner ring
+<<<<<<< HEAD
                     // with negative parent shouild be discarded
+=======
+                    // with negative parent should be discarded
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
                     info.discarded = true;
                 }
 
@@ -386,6 +475,10 @@ inline void assign_parents(Geometry1 const& geometry1,
 // Version for one geometry (called by buffer/dissolve)
 template
 <
+<<<<<<< HEAD
+=======
+    overlay_type OverlayType,
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     typename Geometry,
     typename RingCollection,
     typename RingMap,
@@ -394,6 +487,7 @@ template
 inline void assign_parents(Geometry const& geometry,
             RingCollection const& collection,
             RingMap& ring_map,
+<<<<<<< HEAD
             Strategy const& strategy,
             bool check_for_orientation,
             bool discard_double_negative)
@@ -404,6 +498,15 @@ inline void assign_parents(Geometry const& geometry,
     Geometry empty;
     assign_parents(geometry, empty, collection, ring_map, strategy,
                    check_for_orientation, discard_double_negative);
+=======
+            Strategy const& strategy)
+{
+    // Call it with an empty geometry as second geometry (source_id == 1)
+    // (ring_map should be empty for source_id==1)
+    Geometry empty;
+    assign_parents<OverlayType>(geometry, empty,
+            collection, ring_map, strategy);
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 }
 
 

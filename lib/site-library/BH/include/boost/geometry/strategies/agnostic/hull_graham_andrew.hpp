@@ -2,8 +2,13 @@
 
 // Copyright (c) 2007-2012 Barend Gehrels, Amsterdam, the Netherlands.
 
+<<<<<<< HEAD
 // This file was modified by Oracle on 2014.
 // Modifications copyright (c) 2014 Oracle and/or its affiliates.
+=======
+// This file was modified by Oracle on 2014, 2018.
+// Modifications copyright (c) 2014, 2018 Oracle and/or its affiliates.
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 // Contributed and/or modified by Adam Wulkiewicz, on behalf of Oracle
 
@@ -22,6 +27,7 @@
 #include <algorithm>
 #include <vector>
 
+<<<<<<< HEAD
 #include <boost/range.hpp>
 
 #include <boost/geometry/core/assert.hpp>
@@ -34,6 +40,19 @@
 #include <boost/geometry/policies/compare.hpp>
 
 #include <boost/geometry/algorithms/detail/for_each_range.hpp>
+=======
+#include <boost/range/begin.hpp>
+#include <boost/range/end.hpp>
+
+#include <boost/geometry/algorithms/detail/for_each_range.hpp>
+#include <boost/geometry/core/assert.hpp>
+#include <boost/geometry/core/cs.hpp>
+#include <boost/geometry/core/point_type.hpp>
+#include <boost/geometry/policies/compare.hpp>
+#include <boost/geometry/strategies/convex_hull.hpp>
+#include <boost/geometry/strategies/side.hpp>
+#include <boost/geometry/views/detail/range_type.hpp>
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 #include <boost/geometry/views/reversible_view.hpp>
 
 
@@ -193,9 +212,12 @@ static inline void sort(Range& range)
 /*!
 \brief Graham scan strategy to calculate convex hull
 \ingroup strategies
+<<<<<<< HEAD
 \note Completely reworked version inspired on the sources listed below
 \see http://www.ddj.com/architect/201806315
 \see http://marknelson.us/2007/08/22/convex
+=======
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
  */
 template <typename InputGeometry, typename OutputPoint>
 class graham_andrew

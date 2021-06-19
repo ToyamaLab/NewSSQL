@@ -131,7 +131,11 @@ options(formatR.arrow=TRUE, width=68, digits=4)
 
 \begin_layout Plain Layout
 
+<<<<<<< HEAD
 ## tune details of base graphics (https://yihui.name/knitr/hooks)
+=======
+## tune details of base graphics (https://yihui.org/knitr/hooks)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 \end_layout
 
 \begin_layout Plain Layout
@@ -218,7 +222,11 @@ status collapsed
 
 \begin_layout Plain Layout
 
+<<<<<<< HEAD
 https://yihui.name/knitr/
+=======
+https://yihui.org/knitr/
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 \end_layout
 
 \end_inset
@@ -433,7 +441,11 @@ status collapsed
 
 \begin_layout Plain Layout
 
+<<<<<<< HEAD
 https://yihui.name/knitr/demo/sweave/
+=======
+https://yihui.org/knitr/demo/sweave/
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 \end_layout
 
 \end_inset
@@ -467,7 +479,11 @@ knitr
 \begin_inset CommandInset href
 LatexCommand href
 name "patterns"
+<<<<<<< HEAD
 target "https://yihui.name/knitr/patterns"
+=======
+target "https://yihui.org/knitr/patterns"
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 \end_inset
 
@@ -488,7 +504,11 @@ a set of output
 \begin_inset CommandInset href
 LatexCommand href
 name "hooks"
+<<<<<<< HEAD
 target "https://yihui.name/knitr/hooks"
+=======
+target "https://yihui.org/knitr/hooks"
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 \end_inset
 
@@ -544,7 +564,11 @@ dependson
 \begin_inset CommandInset href
 LatexCommand href
 name "option"
+<<<<<<< HEAD
 target "https://yihui.name/knitr/options"
+=======
+target "https://yihui.org/knitr/options"
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 \end_inset
 
@@ -809,7 +833,11 @@ status collapsed
 
 \begin_layout Plain Layout
 
+<<<<<<< HEAD
 https://yihui.name/knitr/demos
+=======
+https://yihui.org/knitr/demos
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 \end_layout
 
 \end_inset
@@ -1835,7 +1863,11 @@ The graphics manual contains more detailed information and you can check
 \begin_inset CommandInset href
 LatexCommand href
 name "website"
+<<<<<<< HEAD
 target "https://yihui.name/knitr/demo/graphics/"
+=======
+target "https://yihui.org/knitr/demo/graphics/"
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 \end_inset
 
@@ -2132,7 +2164,11 @@ status collapsed
 
 \begin_layout Plain Layout
 
+<<<<<<< HEAD
 https://yihui.name/knitr/demo/cache/
+=======
+https://yihui.org/knitr/demo/cache/
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 \end_layout
 
 \end_inset
@@ -2349,7 +2385,11 @@ status collapsed
 
 \begin_layout Plain Layout
 
+<<<<<<< HEAD
 https://yihui.name/knitr/demo/sweave/
+=======
+https://yihui.org/knitr/demo/sweave/
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 \end_layout
 
 \end_inset
@@ -2712,7 +2752,11 @@ status collapsed
 
 \begin_layout Plain Layout
 
+<<<<<<< HEAD
 https://yihui.name/knitr/demos
+=======
+https://yihui.org/knitr/demos
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 \end_layout
 
 \end_inset
@@ -2770,7 +2814,11 @@ status collapsed
 
 \begin_layout Plain Layout
 
+<<<<<<< HEAD
 https://yihui.name/knitr/demo/rstudio/
+=======
+https://yihui.org/knitr/demo/rstudio/
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 \end_layout
 
 \end_inset
@@ -2781,7 +2829,11 @@ status collapsed
 
 \begin_layout Plain Layout
 
+<<<<<<< HEAD
 https://yihui.name/knitr/demo/lyx/
+=======
+https://yihui.org/knitr/demo/lyx/
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 \end_layout
 
 \end_inset
@@ -2791,7 +2843,11 @@ https://yihui.name/knitr/demo/lyx/
 \begin_inset CommandInset href
 LatexCommand href
 name "Eclipse"
+<<<<<<< HEAD
 target "https://yihui.name/knitr/demo/eclipse/"
+=======
+target "https://yihui.org/knitr/demo/eclipse/"
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 \end_inset
 
@@ -2799,7 +2855,11 @@ target "https://yihui.name/knitr/demo/eclipse/"
 \begin_inset CommandInset href
 LatexCommand href
 name "Texmaker and WinEdt"
+<<<<<<< HEAD
 target "https://yihui.name/knitr/demo/editors/"
+=======
+target "https://yihui.org/knitr/demo/editors/"
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 \end_inset
 

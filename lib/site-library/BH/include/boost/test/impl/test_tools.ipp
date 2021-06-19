@@ -16,6 +16,10 @@
 #define BOOST_TEST_TEST_TOOLS_IPP_012205GER
 
 // Boost.Test
+<<<<<<< HEAD
+=======
+#include <boost/test/test_tools.hpp>
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 #include <boost/test/unit_test_log.hpp>
 #include <boost/test/tools/context.hpp>
 #include <boost/test/tools/output_test_stream.hpp>
@@ -59,6 +63,16 @@ namespace std { using ::wcscmp; }
 #endif
 # endif
 
+<<<<<<< HEAD
+=======
+
+namespace boost {
+namespace unit_test {
+  // local static variable, needed here for visibility reasons
+  lazy_ostream lazy_ostream::inst = lazy_ostream();
+}}
+
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 namespace boost {
 namespace test_tools {
 namespace tt_detail {
@@ -119,6 +133,7 @@ print_log_value<wchar_t const*>::operator()( std::ostream& ostr, wchar_t const* 
     ostr << ( t ? t : L"null string" );
 }
 
+<<<<<<< HEAD
 #if !defined(BOOST_NO_CXX11_NULLPTR)
 void
 print_log_value<std::nullptr_t>::operator()( std::ostream& ostr, std::nullptr_t )
@@ -127,6 +142,8 @@ print_log_value<std::nullptr_t>::operator()( std::ostream& ostr, std::nullptr_t 
 }
 #endif
 
+=======
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 //____________________________________________________________________________//
 
 // ************************************************************************** //
@@ -382,7 +399,13 @@ report_assertion( assertion_result const&   ar,
         framework::assertion_result( AR_FAILED );
         framework::test_unit_aborted( framework::current_test_unit() );
         BOOST_TEST_I_THROW( execution_aborted() );
+<<<<<<< HEAD
         return false;
+=======
+        // the previous line either throws or aborts and the return below is not reached
+        // return false;
+        BOOST_UNREACHABLE_RETURN(false);
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     }
 
     return true;

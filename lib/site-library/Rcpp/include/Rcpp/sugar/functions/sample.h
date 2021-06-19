@@ -348,7 +348,11 @@ inline Vector<INTSXP> EmpiricalSample(int n, int size, bool replace, bool one_ba
         return ans;
     }
 
+<<<<<<< HEAD
     int* x = reinterpret_cast<int*>(R_alloc(n, sizeof(int)));
+=======
+    IntegerVector x = no_init(n);
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     for (int i = 0; i < n; i++) {
         x[i] = i;
     }
@@ -378,7 +382,11 @@ inline Vector<RTYPE> EmpiricalSample(int size, bool replace, const Vector<RTYPE>
         return ans;
     }
 
+<<<<<<< HEAD
     int* x = reinterpret_cast<int*>(R_alloc(n, sizeof(int)));
+=======
+    IntegerVector x = no_init(n);
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     for (int i = 0; i < n; i++) {
         x[i] = i;
     }

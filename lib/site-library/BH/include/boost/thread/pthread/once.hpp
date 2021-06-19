@@ -14,6 +14,10 @@
 #include <boost/thread/detail/move.hpp>
 #include <boost/thread/detail/invoke.hpp>
 
+<<<<<<< HEAD
+=======
+#include <boost/thread/pthread/pthread_helpers.hpp>
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 #include <boost/thread/pthread/pthread_mutex_scoped_lock.hpp>
 #include <boost/thread/detail/delete.hpp>
 #include <boost/core/no_exceptions_support.hpp>
@@ -149,18 +153,30 @@ namespace boost
                 BOOST_CATCH (...)
                 {
                     flag.epoch=uninitialized_flag;
+<<<<<<< HEAD
                     BOOST_VERIFY(!pthread_cond_broadcast(&thread_detail::once_epoch_cv));
+=======
+                    BOOST_VERIFY(!posix::pthread_cond_broadcast(&thread_detail::once_epoch_cv));
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
                     BOOST_RETHROW
                 }
                 BOOST_CATCH_END
                 flag.epoch=--thread_detail::once_global_epoch;
+<<<<<<< HEAD
                 BOOST_VERIFY(!pthread_cond_broadcast(&thread_detail::once_epoch_cv));
+=======
+                BOOST_VERIFY(!posix::pthread_cond_broadcast(&thread_detail::once_epoch_cv));
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
             }
             else
             {
                 while(flag.epoch==being_initialized)
                 {
+<<<<<<< HEAD
                     BOOST_VERIFY(!pthread_cond_wait(&thread_detail::once_epoch_cv,&thread_detail::once_epoch_mutex));
+=======
+                    BOOST_VERIFY(!posix::pthread_cond_wait(&thread_detail::once_epoch_cv,&thread_detail::once_epoch_mutex));
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
                 }
             }
         }
@@ -194,18 +210,30 @@ namespace boost
                 BOOST_CATCH (...)
                 {
                     flag.epoch=uninitialized_flag;
+<<<<<<< HEAD
                     BOOST_VERIFY(!pthread_cond_broadcast(&thread_detail::once_epoch_cv));
+=======
+                    BOOST_VERIFY(!posix::pthread_cond_broadcast(&thread_detail::once_epoch_cv));
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
                     BOOST_RETHROW
                 }
                 BOOST_CATCH_END
                 flag.epoch=--thread_detail::once_global_epoch;
+<<<<<<< HEAD
                 BOOST_VERIFY(!pthread_cond_broadcast(&thread_detail::once_epoch_cv));
+=======
+                BOOST_VERIFY(!posix::pthread_cond_broadcast(&thread_detail::once_epoch_cv));
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
             }
             else
             {
                 while(flag.epoch==being_initialized)
                 {
+<<<<<<< HEAD
                     BOOST_VERIFY(!pthread_cond_wait(&thread_detail::once_epoch_cv,&thread_detail::once_epoch_mutex));
+=======
+                    BOOST_VERIFY(!posix::pthread_cond_wait(&thread_detail::once_epoch_cv,&thread_detail::once_epoch_mutex));
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
                 }
             }
         }
@@ -238,18 +266,30 @@ namespace boost
                 BOOST_CATCH (...)
                 {
                     flag.epoch=uninitialized_flag;
+<<<<<<< HEAD
                     BOOST_VERIFY(!pthread_cond_broadcast(&thread_detail::once_epoch_cv));
+=======
+                    BOOST_VERIFY(!posix::pthread_cond_broadcast(&thread_detail::once_epoch_cv));
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
                     BOOST_RETHROW
                 }
                 BOOST_CATCH_END
                 flag.epoch=--thread_detail::once_global_epoch;
+<<<<<<< HEAD
                 BOOST_VERIFY(!pthread_cond_broadcast(&thread_detail::once_epoch_cv));
+=======
+                BOOST_VERIFY(!posix::pthread_cond_broadcast(&thread_detail::once_epoch_cv));
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
             }
             else
             {
                 while(flag.epoch==being_initialized)
                 {
+<<<<<<< HEAD
                     BOOST_VERIFY(!pthread_cond_wait(&thread_detail::once_epoch_cv,&thread_detail::once_epoch_mutex));
+=======
+                    BOOST_VERIFY(!posix::pthread_cond_wait(&thread_detail::once_epoch_cv,&thread_detail::once_epoch_mutex));
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
                 }
             }
         }
@@ -281,18 +321,30 @@ namespace boost
                 BOOST_CATCH (...)
                 {
                     flag.epoch=uninitialized_flag;
+<<<<<<< HEAD
                     BOOST_VERIFY(!pthread_cond_broadcast(&thread_detail::once_epoch_cv));
+=======
+                    BOOST_VERIFY(!posix::pthread_cond_broadcast(&thread_detail::once_epoch_cv));
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
                     BOOST_RETHROW
                 }
                 BOOST_CATCH_END
                 flag.epoch=--thread_detail::once_global_epoch;
+<<<<<<< HEAD
                 BOOST_VERIFY(!pthread_cond_broadcast(&thread_detail::once_epoch_cv));
+=======
+                BOOST_VERIFY(!posix::pthread_cond_broadcast(&thread_detail::once_epoch_cv));
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
             }
             else
             {
                 while(flag.epoch==being_initialized)
                 {
+<<<<<<< HEAD
                     BOOST_VERIFY(!pthread_cond_wait(&thread_detail::once_epoch_cv,&thread_detail::once_epoch_mutex));
+=======
+                    BOOST_VERIFY(!posix::pthread_cond_wait(&thread_detail::once_epoch_cv,&thread_detail::once_epoch_mutex));
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
                 }
             }
         }
@@ -325,18 +377,30 @@ namespace boost
                 BOOST_CATCH (...)
                 {
                     flag.epoch=uninitialized_flag;
+<<<<<<< HEAD
                     BOOST_VERIFY(!pthread_cond_broadcast(&thread_detail::once_epoch_cv));
+=======
+                    BOOST_VERIFY(!posix::pthread_cond_broadcast(&thread_detail::once_epoch_cv));
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
                     BOOST_RETHROW
                 }
                 BOOST_CATCH_END
                 flag.epoch=--thread_detail::once_global_epoch;
+<<<<<<< HEAD
                 BOOST_VERIFY(!pthread_cond_broadcast(&thread_detail::once_epoch_cv));
+=======
+                BOOST_VERIFY(!posix::pthread_cond_broadcast(&thread_detail::once_epoch_cv));
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
             }
             else
             {
                 while(flag.epoch==being_initialized)
                 {
+<<<<<<< HEAD
                     BOOST_VERIFY(!pthread_cond_wait(&thread_detail::once_epoch_cv,&thread_detail::once_epoch_mutex));
+=======
+                    BOOST_VERIFY(!posix::pthread_cond_wait(&thread_detail::once_epoch_cv,&thread_detail::once_epoch_mutex));
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
                 }
             }
         }
@@ -369,18 +433,30 @@ namespace boost
                 BOOST_CATCH (...)
                 {
                     flag.epoch=uninitialized_flag;
+<<<<<<< HEAD
                     BOOST_VERIFY(!pthread_cond_broadcast(&thread_detail::once_epoch_cv));
+=======
+                    BOOST_VERIFY(!posix::pthread_cond_broadcast(&thread_detail::once_epoch_cv));
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
                     BOOST_RETHROW
                 }
                 BOOST_CATCH_END
                 flag.epoch=--thread_detail::once_global_epoch;
+<<<<<<< HEAD
                 BOOST_VERIFY(!pthread_cond_broadcast(&thread_detail::once_epoch_cv));
+=======
+                BOOST_VERIFY(!posix::pthread_cond_broadcast(&thread_detail::once_epoch_cv));
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
             }
             else
             {
                 while(flag.epoch==being_initialized)
                 {
+<<<<<<< HEAD
                     BOOST_VERIFY(!pthread_cond_wait(&thread_detail::once_epoch_cv,&thread_detail::once_epoch_mutex));
+=======
+                    BOOST_VERIFY(!posix::pthread_cond_wait(&thread_detail::once_epoch_cv,&thread_detail::once_epoch_mutex));
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
                 }
             }
         }
@@ -416,18 +492,30 @@ namespace boost
                 BOOST_CATCH (...)
                 {
                     flag.epoch=uninitialized_flag;
+<<<<<<< HEAD
                     BOOST_VERIFY(!pthread_cond_broadcast(&thread_detail::once_epoch_cv));
+=======
+                    BOOST_VERIFY(!posix::pthread_cond_broadcast(&thread_detail::once_epoch_cv));
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
                     BOOST_RETHROW
                 }
                 BOOST_CATCH_END
                 flag.epoch=--thread_detail::once_global_epoch;
+<<<<<<< HEAD
                 BOOST_VERIFY(!pthread_cond_broadcast(&thread_detail::once_epoch_cv));
+=======
+                BOOST_VERIFY(!posix::pthread_cond_broadcast(&thread_detail::once_epoch_cv));
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
             }
             else
             {
                 while(flag.epoch==being_initialized)
                 {
+<<<<<<< HEAD
                     BOOST_VERIFY(!pthread_cond_wait(&thread_detail::once_epoch_cv,&thread_detail::once_epoch_mutex));
+=======
+                    BOOST_VERIFY(!posix::pthread_cond_wait(&thread_detail::once_epoch_cv,&thread_detail::once_epoch_mutex));
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
                 }
             }
         }
@@ -463,18 +551,30 @@ namespace boost
                 BOOST_CATCH (...)
                 {
                     flag.epoch=uninitialized_flag;
+<<<<<<< HEAD
                     BOOST_VERIFY(!pthread_cond_broadcast(&thread_detail::once_epoch_cv));
+=======
+                    BOOST_VERIFY(!posix::pthread_cond_broadcast(&thread_detail::once_epoch_cv));
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
                     BOOST_RETHROW
                 }
                 BOOST_CATCH_END
                 flag.epoch=--thread_detail::once_global_epoch;
+<<<<<<< HEAD
                 BOOST_VERIFY(!pthread_cond_broadcast(&thread_detail::once_epoch_cv));
+=======
+                BOOST_VERIFY(!posix::pthread_cond_broadcast(&thread_detail::once_epoch_cv));
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
             }
             else
             {
                 while(flag.epoch==being_initialized)
                 {
+<<<<<<< HEAD
                     BOOST_VERIFY(!pthread_cond_wait(&thread_detail::once_epoch_cv,&thread_detail::once_epoch_mutex));
+=======
+                    BOOST_VERIFY(!posix::pthread_cond_wait(&thread_detail::once_epoch_cv,&thread_detail::once_epoch_mutex));
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
                 }
             }
         }
@@ -512,18 +612,30 @@ namespace boost
                 BOOST_CATCH (...)
                 {
                     flag.epoch=uninitialized_flag;
+<<<<<<< HEAD
                     BOOST_VERIFY(!pthread_cond_broadcast(&thread_detail::once_epoch_cv));
+=======
+                    BOOST_VERIFY(!posix::pthread_cond_broadcast(&thread_detail::once_epoch_cv));
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
                     BOOST_RETHROW
                 }
                 BOOST_CATCH_END
                 flag.epoch=--thread_detail::once_global_epoch;
+<<<<<<< HEAD
                 BOOST_VERIFY(!pthread_cond_broadcast(&thread_detail::once_epoch_cv));
+=======
+                BOOST_VERIFY(!posix::pthread_cond_broadcast(&thread_detail::once_epoch_cv));
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
             }
             else
             {
                 while(flag.epoch==being_initialized)
                 {
+<<<<<<< HEAD
                     BOOST_VERIFY(!pthread_cond_wait(&thread_detail::once_epoch_cv,&thread_detail::once_epoch_mutex));
+=======
+                    BOOST_VERIFY(!posix::pthread_cond_wait(&thread_detail::once_epoch_cv,&thread_detail::once_epoch_mutex));
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
                 }
             }
         }

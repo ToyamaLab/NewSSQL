@@ -14,7 +14,11 @@
 #pragma once
 #endif
 
+<<<<<<< HEAD
 #if defined(BOOST_WINAPI_IS_MINGW_W64) || (BOOST_USE_WINAPI_VERSION >= BOOST_WINAPI_VERSION_WIN6)
+=======
+#if BOOST_USE_WINAPI_VERSION >= BOOST_WINAPI_VERSION_WIN6
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 #if BOOST_WINAPI_PARTITION_APP_SYSTEM
 
@@ -34,13 +38,21 @@ typedef PVOID_ BCRYPT_ALG_HANDLE_;
 
 extern "C" {
 
+<<<<<<< HEAD
 boost::winapi::NTSTATUS_ WINAPI
+=======
+boost::winapi::NTSTATUS_ BOOST_WINAPI_WINAPI_CC
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 BCryptCloseAlgorithmProvider(
     boost::winapi::BCRYPT_ALG_HANDLE_ hAlgorithm,
     boost::winapi::ULONG_             dwFlags
 );
 
+<<<<<<< HEAD
 boost::winapi::NTSTATUS_ WINAPI
+=======
+boost::winapi::NTSTATUS_ BOOST_WINAPI_WINAPI_CC
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 BCryptGenRandom(
     boost::winapi::BCRYPT_ALG_HANDLE_ hAlgorithm,
     boost::winapi::PUCHAR_            pbBuffer,
@@ -48,7 +60,11 @@ BCryptGenRandom(
     boost::winapi::ULONG_             dwFlags
 );
 
+<<<<<<< HEAD
 boost::winapi::NTSTATUS_ WINAPI
+=======
+boost::winapi::NTSTATUS_ BOOST_WINAPI_WINAPI_CC
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 BCryptOpenAlgorithmProvider(
     boost::winapi::BCRYPT_ALG_HANDLE_ *phAlgorithm,
     boost::winapi::LPCWSTR_           pszAlgId,
@@ -78,6 +94,10 @@ using ::BCryptOpenAlgorithmProvider;
 
 #endif // BOOST_WINAPI_PARTITION_APP_SYSTEM
 
+<<<<<<< HEAD
 #endif // defined(BOOST_WINAPI_IS_MINGW_W64) || (BOOST_USE_WINAPI_VERSION >= BOOST_WINAPI_VERSION_WIN6)
+=======
+#endif // BOOST_USE_WINAPI_VERSION >= BOOST_WINAPI_VERSION_WIN6
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 #endif // BOOST_WINAPI_BCRYPT_HPP_INCLUDED_

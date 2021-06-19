@@ -384,6 +384,10 @@ template
    , class O4  = void
    , class O5  = void
    , class O6  = void
+<<<<<<< HEAD
+=======
+   , class O7  = void
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
    >
 #else
 template<class T, class ...Options>
@@ -399,6 +403,10 @@ template
    , class O4  = void
    , class O5  = void
    , class O6  = void
+<<<<<<< HEAD
+=======
+   , class O7  = void
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
    >
 #else
 template<class T, class ...Options>
@@ -414,6 +422,10 @@ template
    , class O4  = void
    , class O5  = void
    , class O6  = void
+<<<<<<< HEAD
+=======
+   , class O7  = void
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
    >
 #else
 template<class T, class ...Options>

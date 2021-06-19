@@ -2,7 +2,11 @@
    Copyright (c) Marshall Clow 2017.
 
    Distributed under the Boost Software License, Version 1.0. (See accompanying
+<<<<<<< HEAD
    file LICENSE10.txt or copy at http://www.boost.org/LICENSE10.txt)
+=======
+   file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 */
 
 /// \file  transform_reduce.hpp
@@ -15,6 +19,10 @@
 #include <functional>     // for std::plus
 #include <iterator>       // for std::iterator_traits
 
+<<<<<<< HEAD
+=======
+#include <boost/config.hpp>
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 #include <boost/range/begin.hpp>
 #include <boost/range/end.hpp>
 #include <boost/range/value_type.hpp>
@@ -46,7 +54,11 @@ template<class InputIterator1, class InputIterator2, class T>
 T transform_reduce(InputIterator1 first1, InputIterator1 last1,
                    InputIterator2 first2, T init)
 {
+<<<<<<< HEAD
     return transform_reduce(first1, last1, first2, init,
+=======
+    return boost::algorithm::transform_reduce(first1, last1, first2, init,
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
                             std::plus<T>(), std::multiplies<T>());
 }
 

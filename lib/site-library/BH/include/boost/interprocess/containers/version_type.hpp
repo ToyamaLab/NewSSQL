@@ -25,8 +25,13 @@
 namespace boost {
 namespace interprocess {
 
+<<<<<<< HEAD
 using boost::container::container_detail::version_type;
 using boost::container::container_detail::version;
+=======
+using boost::container::dtl::version_type;
+using boost::container::dtl::version;
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 }  //namespace interprocess {
 }  //namespace boost {

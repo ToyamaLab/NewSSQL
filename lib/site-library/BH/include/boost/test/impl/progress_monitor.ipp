@@ -52,7 +52,11 @@ struct progress_display {
              << "\n|----|----|----|----|----|----|----|----|----|----|"
              << std::endl;
 
+<<<<<<< HEAD
         if( !m_expected_count ) 
+=======
+        if( !m_expected_count )
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
             m_expected_count = 1;  // prevent divide by zero
     }
 
@@ -63,7 +67,11 @@ struct progress_display {
 
         // use of floating point ensures that both large and small counts
         // work correctly.  static_cast<>() is also used several places
+<<<<<<< HEAD
         // to suppress spurious compiler warnings. 
+=======
+        // to suppress spurious compiler warnings.
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
         unsigned int tics_needed =  static_cast<unsigned int>(
             (static_cast<double>(m_count)/m_expected_count)*50.0 );
 
@@ -121,6 +129,13 @@ progress_monitor_impl& s_pm_impl() { static progress_monitor_impl the_inst; retu
 
 //____________________________________________________________________________//
 
+<<<<<<< HEAD
+=======
+BOOST_TEST_SINGLETON_CONS_IMPL(progress_monitor_t)
+
+//____________________________________________________________________________//
+
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 void
 progress_monitor_t::test_start( counter_t test_cases_amount )
 {

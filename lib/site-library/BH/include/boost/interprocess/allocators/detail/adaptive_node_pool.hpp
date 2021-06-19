@@ -48,13 +48,21 @@ template< class SegmentManager
         , unsigned char OverheadPercent
         >
 class private_adaptive_node_pool
+<<<<<<< HEAD
    :  public boost::container::container_detail::private_adaptive_node_pool_impl
+=======
+   :  public boost::container::dtl::private_adaptive_node_pool_impl_rt
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
          < typename SegmentManager::segment_manager_base_type
          , ::boost::container::adaptive_pool_flag::size_ordered |
            ::boost::container::adaptive_pool_flag::address_ordered
          >
 {
+<<<<<<< HEAD
    typedef boost::container::container_detail::private_adaptive_node_pool_impl
+=======
+   typedef boost::container::dtl::private_adaptive_node_pool_impl_rt
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
       < typename SegmentManager::segment_manager_base_type
       , ::boost::container::adaptive_pool_flag::size_ordered |
         ::boost::container::adaptive_pool_flag::address_ordered
@@ -70,9 +78,12 @@ class private_adaptive_node_pool
 
    static const size_type nodes_per_block = NodesPerBlock;
 
+<<<<<<< HEAD
    //Deprecated, use node_per_block
    static const size_type nodes_per_chunk = NodesPerBlock;
 
+=======
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
    //!Constructor from a segment manager. Never throws
    private_adaptive_node_pool(segment_manager *segment_mngr)
       :  base_t(segment_mngr, NodeSize, NodesPerBlock, MaxFreeBlocks, OverheadPercent)

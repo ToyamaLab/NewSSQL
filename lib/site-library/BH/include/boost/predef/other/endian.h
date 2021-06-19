@@ -148,8 +148,12 @@ information and acquired knowledge:
 #       undef BOOST_ENDIAN_BIG_BYTE
 #       define BOOST_ENDIAN_BIG_BYTE BOOST_VERSION_NUMBER_AVAILABLE
 #   endif
+<<<<<<< HEAD
 #   if BOOST_ARCH_AMD64 || \
         BOOST_ARCH_IA64 || \
+=======
+#   if BOOST_ARCH_IA64 || \
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
         BOOST_ARCH_X86 || \
         BOOST_ARCH_BLACKFIN
 #       undef BOOST_ENDIAN_LITTLE_BYTE

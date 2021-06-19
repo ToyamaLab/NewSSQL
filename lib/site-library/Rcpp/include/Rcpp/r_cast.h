@@ -31,7 +31,12 @@ namespace Rcpp {
             Armor<SEXP> res;
             try{
                 SEXP funSym = Rf_install(fun);
+<<<<<<< HEAD
                 res = Rcpp_fast_eval(Rf_lang2(funSym, x), R_GlobalEnv);
+=======
+                Shield<SEXP> call(Rf_lang2(funSym, x));
+                res = Rcpp_fast_eval(call, R_GlobalEnv);
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
             } catch( eval_error& e) {
                 const char* fmt = "Could not convert using R function: %s.";
                 throw not_compatible(fmt, fun);

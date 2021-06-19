@@ -34,7 +34,13 @@
 #include <boost/mpl/tag.hpp>
 #include <boost/mpl/eval_if.hpp>
 #include <boost/mpl/identity.hpp>
+<<<<<<< HEAD
 #include <boost/type_traits/add_const.hpp>
+=======
+#include <boost/type_traits/is_const.hpp>
+#include <boost/type_traits/add_const.hpp>
+#include <boost/type_traits/add_reference.hpp>
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 #include <boost/typeof/typeof.hpp>
 

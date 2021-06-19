@@ -13,7 +13,10 @@
 #define BOOST_TEST_GLOBAL_TYPEDEF_HPP_021005GER
 
 #include <boost/test/utils/basic_cstring/basic_cstring.hpp>
+<<<<<<< HEAD
 #include <boost/test/detail/workaround.hpp>
+=======
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 #define BOOST_TEST_L( s )         ::boost::unit_test::const_string( s, sizeof( s ) - 1 )
 #define BOOST_TEST_STRINGIZE( s ) BOOST_TEST_L( BOOST_STRINGIZE( s ) )
@@ -101,6 +104,48 @@ T static_constant<T>::value;
 
 //____________________________________________________________________________//
 
+<<<<<<< HEAD
+=======
+// helper defines for singletons.
+// BOOST_TEST_SINGLETON_CONS should appear in the class body,
+// BOOST_TEST_SINGLETON_CONS_IMPL should be in only one translation unit. The
+// global instance should be declared by BOOST_TEST_SINGLETON_INST.
+
+#define BOOST_TEST_SINGLETON_CONS_NO_CTOR( type )       \
+public:                                                 \
+  static type& instance();                              \
+private:                                                \
+  BOOST_DELETED_FUNCTION(type(type const&))             \
+  BOOST_DELETED_FUNCTION(type& operator=(type const&))  \
+  BOOST_DEFAULTED_FUNCTION(~type(), {})                 \
+/**/
+
+#define BOOST_TEST_SINGLETON_CONS( type )               \
+  BOOST_TEST_SINGLETON_CONS_NO_CTOR(type)               \
+private:                                                \
+  BOOST_DEFAULTED_FUNCTION(type(), {})                  \
+/**/
+
+#define BOOST_TEST_SINGLETON_CONS_IMPL( type )          \
+  type& type::instance() {                              \
+    static type the_inst; return the_inst;              \
+  }                                                     \
+/**/
+
+//____________________________________________________________________________//
+
+#if defined(__APPLE_CC__) && defined(__GNUC__) && __GNUC__ < 4
+#define BOOST_TEST_SINGLETON_INST( inst ) \
+static BOOST_JOIN( inst, _t)& inst BOOST_ATTRIBUTE_UNUSED = BOOST_JOIN (inst, _t)::instance();
+
+#else
+
+#define BOOST_TEST_SINGLETON_INST( inst ) \
+namespace { BOOST_JOIN( inst, _t)& inst BOOST_ATTRIBUTE_UNUSED = BOOST_JOIN( inst, _t)::instance(); }
+
+#endif
+
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 } // namespace unit_test
 } // namespace boost
 

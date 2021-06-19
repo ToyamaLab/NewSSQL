@@ -13,6 +13,7 @@ public class LinkForeach {
 	public final static StringBuffer C3contents = new StringBuffer();
 
 	public static boolean plink_glink = false;				//added by goto 20161109 for plink/glink
+	private String r;
 
 	public LinkForeach() {
 
@@ -89,7 +90,8 @@ public class LinkForeach {
 			}
 			else{
 				//r += "		document.write(\"SuperSQL Foreach Page\");\n";
-				r += "		document.body.innerHTML = \"SuperSQL Foreach Page\";\n";
+				r += "		document.body.innerHTML += \"SuperSQL Foreach Page<br>\";\n" +
+					 "      	get_id();\n"  ; //added by li 20201207
 			}
 			r +=
 					"	}else{\n" +
@@ -121,6 +123,18 @@ public class LinkForeach {
 					//"}\n" +
 					"});\n";
 		}
+		r += "function get_id(){\n" +  //added by li 20201207
+
+				"     $(\"div\").each(function() {\n" + 
+				"          var url = location.href ;\n" + 
+				"          var foreach_id = $(this).attr('id') ;\n" + 
+				"          if(foreach_id != 'ssql_body_contents'){\n" + 
+				"               var id = foreach_id.substr(\"ssql_foreach_\".length);\n" + 
+				"               //console.log( url );\n" + 
+				"               document.body.innerHTML += \"<a href=\" + url + \"?att=\" + id + \">\" + foreach_id + \"<a><br>\";\n" + 
+				"          }\n" + 
+				"     });\n" + 
+				"}";
 		r += 	"//-->" +
 				"</script>\n";
 		return r;

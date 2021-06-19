@@ -17,11 +17,18 @@
 #include <iterator>                             // advance.
 #include <list>
 #include <memory>                               // allocator, auto_ptr or unique_ptr.
+<<<<<<< HEAD
 #include <typeinfo>
+=======
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 #include <stdexcept>                            // logic_error, out_of_range.
 #include <boost/checked_delete.hpp>
 #include <boost/config.hpp>                     // BOOST_MSVC, template friends,
 #include <boost/detail/workaround.hpp>          // BOOST_NESTED_TEMPLATE 
+<<<<<<< HEAD
+=======
+#include <boost/core/typeinfo.hpp>
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 #include <boost/iostreams/constants.hpp>
 #include <boost/iostreams/detail/access_control.hpp>
 #include <boost/iostreams/detail/char_traits.hpp>
@@ -164,7 +171,11 @@ public:
 
     //----------Direct component access---------------------------------------//
 
+<<<<<<< HEAD
     const std::type_info& component_type(int n) const
+=======
+    const boost::core::typeinfo& component_type(int n) const
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     {
         if (static_cast<size_type>(n) >= size())
             boost::throw_exception(std::out_of_range("bad chain offset"));
@@ -173,7 +184,11 @@ public:
 
     // Deprecated.
     template<int N>
+<<<<<<< HEAD
     const std::type_info& component_type() const { return component_type(N); }
+=======
+    const boost::core::typeinfo& component_type() const { return component_type(N); }
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
     template<typename T>
     T* component(int n) const { return component(n, boost::type<T>()); }
@@ -191,7 +206,11 @@ public:
         if (static_cast<size_type>(n) >= size())
             boost::throw_exception(std::out_of_range("bad chain offset"));
         streambuf_type* link = *boost::next(list().begin(), n);
+<<<<<<< HEAD
         if (BOOST_IOSTREAMS_COMPARE_TYPE_ID(link->component_type(), typeid(T)))
+=======
+        if (BOOST_IOSTREAMS_COMPARE_TYPE_ID(link->component_type(), BOOST_CORE_TYPEID(T)))
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
             return static_cast<T*>(link->component_impl());
         else
             return 0;
@@ -455,12 +474,20 @@ public:
     chain_client(chain_client* client) : chain_(client->chain_) { }
     virtual ~chain_client() { }
 
+<<<<<<< HEAD
     const std::type_info& component_type(int n) const
+=======
+    const boost::core::typeinfo& component_type(int n) const
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     { return chain_->component_type(n); }
 
     // Deprecated.
     template<int N>
+<<<<<<< HEAD
     const std::type_info& component_type() const
+=======
+    const boost::core::typeinfo& component_type() const
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     { return chain_->BOOST_NESTED_TEMPLATE component_type<N>(); }
 
     template<typename T>

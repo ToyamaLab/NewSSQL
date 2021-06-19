@@ -24,6 +24,7 @@ namespace boost { namespace spirit { namespace x3 { namespace traits
     template <typename Exposed, typename Transformed, typename Tag
       , typename Enable = void>
     struct transform_attribute;
+<<<<<<< HEAD
 
     ///////////////////////////////////////////////////////////////////////////
     template <typename Tag, typename Transformed, typename Exposed>
@@ -39,6 +40,8 @@ namespace boost { namespace spirit { namespace x3 { namespace traits
     {
         return transform_attribute<Exposed const, Transformed, Tag>::pre(attr);
     }
+=======
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 }}}}
 
 #endif

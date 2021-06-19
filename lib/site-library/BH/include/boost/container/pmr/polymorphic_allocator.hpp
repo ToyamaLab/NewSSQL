@@ -104,7 +104,11 @@ class polymorphic_allocator
    void construct(U* p, BOOST_FWD_REF(Args)...args)
    {
       new_allocator<U> na;
+<<<<<<< HEAD
       container_detail::dispatch_uses_allocator
+=======
+      dtl::dispatch_uses_allocator
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
          (na, *this, p, ::boost::forward<Args>(args)...);
    }
 
@@ -117,7 +121,11 @@ class polymorphic_allocator
    void construct(U* p BOOST_MOVE_I##N BOOST_MOVE_UREFQ##N)\
    {\
       new_allocator<U> na;\
+<<<<<<< HEAD
       container_detail::dispatch_uses_allocator\
+=======
+      dtl::dispatch_uses_allocator\
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
          (na, *this, p BOOST_MOVE_I##N BOOST_MOVE_FWDQ##N);\
    }\
    //

@@ -5,8 +5,13 @@
 // Copyright (c) 2009-2015 Mateusz Loskot, London, UK.
 // Copyright (c) 2014-2015 Samuel Debionne, Grenoble, France.
 
+<<<<<<< HEAD
 // This file was modified by Oracle on 2015, 2016, 2017.
 // Modifications copyright (c) 2015-2017, Oracle and/or its affiliates.
+=======
+// This file was modified by Oracle on 2015-2018.
+// Modifications copyright (c) 2015-2018, Oracle and/or its affiliates.
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 // Contributed and/or modified by Vissarion Fysikopoulos, on behalf of Oracle
 // Contributed and/or modified by Menelaos Karavelas, on behalf of Oracle
@@ -22,6 +27,7 @@
 #ifndef BOOST_GEOMETRY_ALGORITHMS_DETAIL_EXPAND_POINT_HPP
 #define BOOST_GEOMETRY_ALGORITHMS_DETAIL_EXPAND_POINT_HPP
 
+<<<<<<< HEAD
 #include <cstddef>
 #include <algorithm>
 #include <functional>
@@ -42,11 +48,22 @@
 #include <boost/geometry/algorithms/detail/envelope/transform_units.hpp>
 
 #include <boost/geometry/algorithms/dispatch/expand.hpp>
+=======
+
+#include <boost/geometry/algorithms/dispatch/expand.hpp>
+
+#include <boost/geometry/core/tags.hpp>
+
+// For backward compatibility
+#include <boost/geometry/strategies/cartesian/expand_point.hpp>
+#include <boost/geometry/strategies/spherical/expand_point.hpp>
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 
 namespace boost { namespace geometry
 {
 
+<<<<<<< HEAD
 #ifndef DOXYGEN_NO_DETAIL
 namespace detail { namespace expand
 {
@@ -207,6 +224,8 @@ struct point_loop_on_spheroid
 }} // namespace detail::expand
 #endif // DOXYGEN_NO_DETAIL
 
+=======
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 #ifndef DOXYGEN_NO_DISPATCH
 namespace dispatch
 {
@@ -215,12 +234,17 @@ namespace dispatch
 // Box + point -> new box containing also point
 template
 <
+<<<<<<< HEAD
     typename BoxOut, typename Point,
     typename CSTagOut, typename CSTag
+=======
+    typename BoxOut, typename Point
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 >
 struct expand
     <
         BoxOut, Point,
+<<<<<<< HEAD
         box_tag, point_tag,
         CSTagOut, CSTag
     >
@@ -283,6 +307,21 @@ struct expand
         >
 {};
 
+=======
+        box_tag, point_tag
+    >
+{
+    template <typename Strategy>
+    static inline void apply(BoxOut& box,
+                             Point const& point,
+                             Strategy const& )
+    {
+        Strategy::apply(box, point);
+    }
+};
+
+
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 } // namespace dispatch
 #endif // DOXYGEN_NO_DISPATCH

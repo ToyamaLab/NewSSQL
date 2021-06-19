@@ -36,6 +36,19 @@ struct gcc_x86_extra_operations_common :
     typedef Base base_type;
     typedef typename base_type::storage_type storage_type;
 
+<<<<<<< HEAD
+=======
+    static BOOST_FORCEINLINE storage_type add(storage_type volatile& storage, storage_type v, memory_order order) BOOST_NOEXCEPT
+    {
+        return static_cast< storage_type >(Base::fetch_add(storage, v, order) + v);
+    }
+
+    static BOOST_FORCEINLINE storage_type sub(storage_type volatile& storage, storage_type v, memory_order order) BOOST_NOEXCEPT
+    {
+        return static_cast< storage_type >(Base::fetch_sub(storage, v, order) - v);
+    }
+
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     static BOOST_FORCEINLINE bool bit_test_and_set(storage_type volatile& storage, unsigned int bit_number, memory_order) BOOST_NOEXCEPT
     {
         bool res;
@@ -110,11 +123,16 @@ struct gcc_x86_extra_operations_common :
 };
 
 template< typename Base, bool Signed >
+<<<<<<< HEAD
 struct extra_operations< Base, 1u, Signed > :
+=======
+struct extra_operations< Base, 1u, Signed, true > :
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     public gcc_x86_extra_operations_common< Base >
 {
     typedef gcc_x86_extra_operations_common< Base > base_type;
     typedef typename base_type::storage_type storage_type;
+<<<<<<< HEAD
     typedef typename make_storage_type< 4u, Signed >::type temp_storage_type;
 
 #define BOOST_ATOMIC_DETAIL_CAS_LOOP(op, result)\
@@ -127,26 +145,121 @@ struct extra_operations< Base, 1u, Signed > :
         "lock; cmpxchgb %b2, %[storage]\n\t"\
         "jne 1b"\
         : [res] "+a" (result), [storage] "+m" (storage), "=&q" (new_val)\
+=======
+    typedef typename make_storage_type< 4u >::type temp_storage_type;
+
+#define BOOST_ATOMIC_DETAIL_CAS_LOOP(op, original, result)\
+    __asm__ __volatile__\
+    (\
+        ".align 16\n\t"\
+        "1: movzbl %[orig], %2\n\t"\
+        op " %b2\n\t"\
+        "lock; cmpxchgb %b2, %[storage]\n\t"\
+        "jne 1b"\
+        : [orig] "+a" (original), [storage] "+m" (storage), "=&q" (result)\
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
         : \
         : BOOST_ATOMIC_DETAIL_ASM_CLOBBER_CC_COMMA "memory"\
     )
 
     static BOOST_FORCEINLINE storage_type fetch_negate(storage_type volatile& storage, memory_order) BOOST_NOEXCEPT
     {
+<<<<<<< HEAD
         storage_type res = storage;
         BOOST_ATOMIC_DETAIL_CAS_LOOP("negb", res);
         return res;
+=======
+        storage_type original = storage;
+        temp_storage_type result;
+        BOOST_ATOMIC_DETAIL_CAS_LOOP("negb", original, result);
+        return original;
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     }
 
     static BOOST_FORCEINLINE storage_type fetch_complement(storage_type volatile& storage, memory_order) BOOST_NOEXCEPT
     {
+<<<<<<< HEAD
         storage_type res = storage;
         BOOST_ATOMIC_DETAIL_CAS_LOOP("notb", res);
         return res;
+=======
+        storage_type original = storage;
+        temp_storage_type result;
+        BOOST_ATOMIC_DETAIL_CAS_LOOP("notb", original, result);
+        return original;
+    }
+
+    static BOOST_FORCEINLINE storage_type negate(storage_type volatile& storage, memory_order) BOOST_NOEXCEPT
+    {
+        storage_type original = storage;
+        temp_storage_type result;
+        BOOST_ATOMIC_DETAIL_CAS_LOOP("negb", original, result);
+        return static_cast< storage_type >(result);
+    }
+
+    static BOOST_FORCEINLINE storage_type bitwise_complement(storage_type volatile& storage, memory_order) BOOST_NOEXCEPT
+    {
+        storage_type original = storage;
+        temp_storage_type result;
+        BOOST_ATOMIC_DETAIL_CAS_LOOP("notb", original, result);
+        return static_cast< storage_type >(result);
     }
 
 #undef BOOST_ATOMIC_DETAIL_CAS_LOOP
 
+#define BOOST_ATOMIC_DETAIL_CAS_LOOP(op, argument, original, result)\
+    __asm__ __volatile__\
+    (\
+        ".align 16\n\t"\
+        "1: mov %[arg], %2\n\t"\
+        op " %%al, %b2\n\t"\
+        "lock; cmpxchgb %b2, %[storage]\n\t"\
+        "jne 1b"\
+        : [orig] "+a" (original), [storage] "+m" (storage), "=&q" (result)\
+        : [arg] "ir" ((temp_storage_type)argument)\
+        : BOOST_ATOMIC_DETAIL_ASM_CLOBBER_CC_COMMA "memory"\
+    )
+
+    static BOOST_FORCEINLINE storage_type bitwise_and(storage_type volatile& storage, storage_type v, memory_order) BOOST_NOEXCEPT
+    {
+        storage_type original = storage;
+        temp_storage_type result;
+        BOOST_ATOMIC_DETAIL_CAS_LOOP("andb", v, original, result);
+        return static_cast< storage_type >(result);
+    }
+
+    static BOOST_FORCEINLINE storage_type bitwise_or(storage_type volatile& storage, storage_type v, memory_order) BOOST_NOEXCEPT
+    {
+        storage_type original = storage;
+        temp_storage_type result;
+        BOOST_ATOMIC_DETAIL_CAS_LOOP("orb", v, original, result);
+        return static_cast< storage_type >(result);
+    }
+
+    static BOOST_FORCEINLINE storage_type bitwise_xor(storage_type volatile& storage, storage_type v, memory_order) BOOST_NOEXCEPT
+    {
+        storage_type original = storage;
+        temp_storage_type result;
+        BOOST_ATOMIC_DETAIL_CAS_LOOP("xorb", v, original, result);
+        return static_cast< storage_type >(result);
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
+    }
+
+#undef BOOST_ATOMIC_DETAIL_CAS_LOOP
+
+<<<<<<< HEAD
+=======
+    static BOOST_FORCEINLINE bool negate_and_test(storage_type volatile& storage, memory_order order) BOOST_NOEXCEPT
+    {
+        return !!negate(storage, order);
+    }
+
+    static BOOST_FORCEINLINE bool complement_and_test(storage_type volatile& storage, memory_order order) BOOST_NOEXCEPT
+    {
+        return !!bitwise_complement(storage, order);
+    }
+
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     static BOOST_FORCEINLINE void opaque_add(storage_type volatile& storage, storage_type v, memory_order) BOOST_NOEXCEPT
     {
         if (BOOST_ATOMIC_DETAIL_IS_CONSTANT(v) && v == 1)
@@ -259,7 +372,11 @@ struct extra_operations< Base, 1u, Signed > :
             __asm__ __volatile__
             (
                 "lock; incb %[storage]\n\t"
+<<<<<<< HEAD
                 : [storage] "+m" (storage), [result] "=@ccz" (res)
+=======
+                : [storage] "+m" (storage), [result] "=@ccnz" (res)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
                 :
                 : "memory"
             );
@@ -269,7 +386,11 @@ struct extra_operations< Base, 1u, Signed > :
             __asm__ __volatile__
             (
                 "lock; addb %[argument], %[storage]\n\t"
+<<<<<<< HEAD
                 : [storage] "+m" (storage), [result] "=@ccz" (res)
+=======
+                : [storage] "+m" (storage), [result] "=@ccnz" (res)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
                 : [argument] "iq" (v)
                 : "memory"
             );
@@ -280,7 +401,11 @@ struct extra_operations< Base, 1u, Signed > :
             __asm__ __volatile__
             (
                 "lock; incb %[storage]\n\t"
+<<<<<<< HEAD
                 "setz %[result]\n\t"
+=======
+                "setnz %[result]\n\t"
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
                 : [storage] "+m" (storage), [result] "=q" (res)
                 :
                 : BOOST_ATOMIC_DETAIL_ASM_CLOBBER_CC_COMMA "memory"
@@ -291,7 +416,11 @@ struct extra_operations< Base, 1u, Signed > :
             __asm__ __volatile__
             (
                 "lock; addb %[argument], %[storage]\n\t"
+<<<<<<< HEAD
                 "setz %[result]\n\t"
+=======
+                "setnz %[result]\n\t"
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
                 : [storage] "+m" (storage), [result] "=q" (res)
                 : [argument] "iq" (v)
                 : BOOST_ATOMIC_DETAIL_ASM_CLOBBER_CC_COMMA "memory"
@@ -310,7 +439,11 @@ struct extra_operations< Base, 1u, Signed > :
             __asm__ __volatile__
             (
                 "lock; decb %[storage]\n\t"
+<<<<<<< HEAD
                 : [storage] "+m" (storage), [result] "=@ccz" (res)
+=======
+                : [storage] "+m" (storage), [result] "=@ccnz" (res)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
                 :
                 : "memory"
             );
@@ -320,7 +453,11 @@ struct extra_operations< Base, 1u, Signed > :
             __asm__ __volatile__
             (
                 "lock; subb %[argument], %[storage]\n\t"
+<<<<<<< HEAD
                 : [storage] "+m" (storage), [result] "=@ccz" (res)
+=======
+                : [storage] "+m" (storage), [result] "=@ccnz" (res)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
                 : [argument] "iq" (v)
                 : "memory"
             );
@@ -331,7 +468,11 @@ struct extra_operations< Base, 1u, Signed > :
             __asm__ __volatile__
             (
                 "lock; decb %[storage]\n\t"
+<<<<<<< HEAD
                 "setz %[result]\n\t"
+=======
+                "setnz %[result]\n\t"
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
                 : [storage] "+m" (storage), [result] "=q" (res)
                 :
                 : BOOST_ATOMIC_DETAIL_ASM_CLOBBER_CC_COMMA "memory"
@@ -342,7 +483,11 @@ struct extra_operations< Base, 1u, Signed > :
             __asm__ __volatile__
             (
                 "lock; subb %[argument], %[storage]\n\t"
+<<<<<<< HEAD
                 "setz %[result]\n\t"
+=======
+                "setnz %[result]\n\t"
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
                 : [storage] "+m" (storage), [result] "=q" (res)
                 : [argument] "iq" (v)
                 : BOOST_ATOMIC_DETAIL_ASM_CLOBBER_CC_COMMA "memory"
@@ -359,7 +504,11 @@ struct extra_operations< Base, 1u, Signed > :
         __asm__ __volatile__
         (
             "lock; andb %[argument], %[storage]\n\t"
+<<<<<<< HEAD
             : [storage] "+m" (storage), [result] "=@ccz" (res)
+=======
+            : [storage] "+m" (storage), [result] "=@ccnz" (res)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
             : [argument] "iq" (v)
             : "memory"
         );
@@ -367,7 +516,11 @@ struct extra_operations< Base, 1u, Signed > :
         __asm__ __volatile__
         (
             "lock; andb %[argument], %[storage]\n\t"
+<<<<<<< HEAD
             "setz %[result]\n\t"
+=======
+            "setnz %[result]\n\t"
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
             : [storage] "+m" (storage), [result] "=q" (res)
             : [argument] "iq" (v)
             : BOOST_ATOMIC_DETAIL_ASM_CLOBBER_CC_COMMA "memory"
@@ -383,7 +536,11 @@ struct extra_operations< Base, 1u, Signed > :
         __asm__ __volatile__
         (
             "lock; orb %[argument], %[storage]\n\t"
+<<<<<<< HEAD
             : [storage] "+m" (storage), [result] "=@ccz" (res)
+=======
+            : [storage] "+m" (storage), [result] "=@ccnz" (res)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
             : [argument] "iq" (v)
             : "memory"
         );
@@ -391,7 +548,11 @@ struct extra_operations< Base, 1u, Signed > :
         __asm__ __volatile__
         (
             "lock; orb %[argument], %[storage]\n\t"
+<<<<<<< HEAD
             "setz %[result]\n\t"
+=======
+            "setnz %[result]\n\t"
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
             : [storage] "+m" (storage), [result] "=q" (res)
             : [argument] "iq" (v)
             : BOOST_ATOMIC_DETAIL_ASM_CLOBBER_CC_COMMA "memory"
@@ -407,7 +568,11 @@ struct extra_operations< Base, 1u, Signed > :
         __asm__ __volatile__
         (
             "lock; xorb %[argument], %[storage]\n\t"
+<<<<<<< HEAD
             : [storage] "+m" (storage), [result] "=@ccz" (res)
+=======
+            : [storage] "+m" (storage), [result] "=@ccnz" (res)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
             : [argument] "iq" (v)
             : "memory"
         );
@@ -415,7 +580,11 @@ struct extra_operations< Base, 1u, Signed > :
         __asm__ __volatile__
         (
             "lock; xorb %[argument], %[storage]\n\t"
+<<<<<<< HEAD
             "setz %[result]\n\t"
+=======
+            "setnz %[result]\n\t"
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
             : [storage] "+m" (storage), [result] "=q" (res)
             : [argument] "iq" (v)
             : BOOST_ATOMIC_DETAIL_ASM_CLOBBER_CC_COMMA "memory"
@@ -426,11 +595,16 @@ struct extra_operations< Base, 1u, Signed > :
 };
 
 template< typename Base, bool Signed >
+<<<<<<< HEAD
 struct extra_operations< Base, 2u, Signed > :
+=======
+struct extra_operations< Base, 2u, Signed, true > :
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     public gcc_x86_extra_operations_common< Base >
 {
     typedef gcc_x86_extra_operations_common< Base > base_type;
     typedef typename base_type::storage_type storage_type;
+<<<<<<< HEAD
     typedef typename make_storage_type< 4u, Signed >::type temp_storage_type;
 
 #define BOOST_ATOMIC_DETAIL_CAS_LOOP(op, result)\
@@ -443,26 +617,121 @@ struct extra_operations< Base, 2u, Signed > :
         "lock; cmpxchgw %w2, %[storage]\n\t"\
         "jne 1b"\
         : [res] "+a" (result), [storage] "+m" (storage), "=&q" (new_val)\
+=======
+    typedef typename make_storage_type< 4u >::type temp_storage_type;
+
+#define BOOST_ATOMIC_DETAIL_CAS_LOOP(op, original, result)\
+    __asm__ __volatile__\
+    (\
+        ".align 16\n\t"\
+        "1: movzwl %[orig], %2\n\t"\
+        op " %w2\n\t"\
+        "lock; cmpxchgw %w2, %[storage]\n\t"\
+        "jne 1b"\
+        : [orig] "+a" (original), [storage] "+m" (storage), "=&q" (result)\
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
         : \
         : BOOST_ATOMIC_DETAIL_ASM_CLOBBER_CC_COMMA "memory"\
     )
 
     static BOOST_FORCEINLINE storage_type fetch_negate(storage_type volatile& storage, memory_order) BOOST_NOEXCEPT
     {
+<<<<<<< HEAD
         storage_type res = storage;
         BOOST_ATOMIC_DETAIL_CAS_LOOP("negw", res);
         return res;
+=======
+        storage_type original = storage;
+        temp_storage_type result;
+        BOOST_ATOMIC_DETAIL_CAS_LOOP("negw", original, result);
+        return original;
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     }
 
     static BOOST_FORCEINLINE storage_type fetch_complement(storage_type volatile& storage, memory_order) BOOST_NOEXCEPT
     {
+<<<<<<< HEAD
         storage_type res = storage;
         BOOST_ATOMIC_DETAIL_CAS_LOOP("notw", res);
         return res;
+=======
+        storage_type original = storage;
+        temp_storage_type result;
+        BOOST_ATOMIC_DETAIL_CAS_LOOP("notw", original, result);
+        return original;
+    }
+
+    static BOOST_FORCEINLINE storage_type negate(storage_type volatile& storage, memory_order) BOOST_NOEXCEPT
+    {
+        storage_type original = storage;
+        temp_storage_type result;
+        BOOST_ATOMIC_DETAIL_CAS_LOOP("negw", original, result);
+        return static_cast< storage_type >(result);
+    }
+
+    static BOOST_FORCEINLINE storage_type bitwise_complement(storage_type volatile& storage, memory_order) BOOST_NOEXCEPT
+    {
+        storage_type original = storage;
+        temp_storage_type result;
+        BOOST_ATOMIC_DETAIL_CAS_LOOP("notw", original, result);
+        return static_cast< storage_type >(result);
     }
 
 #undef BOOST_ATOMIC_DETAIL_CAS_LOOP
 
+#define BOOST_ATOMIC_DETAIL_CAS_LOOP(op, argument, original, result)\
+    __asm__ __volatile__\
+    (\
+        ".align 16\n\t"\
+        "1: mov %[arg], %2\n\t"\
+        op " %%ax, %w2\n\t"\
+        "lock; cmpxchgw %w2, %[storage]\n\t"\
+        "jne 1b"\
+        : [orig] "+a" (original), [storage] "+m" (storage), "=&q" (result)\
+        : [arg] "ir" ((temp_storage_type)argument)\
+        : BOOST_ATOMIC_DETAIL_ASM_CLOBBER_CC_COMMA "memory"\
+    )
+
+    static BOOST_FORCEINLINE storage_type bitwise_and(storage_type volatile& storage, storage_type v, memory_order) BOOST_NOEXCEPT
+    {
+        storage_type original = storage;
+        temp_storage_type result;
+        BOOST_ATOMIC_DETAIL_CAS_LOOP("andw", v, original, result);
+        return static_cast< storage_type >(result);
+    }
+
+    static BOOST_FORCEINLINE storage_type bitwise_or(storage_type volatile& storage, storage_type v, memory_order) BOOST_NOEXCEPT
+    {
+        storage_type original = storage;
+        temp_storage_type result;
+        BOOST_ATOMIC_DETAIL_CAS_LOOP("orw", v, original, result);
+        return static_cast< storage_type >(result);
+    }
+
+    static BOOST_FORCEINLINE storage_type bitwise_xor(storage_type volatile& storage, storage_type v, memory_order) BOOST_NOEXCEPT
+    {
+        storage_type original = storage;
+        temp_storage_type result;
+        BOOST_ATOMIC_DETAIL_CAS_LOOP("xorw", v, original, result);
+        return static_cast< storage_type >(result);
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
+    }
+
+#undef BOOST_ATOMIC_DETAIL_CAS_LOOP
+
+<<<<<<< HEAD
+=======
+    static BOOST_FORCEINLINE bool negate_and_test(storage_type volatile& storage, memory_order order) BOOST_NOEXCEPT
+    {
+        return !!negate(storage, order);
+    }
+
+    static BOOST_FORCEINLINE bool complement_and_test(storage_type volatile& storage, memory_order order) BOOST_NOEXCEPT
+    {
+        return !!bitwise_complement(storage, order);
+    }
+
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     static BOOST_FORCEINLINE void opaque_add(storage_type volatile& storage, storage_type v, memory_order) BOOST_NOEXCEPT
     {
         if (BOOST_ATOMIC_DETAIL_IS_CONSTANT(v) && v == 1)
@@ -575,7 +844,11 @@ struct extra_operations< Base, 2u, Signed > :
             __asm__ __volatile__
             (
                 "lock; incw %[storage]\n\t"
+<<<<<<< HEAD
                 : [storage] "+m" (storage), [result] "=@ccz" (res)
+=======
+                : [storage] "+m" (storage), [result] "=@ccnz" (res)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
                 :
                 : "memory"
             );
@@ -585,7 +858,11 @@ struct extra_operations< Base, 2u, Signed > :
             __asm__ __volatile__
             (
                 "lock; addw %[argument], %[storage]\n\t"
+<<<<<<< HEAD
                 : [storage] "+m" (storage), [result] "=@ccz" (res)
+=======
+                : [storage] "+m" (storage), [result] "=@ccnz" (res)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
                 : [argument] "iq" (v)
                 : "memory"
             );
@@ -596,7 +873,11 @@ struct extra_operations< Base, 2u, Signed > :
             __asm__ __volatile__
             (
                 "lock; incw %[storage]\n\t"
+<<<<<<< HEAD
                 "setz %[result]\n\t"
+=======
+                "setnz %[result]\n\t"
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
                 : [storage] "+m" (storage), [result] "=q" (res)
                 :
                 : BOOST_ATOMIC_DETAIL_ASM_CLOBBER_CC_COMMA "memory"
@@ -607,7 +888,11 @@ struct extra_operations< Base, 2u, Signed > :
             __asm__ __volatile__
             (
                 "lock; addw %[argument], %[storage]\n\t"
+<<<<<<< HEAD
                 "setz %[result]\n\t"
+=======
+                "setnz %[result]\n\t"
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
                 : [storage] "+m" (storage), [result] "=q" (res)
                 : [argument] "iq" (v)
                 : BOOST_ATOMIC_DETAIL_ASM_CLOBBER_CC_COMMA "memory"
@@ -626,7 +911,11 @@ struct extra_operations< Base, 2u, Signed > :
             __asm__ __volatile__
             (
                 "lock; decw %[storage]\n\t"
+<<<<<<< HEAD
                 : [storage] "+m" (storage), [result] "=@ccz" (res)
+=======
+                : [storage] "+m" (storage), [result] "=@ccnz" (res)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
                 :
                 : "memory"
             );
@@ -636,7 +925,11 @@ struct extra_operations< Base, 2u, Signed > :
             __asm__ __volatile__
             (
                 "lock; subw %[argument], %[storage]\n\t"
+<<<<<<< HEAD
                 : [storage] "+m" (storage), [result] "=@ccz" (res)
+=======
+                : [storage] "+m" (storage), [result] "=@ccnz" (res)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
                 : [argument] "iq" (v)
                 : "memory"
             );
@@ -647,7 +940,11 @@ struct extra_operations< Base, 2u, Signed > :
             __asm__ __volatile__
             (
                 "lock; decw %[storage]\n\t"
+<<<<<<< HEAD
                 "setz %[result]\n\t"
+=======
+                "setnz %[result]\n\t"
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
                 : [storage] "+m" (storage), [result] "=q" (res)
                 :
                 : BOOST_ATOMIC_DETAIL_ASM_CLOBBER_CC_COMMA "memory"
@@ -658,7 +955,11 @@ struct extra_operations< Base, 2u, Signed > :
             __asm__ __volatile__
             (
                 "lock; subw %[argument], %[storage]\n\t"
+<<<<<<< HEAD
                 "setz %[result]\n\t"
+=======
+                "setnz %[result]\n\t"
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
                 : [storage] "+m" (storage), [result] "=q" (res)
                 : [argument] "iq" (v)
                 : BOOST_ATOMIC_DETAIL_ASM_CLOBBER_CC_COMMA "memory"
@@ -675,7 +976,11 @@ struct extra_operations< Base, 2u, Signed > :
         __asm__ __volatile__
         (
             "lock; andw %[argument], %[storage]\n\t"
+<<<<<<< HEAD
             : [storage] "+m" (storage), [result] "=@ccz" (res)
+=======
+            : [storage] "+m" (storage), [result] "=@ccnz" (res)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
             : [argument] "iq" (v)
             : "memory"
         );
@@ -683,7 +988,11 @@ struct extra_operations< Base, 2u, Signed > :
         __asm__ __volatile__
         (
             "lock; andw %[argument], %[storage]\n\t"
+<<<<<<< HEAD
             "setz %[result]\n\t"
+=======
+            "setnz %[result]\n\t"
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
             : [storage] "+m" (storage), [result] "=q" (res)
             : [argument] "iq" (v)
             : BOOST_ATOMIC_DETAIL_ASM_CLOBBER_CC_COMMA "memory"
@@ -699,7 +1008,11 @@ struct extra_operations< Base, 2u, Signed > :
         __asm__ __volatile__
         (
             "lock; orw %[argument], %[storage]\n\t"
+<<<<<<< HEAD
             : [storage] "+m" (storage), [result] "=@ccz" (res)
+=======
+            : [storage] "+m" (storage), [result] "=@ccnz" (res)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
             : [argument] "iq" (v)
             : "memory"
         );
@@ -707,7 +1020,11 @@ struct extra_operations< Base, 2u, Signed > :
         __asm__ __volatile__
         (
             "lock; orw %[argument], %[storage]\n\t"
+<<<<<<< HEAD
             "setz %[result]\n\t"
+=======
+            "setnz %[result]\n\t"
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
             : [storage] "+m" (storage), [result] "=q" (res)
             : [argument] "iq" (v)
             : BOOST_ATOMIC_DETAIL_ASM_CLOBBER_CC_COMMA "memory"
@@ -723,7 +1040,11 @@ struct extra_operations< Base, 2u, Signed > :
         __asm__ __volatile__
         (
             "lock; xorw %[argument], %[storage]\n\t"
+<<<<<<< HEAD
             : [storage] "+m" (storage), [result] "=@ccz" (res)
+=======
+            : [storage] "+m" (storage), [result] "=@ccnz" (res)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
             : [argument] "iq" (v)
             : "memory"
         );
@@ -731,7 +1052,11 @@ struct extra_operations< Base, 2u, Signed > :
         __asm__ __volatile__
         (
             "lock; xorw %[argument], %[storage]\n\t"
+<<<<<<< HEAD
             "setz %[result]\n\t"
+=======
+            "setnz %[result]\n\t"
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
             : [storage] "+m" (storage), [result] "=q" (res)
             : [argument] "iq" (v)
             : BOOST_ATOMIC_DETAIL_ASM_CLOBBER_CC_COMMA "memory"
@@ -742,12 +1067,17 @@ struct extra_operations< Base, 2u, Signed > :
 };
 
 template< typename Base, bool Signed >
+<<<<<<< HEAD
 struct extra_operations< Base, 4u, Signed > :
+=======
+struct extra_operations< Base, 4u, Signed, true > :
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     public gcc_x86_extra_operations_common< Base >
 {
     typedef gcc_x86_extra_operations_common< Base > base_type;
     typedef typename base_type::storage_type storage_type;
 
+<<<<<<< HEAD
 #define BOOST_ATOMIC_DETAIL_CAS_LOOP(op, result)\
     storage_type new_val;\
     __asm__ __volatile__\
@@ -758,26 +1088,119 @@ struct extra_operations< Base, 4u, Signed > :
         "lock; cmpxchgl %[new_val], %[storage]\n\t"\
         "jne 1b"\
         : [res] "+a" (result), [storage] "+m" (storage), [new_val] "=&r" (new_val)\
+=======
+#define BOOST_ATOMIC_DETAIL_CAS_LOOP(op, original, result)\
+    __asm__ __volatile__\
+    (\
+        ".align 16\n\t"\
+        "1: mov %[orig], %[res]\n\t"\
+        op " %[res]\n\t"\
+        "lock; cmpxchgl %[res], %[storage]\n\t"\
+        "jne 1b"\
+        : [orig] "+a" (original), [storage] "+m" (storage), [res] "=&r" (result)\
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
         : \
         : BOOST_ATOMIC_DETAIL_ASM_CLOBBER_CC_COMMA "memory"\
     )
 
     static BOOST_FORCEINLINE storage_type fetch_negate(storage_type volatile& storage, memory_order) BOOST_NOEXCEPT
     {
+<<<<<<< HEAD
         storage_type res = storage;
         BOOST_ATOMIC_DETAIL_CAS_LOOP("negl", res);
         return res;
+=======
+        storage_type original = storage;
+        storage_type result;
+        BOOST_ATOMIC_DETAIL_CAS_LOOP("negl", original, result);
+        return original;
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     }
 
     static BOOST_FORCEINLINE storage_type fetch_complement(storage_type volatile& storage, memory_order) BOOST_NOEXCEPT
     {
+<<<<<<< HEAD
         storage_type res = storage;
         BOOST_ATOMIC_DETAIL_CAS_LOOP("notl", res);
         return res;
+=======
+        storage_type original = storage;
+        storage_type result;
+        BOOST_ATOMIC_DETAIL_CAS_LOOP("notl", original, result);
+        return original;
+    }
+
+    static BOOST_FORCEINLINE storage_type negate(storage_type volatile& storage, memory_order) BOOST_NOEXCEPT
+    {
+        storage_type original = storage;
+        storage_type result;
+        BOOST_ATOMIC_DETAIL_CAS_LOOP("negl", original, result);
+        return result;
+    }
+
+    static BOOST_FORCEINLINE storage_type bitwise_complement(storage_type volatile& storage, memory_order) BOOST_NOEXCEPT
+    {
+        storage_type original = storage;
+        storage_type result;
+        BOOST_ATOMIC_DETAIL_CAS_LOOP("notl", original, result);
+        return result;
     }
 
 #undef BOOST_ATOMIC_DETAIL_CAS_LOOP
 
+#define BOOST_ATOMIC_DETAIL_CAS_LOOP(op, argument, original, result)\
+    __asm__ __volatile__\
+    (\
+        ".align 16\n\t"\
+        "1: mov %[arg], %[res]\n\t"\
+        op " %%eax, %[res]\n\t"\
+        "lock; cmpxchgl %[res], %[storage]\n\t"\
+        "jne 1b"\
+        : [orig] "+a" (original), [storage] "+m" (storage), [res] "=&r" (result)\
+        : [arg] "ir" (argument)\
+        : BOOST_ATOMIC_DETAIL_ASM_CLOBBER_CC_COMMA "memory"\
+    )
+
+    static BOOST_FORCEINLINE storage_type bitwise_and(storage_type volatile& storage, storage_type v, memory_order) BOOST_NOEXCEPT
+    {
+        storage_type original = storage;
+        storage_type result;
+        BOOST_ATOMIC_DETAIL_CAS_LOOP("andl", v, original, result);
+        return static_cast< storage_type >(result);
+    }
+
+    static BOOST_FORCEINLINE storage_type bitwise_or(storage_type volatile& storage, storage_type v, memory_order) BOOST_NOEXCEPT
+    {
+        storage_type original = storage;
+        storage_type result;
+        BOOST_ATOMIC_DETAIL_CAS_LOOP("orl", v, original, result);
+        return static_cast< storage_type >(result);
+    }
+
+    static BOOST_FORCEINLINE storage_type bitwise_xor(storage_type volatile& storage, storage_type v, memory_order) BOOST_NOEXCEPT
+    {
+        storage_type original = storage;
+        storage_type result;
+        BOOST_ATOMIC_DETAIL_CAS_LOOP("xorl", v, original, result);
+        return static_cast< storage_type >(result);
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
+    }
+
+#undef BOOST_ATOMIC_DETAIL_CAS_LOOP
+
+<<<<<<< HEAD
+=======
+    static BOOST_FORCEINLINE bool negate_and_test(storage_type volatile& storage, memory_order order) BOOST_NOEXCEPT
+    {
+        return !!negate(storage, order);
+    }
+
+    static BOOST_FORCEINLINE bool complement_and_test(storage_type volatile& storage, memory_order order) BOOST_NOEXCEPT
+    {
+        return !!bitwise_complement(storage, order);
+    }
+
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     static BOOST_FORCEINLINE void opaque_add(storage_type volatile& storage, storage_type v, memory_order) BOOST_NOEXCEPT
     {
         if (BOOST_ATOMIC_DETAIL_IS_CONSTANT(v) && v == 1)
@@ -890,7 +1313,11 @@ struct extra_operations< Base, 4u, Signed > :
             __asm__ __volatile__
             (
                 "lock; incl %[storage]\n\t"
+<<<<<<< HEAD
                 : [storage] "+m" (storage), [result] "=@ccz" (res)
+=======
+                : [storage] "+m" (storage), [result] "=@ccnz" (res)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
                 :
                 : "memory"
             );
@@ -900,7 +1327,11 @@ struct extra_operations< Base, 4u, Signed > :
             __asm__ __volatile__
             (
                 "lock; addl %[argument], %[storage]\n\t"
+<<<<<<< HEAD
                 : [storage] "+m" (storage), [result] "=@ccz" (res)
+=======
+                : [storage] "+m" (storage), [result] "=@ccnz" (res)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
                 : [argument] "ir" (v)
                 : "memory"
             );
@@ -911,7 +1342,11 @@ struct extra_operations< Base, 4u, Signed > :
             __asm__ __volatile__
             (
                 "lock; incl %[storage]\n\t"
+<<<<<<< HEAD
                 "setz %[result]\n\t"
+=======
+                "setnz %[result]\n\t"
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
                 : [storage] "+m" (storage), [result] "=q" (res)
                 :
                 : BOOST_ATOMIC_DETAIL_ASM_CLOBBER_CC_COMMA "memory"
@@ -922,7 +1357,11 @@ struct extra_operations< Base, 4u, Signed > :
             __asm__ __volatile__
             (
                 "lock; addl %[argument], %[storage]\n\t"
+<<<<<<< HEAD
                 "setz %[result]\n\t"
+=======
+                "setnz %[result]\n\t"
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
                 : [storage] "+m" (storage), [result] "=q" (res)
                 : [argument] "ir" (v)
                 : BOOST_ATOMIC_DETAIL_ASM_CLOBBER_CC_COMMA "memory"
@@ -941,7 +1380,11 @@ struct extra_operations< Base, 4u, Signed > :
             __asm__ __volatile__
             (
                 "lock; decl %[storage]\n\t"
+<<<<<<< HEAD
                 : [storage] "+m" (storage), [result] "=@ccz" (res)
+=======
+                : [storage] "+m" (storage), [result] "=@ccnz" (res)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
                 :
                 : "memory"
             );
@@ -951,7 +1394,11 @@ struct extra_operations< Base, 4u, Signed > :
             __asm__ __volatile__
             (
                 "lock; subl %[argument], %[storage]\n\t"
+<<<<<<< HEAD
                 : [storage] "+m" (storage), [result] "=@ccz" (res)
+=======
+                : [storage] "+m" (storage), [result] "=@ccnz" (res)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
                 : [argument] "ir" (v)
                 : "memory"
             );
@@ -962,7 +1409,11 @@ struct extra_operations< Base, 4u, Signed > :
             __asm__ __volatile__
             (
                 "lock; decl %[storage]\n\t"
+<<<<<<< HEAD
                 "setz %[result]\n\t"
+=======
+                "setnz %[result]\n\t"
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
                 : [storage] "+m" (storage), [result] "=q" (res)
                 :
                 : BOOST_ATOMIC_DETAIL_ASM_CLOBBER_CC_COMMA "memory"
@@ -973,7 +1424,11 @@ struct extra_operations< Base, 4u, Signed > :
             __asm__ __volatile__
             (
                 "lock; subl %[argument], %[storage]\n\t"
+<<<<<<< HEAD
                 "setz %[result]\n\t"
+=======
+                "setnz %[result]\n\t"
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
                 : [storage] "+m" (storage), [result] "=q" (res)
                 : [argument] "ir" (v)
                 : BOOST_ATOMIC_DETAIL_ASM_CLOBBER_CC_COMMA "memory"
@@ -990,7 +1445,11 @@ struct extra_operations< Base, 4u, Signed > :
         __asm__ __volatile__
         (
             "lock; andl %[argument], %[storage]\n\t"
+<<<<<<< HEAD
             : [storage] "+m" (storage), [result] "=@ccz" (res)
+=======
+            : [storage] "+m" (storage), [result] "=@ccnz" (res)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
             : [argument] "ir" (v)
             : "memory"
         );
@@ -998,7 +1457,11 @@ struct extra_operations< Base, 4u, Signed > :
         __asm__ __volatile__
         (
             "lock; andl %[argument], %[storage]\n\t"
+<<<<<<< HEAD
             "setz %[result]\n\t"
+=======
+            "setnz %[result]\n\t"
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
             : [storage] "+m" (storage), [result] "=q" (res)
             : [argument] "ir" (v)
             : BOOST_ATOMIC_DETAIL_ASM_CLOBBER_CC_COMMA "memory"
@@ -1014,7 +1477,11 @@ struct extra_operations< Base, 4u, Signed > :
         __asm__ __volatile__
         (
             "lock; orl %[argument], %[storage]\n\t"
+<<<<<<< HEAD
             : [storage] "+m" (storage), [result] "=@ccz" (res)
+=======
+            : [storage] "+m" (storage), [result] "=@ccnz" (res)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
             : [argument] "ir" (v)
             : "memory"
         );
@@ -1022,7 +1489,11 @@ struct extra_operations< Base, 4u, Signed > :
         __asm__ __volatile__
         (
             "lock; orl %[argument], %[storage]\n\t"
+<<<<<<< HEAD
             "setz %[result]\n\t"
+=======
+            "setnz %[result]\n\t"
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
             : [storage] "+m" (storage), [result] "=q" (res)
             : [argument] "ir" (v)
             : BOOST_ATOMIC_DETAIL_ASM_CLOBBER_CC_COMMA "memory"
@@ -1038,7 +1509,11 @@ struct extra_operations< Base, 4u, Signed > :
         __asm__ __volatile__
         (
             "lock; xorl %[argument], %[storage]\n\t"
+<<<<<<< HEAD
             : [storage] "+m" (storage), [result] "=@ccz" (res)
+=======
+            : [storage] "+m" (storage), [result] "=@ccnz" (res)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
             : [argument] "ir" (v)
             : "memory"
         );
@@ -1046,7 +1521,11 @@ struct extra_operations< Base, 4u, Signed > :
         __asm__ __volatile__
         (
             "lock; xorl %[argument], %[storage]\n\t"
+<<<<<<< HEAD
             "setz %[result]\n\t"
+=======
+            "setnz %[result]\n\t"
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
             : [storage] "+m" (storage), [result] "=q" (res)
             : [argument] "ir" (v)
             : BOOST_ATOMIC_DETAIL_ASM_CLOBBER_CC_COMMA "memory"
@@ -1059,12 +1538,17 @@ struct extra_operations< Base, 4u, Signed > :
 #if defined(__x86_64__)
 
 template< typename Base, bool Signed >
+<<<<<<< HEAD
 struct extra_operations< Base, 8u, Signed > :
+=======
+struct extra_operations< Base, 8u, Signed, true > :
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     public gcc_x86_extra_operations_common< Base >
 {
     typedef gcc_x86_extra_operations_common< Base > base_type;
     typedef typename base_type::storage_type storage_type;
 
+<<<<<<< HEAD
 #define BOOST_ATOMIC_DETAIL_CAS_LOOP(op, result)\
     storage_type new_val;\
     __asm__ __volatile__\
@@ -1075,26 +1559,119 @@ struct extra_operations< Base, 8u, Signed > :
         "lock; cmpxchgq %[new_val], %[storage]\n\t"\
         "jne 1b"\
         : [res] "+a" (result), [storage] "+m" (storage), [new_val] "=&r" (new_val)\
+=======
+#define BOOST_ATOMIC_DETAIL_CAS_LOOP(op, original, result)\
+    __asm__ __volatile__\
+    (\
+        ".align 16\n\t"\
+        "1: mov %[orig], %[res]\n\t"\
+        op " %[res]\n\t"\
+        "lock; cmpxchgq %[res], %[storage]\n\t"\
+        "jne 1b"\
+        : [orig] "+a" (original), [storage] "+m" (storage), [res] "=&r" (result)\
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
         : \
         : BOOST_ATOMIC_DETAIL_ASM_CLOBBER_CC_COMMA "memory"\
     )
 
     static BOOST_FORCEINLINE storage_type fetch_negate(storage_type volatile& storage, memory_order) BOOST_NOEXCEPT
     {
+<<<<<<< HEAD
         storage_type res = storage;
         BOOST_ATOMIC_DETAIL_CAS_LOOP("negq", res);
         return res;
+=======
+        storage_type original = storage;
+        storage_type result;
+        BOOST_ATOMIC_DETAIL_CAS_LOOP("negq", original, result);
+        return original;
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     }
 
     static BOOST_FORCEINLINE storage_type fetch_complement(storage_type volatile& storage, memory_order) BOOST_NOEXCEPT
     {
+<<<<<<< HEAD
         storage_type res = storage;
         BOOST_ATOMIC_DETAIL_CAS_LOOP("notq", res);
         return res;
+=======
+        storage_type original = storage;
+        storage_type result;
+        BOOST_ATOMIC_DETAIL_CAS_LOOP("notq", original, result);
+        return original;
+    }
+
+    static BOOST_FORCEINLINE storage_type negate(storage_type volatile& storage, memory_order) BOOST_NOEXCEPT
+    {
+        storage_type original = storage;
+        storage_type result;
+        BOOST_ATOMIC_DETAIL_CAS_LOOP("negq", original, result);
+        return result;
+    }
+
+    static BOOST_FORCEINLINE storage_type bitwise_complement(storage_type volatile& storage, memory_order) BOOST_NOEXCEPT
+    {
+        storage_type original = storage;
+        storage_type result;
+        BOOST_ATOMIC_DETAIL_CAS_LOOP("notq", original, result);
+        return result;
     }
 
 #undef BOOST_ATOMIC_DETAIL_CAS_LOOP
 
+#define BOOST_ATOMIC_DETAIL_CAS_LOOP(op, argument, original, result)\
+    __asm__ __volatile__\
+    (\
+        ".align 16\n\t"\
+        "1: mov %[arg], %[res]\n\t"\
+        op " %%rax, %[res]\n\t"\
+        "lock; cmpxchgq %[res], %[storage]\n\t"\
+        "jne 1b"\
+        : [orig] "+a" (original), [storage] "+m" (storage), [res] "=&r" (result)\
+        : [arg] "r" (argument)\
+        : BOOST_ATOMIC_DETAIL_ASM_CLOBBER_CC_COMMA "memory"\
+    )
+
+    static BOOST_FORCEINLINE storage_type bitwise_and(storage_type volatile& storage, storage_type v, memory_order) BOOST_NOEXCEPT
+    {
+        storage_type original = storage;
+        storage_type result;
+        BOOST_ATOMIC_DETAIL_CAS_LOOP("andq", v, original, result);
+        return static_cast< storage_type >(result);
+    }
+
+    static BOOST_FORCEINLINE storage_type bitwise_or(storage_type volatile& storage, storage_type v, memory_order) BOOST_NOEXCEPT
+    {
+        storage_type original = storage;
+        storage_type result;
+        BOOST_ATOMIC_DETAIL_CAS_LOOP("orq", v, original, result);
+        return static_cast< storage_type >(result);
+    }
+
+    static BOOST_FORCEINLINE storage_type bitwise_xor(storage_type volatile& storage, storage_type v, memory_order) BOOST_NOEXCEPT
+    {
+        storage_type original = storage;
+        storage_type result;
+        BOOST_ATOMIC_DETAIL_CAS_LOOP("xorq", v, original, result);
+        return static_cast< storage_type >(result);
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
+    }
+
+#undef BOOST_ATOMIC_DETAIL_CAS_LOOP
+
+<<<<<<< HEAD
+=======
+    static BOOST_FORCEINLINE bool negate_and_test(storage_type volatile& storage, memory_order order) BOOST_NOEXCEPT
+    {
+        return !!negate(storage, order);
+    }
+
+    static BOOST_FORCEINLINE bool complement_and_test(storage_type volatile& storage, memory_order order) BOOST_NOEXCEPT
+    {
+        return !!bitwise_complement(storage, order);
+    }
+
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     static BOOST_FORCEINLINE void opaque_add(storage_type volatile& storage, storage_type v, memory_order) BOOST_NOEXCEPT
     {
         if (BOOST_ATOMIC_DETAIL_IS_CONSTANT(v) && v == 1)
@@ -1207,7 +1784,11 @@ struct extra_operations< Base, 8u, Signed > :
             __asm__ __volatile__
             (
                 "lock; incq %[storage]\n\t"
+<<<<<<< HEAD
                 : [storage] "+m" (storage), [result] "=@ccz" (res)
+=======
+                : [storage] "+m" (storage), [result] "=@ccnz" (res)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
                 :
                 : "memory"
             );
@@ -1217,7 +1798,11 @@ struct extra_operations< Base, 8u, Signed > :
             __asm__ __volatile__
             (
                 "lock; addq %[argument], %[storage]\n\t"
+<<<<<<< HEAD
                 : [storage] "+m" (storage), [result] "=@ccz" (res)
+=======
+                : [storage] "+m" (storage), [result] "=@ccnz" (res)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
                 : [argument] "er" (v)
                 : "memory"
             );
@@ -1228,7 +1813,11 @@ struct extra_operations< Base, 8u, Signed > :
             __asm__ __volatile__
             (
                 "lock; incq %[storage]\n\t"
+<<<<<<< HEAD
                 "setz %[result]\n\t"
+=======
+                "setnz %[result]\n\t"
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
                 : [storage] "+m" (storage), [result] "=q" (res)
                 :
                 : BOOST_ATOMIC_DETAIL_ASM_CLOBBER_CC_COMMA "memory"
@@ -1239,7 +1828,11 @@ struct extra_operations< Base, 8u, Signed > :
             __asm__ __volatile__
             (
                 "lock; addq %[argument], %[storage]\n\t"
+<<<<<<< HEAD
                 "setz %[result]\n\t"
+=======
+                "setnz %[result]\n\t"
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
                 : [storage] "+m" (storage), [result] "=q" (res)
                 : [argument] "er" (v)
                 : BOOST_ATOMIC_DETAIL_ASM_CLOBBER_CC_COMMA "memory"
@@ -1258,7 +1851,11 @@ struct extra_operations< Base, 8u, Signed > :
             __asm__ __volatile__
             (
                 "lock; decq %[storage]\n\t"
+<<<<<<< HEAD
                 : [storage] "+m" (storage), [result] "=@ccz" (res)
+=======
+                : [storage] "+m" (storage), [result] "=@ccnz" (res)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
                 :
                 : "memory"
             );
@@ -1268,7 +1865,11 @@ struct extra_operations< Base, 8u, Signed > :
             __asm__ __volatile__
             (
                 "lock; subq %[argument], %[storage]\n\t"
+<<<<<<< HEAD
                 : [storage] "+m" (storage), [result] "=@ccz" (res)
+=======
+                : [storage] "+m" (storage), [result] "=@ccnz" (res)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
                 : [argument] "er" (v)
                 : "memory"
             );
@@ -1279,7 +1880,11 @@ struct extra_operations< Base, 8u, Signed > :
             __asm__ __volatile__
             (
                 "lock; decq %[storage]\n\t"
+<<<<<<< HEAD
                 "setz %[result]\n\t"
+=======
+                "setnz %[result]\n\t"
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
                 : [storage] "+m" (storage), [result] "=q" (res)
                 :
                 : BOOST_ATOMIC_DETAIL_ASM_CLOBBER_CC_COMMA "memory"
@@ -1290,7 +1895,11 @@ struct extra_operations< Base, 8u, Signed > :
             __asm__ __volatile__
             (
                 "lock; subq %[argument], %[storage]\n\t"
+<<<<<<< HEAD
                 "setz %[result]\n\t"
+=======
+                "setnz %[result]\n\t"
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
                 : [storage] "+m" (storage), [result] "=q" (res)
                 : [argument] "er" (v)
                 : BOOST_ATOMIC_DETAIL_ASM_CLOBBER_CC_COMMA "memory"
@@ -1307,7 +1916,11 @@ struct extra_operations< Base, 8u, Signed > :
         __asm__ __volatile__
         (
             "lock; andq %[argument], %[storage]\n\t"
+<<<<<<< HEAD
             : [storage] "+m" (storage), [result] "=@ccz" (res)
+=======
+            : [storage] "+m" (storage), [result] "=@ccnz" (res)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
             : [argument] "er" (v)
             : "memory"
         );
@@ -1315,7 +1928,11 @@ struct extra_operations< Base, 8u, Signed > :
         __asm__ __volatile__
         (
             "lock; andq %[argument], %[storage]\n\t"
+<<<<<<< HEAD
             "setz %[result]\n\t"
+=======
+            "setnz %[result]\n\t"
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
             : [storage] "+m" (storage), [result] "=q" (res)
             : [argument] "er" (v)
             : BOOST_ATOMIC_DETAIL_ASM_CLOBBER_CC_COMMA "memory"
@@ -1331,7 +1948,11 @@ struct extra_operations< Base, 8u, Signed > :
         __asm__ __volatile__
         (
             "lock; orq %[argument], %[storage]\n\t"
+<<<<<<< HEAD
             : [storage] "+m" (storage), [result] "=@ccz" (res)
+=======
+            : [storage] "+m" (storage), [result] "=@ccnz" (res)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
             : [argument] "er" (v)
             : "memory"
         );
@@ -1339,7 +1960,11 @@ struct extra_operations< Base, 8u, Signed > :
         __asm__ __volatile__
         (
             "lock; orq %[argument], %[storage]\n\t"
+<<<<<<< HEAD
             "setz %[result]\n\t"
+=======
+            "setnz %[result]\n\t"
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
             : [storage] "+m" (storage), [result] "=q" (res)
             : [argument] "er" (v)
             : BOOST_ATOMIC_DETAIL_ASM_CLOBBER_CC_COMMA "memory"
@@ -1355,7 +1980,11 @@ struct extra_operations< Base, 8u, Signed > :
         __asm__ __volatile__
         (
             "lock; xorq %[argument], %[storage]\n\t"
+<<<<<<< HEAD
             : [storage] "+m" (storage), [result] "=@ccz" (res)
+=======
+            : [storage] "+m" (storage), [result] "=@ccnz" (res)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
             : [argument] "er" (v)
             : "memory"
         );
@@ -1363,7 +1992,11 @@ struct extra_operations< Base, 8u, Signed > :
         __asm__ __volatile__
         (
             "lock; xorq %[argument], %[storage]\n\t"
+<<<<<<< HEAD
             "setz %[result]\n\t"
+=======
+            "setnz %[result]\n\t"
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
             : [storage] "+m" (storage), [result] "=q" (res)
             : [argument] "er" (v)
             : BOOST_ATOMIC_DETAIL_ASM_CLOBBER_CC_COMMA "memory"

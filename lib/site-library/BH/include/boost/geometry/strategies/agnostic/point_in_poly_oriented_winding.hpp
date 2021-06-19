@@ -36,8 +36,11 @@ namespace strategy { namespace within
 \tparam PointOfSegment \tparam_segment_point
 \tparam CalculationType \tparam_calculation
 \author Barend Gehrels
+<<<<<<< HEAD
 \note The implementation is inspired by terralib http://www.terralib.org (LGPL)
 \note but totally revised afterwards, especially for cases on segments
+=======
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 \note Only dependant on "side", -> agnostic, suitable for spherical/latlong
 
 \qbk{

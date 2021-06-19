@@ -2,7 +2,11 @@
 // detail/impl/win_iocp_socket_service_base.ipp
 // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 //
+<<<<<<< HEAD
 // Copyright (c) 2003-2017 Christopher M. Kohlhoff (chris at kohlhoff dot com)
+=======
+// Copyright (c) 2003-2019 Christopher M. Kohlhoff (chris at kohlhoff dot com)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 //
 // Distributed under the Boost Software License, Version 1.0. (See accompanying
 // file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
@@ -28,9 +32,15 @@ namespace asio {
 namespace detail {
 
 win_iocp_socket_service_base::win_iocp_socket_service_base(
+<<<<<<< HEAD
     boost::asio::io_context& io_context)
   : io_context_(io_context),
     iocp_service_(use_service<win_iocp_io_context>(io_context)),
+=======
+    execution_context& context)
+  : context_(context),
+    iocp_service_(use_service<win_iocp_io_context>(context)),
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     reactor_(0),
     connect_ex_(0),
     nt_set_info_(0),
@@ -73,6 +83,10 @@ void win_iocp_socket_service_base::construct(
 void win_iocp_socket_service_base::base_move_construct(
     win_iocp_socket_service_base::base_implementation_type& impl,
     win_iocp_socket_service_base::base_implementation_type& other_impl)
+<<<<<<< HEAD
+=======
+  BOOST_ASIO_NOEXCEPT
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 {
   impl.socket_ = other_impl.socket_;
   other_impl.socket_ = invalid_socket;
@@ -250,7 +264,12 @@ boost::system::error_code win_iocp_socket_service_base::cancel(
   {
     // The version of Windows supports cancellation from any thread.
     typedef BOOL (WINAPI* cancel_io_ex_t)(HANDLE, LPOVERLAPPED);
+<<<<<<< HEAD
     cancel_io_ex_t cancel_io_ex = (cancel_io_ex_t)cancel_io_ex_ptr;
+=======
+    cancel_io_ex_t cancel_io_ex = reinterpret_cast<cancel_io_ex_t>(
+        reinterpret_cast<void*>(cancel_io_ex_ptr));
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     socket_type sock = impl.socket_;
     HANDLE sock_as_handle = reinterpret_cast<HANDLE>(sock);
     if (!cancel_io_ex(sock_as_handle, 0))
@@ -708,7 +727,11 @@ select_reactor& win_iocp_socket_service_base::get_reactor()
           reinterpret_cast<void**>(&reactor_), 0, 0));
   if (!r)
   {
+<<<<<<< HEAD
     r = &(use_service<select_reactor>(io_context_));
+=======
+    r = &(use_service<select_reactor>(context_));
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     interlocked_exchange_pointer(reinterpret_cast<void**>(&reactor_), r);
   }
   return *r;

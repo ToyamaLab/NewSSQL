@@ -11,6 +11,10 @@
 
 
 #include <string>
+<<<<<<< HEAD
+=======
+#include <boost/config.hpp>
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 #include "boost/date_time/compiler_config.hpp"
 #include "boost/date_time/special_defs.hpp"
 
@@ -193,10 +197,22 @@ namespace date_time {
                                              const time_rep_type& rhs)
     {
       date_duration_type dd = lhs.day - rhs.day;
+<<<<<<< HEAD
       time_duration_type td(dd.days()*24,0,0); //days * 24 hours
       time_duration_type td2 = lhs.time_of_day - rhs.time_of_day;
       return td+td2;
       // return time_rep_type(base.day-dd, base.time_of_day);
+=======
+      if (BOOST_LIKELY(!dd.is_special())) {
+        time_duration_type td(dd.days()*24,0,0); // days * 24 hours
+        time_duration_type td2 = lhs.time_of_day - rhs.time_of_day;
+        return td+td2;
+      } else {
+        time_duration_type td(dd.as_special());
+        time_duration_type td2 = lhs.time_of_day - rhs.time_of_day;
+        return td+td2;
+      }
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     }
     
   };

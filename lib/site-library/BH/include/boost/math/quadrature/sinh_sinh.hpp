@@ -30,7 +30,11 @@ public:
         : m_imp(std::make_shared<detail::sinh_sinh_detail<Real, Policy> >(max_refinements)) {}
 
     template<class F>
+<<<<<<< HEAD
     Real integrate(const F f, Real tol = boost::math::tools::root_epsilon<Real>(), Real* error = nullptr, Real* L1 = nullptr, std::size_t* levels = nullptr) const
+=======
+    auto integrate(const F f, Real tol = boost::math::tools::root_epsilon<Real>(), Real* error = nullptr, Real* L1 = nullptr, std::size_t* levels = nullptr)->decltype(std::declval<F>()(std::declval<Real>())) const
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     {
         return m_imp->integrate(f, tol, error, L1, levels);
     }

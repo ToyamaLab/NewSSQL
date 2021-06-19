@@ -165,5 +165,13 @@ namespace std {
 #  endif
 #endif
 
+<<<<<<< HEAD
+=======
+#if defined(BOOST_NO_CXX11_NULLPTR)
+#  define BOOST_DATE_TIME_NULLPTR 0
+#else
+#  define BOOST_DATE_TIME_NULLPTR nullptr
+#endif
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 #endif

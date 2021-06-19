@@ -1,3 +1,12 @@
+<<<<<<< HEAD
+=======
+        CHANGES IN highr VERSION 0.8
+
+MAJOR CHANGES
+
+  o The minimal required R version is 3.2.3 now.
+
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
         CHANGES IN highr VERSION 0.7
 
 NEW FEATURES

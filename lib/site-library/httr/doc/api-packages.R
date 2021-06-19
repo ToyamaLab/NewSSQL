@@ -1,8 +1,16 @@
+<<<<<<< HEAD
 ## ----setup, include = FALSE----------------------------------------------
 library(httr)
 knitr::opts_chunk$set(comment = "#>", collapse = TRUE)
 
 ## ------------------------------------------------------------------------
+=======
+## ----setup, include = FALSE---------------------------------------------------
+library(httr)
+knitr::opts_chunk$set(comment = "#>", collapse = TRUE)
+
+## -----------------------------------------------------------------------------
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 library(httr)
 github_api <- function(path) {
   url <- modify_url("https://api.github.com", path = path)
@@ -12,6 +20,7 @@ github_api <- function(path) {
 resp <- github_api("/repos/hadley/httr")
 resp
 
+<<<<<<< HEAD
 ## ------------------------------------------------------------------------
 GET("http://www.colourlovers.com/api/color/6B4106?format=xml")
 GET("http://www.colourlovers.com/api/color/6B4106?format=json")
@@ -20,6 +29,16 @@ GET("http://www.colourlovers.com/api/color/6B4106?format=json")
 http_type(resp)
 
 ## ------------------------------------------------------------------------
+=======
+## -----------------------------------------------------------------------------
+GET("http://www.colourlovers.com/api/color/6B4106?format=xml")
+GET("http://www.colourlovers.com/api/color/6B4106?format=json")
+
+## -----------------------------------------------------------------------------
+http_type(resp)
+
+## -----------------------------------------------------------------------------
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 github_api <- function(path) {
   url <- modify_url("https://api.github.com", path = path)
   
@@ -31,7 +50,11 @@ github_api <- function(path) {
   resp
 }
 
+<<<<<<< HEAD
 ## ------------------------------------------------------------------------
+=======
+## -----------------------------------------------------------------------------
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 github_api <- function(path) {
   url <- modify_url("https://api.github.com", path = path)
   
@@ -43,7 +66,11 @@ github_api <- function(path) {
   jsonlite::fromJSON(content(resp, "text"), simplifyVector = FALSE)
 }
 
+<<<<<<< HEAD
 ## ------------------------------------------------------------------------
+=======
+## -----------------------------------------------------------------------------
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 github_api <- function(path) {
   url <- modify_url("https://api.github.com", path = path)
   
@@ -72,7 +99,11 @@ print.github_api <- function(x, ...) {
 
 github_api("/users/hadley")
 
+<<<<<<< HEAD
 ## ---- error = TRUE-------------------------------------------------------
+=======
+## ---- error = TRUE------------------------------------------------------------
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 github_api <- function(path) {
   url <- modify_url("https://api.github.com", path = path)
   
@@ -106,7 +137,11 @@ github_api <- function(path) {
 }
 github_api("/user/hadley")
 
+<<<<<<< HEAD
 ## ------------------------------------------------------------------------
+=======
+## -----------------------------------------------------------------------------
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 ua <- user_agent("http://github.com/hadley/httr")
 ua
 
@@ -142,7 +177,11 @@ github_api <- function(path) {
   )
 }
 
+<<<<<<< HEAD
 ## ---- eval = FALSE-------------------------------------------------------
+=======
+## ---- eval = FALSE------------------------------------------------------------
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 #  # modify_url
 #  POST(modify_url("https://httpbin.org", path = "/post"))
 #  
@@ -158,13 +197,21 @@ github_api <- function(path) {
 #  ## as json
 #  POST("http://httpbin.org/post", body = list(foo = "bar"), encode = "json")
 
+<<<<<<< HEAD
 ## ------------------------------------------------------------------------
+=======
+## -----------------------------------------------------------------------------
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 f <- function(x = c("apple", "banana", "orange")) {
   match.arg(x)
 }
 f("a")
 
+<<<<<<< HEAD
 ## ------------------------------------------------------------------------
+=======
+## -----------------------------------------------------------------------------
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 github_pat <- function() {
   pat <- Sys.getenv('GITHUB_PAT')
   if (identical(pat, "")) {
@@ -175,13 +222,21 @@ github_pat <- function() {
   pat
 }
 
+<<<<<<< HEAD
 ## ------------------------------------------------------------------------
+=======
+## -----------------------------------------------------------------------------
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 rate_limit <- function() {
   github_api("/rate_limit")
 }
 rate_limit()
 
+<<<<<<< HEAD
 ## ------------------------------------------------------------------------
+=======
+## -----------------------------------------------------------------------------
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 rate_limit <- function() {
   req <- github_api("/rate_limit")
   core <- req$content$resources$core

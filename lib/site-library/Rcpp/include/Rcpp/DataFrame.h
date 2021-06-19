@@ -79,7 +79,11 @@ namespace Rcpp{
             if (Rf_isNull(rn))
                 return 0;
             if (TYPEOF(rn) == INTSXP && LENGTH(rn) == 2 && INTEGER(rn)[0] == NA_INTEGER)
+<<<<<<< HEAD
                 return abs(INTEGER(rn)[1]);
+=======
+                return std::abs(INTEGER(rn)[1]);
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
             return LENGTH(rn);
         }
 
@@ -101,7 +105,11 @@ namespace Rcpp{
             if( ::Rf_inherits( x, "data.frame" )){
                 Parent::set__( x ) ;
             } else{
+<<<<<<< HEAD
                 SEXP y = internal::convert_using_rfunction( x, "as.data.frame" ) ;
+=======
+                Shield<SEXP> y(internal::convert_using_rfunction( x, "as.data.frame" )) ;
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
                 Parent::set__( y ) ;
             }
         }
@@ -130,7 +138,11 @@ namespace Rcpp{
             obj.erase(strings_as_factors_index) ;
             names.erase(strings_as_factors_index) ;
             obj.attr( "names") = names ;
+<<<<<<< HEAD
             Shield<SEXP> call( Rf_lang3(as_df_symb, obj, wrap( strings_as_factors ) ) ) ;
+=======
+            Shield<SEXP> call( Rf_lang3(as_df_symb, obj, Rf_ScalarLogical(strings_as_factors) ) ) ;
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
             SET_TAG( CDDR(call),  strings_as_factors_symb ) ;
             Shield<SEXP> res(Rcpp_fast_eval(call, R_GlobalEnv));
             DataFrame_Impl out( res ) ;

@@ -12,6 +12,10 @@
 
 #include <boost/spirit/home/support/unused.hpp>
 #include <boost/iterator/iterator_facade.hpp>
+<<<<<<< HEAD
+=======
+#include <iterator> // for std::iterator_traits
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 ///////////////////////////////////////////////////////////////////////////////
 namespace boost { namespace spirit { namespace karma { namespace detail
@@ -23,6 +27,7 @@ namespace boost { namespace spirit { namespace karma { namespace detail
     class indirect_iterator
       : public boost::iterator_facade<
             indirect_iterator<Iterator>
+<<<<<<< HEAD
           , typename boost::detail::iterator_traits<Iterator>::value_type
           , boost::forward_traversal_tag
           , typename boost::detail::iterator_traits<Iterator>::reference>
@@ -30,6 +35,15 @@ namespace boost { namespace spirit { namespace karma { namespace detail
         typedef typename boost::detail::iterator_traits<Iterator>::value_type
             base_value_type;
         typedef typename boost::detail::iterator_traits<Iterator>::reference
+=======
+          , typename std::iterator_traits<Iterator>::value_type
+          , boost::forward_traversal_tag
+          , typename std::iterator_traits<Iterator>::reference>
+    {
+        typedef typename std::iterator_traits<Iterator>::value_type
+            base_value_type;
+        typedef typename std::iterator_traits<Iterator>::reference
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
             base_reference_type;
 
         typedef boost::iterator_facade<

@@ -12,7 +12,11 @@
 //        with features contributed and bugs found by
 //        Antony Polukhin, Ed Brey, Mark Rodgers, 
 //        Peter Dimov, and James Curran
+<<<<<<< HEAD
 // when:  July 2001, April 2013 - May 2013
+=======
+// when:  July 2001, April 2013 - 2019
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 #include <algorithm>
 
@@ -30,7 +34,11 @@
 #include <boost/core/addressof.hpp>
 #include <boost/type_traits/is_same.hpp>
 #include <boost/type_traits/is_const.hpp>
+<<<<<<< HEAD
 #include <boost/mpl/if.hpp>
+=======
+#include <boost/type_traits/conditional.hpp>
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 namespace boost
 {
@@ -38,7 +46,11 @@ namespace boost
     {
     public: // structors
 
+<<<<<<< HEAD
         any() BOOST_NOEXCEPT
+=======
+        BOOST_CONSTEXPR any() BOOST_NOEXCEPT
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
           : content(0)
         {
         }
@@ -98,7 +110,11 @@ namespace boost
 
         any & operator=(any rhs)
         {
+<<<<<<< HEAD
             any(rhs).swap(*this);
+=======
+            rhs.swap(*this);
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
             return *this;
         }
 
@@ -109,7 +125,11 @@ namespace boost
             return *this;
         }
 
+<<<<<<< HEAD
         // move assignement
+=======
+        // move assignment
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
         any & operator=(any&& rhs) BOOST_NOEXCEPT
         {
             rhs.swap(*this);
@@ -149,7 +169,11 @@ namespace boost
     public: // types (public so any_cast can be non-friend)
 #endif
 
+<<<<<<< HEAD
         class placeholder
+=======
+        class BOOST_SYMBOL_VISIBLE placeholder
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
         {
         public: // structors
 
@@ -166,7 +190,15 @@ namespace boost
         };
 
         template<typename ValueType>
+<<<<<<< HEAD
         class holder : public placeholder
+=======
+        class holder
+#ifndef BOOST_NO_CXX11_FINAL
+          final
+#endif
+          : public placeholder
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
         {
         public: // structors
 
@@ -271,8 +303,13 @@ namespace boost
         // `ValueType` is not a reference. Example:
         // `static_cast<std::string>(*result);` 
         // which is equal to `std::string(*result);`
+<<<<<<< HEAD
         typedef BOOST_DEDUCED_TYPENAME boost::mpl::if_<
             boost::is_reference<ValueType>,
+=======
+        typedef BOOST_DEDUCED_TYPENAME boost::conditional<
+            boost::is_reference<ValueType>::value,
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
             ValueType,
             BOOST_DEDUCED_TYPENAME boost::add_reference<ValueType>::type
         >::type ref_type;
@@ -329,6 +366,10 @@ namespace boost
 }
 
 // Copyright Kevlin Henney, 2000, 2001, 2002. All rights reserved.
+<<<<<<< HEAD
+=======
+// Copyright Antony Polukhin, 2013-2019.
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 //
 // Distributed under the Boost Software License, Version 1.0. (See
 // accompanying file LICENSE_1_0.txt or copy at

@@ -24,11 +24,18 @@
 #include <boost/graph/overloading.hpp>
 #include <boost/graph/graph_concepts.hpp>
 #include <boost/graph/two_bit_color_map.hpp>
+<<<<<<< HEAD
 #include <boost/concept/assert.hpp>
 
 #ifdef BOOST_GRAPH_USE_MPI
 #include <boost/graph/distributed/concepts.hpp>
 #endif // BOOST_GRAPH_USE_MPI
+=======
+#include <boost/graph/detail/mpi_include.hpp>
+#include <boost/concept/assert.hpp>
+
+#include BOOST_GRAPH_MPI_INCLUDE(<boost/graph/distributed/concepts.hpp>)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 namespace boost {
 
@@ -405,9 +412,13 @@ namespace boost {
 
 } // namespace boost
 
+<<<<<<< HEAD
 #ifdef BOOST_GRAPH_USE_MPI
 #  include <boost/graph/distributed/breadth_first_search.hpp>
 #endif
+=======
+#include BOOST_GRAPH_MPI_INCLUDE(<boost/graph/distributed/breadth_first_search.hpp>)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 #endif // BOOST_GRAPH_BREADTH_FIRST_SEARCH_HPP
 

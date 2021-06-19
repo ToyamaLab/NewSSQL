@@ -1,14 +1,26 @@
 aes_cbc                 Symmetric AES encryption
+<<<<<<< HEAD
 askpass                 Password Prompt Utility
 base64_encode           Encode and decode base64
 bignum                  Big number arithmetic
 cert_verify             X509 certificates
+=======
+base64_encode           Encode and decode base64
+bcrypt_pbkdf            Bcrypt PWKDF
+bignum                  Big number arithmetic
+cert_verify             X509 certificates
+curve25519              Curve25519
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 ec_dh                   Diffie-Hellman Key Agreement
 encrypt_envelope        Envelope encryption
 fingerprint             OpenSSH fingerprint
 hashing                 Vectorized hash/hmac functions
 keygen                  Generate Key pair
+<<<<<<< HEAD
 my_key                  Default keypair
+=======
+my_key                  Default key
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 openssl                 Toolkit for Encryption, Signatures and
                         Certificates based on OpenSSL
 openssl_config          OpenSSL Configuration Info

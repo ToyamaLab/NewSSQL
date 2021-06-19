@@ -4,8 +4,13 @@
 // Copyright (c) 2008-2012 Bruno Lalande, Paris, France.
 // Copyright (c) 2009-2012 Mateusz Loskot, London, UK.
 
+<<<<<<< HEAD
 // This file was modified by Oracle on 2013, 2014, 2017.
 // Modifications copyright (c) 2013-2017 Oracle and/or its affiliates.
+=======
+// This file was modified by Oracle on 2013, 2014, 2017, 2018.
+// Modifications copyright (c) 2013-2018 Oracle and/or its affiliates.
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 // Contributed and/or modified by Adam Wulkiewicz, on behalf of Oracle
 
@@ -63,6 +68,7 @@ struct covered_by
                              Geometry2 const& geometry2,
                              Strategy const& strategy)
     {
+<<<<<<< HEAD
         concepts::within::check
             <
                 typename tag<Geometry1>::type,
@@ -70,6 +76,9 @@ struct covered_by
                 typename tag_cast<typename tag<Geometry2>::type, areal_tag>::type,
                 Strategy
             >();
+=======
+        concepts::within::check<Geometry1, Geometry2, Strategy>();
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
         concepts::check<Geometry1 const>();
         concepts::check<Geometry2 const>();
         assert_dimension_equal<Geometry1, Geometry2>();

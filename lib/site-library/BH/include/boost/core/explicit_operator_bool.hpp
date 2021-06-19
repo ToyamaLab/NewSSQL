@@ -19,6 +19,10 @@
 #define BOOST_CORE_EXPLICIT_OPERATOR_BOOL_HPP
 
 #include <boost/config.hpp>
+<<<<<<< HEAD
+=======
+#include <boost/config/workaround.hpp>
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 #ifdef BOOST_HAS_PRAGMA_ONCE
 #pragma once
@@ -52,6 +56,11 @@
         return !this->operator! ();\
     }
 
+<<<<<<< HEAD
+=======
+#if !BOOST_WORKAROUND(BOOST_GCC, < 40700)
+
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 /*!
  * \brief The macro defines a constexpr explicit operator of conversion to \c bool
  *
@@ -65,6 +74,15 @@
         return !this->operator! ();\
     }
 
+<<<<<<< HEAD
+=======
+#else
+
+#define BOOST_CONSTEXPR_EXPLICIT_OPERATOR_BOOL() BOOST_EXPLICIT_OPERATOR_BOOL_NOEXCEPT()
+
+#endif
+
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 #else // !defined(BOOST_NO_CXX11_EXPLICIT_CONVERSION_OPERATORS)
 
 #if (defined(__SUNPRO_CC) && (__SUNPRO_CC <= 0x530)) && !defined(BOOST_NO_COMPILER_CONFIG)

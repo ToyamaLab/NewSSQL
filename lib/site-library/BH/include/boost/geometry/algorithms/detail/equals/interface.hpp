@@ -5,8 +5,13 @@
 // Copyright (c) 2009-2015 Mateusz Loskot, London, UK.
 // Copyright (c) 2014-2015 Adam Wulkiewicz, Lodz, Poland.
 
+<<<<<<< HEAD
 // This file was modified by Oracle on 2014, 2015, 2016, 2017.
 // Modifications copyright (c) 2014-2017 Oracle and/or its affiliates.
+=======
+// This file was modified by Oracle on 2014, 2015, 2016, 2017, 2019.
+// Modifications copyright (c) 2014-2019 Oracle and/or its affiliates.
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 // Contributed and/or modified by Adam Wulkiewicz, on behalf of Oracle
 // Contributed and/or modified by Menelaos Karavelas, on behalf of Oracle
@@ -52,6 +57,11 @@ template
     typename Geometry2,
     typename Tag1 = typename tag<Geometry1>::type,
     typename Tag2 = typename tag<Geometry2>::type,
+<<<<<<< HEAD
+=======
+    typename CastedTag1 = typename tag_cast<Tag1, pointlike_tag, linear_tag, areal_tag>::type,
+    typename CastedTag2 = typename tag_cast<Tag2, pointlike_tag, linear_tag, areal_tag>::type,
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     std::size_t DimensionCount = dimension<Geometry1>::type::value,
     bool Reverse = reverse_dispatch<Geometry1, Geometry2>::type::value
 >
@@ -64,10 +74,18 @@ template
 <
     typename Geometry1, typename Geometry2,
     typename Tag1, typename Tag2,
+<<<<<<< HEAD
     std::size_t DimensionCount
 >
 struct equals<Geometry1, Geometry2, Tag1, Tag2, DimensionCount, true>
     : equals<Geometry2, Geometry1, Tag2, Tag1, DimensionCount, false>
+=======
+    typename CastedTag1, typename CastedTag2,
+    std::size_t DimensionCount
+>
+struct equals<Geometry1, Geometry2, Tag1, Tag2, CastedTag1, CastedTag2, DimensionCount, true>
+    : equals<Geometry2, Geometry1, Tag2, Tag1, CastedTag2, CastedTag1, DimensionCount, false>
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 {
     template <typename Strategy>
     static inline bool apply(Geometry1 const& g1, Geometry2 const& g2, Strategy const& strategy)
@@ -76,6 +94,10 @@ struct equals<Geometry1, Geometry2, Tag1, Tag2, DimensionCount, true>
             <
                 Geometry2, Geometry1,
                 Tag2, Tag1,
+<<<<<<< HEAD
+=======
+                CastedTag2, CastedTag1,
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
                 DimensionCount,
                 false
             >::apply(g2, g1, strategy);

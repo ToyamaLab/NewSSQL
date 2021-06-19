@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 /* Copyright 2003-2015 Joaquin M Lopez Munoz.
+=======
+/* Copyright 2003-2019 Joaquin M Lopez Munoz.
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
  * Distributed under the Boost Software License, Version 1.0.
  * (See accompanying file LICENSE_1_0.txt or copy at
  * http://www.boost.org/LICENSE_1_0.txt)
@@ -14,7 +18,11 @@
 #endif
 
 #include <boost/config.hpp> /* keep it first to prevent nasty warns in MSVC */
+<<<<<<< HEAD
 #include <boost/detail/allocator_utilities.hpp>
+=======
+#include <boost/multi_index/detail/allocator_traits.hpp>
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 #include <boost/multi_index/detail/raw_ptr.hpp>
 #include <utility>
 
@@ -99,6 +107,7 @@ struct hashed_index_node_impl;
 template<typename Allocator>
 struct hashed_index_base_node_impl
 {
+<<<<<<< HEAD
   typedef typename
   boost::detail::allocator::rebind_to<
       Allocator,hashed_index_base_node_impl
@@ -117,6 +126,21 @@ struct hashed_index_base_node_impl
     Allocator,
     hashed_index_node_impl<Allocator>
   >::type::const_pointer                    const_pointer;
+=======
+  typedef typename rebind_alloc_for<
+    Allocator,hashed_index_base_node_impl
+  >::type                                             base_allocator;
+  typedef typename rebind_alloc_for<
+    Allocator,hashed_index_node_impl<Allocator>
+  >::type                                             node_allocator;
+  typedef allocator_traits<base_allocator>            base_alloc_traits;
+  typedef allocator_traits<node_allocator>            node_alloc_traits;
+  typedef typename base_alloc_traits::pointer         base_pointer;
+  typedef typename base_alloc_traits::const_pointer   const_base_pointer;
+  typedef typename node_alloc_traits::pointer         pointer;
+  typedef typename node_alloc_traits::const_pointer   const_pointer;
+  typedef typename node_alloc_traits::difference_type difference_type;
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
   pointer& prior(){return prior_;}
   pointer  prior()const{return prior_;}
@@ -413,7 +437,11 @@ struct hashed_index_node_alg<Node,hashed_non_unique_tag>
       buc->prior()=x;
       x->next()->prior()=x;
     }
+<<<<<<< HEAD
   };
+=======
+  }
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
   static void link(pointer x,pointer first,pointer last)
   {
@@ -694,6 +722,7 @@ private:
 template<typename Super>
 struct hashed_index_node_trampoline:
   hashed_index_node_impl<
+<<<<<<< HEAD
     typename boost::detail::allocator::rebind_to<
       typename Super::allocator_type,
       char
@@ -705,6 +734,17 @@ struct hashed_index_node_trampoline:
     char
   >::type                                               impl_allocator_type;
   typedef hashed_index_node_impl<impl_allocator_type>   impl_type;
+=======
+    typename rebind_alloc_for<
+      typename Super::allocator_type,char
+    >::type
+  >
+{
+  typedef typename rebind_alloc_for<
+    typename Super::allocator_type,char
+  >::type                                             impl_allocator_type;
+  typedef hashed_index_node_impl<impl_allocator_type> impl_type;
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 };
 
 template<typename Super,typename Category>
@@ -722,6 +762,10 @@ public:
   typedef typename trampoline::const_base_pointer const_impl_base_pointer;
   typedef typename trampoline::pointer            impl_pointer;
   typedef typename trampoline::const_pointer      const_impl_pointer;
+<<<<<<< HEAD
+=======
+  typedef typename trampoline::difference_type    difference_type;
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
   impl_pointer&      prior(){return trampoline::prior();}
   impl_pointer       prior()const{return trampoline::prior();}

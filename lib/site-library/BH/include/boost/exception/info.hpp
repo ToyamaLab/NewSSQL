@@ -62,7 +62,11 @@ boost
                 {
                 }
 
+<<<<<<< HEAD
             ~error_info_container_impl() throw()
+=======
+            ~error_info_container_impl() BOOST_NOEXCEPT_OR_NOTHROW
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
                 {
                 }
 

@@ -2,7 +2,11 @@
 // version.hpp
 // ~~~~~~~~~~~
 //
+<<<<<<< HEAD
 // Copyright (c) 2003-2017 Christopher M. Kohlhoff (chris at kohlhoff dot com)
+=======
+// Copyright (c) 2003-2019 Christopher M. Kohlhoff (chris at kohlhoff dot com)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 //
 // Distributed under the Boost Software License, Version 1.0. (See accompanying
 // file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
@@ -18,6 +22,10 @@
 // BOOST_ASIO_VERSION % 100 is the sub-minor version
 // BOOST_ASIO_VERSION / 100 % 1000 is the minor version
 // BOOST_ASIO_VERSION / 100000 is the major version
+<<<<<<< HEAD
 #define BOOST_ASIO_VERSION 101200 // 1.12.0
+=======
+#define BOOST_ASIO_VERSION 101600 // 1.16.0
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 #endif // BOOST_ASIO_VERSION_HPP

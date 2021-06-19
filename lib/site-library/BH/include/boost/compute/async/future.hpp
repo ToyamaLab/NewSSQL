@@ -82,6 +82,24 @@ public:
         return m_event;
     }
 
+<<<<<<< HEAD
+=======
+    #if defined(BOOST_COMPUTE_CL_VERSION_1_1) || defined(BOOST_COMPUTE_DOXYGEN_INVOKED)
+    /// Invokes a generic callback function once the future is ready.
+    ///
+    /// The function specified by callback must be invokable with zero arguments.
+    ///
+    /// \see_opencl_ref{clSetEventCallback}
+    /// \opencl_version_warning{1,1}
+    template<class Function>
+    future& then(Function callback)
+    {
+        m_event.set_callback(callback);
+        return *this;
+    }
+    #endif // BOOST_COMPUTE_CL_VERSION_1_1
+
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 private:
     T m_result;
     event m_event;
@@ -149,6 +167,24 @@ public:
         return m_event;
     }
 
+<<<<<<< HEAD
+=======
+    #if defined(BOOST_COMPUTE_CL_VERSION_1_1) || defined(BOOST_COMPUTE_DOXYGEN_INVOKED)
+    /// Invokes a generic callback function once the future is ready.
+    ///
+    /// The function specified by callback must be invokable with zero arguments.
+    ///
+    /// \see_opencl_ref{clSetEventCallback}
+    /// \opencl_version_warning{1,1}
+    template<class Function>
+    future<void> &then(Function callback)
+    {
+        m_event.set_callback(callback);
+        return *this;
+    }
+    #endif // BOOST_COMPUTE_CL_VERSION_1_1
+
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 private:
     event m_event;
 };

@@ -14,6 +14,11 @@
 #include <boost/spirit/home/classic/namespace.hpp>
 #include <boost/spirit/home/classic/core/parser.hpp>
 #include <boost/spirit/home/classic/core/composite/composite.hpp>
+<<<<<<< HEAD
+=======
+#include <boost/mpl/if.hpp>
+#include <boost/type_traits/is_same.hpp>
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 ///////////////////////////////////////////////////////////////////////////////
 namespace boost { namespace spirit {

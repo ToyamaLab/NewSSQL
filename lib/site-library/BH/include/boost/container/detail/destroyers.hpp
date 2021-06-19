@@ -30,7 +30,11 @@
 
 namespace boost {
 namespace container {
+<<<<<<< HEAD
 namespace container_detail {
+=======
+namespace dtl {
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 //!A deleter for scoped_ptr that deallocates the memory
 //!allocated for an object using a STL allocator.
@@ -39,8 +43,13 @@ struct scoped_deallocator
 {
    typedef allocator_traits<Allocator> allocator_traits_type;
    typedef typename allocator_traits_type::pointer pointer;
+<<<<<<< HEAD
    typedef container_detail::integral_constant<unsigned,
       boost::container::container_detail::
+=======
+   typedef dtl::integral_constant<unsigned,
+      boost::container::dtl::
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
          version<Allocator>::value>                   alloc_version;
 
    private:
@@ -142,8 +151,13 @@ struct scoped_destroy_deallocator
    typedef boost::container::allocator_traits<Allocator> AllocTraits;
    typedef typename AllocTraits::pointer    pointer;
    typedef typename AllocTraits::size_type  size_type;
+<<<<<<< HEAD
    typedef container_detail::integral_constant<unsigned,
       boost::container::container_detail::
+=======
+   typedef dtl::integral_constant<unsigned,
+      boost::container::dtl::
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
          version<Allocator>::value>                          alloc_version;
 
    scoped_destroy_deallocator(pointer p, Allocator& a)
@@ -296,8 +310,13 @@ class allocator_destroyer
    typedef boost::container::allocator_traits<Allocator> AllocTraits;
    typedef typename AllocTraits::value_type value_type;
    typedef typename AllocTraits::pointer    pointer;
+<<<<<<< HEAD
    typedef container_detail::integral_constant<unsigned,
       boost::container::container_detail::
+=======
+   typedef dtl::integral_constant<unsigned,
+      boost::container::dtl::
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
          version<Allocator>::value>                           alloc_version;
 
    private:
@@ -369,7 +388,11 @@ class allocator_multialloc_chain_node_deallocator
    }
 };
 
+<<<<<<< HEAD
 }  //namespace container_detail {
+=======
+}  //namespace dtl {
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 }  //namespace container {
 }  //namespace boost {
 

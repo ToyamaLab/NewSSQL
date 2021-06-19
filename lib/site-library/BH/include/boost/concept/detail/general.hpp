@@ -10,7 +10,11 @@
 
 # ifdef BOOST_OLD_CONCEPT_SUPPORT
 #  include <boost/concept/detail/has_constraints.hpp>
+<<<<<<< HEAD
 #  include <boost/mpl/if.hpp>
+=======
+#  include <boost/type_traits/conditional.hpp>
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 # endif
 
 // This implementation works on Comeau and GCC, all the way back to
@@ -49,8 +53,13 @@ struct constraint
   
 template <class Model>
 struct requirement_<void(*)(Model)>
+<<<<<<< HEAD
   : mpl::if_<
         concepts::not_satisfied<Model>
+=======
+  : boost::conditional<
+        concepts::not_satisfied<Model>::value
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
       , constraint<Model>
       , requirement<failed ************ Model::************>
     >::type

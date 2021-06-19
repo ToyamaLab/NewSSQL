@@ -57,6 +57,17 @@
 #  define BOOST_HAS_STDINT_H
 #endif
 
+<<<<<<< HEAD
+=======
+#if (defined(linux) || defined(__linux) || defined(__linux__) || defined(__GNU__) || defined(__GLIBC__)) && !defined(_CRAYC)
+#if (__clang_major__ >= 4) && defined(__has_include)
+#if __has_include(<quadmath.h>)
+#  define BOOST_HAS_FLOAT128
+#endif
+#endif
+#endif
+
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 #define BOOST_HAS_NRVO
 
@@ -98,10 +109,21 @@
 //
 // Dynamic shared object (DSO) and dynamic-link library (DLL) support
 //
+<<<<<<< HEAD
 #if !defined(_WIN32) && !defined(__WIN32__) && !defined(WIN32)
 #  define BOOST_SYMBOL_EXPORT __attribute__((__visibility__("default")))
 #  define BOOST_SYMBOL_IMPORT
 #  define BOOST_SYMBOL_VISIBLE __attribute__((__visibility__("default")))
+=======
+#if defined(_WIN32) || defined(__WIN32__) || defined(WIN32) || defined(__CYGWIN__)
+#  define BOOST_HAS_DECLSPEC
+#  define BOOST_SYMBOL_EXPORT __attribute__((__dllexport__))
+#  define BOOST_SYMBOL_IMPORT __attribute__((__dllimport__))
+#else
+#  define BOOST_SYMBOL_EXPORT __attribute__((__visibility__("default")))
+#  define BOOST_SYMBOL_VISIBLE __attribute__((__visibility__("default")))
+#  define BOOST_SYMBOL_IMPORT
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 #endif
 
 //
@@ -290,6 +312,13 @@
 #  define BOOST_NO_CXX17_STRUCTURED_BINDINGS
 #endif
 
+<<<<<<< HEAD
+=======
+#if !defined(__cpp_if_constexpr) || (__cpp_if_constexpr < 201606)
+#  define BOOST_NO_CXX17_IF_CONSTEXPR
+#endif
+
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 // Clang 3.9+ in c++1z
 #if !__has_cpp_attribute(fallthrough) || __cplusplus < 201406L
 #  define BOOST_NO_CXX17_INLINE_VARIABLES

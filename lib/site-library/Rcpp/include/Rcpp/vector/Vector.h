@@ -1,8 +1,15 @@
+<<<<<<< HEAD
 // -*- mode: C++; c-indent-level: 4; c-basic-offset: 4; indent-tabs-mode: nil; -*-
 //
 // Vector.h: Rcpp R/C++ interface class library -- vectors
 //
 // Copyright (C) 2010 - 2018 Dirk Eddelbuettel and Romain Francois
+=======
+//
+// Vector.h: Rcpp R/C++ interface class library -- vectors
+//
+// Copyright (C) 2010 - 2020  Dirk Eddelbuettel and Romain Francois
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 //
 // This file is part of Rcpp.
 //
@@ -71,12 +78,22 @@ public:
     }
 
     Vector( SEXP x ) {
+<<<<<<< HEAD
         Storage::set__( r_cast<RTYPE>(x) ) ;
+=======
+        Rcpp::Shield<SEXP> safe(x);
+        Storage::set__( r_cast<RTYPE>(safe) ) ;
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     }
 
     template <typename Proxy>
     Vector( const GenericProxy<Proxy>& proxy ){
+<<<<<<< HEAD
         Storage::set__( r_cast<RTYPE>(proxy.get()) ) ;
+=======
+        Rcpp::Shield<SEXP> safe(proxy.get());
+        Storage::set__( r_cast<RTYPE>(safe) ) ;
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     }
 
     explicit Vector( const no_init_vector& obj) {
@@ -174,7 +191,12 @@ public:
 
     template <bool NA, typename T>
     Vector( const sugar::SingleLogicalResult<NA,T>& obj ) {
+<<<<<<< HEAD
         Storage::set__( r_cast<RTYPE>( const_cast<sugar::SingleLogicalResult<NA,T>&>(obj).get_sexp() ) ) ;
+=======
+        Rcpp::Shield<SEXP> safe(const_cast<sugar::SingleLogicalResult<NA,T>&>(obj).get_sexp() );
+        Storage::set__( r_cast<RTYPE>(safe) ) ;
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
         RCPP_DEBUG_2( "Vector<%d>( const sugar::SingleLogicalResult<NA,T>& ) [T = %s]", RTYPE, DEMANGLE(T) )
     }
 
@@ -298,12 +320,20 @@ public:
      * one dimensional offset doing bounds checking to ensure
      * it is valid
      */
+<<<<<<< HEAD
     R_xlen_t offset(const R_xlen_t& i) const {
+=======
+    R_xlen_t offset(const R_xlen_t& i) const {											// #nocov start
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
         if(i < 0 || i >= ::Rf_xlength(Storage::get__()) ) {
             const char* fmt = "Index out of bounds: [index=%i; extent=%i].";
             throw index_out_of_bounds(fmt, i, ::Rf_xlength(Storage::get__()) ) ;
         }
+<<<<<<< HEAD
         return i ;
+=======
+        return i ;																		// #nocov end
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     }
 
     R_xlen_t offset(const std::string& name) const {
@@ -349,9 +379,15 @@ public:
     inline Proxy at( const size_t& i) {
        return cache.ref( offset(i) ) ;
     }
+<<<<<<< HEAD
     inline const_Proxy at( const size_t& i) const {
        return cache.ref( offset(i) ) ;
     }
+=======
+    inline const_Proxy at( const size_t& i) const {									// #nocov start
+       return cache.ref( offset(i) ) ;
+    }																				// #nocov end
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
     inline Proxy operator()( const size_t& i, const size_t& j) {
         return cache.ref( offset(i,j) ) ;
@@ -629,7 +665,11 @@ private:
         iterator this_end(end());
         if( Rf_isNull(names) ){
             for( ; it < this_end; ++it, ++target_it ){
+<<<<<<< HEAD
                 *target_it = *it ;
+=======
+                *target_it = *it ;												// #nocov start
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
             }
         } else {
             Shield<SEXP> newnames( ::Rf_allocVector( STRSXP, n + 1) ) ;
@@ -639,7 +679,11 @@ private:
                 SET_STRING_ELT( newnames, i, STRING_ELT(names, i ) ) ;
             }
             SET_STRING_ELT( newnames, i, Rf_mkChar("") ) ;
+<<<<<<< HEAD
             target.attr("names") = newnames ;
+=======
+            target.attr("names") = newnames ;									// #nocov end
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
         }
         *target_it = object_sexp;
         Storage::set__( target.get__() ) ;
@@ -682,8 +726,13 @@ private:
         int i=0;
         if( Rf_isNull(names) ){
             for( ; it < this_end; ++it, ++target_it,i++ ){
+<<<<<<< HEAD
                 *target_it = *it ;
                 SET_STRING_ELT( newnames, i , R_BlankString );
+=======
+                *target_it = *it ;												// #nocov
+                SET_STRING_ELT( newnames, i , R_BlankString );					// #nocov
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
             }
         } else {
             for( ; it < this_end; ++it, ++target_it, i++ ){

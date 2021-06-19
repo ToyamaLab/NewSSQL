@@ -18,6 +18,10 @@
 #if defined(BOOST_SPIRIT_DEBUG)
 #include <boost/spirit/home/support/detail/lexer/debug.hpp>
 #endif
+<<<<<<< HEAD
+=======
+#include <iterator> // for std::iterator_traits
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 namespace boost { namespace spirit { namespace lex { namespace lexertl
 { 
@@ -119,8 +123,12 @@ namespace boost { namespace spirit { namespace lex { namespace lexertl
         // object is always valid
         operator safe_bool() const { return &dummy::true_; }
 
+<<<<<<< HEAD
         typedef typename boost::detail::iterator_traits<Iterator>::value_type 
             char_type;
+=======
+        typedef typename std::iterator_traits<Iterator>::value_type char_type;
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
         typedef std::basic_string<char_type> string_type;
 
         //  Every lexer type to be used as a lexer for Spirit has to conform to 
@@ -151,9 +159,14 @@ namespace boost { namespace spirit { namespace lex { namespace lexertl
             std::size_t num_states_;
             bool bol_;
 
+<<<<<<< HEAD
         private:
             // silence MSVC warning C4512: assignment operator could not be generated
             iterator_data_type& operator= (iterator_data_type const&);
+=======
+            // silence MSVC warning C4512: assignment operator could not be generated
+            BOOST_DELETED_FUNCTION(iterator_data_type& operator= (iterator_data_type const&))
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
         };
 
         typedef LexerTables tables_type;

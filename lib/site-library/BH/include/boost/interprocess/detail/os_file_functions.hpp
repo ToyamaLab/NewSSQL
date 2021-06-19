@@ -543,7 +543,11 @@ inline bool try_acquire_file_lock(file_handle_t hnd, bool &acquired)
    int ret = ::fcntl(hnd, F_SETLK, &lock);
    if(ret == -1){
       return (errno == EAGAIN || errno == EACCES) ?
+<<<<<<< HEAD
                acquired = false, true : false;
+=======
+               (acquired = false, true) : false;
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
    }
    return (acquired = true);
 }
@@ -578,7 +582,11 @@ inline bool try_acquire_file_lock_sharable(file_handle_t hnd, bool &acquired)
    int ret = ::fcntl(hnd, F_SETLK, &lock);
    if(ret == -1){
       return (errno == EAGAIN || errno == EACCES) ?
+<<<<<<< HEAD
                acquired = false, true : false;
+=======
+               (acquired = false, true) : false;
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
    }
    return (acquired = true);
 }

@@ -15,11 +15,18 @@
 #ifndef BOOST_GEOMETRY_ALGORITHMS_DETAIL_AZIMUTH_HPP
 #define BOOST_GEOMETRY_ALGORITHMS_DETAIL_AZIMUTH_HPP
 
+<<<<<<< HEAD
+=======
+
+#include <boost/geometry/algorithms/not_implemented.hpp>
+
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 #include <boost/geometry/core/cs.hpp>
 #include <boost/geometry/core/access.hpp>
 #include <boost/geometry/core/radian_access.hpp>
 #include <boost/geometry/core/tags.hpp>
 
+<<<<<<< HEAD
 #include <boost/geometry/util/math.hpp>
 
 #include <boost/geometry/algorithms/not_implemented.hpp>
@@ -27,6 +34,16 @@
 #include <boost/geometry/formulas/spherical.hpp>
 #include <boost/geometry/formulas/vincenty_inverse.hpp>
 
+=======
+#include <boost/geometry/formulas/spherical.hpp>
+#include <boost/geometry/formulas/vincenty_inverse.hpp>
+
+#include <boost/geometry/srs/spheroid.hpp>
+
+#include <boost/geometry/util/math.hpp>
+
+
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 namespace boost { namespace geometry
 {
 

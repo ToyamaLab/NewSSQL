@@ -43,6 +43,7 @@ namespace boost { namespace spirit { namespace qi { namespace detail
             return false;
         }
 
+<<<<<<< HEAD
         template <typename Component, typename Attribute>
         bool operator()(Component const& component, boost::optional<Attribute>& attr)
         {
@@ -59,6 +60,8 @@ namespace boost { namespace spirit { namespace qi { namespace detail
             return false;
         }
 
+=======
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
         template <typename Component>
         bool operator()(Component const& component)
         {
@@ -79,9 +82,14 @@ namespace boost { namespace spirit { namespace qi { namespace detail
         Skipper const& skipper;
         bool* taken;
 
+<<<<<<< HEAD
     private:
         // silence MSVC warning C4512: assignment operator could not be generated
         permute_function& operator= (permute_function const&);
+=======
+        // silence MSVC warning C4512: assignment operator could not be generated
+        BOOST_DELETED_FUNCTION(permute_function& operator= (permute_function const&))
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     };
 }}}}
 

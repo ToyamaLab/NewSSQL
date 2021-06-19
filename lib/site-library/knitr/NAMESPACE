@@ -26,6 +26,10 @@ export(all_labels)
 export(all_patterns)
 export(all_rcpp_labels)
 export(asis_output)
+<<<<<<< HEAD
+=======
+export(cache_engines)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 export(clean_cache)
 export(combine_words)
 export(current_input)
@@ -36,6 +40,11 @@ export(extract_raw_output)
 export(fig_chunk)
 export(fig_path)
 export(hook_ffmpeg_html)
+<<<<<<< HEAD
+=======
+export(hook_gifski)
+export(hook_mogrify)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 export(hook_movecode)
 export(hook_optipng)
 export(hook_pdfcrop)
@@ -59,12 +68,20 @@ export(inline_expr)
 export(is_html_output)
 export(is_latex_output)
 export(kable)
+<<<<<<< HEAD
+=======
+export(kables)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 export(knit)
 export(knit2html)
 export(knit2pandoc)
 export(knit2pdf)
 export(knit2wp)
 export(knit_child)
+<<<<<<< HEAD
+=======
+export(knit_code)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 export(knit_engines)
 export(knit_exit)
 export(knit_expand)
@@ -100,6 +117,12 @@ export(pat_textile)
 export(plot_crop)
 export(purl)
 export(rand_seed)
+<<<<<<< HEAD
+=======
+export(raw_block)
+export(raw_html)
+export(raw_latex)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 export(raw_output)
 export(read_chunk)
 export(read_demo)
@@ -131,3 +154,18 @@ import(graphics)
 import(methods)
 import(stats)
 import(utils)
+<<<<<<< HEAD
+=======
+importFrom(xfun,attr)
+importFrom(xfun,file_ext)
+importFrom(xfun,file_string)
+importFrom(xfun,isFALSE)
+importFrom(xfun,is_windows)
+importFrom(xfun,loadable)
+importFrom(xfun,parse_only)
+importFrom(xfun,read_utf8)
+importFrom(xfun,sans_ext)
+importFrom(xfun,try_silent)
+importFrom(xfun,with_ext)
+importFrom(xfun,write_utf8)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce

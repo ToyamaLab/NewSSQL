@@ -5,8 +5,13 @@
     Distributed under the Boost Software License, Version 1.0. (See accompanying
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 ==============================================================================*/
+<<<<<<< HEAD
 #if !defined(SPIRIT_REAL_POLICIES_APRIL_17_2006_1158PM)
 #define SPIRIT_REAL_POLICIES_APRIL_17_2006_1158PM
+=======
+#if !defined(BOOST_SPIRIT_X3_REAL_POLICIES_APRIL_17_2006_1158PM)
+#define BOOST_SPIRIT_X3_REAL_POLICIES_APRIL_17_2006_1158PM
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 #include <boost/spirit/home/x3/string/detail/string_parse.hpp>
 #include <boost/spirit/home/x3/support/numeric_utils/extract_int.hpp>
@@ -73,6 +78,7 @@ namespace boost { namespace spirit { namespace x3
         }
 
         ///////////////////////////////////////////////////////////////////////
+<<<<<<< HEAD
         //  The parse_nan() and parse_inf() functions get called whenever:
         //
         //    - a number to parse does not start with a digit (after having
@@ -89,6 +95,11 @@ namespace boost { namespace spirit { namespace x3
         //
         //  The second call allows to recognize representation formats starting
         //  with a 1.0 (such as 1.0#NAN or 1.0#INF etc.).
+=======
+        //  The parse_nan() and parse_inf() functions get called whenever
+        //  a number to parse does not start with a digit (after having
+        //  successfully parsed an optional sign).
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
         //
         //  The functions should return true if a Nan or Inf has been found. In
         //  this case the attr should be set to the matched value (NaN or
@@ -112,7 +123,11 @@ namespace boost { namespace spirit { namespace x3
             // nan[(...)] ?
             if (detail::string_parse("nan", "NAN", first, last, unused))
             {
+<<<<<<< HEAD
                 if (*first == '(')
+=======
+                if (first != last && *first == '(')
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
                 {
                     // skip trailing (...) part
                     Iterator i = first;

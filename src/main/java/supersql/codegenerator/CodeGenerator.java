@@ -1,5 +1,8 @@
 package supersql.codegenerator;
 
+import java.util.*;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Hashtable;
@@ -8,6 +11,7 @@ import supersql.codegenerator.Compiler.Compiler;
 import supersql.codegenerator.Compiler.JSP.JSPFactory;
 import supersql.codegenerator.Compiler.PHP.PHP;
 import supersql.codegenerator.Compiler.Rails.RailsFactory;
+import supersql.codegenerator.HTML.HTMLCONCAT;
 import supersql.codegenerator.HTML.HTMLFactory;
 import supersql.codegenerator.Mobile_HTML5.Mobile_HTML5Factory;
 import supersql.codegenerator.PDF.PDFFactory;
@@ -16,6 +20,7 @@ import supersql.codegenerator.VR.VRFactory;
 import supersql.codegenerator.VR.VRManager;
 import supersql.codegenerator.VR.VRcjoinarray;
 import supersql.codegenerator.VR.VRfilecreate;
+import supersql.codegenerator.VR.VRFunction;
 import supersql.codegenerator.Web.WebFactory;
 import supersql.codegenerator.X3D.X3DFactory;
 import supersql.common.GlobalEnv;
@@ -26,6 +31,8 @@ import supersql.common.Ssedit;
 import supersql.dataconstructor.Ctab;
 import supersql.dataconstructor.Limiter;
 import supersql.extendclass.ExtList;
+import supersql.parser.From;
+import supersql.parser.FromTable;
 import supersql.parser.Preprocessor;
 import supersql.parser.Start_Parse;
 
@@ -42,7 +49,9 @@ public class CodeGenerator {
 
 	static Factory factory;
 
-	public static boolean sqlfunc_flag = false;
+    public static int sqlfunc_flag = 0;
+    public static int inner_sqlfunc_count = 0;
+    public static HashSet<String> useTablesInSQLFunc = new HashSet<>();
 
 	//	private static boolean decocheck = false;
 
@@ -59,6 +68,10 @@ public class CodeGenerator {
 	public static String[] filesplit;
 
 	public static boolean limitFlag;
+	public static boolean unity_dv_flag = false;
+
+	public static DecorateList decorate_summary;
+
 
 	public void CodeGenerator(Start_Parse parser) {
 		attno = 0;
@@ -87,116 +100,30 @@ public class CodeGenerator {
 	public static void setFactory(String media) {
 		if (media.toLowerCase().equals("html")) {
 			factory = new HTMLFactory();
+			Ehtml.setType(0, 0);
+			// Sass.bootstrapFlg(true);	// OK?
 		}else if(media.toLowerCase().equals("mobile_html5")){
 			factory = new Mobile_HTML5Factory();
+			Ehtml.setType(1, 1);
+			// Sass.bootstrapFlg(true);	// OK?
 		} else if (media.toLowerCase().equals("bhtml") || media.toLowerCase().equals("html_bootstrap") || media.toLowerCase().equals("responsivehtml")|| media.toLowerCase().equals("responsive_html")) {
 			factory = new Mobile_HTML5Factory();
+			Ehtml.setType(1, 1);
 			Sass.bootstrapFlg(true);
 		}else if(media.toLowerCase().equals("web")) {
 			factory = new WebFactory();
 		}else if(media.toLowerCase().equals("x3d")){
 			factory = new X3DFactory();
-		}else if(media.toLowerCase().equals("vr_museum") || media.toLowerCase().equals("unity_museum")){
-			VRcjoinarray.gLemaxlist.add(0);
-			VRcjoinarray.getJoin();
-			VRcjoinarray.getexhJoin();
-			VRAttribute.genrearray22.add(0);
-			VRManager.vrflag = true;
+		}else if(media.toLowerCase().equals("vr") || 
+				media.toLowerCase().equals("unity") ||
+				media.toLowerCase().equals("unity_museum") ||
+				media.toLowerCase().equals("unity_dv")
+				){
+			if(media.toLowerCase().equals("unity_dv")){
+				unity_dv_flag = true;
+			}
 			factory = new VRFactory();
-			VRfilecreate.scene = "museum";//VRfilecreateのためのフラグ
-			for(int i=1; i<=VRAttribute.cjoinarray.size()+1; i++){//あとで書き換え
-				VRfilecreate.template_scene[i] = "Type_museum";//museum
-				VRfilecreate.template_stand[i] = "Type_museum";//stand
-				VRfilecreate.room_sizex[i] = 50;
-				VRfilecreate.room_sizey[i] = 20;
-				VRfilecreate.room_sizez[i] = 30;
-				VRfilecreate.stand_sizex[i] = VRfilecreate.stand_sizez[i] = 1.3f;
-				VRfilecreate.stand_sizey[i] = 2;
-			}
-		}else if(mediaUnityModule(media)){//mediaとメディア名いれたarraylistを比較してtrueを返す
-			VRcjoinarray.gLemaxlist.add(0);
-			VRcjoinarray.getJoin();
-			VRcjoinarray.getexhJoin();
-			VRAttribute.genrearray22.add(0);
-			VRManager.vrflag = true;
-			factory = new VRFactory();
-			VRManager.VRmoduleflag = true;//この後VRでもしmoduleがあったらみたいな感じで場合分けして、変数代入していく
-			//一致したメディアを特定。そのfileconを改行ごとに配列に入れていく
-			filesplit = GlobalEnv.multifilecon.get(filenum).split("\n");
-			//メディア名のarraylistで2番目が一致したとする。そっからは他の変数のarraylistでも2番目のを持ってきて、それを変数として扱う
-			for(int i=1; i<=VRAttribute.cjoinarray.size()+1; i++){//あとで書き換え
-				VRfilecreate.template_scene[i] = VRfilecreate.template_stand[i] = VRfilecreate.template_wallstand[i] = "Type_museum";
-				VRfilecreate.light_r[i] = VRfilecreate.light_g[i] = VRfilecreate.light_b[i] = "255";
-				VRfilecreate.exh_distancex[i] = VRfilecreate.exh_distancey[i] = VRfilecreate.exh_distancez[i] = "5";
-				VRfilecreate.room_sizex[i] = 50;
-				VRfilecreate.roomx[i] = VRfilecreate.room_sizex[i]/2-5;
-				VRfilecreate.room_sizey[i] = 20;
-				VRfilecreate.room_sizez[i] = 30;
-				VRfilecreate.roomz[i] = VRfilecreate.room_sizez[i]/2-5;
-				VRfilecreate.stand_sizex[i] = VRfilecreate.stand_sizez[i] = 1.3f;
-				VRfilecreate.stand_sizey[i] = 2;
-				//ここから壁
-				VRfilecreate.picture_sizex[i] = 2;//2D
-				VRfilecreate.wallstand_sizex[i] = VRfilecreate.wallstand_sizey[i] = VRfilecreate.wallstand_sizez[i]= 2;//3D
-				VRfilecreate.wallexh_distancex[i] = VRfilecreate.wallexh_distancey[i] = 4;//3Dと2D共通
-				VRfilecreate.wallexh_high[i] = 1;
-			}
-			for(int i=1; i<=VRAttribute.cjoinarray.size()+1; i++){
-				for(int j=0; j<filesplit.length;j++){
-					String[] str = filesplit[i].split("=");
-					if(str[0].trim().equals("template_scene"))
-						VRfilecreate.template_scene[i] = str[1].trim();
-					if(str[0].trim().equals("template_stand"))
-						VRfilecreate.template_stand[i] = str[1].trim();
-					if(str[0].trim().equals("LightColor.r"))
-						VRfilecreate.light_r[i] = str[1].trim();
-					if(str[0].trim().equals("LightColor.g"))
-						VRfilecreate.light_g[i] = str[1].trim();
-					if(str[0].trim().equals("LightColor.b"))
-						VRfilecreate.light_b[i] = str[1].trim();
-					if(str[0].trim().equals("picture_size.x"))
-						VRfilecreate.picture_sizex[i] = Float.valueOf(str[1].trim());
-					if(str[0].trim().equals("picture_distance.y"))
-						VRfilecreate.exh_distancex[i] = str[1].trim();
-					if(str[0].trim().equals("exhibition_distance.y"))
-						VRfilecreate.exh_distancey[i] = str[1].trim();
-					if(str[0].trim().equals("exhibition_distance.z"))
-						VRfilecreate.exh_distancez[i] = str[1].trim();
-					if(str[0].trim().equals("room_size.x")){
-						VRfilecreate.room_sizex[i] = Float.valueOf(str[1].trim());
-						VRfilecreate.roomx[i] = VRfilecreate.room_sizex[i]/2-5;
-					}
-					if(str[0].trim().equals("room_size.y"))
-						VRfilecreate.room_sizey[i] = Float.valueOf(str[1].trim());
-					if(str[0].trim().equals("room_size.z")){
-						VRfilecreate.room_sizez[i] = Float.valueOf(str[1].trim());
-						VRfilecreate.roomz[i] = VRfilecreate.room_sizez[i]/2-5;
-					}
-					if(str[0].trim().equals("stand_size.x"))
-						VRfilecreate.stand_sizex[i] = Float.valueOf(str[1].trim());
-					if(str[0].trim().equals("stand_size.y"))
-						VRfilecreate.stand_sizey[i] = Float.valueOf(str[1].trim());
-					if(str[0].trim().equals("stand_size.z"))
-						VRfilecreate.stand_sizez[i] = Float.valueOf(str[1].trim());
-					//ここから壁
-					if(str[0].trim().equals("template_wallstand"))
-						VRfilecreate.template_wallstand[i] = str[1].trim();
-					if(str[0].trim().equals("picture_size.x"))
-						VRfilecreate.picture_sizex[i] = Float.valueOf(str[1].trim());
-					if(str[0].trim().equals("wallstand_size.x"))
-						VRfilecreate.wallstand_sizex[i] = Float.valueOf(str[1].trim());
-					if(str[0].trim().equals("wallstand_size.y"))
-						VRfilecreate.wallstand_sizey[i] = Float.valueOf(str[1].trim());
-					if(str[0].trim().equals("wallstand_size.z"))
-						VRfilecreate.wallstand_sizez[i] = Float.valueOf(str[1].trim());
-					if(str[0].trim().equals("wallexh_distance.x"))
-						VRfilecreate.wallexh_distancex[i] = Float.valueOf(str[1].trim());
-					if(str[0].trim().equals("wallexh_distance.y"))
-						VRfilecreate.wallexh_distancey[i] = Float.valueOf(str[1].trim());
-					if(str[0].trim().equals("wallexh_high"))
-						VRfilecreate.wallexh_high[i] = Float.valueOf(str[1].trim());
-				}
-			}
+			Ehtml.setType(0, 0);
 		}else if(media.toLowerCase().equals("pdf")){
 			factory = new PDFFactory();
 		}else if(media.toLowerCase().equals("php")){	//added by goto 20161104
@@ -253,12 +180,87 @@ public class CodeGenerator {
 		Log.info("Schema is " + sch);
 		Log.info("le0 is " + schemaTop.makele0());
 
+
+		// 2016/12/16 commentout by taji
+		//		ExtList test = reverse(schemaTop.makele0());
+		//		Log.info("test:" + test);
+		//		Log.info( getText(test, Start_Parse.ruleNames) );
+
 		parser.schemaTop = schemaTop;
 		parser.sch = sch;
 		parser.schema = schema;
 	}
 
-
+	// 2016/12/16 commentout by taji
+	//	private static ExtList reverse(ExtList extlist){
+	//		ExtList tmp = new ExtList();
+	//		if(extlist.get(0).toString().endsWith("G2")){
+	//			tmp.add("grouper");
+	//			ExtList G = new ExtList();
+	//			G.add("[");
+	//			G.add( reverse((ExtList)extlist.get(1)) );
+	//			G.add("]");
+	//			G.add("!");
+	//			tmp.add(G);
+	//		}else if(extlist.get(0).toString().endsWith("G1")){
+	//			tmp.add("grouper");
+	//			ExtList G = new ExtList();
+	//			G.add("[");
+	//			G.add( reverse((ExtList)extlist.get(1)) );
+	//			G.add("]");
+	//			G.add(",");
+	//			tmp.add(G);
+	//		}else if(extlist.get(0).toString().endsWith("C2")){
+	//			ExtList C = new ExtList();
+	//			tmp.add("v_exp");
+	//			for(int i = 1; i < extlist.size(); i++){
+	//				C.add(reverse((ExtList)extlist.get(i)));
+	//				if(i != extlist.size() - 1){
+	//					C.add("!");
+	//				}
+	//			}
+	//			tmp.add(C);
+	//		}else if(extlist.get(0).toString().endsWith("C1")){
+	//			ExtList C = new ExtList();
+	//			tmp.add("h_exp");
+	//			for(int i = 1; i < extlist.size(); i++){
+	//				C.add(reverse((ExtList)extlist.get(i)));
+	//				if(i != extlist.size() - 1){
+	//					C.add(",");
+	//				}
+	//			}
+	//			tmp.add(C);
+	//		}
+	//		else if(extlist.size() > 1){//function?
+	//			ExtList F = new ExtList();
+	//			for(int i = 0; i < extlist.size(); i++){
+	//				if(extlist.get(i) instanceof ExtList){
+	//					F.add(reverse((ExtList)extlist.get(i)));
+	//				}else{
+	//					ExtList temp1 = new ExtList();
+	//					temp1.add(extlist.get(i));
+	//					F.add(reverse(temp1));
+	//				}
+	//				if(i != extlist.size() - 1){
+	//					F.add(",");
+	//				}
+	//			}
+	//			tmp.add(F);
+	//		}
+	//		else if( extlist.get(0) instanceof Integer ){
+	//			ExtList A = new ExtList();
+	//			A.add(attp.get(extlist.get(0)).toString());
+	//			tmp.add("operand");
+	//			tmp.add(A);
+	//		}else if( extlist.get(0) instanceof String ){
+	//			ExtList S = new ExtList();
+	//			S.add( "\"" + extlist.get(0) + "\"" );
+	//			tmp.add("operand");
+	//			tmp.add(S);
+	//		}
+	//
+	//		return tmp;
+	//	}
 
 	public Hashtable get_attp() {
 		return this.attp;
@@ -266,6 +268,7 @@ public class CodeGenerator {
 
 	public void generateCode(Start_Parse parser, ExtList data_info) {
 		ITFE tfe_info = parser.get_TFEschema();
+//		Log.info("2-2-3-1-1");
 		//	ɬ�פʤ饳���ȥ����ȳ�����Manager������ѹ�
 		//	manager.preProcess(tab,le,le1,le2,le3);
 		//	manager.createSchema(tab,le,le1,le2,le3);
@@ -273,8 +276,10 @@ public class CodeGenerator {
 		if (tfe_info instanceof Grouper && data_info.size() != 0) {
 			data_info = (ExtList) data_info.get(0);
 		}
+//		Log.info("2-2-3-1-2");
 
 		manager.generateCode(tfe_info, data_info);
+//		Log.info("2-2-3-1-3");
 
 		manager.finish();
 
@@ -384,23 +389,24 @@ public class CodeGenerator {
 		return tfe;
 
 	}
-//	public static boolean flag = true;
+	//	public static boolean flag = true;
 	private static TFE read_attribute(ExtList tfe_tree){
 		String att = new String();
 		TFE out_sch = null;
 		String decos = new String();
 		String iterator = new String();
 		boolean add_deco = false;
-//		if(flag){
-//			tfe_tree.add(tfe_tree.size(), "}}");
-//			Log.info("tfe:"+tfe_tree);
-//			flag = !flag;
-//		}
-//		Log.info("tfe_tree"+tfe_tree);
+		//		if(flag){
+		//			tfe_tree.add(tfe_tree.size(), "}}");
+		//			Log.info("tfe:"+tfe_tree);
+		//			flag = !flag;
+		//		}
+		//		Log.info("tfe_tree"+tfe_tree);
 		Asc_Desc ascDesc = new Asc_Desc();
 //		Log.info("ExtList:"+tfe_tree.getExtList(new int[]{1, 0}));
 //		Log.info("String:"+tfe_tree.getExtListString(new int[] {1, 0, 0}));
 //		Log.info("tfe_tree:"+tfe_tree);
+
 		if(tfe_tree.get(0).toString().equals("operand")){
 			if (tfe_tree.getExtListString(tfe_tree.size() - 1) instanceof String) {
 				if(tfe_tree.getExtListString(tfe_tree.size() - 1).equals("ggplot_att")) {
@@ -419,6 +425,7 @@ public class CodeGenerator {
 				ExtList new_out = checkDecoration(tfe_tree, decos);
 				//					Log.info(new_out);
 				out_sch = read_attribute(new_out);
+				System.out.println("decolator:"+decos);
 			}
 
 			else if( ((ExtList)tfe_tree.get(1)).get(0) instanceof String ){
@@ -433,9 +440,14 @@ public class CodeGenerator {
 				}
 			}
 			else{
+				Log.out("function in read_att: " + ((ExtList)((ExtList)tfe_tree.get(1)).get(0)).get(0).toString());
+				Log.out("tfe_tree.get(1): " + ((ExtList)tfe_tree.get(1)));
 				if( ((ExtList)((ExtList)tfe_tree.get(1)).get(0)).get(0).toString().equals("sorting") ){
 					if(decos.isEmpty()){
 						decos = ((ExtList)((ExtList)((ExtList)tfe_tree.get(1)).get(0)).get(1)).get(1).toString();
+					}
+					if(decos.equals("ggplot")) {
+						Log.out("decos: " + decos);
 					}
 					add_deco = true;
 					((ExtList)tfe_tree.get(1)).remove(0);
@@ -451,14 +463,20 @@ public class CodeGenerator {
 					ExtList att1 = new ExtList();
 					String dec_tmp = ((ExtList)tfe_tree.get(1)).get(((ExtList)tfe_tree.get(1)).size() - 1).toString();
 
+					//					if( ((ExtList)((ExtList)((ExtList)((ExtList)tfe_tree.get(1)).get(0)).get(1)).get(2)).get(0).toString().equals("table_alias") ){
+					//						att1.add((ExtList)((ExtList)((ExtList)((ExtList)tfe_tree.get(1)).get(0)).get(1)).get(2));
+					//						att1.add(((ExtList)((ExtList)((ExtList)tfe_tree.get(1)).get(0)).get(1)).get(3));
+					//						att1.add((ExtList)((ExtList)((ExtList)((ExtList)tfe_tree.get(1)).get(0)).get(1)).get(4));
+					//					}else{
 					att1.add((ExtList)((ExtList)((ExtList)((ExtList)tfe_tree.get(1)).get(0)).get(1)).get(2));
-//					}
+					//					}
 					tfe_tree.remove(1);
 //					Log.info(tfe_tree);
 					int i = tfe_tree.indexOf("true");
 					if(i > 0){
 						tfe_tree.remove(i);
 					}
+
 					tfe_tree.add(att1);
 					if(dec_tmp.startsWith("@{")){
 						tfe_tree.add(tfe_tree.size(), "true");
@@ -469,6 +487,23 @@ public class CodeGenerator {
 
 				}
 
+				if( ((ExtList)((ExtList)tfe_tree.get(1)).get(0)).get(0).toString().equals("join_string") ){
+					String operand = getText((ExtList)((ExtList)tfe_tree.get(1)).get(0), Start_Parse.ruleNames);
+					builder = new String();
+					Attribute Att = makeAttribute(operand);
+					out_sch = Att;
+				}
+				else if( ((ExtList)((ExtList)tfe_tree.get(1)).get(0)).get(0).toString().equals("attribute") ){
+					//					att = ((ExtList)((ExtList)((ExtList)((ExtList)((ExtList)tfe_tree.get(1)).get(0)).get(1)).get(0)).get(1)).get(0).toString();
+					//					att = att + ((ExtList)tfe_tree.get(1)).get(1).toString();
+					//					if( ((ExtList)((ExtList)((ExtList)((ExtList)((ExtList)tfe_tree.get(1)).get(2)).get(1)).get(0)).get(1)).get(0) instanceof ExtList){
+					//						att = att + ((ExtList)((ExtList)((ExtList)((ExtList)((ExtList)((ExtList)((ExtList)tfe_tree.get(1)).get(2)).get(1)).get(0)).get(1)).get(0)).get(1)).get(0);
+					//					}else{
+					//						att = att + ((ExtList)((ExtList)((ExtList)((ExtList)((ExtList)tfe_tree.get(1)).get(2)).get(1)).get(0)).get(1)).get(0);
+					//					}
+
+//										Log.info(tfe_tree);
+				}
 				if( ((ExtList)((ExtList)tfe_tree.get(1)).get(0)).get(0).toString().equals("ggplot") ){
 //					if(decos.isEmpty()){
 //						decos = ((ExtList)((ExtList)((ExtList)((ExtList)((ExtList)((ExtList)((ExtList)tfe_tree.get(1)).get(0)).get(1)).get(0)).get(1)).get(0)).get(1)).get(0).toString();
@@ -519,10 +554,8 @@ public class CodeGenerator {
 					builder = new String();
 					Attribute Att = makeAttribute(att);
 					out_sch = Att;
-
 				}else if( ((ExtList)((ExtList)tfe_tree.get(1)).get(0)).get(0).toString().equals("grouper") ){
 					out_sch = grouper((ExtList)((ExtList)((ExtList)tfe_tree.get(1)).get(0)).get(1));
-
 					//added by goto 20161113  for Compiler:[ ] -> [ ]@{dynamic}
 					Compiler.addDynamicModifier(tfe_tree);
 				}else if( ((ExtList)((ExtList)tfe_tree.get(1)).get(0)).get(0).toString().equals("composite_iterator") ){
@@ -560,20 +593,49 @@ public class CodeGenerator {
 						GlobalEnv.setMultiQuery();
 						ExtList result = ctab.makeCtab(fn);
 						out_sch = read_attribute(result);
-					}else{
+					}else {
 						out_sch = func_read((ExtList)((ExtList)((ExtList)tfe_tree.get(1)).get(0)).get(1));
 						//out_sch = func_read((ExtList)((ExtList)((ExtList)tfe_tree.get(1)).get(0)).get(1)).fnc;
 					}
 				}
 				else if( ((ExtList)((ExtList)tfe_tree.get(1)).get(0)).get(0).toString().equals("sqlfunc") ){
-					String sqlfunc = new String();
-					//				Log.info((ExtList)tfe_tree.get(1));
-					sqlfunc = getText( (ExtList)tfe_tree.get(1), Start_Parse.ruleNames );
-					builder = new String();
-					sqlfunc_flag = true;
-					Attribute func = makeAttribute(sqlfunc);
-					sqlfunc_flag = false;
-					out_sch = func;
+                    sqlfunc_flag++;
+//                    System.out.println("====sqlfunc eval start====");
+                    ExtList base = ((ExtList) ((ExtList) tfe_tree.get(1)).get(0)); 
+//                    System.out.println("image: " + getText((ExtList) tfe_tree.get(1), Start_Parse.ruleNames));
+                    builder = "";
+//                    System.out.println("base: " + base);
+                    ArrayList<Integer> isSQLFuncIdx = new ArrayList<>();
+                    for (int i = 3; i < base.getExtList(1).size(); i += 2) {
+                        ExtList arg = base.getExtList(1, i);
+//                        System.out.println("arg: " + arg);
+                        if (arg.getExtListString(1, 0, 0).equals("sqlfunc")) {
+                            isSQLFuncIdx.add(i);
+                        }
+                    }
+                    if (isSQLFuncIdx.size() > 0) {
+                        // sql関数の入れ子になっていたらその下も確認しないとダメ
+                        for (int idx : isSQLFuncIdx) {
+                            ExtList arg = base.getExtList(1, idx);
+                            inner_sqlfunc_count++;
+                            read_attribute(arg);
+                            inner_sqlfunc_count--;
+                        }
+                    }
+                    // useTablesInSQLFuncに利用するテーブルを入れておく
+                    useTablesInSQLFunc.addAll(getUsedtablesInSQLFunc(base));
+                    Log.out("useTablesInSQLFunc: " + useTablesInSQLFunc);
+                    if (inner_sqlfunc_count == 0) {
+                        // 入子の大元のSQLFuncだったらAttributeに登録しuseTablesだけ更新しておく
+//                        System.out.println("usedTablesInSQLFunc: " + useTablesInSQLFunc);
+                        String sqlfunc = getText(base, Start_Parse.ruleNames);
+                        builder = "";
+                        Attribute func = makeAttribute(sqlfunc);
+//                        System.out.println("out_sch: " + func);
+                        out_sch = func;
+                    }
+                    if (inner_sqlfunc_count == 0) useTablesInSQLFunc = new HashSet<>();
+                    sqlfunc_flag--;
 				}
 				else if( ((ExtList)((ExtList)tfe_tree.get(1)).get(0)).get(0).toString().equals("if_then_else") ){
 					out_sch = IfCondition.IfCondition((ExtList)((ExtList)((ExtList)tfe_tree.get(1)).get(0)).get(1));
@@ -585,6 +647,7 @@ public class CodeGenerator {
 				}
 				else if(((ExtList)((ExtList)tfe_tree.get(1)).get(0)).get(0).toString().equals("arithmetics")){
 					att = getText( (ExtList)((ExtList)tfe_tree.get(1)).get(0), Start_Parse.ruleNames);
+					builder = new String();
 					Attribute arithmetics = makeAttribute(att);
 					out_sch = arithmetics;
 				}
@@ -594,7 +657,6 @@ public class CodeGenerator {
 			}
 			if( !(((ExtList)tfe_tree.get(1)).get( ((ExtList)tfe_tree.get(1)).size() - 1 ) instanceof ExtList) ){
 				String deco = ((ExtList)tfe_tree.get(1)).get( ((ExtList)tfe_tree.get(1)).size() - 1 ).toString();
-//				System.out.println("tfe_tree_deco1:::"+tfe_tree);
 				if(deco.contains("@{")){
 					//changed by goto 20161205
 					ascDesc.add_asc_desc_Array(deco);
@@ -648,15 +710,17 @@ public class CodeGenerator {
 				out_sch = connector_main((ExtList)tfe_tree.get(1), 1);
 			}
 		}else if(tfe_tree.get(0).toString().equals("v_exp")){
-			if( ((ExtList)tfe_tree.get(1)).size() == 1 )
+			if( ((ExtList)tfe_tree.get(1)).size() == 1 ){
 				out_sch = read_attribute( (ExtList)((ExtList)tfe_tree.get(1)).get(0) );
-			else
+			}else{
 				out_sch = connector_main((ExtList)tfe_tree.get(1), 2);
+			}
 		}else if(tfe_tree.get(0).toString().equals("d_exp")){
 			if( ((ExtList)tfe_tree.get(1)).size() == 1 ){
 				out_sch = read_attribute( (ExtList)((ExtList)tfe_tree.get(1)).get(0) );
-			}else
+			}else{
 				out_sch = connector_main((ExtList)tfe_tree.get(1), 3);
+			}
 		}else if(tfe_tree.get(0).toString().equals("expr")) {
 			int idx = ((ExtList) tfe_tree.get(1)).indexOf("=");
 			out_sch = read_attribute((ExtList) ((ExtList) tfe_tree.get(1)).get(idx + 1));
@@ -757,6 +821,7 @@ public class CodeGenerator {
 		Connector con = createconnector(dim);
 
 		for (int i = 0; i < atts.size(); i++) {
+			Log.out("!!In codegenerator atts.get(" + i +"): " +atts.get(i));
 			con.setTFE((ITFE) (atts.get(i)));
 		}
 		return con;
@@ -768,7 +833,11 @@ public class CodeGenerator {
 		int dim = 0;
 		TFE operand1 = read_attribute((ExtList)operand.get(1));
 
-		if(operand.get(operand.size() - 1).toString().equals("%")){
+		if(operand.get(operand.size() - 1).toString().equals("◯") || operand.get(operand.size() - 1).toString().equals("@")){
+			dim = 5;
+		}else if (operand.get(operand.size() - 1).toString().equals("#")){
+			dim = 4;
+		}else if(operand.get(operand.size() - 1).toString().equals("%")){
 			dim = 3;
 		}else if(operand.get(operand.size() - 1).toString().equals("!")){
 			dim = 2;
@@ -781,6 +850,143 @@ public class CodeGenerator {
 
 		return grp;
 	}
+
+    static ArrayList<String> getUsedtablesInSQLFunc(ExtList base) {
+//        System.out.println("====Enter getUsedTablesInSQLFunc====");
+//        System.out.println("base: " + base);
+        HashSet<String> usedTables = new HashSet<>();
+        // 引数を順に洗っていく
+        for (int i = 3; i < base.getExtList(1).size(); i += 2) {
+            ExtList arg = base.getExtList(1, i);
+//            System.out.println("arg: " + arg);
+            // attributeの場合
+            if (arg.getExtListString(1, 0, 0).equals("attribute")) {
+                // table_aliasがある場合
+                if (arg.getExtListString(1, 0, 1, 0, 0).equals("table_alias")) {
+//                    System.out.println("table_aliasを発見 -> " + getText(arg.getExtList(1, 0, 1, 0), Start_Parse.ruleNames));
+                    builder = "";
+                    usedTables.add(getText(arg.getExtList(1, 0, 1, 0), Start_Parse.ruleNames));
+                    builder = "";
+                } else {
+                    // column_nameのみの場合は探す
+                    String column_name = getText(arg.getExtList(1, 0, 1, 0), Start_Parse.ruleNames);
+                    builder = "";
+                    ArrayList<String> correTableList = new ArrayList();
+                    for (Map.Entry<String, ExtList> ent : GlobalEnv.tableAtts.entrySet()) {
+                        String tableName = ent.getKey();
+                        ExtList attributes = ent.getValue();
+                        if (attributes.contains(column_name)) {
+                            for (FromTable fromTable : From.getFromItems()) {
+                                if (fromTable.getTableName().equals(tableName)) {
+                                    correTableList.add(fromTable.getAlias());
+                                }
+                            }
+                        }
+                    }
+                    if (correTableList.size() == 1) {
+//                        System.out.println("該当するテーブルを発見しました -> " + correTableList.get(0));
+                        usedTables.add(correTableList.get(0));
+                    }
+                }
+            }
+            // arithmeticsの場合
+            if (arg.getExtListString(1, 0, 0).equals("arithmetics")) {
+//                System.out.println("算術演算子を発見");
+                ExtList baseAriths = arg.getExtList(1, 0, 1);
+                //Log.out("baseAriths.size(): " + baseAriths.size());
+                for (int j = 0; j < baseAriths.size(); j += 2) {
+//                    System.out.println("used:: " + usedTables);
+                    ExtList argArith = baseAriths.getExtList(j);
+                    System.out.println("argArith: " + argArith);
+                    Log.out("items: " + argArith.unnest());
+                    Log.out("argArith get(1,0,1,0,0)" + argArith.getExtListString(1, 0, 1, 0, 0));
+                    // 整数の場合
+                    if (argArith.getExtList(1).size() == 1 && !(argArith.getExtList(1).get(0) instanceof ExtList)) {
+                        continue;
+                    }
+                    if (
+                            argArith.getExtList(1, 0).size() == 2 &&
+                                    argArith.getExtListString(1, 0, 0).equals("arith") &&
+                                    !(argArith.getExtList(1, 0, 1).get(0) instanceof ExtList)
+                    ) {
+                        continue;
+                    }
+                    // attributeの場合
+                   
+                    if (argArith.getExtListString(1, 0, 1, 0, 0).equals("attribute")) {
+                        // table_aliasの場合
+                        //Log.out("In getUsedtablesInSQLFunc attribute");
+                    	//Log.out("In attribute argArith get(1,0,1,0,1,0,0)" + argArith.getExtListString(1, 0, 1, 0, 1, 0, 0));
+                        if (argArith.getExtListString(1, 0, 1, 0, 1, 0, 0).equals("table_alias")) {
+//                            System.out.println("table_aliasを発見 -> " + getText(argArith.getExtList(1, 0, 1, 0, 1, 0), Start_Parse.ruleNames));
+                            builder = "";
+                            Log.out("argArith get(1,0,1,0,1,0): "  + argArith.getExtList(1, 0, 1, 0, 1, 0));
+                            usedTables.add(getText(argArith.getExtList(1, 0, 1, 0, 1, 0), Start_Parse.ruleNames));
+                            builder = "";
+                        } else {
+                            // column_nameのみの場合は探す
+                            String column_name = getText(argArith.getExtList(1, 0, 1, 0, 1, 0), Start_Parse.ruleNames);
+                            builder = "";
+                            ArrayList<String> correTableList = new ArrayList();
+                            for (Map.Entry<String, ExtList> ent : GlobalEnv.tableAtts.entrySet()) {
+                                String tableName = ent.getKey();
+                                ExtList attributes = ent.getValue();
+                                if (attributes.contains(column_name)) {
+                                    for (FromTable fromTable : From.getFromItems()) {
+                                        if (fromTable.getTableName().equals(tableName)) {
+                                            correTableList.add(fromTable.getAlias());
+                                        }
+                                    }
+                                }
+                            }
+                            if (correTableList.size() == 1) {
+//                                System.out.println("該当するテーブルを発見しました -> " + correTableList.get(0));
+                                usedTables.add(correTableList.get(0));
+                            }
+                        }
+                     //Added by li 20210613 to fix the sqlfunc
+                    }else if (argArith.getExtListString(1, 0, 1, 0, 0).equals("arith")){
+                        Log.out("In arith argArith get(1,2,1,0,1,0,1,0,0)" + argArith.getExtListString(1, 2, 1, 0, 1, 0, 1, 0, 0));
+                        Log.out("argArith get(1,2,1,0,1,0,1,0): "  + argArith.getExtList(1,2,1,0,1,0,1,0));
+                        if (argArith.getExtListString(1, 2, 1, 0, 1, 0, 1, 0, 0).equals("table_alias")) {
+                        	builder = "";
+                        	usedTables.add(getText(argArith.getExtList(1, 2, 1, 0, 1, 0, 1, 0), Start_Parse.ruleNames));
+                            builder = "";
+                        }
+                    }else {
+                    	ExtList tmp_x = new ExtList();
+                    	ExtList tmp_any_name = new ExtList();
+                    	ExtList tmp_any_name2 = new ExtList();
+                    	ExtList tmp_table_alias = new ExtList();
+                    	try {
+							for(i = 0; i < argArith.unnest().size(); i++) {
+								if(argArith.unnest().get(i).toString().equals("table_alias")) {
+									//Log.out("argArith.unnest():" + argArith.unnest().get(i) + ", index: " + i);
+									tmp_x.add(argArith.unnest().get(i+2));
+									tmp_any_name.add(argArith.unnest().get(i+1));
+									tmp_any_name.add(tmp_x);
+									//Log.out("tmp_any_name: " + tmp_any_name);
+									tmp_any_name2.add(tmp_any_name);
+									//Log.out("tmp_any_name2: " + tmp_any_name2);
+									tmp_table_alias.add(argArith.unnest().get(i));
+									tmp_table_alias.add(tmp_any_name2);
+									//Log.out("tmp_table_alias: " + tmp_table_alias);
+									builder = "";
+		                        	usedTables.add(getText(tmp_table_alias, Start_Parse.ruleNames));
+		                            builder = "";
+								}
+							}
+						} catch (Exception e) {
+							// TODO: handle exception
+							Log.err("Exception in sqlfunc arithmetics");
+						}
+                    }
+                    //
+                }
+            }
+        }
+        return new ArrayList<>(usedTables);
+    }
 
 	private static ExtList composite(ExtList operand){
 		int index = operand.indexOf("]");
@@ -795,127 +1001,75 @@ public class CodeGenerator {
 			}
 		}
 
-		if(VRManager.vrflag){///vrの時 複合反復で使う
-			/////for VR  column->row_x, row->vr_y
-			if(iterators.get(0).equals(",")){
-				deco = "vr_x=";
-				iterators.remove(0);
-				deco = deco + iterators.get(0);
-				iterators.remove(0);
-				if(iterators.get(0).equals("!")){//xy
-					iterators.remove(0);
-					if(iterators.isEmpty()){
-						deco = deco + ", vr_y=-1";////////,5!みたいな方 -1って印つける
-					}else{
-						deco = deco + ",vr_y=" + iterators.get(0);//,5!3%みたいな方
+		//Merged by li 20210526
+				while(!iterators.isEmpty()){
+					switch(iterators.get(0).toString()){
+					case ",":
 						iterators.remove(0);
-					}
-				}else if(iterators.get(0).equals("%")){//xz
-					iterators.remove(0);
-					if(iterators.isEmpty()){
-						deco = deco + ", vr_z=-1";
-					}else{
-						deco = deco + ",vr_z=" + iterators.get(0);
+						if (iterators.isEmpty()) {
+							deco = deco + ", vr_x=0";
+						} else {
+							deco += (deco.equals("")? "column=":", column=") + iterators.get(0);
+							deco = deco + ", vr_x=" + iterators.get(0);
+							iterators.remove(0);
+						}
+						break;
+						
+					case "!":
 						iterators.remove(0);
+						if (iterators.isEmpty()) {
+							deco = deco + ", vr_y=0";
+						} else {
+							deco += (deco.equals("")? "row=":", row=") + iterators.get(0);
+							deco = deco + ", vr_y=" + iterators.get(0);
+							iterators.remove(0);
+						}
+						break;
+					
+					case "%":
+						iterators.remove(0);
+						if (iterators.isEmpty()) {
+							deco = deco + ", vr_z=0";
+						} else {
+							deco += (deco.equals("")? "row=":", row=") + iterators.get(0);
+							deco = deco + ", vr_z=" + iterators.get(0);
+							iterators.remove(0);
+						}
+						break;
+						
+					case "#":
+						iterators.remove(0);
+						if (iterators.isEmpty()) {
+							deco = deco + ", vr_t=0";
+						} else {
+							deco += (deco.equals("")? "vr_t=":", vr_t=") + iterators.get(0);
+							iterators.remove(0);
+						}
+						break;
+						
+					case "◯":
+					case "@":
+						iterators.remove(0);
+						if (iterators.isEmpty()) {
+							deco = deco + ", vr_c=0";
+						} else {
+							deco += (deco.equals("")? "vr_c=": ", vr_c=") + iterators.get(0);
+							iterators.remove(0);
+						}
+						break;
+					
 					}
-//					iterators.remove(0);
-//					deco = deco + ", vr_z=1";
 				}
-			}else if(iterators.get(0).equals("!")){
-				deco = "vr_y=";
-				iterators.remove(0);
-				deco = deco + iterators.get(0);
-				iterators.remove(0);
-				if(iterators.get(0).equals(",")){//yx
-					iterators.remove(0);
-					if(iterators.isEmpty()){
-						deco = deco + ", vr_x=-1";//////////////
-					}else{
-						deco = deco + ",vr_x=" + iterators.get(0);
-						iterators.remove(0);
-					}
-				}else if(iterators.get(0).equals("%")){//yz
-					iterators.remove(0);
-					if(iterators.isEmpty()){
-						deco = deco + ", vr_z=-1";
-					}else{
-						deco = deco + ",vr_z=" + iterators.get(0);
-						iterators.remove(0);
-					}
-//					iterators.remove(0);
-//					deco = deco + ", vr_z=1";
-				}
-
-			}else if(iterators.get(0).equals("%")){
-				deco = "vr_z=";
-				iterators.remove(0);
-				deco = deco + iterators.get(0);
-				iterators.remove(0);
-				if(iterators.get(0).equals("!")){//zy
-					iterators.remove(0);
-					if(iterators.isEmpty()){
-						deco = deco + ", vr_y=-1";
-					}else{
-						deco = deco + ",vr_y=" + iterators.get(0);
-						iterators.remove(0);
-					}
-				}else if(iterators.get(0).equals(",")){//zx
-					iterators.remove(0);
-					if(iterators.isEmpty()){
-						deco = deco + ", vr_x=-1";
-					}else{
-						deco = deco + ",vr_x=" + iterators.get(0);
-						iterators.remove(0);
-					}
-//					iterators.remove(0);
-//					deco = deco + ", vr_y=1";
-				}
-			}
-		}else{
-
-			if(iterators.get(0).equals(",")){
-				deco = "column=";
-				iterators.remove(0);
-				deco = deco + iterators.get(0);
-				iterators.remove(0);
-				if(iterators.get(0).equals("!")){
-					iterators.remove(0);
-					if(iterators.isEmpty()){
-					}else{
-						deco = deco + ",row=" + iterators.get(0);
-						iterators.remove(0);
-					}
-				}else if(iterators.get(0).equals("%")){
-					iterators.remove(0);
-					deco = deco + ", row=1";
-				}else if(iterators.get(0).equals(",")){//for infinite scroll
-					deco = "infinite-scroll" + deco.substring(deco.indexOf("="));
-					deco = deco + ", dynamic";
-				}
-			}else if(iterators.get(0).equals("!")){
-				deco = "row=";
-				iterators.remove(0);
-				deco = deco + iterators.get(0);
-				iterators.remove(0);
-				if(iterators.get(0).equals(",")){
-					iterators.remove(0);
-					if(iterators.isEmpty()){
-					}else{
-						deco = deco + ",column=" + iterators.get(0);
-						iterators.remove(0);
-					}
-				}else if(iterators.get(0).equals("%")){
-					iterators.remove(0);
-					deco = deco + ", column=1";
-				}else if(iterators.get(0).equals("!")){//for infinite scroll
-					deco = "infinite-scroll" + deco.substring(deco.indexOf("="));
-					deco = deco + "dynamic";
-				}
-
-			}
-		}
+		
+//		try {
+//			java.nio.file.Files.write(java.nio.file.Paths.get("/Users/tatsu/Desktop/output.txt"), ("added " + deco + "to " + operand + "\n").getBytes(), java.nio.file.StandardOpenOption.APPEND, java.nio.file.StandardOpenOption.CREATE);
+//		} catch (IOException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
 		operand.add(deco);
 		return operand;
+
 	}
 
 	private static Decorator createdecorator(int dim){
@@ -930,7 +1084,10 @@ public class CodeGenerator {
 
 	private static Connector createconnector(int dim){
 		Connector connector = new Connector();
-		if(dim == 3){
+
+		if (dim == 4){
+			connector = factory.createC4(manager);
+		}else if(dim == 3){
 			//factory and manager
 			connector = factory.createC3(manager);
 		}else if(dim == 2){
@@ -953,7 +1110,12 @@ public class CodeGenerator {
 
 	private static Grouper creategrouper(int dim){
 		Grouper grouper = null;
-		if(dim == 3){
+
+		if (dim == 5){
+			grouper = factory.createG5(manager);
+		}else if(dim == 4){
+			grouper = factory.createG4(manager);
+		}else if(dim == 3){
 			//factory and manager
 			grouper = factory.createG3(manager);
 		}else if(dim == 2){
@@ -1052,7 +1214,6 @@ public class CodeGenerator {
 	}
 
 	private static Function func_read(ExtList fn) {
-
 		String token;
 		Function fnc = createFunction();
 		String func_name = new String();
@@ -1085,12 +1246,14 @@ public class CodeGenerator {
 		Log.out("[func*read start funcname]=" + fn);
 		/* func_read */
 		TFE read_tfe = read_attribute(func_atts);
-
+		//Log.out("read_tfe " + ((Connector)read_tfe).countconnectitem());
 		Log.out("[func*TFE]=" + read_tfe.makele0());
 		if (read_tfe instanceof Connector) {
 			//		if(read_tfe instanceof Connector && ((Connector) read_tfe).getDimension() == 1){
 			for(TFE tfe: ((Connector)read_tfe).tfes){
+				//Log.out("break FncArg(tfe): " + ((Connector)read_tfe).tfes);
 				fnc.addArg(makeFuncArg(tfe));
+				//Log.out("break: get.Arg: " + fnc.getArg(0));
 			}
 		}
 		else
@@ -1104,11 +1267,17 @@ public class CodeGenerator {
 
 	private static FuncArg makeFuncArg(TFE arg) {
 		FuncArg out_fa;
-		Log.out("argsaregs: " + arg);
+		Log.out("argsaregs: " + arg.getClass().getName());
+
+		VRFunction vrfnc = new VRFunction();
 
 		if (arg instanceof Attribute) {
 			out_fa = new FuncArg(((Attribute) arg).getKey(), arg);
-		} else {
+		}else if(arg instanceof HTMLCONCAT) {
+			out_fa = new FuncArg("default", arg);
+			out_fa.setConcatFlag(true);
+		}
+		else {
 			out_fa = new FuncArg("default", arg);
 		}
 
@@ -1173,9 +1342,9 @@ public class CodeGenerator {
 		else
 			return extList;
 
+
 		//decos.split(",")
 		ArrayList<String> decoList = splitComma(decos);
-//		System.out.println("decoList:::"+decoList);
 		ExtList new_list = new ExtList();
 		ExtList med = new ExtList();
 		extList.add("true");
@@ -1397,7 +1566,7 @@ public class CodeGenerator {
 						}
 						else{
 							builder += tree.get(i).toString();
-							builder += " ";
+							//builder += " ";
 						}
 					}
 				}else {
@@ -1406,15 +1575,12 @@ public class CodeGenerator {
 			}
 		}
 		else if(tree.size() == 1 && (tree.get(0) instanceof String)){
-			String str = new String();
-			if(tree.get(0).toString().startsWith("\"") && tree.get(0).toString().endsWith("\"")){
-				str = "\'" + tree.get(0).toString().substring(1, tree.get(0).toString().length()-1).replaceAll("'", "''") + "\'";
+			String t = tree.get(0).toString();
+			if(t.startsWith("\"") && t.endsWith("\"")){
+				t = "\"" + t.substring(1, t.length()-1).replaceAll("'", "''") + "\"";
 			}
-			else{
-				str = tree.get(0).toString();
-			}
-			builder += str;
-			builder += " " ;
+			//builder += t + " ";
+			builder += t;
 			return builder.toString();
 		}
 		else if(tree.size() == 1 && ((ExtList)tree.get(0)).size() > 1 ){

@@ -20,6 +20,11 @@ namespace detail {
 
 #if !defined(BOOST_NO_CXX11_HDR_TYPE_TRAITS)
 using std::integral_constant;
+<<<<<<< HEAD
+=======
+using std::true_type;
+using std::false_type;
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 #else
 template<class T, T Value>
 struct integral_constant {
@@ -39,6 +44,12 @@ struct integral_constant {
 
 template<class T, T Value>
 BOOST_CONSTEXPR_OR_CONST T integral_constant<T, Value>::value;
+<<<<<<< HEAD
+=======
+
+typedef integral_constant<bool, true> true_type;
+typedef integral_constant<bool, false> false_type;
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 #endif
 
 } /* detail */

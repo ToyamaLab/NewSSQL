@@ -20,7 +20,11 @@
 #define BOOST_REGEX_V4_BASIC_REGEX_HPP
 
 #include <boost/type_traits/is_same.hpp>
+<<<<<<< HEAD
 #include <boost/functional/hash.hpp>
+=======
+#include <boost/container_hash/hash.hpp>
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 #ifdef BOOST_MSVC
 #pragma warning(push)
@@ -36,10 +40,23 @@
 namespace boost{
 #ifdef BOOST_MSVC
 #pragma warning(push)
+<<<<<<< HEAD
 #pragma warning(disable : 4251 4231 4800)
 #if BOOST_MSVC < 1600
 #pragma warning(disable : 4660)
 #endif
+=======
+#pragma warning(disable : 4251)
+#if BOOST_MSVC < 1700
+#     pragma warning(disable : 4231)
+#endif
+#if BOOST_MSVC < 1600
+#pragma warning(disable : 4660)
+#endif
+#if BOOST_MSVC < 1910
+#pragma warning(disable:4800)
+#endif
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 #endif
 
 namespace BOOST_REGEX_DETAIL_NS{

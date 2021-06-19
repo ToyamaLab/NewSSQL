@@ -1,3 +1,113 @@
+<<<<<<< HEAD
+=======
+# pillar 1.4.6
+
+- Restore compatibility with R 3.2.
+
+
+# pillar 1.4.5
+
+## Features
+
+- New `pillar.min_chars` option allows controlling the minimum number of characters shown for a character column (#178, @statsmaths).
+
+- `bit64::integer64()` columns are now formatted the same way as numeric columns (#175).
+
+- New `align()` to support easy alignment of strings within a character vector (existing function exported by @davidchall, #185).
+
+## Technical
+
+- `pillar_shaft()`, `format_type_sum()` and `extra_cols()` issue a warning if dots are unused.
+
+- `new_pillar_title()` and `new_pillar_type()` warn if `...` is not empty.
+
+## Internal
+
+- Use lifecycle package.
+
+- Remove compatibility code for R < 3.3.
+
+
+# pillar 1.4.4
+
+- `obj_sum()` uses `vctrs::vec_size()` internally.
+
+- `is_vector_s3.default()` is soft-deprecated and no longer used. Please ensure that `vctrs::vec_is()` is `TRUE` for your class.
+
+- Rely on vctrs for type abbreviations.
+
+
+# pillar 1.4.3
+
+- `new_pillar_shaft_simple()` gains `na` argument to control appearance of `NA` values.
+
+- String columns are quoted if at least one value needs quotes (#171).
+
+- Apply subtle style to `list_of` columns (#172).
+
+- Fix formatting if mantissa is very close to 1 (#174).
+
+- Use `as.character()` instead of `as_character()`.
+
+- Remove compatibility with testthat < 2.0.0.
+
+
+# pillar 1.4.2
+
+- List columns are shown with their perceived dimensions, which may be different from those stored in the `"dim"` attribute. Regression introduced in 1.4.0 (#167).
+
+- Add ellipsis to `vec_ptype_abbr()` method.
+
+
+# pillar 1.4.1
+
+- More careful specification of minimum package versions for the dependencies (#165).
+- Fix `type_sum.vctrs_vctr()` that also led to a NOTE in `R CMD check`.
+- Resolve `vec_is()` at runtime instead of during `.onLoad()` (#163, @lionel-).
+- Implement methods for vctrs objects.
+
+
+# pillar 1.4.0
+
+## Breaking changes
+
+- `type_sum()` forwards to `vctrs::vec_ptype_abbr()` (#134). This makes sure that `list_of` columns (for values of the same type) are properly displayed. The value returned for `factor` and `complex` remains unchanged, because this will change in vctrs.
+- The `class` argument to `new_pillar_shaft()` deprecates the existing `subclass` argument. Passing a `subclass` argument leads to a warning once per session (#157).
+
+## Output
+
+- Removed extra space for pillars with a negative value of lower magnitude than the largest positive value (example: -1 and 23).
+- 0-col tibble and matrix columns are now formatted with a capital containing `[,0]` and an empty shaft (#149).
+
+## Performance
+
+- `squeeze()` is now faster (because the width computation in `pillar_shaft.numeric()` now uses more arithmetics instead of string concatenation). Further speedups may require implemetation of crucial parts in C (#147).
+- Styling output is faster: an expensive check for availability of colored output is carried out only once per call to `colonnade()`, and styling is implemented manually (#133, @jimhester).
+
+## Internal
+
+- All internal S3 classes have the `pillar_` prefix (#156).
+- Only check native output on Windows, due to subtle differences when running on Linux in a latin1 locale.
+
+
+# pillar 1.3.1
+
+## Bug fixes
+
+- Fix off-by-one error in distribution of empty space (#141).
+
+## Visible changes
+
+- `NA` in names is no longer escaped with backticks.
+- Don't add quotes for pillars formatted with their `format()` method (tidyverse/tibble#448).
+
+## Internal changes
+
+- Update base type abbrevs to rlang 0.3.0 (#140, @lionel-).
+- Tests work again in a 256-color terminal (#129).
+
+
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 # pillar 1.3.0
 
 ## Visible changes

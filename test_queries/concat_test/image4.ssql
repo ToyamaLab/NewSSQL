@@ -1,0 +1,4 @@
+GENERATE HTML
+[e.manager ! [e.name, image(e.id || '.' || ex.extension, './picts') ! '給与は' || e.salary || 'です'],]!
+from employee e, extension ex
+where ex.id = 1

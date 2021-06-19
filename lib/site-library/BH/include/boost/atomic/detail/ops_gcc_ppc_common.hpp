@@ -40,6 +40,10 @@ namespace detail {
 
 struct gcc_ppc_operations_base
 {
+<<<<<<< HEAD
+=======
+    static BOOST_CONSTEXPR_OR_CONST bool full_cas_based = false;
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     static BOOST_CONSTEXPR_OR_CONST bool is_always_lock_free = true;
 
     static BOOST_FORCEINLINE void fence_before(memory_order order) BOOST_NOEXCEPT
@@ -47,17 +51,28 @@ struct gcc_ppc_operations_base
 #if defined(__powerpc64__) || defined(__PPC64__)
         if (order == memory_order_seq_cst)
             __asm__ __volatile__ ("sync" ::: "memory");
+<<<<<<< HEAD
         else if ((order & memory_order_release) != 0)
             __asm__ __volatile__ ("lwsync" ::: "memory");
 #else
         if ((order & memory_order_release) != 0)
+=======
+        else if ((static_cast< unsigned int >(order) & static_cast< unsigned int >(memory_order_release)) != 0u)
+            __asm__ __volatile__ ("lwsync" ::: "memory");
+#else
+        if ((static_cast< unsigned int >(order) & static_cast< unsigned int >(memory_order_release)) != 0u)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
             __asm__ __volatile__ ("sync" ::: "memory");
 #endif
     }
 
     static BOOST_FORCEINLINE void fence_after(memory_order order) BOOST_NOEXCEPT
     {
+<<<<<<< HEAD
         if ((order & (memory_order_consume | memory_order_acquire)) != 0)
+=======
+        if ((static_cast< unsigned int >(order) & (static_cast< unsigned int >(memory_order_consume) | static_cast< unsigned int >(memory_order_acquire))) != 0u)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
             __asm__ __volatile__ ("isync" ::: "memory");
     }
 };

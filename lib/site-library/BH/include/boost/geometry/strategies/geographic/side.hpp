@@ -2,8 +2,13 @@
 
 // Copyright (c) 2007-2012 Barend Gehrels, Amsterdam, the Netherlands.
 
+<<<<<<< HEAD
 // This file was modified by Oracle on 2014-2017.
 // Modifications copyright (c) 2014-2017 Oracle and/or its affiliates.
+=======
+// This file was modified by Oracle on 2014-2019.
+// Modifications copyright (c) 2014-2019 Oracle and/or its affiliates.
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 // Contributed and/or modified by Adam Wulkiewicz, on behalf of Oracle
 
@@ -18,18 +23,33 @@
 #include <boost/geometry/core/access.hpp>
 #include <boost/geometry/core/radian_access.hpp>
 #include <boost/geometry/core/radius.hpp>
+<<<<<<< HEAD
 #include <boost/geometry/core/srs.hpp>
 
 #include <boost/geometry/formulas/spherical.hpp>
 
+=======
+
+#include <boost/geometry/formulas/spherical.hpp>
+
+#include <boost/geometry/srs/spheroid.hpp>
+
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 #include <boost/geometry/util/math.hpp>
 #include <boost/geometry/util/promote_floating_point.hpp>
 #include <boost/geometry/util/select_calculation_type.hpp>
 
 #include <boost/geometry/strategies/geographic/disjoint_segment_box.hpp>
+<<<<<<< HEAD
 #include <boost/geometry/strategies/geographic/envelope_segment.hpp>
 #include <boost/geometry/strategies/geographic/parameters.hpp>
 #include <boost/geometry/strategies/side.hpp>
+=======
+#include <boost/geometry/strategies/geographic/envelope.hpp>
+#include <boost/geometry/strategies/geographic/parameters.hpp>
+#include <boost/geometry/strategies/side.hpp>
+#include <boost/geometry/strategies/spherical/point_in_point.hpp>
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 //#include <boost/geometry/strategies/concepts/side_concept.hpp>
 
 
@@ -48,6 +68,14 @@ namespace strategy { namespace side
 \tparam FormulaPolicy Geodesic solution formula policy.
 \tparam Spheroid Reference model of coordinate system.
 \tparam CalculationType \tparam_calculation
+<<<<<<< HEAD
+=======
+
+\qbk{
+[heading See also]
+[link geometry.reference.srs.srs_spheroid srs::spheroid]
+}
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
  */
 template
 <
@@ -58,7 +86,13 @@ template
 class geographic
 {
 public:
+<<<<<<< HEAD
     typedef strategy::envelope::geographic_segment
+=======
+    typedef geographic_tag cs_tag;
+
+    typedef strategy::envelope::geographic
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
         <
             FormulaPolicy,
             Spheroid,
@@ -82,6 +116,15 @@ public:
         return disjoint_strategy_type(m_model);
     }
 
+<<<<<<< HEAD
+=======
+    typedef strategy::within::spherical_point_point equals_point_point_strategy_type;
+    static inline equals_point_point_strategy_type get_equals_point_point_strategy()
+    {
+        return equals_point_point_strategy_type();
+    }
+
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     geographic()
     {}
 
@@ -110,6 +153,14 @@ public:
         return formula::azimuth_side_value(a1p, a12);
     }
 
+<<<<<<< HEAD
+=======
+    Spheroid const& model() const
+    {
+        return m_model;
+    }
+
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 private:
     template <typename ResultType,
               typename InverseFormulaType,

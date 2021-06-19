@@ -20,9 +20,16 @@
 #if defined(BOOST_MSVC) || defined(BOOST_INTEL)
 #include <boost/type_traits/is_pod.hpp>
 #include <boost/type_traits/is_volatile.hpp>
+<<<<<<< HEAD
 #endif
 
 #if defined(__GNUC__) || defined(__clang)
+=======
+#include <boost/type_traits/is_reference.hpp>
+#endif
+
+#if defined(__GNUC__) || defined(__clang__)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 #include <boost/type_traits/is_constructible.hpp>
 #include <boost/type_traits/is_volatile.hpp>
 #endif

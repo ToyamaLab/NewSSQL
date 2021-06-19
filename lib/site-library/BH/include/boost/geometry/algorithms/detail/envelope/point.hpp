@@ -4,8 +4,13 @@
 // Copyright (c) 2008-2015 Bruno Lalande, Paris, France.
 // Copyright (c) 2009-2015 Mateusz Loskot, London, UK.
 
+<<<<<<< HEAD
 // This file was modified by Oracle on 2015, 2016, 2017.
 // Modifications copyright (c) 2015-2016, Oracle and/or its affiliates.
+=======
+// This file was modified by Oracle on 2015, 2016, 2017, 2018.
+// Modifications copyright (c) 2015-2018, Oracle and/or its affiliates.
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 // Contributed and/or modified by Vissarion Fysikopoulos, on behalf of Oracle
 // Contributed and/or modified by Menelaos Karavelas, on behalf of Oracle
@@ -18,6 +23,7 @@
 #ifndef BOOST_GEOMETRY_ALGORITHMS_DETAIL_ENVELOPE_POINT_HPP
 #define BOOST_GEOMETRY_ALGORITHMS_DETAIL_ENVELOPE_POINT_HPP
 
+<<<<<<< HEAD
 #include <cstddef>
 
 #include <boost/geometry/core/access.hpp>
@@ -35,6 +41,16 @@
 
 #include <boost/geometry/algorithms/dispatch/envelope.hpp>
 
+=======
+#include <boost/geometry/core/tags.hpp>
+
+#include <boost/geometry/algorithms/dispatch/envelope.hpp>
+
+// For backward compatibility
+#include <boost/geometry/strategies/cartesian/envelope_point.hpp>
+#include <boost/geometry/strategies/spherical/envelope_point.hpp>
+
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 namespace boost { namespace geometry
 {
@@ -44,6 +60,7 @@ namespace detail { namespace envelope
 {
 
 
+<<<<<<< HEAD
 template <std::size_t Dimension, std::size_t DimensionCount>
 struct envelope_one_point
 {
@@ -91,6 +108,14 @@ struct envelope_point_on_spheroid
             <
                 2, dimension<Point>::value
             >::apply(normalized_point, mbr, strategy);
+=======
+struct envelope_point
+{
+    template <typename Point, typename Box, typename Strategy>
+    static inline void apply(Point const& point, Box& mbr, Strategy const& )
+    {
+        Strategy::apply(point, mbr);
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     }
 };
 
@@ -104,6 +129,7 @@ namespace dispatch
 
 
 template <typename Point>
+<<<<<<< HEAD
 struct envelope<Point, point_tag, cartesian_tag>
     : detail::envelope::envelope_one_point<0, dimension<Point>::value>
 {};
@@ -124,6 +150,10 @@ struct envelope<Point, point_tag, spherical_equatorial_tag>
 template <typename Point>
 struct envelope<Point, point_tag, geographic_tag>
     : detail::envelope::envelope_point_on_spheroid
+=======
+struct envelope<Point, point_tag>
+    : detail::envelope::envelope_point
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 {};
 
 

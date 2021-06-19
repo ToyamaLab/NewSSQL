@@ -47,7 +47,16 @@ public:
     {
       return size_ = buffer_.size();
     }
+<<<<<<< HEAD
 
+=======
+    
+    const std::size_t* size_ptr() const
+    {
+      return &size();
+    }
+    
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     void save_binary(void const *address, std::size_t count)
     {
       save_impl(address,count);

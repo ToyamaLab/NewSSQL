@@ -70,6 +70,13 @@ namespace boost { namespace fusion
         cons(cons<Car2, Cdr2> const& rhs)
             : car(rhs.car), cdr(rhs.cdr) {}
 
+<<<<<<< HEAD
+=======
+#if BOOST_WORKAROUND(BOOST_GCC, / 100 == 406) && !defined(BOOST_NO_CXX11_FUNCTION_TEMPLATE_DEFAULT_ARGS)
+        // Workaround for `array used as initializer` compile error on gcc 4.6 w/ c++0x.
+        template <typename = void>
+#endif
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
         BOOST_CONSTEXPR BOOST_FUSION_GPU_ENABLED
         cons(cons const& rhs)
             : car(rhs.car), cdr(rhs.cdr) {}

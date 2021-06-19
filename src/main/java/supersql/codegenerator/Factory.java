@@ -298,6 +298,26 @@ public class Factory {
 		}
 		return null;
 	}
+	
+	public Grouper createG5(Manager manager) {
+		try {
+			
+			Constructor connectorConstructor = getConstructor("G5");
+			return (Grouper) connectorConstructor.newInstance(manager, getEnv(), getEnv2());
+
+		} catch (SecurityException e) {
+			e.printStackTrace();
+		} catch (IllegalArgumentException e) {
+			e.printStackTrace();
+		} catch (InstantiationException e) {
+			e.printStackTrace();
+		} catch (IllegalAccessException e) {
+			e.printStackTrace();
+		} catch (InvocationTargetException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
 
 	public Decorator createDecoration(Manager manager) {
 		try {

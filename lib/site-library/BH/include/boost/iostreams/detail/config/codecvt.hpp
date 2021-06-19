@@ -42,7 +42,11 @@
 
 //------------------Normalize codecvt::length---------------------------------//
 
+<<<<<<< HEAD
 #if !defined(__MSL_CPP__) && !defined(__LIBCOMO__) && \
+=======
+#if !defined(__MSL_CPP__) && !defined(__LIBCOMO__) && !defined(__clang__) && \
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     (!defined(BOOST_RWSTD_VER) || BOOST_RWSTD_VER < 0x04010300) && \
     (!defined(__MACH__) || !defined(__INTEL_COMPILER))
     /**/

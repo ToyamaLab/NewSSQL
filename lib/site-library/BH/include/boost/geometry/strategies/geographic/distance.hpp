@@ -2,8 +2,13 @@
 
 // Copyright (c) 2007-2016 Barend Gehrels, Amsterdam, the Netherlands.
 
+<<<<<<< HEAD
 // This file was modified by Oracle on 2014-2017.
 // Modifications copyright (c) 2014-2017 Oracle and/or its affiliates.
+=======
+// This file was modified by Oracle on 2014-2018.
+// Modifications copyright (c) 2014-2018 Oracle and/or its affiliates.
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 // Contributed and/or modified by Vissarion Fysikopoulos, on behalf of Oracle
 // Contributed and/or modified by Adam Wulkiewicz, on behalf of Oracle
@@ -20,12 +25,22 @@
 #include <boost/geometry/core/coordinate_type.hpp>
 #include <boost/geometry/core/radian_access.hpp>
 #include <boost/geometry/core/radius.hpp>
+<<<<<<< HEAD
 #include <boost/geometry/core/srs.hpp>
 
 #include <boost/geometry/formulas/andoyer_inverse.hpp>
 #include <boost/geometry/formulas/elliptic_arc_length.hpp>
 #include <boost/geometry/formulas/flattening.hpp>
 
+=======
+
+#include <boost/geometry/formulas/andoyer_inverse.hpp>
+#include <boost/geometry/formulas/meridian_inverse.hpp>
+#include <boost/geometry/formulas/flattening.hpp>
+
+#include <boost/geometry/srs/spheroid.hpp>
+
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 #include <boost/geometry/strategies/distance.hpp>
 #include <boost/geometry/strategies/geographic/parameters.hpp>
 
@@ -34,6 +49,10 @@
 #include <boost/geometry/util/promote_floating_point.hpp>
 #include <boost/geometry/util/select_calculation_type.hpp>
 
+<<<<<<< HEAD
+=======
+#include <boost/geometry/geometries/point_xy.hpp>
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 namespace boost { namespace geometry
 {
@@ -41,6 +60,22 @@ namespace boost { namespace geometry
 namespace strategy { namespace distance
 {
 
+<<<<<<< HEAD
+=======
+/*!
+\brief Distance calculation for geographic coordinates on a spheroid
+\ingroup strategies
+\tparam FormulaPolicy Formula used to calculate azimuths
+\tparam Spheroid The spheroid model
+\tparam CalculationType \tparam_calculation
+
+\qbk{
+[heading See also]
+\* [link geometry.reference.algorithms.distance.distance_3_with_strategy distance (with strategy)]
+\* [link geometry.reference.srs.srs_spheroid srs::spheroid]
+}
+*/
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 template
 <
     typename FormulaPolicy = strategy::andoyer,
@@ -77,6 +112,7 @@ public :
     static inline CT apply(CT lon1, CT lat1, CT lon2, CT lat2,
                            Spheroid const& spheroid)
     {
+<<<<<<< HEAD
         typedef typename formula::elliptic_arc_length
                 <
                 CT, strategy::default_order<FormulaPolicy>::value
@@ -84,6 +120,15 @@ public :
 
         typename elliptic_arc_length::result res =
                  elliptic_arc_length::apply(lon1, lat1, lon2, lat2, spheroid);
+=======
+        typedef typename formula::meridian_inverse
+                <
+                CT, strategy::default_order<FormulaPolicy>::value
+                > meridian_inverse;
+
+        typename meridian_inverse::result res =
+                 meridian_inverse::apply(lon1, lat1, lon2, lat2, spheroid);
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
         if (res.meridian)
         {

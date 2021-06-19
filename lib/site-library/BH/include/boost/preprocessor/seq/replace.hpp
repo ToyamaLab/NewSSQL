@@ -33,6 +33,7 @@
 #    define BOOST_PP_SEQ_REPLACE_DETAIL_REST_EMPTY(seq, i)
 #    define BOOST_PP_SEQ_REPLACE_DETAIL_REST_VALID(seq, i) BOOST_PP_SEQ_REST_N(BOOST_PP_INC(i), seq)
 #    define BOOST_PP_SEQ_REPLACE_DETAIL_REST(seq, i) \
+<<<<<<< HEAD
 		BOOST_PP_IIF \
 			( \
 			BOOST_PP_EQUAL(i,BOOST_PP_DEC(BOOST_PP_SEQ_SIZE(seq))), \
@@ -40,6 +41,15 @@
 			BOOST_PP_SEQ_REPLACE_DETAIL_REST_VALID \
 			) \
 		(seq, i) \
+=======
+        BOOST_PP_IIF \
+            ( \
+            BOOST_PP_EQUAL(i,BOOST_PP_DEC(BOOST_PP_SEQ_SIZE(seq))), \
+            BOOST_PP_SEQ_REPLACE_DETAIL_REST_EMPTY, \
+            BOOST_PP_SEQ_REPLACE_DETAIL_REST_VALID \
+            ) \
+        (seq, i) \
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 /**/
 #
 # endif

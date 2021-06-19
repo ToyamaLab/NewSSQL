@@ -26,8 +26,13 @@
 #elif defined (BOOST_SPIRIT_ASSERT_EXCEPTION)
     #define BOOST_SPIRIT_ASSERT_AUX(f, l, x) BOOST_SPIRIT_ASSERT_AUX2(f, l, x)
     #define BOOST_SPIRIT_ASSERT_AUX2(f, l, x)                                   \
+<<<<<<< HEAD
     do{ if (!(x)) boost::throw_exception(                                       \
         BOOST_SPIRIT_ASSERT_EXCEPTION(f "(" #l "): " #x)); } while(0)
+=======
+    ( (x) ? (void)0 : boost::throw_exception(                                   \
+        BOOST_SPIRIT_ASSERT_EXCEPTION(f "(" #l "): " #x)) )
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     #define BOOST_SPIRIT_ASSERT(x) BOOST_SPIRIT_ASSERT_AUX(__FILE__, __LINE__, x)
 #else
     #include <boost/assert.hpp>

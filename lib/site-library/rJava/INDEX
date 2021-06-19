@@ -10,6 +10,10 @@ $,jobjRef-method        Field/method operator for Java objects
                         another class
 .jequals                Comparing Java References
 .jfield                 Obtains the value of a field
+<<<<<<< HEAD
+=======
+.jgc                    Invoke Java Garbage Collection
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 .jinit                  Initialize Java VM
 .jinstanceof            Is a java object an instance of a given java
                         class

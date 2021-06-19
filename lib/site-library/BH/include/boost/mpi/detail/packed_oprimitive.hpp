@@ -12,7 +12,10 @@
 #include <boost/mpi/config.hpp>
 #include <cstddef> // size_t
 #include <boost/config.hpp>
+<<<<<<< HEAD
 
+=======
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 #include <boost/mpi/datatype.hpp>
 #include <boost/mpi/exception.hpp>
 #include <boost/mpi/detail/antiques.hpp>
@@ -47,6 +50,14 @@ public:
       return size_ = buffer_.size();
     }
 
+<<<<<<< HEAD
+=======
+    const std::size_t* size_ptr() const
+    {
+      return &size();
+    }
+
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     void save_binary(void const *address, std::size_t count)
         {
           save_impl(address,MPI_BYTE,count);
@@ -108,6 +119,14 @@ private:
           buffer_.resize(position);
     }
 
+<<<<<<< HEAD
+=======
+    static buffer_type::value_type* get_data(buffer_type& b)
+    {
+      return b.empty() ? 0 : &(b[0]);
+    }
+
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
   buffer_type& buffer_;
   mutable std::size_t size_;
   MPI_Comm comm;

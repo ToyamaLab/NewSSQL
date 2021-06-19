@@ -32,4 +32,8 @@ Author: Gábor Csárdi [aut, cre],
 Maintainer: Gábor Csárdi <csardi.gabor@gmail.com>
 Repository: CRAN
 Date/Publication: 2017-09-16 19:49:46 UTC
+<<<<<<< HEAD
 Built: R 3.5.1; ; 2018-08-18 07:12:35 UTC; unix
+=======
+Built: R 4.0.2; ; 2020-08-27 07:43:56 UTC; unix
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce

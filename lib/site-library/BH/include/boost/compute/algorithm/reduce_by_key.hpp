@@ -14,11 +14,20 @@
 #include <iterator>
 #include <utility>
 
+<<<<<<< HEAD
+=======
+#include <boost/static_assert.hpp>
+
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 #include <boost/compute/command_queue.hpp>
 #include <boost/compute/device.hpp>
 #include <boost/compute/functional.hpp>
 #include <boost/compute/system.hpp>
 #include <boost/compute/algorithm/detail/reduce_by_key.hpp>
+<<<<<<< HEAD
+=======
+#include <boost/compute/type_traits/is_device_iterator.hpp>
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 namespace boost {
 namespace compute {
@@ -68,6 +77,14 @@ reduce_by_key(InputKeyIterator keys_first,
               BinaryPredicate predicate,
               command_queue &queue = system::default_queue())
 {
+<<<<<<< HEAD
+=======
+    BOOST_STATIC_ASSERT(is_device_iterator<InputKeyIterator>::value);
+    BOOST_STATIC_ASSERT(is_device_iterator<InputValueIterator>::value);
+    BOOST_STATIC_ASSERT(is_device_iterator<OutputKeyIterator>::value);
+    BOOST_STATIC_ASSERT(is_device_iterator<OutputValueIterator>::value);
+
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     return detail::dispatch_reduce_by_key(keys_first, keys_last, values_first,
                                           keys_result, values_result,
                                           function, predicate,
@@ -87,6 +104,13 @@ reduce_by_key(InputKeyIterator keys_first,
               BinaryFunction function,
               command_queue &queue = system::default_queue())
 {
+<<<<<<< HEAD
+=======
+    BOOST_STATIC_ASSERT(is_device_iterator<InputKeyIterator>::value);
+    BOOST_STATIC_ASSERT(is_device_iterator<InputValueIterator>::value);
+    BOOST_STATIC_ASSERT(is_device_iterator<OutputKeyIterator>::value);
+    BOOST_STATIC_ASSERT(is_device_iterator<OutputValueIterator>::value);
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     typedef typename std::iterator_traits<InputKeyIterator>::value_type key_type;
 
     return reduce_by_key(keys_first, keys_last, values_first,
@@ -106,6 +130,13 @@ reduce_by_key(InputKeyIterator keys_first,
               OutputValueIterator values_result,
               command_queue &queue = system::default_queue())
 {
+<<<<<<< HEAD
+=======
+    BOOST_STATIC_ASSERT(is_device_iterator<InputKeyIterator>::value);
+    BOOST_STATIC_ASSERT(is_device_iterator<InputValueIterator>::value);
+    BOOST_STATIC_ASSERT(is_device_iterator<OutputKeyIterator>::value);
+    BOOST_STATIC_ASSERT(is_device_iterator<OutputValueIterator>::value);
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     typedef typename std::iterator_traits<InputKeyIterator>::value_type key_type;
     typedef typename std::iterator_traits<InputValueIterator>::value_type value_type;
 

@@ -2,7 +2,11 @@
 // local/detail/impl/endpoint.hpp
 // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 //
+<<<<<<< HEAD
 // Copyright (c) 2003-2017 Christopher M. Kohlhoff (chris at kohlhoff dot com)
+=======
+// Copyright (c) 2003-2019 Christopher M. Kohlhoff (chris at kohlhoff dot com)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 // Derived from a public domain implementation written by Daniel Casimiro.
 //
 // Distributed under the Boost Software License, Version 1.0. (See accompanying
@@ -49,6 +53,16 @@ endpoint::endpoint(const std::string& path_name)
   init(path_name.data(), path_name.length());
 }
 
+<<<<<<< HEAD
+=======
+#if defined(BOOST_ASIO_HAS_STRING_VIEW)
+endpoint::endpoint(string_view path_name)
+{
+  init(path_name.data(), path_name.length());
+}
+#endif // defined(BOOST_ASIO_HAS_STRING_VIEW)
+
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 void endpoint::resize(std::size_t new_size)
 {
   if (new_size > sizeof(boost::asio::detail::sockaddr_un_type))

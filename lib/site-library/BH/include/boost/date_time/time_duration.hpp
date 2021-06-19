@@ -9,12 +9,23 @@
  * $Date$
  */
 
+<<<<<<< HEAD
 #include <boost/cstdint.hpp>
 #include <boost/operators.hpp>
 #include <boost/static_assert.hpp>
 #include <boost/date_time/time_defs.hpp>
 #include <boost/date_time/special_defs.hpp>
 #include <boost/date_time/compiler_config.hpp>
+=======
+#include <boost/core/enable_if.hpp>
+#include <boost/cstdint.hpp>
+#include <boost/date_time/compiler_config.hpp>
+#include <boost/date_time/special_defs.hpp>
+#include <boost/date_time/time_defs.hpp>
+#include <boost/operators.hpp>
+#include <boost/static_assert.hpp>
+#include <boost/type_traits/is_integral.hpp>
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 namespace boost {
 namespace date_time {
@@ -27,8 +38,13 @@ namespace date_time {
       This design allows the subclass duration types to provide custom
       construction policies or other custom features not provided here.
 
+<<<<<<< HEAD
       @param T The subclass type
       @param rep_type The time resolution traits for this duration type.
+=======
+      @tparam T The subclass type
+      @tparam rep_type The time resolution traits for this duration type.
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
   */
   template<class T, typename rep_type>
   class BOOST_SYMBOL_VISIBLE time_duration : private
@@ -142,10 +158,32 @@ namespace date_time {
     {
       return duration_type(ticks_ * (-1));
     }
+<<<<<<< HEAD
+=======
+    duration_type abs() const
+    {
+      if ( is_negative() )
+      {
+        return invert_sign();
+      }
+      return duration_type(ticks_);
+    }
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     bool is_negative() const
     {
       return ticks_ < 0;
     }
+<<<<<<< HEAD
+=======
+    bool is_zero() const
+    {
+      return ticks_ == 0;
+    }
+    bool is_positive() const
+    {
+      return ticks_ > 0;
+    }
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     bool operator<(const time_duration& rhs)  const
     {
       return ticks_ <  rhs.ticks_;
@@ -262,7 +300,11 @@ namespace date_time {
 
   //! Template for instantiating derived adjusting durations
   /* These templates are designed to work with multiples of
+<<<<<<< HEAD
    * 10 for frac_of_second and resoultion adjustment
+=======
+   * 10 for frac_of_second and resolution adjustment
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
    */
   template<class base_duration, boost::int64_t frac_of_second>
   class BOOST_SYMBOL_VISIBLE subsecond_duration : public base_duration
@@ -278,14 +320,24 @@ namespace date_time {
     BOOST_STATIC_CONSTANT(boost::int64_t, adjustment_ratio = (traits_type::ticks_per_second >= frac_of_second ? traits_type::ticks_per_second / frac_of_second : frac_of_second / traits_type::ticks_per_second));
 
   public:
+<<<<<<< HEAD
     explicit subsecond_duration(boost::int64_t ss) :
+=======
+    // The argument (ss) must be an integral type
+    template <typename T>
+    explicit subsecond_duration(T const& ss,
+                                typename boost::enable_if<boost::is_integral<T>, void>::type* = BOOST_DATE_TIME_NULLPTR) :
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
       base_duration(impl_type(traits_type::ticks_per_second >= frac_of_second ? ss * adjustment_ratio : ss / adjustment_ratio))
     {
     }
   };
 
+<<<<<<< HEAD
 
 
+=======
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 } } //namespace date_time
 
 

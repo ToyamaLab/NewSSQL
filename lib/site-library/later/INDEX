@@ -1,3 +1,7 @@
+<<<<<<< HEAD
+=======
+create_loop             Private event loops
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 later                   Executes a function later
 next_op_secs            Relative time to next scheduled operation
 run_now                 Execute scheduled operations

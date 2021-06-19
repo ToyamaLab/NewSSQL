@@ -12,7 +12,10 @@
 #include <boost/spirit/home/x3/support/traits/print_token.hpp>
 #include <boost/spirit/home/x3/support/traits/print_attribute.hpp>
 #include <boost/spirit/home/x3/nonterminal/debug_handler_state.hpp>
+<<<<<<< HEAD
 #include <boost/fusion/include/out.hpp>
+=======
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 #include <boost/type_traits/is_same.hpp>
 #include <iostream>
 
@@ -102,11 +105,14 @@ namespace boost { namespace spirit { namespace x3
                             << "</attributes>";
                         out << std::endl;
                     }
+<<<<<<< HEAD
                     //~ if (!fusion::empty(context.locals))
                         //~ out
                             //~ << "<locals>"
                             //~ << context.locals
                             //~ << "</locals>";
+=======
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
                     print_indent(--indent);
                     out
                         << "</" << rule_name << '>'

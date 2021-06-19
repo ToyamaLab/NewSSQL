@@ -1,8 +1,16 @@
+<<<<<<< HEAD
 ## ---- echo = FALSE-------------------------------------------------------
 library(DBI)
 knitr::opts_chunk$set(collapse = TRUE, comment = "#>")
 
 ## ------------------------------------------------------------------------
+=======
+## ---- echo = FALSE------------------------------------------------------------
+library(DBI)
+knitr::opts_chunk$set(collapse = TRUE, comment = "#>")
+
+## -----------------------------------------------------------------------------
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 #' Driver for Kazam database.
 #' 
 #' @keywords internal
@@ -11,19 +19,31 @@ knitr::opts_chunk$set(collapse = TRUE, comment = "#>")
 #' @import methods
 setClass("KazamDriver", contains = "DBIDriver")
 
+<<<<<<< HEAD
 ## ------------------------------------------------------------------------
+=======
+## -----------------------------------------------------------------------------
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 #' @export
 #' @rdname Kazam-class
 setMethod("dbUnloadDriver", "KazamDriver", function(drv, ...) {
   TRUE
 })
 
+<<<<<<< HEAD
 ## ------------------------------------------------------------------------
+=======
+## -----------------------------------------------------------------------------
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 setMethod("show", "KazamDriver", function(object) {
   cat("<KazamDriver>\n")
 })
 
+<<<<<<< HEAD
 ## ------------------------------------------------------------------------
+=======
+## -----------------------------------------------------------------------------
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 #' @export
 Kazam <- function() {
   new("KazamDriver")
@@ -31,7 +51,11 @@ Kazam <- function() {
 
 Kazam()
 
+<<<<<<< HEAD
 ## ------------------------------------------------------------------------
+=======
+## -----------------------------------------------------------------------------
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 #' Kazam connection class.
 #' 
 #' @export
@@ -46,7 +70,11 @@ setClass("KazamConnection",
   )
 )
 
+<<<<<<< HEAD
 ## ------------------------------------------------------------------------
+=======
+## -----------------------------------------------------------------------------
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 #' @param drv An object created by \code{Kazam()} 
 #' @rdname Kazam
 #' @export
@@ -62,7 +90,11 @@ setMethod("dbConnect", "KazamDriver", function(drv, ...) {
   new("KazamConnection", host = host, ...)
 })
 
+<<<<<<< HEAD
 ## ------------------------------------------------------------------------
+=======
+## -----------------------------------------------------------------------------
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 #' Kazam results class.
 #' 
 #' @keywords internal
@@ -72,7 +104,11 @@ setClass("KazamResult",
   slots = list(ptr = "externalptr")
 )
 
+<<<<<<< HEAD
 ## ------------------------------------------------------------------------
+=======
+## -----------------------------------------------------------------------------
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 #' Send a query to Kazam.
 #' 
 #' @export
@@ -83,14 +119,22 @@ setMethod("dbSendQuery", "KazamConnection", function(conn, statement, ...) {
   new("KazamResult", ...)
 })
 
+<<<<<<< HEAD
 ## ------------------------------------------------------------------------
+=======
+## -----------------------------------------------------------------------------
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 #' @export
 setMethod("dbClearResult", "KazamResult", function(res, ...) {
   # free resources
   TRUE
 })
 
+<<<<<<< HEAD
 ## ------------------------------------------------------------------------
+=======
+## -----------------------------------------------------------------------------
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 #' Retrieve records from Kazam query
 #' @export
 setMethod("dbFetch", "KazamResult", function(res, n = -1, ...) {
@@ -105,7 +149,11 @@ setMethod("dbDataType", "KazamConnection", function(dbObj, obj, ...) {
   ...
 })
 
+<<<<<<< HEAD
 ## ------------------------------------------------------------------------
+=======
+## -----------------------------------------------------------------------------
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 #' @export
 setMethod("dbHasCompleted", "KazamResult", function(res, ...) { 
   

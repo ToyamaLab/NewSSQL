@@ -1,15 +1,69 @@
+<<<<<<< HEAD
 ## hms 0.4.2 (2018-03-10)
+=======
+# hms 0.5.3
+
+- Use `vec_default_ptype2()`, remove `vec_ptype2.hms.unspecified()` (#80, @romainfrancois).
+- `vec_ptype2.hms.default()` forwards to `vec_default_ptype2()` for compatibility with vctrs 0.2.1.
+- Remove `as.data.frame.hms()`, handeld by vctrs.
+
+
+# hms 0.5.2.9000
+
+- Internal changes only.
+
+
+# hms 0.5.2
+
+- Work around parsing error that occurs on DST changeover dates (https://bugs.r-project.org/bugzilla/show_bug.cgi?id=16764).
+
+
+# hms 0.5.1
+
+- Lossy casts from `character` vectors to `hms` now also trigger a warning if the cast succeeds in the first element of the vector but fails for other elements.
+
+
+# hms 0.5.0
+
+## Breaking changes
+
+- Now based on vctrs >= 0.2.0 (#61). This adds support for `vec_cast()` and `vec_ptype2()`. Some operations (such as subset assignment) are now stricter. The `new_hms()` constructor permits safe construction of `hms` objects from a numeric vector.
+
+- The new `is_hms()` deprecates the existing `is.hms()`. `as.hms()` is deprecated in favor of `vec_cast()` or the new `as_hms()` (which is just a thin wrapper around `vec_cast()`).
+
+## Printing
+
+- Always show seconds in a pillar if they are different from zero (#54).
+
+- Values with nonzero hours, seconds and split-seconds are now displayed correctly in tibbles (#56), even with a very small distance to the full second (#64).
+
+## Internal
+
+- Don't test colored output on CRAN.
+- Correct reference link on r4ds (#58, @evanhaldane).
+
+
+# hms 0.4.2
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 - Adapted tests to pillar 1.2.1.
 
 
+<<<<<<< HEAD
 # hms 0.4.1 (2018-01-23)
+=======
+# hms 0.4.1
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 - Preserve `NA` when converting to `character` (#51, @jeroen).
 - Adapted tests to pillar 1.1.0.
 
 
+<<<<<<< HEAD
 # hms 0.4.0 (2017-11-16)
+=======
+# hms 0.4.0
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 ## Breaking changes
 
@@ -39,13 +93,21 @@
 - Improved error message if calling `hms()` with a character argument (#29).
 
 
+<<<<<<< HEAD
 # hms 0.3 (2016-11-22)
+=======
+# hms 0.3
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 - Fix `lubridate` test for compatibility with 1.6.0 (#23, @vspinu).
 - NA values are formatted as `NA` (#22).
 
 
+<<<<<<< HEAD
 # hms 0.2 (2016-06-17)
+=======
+# hms 0.2
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 Minor fixes and improvements.
 
@@ -55,7 +117,11 @@ Minor fixes and improvements.
 - Sub-second part is printed with up to six digits, for even smaller values trailing zeros are shown (#17).
 
 
+<<<<<<< HEAD
 # hms 0.1 (2016-04-30)
+=======
+# hms 0.1
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 First CRAN release.
 

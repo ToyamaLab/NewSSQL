@@ -14,10 +14,16 @@
 #define BOOST_OPTIONAL_DETAIL_OLD_OPTIONAL_IMPLEMENTATION_AJK_28JAN2015_HPP
 
 #include <boost/detail/reference_content.hpp>
+<<<<<<< HEAD
 #include <boost/mpl/bool.hpp>
 #include <boost/mpl/if.hpp>
 #include <boost/mpl/not.hpp>
 #include <boost/type_traits/is_reference.hpp>
+=======
+#include <boost/type_traits/is_reference.hpp>
+#include <boost/type_traits/integral_constant.hpp>
+#include <boost/type_traits/conditional.hpp>
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 namespace boost {
 
@@ -96,13 +102,22 @@ class optional_base : public optional_tag
 
     typedef T value_type ;
 
+<<<<<<< HEAD
     typedef mpl::true_  is_reference_tag ;
     typedef mpl::false_ is_not_reference_tag ;
+=======
+    typedef true_type  is_reference_tag ;
+    typedef false_type is_not_reference_tag ;
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
     typedef BOOST_DEDUCED_TYPENAME is_reference<T>::type is_reference_predicate ;
 
   public:
+<<<<<<< HEAD
     typedef BOOST_DEDUCED_TYPENAME mpl::if_<is_reference_predicate,types_when_ref,types_when_not_ref>::type types ;
+=======
+    typedef BOOST_DEDUCED_TYPENAME conditional<is_reference_predicate::value,types_when_ref,types_when_not_ref>::type types ;
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
   protected:
     typedef BOOST_DEDUCED_TYPENAME types::reference_type       reference_type ;
@@ -147,7 +162,11 @@ class optional_base : public optional_tag
     }
 #endif
 
+<<<<<<< HEAD
     // Creates an optional<T> initialized with 'val' IFF cond is true, otherwise creates an uninitialzed optional<T>.
+=======
+    // Creates an optional<T> initialized with 'val' IFF cond is true, otherwise creates an uninitialized optional<T>.
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     // Can throw if T::T(T const&) does
     optional_base ( bool cond, argument_type val )
       :
@@ -333,7 +352,11 @@ class optional_base : public optional_tag
 
   public :
 
+<<<<<<< HEAD
     // **DEPPRECATED** Destroys the current value, if any, leaving this UNINITIALIZED
+=======
+    // Destroys the current value, if any, leaving this UNINITIALIZED
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     // No-throw (assuming T::~T() doesn't)
     void reset() BOOST_NOEXCEPT { destroy(); }
 
@@ -422,7 +445,11 @@ class optional_base : public optional_tag
     template<class Expr>
     void construct ( Expr&& factory, in_place_factory_base const* )
      {
+<<<<<<< HEAD
        BOOST_STATIC_ASSERT ( ::boost::mpl::not_<is_reference_predicate>::value ) ;
+=======
+       BOOST_STATIC_ASSERT ( !is_reference_predicate::value ) ;
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
        boost_optional_detail::construct<value_type>(factory, m_storage.address());
        m_initialized = true ;
      }
@@ -431,7 +458,11 @@ class optional_base : public optional_tag
     template<class Expr>
     void construct ( Expr&& factory, typed_in_place_factory_base const* )
      {
+<<<<<<< HEAD
        BOOST_STATIC_ASSERT ( ::boost::mpl::not_<is_reference_predicate>::value ) ;
+=======
+       BOOST_STATIC_ASSERT ( !is_reference_predicate::value ) ;
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
        factory.apply(m_storage.address()) ;
        m_initialized = true ;
      }
@@ -456,7 +487,11 @@ class optional_base : public optional_tag
     template<class Expr>
     void construct ( Expr const& factory, in_place_factory_base const* )
      {
+<<<<<<< HEAD
        BOOST_STATIC_ASSERT ( ::boost::mpl::not_<is_reference_predicate>::value ) ;
+=======
+       BOOST_STATIC_ASSERT ( !is_reference_predicate::value ) ;
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
        boost_optional_detail::construct<value_type>(factory, m_storage.address());
        m_initialized = true ;
      }
@@ -465,7 +500,11 @@ class optional_base : public optional_tag
     template<class Expr>
     void construct ( Expr const& factory, typed_in_place_factory_base const* )
      {
+<<<<<<< HEAD
        BOOST_STATIC_ASSERT ( ::boost::mpl::not_<is_reference_predicate>::value ) ;
+=======
+       BOOST_STATIC_ASSERT ( !is_reference_predicate::value ) ;
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
        factory.apply(m_storage.address()) ;
        m_initialized = true ;
      }
@@ -730,7 +769,11 @@ class optional : public optional_detail::optional_base<T>
   explicit optional ( Expr&& expr, 
                       BOOST_DEDUCED_TYPENAME boost::disable_if_c<
                         (boost::is_base_of<optional_detail::optional_tag, BOOST_DEDUCED_TYPENAME boost::decay<Expr>::type>::value) || 
+<<<<<<< HEAD
                         boost::is_same<BOOST_DEDUCED_TYPENAME boost::decay<Expr>::type, none_t>::value >::type* = 0 
+=======
+                        boost::is_same<BOOST_DEDUCED_TYPENAME boost::decay<Expr>::type, none_t>::value, bool >::type = true 
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
   ) 
     : base(boost::forward<Expr>(expr),boost::addressof(expr)) 
     {optional_detail::prevent_binding_rvalue_ref_to_optional_lvalue_ref<T, Expr&&>();}

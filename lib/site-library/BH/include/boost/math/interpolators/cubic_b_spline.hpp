@@ -23,6 +23,12 @@
 #define BOOST_MATH_INTERPOLATORS_CUBIC_B_SPLINE_HPP
 
 #include <boost/math/interpolators/detail/cubic_b_spline_detail.hpp>
+<<<<<<< HEAD
+=======
+#include <boost/config/header_deprecated.hpp>
+
+BOOST_HEADER_DEPRECATED("<boost/math/interpolators/cardinal_cubic_b_spline.hpp>");
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 namespace boost{ namespace math{
 
@@ -45,6 +51,11 @@ public:
 
     Real prime(Real x) const;
 
+<<<<<<< HEAD
+=======
+    Real double_prime(Real x) const;
+
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 private:
     std::shared_ptr<detail::cubic_b_spline_imp<Real>> m_imp;
 };
@@ -74,5 +85,15 @@ Real cubic_b_spline<Real>::prime(Real x) const
     return m_imp->prime(x);
 }
 
+<<<<<<< HEAD
+=======
+template<class Real>
+Real cubic_b_spline<Real>::double_prime(Real x) const
+{
+    return m_imp->double_prime(x);
+}
+
+
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 }}
 #endif

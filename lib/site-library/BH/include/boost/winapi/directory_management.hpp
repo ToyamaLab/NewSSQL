@@ -19,6 +19,7 @@
 #if !defined( BOOST_USE_WINDOWS_H )
 extern "C" {
 #if !defined( BOOST_NO_ANSI_APIS )
+<<<<<<< HEAD
 BOOST_SYMBOL_IMPORT boost::winapi::BOOL_ WINAPI
     CreateDirectoryA(boost::winapi::LPCSTR_, ::_SECURITY_ATTRIBUTES*);
 #if BOOST_WINAPI_PARTITION_APP_SYSTEM
@@ -35,6 +36,24 @@ BOOST_SYMBOL_IMPORT boost::winapi::DWORD_ WINAPI
     GetTempPathW(boost::winapi::DWORD_ length, boost::winapi::LPWSTR_ buffer);
 #endif
 BOOST_SYMBOL_IMPORT boost::winapi::BOOL_ WINAPI
+=======
+BOOST_SYMBOL_IMPORT boost::winapi::BOOL_ BOOST_WINAPI_WINAPI_CC
+    CreateDirectoryA(boost::winapi::LPCSTR_, ::_SECURITY_ATTRIBUTES*);
+#if BOOST_WINAPI_PARTITION_APP_SYSTEM
+BOOST_SYMBOL_IMPORT boost::winapi::DWORD_ BOOST_WINAPI_WINAPI_CC
+    GetTempPathA(boost::winapi::DWORD_ length, boost::winapi::LPSTR_ buffer);
+#endif
+BOOST_SYMBOL_IMPORT boost::winapi::BOOL_ BOOST_WINAPI_WINAPI_CC
+    RemoveDirectoryA(boost::winapi::LPCSTR_);
+#endif
+BOOST_SYMBOL_IMPORT boost::winapi::BOOL_ BOOST_WINAPI_WINAPI_CC
+    CreateDirectoryW(boost::winapi::LPCWSTR_, ::_SECURITY_ATTRIBUTES*);
+#if BOOST_WINAPI_PARTITION_APP_SYSTEM
+BOOST_SYMBOL_IMPORT boost::winapi::DWORD_ BOOST_WINAPI_WINAPI_CC
+    GetTempPathW(boost::winapi::DWORD_ length, boost::winapi::LPWSTR_ buffer);
+#endif
+BOOST_SYMBOL_IMPORT boost::winapi::BOOL_ BOOST_WINAPI_WINAPI_CC
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     RemoveDirectoryW(boost::winapi::LPCWSTR_);
 } // extern "C"
 #endif

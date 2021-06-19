@@ -10,7 +10,11 @@
 #   ifndef BOOST_PP_IS_ITERATING
 
 #   include <boost/config.hpp>
+<<<<<<< HEAD
 #   include <boost/detail/workaround.hpp>
+=======
+#   include <boost/config/workaround.hpp>
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 #   include <boost/preprocessor/cat.hpp>
 #   include <boost/preprocessor/iteration/iterate.hpp>

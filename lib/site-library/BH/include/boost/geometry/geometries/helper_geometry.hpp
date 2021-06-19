@@ -32,6 +32,7 @@ namespace boost { namespace geometry
 namespace detail { namespace helper_geometries
 {
 
+<<<<<<< HEAD
 template <typename Geometry, typename CS_Tag = typename cs_tag<Geometry>::type>
 struct default_units
 {
@@ -86,6 +87,8 @@ struct cs_tag_to_coordinate_system<Units, geographic_tag>
 };
 
 
+=======
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 template
 <
     typename Point,
@@ -154,10 +157,14 @@ template
 <
     typename Geometry,
     typename NewCoordinateType = typename coordinate_type<Geometry>::type,
+<<<<<<< HEAD
     typename NewUnits = typename detail::helper_geometries::default_units
         <
             Geometry
         >::type
+=======
+    typename NewUnits = typename detail::cs_angular_units<Geometry>::type
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 >
 struct helper_geometry
 {

@@ -15,7 +15,10 @@
 #define BOOST_GEOMETRY_ITERATORS_CLOSING_ITERATOR_HPP
 
 #include <boost/range.hpp>
+<<<<<<< HEAD
 #include <boost/iterator.hpp>
+=======
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 #include <boost/iterator/iterator_facade.hpp>
 #include <boost/iterator/iterator_categories.hpp>
 
@@ -39,10 +42,31 @@ struct closing_iterator
     <
         closing_iterator<Range>,
         typename boost::range_value<Range>::type const,
+<<<<<<< HEAD
         boost::random_access_traversal_tag
     >
 {
     typedef typename boost::range_difference<Range>::type difference_type;
+=======
+        boost::random_access_traversal_tag,
+        typename boost::range_reference<Range const>::type,
+        typename boost::range_difference<Range>::type
+    >
+{
+private:
+    typedef boost::iterator_facade
+        <
+            closing_iterator<Range>,
+            typename boost::range_value<Range>::type const,
+            boost::random_access_traversal_tag,
+            typename boost::range_reference<Range const>::type,
+            typename boost::range_difference<Range>::type
+        > base_type;
+
+public:
+    typedef typename base_type::reference reference;
+    typedef typename base_type::difference_type difference_type;
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
     /// Constructor including the range it is based on
     explicit inline closing_iterator(Range& range)
@@ -72,7 +96,11 @@ struct closing_iterator
 private:
     friend class boost::iterator_core_access;
 
+<<<<<<< HEAD
     inline typename boost::range_value<Range>::type const& dereference() const
+=======
+    inline reference dereference() const
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     {
         return *m_iterator;
     }

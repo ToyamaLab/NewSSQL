@@ -13,5 +13,9 @@ http://www.boost.org/LICENSE_1_0.txt)
 #include <boost/predef/language/stdc.h>
 #include <boost/predef/language/stdcpp.h>
 #include <boost/predef/language/objc.h>
+<<<<<<< HEAD
+=======
+#include <boost/predef/language/cuda.h>
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 #endif

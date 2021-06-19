@@ -324,7 +324,11 @@ namespace impl {
         >
         static typename parser_result<ParserT, ScannerT>::type
         parse(ParserT const &, ScannerT const& scan, ActionT const &action,
+<<<<<<< HEAD
             NestedT const& nested_d)
+=======
+            NestedT const& /*nested_d*/)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
         {
             return action.parse(scan);
         }

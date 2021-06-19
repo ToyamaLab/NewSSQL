@@ -22,9 +22,14 @@ namespace boost { namespace spirit { namespace qi { namespace detail
           : skipper(skipper_) {}
         Skipper const& skipper;
 
+<<<<<<< HEAD
     private:
         // silence MSVC warning C4512: assignment operator could not be generated
         unused_skipper& operator= (unused_skipper const&);
+=======
+        // silence MSVC warning C4512: assignment operator could not be generated
+        BOOST_DELETED_FUNCTION(unused_skipper& operator= (unused_skipper const&))
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     };
 
     template <typename Skipper>

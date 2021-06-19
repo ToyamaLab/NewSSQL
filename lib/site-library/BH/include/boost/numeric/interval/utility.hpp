@@ -11,8 +11,12 @@
 #ifndef BOOST_NUMERIC_INTERVAL_UTILITY_HPP
 #define BOOST_NUMERIC_INTERVAL_UTILITY_HPP
 
+<<<<<<< HEAD
 #include <boost/config.hpp>
 #include <boost/numeric/interval/detail/interval_prototype.hpp>
+=======
+#include <boost/numeric/interval/utility_fwd.hpp>
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 #include <boost/numeric/interval/detail/test_input.hpp>
 #include <boost/numeric/interval/detail/bugs.hpp>
 #include <algorithm>

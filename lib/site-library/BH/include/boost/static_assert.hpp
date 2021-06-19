@@ -53,9 +53,15 @@
 //
 #if defined(__GNUC__) && ((__GNUC__ > 3) || ((__GNUC__ == 3) && (__GNUC_MINOR__ >= 4)))
 #  ifndef BOOST_NO_CXX11_VARIADIC_MACROS
+<<<<<<< HEAD
 #     define BOOST_STATIC_ASSERT_BOOL_CAST( ... ) ((__VA_ARGS__) == 0 ? false : true)
 #  else
 #     define BOOST_STATIC_ASSERT_BOOL_CAST( x ) ((x) == 0 ? false : true)
+=======
+#     define BOOST_STATIC_ASSERT_BOOL_CAST( ... ) ((__VA_ARGS__) != 0)
+#  else
+#     define BOOST_STATIC_ASSERT_BOOL_CAST( x ) ((x) != 0)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 #  endif
 #else
 #  ifndef BOOST_NO_CXX11_VARIADIC_MACROS

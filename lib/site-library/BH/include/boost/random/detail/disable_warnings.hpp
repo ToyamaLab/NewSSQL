@@ -25,5 +25,9 @@
 
 #if defined(BOOST_GCC) && BOOST_GCC >= 40600
 #pragma GCC diagnostic push
+<<<<<<< HEAD
 // #pragma GCC diagnostic ignored "-Wlogical-op"
+=======
+//#pragma GCC diagnostic ignored "-Wlogical-op"
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 #endif

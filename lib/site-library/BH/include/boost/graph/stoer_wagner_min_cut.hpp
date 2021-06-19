@@ -215,9 +215,16 @@ namespace graph {
 
         typename boost::result_of<gen_type(const UndirectedGraph&, const ArgPack&)>::type pq = gen(g, arg_pack);
 
+<<<<<<< HEAD
         return boost::stoer_wagner_min_cut(g,
           weights,
           arg_pack [_parity_map | boost::dummy_property_map()],
+=======
+        boost::dummy_property_map dummy_prop;
+        return boost::stoer_wagner_min_cut(g,
+          weights,
+          arg_pack [_parity_map | dummy_prop],
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
           boost::detail::make_property_map_from_arg_pack_gen<tag::vertex_assignment_map, vertex_descriptor>(vertex_descriptor())(g, arg_pack),
           pq,
           boost::detail::override_const_property(arg_pack, _vertex_index_map, g, vertex_index)

@@ -2,7 +2,11 @@
 // detail/strand_executor_service.hpp
 // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 //
+<<<<<<< HEAD
 // Copyright (c) 2003-2017 Christopher M. Kohlhoff (chris at kohlhoff dot com)
+=======
+// Copyright (c) 2003-2019 Christopher M. Kohlhoff (chris at kohlhoff dot com)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 //
 // Distributed under the Boost Software License, Version 1.0. (See accompanying
 // file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
@@ -53,6 +57,13 @@ public:
     // itself has been scheduled in order to invoke some pending handlers.
     bool locked_;
 
+<<<<<<< HEAD
+=======
+    // Indicates that the strand has been shut down and will accept no further
+    // handlers.
+    bool shutdown_;
+
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     // The handlers that are waiting on the strand but should not be run until
     // after the next time the strand is scheduled. This queue must only be
     // modified while the mutex is locked.

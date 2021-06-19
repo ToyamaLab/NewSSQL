@@ -96,9 +96,15 @@ namespace boost {
 namespace chrono {
 
   // Clocks
+<<<<<<< HEAD
   class BOOST_CHRONO_DECL system_clock;
 #ifdef BOOST_CHRONO_HAS_CLOCK_STEADY
   class BOOST_CHRONO_DECL steady_clock;
+=======
+  class system_clock;
+#ifdef BOOST_CHRONO_HAS_CLOCK_STEADY
+  class steady_clock;
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 #endif
 
 #ifdef BOOST_CHRONO_HAS_CLOCK_STEADY

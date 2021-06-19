@@ -20,7 +20,11 @@
 
 namespace boost {
 namespace container {
+<<<<<<< HEAD
 namespace container_detail {
+=======
+namespace dtl {
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 template <class ForwardIterator, class Pred>
 bool is_sorted (ForwardIterator first, ForwardIterator last, Pred pred)
@@ -50,7 +54,11 @@ bool is_sorted_and_unique (ForwardIterator first, ForwardIterator last, Pred pre
    return true;
 }
 
+<<<<<<< HEAD
 }  //namespace container_detail {
+=======
+}  //namespace dtl {
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 }  //namespace container {
 }  //namespace boost {
 

@@ -87,9 +87,15 @@ namespace boost
         {
             void* const res=
 #if defined(_M_ARM64)
+<<<<<<< HEAD
                 __iso_volatile_load64((const volatile __int64*)x);
 #else
                 __iso_volatile_load32((const volatile __int32*)x);
+=======
+                (void*)__iso_volatile_load64((const volatile __int64*)x);
+#else
+                (void*)__iso_volatile_load32((const volatile __int32*)x);
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 #endif
             BOOST_THREAD_DETAIL_COMPILER_BARRIER();
             __dmb(0xB); // _ARM_BARRIER_ISH, see armintr.h from MSVC 11 and later

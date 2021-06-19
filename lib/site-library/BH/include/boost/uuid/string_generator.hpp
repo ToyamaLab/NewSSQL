@@ -3,7 +3,11 @@
 // Copyright 2010 Andy Tompkins.
 // Distributed under the Boost Software License, Version 1.0. (See
 // accompanying file LICENSE_1_0.txt or copy at
+<<<<<<< HEAD
 // http://www.boost.org/LICENSE_1_0.txt)
+=======
+// https://www.boost.org/LICENSE_1_0.txt)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 #ifndef BOOST_UUID_STRING_GENERATOR_HPP
 #define BOOST_UUID_STRING_GENERATOR_HPP
@@ -15,6 +19,10 @@
 #include <algorithm> // for find
 #include <stdexcept>
 #include <boost/throw_exception.hpp>
+<<<<<<< HEAD
+=======
+#include <boost/config.hpp>
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 #ifdef BOOST_NO_STDC_NAMESPACE
 namespace std {
@@ -187,7 +195,11 @@ private:
         }
     }
     
+<<<<<<< HEAD
     void throw_invalid() const {
+=======
+    BOOST_NORETURN void throw_invalid() const {
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
         BOOST_THROW_EXCEPTION(std::runtime_error("invalid uuid string"));
     }
 };

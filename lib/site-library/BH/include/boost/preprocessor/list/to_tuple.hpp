@@ -21,6 +21,7 @@
 # /* BOOST_PP_LIST_TO_TUPLE */
 #
 # define BOOST_PP_LIST_TO_TUPLE(list) \
+<<<<<<< HEAD
 	BOOST_PP_IIF \
 		( \
 		BOOST_PP_LIST_IS_NIL(list), \
@@ -28,6 +29,15 @@
 		BOOST_PP_LIST_TO_TUPLE_DO \
 		) \
 	(list) \
+=======
+    BOOST_PP_IIF \
+        ( \
+        BOOST_PP_LIST_IS_NIL(list), \
+        BOOST_PP_LIST_TO_TUPLE_EMPTY, \
+        BOOST_PP_LIST_TO_TUPLE_DO \
+        ) \
+    (list) \
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 /**/
 # define BOOST_PP_LIST_TO_TUPLE_EMPTY(list)
 #
@@ -41,6 +51,7 @@
 # /* BOOST_PP_LIST_TO_TUPLE_R */
 #
 # define BOOST_PP_LIST_TO_TUPLE_R(r, list) \
+<<<<<<< HEAD
 	BOOST_PP_IIF \
 		( \
 		BOOST_PP_LIST_IS_NIL(list), \
@@ -48,6 +59,15 @@
 		BOOST_PP_LIST_TO_TUPLE_R_DO \
 		) \
 	(r, list) \
+=======
+    BOOST_PP_IIF \
+        ( \
+        BOOST_PP_LIST_IS_NIL(list), \
+        BOOST_PP_LIST_TO_TUPLE_R_EMPTY, \
+        BOOST_PP_LIST_TO_TUPLE_R_DO \
+        ) \
+    (r, list) \
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 /**/
 # define BOOST_PP_LIST_TO_TUPLE_R_EMPTY(r,list)
 #

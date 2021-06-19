@@ -18,7 +18,10 @@
 // Boost.Test
 #include <boost/test/detail/config.hpp>
 #include <boost/test/detail/global_typedef.hpp>
+<<<<<<< HEAD
 #include <boost/test/detail/workaround.hpp>
+=======
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 // Boost
 #include <boost/mpl/or.hpp>
@@ -28,6 +31,11 @@
 #include <boost/type_traits/is_abstract.hpp>
 #include <boost/type_traits/has_left_shift.hpp>
 
+<<<<<<< HEAD
+=======
+#include <ios>
+#include <iostream>
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 #include <limits>
 
 #if !defined(BOOST_NO_CXX11_NULLPTR)
@@ -166,8 +174,16 @@ struct BOOST_TEST_DECL print_log_value<wchar_t const*> {
 
 #if !defined(BOOST_NO_CXX11_NULLPTR)
 template<>
+<<<<<<< HEAD
 struct BOOST_TEST_DECL print_log_value<std::nullptr_t> {
     void    operator()( std::ostream& ostr, std::nullptr_t t );
+=======
+struct print_log_value<std::nullptr_t> {
+    // declaration and definition is here because of #12969 https://svn.boost.org/trac10/ticket/12969
+    void    operator()( std::ostream& ostr, std::nullptr_t /*t*/ ) {
+        ostr << "nullptr";
+    }
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 };
 #endif
 

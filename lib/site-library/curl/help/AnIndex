@@ -3,18 +3,33 @@ curl_download	curl_download
 curl_echo	curl_echo
 curl_escape	curl_escape
 curl_fetch_disk	curl_fetch
+<<<<<<< HEAD
+=======
+curl_fetch_echo	curl_fetch
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 curl_fetch_memory	curl_fetch
 curl_fetch_multi	curl_fetch
 curl_fetch_stream	curl_fetch
 curl_options	curl_options
 curl_symbols	curl_options
 curl_unescape	curl_escape
+<<<<<<< HEAD
 curl_version	curl_options
+=======
+curl_upload	curl_upload
+curl_version	curl_options
+file_writer	file_writer
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 form_data	multipart
 form_file	multipart
 handle	handle
 handle_cookies	handle_cookies
 handle_data	handle
+<<<<<<< HEAD
+=======
+handle_getcustom	handle
+handle_getheaders	handle
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 handle_reset	handle
 handle_setform	handle
 handle_setheaders	handle
@@ -37,3 +52,7 @@ nslookup	nslookup
 parse_date	parse_date
 parse_headers	parse_headers
 parse_headers_list	parse_headers
+<<<<<<< HEAD
+=======
+send_mail	send_mail
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce

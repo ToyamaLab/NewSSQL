@@ -25,6 +25,10 @@ export(dbDriver)
 export(dbExecute)
 export(dbExistsTable)
 export(dbFetch)
+<<<<<<< HEAD
+=======
+export(dbGetConnectArgs)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 export(dbGetDBIVersion)
 export(dbGetException)
 export(dbGetInfo)
@@ -70,17 +74,29 @@ export(sqlParseVariablesImpl)
 export(sqlQuoteSpec)
 export(sqlRownamesToColumn)
 exportClasses(DBIConnection)
+<<<<<<< HEAD
+=======
+exportClasses(DBIConnector)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 exportClasses(DBIDriver)
 exportClasses(DBIObject)
 exportClasses(DBIResult)
 exportClasses(SQL)
 exportMethods(dbAppendTable)
 exportMethods(dbCanConnect)
+<<<<<<< HEAD
+=======
+exportMethods(dbConnect)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 exportMethods(dbCreateTable)
 exportMethods(dbDataType)
 exportMethods(dbExecute)
 exportMethods(dbExistsTable)
 exportMethods(dbFetch)
+<<<<<<< HEAD
+=======
+exportMethods(dbGetConnectArgs)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 exportMethods(dbGetQuery)
 exportMethods(dbListFields)
 exportMethods(dbListObjects)

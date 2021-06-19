@@ -35,7 +35,11 @@ namespace boost { namespace spirit { namespace x3
                  , typename RContext, typename Attribute>
         bool parse(
             Iterator& first, Iterator const& last
+<<<<<<< HEAD
             , Context& context, RContext& rcontext, Attribute& attr) const
+=======
+            , Context const& context, RContext& rcontext, Attribute& attr) const
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
         {
             Iterator save = first;
 

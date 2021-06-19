@@ -19,6 +19,12 @@
 #include <boost/test/utils/runtime/argument.hpp>
 #include <boost/make_shared.hpp>
 
+<<<<<<< HEAD
+=======
+// Boost
+#include <boost/function/function0.hpp>
+
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 // STL
 #include <iostream>
 #include <fstream>
@@ -96,16 +102,26 @@ BOOST_TEST_DECL bool save_pattern();
 class stream_holder {
 public:
     // Constructor
+<<<<<<< HEAD
     explicit        stream_holder( std::ostream& default_stream = std::cout)
+=======
+    explicit        stream_holder( std::ostream& default_stream = std::cout )
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     : m_stream( &default_stream )
     {
     }
 
+<<<<<<< HEAD
     void            setup( const const_string& stream_name )
+=======
+    void            setup( const const_string& stream_name,
+                           boost::function<void ()> const &cleaner_callback = boost::function<void ()>() )
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     {
         if(stream_name.empty())
             return;
 
+<<<<<<< HEAD
         if( stream_name == "stderr" )
             m_stream = &std::cerr;
         else if( stream_name == "stdout" )
@@ -114,6 +130,30 @@ public:
             m_file = boost::make_shared<std::ofstream>();
             m_file->open( std::string(stream_name.begin(), stream_name.end()).c_str() );
             m_stream = m_file.get();
+=======
+        if( stream_name == "stderr" ) {
+            m_stream = &std::cerr;
+            if(cleaner_callback) {
+                m_cleaner = boost::make_shared<callback_cleaner>(cleaner_callback);
+            }
+            else {
+                m_cleaner.reset();
+            }
+        }
+        else if( stream_name == "stdout" ) {
+            m_stream = &std::cout;
+            if (cleaner_callback) {
+                m_cleaner = boost::make_shared<callback_cleaner>(cleaner_callback);
+            }
+            else {
+                m_cleaner.reset();
+            }
+        }
+        else {
+            m_cleaner = boost::make_shared<callback_cleaner>(cleaner_callback);
+            m_cleaner->m_file.open( std::string(stream_name.begin(), stream_name.end()).c_str() );
+            m_stream = &m_cleaner->m_file;
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
         }
     }
 
@@ -121,9 +161,28 @@ public:
     std::ostream&   ref() const { return *m_stream; }
 
 private:
+<<<<<<< HEAD
     // Data members
     boost::shared_ptr<std::ofstream>   m_file;
     std::ostream*   m_stream;
+=======
+    struct callback_cleaner {
+        callback_cleaner(boost::function<void ()> cleaner_callback)
+        : m_cleaner_callback(cleaner_callback)
+        , m_file() {
+        }
+        ~callback_cleaner() {
+            if( m_cleaner_callback )
+                m_cleaner_callback();
+        }
+        boost::function<void ()> m_cleaner_callback;
+        std::ofstream m_file;
+    };
+
+    // Data members
+    boost::shared_ptr<callback_cleaner>   m_cleaner;
+    std::ostream*                         m_stream;
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 };
 
 } // namespace runtime_config

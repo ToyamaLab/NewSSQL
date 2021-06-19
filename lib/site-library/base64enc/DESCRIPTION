@@ -12,4 +12,8 @@ NeedsCompilation: yes
 Packaged: 2015-02-04 20:31:00 UTC; svnuser
 Repository: CRAN
 Date/Publication: 2015-07-28 08:03:37
+<<<<<<< HEAD
 Built: R 3.5.1; x86_64-apple-darwin17.6.0; 2018-08-21 07:38:43 UTC; unix
+=======
+Built: R 4.0.2; x86_64-apple-darwin17.7.0; 2020-08-27 07:29:02 UTC; unix
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce

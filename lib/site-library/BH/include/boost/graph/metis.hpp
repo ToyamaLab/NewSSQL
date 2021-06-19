@@ -26,8 +26,13 @@
 
 namespace boost { namespace graph {
 
+<<<<<<< HEAD
 class metis_exception : public std::exception {};
 class metis_input_exception : public metis_exception {};
+=======
+class BOOST_SYMBOL_VISIBLE metis_exception : public std::exception {};
+class BOOST_SYMBOL_VISIBLE metis_input_exception : public metis_exception {};
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 class metis_reader
 {

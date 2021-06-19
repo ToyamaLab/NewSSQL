@@ -1,5 +1,10 @@
+<<<<<<< HEAD
 #ifndef OTHER_DWA20020601_HPP
 # define OTHER_DWA20020601_HPP
+=======
+#ifndef BOOST_PYTHON_OTHER_HPP
+# define BOOST_PYTHON_OTHER_HPP
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 # include <boost/python/detail/prefix.hpp>
 // Copyright David Abrahams 2002.
@@ -7,8 +12,11 @@
 // accompanying file LICENSE_1_0.txt or copy at
 // http://www.boost.org/LICENSE_1_0.txt)
 
+<<<<<<< HEAD
 # pragma once
 
+=======
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 # include <boost/config.hpp>
 
 namespace boost { namespace python {
@@ -51,4 +59,8 @@ namespace detail
 
 }} // namespace boost::python
 
+<<<<<<< HEAD
 #endif // #ifndef OTHER_DWA20020601_HPP
+=======
+#endif
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce

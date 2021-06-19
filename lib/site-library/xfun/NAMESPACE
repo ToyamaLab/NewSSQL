@@ -2,12 +2,31 @@
 
 S3method("$",xfun_strict_list)
 S3method(print,xfun_raw_string)
+<<<<<<< HEAD
 S3method(print,xfun_strict_list)
 export(Rcmd)
 export(Rscript)
 export(attr)
 export(compare_Rcheck)
 export(download_file)
+=======
+S3method(print,xfun_rename_seq)
+S3method(print,xfun_strict_list)
+export(Rcmd)
+export(Rscript)
+export(Rscript_call)
+export(as_strict_list)
+export(attr)
+export(base64_decode)
+export(base64_encode)
+export(base64_uri)
+export(cache_rds)
+export(compare_Rcheck)
+export(download_file)
+export(embed_dir)
+export(embed_file)
+export(embed_files)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 export(file_ext)
 export(file_string)
 export(gsub_dir)
@@ -16,6 +35,10 @@ export(gsub_file)
 export(gsub_files)
 export(in_dir)
 export(install_dir)
+<<<<<<< HEAD
+=======
+export(install_github)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 export(isFALSE)
 export(is_ascii)
 export(is_linux)
@@ -38,15 +61,35 @@ export(prose_index)
 export(protect_math)
 export(raw_string)
 export(read_utf8)
+<<<<<<< HEAD
+=======
+export(rename_seq)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 export(rev_check)
 export(rstudio_type)
 export(same_path)
 export(sans_ext)
 export(session_info)
+<<<<<<< HEAD
 export(strict_list)
 export(tojson)
 export(try_silent)
+=======
+export(split_lines)
+export(strict_list)
+export(stringsAsStrings)
+export(strings_please)
+export(tojson)
+export(tree)
+export(try_silent)
+export(upload_ftp)
+export(upload_win_builder)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 export(with_ext)
 export(write_utf8)
 import(stats)
 import(utils)
+<<<<<<< HEAD
+=======
+useDynLib(xfun, .registration = TRUE)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce

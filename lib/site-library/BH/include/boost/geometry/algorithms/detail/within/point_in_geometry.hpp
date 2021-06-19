@@ -5,8 +5,13 @@
 // Copyright (c) 2009-2012 Mateusz Loskot, London, UK.
 // Copyright (c) 2014 Adam Wulkiewicz, Lodz, Poland.
 
+<<<<<<< HEAD
 // This file was modified by Oracle on 2013, 2014, 2015, 2017.
 // Modifications copyright (c) 2013-2017, Oracle and/or its affiliates.
+=======
+// This file was modified by Oracle on 2013, 2014, 2015, 2017, 2018, 2019.
+// Modifications copyright (c) 2013-2019, Oracle and/or its affiliates.
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 // Contributed and/or modified by Adam Wulkiewicz, on behalf of Oracle
 
@@ -45,6 +50,14 @@ namespace boost { namespace geometry {
 #ifndef DOXYGEN_NO_DETAIL
 namespace detail { namespace within {
 
+<<<<<<< HEAD
+=======
+template <typename Point1, typename Point2, typename Strategy>
+inline bool equals_point_point(Point1 const& p1, Point2 const& p2, Strategy const& strategy)
+{
+    return equals::equals_point_point(p1, p2, strategy.get_equals_point_point_strategy());
+}
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 // TODO: is this needed?
 inline int check_result_type(int result)
@@ -139,8 +152,13 @@ struct point_in_geometry<Segment, segment_tag>
             return -1; // exterior
 
         // if the point is equal to the one of the terminal points
+<<<<<<< HEAD
         if ( detail::equals::equals_point_point(point, p0)
           || detail::equals::equals_point_point(point, p1) )
+=======
+        if ( detail::within::equals_point_point(point, p0, strategy)
+          || detail::within::equals_point_point(point, p1, strategy) )
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
             return 0; // boundary
         else
             return 1; // interior
@@ -161,11 +179,19 @@ struct point_in_geometry<Linestring, linestring_tag>
                 return -1; // exterior
 
             // if the linestring doesn't have a boundary
+<<<<<<< HEAD
             if (detail::equals::equals_point_point(range::front(linestring), range::back(linestring)))
                 return 1; // interior
             // else if the point is equal to the one of the terminal points
             else if (detail::equals::equals_point_point(point, range::front(linestring))
                 || detail::equals::equals_point_point(point, range::back(linestring)))
+=======
+            if (detail::within::equals_point_point(range::front(linestring), range::back(linestring), strategy))
+                return 1; // interior
+            // else if the point is equal to the one of the terminal points
+            else if (detail::within::equals_point_point(point, range::front(linestring), strategy)
+                || detail::within::equals_point_point(point, range::back(linestring), strategy))
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
                 return 0; // boundary
             else
                 return 1; // interior
@@ -304,12 +330,21 @@ struct point_in_geometry<Geometry, multi_linestring_tag>
             point_type const& back = range::back(*it);
 
             // is closed_ring - no boundary
+<<<<<<< HEAD
             if ( detail::equals::equals_point_point(front, back) )
                 continue;
 
             // is point on boundary
             if ( detail::equals::equals_point_point(point, front)
               || detail::equals::equals_point_point(point, back) )
+=======
+            if ( detail::within::equals_point_point(front, back, strategy) )
+                continue;
+
+            // is point on boundary
+            if ( detail::within::equals_point_point(point, front, strategy)
+              || detail::within::equals_point_point(point, back, strategy) )
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
             {
                 ++boundaries;
             }
@@ -361,6 +396,7 @@ namespace detail { namespace within {
 template <typename Point, typename Geometry, typename Strategy>
 inline int point_in_geometry(Point const& point, Geometry const& geometry, Strategy const& strategy)
 {
+<<<<<<< HEAD
     concepts::within::check
         <
             typename tag<Point>::type,
@@ -368,6 +404,9 @@ inline int point_in_geometry(Point const& point, Geometry const& geometry, Strat
             typename tag_cast<typename tag<Geometry>::type, areal_tag>::type,
             Strategy
         >();
+=======
+    concepts::within::check<Point, Geometry, Strategy>();
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
     return detail_dispatch::within::point_in_geometry<Geometry>::apply(point, geometry, strategy);
 }
@@ -383,6 +422,33 @@ inline int point_in_geometry(Point const& point, Geometry const& geometry)
     return point_in_geometry(point, geometry, strategy_type());
 }
 
+<<<<<<< HEAD
+=======
+template <typename Point, typename Geometry, typename Strategy>
+inline bool within_point_geometry(Point const& point, Geometry const& geometry, Strategy const& strategy)
+{
+    return point_in_geometry(point, geometry, strategy) > 0;
+}
+
+template <typename Point, typename Geometry>
+inline bool within_point_geometry(Point const& point, Geometry const& geometry)
+{
+    return point_in_geometry(point, geometry) > 0;
+}
+
+template <typename Point, typename Geometry, typename Strategy>
+inline bool covered_by_point_geometry(Point const& point, Geometry const& geometry, Strategy const& strategy)
+{
+    return point_in_geometry(point, geometry, strategy) >= 0;
+}
+
+template <typename Point, typename Geometry>
+inline bool covered_by_point_geometry(Point const& point, Geometry const& geometry)
+{
+    return point_in_geometry(point, geometry) >= 0;
+}
+
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 }} // namespace detail::within
 #endif // DOXYGEN_NO_DETAIL
 

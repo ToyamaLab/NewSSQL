@@ -29,10 +29,16 @@ namespace boost { namespace spirit { namespace x3
         template <typename Char, typename Context>
         bool test(Char ch_, Context const& context) const
         {
+<<<<<<< HEAD
             return ((sizeof(Char) <= sizeof(char_type)) || encoding::ischar(ch_))
                 && (get_case_compare<encoding>(context)(ch, char_type(ch_)) == 0);
         }
         
+=======
+            return get_case_compare<encoding>(context)(ch, char_type(ch_)) == 0;
+        }
+
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
         char_type ch;
     };
 

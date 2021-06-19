@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 // Copyright David Abrahams 2005. Distributed under the Boost
 // Software License, Version 1.0. (See accompanying
 // file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
@@ -37,6 +38,39 @@
 #  define BOOST_PARAMETER_MATCH_DEFAULTS(ArgTypes)
 
 # endif 
+=======
+// Copyright David Abrahams 2005.
+// Distributed under the Boost Software License, Version 1.0.
+// (See accompanying file LICENSE_1_0.txt or copy at
+// http://www.boost.org/LICENSE_1_0.txt)
+
+#ifndef BOOST_PARAMETER_MATCH_DWA2005714_HPP
+#define BOOST_PARAMETER_MATCH_DWA2005714_HPP
+
+#include <boost/parameter/config.hpp>
+
+#if BOOST_WORKAROUND(__BORLANDC__, BOOST_TESTED_AT(0x564))
+#include <boost/parameter/aux_/void.hpp>
+#include <boost/preprocessor/arithmetic/sub.hpp>
+#include <boost/preprocessor/facilities/intercept.hpp>
+#include <boost/preprocessor/repetition/enum_trailing_params.hpp>
+#include <boost/preprocessor/seq/size.hpp>
+
+#define BOOST_PARAMETER_MATCH_DEFAULTS(ArgTypes)                             \
+    BOOST_PP_ENUM_TRAILING_PARAMS(                                           \
+        BOOST_PP_SUB(                                                        \
+            BOOST_PARAMETER_MAX_ARITY                                        \
+          , BOOST_PP_SEQ_SIZE(ArgTypes)                                      \
+        )                                                                    \
+      , ::boost::parameter::void_ BOOST_PP_INTERCEPT                         \
+    )
+/**/
+#else
+#define BOOST_PARAMETER_MATCH_DEFAULTS(ArgTypes)
+#endif 
+
+#include <boost/parameter/aux_/preprocessor/seq_enum.hpp>
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 //
 // Generates, e.g.
@@ -45,6 +79,7 @@
 //
 // with workarounds for Borland compatibility.
 //
+<<<<<<< HEAD
 
 # define BOOST_PARAMETER_MATCH(ParameterSpec, ArgTypes, name)   \
     typename ParameterSpec ::match<                             \
@@ -53,3 +88,14 @@
     >::type name = ParameterSpec ()
 
 #endif // BOOST_PARAMETER_MATCH_DWA2005714_HPP
+=======
+#define BOOST_PARAMETER_MATCH(ParameterSpec, ArgTypes, name)                 \
+    typename ParameterSpec::match<                                           \
+        BOOST_PARAMETER_SEQ_ENUM(ArgTypes)                                   \
+        BOOST_PARAMETER_MATCH_DEFAULTS(ArgTypes)                             \
+    >::type name = ParameterSpec()
+/**/
+
+#endif  // include guard
+
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce

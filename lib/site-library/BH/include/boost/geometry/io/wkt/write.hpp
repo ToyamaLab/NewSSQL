@@ -5,10 +5,18 @@
 // Copyright (c) 2009-2017 Mateusz Loskot, London, UK.
 // Copyright (c) 2014-2017 Adam Wulkiewicz, Lodz, Poland.
 
+<<<<<<< HEAD
 // This file was modified by Oracle on 2015.
 // Modifications copyright (c) 2015-2017, Oracle and/or its affiliates.
 
 // Contributed and/or modified by Menelaos Karavelas, on behalf of Oracle
+=======
+// This file was modified by Oracle on 2015, 2018, 2019.
+// Modifications copyright (c) 2015-2019, Oracle and/or its affiliates.
+
+// Contributed and/or modified by Menelaos Karavelas, on behalf of Oracle
+// Contributed and/or modified by Adam Wulkiewicz, on behalf of Oracle
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 // Parts of Boost.Geometry are redesigned from Geodan's Geographic Library
 // (geolib/GGL), copyright (c) 1995-2010 Geodan, Amsterdam, the Netherlands.
@@ -45,6 +53,11 @@
 
 #include <boost/geometry/io/wkt/detail/prefix.hpp>
 
+<<<<<<< HEAD
+=======
+#include <boost/geometry/util/condition.hpp>
+
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 namespace boost { namespace geometry
 {
@@ -159,10 +172,17 @@ struct wkt_range
         }
 
         // optionally, close range to ring by repeating the first point
+<<<<<<< HEAD
         if (ForceClosurePossible
             && force_closure
             && boost::size(range) > 1
             && detail::disjoint::disjoint_point_point(*begin, *(end - 1)))
+=======
+        if (BOOST_GEOMETRY_CONDITION(ForceClosurePossible)
+            && force_closure
+            && boost::size(range) > 1
+            && wkt_range::disjoint(*begin, *(end - 1)))
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
         {
             os << ",";
             stream_type::apply(os, *begin);
@@ -174,6 +194,20 @@ struct wkt_range
 
 private:
     typedef typename boost::range_value<Range>::type point_type;
+<<<<<<< HEAD
+=======
+
+    static inline bool disjoint(point_type const& p1, point_type const& p2)
+    {
+        // TODO: pass strategy
+        typedef typename strategy::disjoint::services::default_strategy
+            <
+                point_type, point_type
+            >::type strategy_type;
+
+        return detail::disjoint::disjoint_point_point(p1, p2, strategy_type());
+    }
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 };
 
 /*!

@@ -43,16 +43,21 @@ namespace boost
         {
             BOOST_MATH_STD_USING
 
+<<<<<<< HEAD
             T const    taylor_0_bound = tools::epsilon<T>();
             T const    taylor_2_bound = tools::root_epsilon<T>();
             T const    taylor_n_bound = tools::forth_root_epsilon<T>();
 
             if    (abs(x) >= taylor_n_bound)
+=======
+            if    (abs(x) >= 3.3 * tools::forth_root_epsilon<T>())
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
             {
                 return(sin(x)/x);
             }
             else
             {
+<<<<<<< HEAD
                 // approximation by taylor series in x at 0 up to order 0
                 T    result = static_cast<T>(1);
 
@@ -71,6 +76,10 @@ namespace boost
                 }
 
                 return(result);
+=======
+                // |x| < (eps*120)^(1/4)
+                return 1 - x * x / 6;
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
             }
         }
 

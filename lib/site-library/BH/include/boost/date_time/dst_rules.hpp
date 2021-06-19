@@ -94,7 +94,11 @@ namespace boost {
        *  @param dst_start_offset Time offset within day for dst boundary
        *  @param dst_end_day    Ending day of dst for the given locality
        *  @param dst_end_offset Time offset within day given in dst for dst boundary
+<<<<<<< HEAD
        *  @param dst_length lenght of dst adjusment
+=======
+       *  @param dst_length_minutes length of dst adjusment
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
        *  @retval The time is either ambiguous, invalid, in dst, or not in dst
        */
       static time_is_dst_result 
@@ -104,14 +108,22 @@ namespace boost {
                    const time_duration_type& dst_start_offset,
                    const date_type& dst_end_day,
                    const time_duration_type& dst_end_offset,
+<<<<<<< HEAD
                    const time_duration_type& dst_length_minutes)
+=======
+                   const time_duration_type& dst_length)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
       {
         unsigned int start_minutes = static_cast<unsigned>(
           dst_start_offset.hours() * 60 + dst_start_offset.minutes());
         unsigned int end_minutes = static_cast<unsigned>(
           dst_end_offset.hours() * 60 + dst_end_offset.minutes());
         long length_minutes = static_cast<long>(
+<<<<<<< HEAD
           dst_length_minutes.hours() * 60 + dst_length_minutes.minutes());
+=======
+          dst_length.hours() * 60 + dst_length.minutes());
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
         return local_is_dst(current_day, time_of_day,
                             dst_start_day, start_minutes,

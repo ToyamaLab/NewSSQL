@@ -9,6 +9,10 @@
 
 #include <boost/range.hpp>
 #include <boost/type_traits/is_base_of.hpp>
+<<<<<<< HEAD
+=======
+#include <boost/core/enable_if.hpp>
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 namespace boost { namespace spirit { namespace x3
 {
@@ -46,16 +50,31 @@ namespace boost { namespace spirit { namespace x3
 
         // This will catch all nodes except those inheriting from position_tagged
         template <typename AST>
+<<<<<<< HEAD
         boost::iterator_range<iterator_type>
         position_of(AST const& ast) const
+=======
+        typename boost::enable_if_c<
+            (!is_base_of<position_tagged, AST>::value)
+          , boost::iterator_range<iterator_type>
+        >::type
+        position_of(AST const& /* ast */) const
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
         {
             // returns an empty position
             return boost::iterator_range<iterator_type>();
         }
+<<<<<<< HEAD
         
         // This will catch all nodes except those inheriting from position_tagged
         template <typename AST>
         void annotate(AST& ast, iterator_type first, iterator_type last, mpl::false_)
+=======
+
+        // This will catch all nodes except those inheriting from position_tagged
+        template <typename AST>
+        void annotate(AST& /* ast */, iterator_type /* first */, iterator_type /* last */, mpl::false_)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
         {
             // (no-op) no need for tags
         }

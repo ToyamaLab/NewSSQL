@@ -13,6 +13,7 @@
 #pragma once
 #endif
 
+<<<<<<< HEAD
 #include <boost/config/no_tr1/cmath.hpp>
 #include <boost/version.hpp>
 #if BOOST_VERSION < 104000 
@@ -41,12 +42,19 @@ namespace boost { namespace spirit { namespace detail
         return (boost::spirit::math::changesign)(x);
     }
 #else
+=======
+#include <boost/math/special_functions/sign.hpp>
+
+namespace boost { namespace spirit { namespace detail
+{
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     template<typename T> 
     inline bool (signbit)(T x)
     {
         return (boost::math::signbit)(x) ? true : false;
     }
 
+<<<<<<< HEAD
     // This routine has been taken and adapted from Johan Rade's fp_traits 
     // library
     template<typename T> 
@@ -65,6 +73,13 @@ namespace boost { namespace spirit { namespace detail
 #endif
     }
 #endif
+=======
+    template<typename T> 
+    inline T (changesign)(T x)
+    {
+        return (boost::math::changesign)(x);
+    }
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 }}}
 

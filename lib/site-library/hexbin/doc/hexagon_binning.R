@@ -50,7 +50,11 @@ nr <- length(fc.sq$x)/2
 
 
 ###################################################
+<<<<<<< HEAD
 ### code chunk number 3: hexagon_binning.Rnw:139-171
+=======
+### code chunk number 3: hexagon_binning.Rnw:138-170
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 ###################################################
 par(mfrow = c(3,1))
 par(mai = c(.1667,0.2680,0.1667,0.2680)) ##par(mai=.25*par("mai"))
@@ -110,7 +114,11 @@ shape <- optShape(height = vpin[2],width = vpin[1]/3,mar = mai)
 x <- rnorm(20000)
 y <- rnorm(20000)
 hbin <- hexbin(x,y, xbins = 40, shape = shape)
+<<<<<<< HEAD
 grid.newpage()
+=======
+#grid.newpage()
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 pushViewport(viewport(layout = grid.layout(1, 3)))
 pushViewport(viewport(layout.pos.col = 1,layout.pos.row = 1))
 plot(hbin, legend = 0, xlab = "X", ylab = "Y", newpage = FALSE)
@@ -157,7 +165,11 @@ popViewport()
 
 
 ###################################################
+<<<<<<< HEAD
 ### code chunk number 7: hexagon_binning.Rnw:348-356
+=======
+### code chunk number 7: hexagon_binning.Rnw:349-357
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 ###################################################
 data(NHANES)
 #grid.newpage()

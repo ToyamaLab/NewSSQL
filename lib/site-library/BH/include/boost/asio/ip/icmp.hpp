@@ -2,7 +2,11 @@
 // ip/icmp.hpp
 // ~~~~~~~~~~~
 //
+<<<<<<< HEAD
 // Copyright (c) 2003-2017 Christopher M. Kohlhoff (chris at kohlhoff dot com)
+=======
+// Copyright (c) 2003-2019 Christopher M. Kohlhoff (chris at kohlhoff dot com)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 //
 // Distributed under the Boost Software License, Version 1.0. (See accompanying
 // file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
@@ -47,33 +51,53 @@ public:
   typedef basic_endpoint<icmp> endpoint;
 
   /// Construct to represent the IPv4 ICMP protocol.
+<<<<<<< HEAD
   static icmp v4()
+=======
+  static icmp v4() BOOST_ASIO_NOEXCEPT
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
   {
     return icmp(BOOST_ASIO_OS_DEF(IPPROTO_ICMP),
         BOOST_ASIO_OS_DEF(AF_INET));
   }
 
   /// Construct to represent the IPv6 ICMP protocol.
+<<<<<<< HEAD
   static icmp v6()
+=======
+  static icmp v6() BOOST_ASIO_NOEXCEPT
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
   {
     return icmp(BOOST_ASIO_OS_DEF(IPPROTO_ICMPV6),
         BOOST_ASIO_OS_DEF(AF_INET6));
   }
 
   /// Obtain an identifier for the type of the protocol.
+<<<<<<< HEAD
   int type() const
+=======
+  int type() const BOOST_ASIO_NOEXCEPT
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
   {
     return BOOST_ASIO_OS_DEF(SOCK_RAW);
   }
 
   /// Obtain an identifier for the protocol.
+<<<<<<< HEAD
   int protocol() const
+=======
+  int protocol() const BOOST_ASIO_NOEXCEPT
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
   {
     return protocol_;
   }
 
   /// Obtain an identifier for the protocol family.
+<<<<<<< HEAD
   int family() const
+=======
+  int family() const BOOST_ASIO_NOEXCEPT
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
   {
     return family_;
   }
@@ -98,7 +122,11 @@ public:
 
 private:
   // Construct with a specific family.
+<<<<<<< HEAD
   explicit icmp(int protocol_id, int protocol_family)
+=======
+  explicit icmp(int protocol_id, int protocol_family) BOOST_ASIO_NOEXCEPT
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     : protocol_(protocol_id),
       family_(protocol_family)
   {

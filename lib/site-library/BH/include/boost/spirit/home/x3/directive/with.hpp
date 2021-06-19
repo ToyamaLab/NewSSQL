@@ -21,6 +21,7 @@ namespace boost { namespace spirit { namespace x3
     {
         typedef unary_parser<Subject, Derived> base_type;
         mutable T val;
+<<<<<<< HEAD
         with_value_holder(Subject const& subject, T const& val)
           : base_type(subject)
           , val(val) {}
@@ -33,6 +34,20 @@ namespace boost { namespace spirit { namespace x3
         typedef unary_parser<Subject, Derived> base_type;
         T val;
         with_value_holder(Subject const& subject, T const& val)
+=======
+        with_value_holder(Subject const& subject, T&& val)
+          : base_type(subject)
+          , val(std::forward<T>(val)) {}
+    };
+    
+    template <typename Subject, typename Derived, typename T>
+    struct with_value_holder<Subject, Derived, T&>
+      : unary_parser<Subject, Derived>
+    {
+        typedef unary_parser<Subject, Derived> base_type;
+        T& val;
+        with_value_holder(Subject const& subject, T& val)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
           : base_type(subject)
           , val(val) {}
     };
@@ -47,8 +62,13 @@ namespace boost { namespace spirit { namespace x3
 
         typedef Subject subject_type;
 
+<<<<<<< HEAD
         with_directive(Subject const& subject, T const& val)
           : base_type(subject, val) {}
+=======
+        with_directive(Subject const& subject, T&& val)
+          : base_type(subject, std::forward<T>(val)) {}
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
         template <typename Iterator, typename Context
           , typename RContext, typename Attribute>
@@ -63,6 +83,7 @@ namespace boost { namespace spirit { namespace x3
         }
     };
    
+<<<<<<< HEAD
     template <typename ID, typename T, typename NextContext = unused_type>
     struct with_context
     {
@@ -82,16 +103,27 @@ namespace boost { namespace spirit { namespace x3
 
         with_gen(T& val)
           : val(val) {}
+=======
+    template <typename ID, typename T>
+    struct with_gen
+    {
+        T&& val;
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
         template <typename Subject>
         with_directive<typename extension::as_parser<Subject>::value_type, ID, T>
         operator[](Subject const& subject) const
         {
+<<<<<<< HEAD
             return { as_parser(subject), val };
+=======
+            return { as_parser(subject), std::forward<T>(val) };
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
         }
     };
 
     template <typename ID, typename T>
+<<<<<<< HEAD
     inline with_gen<ID, T> with(T& val)
     {
         return { val };
@@ -101,6 +133,11 @@ namespace boost { namespace spirit { namespace x3
     inline with_gen<ID, T const> with(T const& val)
     {
         return { val };
+=======
+    inline with_gen<ID, T> with(T&& val)
+    {
+        return { std::forward<T>(val) };
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     }
 }}}
 

@@ -16,6 +16,10 @@
 //
 
 #include <boost/smart_ptr/detail/yield_k.hpp>
+<<<<<<< HEAD
+=======
+#include <boost/config.hpp>
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 #include <atomic>
 
 namespace boost
@@ -32,12 +36,20 @@ public:
 
 public:
 
+<<<<<<< HEAD
     bool try_lock()
+=======
+    bool try_lock() BOOST_NOEXCEPT
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     {
         return !v_.test_and_set( std::memory_order_acquire );
     }
 
+<<<<<<< HEAD
     void lock()
+=======
+    void lock() BOOST_NOEXCEPT
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     {
         for( unsigned k = 0; !try_lock(); ++k )
         {
@@ -45,7 +57,11 @@ public:
         }
     }
 
+<<<<<<< HEAD
     void unlock()
+=======
+    void unlock() BOOST_NOEXCEPT
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     {
         v_ .clear( std::memory_order_release );
     }
@@ -63,12 +79,20 @@ public:
 
     public:
 
+<<<<<<< HEAD
         explicit scoped_lock( spinlock & sp ): sp_( sp )
+=======
+        explicit scoped_lock( spinlock & sp ) BOOST_NOEXCEPT: sp_( sp )
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
         {
             sp.lock();
         }
 
+<<<<<<< HEAD
         ~scoped_lock()
+=======
+        ~scoped_lock() /*BOOST_NOEXCEPT*/
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
         {
             sp_.unlock();
         }

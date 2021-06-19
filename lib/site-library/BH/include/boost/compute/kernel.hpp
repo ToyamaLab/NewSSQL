@@ -24,6 +24,10 @@
 #include <boost/compute/program.hpp>
 #include <boost/compute/platform.hpp>
 #include <boost/compute/type_traits/is_fundamental.hpp>
+<<<<<<< HEAD
+=======
+#include <boost/compute/detail/diagnostic.hpp>
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 #include <boost/compute/detail/get_object_info.hpp>
 #include <boost/compute/detail/assert_cl_success.hpp>
 
@@ -256,12 +260,20 @@ public:
             return boost::optional<T>();
         }
 
+<<<<<<< HEAD
+=======
+        BOOST_COMPUTE_DISABLE_DEPRECATED_DECLARATIONS();
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
         clGetKernelSubGroupInfoKHR_fn clGetKernelSubGroupInfoKHR_fptr =
             reinterpret_cast<clGetKernelSubGroupInfoKHR_fn>(
                 reinterpret_cast<size_t>(
                     device.platform().get_extension_function_address("clGetKernelSubGroupInfoKHR")
                 )
             );
+<<<<<<< HEAD
+=======
+        BOOST_COMPUTE_ENABLE_DEPRECATED_DECLARATIONS();
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
         return detail::get_object_info<T>(
             clGetKernelSubGroupInfoKHR_fptr, m_kernel, info, device.id(), input_size, input
@@ -299,12 +311,20 @@ public:
             return boost::optional<T>();
         }
 
+<<<<<<< HEAD
+=======
+        BOOST_COMPUTE_DISABLE_DEPRECATED_DECLARATIONS();
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
         clGetKernelSubGroupInfoKHR_fn clGetKernelSubGroupInfoKHR_fptr =
             reinterpret_cast<clGetKernelSubGroupInfoKHR_fn>(
                 reinterpret_cast<size_t>(
                     device.platform().get_extension_function_address("clGetKernelSubGroupInfoKHR")
                 )
             );
+<<<<<<< HEAD
+=======
+        BOOST_COMPUTE_ENABLE_DEPRECATED_DECLARATIONS();
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
         return detail::get_object_info<T>(
             clGetKernelSubGroupInfoKHR_fptr, m_kernel, info, device.id(), input_size, input

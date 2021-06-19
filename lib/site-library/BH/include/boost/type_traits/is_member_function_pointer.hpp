@@ -12,6 +12,7 @@
 #define BOOST_TT_IS_MEMBER_FUNCTION_POINTER_HPP_INCLUDED
 
 #include <boost/type_traits/detail/config.hpp>
+<<<<<<< HEAD
 #include <boost/detail/workaround.hpp>
 
 #if !BOOST_WORKAROUND(__BORLANDC__, < 0x600) && !defined(BOOST_TT_TEST_MS_FUNC_SIGS)
@@ -117,4 +118,17 @@ struct is_member_function_pointer
 
 } // namespace boost
 
+=======
+
+#ifdef BOOST_TT_HAS_ASCCURATE_IS_FUNCTION
+
+#include <boost/type_traits/detail/is_member_function_pointer_cxx_11.hpp>
+
+#else
+
+#include <boost/type_traits/detail/is_member_function_pointer_cxx_03.hpp>
+
+#endif
+
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 #endif // BOOST_TT_IS_MEMBER_FUNCTION_POINTER_HPP_INCLUDED

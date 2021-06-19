@@ -2,7 +2,11 @@
 // detail/win_iocp_socket_service_base.hpp
 // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 //
+<<<<<<< HEAD
 // Copyright (c) 2003-2017 Christopher M. Kohlhoff (chris at kohlhoff dot com)
+=======
+// Copyright (c) 2003-2019 Christopher M. Kohlhoff (chris at kohlhoff dot com)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 //
 // Distributed under the Boost Software License, Version 1.0. (See accompanying
 // file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
@@ -20,7 +24,11 @@
 #if defined(BOOST_ASIO_HAS_IOCP)
 
 #include <boost/asio/error.hpp>
+<<<<<<< HEAD
 #include <boost/asio/io_context.hpp>
+=======
+#include <boost/asio/execution_context.hpp>
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 #include <boost/asio/socket_base.hpp>
 #include <boost/asio/detail/bind_handler.hpp>
 #include <boost/asio/detail/buffer_sequence_adapter.hpp>
@@ -86,8 +94,12 @@ public:
   };
 
   // Constructor.
+<<<<<<< HEAD
   BOOST_ASIO_DECL win_iocp_socket_service_base(
       boost::asio::io_context& io_context);
+=======
+  BOOST_ASIO_DECL win_iocp_socket_service_base(execution_context& context);
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
   // Destroy all user-defined handler objects owned by the service.
   BOOST_ASIO_DECL void base_shutdown();
@@ -97,7 +109,11 @@ public:
 
   // Move-construct a new socket implementation.
   BOOST_ASIO_DECL void base_move_construct(base_implementation_type& impl,
+<<<<<<< HEAD
       base_implementation_type& other_impl);
+=======
+      base_implementation_type& other_impl) BOOST_ASIO_NOEXCEPT;
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
   // Move-assign from another socket implementation.
   BOOST_ASIO_DECL void base_move_assign(base_implementation_type& impl,
@@ -211,20 +227,35 @@ public:
 
   // Asynchronously wait for the socket to become ready to read, ready to
   // write, or to have pending error conditions.
+<<<<<<< HEAD
   template <typename Handler>
   void async_wait(base_implementation_type& impl,
       socket_base::wait_type w, Handler& handler)
+=======
+  template <typename Handler, typename IoExecutor>
+  void async_wait(base_implementation_type& impl,
+      socket_base::wait_type w, Handler& handler, const IoExecutor& io_ex)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
   {
     bool is_continuation =
       boost_asio_handler_cont_helpers::is_continuation(handler);
 
     // Allocate and construct an operation to wrap the handler.
+<<<<<<< HEAD
     typedef win_iocp_wait_op<Handler> op;
     typename op::ptr p = { boost::asio::detail::addressof(handler),
       op::ptr::allocate(handler), 0 };
     p.p = new (p.v) op(impl.cancel_token_, handler);
 
     BOOST_ASIO_HANDLER_CREATION((io_context_, *p.p, "socket",
+=======
+    typedef win_iocp_wait_op<Handler, IoExecutor> op;
+    typename op::ptr p = { boost::asio::detail::addressof(handler),
+      op::ptr::allocate(handler), 0 };
+    p.p = new (p.v) op(impl.cancel_token_, handler, io_ex);
+
+    BOOST_ASIO_HANDLER_CREATION((context_, *p.p, "socket",
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
           &impl, impl.socket_, "async_wait"));
 
     switch (w)
@@ -272,6 +303,7 @@ public:
 
   // Start an asynchronous send. The data being sent must be valid for the
   // lifetime of the asynchronous operation.
+<<<<<<< HEAD
   template <typename ConstBufferSequence, typename Handler>
   void async_send(base_implementation_type& impl,
       const ConstBufferSequence& buffers,
@@ -284,6 +316,21 @@ public:
     p.p = new (p.v) op(impl.cancel_token_, buffers, handler);
 
     BOOST_ASIO_HANDLER_CREATION((io_context_, *p.p, "socket",
+=======
+  template <typename ConstBufferSequence, typename Handler, typename IoExecutor>
+  void async_send(base_implementation_type& impl,
+      const ConstBufferSequence& buffers, socket_base::message_flags flags,
+      Handler& handler, const IoExecutor& io_ex)
+  {
+    // Allocate and construct an operation to wrap the handler.
+    typedef win_iocp_socket_send_op<
+        ConstBufferSequence, Handler, IoExecutor> op;
+    typename op::ptr p = { boost::asio::detail::addressof(handler),
+      op::ptr::allocate(handler), 0 };
+    p.p = new (p.v) op(impl.cancel_token_, buffers, handler, io_ex);
+
+    BOOST_ASIO_HANDLER_CREATION((context_, *p.p, "socket",
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
           &impl, impl.socket_, "async_send"));
 
     buffer_sequence_adapter<boost::asio::const_buffer,
@@ -296,6 +343,7 @@ public:
   }
 
   // Start an asynchronous wait until data can be sent without blocking.
+<<<<<<< HEAD
   template <typename Handler>
   void async_send(base_implementation_type& impl, const null_buffers&,
       socket_base::message_flags, Handler& handler)
@@ -307,6 +355,19 @@ public:
     p.p = new (p.v) op(impl.cancel_token_, handler);
 
     BOOST_ASIO_HANDLER_CREATION((io_context_, *p.p, "socket",
+=======
+  template <typename Handler, typename IoExecutor>
+  void async_send(base_implementation_type& impl, const null_buffers&,
+      socket_base::message_flags, Handler& handler, const IoExecutor& io_ex)
+  {
+    // Allocate and construct an operation to wrap the handler.
+    typedef win_iocp_null_buffers_op<Handler, IoExecutor> op;
+    typename op::ptr p = { boost::asio::detail::addressof(handler),
+      op::ptr::allocate(handler), 0 };
+    p.p = new (p.v) op(impl.cancel_token_, handler, io_ex);
+
+    BOOST_ASIO_HANDLER_CREATION((context_, *p.p, "socket",
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
           &impl, impl.socket_, "async_send(null_buffers)"));
 
     start_reactor_op(impl, select_reactor::write_op, p.p);
@@ -338,6 +399,7 @@ public:
 
   // Start an asynchronous receive. The buffer for the data being received
   // must be valid for the lifetime of the asynchronous operation.
+<<<<<<< HEAD
   template <typename MutableBufferSequence, typename Handler>
   void async_receive(base_implementation_type& impl,
       const MutableBufferSequence& buffers,
@@ -350,6 +412,23 @@ public:
     p.p = new (p.v) op(impl.state_, impl.cancel_token_, buffers, handler);
 
     BOOST_ASIO_HANDLER_CREATION((io_context_, *p.p, "socket",
+=======
+  template <typename MutableBufferSequence,
+      typename Handler, typename IoExecutor>
+  void async_receive(base_implementation_type& impl,
+      const MutableBufferSequence& buffers, socket_base::message_flags flags,
+      Handler& handler, const IoExecutor& io_ex)
+  {
+    // Allocate and construct an operation to wrap the handler.
+    typedef win_iocp_socket_recv_op<
+        MutableBufferSequence, Handler, IoExecutor> op;
+    typename op::ptr p = { boost::asio::detail::addressof(handler),
+      op::ptr::allocate(handler), 0 };
+    p.p = new (p.v) op(impl.state_, impl.cancel_token_,
+        buffers, handler, io_ex);
+
+    BOOST_ASIO_HANDLER_CREATION((context_, *p.p, "socket",
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
           &impl, impl.socket_, "async_receive"));
 
     buffer_sequence_adapter<boost::asio::mutable_buffer,
@@ -362,6 +441,7 @@ public:
   }
 
   // Wait until data can be received without blocking.
+<<<<<<< HEAD
   template <typename Handler>
   void async_receive(base_implementation_type& impl, const null_buffers&,
       socket_base::message_flags flags, Handler& handler)
@@ -373,6 +453,20 @@ public:
     p.p = new (p.v) op(impl.cancel_token_, handler);
 
     BOOST_ASIO_HANDLER_CREATION((io_context_, *p.p, "socket",
+=======
+  template <typename Handler, typename IoExecutor>
+  void async_receive(base_implementation_type& impl,
+      const null_buffers&, socket_base::message_flags flags,
+      Handler& handler, const IoExecutor& io_ex)
+  {
+    // Allocate and construct an operation to wrap the handler.
+    typedef win_iocp_null_buffers_op<Handler, IoExecutor> op;
+    typename op::ptr p = { boost::asio::detail::addressof(handler),
+      op::ptr::allocate(handler), 0 };
+    p.p = new (p.v) op(impl.cancel_token_, handler, io_ex);
+
+    BOOST_ASIO_HANDLER_CREATION((context_, *p.p, "socket",
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
           &impl, impl.socket_, "async_receive(null_buffers)"));
 
     start_null_buffers_receive_op(impl, flags, p.p);
@@ -411,6 +505,7 @@ public:
 
   // Start an asynchronous receive. The buffer for the data being received
   // must be valid for the lifetime of the asynchronous operation.
+<<<<<<< HEAD
   template <typename MutableBufferSequence, typename Handler>
   void async_receive_with_flags(base_implementation_type& impl,
       const MutableBufferSequence& buffers, socket_base::message_flags in_flags,
@@ -423,6 +518,24 @@ public:
     p.p = new (p.v) op(impl.cancel_token_, buffers, out_flags, handler);
 
     BOOST_ASIO_HANDLER_CREATION((io_context_, *p.p, "socket",
+=======
+  template <typename MutableBufferSequence,
+      typename Handler, typename IoExecutor>
+  void async_receive_with_flags(base_implementation_type& impl,
+      const MutableBufferSequence& buffers, socket_base::message_flags in_flags,
+      socket_base::message_flags& out_flags, Handler& handler,
+      const IoExecutor& io_ex)
+  {
+    // Allocate and construct an operation to wrap the handler.
+    typedef win_iocp_socket_recvmsg_op<
+        MutableBufferSequence, Handler, IoExecutor> op;
+    typename op::ptr p = { boost::asio::detail::addressof(handler),
+      op::ptr::allocate(handler), 0 };
+    p.p = new (p.v) op(impl.cancel_token_,
+        buffers, out_flags, handler, io_ex);
+
+    BOOST_ASIO_HANDLER_CREATION((context_, *p.p, "socket",
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
           &impl, impl.socket_, "async_receive_with_flags"));
 
     buffer_sequence_adapter<boost::asio::mutable_buffer,
@@ -433,6 +546,7 @@ public:
   }
 
   // Wait until data can be received without blocking.
+<<<<<<< HEAD
   template <typename Handler>
   void async_receive_with_flags(base_implementation_type& impl,
       const null_buffers&, socket_base::message_flags in_flags,
@@ -445,6 +559,21 @@ public:
     p.p = new (p.v) op(impl.cancel_token_, handler);
 
     BOOST_ASIO_HANDLER_CREATION((io_context_, *p.p, "socket",
+=======
+  template <typename Handler, typename IoExecutor>
+  void async_receive_with_flags(base_implementation_type& impl,
+      const null_buffers&, socket_base::message_flags in_flags,
+      socket_base::message_flags& out_flags, Handler& handler,
+      const IoExecutor& io_ex)
+  {
+    // Allocate and construct an operation to wrap the handler.
+    typedef win_iocp_null_buffers_op<Handler, IoExecutor> op;
+    typename op::ptr p = { boost::asio::detail::addressof(handler),
+      op::ptr::allocate(handler), 0 };
+    p.p = new (p.v) op(impl.cancel_token_, handler, io_ex);
+
+    BOOST_ASIO_HANDLER_CREATION((context_, *p.p, "socket",
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
           &impl, impl.socket_, "async_receive_with_flags(null_buffers)"));
 
     // Reset out_flags since it can be given no sensible value at this time.
@@ -519,8 +648,13 @@ protected:
       base_implementation_type& impl);
 
   // Helper function to get the reactor. If no reactor has been created yet, a
+<<<<<<< HEAD
   // new one is obtained from the io_context and a pointer to it is cached in
   // this service.
+=======
+  // new one is obtained from the execution context and a pointer to it is
+  // cached in this service.
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
   BOOST_ASIO_DECL select_reactor& get_reactor();
 
   // The type of a ConnectEx function pointer, as old SDKs may not provide it.
@@ -554,8 +688,13 @@ protected:
   // - platform SDKs where MSVC's /Wp64 option causes spurious warnings.
   BOOST_ASIO_DECL void* interlocked_exchange_pointer(void** dest, void* val);
 
+<<<<<<< HEAD
   // The io_context used to obtain the reactor, if required.
   boost::asio::io_context& io_context_;
+=======
+  // The execution context used to obtain the reactor, if required.
+  execution_context& context_;
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
   // The IOCP service used for running asynchronous operations and dispatching
   // handlers.

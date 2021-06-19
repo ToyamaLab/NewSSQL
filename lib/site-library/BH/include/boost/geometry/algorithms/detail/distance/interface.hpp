@@ -6,10 +6,18 @@
 // Copyright (c) 2013-2014 Adam Wulkiewicz, Lodz, Poland.
 // Copyright (c) 2014 Samuel Debionne, Grenoble, France.
 
+<<<<<<< HEAD
 // This file was modified by Oracle on 2014.
 // Modifications copyright (c) 2014, Oracle and/or its affiliates.
 
 // Contributed and/or modified by Menelaos Karavelas, on behalf of Oracle
+=======
+// This file was modified by Oracle on 2014, 2018.
+// Modifications copyright (c) 2014-2018, Oracle and/or its affiliates.
+
+// Contributed and/or modified by Menelaos Karavelas, on behalf of Oracle
+// Contributed and/or modified by Adam Wulkiewicz, on behalf of Oracle
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 // Parts of Boost.Geometry are redesigned from Geodan's Geographic Library
 // (geolib/GGL), copyright (c) 1995-2010 Geodan, Amsterdam, the Netherlands.
@@ -94,9 +102,16 @@ struct distance
 namespace resolve_strategy
 {
 
+<<<<<<< HEAD
 struct distance
 {
     template <typename Geometry1, typename Geometry2, typename Strategy>
+=======
+template <typename Strategy>
+struct distance
+{
+    template <typename Geometry1, typename Geometry2>
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     static inline typename distance_result<Geometry1, Geometry2, Strategy>::type
     apply(Geometry1 const& geometry1,
           Geometry2 const& geometry2,
@@ -107,7 +122,15 @@ struct distance
                 Geometry1, Geometry2, Strategy
             >::apply(geometry1, geometry2, strategy);
     }
+<<<<<<< HEAD
 
+=======
+};
+
+template <>
+struct distance<default_strategy>
+{
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     template <typename Geometry1, typename Geometry2>
     static inline
     typename distance_result<Geometry1, Geometry2, default_strategy>::type
@@ -143,8 +166,15 @@ struct distance
           Geometry2 const& geometry2,
           Strategy const& strategy)
     {
+<<<<<<< HEAD
         return
             resolve_strategy::distance::apply(geometry1, geometry2, strategy);
+=======
+        return resolve_strategy::distance
+            <
+                Strategy
+            >::apply(geometry1, geometry2, strategy);
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     }
 };
 
@@ -320,10 +350,17 @@ struct distance
 
 
 /*!
+<<<<<<< HEAD
 \brief \brief_calc2{distance} \brief_strategy
 \ingroup distance
 \details
 \details \details_calc{area}. \brief_strategy. \details_strategy_reasons
+=======
+\brief Calculate the distance between two geometries \brief_strategy
+\ingroup distance
+\details
+\details The free function distance calculates the distance between two geometries \brief_strategy. \details_strategy_reasons
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 \tparam Geometry1 \tparam_geometry
 \tparam Geometry2 \tparam_geometry
@@ -376,9 +413,16 @@ distance(Geometry1 const& geometry1,
 
 
 /*!
+<<<<<<< HEAD
 \brief \brief_calc2{distance}
 \ingroup distance
 \details The default strategy is used, corresponding to the coordinate system of the geometries
+=======
+\brief Calculate the distance between two geometries.
+\ingroup distance
+\details The free function distance calculates the distance between two geometries. \details_default_strategy
+
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 \tparam Geometry1 \tparam_geometry
 \tparam Geometry2 \tparam_geometry
 \param geometry1 \param_geometry

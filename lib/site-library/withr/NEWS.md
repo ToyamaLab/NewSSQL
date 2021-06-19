@@ -1,3 +1,34 @@
+<<<<<<< HEAD
+=======
+# withr 2.2.0
+
+# withr 2.1.2.9000
+
+- `defer()` can set deferred events on `.GlobalEnv` to facilitate the interactive development of code inside a function or test.
+  Helpers `deferred_run()` (and `deferred_clear()`) provide a way to explicity run and clear (or just clear) deferred events (#76, @jennybc).
+
+- `with_connection()` now works when existing objects or connections exist with the same names (#120)
+
+- `with_makevars()` now uses `tools::makevars_user()` to determine the default user makevars file (#77, @siddharthab).
+
+- `with_options()` no longer uses `do.call()`, so optiosn are not evaluated on exit (#73, @mtmorgan).
+
+- `with_package()` no longer has the `help` argument (#94, @wendtke).
+
+- `with_package()` now does not try to detach the package if it is already attached before calling `with_package()` (#107)
+
+- `with_preserve_seed()` now restores `.Random.seed` if it is not set
+  originally (#124).
+
+- Add `with_rng_version()` and `local_rng_version()` functions to change the version of the RNG (#90, @gaborcsardi).
+
+- `with_svg()` documentation now is consistent across R versions (#129)
+
+- Add `with_timezone()` and `local_timezone()` functions to change the time zone (#92, @gaborcsardi).
+
+- `with_tempfile()` and `local_tempfile()` now delete recursively directories on exit (#84, @meta00).
+
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 # withr 2.1.2
 
 - `set_makevars()` is now exported (#68, @gaborcsardi).

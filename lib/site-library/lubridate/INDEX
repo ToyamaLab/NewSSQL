@@ -1,7 +1,12 @@
 %m+%                    Add and subtract months to a date without
                         exceeding the last day of the new month
+<<<<<<< HEAD
 %within%                Tests whether a date or interval falls within
                         an interval
+=======
+%within%                Does a date (or interval) fall within an
+                        interval?
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 DateTimeUpdate          Changes the components of a date object
 Duration-class          Duration class
 Interval-class          Interval class
@@ -10,6 +15,10 @@ as.duration             Change an object to a duration
 as.interval             Change an object to an 'interval'
 as.period               Change an object to a period
 as_date                 Convert an object to a date or date-time
+<<<<<<< HEAD
+=======
+cyclic_encoding         Cyclic encoding of date-times
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 date                    Get/set date component of a date-time
 date_decimal            Converts a decimal to a date
 day                     Get/set days component of a date-time
@@ -21,13 +30,22 @@ dst                     Get *d*aylight *s*avings *t*ime indicator of a
 duration                Create a duration object.
 fit_to_timeline         Fit a POSIXlt date-time to the timeline
 force_tz                Replace time zone to create new date-time
+<<<<<<< HEAD
+=======
+format_ISO8601          Format in ISO8601 character format
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 guess_formats           Guess possible date-times formats from a
                         character vector
 hour                    Get/set hours component of a date-time
 interval                Utilities for creation and manipulation of
                         'Interval' objects
+<<<<<<< HEAD
 is.Date                 Is x a Date object?
 is.POSIXt               Is x a POSIXct or POSIXlt object?
+=======
+is.Date                 Various date utilities
+is.POSIXt               Various POSIX utilities
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 is.difftime             Is x a difftime object?
 is.instant              Is x a date-time object?
 is.timespan             Is x a length of time?
@@ -41,7 +59,11 @@ minute                  Get/set minutes component of a date-time
 month                   Get/set months component of a date-time
 ms                      Parse periods with *h*our, *m*inute, and
                         *s*econd components
+<<<<<<< HEAD
 now                     The current time
+=======
+now                     The current day and time
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 origin                  1970-01-01 UTC
 parse_date_time         User friendly date-time parsing functions
 period                  Create or parse period objects
@@ -59,7 +81,10 @@ stamp                   Format dates and times based on human-friendly
                         templates
 time_length             Compute the exact length of a time span
 timespan                Description of time span classes in lubridate
+<<<<<<< HEAD
 today                   The current date
+=======
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 tz                      Get/set time zone component of a date-time
 week                    Get/set weeks component of a date-time
 with_tz                 Get date-time in a different time zone

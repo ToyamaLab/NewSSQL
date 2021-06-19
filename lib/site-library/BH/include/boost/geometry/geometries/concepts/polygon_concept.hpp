@@ -15,6 +15,10 @@
 #define BOOST_GEOMETRY_GEOMETRIES_CONCEPTS_POLYGON_CONCEPT_HPP
 
 #include <boost/concept_check.hpp>
+<<<<<<< HEAD
+=======
+#include <boost/core/ignore_unused.hpp>
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 #include <boost/range/concepts.hpp>
 
 #include <boost/geometry/core/access.hpp>
@@ -65,12 +69,17 @@ class Polygon
             ring_const_type ce = traits::exterior_ring<PolygonType>::get(*cpoly);
             interior_const_type ci = traits::interior_rings<PolygonType>::get(*cpoly);
 
+<<<<<<< HEAD
             boost::ignore_unused_variable_warning(e);
             boost::ignore_unused_variable_warning(i);
             boost::ignore_unused_variable_warning(ce);
             boost::ignore_unused_variable_warning(ci);
             boost::ignore_unused_variable_warning(poly);
             boost::ignore_unused_variable_warning(cpoly);
+=======
+            boost::ignore_unused(poly, cpoly);
+            boost::ignore_unused(e, i, ce, ci);
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
         }
     };
 
@@ -115,9 +124,13 @@ class ConstPolygon
             ring_const_type ce = traits::exterior_ring<const_polygon_type>::get(*cpoly);
             interior_const_type ci = traits::interior_rings<const_polygon_type>::get(*cpoly);
 
+<<<<<<< HEAD
             boost::ignore_unused_variable_warning(ce);
             boost::ignore_unused_variable_warning(ci);
             boost::ignore_unused_variable_warning(cpoly);
+=======
+            boost::ignore_unused(ce, ci, cpoly);
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
         }
     };
 

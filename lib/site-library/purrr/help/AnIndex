@@ -3,20 +3,36 @@ purrr-package	purrr-package
 %@%	get-attr
 %||%	null-default
 accumulate	accumulate
+<<<<<<< HEAD
 accumulate_right	accumulate
+=======
+accumulate2	accumulate
+accumulate_right	reduce_right
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 along	along
 array-coercion	array-coercion
 array_branch	array-coercion
 array_tree	array-coercion
+<<<<<<< HEAD
+=======
+assign_in	modify_in
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 as_function	as_mapper
 as_mapper	as_mapper
 as_mapper.character	as_mapper
 as_mapper.list	as_mapper
 as_mapper.numeric	as_mapper
 as_vector	as_vector
+<<<<<<< HEAD
 attr_getter	pluck
 at_depth	modify
 auto_browse	safely
+=======
+attr_getter	attr_getter
+at_depth	at_depth
+auto_browse	safely
+chuck	pluck
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 compact	keep
 compose	compose
 cross	cross
@@ -28,7 +44,14 @@ cross_n	cross
 detect	detect
 detect_index	detect
 discard	keep
+<<<<<<< HEAD
 every	every
+=======
+done	done
+every	every
+exec	exec
+faq-adverbs-export	faq-adverbs-export
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 flatten	flatten
 flatten_chr	flatten
 flatten_dbl	flatten
@@ -37,6 +60,10 @@ flatten_dfc	flatten
 flatten_dfr	flatten
 flatten_int	flatten
 flatten_lgl	flatten
+<<<<<<< HEAD
+=======
+flatten_raw	flatten
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 get-attr	get-attr
 has_element	has_element
 head_while	head_while
@@ -47,6 +74,12 @@ imap_dfc	imap
 imap_dfr	imap
 imap_int	imap
 imap_lgl	imap
+<<<<<<< HEAD
+=======
+imap_raw	imap
+imodify	modify
+insistently	insistently
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 invoke	invoke
 invoke_map	invoke
 invoke_map_chr	invoke
@@ -56,6 +89,10 @@ invoke_map_dfc	invoke
 invoke_map_dfr	invoke
 invoke_map_int	invoke
 invoke_map_lgl	invoke
+<<<<<<< HEAD
+=======
+invoke_map_raw	invoke
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 is_atomic	reexports
 is_bare_atomic	reexports
 is_bare_character	reexports
@@ -75,6 +112,10 @@ is_list	reexports
 is_logical	reexports
 is_null	reexports
 is_numeric	is_numeric
+<<<<<<< HEAD
+=======
+is_rate	rate-helpers
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 is_scalar_atomic	reexports
 is_scalar_character	reexports
 is_scalar_double	reexports
@@ -108,6 +149,7 @@ map2_dfc	map2
 map2_dfr	map2
 map2_int	map2
 map2_lgl	map2
+<<<<<<< HEAD
 map_at	map
 map_call	invoke
 map_chr	map
@@ -120,16 +162,44 @@ map_int	map
 map_lgl	map
 modify	modify
 modify.default	modify
+=======
+map2_raw	map2
+map_at	map_if
+map_call	invoke
+map_chr	map
+map_dbl	map
+map_depth	map_if
+map_df	map
+map_dfc	map
+map_dfr	map
+map_if	map_if
+map_int	map
+map_lgl	map
+map_raw	map
+modify	modify
+modify.default	modify
+modify2	modify
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 modify_at	modify
 modify_at.default	modify
 modify_depth	modify
 modify_depth.default	modify
 modify_if	modify
 modify_if.default	modify
+<<<<<<< HEAD
 negate	negate
 null-default	null-default
 partial	partial
 pluck	pluck
+=======
+modify_in	modify_in
+negate	negate
+none	every
+null-default	null-default
+partial	partial
+pluck	pluck
+pluck<-	pluck
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 pmap	map2
 pmap_chr	map2
 pmap_dbl	map2
@@ -138,24 +208,47 @@ pmap_dfc	map2
 pmap_dfr	map2
 pmap_int	map2
 pmap_lgl	map2
+<<<<<<< HEAD
+=======
+pmap_raw	map2
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 possibly	safely
 prepend	prepend
 purrr	purrr-package
 pwalk	map2
 quietly	safely
+<<<<<<< HEAD
+=======
+rate-helpers	rate-helpers
+rate_backoff	rate-helpers
+rate_delay	rate-helpers
+rate_reset	rate_sleep
+rate_sleep	rate_sleep
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 rbernoulli	rbernoulli
 rdunif	rdunif
 reduce	reduce
 reduce2	reduce
+<<<<<<< HEAD
 reduce2_right	reduce
 reduce_right	reduce
 reexports	reexports
 rep_along	along
+=======
+reduce2_right	reduce_right
+reduce_right	reduce_right
+reexports	reexports
+rep_along	rep_along
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 rerun	rerun
 safely	safely
 set_names	set_names
 simplify	as_vector
 simplify_all	as_vector
+<<<<<<< HEAD
+=======
+slowly	insistently
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 some	every
 splice	splice
 tail_while	head_while
@@ -165,3 +258,7 @@ vec_depth	vec_depth
 walk	map
 walk2	map2
 when	when
+<<<<<<< HEAD
+=======
+zap	zap
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce

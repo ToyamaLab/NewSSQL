@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 /* Copyright 2003-2015 Joaquin M Lopez Munoz.
+=======
+/* Copyright 2003-2018 Joaquin M Lopez Munoz.
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
  * Distributed under the Boost Software License, Version 1.0.
  * (See accompanying file LICENSE_1_0.txt or copy at
  * http://www.boost.org/LICENSE_1_0.txt)
@@ -15,6 +19,10 @@
 
 #include <boost/config.hpp> /* keep it first to prevent nasty warns in MSVC */
 #include <algorithm>
+<<<<<<< HEAD
+=======
+#include <boost/multi_index/detail/allocator_traits.hpp>
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 #include <boost/multi_index/detail/auto_space.hpp>
 #include <boost/multi_index/detail/hash_index_node.hpp>
 #include <boost/noncopyable.hpp>
@@ -128,7 +136,11 @@ class bucket_array:bucket_array_base<>
 {
   typedef bucket_array_base<>                        super;
   typedef hashed_index_base_node_impl<
+<<<<<<< HEAD
     typename boost::detail::allocator::rebind_to<
+=======
+    typename rebind_alloc_for<
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
       Allocator,
       char
     >::type
@@ -140,7 +152,11 @@ public:
 
   bucket_array(const Allocator& al,pointer end_,std::size_t size_):
     size_index_(super::size_index(size_)),
+<<<<<<< HEAD
     spc(al,super::sizes[size_index_]+1)
+=======
+    spc(al,static_cast<auto_space_size_type>(super::sizes[size_index_]+1))
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
   {
     clear(end_);
   }
@@ -173,8 +189,16 @@ public:
   }
 
 private:
+<<<<<<< HEAD
   std::size_t                               size_index_;
   auto_space<base_node_impl_type,Allocator> spc;
+=======
+  typedef auto_space<base_node_impl_type,Allocator> auto_space_type;
+  typedef typename auto_space_type::size_type       auto_space_size_type;
+
+  std::size_t      size_index_;
+  auto_space_type  spc;
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
   base_pointer buckets()const
   {

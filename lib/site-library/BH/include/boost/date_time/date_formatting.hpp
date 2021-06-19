@@ -11,6 +11,10 @@
 
 #include "boost/date_time/iso_format.hpp"
 #include "boost/date_time/compiler_config.hpp"
+<<<<<<< HEAD
+=======
+#include <boost/io/ios_state.hpp>
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 #include <string>
 #include <sstream>
 #include <iomanip>
@@ -51,6 +55,10 @@ namespace date_time {
         }
         case month_as_integer: 
         { 
+<<<<<<< HEAD
+=======
+          boost::io::basic_ios_fill_saver<charT> ifs(os);
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
           os << std::setw(2) << std::setfill(os.widen('0')) << month.as_number();
           break;
         }

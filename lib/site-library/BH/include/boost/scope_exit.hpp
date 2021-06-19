@@ -6,6 +6,7 @@
 // http://www.boost.org/LICENSE_1_0.txt)
 // Home at http://www.boost.org/libs/scope_exit
 
+<<<<<<< HEAD
 #ifndef FILE_boost_scope_exit_hpp_INCLUDED
 #define FILE_boost_scope_exit_hpp_INCLUDED
 
@@ -15,6 +16,16 @@
 #include <boost/mpl/assert.hpp>
 #include <boost/mpl/int.hpp>
 #include <boost/utility/enable_if.hpp>
+=======
+#ifndef BOOST_SCOPE_EXIT_HPP
+#define BOOST_SCOPE_EXIT_HPP
+
+#ifndef DOXYGEN
+
+#include <boost/config/workaround.hpp>
+#include <boost/type_traits/integral_constant.hpp>
+#include <boost/type_traits/enable_if.hpp>
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 #include <boost/function.hpp>
 #include <boost/typeof/typeof.hpp>
 #include <boost/config.hpp>
@@ -61,7 +72,11 @@
 #   define BOOST_SCOPE_EXIT_AUX_TPL_GCC_WORKAROUND_01 0
 #endif
 
+<<<<<<< HEAD
 #if BOOST_MSVC
+=======
+#if BOOST_MSVC && (BOOST_MSVC <= 1900)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 #   define BOOST_SCOPE_EXIT_AUX_TYPEOF_THIS_MSVC_WORKAROUND_01 1
 #else
 #   define BOOST_SCOPE_EXIT_AUX_TYPEOF_THIS_MSVC_WORKAROUND_01 0
@@ -337,9 +352,15 @@ extern boost::scope_exit::detail::undeclared BOOST_SCOPE_EXIT_AUX_ARGS;
 
 #include <boost/config.hpp>
 #include <boost/detail/workaround.hpp>
+<<<<<<< HEAD
 #include <boost/mpl/int.hpp>
 #include <boost/type_traits/is_function.hpp>
 #include <boost/utility/enable_if.hpp>
+=======
+#include <boost/type_traits/integral_constant.hpp>
+#include <boost/type_traits/is_function.hpp>
+#include <boost/type_traits/enable_if.hpp>
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 #if defined(BOOST_MSVC)
 #   include <typeinfo>
@@ -448,7 +469,11 @@ struct msvc_register_type : msvc_extract_type<ID> {
 
 template<int Id>
 struct msvc_typeid_wrapper {
+<<<<<<< HEAD
     typedef typename msvc_extract_type<boost::mpl::int_<Id>
+=======
+    typedef typename msvc_extract_type<boost::integral_constant<int, Id>
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
             >::id2type id2type;
     typedef typename id2type::type type;
 };
@@ -462,7 +487,11 @@ template<typename T>
 struct encode_type {
     BOOST_STATIC_CONSTANT(unsigned, value = encode_counter<T>::count);
     typedef typename msvc_register_type<T,
+<<<<<<< HEAD
             boost::mpl::int_<value> >::id2type type;
+=======
+            boost::integral_constant<int, value> >::id2type type;
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     BOOST_STATIC_CONSTANT(unsigned, next = value + 1);
 };
 
@@ -472,14 +501,24 @@ struct sizer {
 };
 
 template<typename T>
+<<<<<<< HEAD
 typename boost::disable_if<
       typename boost::is_function<T>::type
+=======
+typename boost::enable_if_<
+      !boost::is_function<T>::value
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     , typename sizer<T>::type
 >::type encode_start(T const&);
 
 template<typename T>
+<<<<<<< HEAD
 typename boost::enable_if<
       typename boost::is_function<T>::type
+=======
+typename boost::enable_if_<
+      boost::is_function<T>::value
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     , typename sizer<T>::type
 >::type encode_start(T&);
 
@@ -1411,5 +1450,9 @@ compilers that support C++11 lambda functions.
 
 #endif // DOXYGEN
 
+<<<<<<< HEAD
 #endif // #ifndef FILE_boost_scope_exit_hpp_INCLUDED
+=======
+#endif // BOOST_SCOPE_EXIT_HPP
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 

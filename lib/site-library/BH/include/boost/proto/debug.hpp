@@ -11,14 +11,22 @@
 
 #include <iostream>
 #include <boost/preprocessor/stringize.hpp>
+<<<<<<< HEAD
 #include <boost/ref.hpp>
+=======
+#include <boost/core/ref.hpp>
+#include <boost/core/typeinfo.hpp>
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 #include <boost/mpl/assert.hpp>
 #include <boost/proto/proto_fwd.hpp>
 #include <boost/proto/traits.hpp>
 #include <boost/proto/matches.hpp>
 #include <boost/proto/fusion.hpp>
 #include <boost/fusion/algorithm/iteration/for_each.hpp>
+<<<<<<< HEAD
 #include <boost/detail/sp_typeinfo.hpp>
+=======
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 namespace boost { namespace proto
 {
@@ -100,7 +108,11 @@ namespace boost { namespace proto
         {
             template<typename T>
             named_any(T const &)
+<<<<<<< HEAD
               : name_(BOOST_SP_TYPEID(T).name())
+=======
+              : name_(BOOST_CORE_TYPEID(T).name())
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
             {}
 
             char const *name_;
@@ -114,6 +126,26 @@ namespace boost { namespace proto
 
     namespace detail
     {
+<<<<<<< HEAD
+=======
+        // copyable functor to pass by value to fusion::foreach
+        struct display_expr_impl;
+        struct display_expr_impl_functor
+        {
+            display_expr_impl_functor(display_expr_impl const& impl): impl_(impl)
+            {}
+
+            template<typename Expr>
+            void operator()(Expr const &expr) const
+            {
+                this->impl_(expr);
+            }
+
+        private:
+            display_expr_impl const& impl_;
+        };
+
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
         struct display_expr_impl
         {
             explicit display_expr_impl(std::ostream &sout, int depth = 0)
@@ -152,7 +184,11 @@ namespace boost { namespace proto
                 this->sout_ << (this->first_? "" : ", ");
                 this->sout_ << tag() << "(\n";
                 display_expr_impl display(this->sout_, this->depth_ + 4);
+<<<<<<< HEAD
                 fusion::for_each(expr, display);
+=======
+                fusion::for_each(expr, display_expr_impl_functor(display));
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
                 this->sout_.width(this->depth_);
                 this->sout_ << "" << ")\n";
                 this->first_ = false;

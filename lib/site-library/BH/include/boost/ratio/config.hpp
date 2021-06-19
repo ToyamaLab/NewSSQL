@@ -45,14 +45,28 @@
 
 #ifdef INTMAX_C
 #define BOOST_RATIO_INTMAX_C(a) INTMAX_C(a)
+<<<<<<< HEAD
 #else
 #define BOOST_RATIO_INTMAX_C(a) a##LL
+=======
+#elif __cplusplus >= 201103L
+#define BOOST_RATIO_INTMAX_C(a) a##LL
+#else
+#define BOOST_RATIO_INTMAX_C(a) a##L
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 #endif
 
 #ifdef UINTMAX_C
 #define BOOST_RATIO_UINTMAX_C(a) UINTMAX_C(a)
+<<<<<<< HEAD
 #else
 #define BOOST_RATIO_UINTMAX_C(a) a##ULL
+=======
+#elif __cplusplus >= 201103L
+#define BOOST_RATIO_UINTMAX_C(a) a##ULL
+#else
+#define BOOST_RATIO_UINTMAX_C(a) a##UL
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 #endif
 
 #define BOOST_RATIO_INTMAX_T_MAX (0x7FFFFFFFFFFFFFFELL)

@@ -5,6 +5,14 @@
 // Copyright (c) 2009-2012 Mateusz Loskot, London, UK.
 // Copyright (c) 2014 Adam Wulkiewicz, Lodz, Poland.
 
+<<<<<<< HEAD
+=======
+// This file was modified by Oracle on 2018.
+// Modifications copyright (c) 2018, Oracle and/or its affiliates.
+
+// Contributed and/or modified by Adam Wulkiewicz, on behalf of Oracle
+
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 // Parts of Boost.Geometry are redesigned from Geodan's Geographic Library
 // (geolib/GGL), copyright (c) 1995-2010 Geodan, Amsterdam, the Netherlands.
 
@@ -405,7 +413,11 @@ struct dsv<multi_tag, Geometry>
 \note Useful for examples and testing purposes
 \note With this function GeoJSON objects can be created, using the right
     delimiters
+<<<<<<< HEAD
 \ingroup utility
+=======
+\ingroup dsv
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 */
 template <typename Geometry>
 inline detail::dsv::dsv_manipulator<Geometry> dsv(Geometry const& geometry

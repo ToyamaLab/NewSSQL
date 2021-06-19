@@ -2,7 +2,11 @@
 // detail/push_options.hpp
 // ~~~~~~~~~~~~~~~~~~~~~~~
 //
+<<<<<<< HEAD
 // Copyright (c) 2003-2017 Christopher M. Kohlhoff (chris at kohlhoff dot com)
+=======
+// Copyright (c) 2003-2019 Christopher M. Kohlhoff (chris at kohlhoff dot com)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 //
 // Distributed under the Boost Software License, Version 1.0. (See accompanying
 // file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
@@ -24,7 +28,13 @@
 // Intel C++
 
 # if (__GNUC__ == 4 && __GNUC_MINOR__ >= 1) || (__GNUC__ > 4)
+<<<<<<< HEAD
 #  pragma GCC visibility push (default)
+=======
+#  if !defined(BOOST_ASIO_DISABLE_VISIBILITY)
+#   pragma GCC visibility push (default)
+#  endif // !defined(BOOST_ASIO_DISABLE_VISIBILITY)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 # endif // (__GNUC__ == 4 && __GNUC_MINOR__ >= 1) || (__GNUC__ > 4)
 
 #elif defined(__clang__)
@@ -44,7 +54,13 @@
 # endif
 
 # if !defined(_WIN32) && !defined(__WIN32__) && !defined(WIN32)
+<<<<<<< HEAD
 #  pragma GCC visibility push (default)
+=======
+#  if !defined(BOOST_ASIO_DISABLE_VISIBILITY)
+#   pragma GCC visibility push (default)
+#  endif // !defined(BOOST_ASIO_DISABLE_VISIBILITY)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 # endif // !defined(_WIN32) && !defined(__WIN32__) && !defined(WIN32)
 
 #elif defined(__GNUC__)
@@ -68,12 +84,22 @@
 # endif
 
 # if (__GNUC__ == 4 && __GNUC_MINOR__ >= 1) || (__GNUC__ > 4)
+<<<<<<< HEAD
 #  pragma GCC visibility push (default)
+=======
+#  if !defined(BOOST_ASIO_DISABLE_VISIBILITY)
+#   pragma GCC visibility push (default)
+#  endif // !defined(BOOST_ASIO_DISABLE_VISIBILITY)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 # endif // (__GNUC__ == 4 && __GNUC_MINOR__ >= 1) || (__GNUC__ > 4)
 
 # if (__GNUC__ >= 7)
 #  pragma GCC diagnostic push
+<<<<<<< HEAD
 //  #  pragma GCC diagnostic ignored "-Wimplicit-fallthrough"
+=======
+//#  pragma GCC diagnostic ignored "-Wimplicit-fallthrough"
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 # endif // (__GNUC__ >= 7)
 
 #elif defined(__KCC)

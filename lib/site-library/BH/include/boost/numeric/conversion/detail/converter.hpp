@@ -453,7 +453,11 @@ namespace boost { namespace numeric { namespace convdetail
   struct trivial_converter_impl : public dummy_range_checker<Traits>
   {
     typedef Traits traits ;
+<<<<<<< HEAD
 
+=======
+    
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     typedef typename Traits::source_type   source_type   ;
     typedef typename Traits::argument_type argument_type ;
     typedef typename Traits::result_type   result_type   ;

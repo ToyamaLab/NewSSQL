@@ -16,15 +16,29 @@
 #include <boost/spirit/home/qi/parser.hpp>
 #include <boost/spirit/home/qi/auxiliary/lazy.hpp>
 #include <boost/spirit/home/qi/operator/kleene.hpp>
+<<<<<<< HEAD
+=======
+#include <boost/spirit/home/qi/string/lit.hpp>
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 #include <boost/spirit/home/support/container.hpp>
 #include <boost/spirit/home/qi/detail/attributes.hpp>
 #include <boost/spirit/home/qi/detail/fail_function.hpp>
 #include <boost/spirit/home/support/info.hpp>
 #include <boost/spirit/repository/home/support/kwd.hpp>
 #include <boost/fusion/include/at.hpp>
+<<<<<<< HEAD
 #include <boost/foreach.hpp>
 #include <vector>
 
+=======
+#include <vector>
+
+#if defined(_MSC_VER)
+# pragma warning(push)
+# pragma warning(disable: 4127) // conditional expression is constant
+#endif
+
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 namespace boost { namespace spirit
 {
     ///////////////////////////////////////////////////////////////////////////
@@ -148,11 +162,23 @@ namespace boost { namespace spirit
 
 namespace boost { namespace spirit { namespace repository { namespace qi
 {
+<<<<<<< HEAD
+=======
+#ifndef BOOST_SPIRIT_NO_PREDEFINED_TERMINALS
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     using repository::kwd;
     using repository::ikwd;
     using repository::dkwd;
     using repository::idkwd;
     using spirit::inf;
+<<<<<<< HEAD
+=======
+#endif
+    using repository::kwd_type;
+    using repository::ikwd_type;
+    using repository::dkwd_type;
+    using repository::idkwd_type;
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     using spirit::inf_type;
 
 template <typename T>
@@ -160,15 +186,24 @@ template <typename T>
     {
         kwd_pass_iterator() {}
         bool flag_init() const { return true; }
+<<<<<<< HEAD
         bool register_successful_parse(bool &flag,T &i) const {
+=======
+        bool register_successful_parse(bool &flag,T &/*i*/) const {
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
             flag=true;
             return true;
         }
 
 
+<<<<<<< HEAD
     private:
         // silence MSVC warning C4512: assignment operator could not be generated
         kwd_pass_iterator& operator= (kwd_pass_iterator const&);
+=======
+        // silence MSVC warning C4512: assignment operator could not be generated
+        BOOST_DELETED_FUNCTION(kwd_pass_iterator& operator= (kwd_pass_iterator const&))
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     };
 
     template <typename T>
@@ -197,9 +232,14 @@ template <typename T>
         }
         T const exact;
 
+<<<<<<< HEAD
     private:
         // silence MSVC warning C4512: assignment operator could not be generated
         kwd_exact_iterator& operator= (kwd_exact_iterator const&);
+=======
+        // silence MSVC warning C4512: assignment operator could not be generated
+        BOOST_DELETED_FUNCTION(kwd_exact_iterator& operator= (kwd_exact_iterator const&))
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     };
 
     template <typename T>
@@ -229,9 +269,14 @@ template <typename T>
         T const min;
         T const max;
 
+<<<<<<< HEAD
     private:
         // silence MSVC warning C4512: assignment operator could not be generated
         kwd_finite_iterator& operator= (kwd_finite_iterator const&);
+=======
+        // silence MSVC warning C4512: assignment operator could not be generated
+        BOOST_DELETED_FUNCTION(kwd_finite_iterator& operator= (kwd_finite_iterator const&))
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     };
 
     template <typename T>
@@ -249,9 +294,14 @@ template <typename T>
         }
         T const min;
 
+<<<<<<< HEAD
     private:
         // silence MSVC warning C4512: assignment operator could not be generated
         kwd_infinite_iterator& operator= (kwd_infinite_iterator const&);
+=======
+        // silence MSVC warning C4512: assignment operator could not be generated
+        BOOST_DELETED_FUNCTION(kwd_infinite_iterator& operator= (kwd_infinite_iterator const&))
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     };
 
     // This class enables the transportation of parameters needed to call
@@ -433,11 +483,20 @@ template <typename T>
                 no_case_keyword,
                 spirit::qi::no_case_literal_string< KeywordType, true>,
                 spirit::qi::literal_string<KeywordType, true> >::type keyword_string_type;
+<<<<<<< HEAD
        keyword_string_type keyword;
     private:
         // silence MSVC warning C4512: assignment operator could not be generated
         kwd_parser& operator= (kwd_parser const&);
 
+=======
+        keyword_string_type keyword;
+
+        // silence MSVC warning C4512: assignment operator could not be generated
+        BOOST_DELETED_FUNCTION(kwd_parser& operator= (kwd_parser const&))
+
+    private:
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
         template <typename Iterator, typename Context, typename Skipper>
         static spirit::qi::detail::fail_function<Iterator, Context, Skipper>
         fail_function(
@@ -579,10 +638,18 @@ template <typename Subject, typename KeywordType, typename LoopIter, typename Di
         LoopIter iter;
 
         KeywordType keyword;
+<<<<<<< HEAD
     private:
         // silence MSVC warning C4512: assignment operator could not be generated
         complex_kwd_parser& operator= (complex_kwd_parser const&);
 
+=======
+
+        // silence MSVC warning C4512: assignment operator could not be generated
+        BOOST_DELETED_FUNCTION(complex_kwd_parser& operator= (complex_kwd_parser const&))
+
+    private:
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
         template <typename Iterator, typename Context, typename Skipper>
         static spirit::qi::detail::fail_function<Iterator, Context, Skipper>
         fail_function(
@@ -650,7 +717,11 @@ namespace boost { namespace spirit { namespace qi
                         );
         }
         template <typename Terminal>
+<<<<<<< HEAD
         result_type create_kwd(Terminal const &term, Subject const & subject, Modifiers const& modifiers, boost::mpl::true_ ) const
+=======
+        result_type create_kwd(Terminal const &term, Subject const & subject, Modifiers const& /*modifiers*/, boost::mpl::true_ ) const
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
         {
            return create_kwd_string(term,subject,no_case());
         }
@@ -721,7 +792,11 @@ namespace boost { namespace spirit { namespace qi
                         );
         }
         template <typename Terminal>
+<<<<<<< HEAD
         result_type create_kwd(Terminal const &term, Subject const & subject, Modifiers const& modifiers, boost::mpl::true_ ) const
+=======
+        result_type create_kwd(Terminal const &term, Subject const & subject, Modifiers const& /*modifiers*/, boost::mpl::true_ ) const
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
         {
            return create_kwd_string(term,subject,no_case());
         }
@@ -896,7 +971,11 @@ namespace boost { namespace spirit { namespace qi
 
         template <typename Terminal>
         result_type operator()(
+<<<<<<< HEAD
             Terminal const& term, Subject const& subject, Modifiers const& modifiers) const
+=======
+            Terminal const& term, Subject const& subject, Modifiers const& /*modifiers*/) const
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
         {
             typename spirit::detail::get_encoding<Modifiers,
                 spirit::char_encoding::standard>::type encoding;
@@ -919,7 +998,11 @@ namespace boost { namespace spirit { namespace qi
 
         template <typename Terminal>
         result_type operator()(
+<<<<<<< HEAD
             Terminal const& term, Subject const& subject, Modifiers const& modifiers) const
+=======
+            Terminal const& term, Subject const& subject, Modifiers const& /*modifiers*/) const
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
         {
             typename spirit::detail::get_encoding<Modifiers,
                 spirit::char_encoding::standard>::type encoding;
@@ -1195,5 +1278,12 @@ namespace boost { namespace spirit { namespace traits
 
 }}}
 
+<<<<<<< HEAD
+=======
+#if defined(_MSC_VER)
+# pragma warning(pop)
+#endif
+
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 #endif
 

@@ -120,7 +120,11 @@ namespace gregorian {
     date end_of_month() const
     {
       ymd_type ymd = year_month_day();
+<<<<<<< HEAD
       short eom_day =  gregorian_calendar::end_of_month_day(ymd.year, ymd.month);
+=======
+      unsigned short eom_day =  gregorian_calendar::end_of_month_day(ymd.year, ymd.month);
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
       return date(ymd.year, ymd.month, eom_day);
     }
 

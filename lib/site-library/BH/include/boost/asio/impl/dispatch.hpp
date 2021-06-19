@@ -2,7 +2,11 @@
 // impl/dispatch.hpp
 // ~~~~~~~~~~~~~~~~~
 //
+<<<<<<< HEAD
 // Copyright (c) 2003-2017 Christopher M. Kohlhoff (chris at kohlhoff dot com)
+=======
+// Copyright (c) 2003-2019 Christopher M. Kohlhoff (chris at kohlhoff dot com)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 //
 // Distributed under the Boost Software License, Version 1.0. (See accompanying
 // file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
@@ -24,6 +28,7 @@
 
 namespace boost {
 namespace asio {
+<<<<<<< HEAD
 
 template <typename CompletionToken>
 BOOST_ASIO_INITFN_RESULT_TYPE(CompletionToken, void()) dispatch(
@@ -64,6 +69,83 @@ BOOST_ASIO_INITFN_RESULT_TYPE(CompletionToken, void()) dispatch(
 
 template <typename ExecutionContext, typename CompletionToken>
 inline BOOST_ASIO_INITFN_RESULT_TYPE(CompletionToken, void()) dispatch(
+=======
+namespace detail {
+
+class initiate_dispatch
+{
+public:
+  template <typename CompletionHandler>
+  void operator()(BOOST_ASIO_MOVE_ARG(CompletionHandler) handler) const
+  {
+    typedef typename decay<CompletionHandler>::type DecayedHandler;
+
+    typename associated_executor<DecayedHandler>::type ex(
+        (get_associated_executor)(handler));
+
+    typename associated_allocator<DecayedHandler>::type alloc(
+        (get_associated_allocator)(handler));
+
+    ex.dispatch(BOOST_ASIO_MOVE_CAST(CompletionHandler)(handler), alloc);
+  }
+};
+
+template <typename Executor>
+class initiate_dispatch_with_executor
+{
+public:
+  typedef Executor executor_type;
+
+  explicit initiate_dispatch_with_executor(const Executor& ex)
+    : ex_(ex)
+  {
+  }
+
+  executor_type get_executor() const BOOST_ASIO_NOEXCEPT
+  {
+    return ex_;
+  }
+
+  template <typename CompletionHandler>
+  void operator()(BOOST_ASIO_MOVE_ARG(CompletionHandler) handler) const
+  {
+    typedef typename decay<CompletionHandler>::type DecayedHandler;
+
+    typename associated_allocator<DecayedHandler>::type alloc(
+        (get_associated_allocator)(handler));
+
+    ex_.dispatch(detail::work_dispatcher<DecayedHandler>(
+          BOOST_ASIO_MOVE_CAST(CompletionHandler)(handler)), alloc);
+  }
+
+private:
+  Executor ex_;
+};
+
+} // namespace detail
+
+template <BOOST_ASIO_COMPLETION_TOKEN_FOR(void()) CompletionToken>
+BOOST_ASIO_INITFN_AUTO_RESULT_TYPE(CompletionToken, void()) dispatch(
+    BOOST_ASIO_MOVE_ARG(CompletionToken) token)
+{
+  return async_initiate<CompletionToken, void()>(
+      detail::initiate_dispatch(), token);
+}
+
+template <typename Executor,
+    BOOST_ASIO_COMPLETION_TOKEN_FOR(void()) CompletionToken>
+BOOST_ASIO_INITFN_AUTO_RESULT_TYPE(CompletionToken, void()) dispatch(
+    const Executor& ex, BOOST_ASIO_MOVE_ARG(CompletionToken) token,
+    typename enable_if<is_executor<Executor>::value>::type*)
+{
+  return async_initiate<CompletionToken, void()>(
+      detail::initiate_dispatch_with_executor<Executor>(ex), token);
+}
+
+template <typename ExecutionContext,
+    BOOST_ASIO_COMPLETION_TOKEN_FOR(void()) CompletionToken>
+inline BOOST_ASIO_INITFN_AUTO_RESULT_TYPE(CompletionToken, void()) dispatch(
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     ExecutionContext& ctx, BOOST_ASIO_MOVE_ARG(CompletionToken) token,
     typename enable_if<is_convertible<
       ExecutionContext&, execution_context&>::value>::type*)

@@ -301,6 +301,7 @@ ast_parse(
     SkipT const&            skip_,
     AstFactoryT const &   /*dummy_*/ = AstFactoryT())
 {
+<<<<<<< HEAD
     typedef skip_parser_iteration_policy<SkipT> iter_policy_t;
     typedef ast_match_policy<IteratorT, AstFactoryT> ast_match_policy_t;
     typedef
@@ -310,6 +311,17 @@ ast_parse(
 
     iter_policy_t iter_policy(skip_);
     scanner_policies_t policies(iter_policy);
+=======
+    typedef skip_parser_iteration_policy<SkipT> it_policy_t;
+    typedef ast_match_policy<IteratorT, AstFactoryT> ast_match_policy_t;
+    typedef
+        scanner_policies<it_policy_t, ast_match_policy_t>
+        scan_policies_t;
+    typedef scanner<IteratorT, scan_policies_t> scanner_t;
+
+    it_policy_t iter_policy(skip_);
+    scan_policies_t policies(iter_policy);
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     IteratorT first = first_;
     scanner_t scan(first, last_, policies);
     tree_match<IteratorT, AstFactoryT> hit = parser.derived().parse(scan);

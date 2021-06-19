@@ -10,17 +10,29 @@
 // in ACM TOMS, {VOL 37, ISSUE 4, (February 2011)} (C) ACM, 2011. http://doi.acm.org/10.1145/1916461.1916469
 //
 // This file has no include guards or namespaces - it's expanded inline inside default_ops.hpp
+<<<<<<< HEAD
 // 
 
 #ifdef BOOST_MSVC
 #pragma warning(push)
 #pragma warning(disable:6326)  // comparison of two constants
+=======
+//
+
+#ifdef BOOST_MSVC
+#pragma warning(push)
+#pragma warning(disable : 6326) // comparison of two constants
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 #endif
 
 template <class T>
 void hyp0F1(T& result, const T& b, const T& x)
 {
+<<<<<<< HEAD
    typedef typename boost::multiprecision::detail::canonical<boost::int32_t, T>::type si_type;
+=======
+   typedef typename boost::multiprecision::detail::canonical<boost::int32_t, T>::type  si_type;
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
    typedef typename boost::multiprecision::detail::canonical<boost::uint32_t, T>::type ui_type;
 
    // Compute the series representation of Hypergeometric0F1 taken from
@@ -28,8 +40,13 @@ void hyp0F1(T& result, const T& b, const T& x)
    // There are no checks on input range or parameter boundaries.
 
    T x_pow_n_div_n_fact(x);
+<<<<<<< HEAD
    T pochham_b         (b);
    T bp                (b);
+=======
+   T pochham_b(b);
+   T bp(b);
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
    eval_divide(result, x_pow_n_div_n_fact, pochham_b);
    eval_add(result, ui_type(1));
@@ -40,6 +57,7 @@ void hyp0F1(T& result, const T& b, const T& x)
    tol = ui_type(1);
    eval_ldexp(tol, tol, 1 - boost::multiprecision::detail::digits2<number<T, et_on> >::value());
    eval_multiply(tol, result);
+<<<<<<< HEAD
    if(eval_get_sign(tol) < 0)
       tol.negate();
    T term;
@@ -49,6 +67,18 @@ void hyp0F1(T& result, const T& b, const T& x)
       ? 100 : boost::multiprecision::detail::digits2<number<T, et_on> >::value();
    // Series expansion of hyperg_0f1(; b; x).
    for(n = 2; n < series_limit; ++n)
+=======
+   if (eval_get_sign(tol) < 0)
+      tol.negate();
+   T term;
+
+   const int series_limit =
+       boost::multiprecision::detail::digits2<number<T, et_on> >::value() < 100
+           ? 100
+           : boost::multiprecision::detail::digits2<number<T, et_on> >::value();
+   // Series expansion of hyperg_0f1(; b; x).
+   for (n = 2; n < series_limit; ++n)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
    {
       eval_multiply(x_pow_n_div_n_fact, x);
       eval_divide(x_pow_n_div_n_fact, n);
@@ -59,6 +89,7 @@ void hyp0F1(T& result, const T& b, const T& x)
       eval_add(result, term);
 
       bool neg_term = eval_get_sign(term) < 0;
+<<<<<<< HEAD
       if(neg_term)
          term.negate();
       if(term.compare(tol) <= 0)
@@ -70,11 +101,27 @@ void hyp0F1(T& result, const T& b, const T& x)
 }
 
 
+=======
+      if (neg_term)
+         term.negate();
+      if (term.compare(tol) <= 0)
+         break;
+   }
+
+   if (n >= series_limit)
+      BOOST_THROW_EXCEPTION(std::runtime_error("H0F1 Failed to Converge"));
+}
+
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 template <class T>
 void eval_sin(T& result, const T& x)
 {
    BOOST_STATIC_ASSERT_MSG(number_category<T>::value == number_kind_floating_point, "The sin function is only valid for floating point types.");
+<<<<<<< HEAD
    if(&result == &x)
+=======
+   if (&result == &x)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
    {
       T temp;
       eval_sin(temp, x);
@@ -82,6 +129,7 @@ void eval_sin(T& result, const T& x)
       return;
    }
 
+<<<<<<< HEAD
    typedef typename boost::multiprecision::detail::canonical<boost::int32_t, T>::type si_type;
    typedef typename boost::multiprecision::detail::canonical<boost::uint32_t, T>::type ui_type;
    typedef typename mpl::front<typename T::float_types>::type fp_type;
@@ -94,6 +142,20 @@ void eval_sin(T& result, const T& x)
       {
          result = std::numeric_limits<number<T, et_on> >::quiet_NaN().backend();
          errno = EDOM;
+=======
+   typedef typename boost::multiprecision::detail::canonical<boost::int32_t, T>::type  si_type;
+   typedef typename boost::multiprecision::detail::canonical<boost::uint32_t, T>::type ui_type;
+   typedef typename mpl::front<typename T::float_types>::type                          fp_type;
+
+   switch (eval_fpclassify(x))
+   {
+   case FP_INFINITE:
+   case FP_NAN:
+      if (std::numeric_limits<number<T, et_on> >::has_quiet_NaN)
+      {
+         result = std::numeric_limits<number<T, et_on> >::quiet_NaN().backend();
+         errno  = EDOM;
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
       }
       else
          BOOST_THROW_EXCEPTION(std::domain_error("Result is undefined or complex and there is no NaN for this number type."));
@@ -101,7 +163,11 @@ void eval_sin(T& result, const T& x)
    case FP_ZERO:
       result = x;
       return;
+<<<<<<< HEAD
    default: ;
+=======
+   default:;
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
    }
 
    // Local copy of the argument
@@ -112,7 +178,11 @@ void eval_sin(T& result, const T& x)
    // The argument xx will be reduced to 0 <= xx <= pi/2.
    bool b_negate_sin = false;
 
+<<<<<<< HEAD
    if(eval_get_sign(x) < 0)
+=======
+   if (eval_get_sign(x) < 0)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
    {
       xx.negate();
       b_negate_sin = !b_negate_sin;
@@ -120,7 +190,11 @@ void eval_sin(T& result, const T& x)
 
    T n_pi, t;
    // Remove even multiples of pi.
+<<<<<<< HEAD
    if(xx.compare(get_constant_pi<T>()) > 0)
+=======
+   if (xx.compare(get_constant_pi<T>()) > 0)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
    {
       eval_divide(n_pi, xx, get_constant_pi<T>());
       eval_trunc(n_pi, n_pi);
@@ -140,7 +214,11 @@ void eval_sin(T& result, const T& x)
       BOOST_MATH_INSTRUMENT_CODE(n_pi.str(0, std::ios_base::scientific));
 
       // Adjust signs if the multiple of pi is not even.
+<<<<<<< HEAD
       if(!b_n_pi_is_even)
+=======
+      if (!b_n_pi_is_even)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
       {
          b_negate_sin = !b_negate_sin;
       }
@@ -148,7 +226,11 @@ void eval_sin(T& result, const T& x)
 
    // Reduce the argument to 0 <= xx <= pi/2.
    eval_ldexp(t, get_constant_pi<T>(), -1);
+<<<<<<< HEAD
    if(xx.compare(t) > 0)
+=======
+   if (xx.compare(t) > 0)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
    {
       eval_subtract(xx, get_constant_pi<T>(), xx);
       BOOST_MATH_INSTRUMENT_CODE(xx.str(0, std::ios_base::scientific));
@@ -159,6 +241,7 @@ void eval_sin(T& result, const T& x)
    const bool b_pi_half = eval_get_sign(t) == 0;
 
    // Check if the reduced argument is very close to 0 or pi/2.
+<<<<<<< HEAD
    const bool    b_near_zero    = xx.compare(fp_type(1e-1)) < 0;
    const bool    b_near_pi_half = t.compare(fp_type(1e-1)) < 0;;
 
@@ -171,6 +254,21 @@ void eval_sin(T& result, const T& x)
       result = ui_type(1);
    }
    else if(b_near_zero)
+=======
+   const bool b_near_zero    = xx.compare(fp_type(1e-1)) < 0;
+   const bool b_near_pi_half = t.compare(fp_type(1e-1)) < 0;
+   ;
+
+   if (b_zero)
+   {
+      result = ui_type(0);
+   }
+   else if (b_pi_half)
+   {
+      result = ui_type(1);
+   }
+   else if (b_near_zero)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
    {
       eval_multiply(t, xx, xx);
       eval_divide(t, si_type(-4));
@@ -180,7 +278,11 @@ void eval_sin(T& result, const T& x)
       BOOST_MATH_INSTRUMENT_CODE(result.str(0, std::ios_base::scientific));
       eval_multiply(result, xx);
    }
+<<<<<<< HEAD
    else if(b_near_pi_half)
+=======
+   else if (b_near_pi_half)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
    {
       eval_multiply(t, t);
       eval_divide(t, si_type(-4));
@@ -196,7 +298,11 @@ void eval_sin(T& result, const T& x)
       // divide by three identity a certain number of times.
       // Here we use division by 3^9 --> (19683 = 3^9).
 
+<<<<<<< HEAD
       static const si_type n_scale = 9;
+=======
+      static const si_type n_scale           = 9;
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
       static const si_type n_three_pow_scale = static_cast<si_type>(19683L);
 
       eval_divide(xx, n_three_pow_scale);
@@ -211,7 +317,11 @@ void eval_sin(T& result, const T& x)
       eval_multiply(result, xx);
 
       // Convert back using multiple angle identity.
+<<<<<<< HEAD
       for(boost::int32_t k = static_cast<boost::int32_t>(0); k < n_scale; k++)
+=======
+      for (boost::int32_t k = static_cast<boost::int32_t>(0); k < n_scale; k++)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
       {
          // Rescale the cosine value using the multiple angle identity.
          eval_multiply(t2, result, ui_type(3));
@@ -222,7 +332,11 @@ void eval_sin(T& result, const T& x)
       }
    }
 
+<<<<<<< HEAD
    if(b_negate_sin)
+=======
+   if (b_negate_sin)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
       result.negate();
 }
 
@@ -230,7 +344,11 @@ template <class T>
 void eval_cos(T& result, const T& x)
 {
    BOOST_STATIC_ASSERT_MSG(number_category<T>::value == number_kind_floating_point, "The cos function is only valid for floating point types.");
+<<<<<<< HEAD
    if(&result == &x)
+=======
+   if (&result == &x)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
    {
       T temp;
       eval_cos(temp, x);
@@ -238,6 +356,7 @@ void eval_cos(T& result, const T& x)
       return;
    }
 
+<<<<<<< HEAD
    typedef typename boost::multiprecision::detail::canonical<boost::int32_t, T>::type si_type;
    typedef typename boost::multiprecision::detail::canonical<boost::uint32_t, T>::type ui_type;
    typedef typename mpl::front<typename T::float_types>::type fp_type;
@@ -250,6 +369,20 @@ void eval_cos(T& result, const T& x)
       {
          result = std::numeric_limits<number<T, et_on> >::quiet_NaN().backend();
          errno = EDOM;
+=======
+   typedef typename boost::multiprecision::detail::canonical<boost::int32_t, T>::type  si_type;
+   typedef typename boost::multiprecision::detail::canonical<boost::uint32_t, T>::type ui_type;
+   typedef typename mpl::front<typename T::float_types>::type                          fp_type;
+
+   switch (eval_fpclassify(x))
+   {
+   case FP_INFINITE:
+   case FP_NAN:
+      if (std::numeric_limits<number<T, et_on> >::has_quiet_NaN)
+      {
+         result = std::numeric_limits<number<T, et_on> >::quiet_NaN().backend();
+         errno  = EDOM;
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
       }
       else
          BOOST_THROW_EXCEPTION(std::domain_error("Result is undefined or complex and there is no NaN for this number type."));
@@ -257,7 +390,11 @@ void eval_cos(T& result, const T& x)
    case FP_ZERO:
       result = ui_type(1);
       return;
+<<<<<<< HEAD
    default: ;
+=======
+   default:;
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
    }
 
    // Local copy of the argument
@@ -268,14 +405,22 @@ void eval_cos(T& result, const T& x)
    // The argument xx will be reduced to 0 <= xx <= pi/2.
    bool b_negate_cos = false;
 
+<<<<<<< HEAD
    if(eval_get_sign(x) < 0)
+=======
+   if (eval_get_sign(x) < 0)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
    {
       xx.negate();
    }
 
    T n_pi, t;
    // Remove even multiples of pi.
+<<<<<<< HEAD
    if(xx.compare(get_constant_pi<T>()) > 0)
+=======
+   if (xx.compare(get_constant_pi<T>()) > 0)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
    {
       eval_divide(t, xx, get_constant_pi<T>());
       eval_trunc(n_pi, t);
@@ -303,7 +448,11 @@ void eval_cos(T& result, const T& x)
       eval_fmod(t, n_pi, t);
       const bool b_n_pi_is_even = eval_get_sign(t) == 0;
 
+<<<<<<< HEAD
       if(!b_n_pi_is_even)
+=======
+      if (!b_n_pi_is_even)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
       {
          b_negate_cos = !b_negate_cos;
       }
@@ -312,7 +461,11 @@ void eval_cos(T& result, const T& x)
    // Reduce the argument to 0 <= xx <= pi/2.
    eval_ldexp(t, get_constant_pi<T>(), -1);
    int com = xx.compare(t);
+<<<<<<< HEAD
    if(com > 0)
+=======
+   if (com > 0)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
    {
       eval_subtract(xx, get_constant_pi<T>(), xx);
       b_negate_cos = !b_negate_cos;
@@ -323,6 +476,7 @@ void eval_cos(T& result, const T& x)
    const bool b_pi_half = com == 0;
 
    // Check if the reduced argument is very close to 0.
+<<<<<<< HEAD
    const bool    b_near_zero    = xx.compare(fp_type(1e-1)) < 0;
 
    if(b_zero)
@@ -334,6 +488,19 @@ void eval_cos(T& result, const T& x)
       result = si_type(0);
    }
    else if(b_near_zero)
+=======
+   const bool b_near_zero = xx.compare(fp_type(1e-1)) < 0;
+
+   if (b_zero)
+   {
+      result = si_type(1);
+   }
+   else if (b_pi_half)
+   {
+      result = si_type(0);
+   }
+   else if (b_near_zero)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
    {
       eval_multiply(t, xx, xx);
       eval_divide(t, si_type(-4));
@@ -346,7 +513,11 @@ void eval_cos(T& result, const T& x)
       eval_subtract(t, xx);
       eval_sin(result, t);
    }
+<<<<<<< HEAD
    if(b_negate_cos)
+=======
+   if (b_negate_cos)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
       result.negate();
 }
 
@@ -354,7 +525,11 @@ template <class T>
 void eval_tan(T& result, const T& x)
 {
    BOOST_STATIC_ASSERT_MSG(number_category<T>::value == number_kind_floating_point, "The tan function is only valid for floating point types.");
+<<<<<<< HEAD
    if(&result == &x)
+=======
+   if (&result == &x)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
    {
       T temp;
       eval_tan(temp, x);
@@ -370,19 +545,34 @@ void eval_tan(T& result, const T& x)
 template <class T>
 void hyp2F1(T& result, const T& a, const T& b, const T& c, const T& x)
 {
+<<<<<<< HEAD
   // Compute the series representation of hyperg_2f1 taken from
   // Abramowitz and Stegun 15.1.1.
   // There are no checks on input range or parameter boundaries.
+=======
+   // Compute the series representation of hyperg_2f1 taken from
+   // Abramowitz and Stegun 15.1.1.
+   // There are no checks on input range or parameter boundaries.
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
    typedef typename boost::multiprecision::detail::canonical<boost::uint32_t, T>::type ui_type;
 
    T x_pow_n_div_n_fact(x);
+<<<<<<< HEAD
    T pochham_a         (a);
    T pochham_b         (b);
    T pochham_c         (c);
    T ap                (a);
    T bp                (b);
    T cp                (c);
+=======
+   T pochham_a(a);
+   T pochham_b(b);
+   T pochham_c(c);
+   T ap(a);
+   T bp(b);
+   T cp(c);
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
    eval_multiply(result, pochham_a, pochham_b);
    eval_divide(result, pochham_c);
@@ -392,6 +582,7 @@ void hyp2F1(T& result, const T& a, const T& b, const T& c, const T& x)
    T lim;
    eval_ldexp(lim, result, 1 - boost::multiprecision::detail::digits2<number<T, et_on> >::value());
 
+<<<<<<< HEAD
    if(eval_get_sign(lim) < 0)
       lim.negate();
 
@@ -403,6 +594,20 @@ void hyp2F1(T& result, const T& a, const T& b, const T& c, const T& x)
       ? 100 : boost::multiprecision::detail::digits2<number<T, et_on> >::value();
    // Series expansion of hyperg_2f1(a, b; c; x).
    for(n = 2; n < series_limit; ++n)
+=======
+   if (eval_get_sign(lim) < 0)
+      lim.negate();
+
+   ui_type n;
+   T       term;
+
+   const unsigned series_limit =
+       boost::multiprecision::detail::digits2<number<T, et_on> >::value() < 100
+           ? 100
+           : boost::multiprecision::detail::digits2<number<T, et_on> >::value();
+   // Series expansion of hyperg_2f1(a, b; c; x).
+   for (n = 2; n < series_limit; ++n)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
    {
       eval_multiply(x_pow_n_div_n_fact, x);
       eval_divide(x_pow_n_div_n_fact, n);
@@ -419,12 +624,21 @@ void hyp2F1(T& result, const T& a, const T& b, const T& c, const T& x)
       eval_multiply(term, x_pow_n_div_n_fact);
       eval_add(result, term);
 
+<<<<<<< HEAD
       if(eval_get_sign(term) < 0)
          term.negate();
       if(lim.compare(term) >= 0)
          break;
    }
    if(n > series_limit)
+=======
+      if (eval_get_sign(term) < 0)
+         term.negate();
+      if (lim.compare(term) >= 0)
+         break;
+   }
+   if (n > series_limit)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
       BOOST_THROW_EXCEPTION(std::runtime_error("H2F1 failed to converge."));
 }
 
@@ -433,15 +647,22 @@ void eval_asin(T& result, const T& x)
 {
    BOOST_STATIC_ASSERT_MSG(number_category<T>::value == number_kind_floating_point, "The asin function is only valid for floating point types.");
    typedef typename boost::multiprecision::detail::canonical<boost::uint32_t, T>::type ui_type;
+<<<<<<< HEAD
    typedef typename mpl::front<typename T::float_types>::type fp_type;
 
    if(&result == &x)
+=======
+   typedef typename mpl::front<typename T::float_types>::type                          fp_type;
+
+   if (&result == &x)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
    {
       T t(x);
       eval_asin(result, t);
       return;
    }
 
+<<<<<<< HEAD
    switch(eval_fpclassify(x))
    {
    case FP_NAN:
@@ -450,6 +671,16 @@ void eval_asin(T& result, const T& x)
       {
          result = std::numeric_limits<number<T, et_on> >::quiet_NaN().backend();
          errno = EDOM;
+=======
+   switch (eval_fpclassify(x))
+   {
+   case FP_NAN:
+   case FP_INFINITE:
+      if (std::numeric_limits<number<T, et_on> >::has_quiet_NaN)
+      {
+         result = std::numeric_limits<number<T, et_on> >::quiet_NaN().backend();
+         errno  = EDOM;
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
       }
       else
          BOOST_THROW_EXCEPTION(std::domain_error("Result is undefined or complex and there is no NaN for this number type."));
@@ -457,12 +688,17 @@ void eval_asin(T& result, const T& x)
    case FP_ZERO:
       result = x;
       return;
+<<<<<<< HEAD
    default: ;
+=======
+   default:;
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
    }
 
    const bool b_neg = eval_get_sign(x) < 0;
 
    T xx(x);
+<<<<<<< HEAD
    if(b_neg)
       xx.negate();
 
@@ -473,21 +709,45 @@ void eval_asin(T& result, const T& x)
       {
          result = std::numeric_limits<number<T, et_on> >::quiet_NaN().backend();
          errno = EDOM;
+=======
+   if (b_neg)
+      xx.negate();
+
+   int c = xx.compare(ui_type(1));
+   if (c > 0)
+   {
+      if (std::numeric_limits<number<T, et_on> >::has_quiet_NaN)
+      {
+         result = std::numeric_limits<number<T, et_on> >::quiet_NaN().backend();
+         errno  = EDOM;
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
       }
       else
          BOOST_THROW_EXCEPTION(std::domain_error("Result is undefined or complex and there is no NaN for this number type."));
       return;
    }
+<<<<<<< HEAD
    else if(c == 0)
    {
       result = get_constant_pi<T>();
       eval_ldexp(result, result, -1);
       if(b_neg)
+=======
+   else if (c == 0)
+   {
+      result = get_constant_pi<T>();
+      eval_ldexp(result, result, -1);
+      if (b_neg)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
          result.negate();
       return;
    }
 
+<<<<<<< HEAD
    if(xx.compare(fp_type(1e-4)) < 0)
+=======
+   if (xx.compare(fp_type(1e-4)) < 0)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
    {
       // http://functions.wolfram.com/ElementaryFunctions/ArcSin/26/01/01/
       eval_multiply(xx, xx);
@@ -498,7 +758,11 @@ void eval_asin(T& result, const T& x)
       eval_multiply(result, x);
       return;
    }
+<<<<<<< HEAD
    else if(xx.compare(fp_type(1 - 1e-4f)) > 0)
+=======
+   else if (xx.compare(fp_type(1 - 1e-4f)) > 0)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
    {
       T dx1;
       T t1, t2;
@@ -513,7 +777,11 @@ void eval_asin(T& result, const T& x)
       eval_ldexp(t1, get_constant_pi<T>(), -1);
       result.negate();
       eval_add(result, t1);
+<<<<<<< HEAD
       if(b_neg)
+=======
+      if (b_neg)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
          result.negate();
       return;
    }
@@ -528,6 +796,7 @@ void eval_asin(T& result, const T& x)
 
    result = (guess_type)(std::asin(dd));
 
+<<<<<<< HEAD
    // Newton-Raphson iteration, we should double our precision with each iteration, 
    // in practice this seems to not quite work in all cases... so terminate when we
    // have at least 2/3 of the digits correct on the assumption that the correction 
@@ -538,6 +807,18 @@ void eval_asin(T& result, const T& x)
 
    // Newton-Raphson iteration
    while(current_precision > target_precision)
+=======
+   // Newton-Raphson iteration, we should double our precision with each iteration,
+   // in practice this seems to not quite work in all cases... so terminate when we
+   // have at least 2/3 of the digits correct on the assumption that the correction
+   // we've just added will finish the job...
+
+   boost::intmax_t current_precision = eval_ilogb(result);
+   boost::intmax_t target_precision  = current_precision - 1 - (std::numeric_limits<number<T> >::digits * 2) / 3;
+
+   // Newton-Raphson iteration
+   while (current_precision > target_precision)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
    {
       T sine, cosine;
       eval_sin(sine, result);
@@ -546,10 +827,17 @@ void eval_asin(T& result, const T& x)
       eval_divide(sine, cosine);
       eval_subtract(result, sine);
       current_precision = eval_ilogb(sine);
+<<<<<<< HEAD
       if(current_precision <= (std::numeric_limits<typename T::exponent_type>::min)() + 1)
          break;
    }
    if(b_neg)
+=======
+      if (current_precision <= (std::numeric_limits<typename T::exponent_type>::min)() + 1)
+         break;
+   }
+   if (b_neg)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
       result.negate();
 }
 
@@ -559,6 +847,7 @@ inline void eval_acos(T& result, const T& x)
    BOOST_STATIC_ASSERT_MSG(number_category<T>::value == number_kind_floating_point, "The acos function is only valid for floating point types.");
    typedef typename boost::multiprecision::detail::canonical<boost::uint32_t, T>::type ui_type;
 
+<<<<<<< HEAD
    switch(eval_fpclassify(x))
    {
    case FP_NAN:
@@ -567,6 +856,16 @@ inline void eval_acos(T& result, const T& x)
       {
          result = std::numeric_limits<number<T, et_on> >::quiet_NaN().backend();
          errno = EDOM;
+=======
+   switch (eval_fpclassify(x))
+   {
+   case FP_NAN:
+   case FP_INFINITE:
+      if (std::numeric_limits<number<T, et_on> >::has_quiet_NaN)
+      {
+         result = std::numeric_limits<number<T, et_on> >::quiet_NaN().backend();
+         errno  = EDOM;
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
       }
       else
          BOOST_THROW_EXCEPTION(std::domain_error("Result is undefined or complex and there is no NaN for this number type."));
@@ -580,20 +879,35 @@ inline void eval_acos(T& result, const T& x)
    eval_abs(result, x);
    int c = result.compare(ui_type(1));
 
+<<<<<<< HEAD
    if(c > 0)
    {
       if(std::numeric_limits<number<T, et_on> >::has_quiet_NaN)
       {
          result = std::numeric_limits<number<T, et_on> >::quiet_NaN().backend();
          errno = EDOM;
+=======
+   if (c > 0)
+   {
+      if (std::numeric_limits<number<T, et_on> >::has_quiet_NaN)
+      {
+         result = std::numeric_limits<number<T, et_on> >::quiet_NaN().backend();
+         errno  = EDOM;
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
       }
       else
          BOOST_THROW_EXCEPTION(std::domain_error("Result is undefined or complex and there is no NaN for this number type."));
       return;
    }
+<<<<<<< HEAD
    else if(c == 0)
    {
       if(eval_get_sign(x) < 0)
+=======
+   else if (c == 0)
+   {
+      if (eval_get_sign(x) < 0)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
          result = get_constant_pi<T>();
       else
          result = ui_type(0);
@@ -611,6 +925,7 @@ template <class T>
 void eval_atan(T& result, const T& x)
 {
    BOOST_STATIC_ASSERT_MSG(number_category<T>::value == number_kind_floating_point, "The atan function is only valid for floating point types.");
+<<<<<<< HEAD
    typedef typename boost::multiprecision::detail::canonical<boost::int32_t, T>::type si_type;
    typedef typename boost::multiprecision::detail::canonical<boost::uint32_t, T>::type ui_type;
    typedef typename mpl::front<typename T::float_types>::type fp_type;
@@ -620,12 +935,27 @@ void eval_atan(T& result, const T& x)
    case FP_NAN:
       result = x;
       errno = EDOM;
+=======
+   typedef typename boost::multiprecision::detail::canonical<boost::int32_t, T>::type  si_type;
+   typedef typename boost::multiprecision::detail::canonical<boost::uint32_t, T>::type ui_type;
+   typedef typename mpl::front<typename T::float_types>::type                          fp_type;
+
+   switch (eval_fpclassify(x))
+   {
+   case FP_NAN:
+      result = x;
+      errno  = EDOM;
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
       return;
    case FP_ZERO:
       result = x;
       return;
    case FP_INFINITE:
+<<<<<<< HEAD
       if(eval_get_sign(x) < 0)
+=======
+      if (eval_get_sign(x) < 0)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
       {
          eval_ldexp(result, get_constant_pi<T>(), -1);
          result.negate();
@@ -633,16 +963,27 @@ void eval_atan(T& result, const T& x)
       else
          eval_ldexp(result, get_constant_pi<T>(), -1);
       return;
+<<<<<<< HEAD
    default: ;
+=======
+   default:;
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
    }
 
    const bool b_neg = eval_get_sign(x) < 0;
 
    T xx(x);
+<<<<<<< HEAD
    if(b_neg)
       xx.negate();
 
    if(xx.compare(fp_type(0.1)) < 0)
+=======
+   if (b_neg)
+      xx.negate();
+
+   if (xx.compare(fp_type(0.1)) < 0)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
    {
       T t1, t2, t3;
       t1 = ui_type(1);
@@ -655,7 +996,11 @@ void eval_atan(T& result, const T& x)
       return;
    }
 
+<<<<<<< HEAD
    if(xx.compare(fp_type(10)) > 0)
+=======
+   if (xx.compare(fp_type(10)) > 0)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
    {
       T t1, t2, t3;
       t1 = fp_type(0.5f);
@@ -665,21 +1010,33 @@ void eval_atan(T& result, const T& x)
       eval_divide(xx, si_type(-1), xx);
       hyp2F1(result, t1, t2, t3, xx);
       eval_divide(result, x);
+<<<<<<< HEAD
       if(!b_neg)
          result.negate();
       eval_ldexp(t1, get_constant_pi<T>(), -1);
       eval_add(result, t1);
       if(b_neg)
+=======
+      if (!b_neg)
+         result.negate();
+      eval_ldexp(t1, get_constant_pi<T>(), -1);
+      eval_add(result, t1);
+      if (b_neg)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
          result.negate();
       return;
    }
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
    // Get initial estimate using standard math function atan.
    fp_type d;
    eval_convert_to(&d, xx);
    result = fp_type(std::atan(d));
 
+<<<<<<< HEAD
    // Newton-Raphson iteration, we should double our precision with each iteration, 
    // in practice this seems to not quite work in all cases... so terminate when we
    // have at least 2/3 of the digits correct on the assumption that the correction 
@@ -690,6 +1047,18 @@ void eval_atan(T& result, const T& x)
 
    T s, c, t;
    while(current_precision > target_precision)
+=======
+   // Newton-Raphson iteration, we should double our precision with each iteration,
+   // in practice this seems to not quite work in all cases... so terminate when we
+   // have at least 2/3 of the digits correct on the assumption that the correction
+   // we've just added will finish the job...
+
+   boost::intmax_t current_precision = eval_ilogb(result);
+   boost::intmax_t target_precision  = current_precision - 1 - (std::numeric_limits<number<T> >::digits * 2) / 3;
+
+   T s, c, t;
+   while (current_precision > target_precision)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
    {
       eval_sin(s, result);
       eval_cos(c, result);
@@ -698,10 +1067,17 @@ void eval_atan(T& result, const T& x)
       eval_multiply(s, t, c);
       eval_add(result, s);
       current_precision = eval_ilogb(s);
+<<<<<<< HEAD
       if(current_precision <= (std::numeric_limits<typename T::exponent_type>::min)() + 1)
          break;
    }
    if(b_neg)
+=======
+      if (current_precision <= (std::numeric_limits<typename T::exponent_type>::min)() + 1)
+         break;
+   }
+   if (b_neg)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
       result.negate();
 }
 
@@ -709,13 +1085,21 @@ template <class T>
 void eval_atan2(T& result, const T& y, const T& x)
 {
    BOOST_STATIC_ASSERT_MSG(number_category<T>::value == number_kind_floating_point, "The atan2 function is only valid for floating point types.");
+<<<<<<< HEAD
    if(&result == &y)
+=======
+   if (&result == &y)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
    {
       T temp(y);
       eval_atan2(result, temp, x);
       return;
    }
+<<<<<<< HEAD
    else if(&result == &x)
+=======
+   else if (&result == &x)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
    {
       T temp(x);
       eval_atan2(result, y, temp);
@@ -724,6 +1108,7 @@ void eval_atan2(T& result, const T& y, const T& x)
 
    typedef typename boost::multiprecision::detail::canonical<boost::uint32_t, T>::type ui_type;
 
+<<<<<<< HEAD
    switch(eval_fpclassify(y))
    {
    case FP_NAN:
@@ -793,13 +1178,88 @@ void eval_atan2(T& result, const T& y, const T& x)
       else
          result = get_constant_pi<T>();
       if(eval_get_sign(y) < 0)
+=======
+   switch (eval_fpclassify(y))
+   {
+   case FP_NAN:
+      result = y;
+      errno  = EDOM;
+      return;
+   case FP_ZERO:
+   {
+      if (eval_signbit(x))
+      {
+         result = get_constant_pi<T>();
+         if (eval_signbit(y))
+            result.negate();
+      }
+      else
+      {
+         result = y; // Note we allow atan2(0,0) to be +-zero, even though it's mathematically undefined
+      }
+      return;
+   }
+   case FP_INFINITE:
+   {
+      if (eval_fpclassify(x) == FP_INFINITE)
+      {
+         if (eval_signbit(x))
+         {
+            // 3Pi/4
+            eval_ldexp(result, get_constant_pi<T>(), -2);
+            eval_subtract(result, get_constant_pi<T>());
+            if (eval_get_sign(y) >= 0)
+               result.negate();
+         }
+         else
+         {
+            // Pi/4
+            eval_ldexp(result, get_constant_pi<T>(), -2);
+            if (eval_get_sign(y) < 0)
+               result.negate();
+         }
+      }
+      else
+      {
+         eval_ldexp(result, get_constant_pi<T>(), -1);
+         if (eval_get_sign(y) < 0)
+            result.negate();
+      }
+      return;
+   }
+   }
+
+   switch (eval_fpclassify(x))
+   {
+   case FP_NAN:
+      result = x;
+      errno  = EDOM;
+      return;
+   case FP_ZERO:
+   {
+      eval_ldexp(result, get_constant_pi<T>(), -1);
+      if (eval_get_sign(y) < 0)
+         result.negate();
+      return;
+   }
+   case FP_INFINITE:
+      if (eval_get_sign(x) > 0)
+         result = ui_type(0);
+      else
+         result = get_constant_pi<T>();
+      if (eval_get_sign(y) < 0)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
          result.negate();
       return;
    }
 
    T xx;
    eval_divide(xx, y, x);
+<<<<<<< HEAD
    if(eval_get_sign(xx) < 0)
+=======
+   if (eval_get_sign(xx) < 0)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
       xx.negate();
 
    eval_atan(result, xx);
@@ -808,33 +1268,60 @@ void eval_atan2(T& result, const T& y, const T& x)
    const bool y_neg = eval_get_sign(y) < 0;
    const bool x_neg = eval_get_sign(x) < 0;
 
+<<<<<<< HEAD
    if(y_neg != x_neg)
       result.negate();
 
    if(x_neg)
    {
       if(y_neg)
+=======
+   if (y_neg != x_neg)
+      result.negate();
+
+   if (x_neg)
+   {
+      if (y_neg)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
          eval_subtract(result, get_constant_pi<T>());
       else
          eval_add(result, get_constant_pi<T>());
    }
 }
+<<<<<<< HEAD
 template<class T, class A> 
 inline typename enable_if<is_arithmetic<A>, void>::type eval_atan2(T& result, const T& x, const A& a)
 {
    typedef typename boost::multiprecision::detail::canonical<A, T>::type canonical_type;
    typedef typename mpl::if_<is_same<A, canonical_type>, T, canonical_type>::type cast_type;
    cast_type c;
+=======
+template <class T, class A>
+inline typename enable_if<is_arithmetic<A>, void>::type eval_atan2(T& result, const T& x, const A& a)
+{
+   typedef typename boost::multiprecision::detail::canonical<A, T>::type          canonical_type;
+   typedef typename mpl::if_<is_same<A, canonical_type>, T, canonical_type>::type cast_type;
+   cast_type                                                                      c;
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
    c = a;
    eval_atan2(result, x, c);
 }
 
+<<<<<<< HEAD
 template<class T, class A> 
 inline typename enable_if<is_arithmetic<A>, void>::type eval_atan2(T& result, const A& x, const T& a)
 {
    typedef typename boost::multiprecision::detail::canonical<A, T>::type canonical_type;
    typedef typename mpl::if_<is_same<A, canonical_type>, T, canonical_type>::type cast_type;
    cast_type c;
+=======
+template <class T, class A>
+inline typename enable_if<is_arithmetic<A>, void>::type eval_atan2(T& result, const A& x, const T& a)
+{
+   typedef typename boost::multiprecision::detail::canonical<A, T>::type          canonical_type;
+   typedef typename mpl::if_<is_same<A, canonical_type>, T, canonical_type>::type cast_type;
+   cast_type                                                                      c;
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
    c = x;
    eval_atan2(result, c, a);
 }

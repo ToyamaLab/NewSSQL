@@ -1,8 +1,15 @@
 // Boost.Geometry (aka GGL, Generic Geometry Library)
 
+<<<<<<< HEAD
 // Copyright (c) 2015, Oracle and/or its affiliates.
 
 // Contributed and/or modified by Menelaos Karavelas, on behalf of Oracle
+=======
+// Copyright (c) 2015, 2018, Oracle and/or its affiliates.
+
+// Contributed and/or modified by Menelaos Karavelas, on behalf of Oracle
+// Contributed and/or modified by Adam Wulkiewicz, on behalf of Oracle
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 // Licensed under the Boost Software License version 1.0.
 // http://www.boost.org/users/license.html
@@ -19,12 +26,18 @@
 #include <vector>
 
 #include <boost/core/addressof.hpp>
+<<<<<<< HEAD
 #include <boost/iterator.hpp>
+=======
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 #include <boost/iterator/iterator_facade.hpp>
 #include <boost/iterator/iterator_categories.hpp>
 #include <boost/mpl/assert.hpp>
 #include <boost/mpl/if.hpp>
+<<<<<<< HEAD
 #include <boost/range.hpp>
+=======
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 #include <boost/type_traits/is_const.hpp>
 #include <boost/type_traits/is_convertible.hpp>
 #include <boost/type_traits/remove_reference.hpp>
@@ -41,6 +54,10 @@
 #include <boost/geometry/util/range.hpp>
 
 #include <boost/geometry/views/closeable_view.hpp>
+<<<<<<< HEAD
+=======
+#include <boost/geometry/views/detail/boundary_view/interface.hpp>
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 #include <boost/geometry/algorithms/num_interior_rings.hpp>
 

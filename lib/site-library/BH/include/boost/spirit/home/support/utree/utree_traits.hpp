@@ -1149,26 +1149,42 @@ namespace boost { namespace spirit { namespace traits
     template <>
     struct extract_from_container<utree, utf8_symbol_type>
     {
+<<<<<<< HEAD
         typedef std::string type;
+=======
+        typedef utf8_symbol_type type;
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
         template <typename Context>
         static type call(utree const& t, Context&)
         {
             utf8_symbol_range_type r = detail::get_or_deref<utf8_symbol_range_type>(t);
+<<<<<<< HEAD
             return std::string(traits::begin(r), traits::end(r));
+=======
+            return type(traits::begin(r), traits::end(r));
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
         }
     };
 
     template <>
     struct extract_from_container<utree, utf8_string_type>
     {
+<<<<<<< HEAD
         typedef std::string type;
+=======
+        typedef utf8_string_type type;
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
         template <typename Context>
         static type call(utree const& t, Context&)
         {
             utf8_string_range_type r = detail::get_or_deref<utf8_string_range_type>(t);
+<<<<<<< HEAD
             return std::string(traits::begin(r), traits::end(r));
+=======
+            return type(traits::begin(r), traits::end(r));
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
         }
     };
 
@@ -1264,24 +1280,40 @@ namespace boost { namespace spirit { namespace traits
     template <>
     struct transform_attribute<utree const, utf8_string_type, karma::domain>
     {
+<<<<<<< HEAD
         typedef std::string type;
+=======
+        typedef utf8_string_type type;
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
         static type pre(utree const& t)
         {
             utf8_string_range_type r = detail::get_or_deref<utf8_string_range_type>(t);
+<<<<<<< HEAD
             return std::string(traits::begin(r), traits::end(r));
+=======
+            return type(traits::begin(r), traits::end(r));
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
         }
     };
 
     template <>
     struct transform_attribute<utree const, utf8_symbol_type, karma::domain>
     {
+<<<<<<< HEAD
         typedef std::string type;
+=======
+        typedef utf8_symbol_type type;
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
         static type pre(utree const& t)
         {
             utf8_symbol_range_type r = detail::get_or_deref<utf8_symbol_range_type>(t);
+<<<<<<< HEAD
             return std::string(traits::begin(r), traits::end(r));
+=======
+            return type(traits::begin(r), traits::end(r));
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
         }
     };
 

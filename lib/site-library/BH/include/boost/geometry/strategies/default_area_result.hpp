@@ -3,6 +3,10 @@
 // Copyright (c) 2007-2012 Barend Gehrels, Amsterdam, the Netherlands.
 // Copyright (c) 2008-2012 Bruno Lalande, Paris, France.
 // Copyright (c) 2009-2012 Mateusz Loskot, London, UK.
+<<<<<<< HEAD
+=======
+// Copyright (c) 2017 Adam Wulkiewicz, Lodz, Poland.
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 // Parts of Boost.Geometry are redesigned from Geodan's Geographic Library
 // (geolib/GGL), copyright (c) 1995-2010 Geodan, Amsterdam, the Netherlands.
@@ -15,10 +19,14 @@
 #define BOOST_GEOMETRY_STRATEGIES_DEFAULT_AREA_RESULT_HPP
 
 
+<<<<<<< HEAD
 #include <boost/geometry/core/cs.hpp>
 #include <boost/geometry/core/coordinate_type.hpp>
 #include <boost/geometry/strategies/area.hpp>
 #include <boost/geometry/util/select_most_precise.hpp>
+=======
+#include <boost/geometry/strategies/area_result.hpp>
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 
 namespace boost { namespace geometry
@@ -33,6 +41,7 @@ namespace boost { namespace geometry
 
 template <typename Geometry>
 struct default_area_result
+<<<<<<< HEAD
 {
     typedef typename point_type<Geometry>::type point_type;
     typedef typename strategy::area::services::default_strategy
@@ -43,6 +52,10 @@ struct default_area_result
 
     typedef typename strategy_type::return_type type;
 };
+=======
+    : area_result<Geometry>
+{};
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 
 }} // namespace boost::geometry

@@ -6,3 +6,7 @@ export(dr_clipr)
 export(read_clip)
 export(read_clip_tbl)
 export(write_clip)
+<<<<<<< HEAD
+=======
+export(write_last_clip)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce

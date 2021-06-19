@@ -57,6 +57,7 @@
 
    #include <boost/move/detail/type_traits.hpp>
 
+<<<<<<< HEAD
    #if defined(BOOST_MOVE_ADDRESS_SANITIZER_ON)
       #define BOOST_MOVE_TO_RV_CAST(RV_TYPE, ARG) reinterpret_cast<RV_TYPE>(ARG)
    #else
@@ -65,6 +66,16 @@
 
    //Move emulation rv breaks standard aliasing rules so add workarounds for some compilers
    #define BOOST_MOVE_ATTRIBUTE_MAY_ALIAS BOOST_MAY_ALIAS
+=======
+   #define BOOST_MOVE_TO_RV_CAST(RV_TYPE, ARG) reinterpret_cast<RV_TYPE>(ARG)
+
+   //Move emulation rv breaks standard aliasing rules so add workarounds for some compilers
+   #if defined(BOOST_GCC) && (BOOST_GCC >= 40400) && (BOOST_GCC < 40500)
+   #define BOOST_RV_ATTRIBUTE_MAY_ALIAS BOOST_MAY_ALIAS
+   #else
+   #define BOOST_RV_ATTRIBUTE_MAY_ALIAS 
+   #endif
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
    namespace boost {
 
@@ -74,7 +85,11 @@
    //
    //////////////////////////////////////////////////////////////////////////////
    template <class T>
+<<<<<<< HEAD
    class rv
+=======
+   class BOOST_RV_ATTRIBUTE_MAY_ALIAS rv
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
       : public ::boost::move_detail::if_c
          < ::boost::move_detail::is_class<T>::value
          , T
@@ -85,7 +100,11 @@
       ~rv() throw();
       rv(rv const&);
       void operator=(rv const&);
+<<<<<<< HEAD
    } BOOST_MOVE_ATTRIBUTE_MAY_ALIAS;
+=======
+   };
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 
    //////////////////////////////////////////////////////////////////////////////

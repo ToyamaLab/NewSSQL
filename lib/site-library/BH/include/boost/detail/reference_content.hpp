@@ -15,15 +15,26 @@
 
 #include "boost/config.hpp"
 
+<<<<<<< HEAD
 #   include "boost/mpl/bool.hpp"
 #   include "boost/type_traits/has_nothrow_copy.hpp"
 
 #include "boost/mpl/void.hpp"
 
+=======
+#   include "boost/type_traits/integral_constant.hpp"
+#   include "boost/type_traits/has_nothrow_copy.hpp"
+
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 namespace boost {
 
 namespace detail {
 
+<<<<<<< HEAD
+=======
+struct void_type {};
+
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 ///////////////////////////////////////////////////////////////////////////////
 // (detail) class template reference_content
 //
@@ -71,7 +82,11 @@ public: // queries
 // Wraps with reference_content if specified type is reference.
 //
 
+<<<<<<< HEAD
 template <typename T = mpl::void_> struct make_reference_content;
+=======
+template <typename T = void_type> struct make_reference_content;
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 
 template <typename T>
@@ -88,7 +103,11 @@ struct make_reference_content< T& >
 
 
 template <>
+<<<<<<< HEAD
 struct make_reference_content< mpl::void_ >
+=======
+struct make_reference_content< void_type >
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 {
     template <typename T>
     struct apply
@@ -96,7 +115,11 @@ struct make_reference_content< mpl::void_ >
     {
     };
 
+<<<<<<< HEAD
     typedef mpl::void_ type;
+=======
+    typedef void_type type;
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 };
 
 } // namespace detail
@@ -110,7 +133,11 @@ template <typename T>
 struct has_nothrow_copy<
       ::boost::detail::reference_content< T& >
     >
+<<<<<<< HEAD
     : mpl::true_
+=======
+    : boost::true_type
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 {
 };
 

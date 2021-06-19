@@ -8,15 +8,19 @@ import net.sf.jsqlparser.parser.CCJSqlParserUtil;
 import net.sf.jsqlparser.statement.Statement;
 import net.sf.jsqlparser.statement.select.PlainSelect;
 import net.sf.jsqlparser.statement.select.Select;
+import supersql.common.Log;
 import supersql.extendclass.ExtList;
 
 public class From {
     private static ArrayList<FromTable> fromItems = new ArrayList<>();
     private static ArrayList<JoinItem> joinItems = new ArrayList<>();
-    private static String fromLine = new String();
+    private static StringBuilder fromLine = new StringBuilder();
 
     public From(ExtList listFrom){
         parseFromlist(listFrom);
+        Log.out("[FromParse] fromItems: " + fromItems);
+        Log.out("[FromParse] joinItems: " + joinItems);
+        Log.out("[FromParse] fromLine: " + fromLine.toString());
     }
 
     private void parseFromlist(ExtList listFrom) {
@@ -46,13 +50,13 @@ public class From {
             }else{
                 name = ", ";
             }
-            fromLine += name;
+            fromLine.append(name);
         }
     }
 
     private void parseJoinFromList(ExtList listFrom) {
-        fromLine = Start_Parse.getText(listFrom.getExtList(0), Start_Parse.ruleNames);
-        String dummyStatement = "Select hoge FROM " + fromLine;
+        fromLine.append(Start_Parse.getText(listFrom.getExtList(0), Start_Parse.ruleNames));
+        String dummyStatement = "Select hoge FROM " + fromLine.toString();
         try{
             Statement stmt = CCJSqlParserUtil.parse(dummyStatement);
             Select select = (Select) stmt;
@@ -116,6 +120,6 @@ public class From {
     public static void clear(){
         fromItems.clear();
         joinItems.clear();
-        fromLine = "";
+        fromLine = new StringBuilder();
     }
 }

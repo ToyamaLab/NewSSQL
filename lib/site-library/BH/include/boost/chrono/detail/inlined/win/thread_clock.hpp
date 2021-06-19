@@ -43,7 +43,11 @@ thread_clock::time_point thread_clock::now( system::error_code & ec )
                 ((static_cast<duration::rep>(system_time.dwHighDateTime) << 32)
                         | system_time.dwLowDateTime) * 100 );
 
+<<<<<<< HEAD
         if (!BOOST_CHRONO_IS_THROWS(ec))
+=======
+        if (!::boost::chrono::is_throws(ec))
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
         {
             ec.clear();
         }
@@ -52,17 +56,29 @@ thread_clock::time_point thread_clock::now( system::error_code & ec )
     }
     else
     {
+<<<<<<< HEAD
         if (BOOST_CHRONO_IS_THROWS(ec))
+=======
+        if (::boost::chrono::is_throws(ec))
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
         {
             boost::throw_exception(
                     system::system_error(
                             boost::detail::winapi::GetLastError(),
+<<<<<<< HEAD
                             BOOST_CHRONO_SYSTEM_CATEGORY,
+=======
+                            ::boost::system::system_category(),
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
                             "chrono::thread_clock" ));
         }
         else
         {
+<<<<<<< HEAD
             ec.assign( boost::detail::winapi::GetLastError(), BOOST_CHRONO_SYSTEM_CATEGORY );
+=======
+            ec.assign( boost::detail::winapi::GetLastError(), ::boost::system::system_category() );
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
             return thread_clock::time_point(duration(0));
         }
     }

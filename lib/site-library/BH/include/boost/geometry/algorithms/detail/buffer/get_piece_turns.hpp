@@ -3,8 +3,13 @@
 // Copyright (c) 2012-2014 Barend Gehrels, Amsterdam, the Netherlands.
 // Copyright (c) 2017 Adam Wulkiewicz, Lodz, Poland.
 
+<<<<<<< HEAD
 // This file was modified by Oracle on 2017.
 // Modifications copyright (c) 2017 Oracle and/or its affiliates.
+=======
+// This file was modified by Oracle on 2017, 2018.
+// Modifications copyright (c) 2017-2018 Oracle and/or its affiliates.
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 // Contributed and/or modified by Adam Wulkiewicz, on behalf of Oracle
 
 // Use, modification and distribution is subject to the Boost Software License,
@@ -14,10 +19,18 @@
 #ifndef BOOST_GEOMETRY_ALGORITHMS_DETAIL_BUFFER_GET_PIECE_TURNS_HPP
 #define BOOST_GEOMETRY_ALGORITHMS_DETAIL_BUFFER_GET_PIECE_TURNS_HPP
 
+<<<<<<< HEAD
 #include <boost/range.hpp>
 
 #include <boost/geometry/algorithms/equals.hpp>
 #include <boost/geometry/algorithms/expand.hpp>
+=======
+#include <boost/core/ignore_unused.hpp>
+#include <boost/range.hpp>
+
+#include <boost/geometry/core/assert.hpp>
+#include <boost/geometry/algorithms/equals.hpp>
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 #include <boost/geometry/algorithms/detail/disjoint/box_box.hpp>
 #include <boost/geometry/algorithms/detail/overlay/segment_identifier.hpp>
 #include <boost/geometry/algorithms/detail/overlay/get_turn_info.hpp>
@@ -33,6 +46,7 @@ namespace boost { namespace geometry
 namespace detail { namespace buffer
 {
 
+<<<<<<< HEAD
 
 #if defined(BOOST_GEOMETRY_BUFFER_USE_SIDE_OF_INTERSECTION)
 struct buffer_assign_turn
@@ -61,6 +75,83 @@ struct buffer_assign_turn
 
 };
 #endif
+=======
+// Implements a unique_sub_range for a buffered piece,
+// the range can return subsequent points
+// known as "i", "j" and "k" (and further),  indexed as 0,1,2,3
+template <typename Ring>
+struct unique_sub_range_from_piece
+{
+    typedef typename boost::range_iterator<Ring const>::type iterator_type;
+    typedef typename geometry::point_type<Ring const>::type point_type;
+
+    unique_sub_range_from_piece(Ring const& ring,
+                                iterator_type iterator_at_i, iterator_type iterator_at_j)
+        : m_ring(ring)
+        , m_iterator_at_i(iterator_at_i)
+        , m_iterator_at_j(iterator_at_j)
+        , m_point_retrieved(false)
+    {}
+
+    static inline bool is_first_segment() { return false; }
+    static inline bool is_last_segment() { return false; }
+
+    static inline std::size_t size() { return 3u; }
+
+    inline point_type const& at(std::size_t index) const
+    {
+        BOOST_GEOMETRY_ASSERT(index < size());
+        switch (index)
+        {
+            case 0 : return *m_iterator_at_i;
+            case 1 : return *m_iterator_at_j;
+            case 2 : return get_point_k();
+            default : return *m_iterator_at_i;
+        }
+    }
+
+private :
+
+    inline point_type const& get_point_k() const
+    {
+        if (! m_point_retrieved)
+        {
+            m_iterator_at_k = advance_one(m_iterator_at_j);
+            m_point_retrieved = true;
+        }
+        return *m_iterator_at_k;
+    }
+
+    inline void circular_advance_one(iterator_type& next) const
+    {
+        ++next;
+        if (next == boost::end(m_ring))
+        {
+            next = boost::begin(m_ring) + 1;
+        }
+    }
+
+    inline iterator_type advance_one(iterator_type it) const
+    {
+        iterator_type result = it;
+        circular_advance_one(result);
+
+        // TODO: we could also use piece-boundaries
+        // to check if the point equals the last one
+        while (geometry::equals(*it, *result))
+        {
+            circular_advance_one(result);
+        }
+        return result;
+    }
+
+    Ring const& m_ring;
+    iterator_type m_iterator_at_i;
+    iterator_type m_iterator_at_j;
+    mutable iterator_type m_iterator_at_k;
+    mutable bool m_point_retrieved;
+};
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 template
 <
@@ -101,6 +192,7 @@ class piece_turn_visitor
         return ! m_rings[piece1.first_seg_id.multi_index].has_concave;
     }
 
+<<<<<<< HEAD
     template <typename Range, typename Iterator>
     inline void move_to_next_point(Range const& range, Iterator& next) const
     {
@@ -124,6 +216,8 @@ class piece_turn_visitor
         }
         return result;
     }
+=======
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
     template <std::size_t Dimension, typename Iterator, typename Box>
     inline void move_begin_iterator(Iterator& it_begin, Iterator it_beyond,
@@ -228,15 +322,28 @@ class piece_turn_visitor
             the_model.operations[1].piece_index = piece2.index;
             the_model.operations[1].seg_id = piece2.first_seg_id;
             the_model.operations[1].seg_id.segment_index = index2; // override
+<<<<<<< HEAD
 
             iterator next1 = next_point(ring1, it1);
+=======
+            geometry::recalculate(the_model.rob_pi, *prev1, m_robust_policy);
+            geometry::recalculate(the_model.rob_pj, *it1, m_robust_policy);
+
+            unique_sub_range_from_piece<ring_type> unique_sub_range1(ring1, prev1, it1);
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
             iterator it2 = it2_first;
             for (iterator prev2 = it2++;
                     it2 != it2_beyond;
                     prev2 = it2++, the_model.operations[1].seg_id.segment_index++)
             {
+<<<<<<< HEAD
                 iterator next2 = next_point(ring2, it2);
+=======
+                unique_sub_range_from_piece<ring_type> unique_sub_range2(ring2, prev2, it2);
+                geometry::recalculate(the_model.rob_qi, *prev2, m_robust_policy);
+                geometry::recalculate(the_model.rob_qj, *it2, m_robust_policy);
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
                 // TODO: internally get_turn_info calculates robust points.
                 // But they are already calculated.
@@ -245,6 +352,7 @@ class piece_turn_visitor
                 // and iterating in sync with them...
                 typedef detail::overlay::get_turn_info
                     <
+<<<<<<< HEAD
 #if defined(BOOST_GEOMETRY_BUFFER_USE_SIDE_OF_INTERSECTION)
                         buffer_assign_turn
 #else
@@ -259,6 +367,16 @@ class piece_turn_visitor
                                     m_intersection_strategy,
                                     m_robust_policy,
                                     std::back_inserter(m_turns));
+=======
+                        detail::overlay::assign_null_policy
+                    > turn_policy;
+
+                turn_policy::apply(unique_sub_range1, unique_sub_range2,
+                                   the_model,
+                                   m_intersection_strategy,
+                                   m_robust_policy,
+                                   std::back_inserter(m_turns));
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
             }
         }
     }
@@ -281,7 +399,11 @@ public:
     inline bool apply(Section const& section1, Section const& section2,
                     bool first = true)
     {
+<<<<<<< HEAD
         boost::ignore_unused_variable_warning(first);
+=======
+        boost::ignore_unused(first);
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
         typedef typename boost::range_value<Pieces const>::type piece_type;
         piece_type const& piece1 = m_pieces[section1.ring_id.source_index];
@@ -291,7 +413,12 @@ public:
           || is_adjacent(piece1, piece2)
           || is_on_same_convex_ring(piece1, piece2)
           || detail::disjoint::disjoint_box_box(section1.bounding_box,
+<<<<<<< HEAD
                                                 section2.bounding_box) )
+=======
+                                                section2.bounding_box,
+                                                m_intersection_strategy.get_disjoint_box_box_strategy()) )
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
         {
             return true;
         }

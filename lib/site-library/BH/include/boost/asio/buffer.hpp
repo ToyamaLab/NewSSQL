@@ -2,7 +2,11 @@
 // buffer.hpp
 // ~~~~~~~~~~
 //
+<<<<<<< HEAD
 // Copyright (c) 2003-2017 Christopher M. Kohlhoff (chris at kohlhoff dot com)
+=======
+// Copyright (c) 2003-2019 Christopher M. Kohlhoff (chris at kohlhoff dot com)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 //
 // Distributed under the Boost Software License, Version 1.0. (See accompanying
 // file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
@@ -23,7 +27,11 @@
 #include <string>
 #include <vector>
 #include <boost/asio/detail/array_fwd.hpp>
+<<<<<<< HEAD
 #include <boost/asio/detail/is_buffer_sequence.hpp>
+=======
+#include <boost/asio/detail/memory.hpp>
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 #include <boost/asio/detail/string_view.hpp>
 #include <boost/asio/detail/throw_exception.hpp>
 #include <boost/asio/detail/type_traits.hpp>
@@ -347,6 +355,7 @@ public:
 
 #endif // !defined(BOOST_ASIO_NO_DEPRECATED)
 
+<<<<<<< HEAD
 /// Trait to determine whether a type satisfies the MutableBufferSequence
 /// requirements.
 template <typename T>
@@ -382,6 +391,8 @@ struct is_dynamic_buffer
 {
 };
 
+=======
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 /// (Deprecated: Use the socket/descriptor wait() and async_wait() member
 /// functions.) An implementation of both the ConstBufferSequence and
 /// MutableBufferSequence concepts to represent a null buffer sequence.
@@ -418,6 +429,7 @@ private:
 /*@{*/
 
 /// Get an iterator to the first element in a buffer sequence.
+<<<<<<< HEAD
 inline const mutable_buffer* buffer_sequence_begin(const mutable_buffer& b)
 {
   return &b;
@@ -427,20 +439,55 @@ inline const mutable_buffer* buffer_sequence_begin(const mutable_buffer& b)
 inline const const_buffer* buffer_sequence_begin(const const_buffer& b)
 {
   return &b;
+=======
+template <typename MutableBuffer>
+inline const mutable_buffer* buffer_sequence_begin(const MutableBuffer& b,
+    typename enable_if<
+      is_convertible<const MutableBuffer*, const mutable_buffer*>::value
+    >::type* = 0) BOOST_ASIO_NOEXCEPT
+{
+  return static_cast<const mutable_buffer*>(detail::addressof(b));
+}
+
+/// Get an iterator to the first element in a buffer sequence.
+template <typename ConstBuffer>
+inline const const_buffer* buffer_sequence_begin(const ConstBuffer& b,
+    typename enable_if<
+      is_convertible<const ConstBuffer*, const const_buffer*>::value
+    >::type* = 0) BOOST_ASIO_NOEXCEPT
+{
+  return static_cast<const const_buffer*>(detail::addressof(b));
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 }
 
 #if defined(BOOST_ASIO_HAS_DECLTYPE) || defined(GENERATING_DOCUMENTATION)
 
 /// Get an iterator to the first element in a buffer sequence.
 template <typename C>
+<<<<<<< HEAD
 inline auto buffer_sequence_begin(C& c) -> decltype(c.begin())
+=======
+inline auto buffer_sequence_begin(C& c,
+    typename enable_if<
+      !is_convertible<const C*, const mutable_buffer*>::value
+        && !is_convertible<const C*, const const_buffer*>::value
+    >::type* = 0) BOOST_ASIO_NOEXCEPT -> decltype(c.begin())
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 {
   return c.begin();
 }
 
 /// Get an iterator to the first element in a buffer sequence.
 template <typename C>
+<<<<<<< HEAD
 inline auto buffer_sequence_begin(const C& c) -> decltype(c.begin())
+=======
+inline auto buffer_sequence_begin(const C& c,
+    typename enable_if<
+      !is_convertible<const C*, const mutable_buffer*>::value
+        && !is_convertible<const C*, const const_buffer*>::value
+    >::type* = 0) BOOST_ASIO_NOEXCEPT -> decltype(c.begin())
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 {
   return c.begin();
 }
@@ -448,13 +495,29 @@ inline auto buffer_sequence_begin(const C& c) -> decltype(c.begin())
 #else // defined(BOOST_ASIO_HAS_DECLTYPE) || defined(GENERATING_DOCUMENTATION)
 
 template <typename C>
+<<<<<<< HEAD
 inline typename C::iterator buffer_sequence_begin(C& c)
+=======
+inline typename C::iterator buffer_sequence_begin(C& c,
+    typename enable_if<
+      !is_convertible<const C*, const mutable_buffer*>::value
+        && !is_convertible<const C*, const const_buffer*>::value
+    >::type* = 0) BOOST_ASIO_NOEXCEPT
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 {
   return c.begin();
 }
 
 template <typename C>
+<<<<<<< HEAD
 inline typename C::const_iterator buffer_sequence_begin(const C& c)
+=======
+inline typename C::const_iterator buffer_sequence_begin(const C& c,
+    typename enable_if<
+      !is_convertible<const C*, const mutable_buffer*>::value
+        && !is_convertible<const C*, const const_buffer*>::value
+    >::type* = 0) BOOST_ASIO_NOEXCEPT
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 {
   return c.begin();
 }
@@ -471,6 +534,7 @@ inline typename C::const_iterator buffer_sequence_begin(const C& c)
 /*@{*/
 
 /// Get an iterator to one past the end element in a buffer sequence.
+<<<<<<< HEAD
 inline const mutable_buffer* buffer_sequence_end(const mutable_buffer& b)
 {
   return &b + 1;
@@ -480,20 +544,55 @@ inline const mutable_buffer* buffer_sequence_end(const mutable_buffer& b)
 inline const const_buffer* buffer_sequence_end(const const_buffer& b)
 {
   return &b + 1;
+=======
+template <typename MutableBuffer>
+inline const mutable_buffer* buffer_sequence_end(const MutableBuffer& b,
+    typename enable_if<
+      is_convertible<const MutableBuffer*, const mutable_buffer*>::value
+    >::type* = 0) BOOST_ASIO_NOEXCEPT
+{
+  return static_cast<const mutable_buffer*>(detail::addressof(b)) + 1;
+}
+
+/// Get an iterator to one past the end element in a buffer sequence.
+template <typename ConstBuffer>
+inline const const_buffer* buffer_sequence_end(const ConstBuffer& b,
+    typename enable_if<
+      is_convertible<const ConstBuffer*, const const_buffer*>::value
+    >::type* = 0) BOOST_ASIO_NOEXCEPT
+{
+  return static_cast<const const_buffer*>(detail::addressof(b)) + 1;
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 }
 
 #if defined(BOOST_ASIO_HAS_DECLTYPE) || defined(GENERATING_DOCUMENTATION)
 
 /// Get an iterator to one past the end element in a buffer sequence.
 template <typename C>
+<<<<<<< HEAD
 inline auto buffer_sequence_end(C& c) -> decltype(c.end())
+=======
+inline auto buffer_sequence_end(C& c,
+    typename enable_if<
+      !is_convertible<const C*, const mutable_buffer*>::value
+        && !is_convertible<const C*, const const_buffer*>::value
+    >::type* = 0) BOOST_ASIO_NOEXCEPT -> decltype(c.end())
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 {
   return c.end();
 }
 
 /// Get an iterator to one past the end element in a buffer sequence.
 template <typename C>
+<<<<<<< HEAD
 inline auto buffer_sequence_end(const C& c) -> decltype(c.end())
+=======
+inline auto buffer_sequence_end(const C& c,
+    typename enable_if<
+      !is_convertible<const C*, const mutable_buffer*>::value
+        && !is_convertible<const C*, const const_buffer*>::value
+    >::type* = 0) BOOST_ASIO_NOEXCEPT -> decltype(c.end())
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 {
   return c.end();
 }
@@ -501,13 +600,29 @@ inline auto buffer_sequence_end(const C& c) -> decltype(c.end())
 #else // defined(BOOST_ASIO_HAS_DECLTYPE) || defined(GENERATING_DOCUMENTATION)
 
 template <typename C>
+<<<<<<< HEAD
 inline typename C::iterator buffer_sequence_end(C& c)
+=======
+inline typename C::iterator buffer_sequence_end(C& c,
+    typename enable_if<
+      !is_convertible<const C*, const mutable_buffer*>::value
+        && !is_convertible<const C*, const const_buffer*>::value
+    >::type* = 0) BOOST_ASIO_NOEXCEPT
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 {
   return c.end();
 }
 
 template <typename C>
+<<<<<<< HEAD
 inline typename C::const_iterator buffer_sequence_end(const C& c)
+=======
+inline typename C::const_iterator buffer_sequence_end(const C& c,
+    typename enable_if<
+      !is_convertible<const C*, const mutable_buffer*>::value
+        && !is_convertible<const C*, const const_buffer*>::value
+    >::type* = 0) BOOST_ASIO_NOEXCEPT
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 {
   return c.end();
 }
@@ -707,7 +822,11 @@ public:
 
   void operator()()
   {
+<<<<<<< HEAD
     *iter_;
+=======
+    (void)*iter_;
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
   }
 
 private:
@@ -1404,7 +1523,11 @@ inline BOOST_ASIO_MUTABLE_BUFFER buffer(
       );
 }
 
+<<<<<<< HEAD
 /// Create a new non-modifiable buffer that represents the given string.
+=======
+/// Create a new modifiable buffer that represents the given string.
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 /**
  * @returns A mutable_buffer value equivalent to:
  * @code mutable_buffer(
@@ -1476,7 +1599,11 @@ inline BOOST_ASIO_CONST_BUFFER buffer(
       );
 }
 
+<<<<<<< HEAD
 #if defined(BOOST_ASIO_HAS_STD_STRING_VIEW) \
+=======
+#if defined(BOOST_ASIO_HAS_STRING_VIEW) \
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
   || defined(GENERATING_DOCUMENTATION)
 
 /// Create a new modifiable buffer that represents the given string_view.
@@ -1521,7 +1648,11 @@ inline BOOST_ASIO_CONST_BUFFER buffer(
       );
 }
 
+<<<<<<< HEAD
 #endif // defined(BOOST_ASIO_HAS_STD_STRING_VIEW)
+=======
+#endif // defined(BOOST_ASIO_HAS_STRING_VIEW)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
        //  || defined(GENERATING_DOCUMENTATION)
 
 /*@}*/
@@ -1534,19 +1665,37 @@ template <typename Elem, typename Traits, typename Allocator>
 class dynamic_string_buffer
 {
 public:
+<<<<<<< HEAD
   /// The type used to represent the input sequence as a list of buffers.
   typedef BOOST_ASIO_CONST_BUFFER const_buffers_type;
 
   /// The type used to represent the output sequence as a list of buffers.
+=======
+  /// The type used to represent a sequence of constant buffers that refers to
+  /// the underlying memory.
+  typedef BOOST_ASIO_CONST_BUFFER const_buffers_type;
+
+  /// The type used to represent a sequence of mutable buffers that refers to
+  /// the underlying memory.
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
   typedef BOOST_ASIO_MUTABLE_BUFFER mutable_buffers_type;
 
   /// Construct a dynamic buffer from a string.
   /**
    * @param s The string to be used as backing storage for the dynamic buffer.
+<<<<<<< HEAD
    * Any existing data in the string is treated as the dynamic buffer's input
    * sequence. The object stores a reference to the string and the user is
    * responsible for ensuring that the string object remains valid until the
    * dynamic_string_buffer object is destroyed.
+=======
+   * The object stores a reference to the string and the user is responsible
+   * for ensuring that the string object remains valid while the
+   * dynamic_string_buffer object, and copies of the object, are in use.
+   *
+   * @b DynamicBuffer_v1: Any existing data in the string is treated as the
+   * dynamic buffer's input sequence.
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
    *
    * @param maximum_size Specifies a maximum size for the buffer, in bytes.
    */
@@ -1554,37 +1703,84 @@ public:
       std::size_t maximum_size =
         (std::numeric_limits<std::size_t>::max)()) BOOST_ASIO_NOEXCEPT
     : string_(s),
+<<<<<<< HEAD
       size_(string_.size()),
+=======
+#if !defined(BOOST_ASIO_NO_DYNAMIC_BUFFER_V1)
+      size_((std::numeric_limits<std::size_t>::max)()),
+#endif // !defined(BOOST_ASIO_NO_DYNAMIC_BUFFER_V1)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
       max_size_(maximum_size)
   {
   }
 
+<<<<<<< HEAD
+=======
+  /// @b DynamicBuffer_v2: Copy construct a dynamic buffer.
+  dynamic_string_buffer(const dynamic_string_buffer& other) BOOST_ASIO_NOEXCEPT
+    : string_(other.string_),
+#if !defined(BOOST_ASIO_NO_DYNAMIC_BUFFER_V1)
+      size_(other.size_),
+#endif // !defined(BOOST_ASIO_NO_DYNAMIC_BUFFER_V1)
+      max_size_(other.max_size_)
+  {
+  }
+
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 #if defined(BOOST_ASIO_HAS_MOVE) || defined(GENERATING_DOCUMENTATION)
   /// Move construct a dynamic buffer.
   dynamic_string_buffer(dynamic_string_buffer&& other) BOOST_ASIO_NOEXCEPT
     : string_(other.string_),
+<<<<<<< HEAD
       size_(other.size_),
+=======
+#if !defined(BOOST_ASIO_NO_DYNAMIC_BUFFER_V1)
+      size_(other.size_),
+#endif // !defined(BOOST_ASIO_NO_DYNAMIC_BUFFER_V1)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
       max_size_(other.max_size_)
   {
   }
 #endif // defined(BOOST_ASIO_HAS_MOVE) || defined(GENERATING_DOCUMENTATION)
 
+<<<<<<< HEAD
   /// Get the size of the input sequence.
   std::size_t size() const BOOST_ASIO_NOEXCEPT
   {
     return size_;
+=======
+  /// @b DynamicBuffer_v1: Get the size of the input sequence.
+  /// @b DynamicBuffer_v2: Get the current size of the underlying memory.
+  /**
+   * @returns @b DynamicBuffer_v1 The current size of the input sequence.
+   * @b DynamicBuffer_v2: The current size of the underlying string if less than
+   * max_size(). Otherwise returns max_size().
+   */
+  std::size_t size() const BOOST_ASIO_NOEXCEPT
+  {
+#if !defined(BOOST_ASIO_NO_DYNAMIC_BUFFER_V1)
+    if (size_ != (std::numeric_limits<std::size_t>::max)())
+      return size_;
+#endif // !defined(BOOST_ASIO_NO_DYNAMIC_BUFFER_V1)
+    return (std::min)(string_.size(), max_size());
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
   }
 
   /// Get the maximum size of the dynamic buffer.
   /**
+<<<<<<< HEAD
    * @returns The allowed maximum of the sum of the sizes of the input sequence
    * and output sequence.
+=======
+   * @returns The allowed maximum size of the underlying memory.
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
    */
   std::size_t max_size() const BOOST_ASIO_NOEXCEPT
   {
     return max_size_;
   }
 
+<<<<<<< HEAD
   /// Get the current capacity of the dynamic buffer.
   /**
    * @returns The current total capacity of the buffer, i.e. for both the input
@@ -1604,14 +1800,85 @@ public:
    * @note The returned object is invalidated by any @c dynamic_string_buffer
    * or @c basic_string member function that modifies the input sequence or
    * output sequence.
+=======
+  /// Get the maximum size that the buffer may grow to without triggering
+  /// reallocation.
+  /**
+   * @returns The current capacity of the underlying string if less than
+   * max_size(). Otherwise returns max_size().
+   */
+  std::size_t capacity() const BOOST_ASIO_NOEXCEPT
+  {
+    return (std::min)(string_.capacity(), max_size());
+  }
+
+#if !defined(BOOST_ASIO_NO_DYNAMIC_BUFFER_V1)
+  /// @b DynamicBuffer_v1: Get a list of buffers that represents the input
+  /// sequence.
+  /**
+   * @returns An object of type @c const_buffers_type that satisfies
+   * ConstBufferSequence requirements, representing the basic_string memory in
+   * the input sequence.
+   *
+   * @note The returned object is invalidated by any @c dynamic_string_buffer
+   * or @c basic_string member function that resizes or erases the string.
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
    */
   const_buffers_type data() const BOOST_ASIO_NOEXCEPT
   {
     return const_buffers_type(boost::asio::buffer(string_, size_));
   }
+<<<<<<< HEAD
 
   /// Get a list of buffers that represents the output sequence, with the given
   /// size.
+=======
+#endif // !defined(BOOST_ASIO_NO_DYNAMIC_BUFFER_V1)
+
+  /// @b DynamicBuffer_v2: Get a sequence of buffers that represents the
+  /// underlying memory.
+  /**
+   * @param pos Position of the first byte to represent in the buffer sequence
+   *
+   * @param n The number of bytes to return in the buffer sequence. If the
+   * underlying memory is shorter, the buffer sequence represents as many bytes
+   * as are available.
+   *
+   * @returns An object of type @c mutable_buffers_type that satisfies
+   * MutableBufferSequence requirements, representing the basic_string memory.
+   *
+   * @note The returned object is invalidated by any @c dynamic_string_buffer
+   * or @c basic_string member function that resizes or erases the string.
+   */
+  mutable_buffers_type data(std::size_t pos, std::size_t n) BOOST_ASIO_NOEXCEPT
+  {
+    return mutable_buffers_type(boost::asio::buffer(
+          boost::asio::buffer(string_, max_size_) + pos, n));
+  }
+
+  /// @b DynamicBuffer_v2: Get a sequence of buffers that represents the
+  /// underlying memory.
+  /**
+   * @param pos Position of the first byte to represent in the buffer sequence
+   *
+   * @param n The number of bytes to return in the buffer sequence. If the
+   * underlying memory is shorter, the buffer sequence represents as many bytes
+   * as are available.
+   *
+   * @note The returned object is invalidated by any @c dynamic_string_buffer
+   * or @c basic_string member function that resizes or erases the string.
+   */
+  const_buffers_type data(std::size_t pos,
+      std::size_t n) const BOOST_ASIO_NOEXCEPT
+  {
+    return const_buffers_type(boost::asio::buffer(
+          boost::asio::buffer(string_, max_size_) + pos, n));
+  }
+
+#if !defined(BOOST_ASIO_NO_DYNAMIC_BUFFER_V1)
+  /// @b DynamicBuffer_v1: Get a list of buffers that represents the output
+  /// sequence, with the given size.
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
   /**
    * Ensures that the output sequence can accommodate @c n bytes, resizing the
    * basic_string object as necessary.
@@ -1628,18 +1895,33 @@ public:
    */
   mutable_buffers_type prepare(std::size_t n)
   {
+<<<<<<< HEAD
     if (size () > max_size() || max_size() - size() < n)
+=======
+    if (size() > max_size() || max_size() - size() < n)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     {
       std::length_error ex("dynamic_string_buffer too long");
       boost::asio::detail::throw_exception(ex);
     }
 
+<<<<<<< HEAD
+=======
+    if (size_ == (std::numeric_limits<std::size_t>::max)())
+      size_ = string_.size(); // Enable v1 behaviour.
+
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     string_.resize(size_ + n);
 
     return boost::asio::buffer(boost::asio::buffer(string_) + size_, n);
   }
 
+<<<<<<< HEAD
   /// Move bytes from the output sequence to the input sequence.
+=======
+  /// @b DynamicBuffer_v1: Move bytes from the output sequence to the input
+  /// sequence.
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
   /**
    * @param n The number of bytes to append from the start of the output
    * sequence to the end of the input sequence. The remainder of the output
@@ -1656,6 +1938,7 @@ public:
     size_ += (std::min)(n, string_.size() - size_);
     string_.resize(size_);
   }
+<<<<<<< HEAD
 
   /// Remove characters from the input sequence.
   /**
@@ -1669,11 +1952,75 @@ public:
     std::size_t consume_length = (std::min)(n, size_);
     string_.erase(0, consume_length);
     size_ -= consume_length;
+=======
+#endif // !defined(BOOST_ASIO_NO_DYNAMIC_BUFFER_V1)
+
+  /// @b DynamicBuffer_v2: Grow the underlying memory by the specified number of
+  /// bytes.
+  /**
+   * Resizes the string to accommodate an additional @c n bytes at the end.
+   *
+   * @throws std::length_error If <tt>size() + n > max_size()</tt>.
+   */
+  void grow(std::size_t n)
+  {
+    if (size() > max_size() || max_size() - size() < n)
+    {
+      std::length_error ex("dynamic_string_buffer too long");
+      boost::asio::detail::throw_exception(ex);
+    }
+
+    string_.resize(size() + n);
+  }
+
+  /// @b DynamicBuffer_v2: Shrink the underlying memory by the specified number
+  /// of bytes.
+  /**
+   * Erases @c n bytes from the end of the string by resizing the basic_string
+   * object. If @c n is greater than the current size of the string, the string
+   * is emptied.
+   */
+  void shrink(std::size_t n)
+  {
+    string_.resize(n > size() ? 0 : size() - n);
+  }
+
+  /// @b DynamicBuffer_v1: Remove characters from the input sequence.
+  /// @b DynamicBuffer_v2: Consume the specified number of bytes from the
+  /// beginning of the underlying memory.
+  /**
+   * @b DynamicBuffer_v1: Removes @c n characters from the beginning of the
+   * input sequence. @note If @c n is greater than the size of the input
+   * sequence, the entire input sequence is consumed and no error is issued.
+   *
+   * @b DynamicBuffer_v2: Erases @c n bytes from the beginning of the string.
+   * If @c n is greater than the current size of the string, the string is
+   * emptied.
+   */
+  void consume(std::size_t n)
+  {
+#if !defined(BOOST_ASIO_NO_DYNAMIC_BUFFER_V1)
+    if (size_ != (std::numeric_limits<std::size_t>::max)())
+    {
+      std::size_t consume_length = (std::min)(n, size_);
+      string_.erase(0, consume_length);
+      size_ -= consume_length;
+      return;
+    }
+#endif // !defined(BOOST_ASIO_NO_DYNAMIC_BUFFER_V1)
+    string_.erase(0, n);
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
   }
 
 private:
   std::basic_string<Elem, Traits, Allocator>& string_;
+<<<<<<< HEAD
   std::size_t size_;
+=======
+#if !defined(BOOST_ASIO_NO_DYNAMIC_BUFFER_V1)
+  std::size_t size_;
+#endif // !defined(BOOST_ASIO_NO_DYNAMIC_BUFFER_V1)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
   const std::size_t max_size_;
 };
 
@@ -1685,6 +2032,7 @@ template <typename Elem, typename Allocator>
 class dynamic_vector_buffer
 {
 public:
+<<<<<<< HEAD
   /// The type used to represent the input sequence as a list of buffers.
   typedef BOOST_ASIO_CONST_BUFFER const_buffers_type;
 
@@ -1698,6 +2046,22 @@ public:
    * sequence. The object stores a reference to the vector and the user is
    * responsible for ensuring that the vector object remains valid until the
    * dynamic_vector_buffer object is destroyed.
+=======
+  /// The type used to represent a sequence of constant buffers that refers to
+  /// the underlying memory.
+  typedef BOOST_ASIO_CONST_BUFFER const_buffers_type;
+
+  /// The type used to represent a sequence of mutable buffers that refers to
+  /// the underlying memory.
+  typedef BOOST_ASIO_MUTABLE_BUFFER mutable_buffers_type;
+
+  /// Construct a dynamic buffer from a vector.
+  /**
+   * @param v The vector to be used as backing storage for the dynamic buffer.
+   * The object stores a reference to the vector and the user is responsible
+   * for ensuring that the vector object remains valid while the
+   * dynamic_vector_buffer object, and copies of the object, are in use.
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
    *
    * @param maximum_size Specifies a maximum size for the buffer, in bytes.
    */
@@ -1705,37 +2069,86 @@ public:
       std::size_t maximum_size =
         (std::numeric_limits<std::size_t>::max)()) BOOST_ASIO_NOEXCEPT
     : vector_(v),
+<<<<<<< HEAD
       size_(vector_.size()),
+=======
+#if !defined(BOOST_ASIO_NO_DYNAMIC_BUFFER_V1)
+      size_((std::numeric_limits<std::size_t>::max)()),
+#endif // !defined(BOOST_ASIO_NO_DYNAMIC_BUFFER_V1)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
       max_size_(maximum_size)
   {
   }
 
+<<<<<<< HEAD
+=======
+  /// @b DynamicBuffer_v2: Copy construct a dynamic buffer.
+  dynamic_vector_buffer(const dynamic_vector_buffer& other) BOOST_ASIO_NOEXCEPT
+    : vector_(other.vector_),
+#if !defined(BOOST_ASIO_NO_DYNAMIC_BUFFER_V1)
+      size_(other.size_),
+#endif // !defined(BOOST_ASIO_NO_DYNAMIC_BUFFER_V1)
+      max_size_(other.max_size_)
+  {
+  }
+
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 #if defined(BOOST_ASIO_HAS_MOVE) || defined(GENERATING_DOCUMENTATION)
   /// Move construct a dynamic buffer.
   dynamic_vector_buffer(dynamic_vector_buffer&& other) BOOST_ASIO_NOEXCEPT
     : vector_(other.vector_),
+<<<<<<< HEAD
       size_(other.size_),
+=======
+#if !defined(BOOST_ASIO_NO_DYNAMIC_BUFFER_V1)
+      size_(other.size_),
+#endif // !defined(BOOST_ASIO_NO_DYNAMIC_BUFFER_V1)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
       max_size_(other.max_size_)
   {
   }
 #endif // defined(BOOST_ASIO_HAS_MOVE) || defined(GENERATING_DOCUMENTATION)
 
+<<<<<<< HEAD
   /// Get the size of the input sequence.
   std::size_t size() const BOOST_ASIO_NOEXCEPT
   {
     return size_;
+=======
+  /// @b DynamicBuffer_v1: Get the size of the input sequence.
+  /// @b DynamicBuffer_v2: Get the current size of the underlying memory.
+  /**
+   * @returns @b DynamicBuffer_v1 The current size of the input sequence.
+   * @b DynamicBuffer_v2: The current size of the underlying vector if less than
+   * max_size(). Otherwise returns max_size().
+   */
+  std::size_t size() const BOOST_ASIO_NOEXCEPT
+  {
+#if !defined(BOOST_ASIO_NO_DYNAMIC_BUFFER_V1)
+    if (size_ != (std::numeric_limits<std::size_t>::max)())
+      return size_;
+#endif // !defined(BOOST_ASIO_NO_DYNAMIC_BUFFER_V1)
+    return (std::min)(vector_.size(), max_size());
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
   }
 
   /// Get the maximum size of the dynamic buffer.
   /**
+<<<<<<< HEAD
    * @returns The allowed maximum of the sum of the sizes of the input sequence
    * and output sequence.
+=======
+   * @returns @b DynamicBuffer_v1: The allowed maximum of the sum of the sizes
+   * of the input sequence and output sequence. @b DynamicBuffer_v2: The allowed
+   * maximum size of the underlying memory.
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
    */
   std::size_t max_size() const BOOST_ASIO_NOEXCEPT
   {
     return max_size_;
   }
 
+<<<<<<< HEAD
   /// Get the current capacity of the dynamic buffer.
   /**
    * @returns The current total capacity of the buffer, i.e. for both the input
@@ -1755,11 +2168,38 @@ public:
    * @note The returned object is invalidated by any @c dynamic_vector_buffer
    * or @c basic_string member function that modifies the input sequence or
    * output sequence.
+=======
+  /// Get the maximum size that the buffer may grow to without triggering
+  /// reallocation.
+  /**
+   * @returns @b DynamicBuffer_v1: The current total capacity of the buffer,
+   * i.e. for both the input sequence and output sequence. @b DynamicBuffer_v2:
+   * The current capacity of the underlying vector if less than max_size().
+   * Otherwise returns max_size().
+   */
+  std::size_t capacity() const BOOST_ASIO_NOEXCEPT
+  {
+    return (std::min)(vector_.capacity(), max_size());
+  }
+
+#if !defined(BOOST_ASIO_NO_DYNAMIC_BUFFER_V1)
+  /// @b DynamicBuffer_v1: Get a list of buffers that represents the input
+  /// sequence.
+  /**
+   * @returns An object of type @c const_buffers_type that satisfies
+   * ConstBufferSequence requirements, representing the vector memory in the
+   * input sequence.
+   *
+   * @note The returned object is invalidated by any @c dynamic_vector_buffer
+   * or @c vector member function that modifies the input sequence or output
+   * sequence.
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
    */
   const_buffers_type data() const BOOST_ASIO_NOEXCEPT
   {
     return const_buffers_type(boost::asio::buffer(vector_, size_));
   }
+<<<<<<< HEAD
 
   /// Get a list of buffers that represents the output sequence, with the given
   /// size.
@@ -1770,12 +2210,71 @@ public:
    * @returns An object of type @c mutable_buffers_type that satisfies
    * MutableBufferSequence requirements, representing basic_string memory
    * at the start of the output sequence of size @c n.
+=======
+#endif // !defined(BOOST_ASIO_NO_DYNAMIC_BUFFER_V1)
+
+  /// @b DynamicBuffer_v2: Get a sequence of buffers that represents the
+  /// underlying memory.
+  /**
+   * @param pos Position of the first byte to represent in the buffer sequence
+   *
+   * @param n The number of bytes to return in the buffer sequence. If the
+   * underlying memory is shorter, the buffer sequence represents as many bytes
+   * as are available.
+   *
+   * @returns An object of type @c mutable_buffers_type that satisfies
+   * MutableBufferSequence requirements, representing the vector memory.
+   *
+   * @note The returned object is invalidated by any @c dynamic_vector_buffer
+   * or @c vector member function that resizes or erases the vector.
+   */
+  mutable_buffers_type data(std::size_t pos, std::size_t n) BOOST_ASIO_NOEXCEPT
+  {
+    return mutable_buffers_type(boost::asio::buffer(
+          boost::asio::buffer(vector_, max_size_) + pos, n));
+  }
+
+  /// @b DynamicBuffer_v2: Get a sequence of buffers that represents the
+  /// underlying memory.
+  /**
+   * @param pos Position of the first byte to represent in the buffer sequence
+   *
+   * @param n The number of bytes to return in the buffer sequence. If the
+   * underlying memory is shorter, the buffer sequence represents as many bytes
+   * as are available.
+   *
+   * @note The returned object is invalidated by any @c dynamic_vector_buffer
+   * or @c vector member function that resizes or erases the vector.
+   */
+  const_buffers_type data(std::size_t pos,
+      std::size_t n) const BOOST_ASIO_NOEXCEPT
+  {
+    return const_buffers_type(boost::asio::buffer(
+          boost::asio::buffer(vector_, max_size_) + pos, n));
+  }
+
+#if !defined(BOOST_ASIO_NO_DYNAMIC_BUFFER_V1)
+  /// @b DynamicBuffer_v1: Get a list of buffers that represents the output
+  /// sequence, with the given size.
+  /**
+   * Ensures that the output sequence can accommodate @c n bytes, resizing the
+   * vector object as necessary.
+   *
+   * @returns An object of type @c mutable_buffers_type that satisfies
+   * MutableBufferSequence requirements, representing vector memory at the
+   * start of the output sequence of size @c n.
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
    *
    * @throws std::length_error If <tt>size() + n > max_size()</tt>.
    *
    * @note The returned object is invalidated by any @c dynamic_vector_buffer
+<<<<<<< HEAD
    * or @c basic_string member function that modifies the input sequence or
    * output sequence.
+=======
+   * or @c vector member function that modifies the input sequence or output
+   * sequence.
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
    */
   mutable_buffers_type prepare(std::size_t n)
   {
@@ -1785,12 +2284,23 @@ public:
       boost::asio::detail::throw_exception(ex);
     }
 
+<<<<<<< HEAD
+=======
+    if (size_ == (std::numeric_limits<std::size_t>::max)())
+      size_ = vector_.size(); // Enable v1 behaviour.
+
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     vector_.resize(size_ + n);
 
     return boost::asio::buffer(boost::asio::buffer(vector_) + size_, n);
   }
 
+<<<<<<< HEAD
   /// Move bytes from the output sequence to the input sequence.
+=======
+  /// @b DynamicBuffer_v1: Move bytes from the output sequence to the input
+  /// sequence.
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
   /**
    * @param n The number of bytes to append from the start of the output
    * sequence to the end of the input sequence. The remainder of the output
@@ -1807,6 +2317,7 @@ public:
     size_ += (std::min)(n, vector_.size() - size_);
     vector_.resize(size_);
   }
+<<<<<<< HEAD
 
   /// Remove characters from the input sequence.
   /**
@@ -1820,11 +2331,75 @@ public:
     std::size_t consume_length = (std::min)(n, size_);
     vector_.erase(vector_.begin(), vector_.begin() + consume_length);
     size_ -= consume_length;
+=======
+#endif // !defined(BOOST_ASIO_NO_DYNAMIC_BUFFER_V1)
+
+  /// @b DynamicBuffer_v2: Grow the underlying memory by the specified number of
+  /// bytes.
+  /**
+   * Resizes the vector to accommodate an additional @c n bytes at the end.
+   *
+   * @throws std::length_error If <tt>size() + n > max_size()</tt>.
+   */
+  void grow(std::size_t n)
+  {
+    if (size() > max_size() || max_size() - size() < n)
+    {
+      std::length_error ex("dynamic_vector_buffer too long");
+      boost::asio::detail::throw_exception(ex);
+    }
+
+    vector_.resize(size() + n);
+  }
+
+  /// @b DynamicBuffer_v2: Shrink the underlying memory by the specified number
+  /// of bytes.
+  /**
+   * Erases @c n bytes from the end of the vector by resizing the vector
+   * object. If @c n is greater than the current size of the vector, the vector
+   * is emptied.
+   */
+  void shrink(std::size_t n)
+  {
+    vector_.resize(n > size() ? 0 : size() - n);
+  }
+
+  /// @b DynamicBuffer_v1: Remove characters from the input sequence.
+  /// @b DynamicBuffer_v2: Consume the specified number of bytes from the
+  /// beginning of the underlying memory.
+  /**
+   * @b DynamicBuffer_v1: Removes @c n characters from the beginning of the
+   * input sequence. @note If @c n is greater than the size of the input
+   * sequence, the entire input sequence is consumed and no error is issued.
+   *
+   * @b DynamicBuffer_v2: Erases @c n bytes from the beginning of the vector.
+   * If @c n is greater than the current size of the vector, the vector is
+   * emptied.
+   */
+  void consume(std::size_t n)
+  {
+#if !defined(BOOST_ASIO_NO_DYNAMIC_BUFFER_V1)
+    if (size_ != (std::numeric_limits<std::size_t>::max)())
+    {
+      std::size_t consume_length = (std::min)(n, size_);
+      vector_.erase(vector_.begin(), vector_.begin() + consume_length);
+      size_ -= consume_length;
+      return;
+    }
+#endif // !defined(BOOST_ASIO_NO_DYNAMIC_BUFFER_V1)
+    vector_.erase(vector_.begin(), vector_.begin() + (std::min)(size(), n));
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
   }
 
 private:
   std::vector<Elem, Allocator>& vector_;
+<<<<<<< HEAD
   std::size_t size_;
+=======
+#if !defined(BOOST_ASIO_NO_DYNAMIC_BUFFER_V1)
+  std::size_t size_;
+#endif // !defined(BOOST_ASIO_NO_DYNAMIC_BUFFER_V1)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
   const std::size_t max_size_;
 };
 
@@ -2160,5 +2735,87 @@ inline std::size_t buffer_copy(const MutableBufferSequence& target,
 } // namespace boost
 
 #include <boost/asio/detail/pop_options.hpp>
+<<<<<<< HEAD
+=======
+#include <boost/asio/detail/is_buffer_sequence.hpp>
+#include <boost/asio/detail/push_options.hpp>
+
+namespace boost {
+namespace asio {
+
+/// Trait to determine whether a type satisfies the MutableBufferSequence
+/// requirements.
+template <typename T>
+struct is_mutable_buffer_sequence
+#if defined(GENERATING_DOCUMENTATION)
+  : integral_constant<bool, automatically_determined>
+#else // defined(GENERATING_DOCUMENTATION)
+  : boost::asio::detail::is_buffer_sequence<T, mutable_buffer>
+#endif // defined(GENERATING_DOCUMENTATION)
+{
+};
+
+/// Trait to determine whether a type satisfies the ConstBufferSequence
+/// requirements.
+template <typename T>
+struct is_const_buffer_sequence
+#if defined(GENERATING_DOCUMENTATION)
+  : integral_constant<bool, automatically_determined>
+#else // defined(GENERATING_DOCUMENTATION)
+  : boost::asio::detail::is_buffer_sequence<T, const_buffer>
+#endif // defined(GENERATING_DOCUMENTATION)
+{
+};
+
+#if !defined(BOOST_ASIO_NO_DYNAMIC_BUFFER_V1)
+/// Trait to determine whether a type satisfies the DynamicBuffer_v1
+/// requirements.
+template <typename T>
+struct is_dynamic_buffer_v1
+#if defined(GENERATING_DOCUMENTATION)
+  : integral_constant<bool, automatically_determined>
+#else // defined(GENERATING_DOCUMENTATION)
+  : boost::asio::detail::is_dynamic_buffer_v1<T>
+#endif // defined(GENERATING_DOCUMENTATION)
+{
+};
+#endif // !defined(BOOST_ASIO_NO_DYNAMIC_BUFFER_V1)
+
+/// Trait to determine whether a type satisfies the DynamicBuffer_v2
+/// requirements.
+template <typename T>
+struct is_dynamic_buffer_v2
+#if defined(GENERATING_DOCUMENTATION)
+  : integral_constant<bool, automatically_determined>
+#else // defined(GENERATING_DOCUMENTATION)
+  : boost::asio::detail::is_dynamic_buffer_v2<T>
+#endif // defined(GENERATING_DOCUMENTATION)
+{
+};
+
+/// Trait to determine whether a type satisfies the DynamicBuffer requirements.
+/**
+ * If @c BOOST_ASIO_NO_DYNAMIC_BUFFER_V1 is not defined, determines whether the
+ * type satisfies the DynamicBuffer_v1 requirements. Otherwise, if @c
+ * BOOST_ASIO_NO_DYNAMIC_BUFFER_V1 is defined, determines whether the type
+ * satisfies the DynamicBuffer_v2 requirements.
+ */
+template <typename T>
+struct is_dynamic_buffer
+#if defined(GENERATING_DOCUMENTATION)
+  : integral_constant<bool, automatically_determined>
+#elif defined(BOOST_ASIO_NO_DYNAMIC_BUFFER_V1)
+  : boost::asio::is_dynamic_buffer_v2<T>
+#else // defined(BOOST_ASIO_NO_DYNAMIC_BUFFER_V1)
+  : boost::asio::is_dynamic_buffer_v1<T>
+#endif // defined(BOOST_ASIO_NO_DYNAMIC_BUFFER_V1)
+{
+};
+
+} // namespace asio
+} // namespace boost
+
+#include <boost/asio/detail/pop_options.hpp>
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 #endif // BOOST_ASIO_BUFFER_HPP

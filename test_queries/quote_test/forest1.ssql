@@ -1,0 +1,4 @@
+GENERATE HTML {
+   'hoge'
+}
+from employee e

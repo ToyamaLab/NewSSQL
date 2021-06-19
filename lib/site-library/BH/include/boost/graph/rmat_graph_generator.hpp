@@ -20,6 +20,10 @@
 #include <boost/random/uniform_int.hpp>
 #include <boost/random/uniform_01.hpp>
 #include <boost/graph/graph_traits.hpp>
+<<<<<<< HEAD
+=======
+#include <boost/graph/detail/mpi_include.hpp>
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 #include <boost/type_traits/is_base_and_derived.hpp>
 #include <boost/type_traits/is_same.hpp>
 // #include <boost/test/floating_point_comparison.hpp>
@@ -588,8 +592,12 @@ namespace boost {
 
 } // end namespace boost
 
+<<<<<<< HEAD
 #ifdef BOOST_GRAPH_USE_MPI
 #include <boost/graph/distributed/rmat_graph_generator.hpp>
 #endif // BOOST_GRAPH_USE_MPI
+=======
+#include BOOST_GRAPH_MPI_INCLUDE(<boost/graph/distributed/rmat_graph_generator.hpp>)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 #endif // BOOST_GRAPH_RMAT_GENERATOR_HPP

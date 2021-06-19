@@ -49,4 +49,5 @@ public interface ITFE extends Serializable {
 	ExtList makeschImage();
 
 	void addDeco(String name, String value, String condition);
+
 }

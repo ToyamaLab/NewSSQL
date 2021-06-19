@@ -11,7 +11,11 @@
 #define BOOST_GEOMETRY_STRATEGIES_GEOGRAPHIC_INTERSECTION_ELLIPTIC_HPP
 
 
+<<<<<<< HEAD
 #include <boost/geometry/core/srs.hpp>
+=======
+#include <boost/geometry/srs/spheroid.hpp>
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 #include <boost/geometry/formulas/geographic.hpp>
 

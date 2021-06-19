@@ -8,6 +8,10 @@
 #define BOOST_SPIRIT_X3_TUPLE_TRAITS_JANUARY_2012_1132PM
 
 #include <boost/fusion/include/is_sequence.hpp>
+<<<<<<< HEAD
+=======
+#include <boost/fusion/include/is_view.hpp>
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 #include <boost/fusion/include/size.hpp>
 #include <boost/mpl/bool.hpp>
 #include <boost/mpl/and.hpp>
@@ -43,6 +47,17 @@ namespace boost { namespace spirit { namespace x3 { namespace traits
           , has_size<Seq, 1>
         >
     {};
+<<<<<<< HEAD
+=======
+
+    template <typename View>
+    struct is_size_one_view
+      : mpl::and_<
+            fusion::traits::is_view<View>
+          , has_size<View, 1>
+        >
+    {};
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 }}}}
 
 #endif

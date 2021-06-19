@@ -1,3 +1,36 @@
+<<<<<<< HEAD
+=======
+# tidyverse 1.3.0
+
+* The tidyverse now has an associated paper at the 
+  [Journal of Open Source Software](http://joss.theoj.org/) that you can
+  use to cite the tidyverse if you use it in a paper - see 
+  `citation("tidyverse")` for details.
+
+* Eliminate repeats in the package list when loading an odd number of 
+  packages (#94, #100, @dchiu911)
+
+* Packages attached from same library they were initially loaded from 
+  (#171, @gabrocsardi)
+
+* If conflicted package is loaded, omit display of conflicts. 
+  This includes fix to `tidyverse_conflicts()` to avoid accidentally
+  triggering conflited shims (#136).
+
+* `tidyverse_deps()` now succeeds even if a dependency of a depedency 
+  is missing (#152, @PoGibas). It no longer includes dependencies that
+  are needed by the tidyverse package but are not strictly part of the
+  tidyverse (i.e. cli, crayon, and rstudioapi).
+
+* `tidyverse_deps()` and `tidyverse_update()` gain a new `repos` argument
+  that gets passed to the base function `available.packages()` (@zkamvar, #82)
+
+* `tidyverse_packages()` corrently returns packages names (#93, #106, @coatless)
+
+* `tidyverse_sitrep()` gives you a situtation report on your install of 
+  the tidyverse (#203)
+
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 # tidyverse 1.2.1
 
 * Require modern versions of all packages (#85)

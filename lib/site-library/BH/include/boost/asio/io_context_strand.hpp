@@ -2,7 +2,11 @@
 // io_context_strand.hpp
 // ~~~~~~~~~~~~~~~~~~~~~
 //
+<<<<<<< HEAD
 // Copyright (c) 2003-2017 Christopher M. Kohlhoff (chris at kohlhoff dot com)
+=======
+// Copyright (c) 2003-2019 Christopher M. Kohlhoff (chris at kohlhoff dot com)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 //
 // Distributed under the Boost Software License, Version 1.0. (See accompanying
 // file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
@@ -114,6 +118,7 @@ public:
   {
   }
 
+<<<<<<< HEAD
 #if !defined(BOOST_ASIO_NO_DEPRECATED)
   /// (Deprecated: Use context().) Get the io_context associated with the
   /// strand.
@@ -144,6 +149,8 @@ public:
   }
 #endif // !defined(BOOST_ASIO_NO_DEPRECATED)
 
+=======
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
   /// Obtain the underlying execution context.
   boost::asio::io_context& context() const BOOST_ASIO_NOEXCEPT
   {
@@ -212,6 +219,7 @@ public:
    * handler object as required. The function signature of the handler must be:
    * @code void handler(); @endcode
    */
+<<<<<<< HEAD
   template <typename CompletionHandler>
   BOOST_ASIO_INITFN_RESULT_TYPE(CompletionHandler, void ())
   dispatch(BOOST_ASIO_MOVE_ARG(CompletionHandler) handler)
@@ -225,6 +233,14 @@ public:
     service_.dispatch(impl_, init.completion_handler);
 
     return init.result.get();
+=======
+  template <typename LegacyCompletionHandler>
+  BOOST_ASIO_INITFN_AUTO_RESULT_TYPE(LegacyCompletionHandler, void ())
+  dispatch(BOOST_ASIO_MOVE_ARG(LegacyCompletionHandler) handler)
+  {
+    return async_initiate<LegacyCompletionHandler, void ()>(
+        initiate_dispatch(), handler, this);
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
   }
 #endif // !defined(BOOST_ASIO_NO_DEPRECATED)
 
@@ -266,6 +282,7 @@ public:
    * handler object as required. The function signature of the handler must be:
    * @code void handler(); @endcode
    */
+<<<<<<< HEAD
   template <typename CompletionHandler>
   BOOST_ASIO_INITFN_RESULT_TYPE(CompletionHandler, void ())
   post(BOOST_ASIO_MOVE_ARG(CompletionHandler) handler)
@@ -279,6 +296,14 @@ public:
     service_.post(impl_, init.completion_handler);
 
     return init.result.get();
+=======
+  template <typename LegacyCompletionHandler>
+  BOOST_ASIO_INITFN_AUTO_RESULT_TYPE(LegacyCompletionHandler, void ())
+  post(BOOST_ASIO_MOVE_ARG(LegacyCompletionHandler) handler)
+  {
+    return async_initiate<LegacyCompletionHandler, void ()>(
+        initiate_post(), handler, this);
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
   }
 #endif // !defined(BOOST_ASIO_NO_DEPRECATED)
 
@@ -370,6 +395,45 @@ public:
   }
 
 private:
+<<<<<<< HEAD
+=======
+#if !defined(BOOST_ASIO_NO_DEPRECATED)
+  struct initiate_dispatch
+  {
+    template <typename LegacyCompletionHandler>
+    void operator()(BOOST_ASIO_MOVE_ARG(LegacyCompletionHandler) handler,
+        strand* self) const
+    {
+      // If you get an error on the following line it means that your
+      // handler does not meet the documented type requirements for a
+      // LegacyCompletionHandler.
+      BOOST_ASIO_LEGACY_COMPLETION_HANDLER_CHECK(
+          LegacyCompletionHandler, handler) type_check;
+
+      detail::non_const_lvalue<LegacyCompletionHandler> handler2(handler);
+      self->service_.dispatch(self->impl_, handler2.value);
+    }
+  };
+
+  struct initiate_post
+  {
+    template <typename LegacyCompletionHandler>
+    void operator()(BOOST_ASIO_MOVE_ARG(LegacyCompletionHandler) handler,
+        strand* self) const
+    {
+      // If you get an error on the following line it means that your
+      // handler does not meet the documented type requirements for a
+      // LegacyCompletionHandler.
+      BOOST_ASIO_LEGACY_COMPLETION_HANDLER_CHECK(
+          LegacyCompletionHandler, handler) type_check;
+
+      detail::non_const_lvalue<LegacyCompletionHandler> handler2(handler);
+      self->service_.post(self->impl_, handler2.value);
+    }
+  };
+#endif // !defined(BOOST_ASIO_NO_DEPRECATED)
+
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
   boost::asio::detail::strand_service& service_;
   mutable boost::asio::detail::strand_service::implementation_type impl_;
 };

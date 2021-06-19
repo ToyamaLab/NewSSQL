@@ -16,12 +16,18 @@
 #include <algorithm>    // for std::swap
 #include <exception>    // for std::exception
 #include <boost/limits.hpp>
+<<<<<<< HEAD
 #include <boost/iterator.hpp>
+=======
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 #include <boost/spirit/home/classic/namespace.hpp>
 #include <boost/spirit/home/classic/core/assert.hpp> // for BOOST_SPIRIT_ASSERT
 #include <boost/spirit/home/classic/iterator/fixed_size_queue.hpp>
+<<<<<<< HEAD
 #include <boost/detail/iterator.hpp> // for boost::detail::iterator_traits
+=======
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 #include <boost/spirit/home/classic/iterator/multi_pass_fwd.hpp>
 
@@ -147,6 +153,7 @@ class first_owner
 // thrown by buf_id_check CheckingPolicy if an instance of an iterator is
 // used after another one has invalidated the queue
 ///////////////////////////////////////////////////////////////////////////////
+<<<<<<< HEAD
 class illegal_backtracking : public std::exception
 {
 public:
@@ -156,6 +163,17 @@ public:
 
     virtual const char*
     what() const throw()
+=======
+class BOOST_SYMBOL_VISIBLE illegal_backtracking : public std::exception
+{
+public:
+
+    illegal_backtracking() BOOST_NOEXCEPT_OR_NOTHROW {}
+    ~illegal_backtracking() BOOST_NOEXCEPT_OR_NOTHROW {}
+
+    virtual const char*
+    what() const BOOST_NOEXCEPT_OR_NOTHROW
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     { return "BOOST_SPIRIT_CLASSIC_NS::illegal_backtracking"; }
 };
 
@@ -492,7 +510,11 @@ class inner
 {
     private:
         typedef
+<<<<<<< HEAD
             typename boost::detail::iterator_traits<InputT>::value_type
+=======
+            typename std::iterator_traits<InputT>::value_type
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
             result_type;
 
     public:
@@ -517,6 +539,7 @@ class inner
 
     public:
         typedef
+<<<<<<< HEAD
             typename boost::detail::iterator_traits<InputT>::difference_type
             difference_type;
         typedef
@@ -524,6 +547,15 @@ class inner
             pointer;
         typedef
             typename boost::detail::iterator_traits<InputT>::reference
+=======
+            typename std::iterator_traits<InputT>::difference_type
+            difference_type;
+        typedef
+            typename std::iterator_traits<InputT>::pointer
+            pointer;
+        typedef
+            typename std::iterator_traits<InputT>::reference
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
             reference;
 
     protected:
@@ -551,7 +583,11 @@ class inner
         }
 
         typedef
+<<<<<<< HEAD
             typename boost::detail::iterator_traits<InputT>::value_type
+=======
+            typename std::iterator_traits<InputT>::value_type
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
             value_t;
         void swap(inner& x)
         {
@@ -760,16 +796,21 @@ class inner
 
 namespace iterator_ { namespace impl {
 
+<<<<<<< HEAD
 // Meta-function to generate a std::iterator<> base class for multi_pass. This
 //  is used mainly to improve conformance of compilers not supporting PTS
 //  and thus relying on inheritance to recognize an iterator.
 // We are using boost::iterator<> because it offers an automatic workaround
 //  for broken std::iterator<> implementations.
+=======
+// Meta-function to generate a std::iterator<>-like base class for multi_pass.
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 template <typename InputPolicyT, typename InputT>
 struct iterator_base_creator
 {
     typedef typename InputPolicyT::BOOST_NESTED_TEMPLATE inner<InputT> input_t;
 
+<<<<<<< HEAD
     typedef boost::iterator
     <
         std::forward_iterator_tag,
@@ -778,6 +819,15 @@ struct iterator_base_creator
         typename input_t::pointer,
         typename input_t::reference
     > type;
+=======
+    struct type {
+        typedef std::forward_iterator_tag iterator_category;
+        typedef typename input_t::value_type value_type;
+        typedef typename input_t::difference_type difference_type;
+        typedef typename input_t::pointer pointer;
+        typedef typename input_t::reference reference;
+    };
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 };
 
 }}

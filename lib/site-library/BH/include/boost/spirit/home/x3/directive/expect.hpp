@@ -4,20 +4,33 @@
     Distributed under the Boost Software License, Version 1.0. (See accompanying
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 =============================================================================*/
+<<<<<<< HEAD
 #if !defined(SPIRIT_EXPECT_MARCH_16_2012_1024PM)
 #define SPIRIT_EXPECT_MARCH_16_2012_1024PM
+=======
+#if !defined(BOOST_SPIRIT_X3_EXPECT_MARCH_16_2012_1024PM)
+#define BOOST_SPIRIT_X3_EXPECT_MARCH_16_2012_1024PM
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 #include <boost/spirit/home/x3/support/context.hpp>
 #include <boost/spirit/home/x3/core/parser.hpp>
 #include <boost/spirit/home/x3/core/detail/parse_into_container.hpp>
 
+<<<<<<< HEAD
+=======
+#include <boost/config.hpp> // for BOOST_SYMBOL_VISIBLE
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 #include <boost/throw_exception.hpp>
 #include <stdexcept>
 
 namespace boost { namespace spirit { namespace x3
 {
     template <typename Iterator>
+<<<<<<< HEAD
     struct expectation_failure : std::runtime_error
+=======
+    struct BOOST_SYMBOL_VISIBLE expectation_failure : std::runtime_error
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     {
     public:
 
@@ -25,7 +38,11 @@ namespace boost { namespace spirit { namespace x3
           : std::runtime_error("boost::spirit::x3::expectation_failure")
           , where_(where), which_(which)
         {}
+<<<<<<< HEAD
         ~expectation_failure() throw() {}
+=======
+        ~expectation_failure() {}
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
         std::string which() const { return which_; }
         Iterator const& where() const { return where_; }

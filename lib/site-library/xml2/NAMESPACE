@@ -207,5 +207,13 @@ export(xml_type)
 export(xml_unserialize)
 export(xml_url)
 export(xml_validate)
+<<<<<<< HEAD
 importFrom(Rcpp,sourceCpp)
+=======
+exportClasses(xml_document)
+exportClasses(xml_missing)
+exportClasses(xml_node)
+exportClasses(xml_nodeset)
+importFrom(methods,setOldClass)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 useDynLib(xml2, .registration = TRUE)

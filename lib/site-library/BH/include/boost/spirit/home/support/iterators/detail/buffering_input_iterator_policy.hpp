@@ -10,8 +10,13 @@
 #include <boost/spirit/home/support/iterators/multi_pass_fwd.hpp>
 #include <boost/spirit/home/support/iterators/detail/multi_pass.hpp>
 #include <boost/spirit/home/support/iterators/detail/input_iterator_policy.hpp>
+<<<<<<< HEAD
 #include <boost/detail/iterator.hpp> // for boost::detail::iterator_traits
 #include <boost/assert.hpp>
+=======
+#include <boost/assert.hpp>
+#include <iterator> // for std::iterator_traits
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 namespace boost { namespace spirit { namespace iterator_policies
 {
@@ -35,11 +40,16 @@ namespace boost { namespace spirit { namespace iterator_policies
         {
         private:
             typedef
+<<<<<<< HEAD
                 typename boost::detail::iterator_traits<T>::value_type
+=======
+                typename std::iterator_traits<T>::value_type
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
             result_type;
 
         public:
             typedef
+<<<<<<< HEAD
                 typename boost::detail::iterator_traits<T>::difference_type
             difference_type;
             typedef
@@ -47,6 +57,15 @@ namespace boost { namespace spirit { namespace iterator_policies
             distance_type;
             typedef
                 typename boost::detail::iterator_traits<T>::pointer
+=======
+                typename std::iterator_traits<T>::difference_type
+            difference_type;
+            typedef
+                typename std::iterator_traits<T>::difference_type
+            distance_type;
+            typedef
+                typename std::iterator_traits<T>::pointer
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
             pointer;
             typedef result_type& reference;
             typedef result_type value_type;
@@ -96,7 +115,11 @@ namespace boost { namespace spirit { namespace iterator_policies
         struct shared
         {
             typedef
+<<<<<<< HEAD
                 typename boost::detail::iterator_traits<T>::value_type
+=======
+                typename std::iterator_traits<T>::value_type
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
             result_type;
 
             explicit shared(T const& input) 

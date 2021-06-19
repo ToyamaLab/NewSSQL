@@ -33,7 +33,14 @@
 namespace boost{
 #ifdef BOOST_MSVC
 #pragma warning(push)
+<<<<<<< HEAD
 #pragma warning(disable : 4251 4231)
+=======
+#pragma warning(disable : 4251)
+#if BOOST_MSVC < 1700
+#     pragma warning(disable : 4231)
+#endif
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 #  if BOOST_MSVC < 1600
 #     pragma warning(disable : 4660)
 #  endif
@@ -56,7 +63,13 @@ private:
 #endif
 public: 
    typedef          sub_match<BidiIterator>                         value_type;
+<<<<<<< HEAD
 #if  !defined(BOOST_NO_STD_ALLOCATOR) && !(defined(BOOST_MSVC) && defined(_STLPORT_VERSION))
+=======
+#ifndef BOOST_NO_CXX11_ALLOCATOR
+   typedef typename std::allocator_traits<Allocator>::value_type const &    const_reference;
+#elif  !defined(BOOST_NO_STD_ALLOCATOR) && !(defined(BOOST_MSVC) && defined(_STLPORT_VERSION))
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
    typedef typename Allocator::const_reference                              const_reference;
 #else
    typedef          const value_type&                                       const_reference;
@@ -66,7 +79,15 @@ public:
    typedef          const_iterator                                          iterator;
    typedef typename BOOST_REGEX_DETAIL_NS::regex_iterator_traits<
                                     BidiIterator>::difference_type          difference_type;
+<<<<<<< HEAD
    typedef typename Allocator::size_type                                    size_type;
+=======
+#ifdef BOOST_NO_CXX11_ALLOCATOR
+   typedef typename Allocator::size_type                                    size_type;
+#else
+   typedef typename std::allocator_traits<Allocator>::size_type             size_type;
+#endif
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
    typedef          Allocator                                               allocator_type;
    typedef typename BOOST_REGEX_DETAIL_NS::regex_iterator_traits<
                                     BidiIterator>::value_type               char_type;
@@ -563,7 +584,11 @@ private:
    //
    static void raise_logic_error()
    {
+<<<<<<< HEAD
       std::logic_error e("Attempt to access an uninitialzed boost::match_results<> class.");
+=======
+      std::logic_error e("Attempt to access an uninitialized boost::match_results<> class.");
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
       boost::throw_exception(e);
    }
 

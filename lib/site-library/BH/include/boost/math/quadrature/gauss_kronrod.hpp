@@ -1769,6 +1769,7 @@ class gauss_kronrod : public detail::gauss_kronrod_detail<Real, N, detail::gauss
 {
    typedef detail::gauss_kronrod_detail<Real, N, detail::gauss_constant_category<Real>::value> base;
 public:
+<<<<<<< HEAD
    typedef Real value_type;
 private:
    template <class F>
@@ -1781,6 +1782,21 @@ private:
       value_type kronrod_result = 0;
       value_type gauss_result = 0;
       value_type fp, fm;
+=======
+  typedef Real value_type;
+private:
+   template <class F>
+   static auto integrate_non_adaptive_m1_1(F f, Real* error = nullptr, Real* pL1 = nullptr)->decltype(std::declval<F>()(std::declval<Real>()))
+   {
+      typedef decltype(f(Real(0))) K;
+      using std::abs;
+      unsigned gauss_start = 2;
+      unsigned kronrod_start = 1;
+      unsigned gauss_order = (N - 1) / 2;
+      K kronrod_result = 0;
+      K gauss_result = 0;
+      K fp, fm;
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
       if (gauss_order & 1)
       {
          fp = f(value_type(0));
@@ -1794,13 +1810,21 @@ private:
          gauss_start = 1;
          kronrod_start = 2;
       }
+<<<<<<< HEAD
       value_type L1 = fabs(kronrod_result);
+=======
+      Real L1 = abs(kronrod_result);
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
       for (unsigned i = gauss_start; i < base::abscissa().size(); i += 2)
       {
          fp = f(base::abscissa()[i]);
          fm = f(-base::abscissa()[i]);
          kronrod_result += (fp + fm) * base::weights()[i];
+<<<<<<< HEAD
          L1 += (fabs(fp) + fabs(fm)) *  base::weights()[i];
+=======
+         L1 += (abs(fp) + abs(fm)) *  base::weights()[i];
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
          gauss_result += (fp + fm) * gauss<Real, (N - 1) / 2>::weights()[i / 2];
       }
       for (unsigned i = kronrod_start; i < base::abscissa().size(); i += 2)
@@ -1808,12 +1832,20 @@ private:
          fp = f(base::abscissa()[i]);
          fm = f(-base::abscissa()[i]);
          kronrod_result += (fp + fm) * base::weights()[i];
+<<<<<<< HEAD
          L1 += (fabs(fp) + fabs(fm)) *  base::weights()[i];
+=======
+         L1 += (abs(fp) + abs(fm)) *  base::weights()[i];
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
       }
       if (pL1)
          *pL1 = L1;
       if (error)
+<<<<<<< HEAD
          *error = (std::max)(static_cast<Real>(fabs(kronrod_result - gauss_result)), static_cast<Real>(fabs(kronrod_result * tools::epsilon<Real>() * 2)));
+=======
+         *error = (std::max)(static_cast<Real>(abs(kronrod_result - gauss_result)), static_cast<Real>(abs(kronrod_result * tools::epsilon<Real>() * Real(2))));
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
       return kronrod_result;
    }
 
@@ -1825,6 +1857,7 @@ private:
    };
 
    template <class F>
+<<<<<<< HEAD
    static value_type recursive_adaptive_integrate(const recursive_info<F>* info, Real a, Real b, unsigned max_levels, Real abs_tol, Real* error, Real* L1)
    {
       using std::fabs;
@@ -1838,6 +1871,24 @@ private:
       Real estimate = scale * integrate_non_adaptive_m1_1(ff, &error_local, L1);
 
       Real abs_tol1 = fabs(estimate * info->tol);
+=======
+   static auto recursive_adaptive_integrate(const recursive_info<F>* info, Real a, Real b, unsigned max_levels, Real abs_tol, Real* error, Real* L1)->decltype(std::declval<F>()(std::declval<Real>()))
+   {
+      typedef decltype(info->f(Real(a))) K;
+      using std::abs;
+      Real error_local;
+      Real mean = (b + a) / 2;
+      Real scale = (b - a) / 2;
+      auto ff = [&](const Real& x)->K
+      {
+         return info->f(scale * x + mean);
+      };
+      K r1 = integrate_non_adaptive_m1_1(ff, &error_local, L1);
+      K estimate = scale * r1;
+
+      K tmp = estimate * info->tol;
+      Real abs_tol1 = abs(tmp);
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
       if (abs_tol == 0)
          abs_tol = abs_tol1;
 
@@ -1862,14 +1913,21 @@ private:
 
 public:
    template <class F>
+<<<<<<< HEAD
    static value_type integrate(F f, Real a, Real b, unsigned max_depth = 15, Real tol = tools::root_epsilon<Real>(), Real* error = nullptr, Real* pL1 = nullptr)
    {
+=======
+   static auto integrate(F f, Real a, Real b, unsigned max_depth = 15, Real tol = tools::root_epsilon<Real>(), Real* error = nullptr, Real* pL1 = nullptr)->decltype(std::declval<F>()(std::declval<Real>()))
+   {
+      typedef decltype(f(a)) K;
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
       static const char* function = "boost::math::quadrature::gauss_kronrod<%1%>::integrate(f, %1%, %1%)";
       if (!(boost::math::isnan)(a) && !(boost::math::isnan)(b))
       {
          // Infinite limits:
          if ((a <= -tools::max_value<Real>()) && (b >= tools::max_value<Real>()))
          {
+<<<<<<< HEAD
             auto u = [&](const Real& t)->Real
             {
                Real t_sq = t*t;
@@ -1878,11 +1936,26 @@ public:
             };
             recursive_info<decltype(u)> info = { u, tol };
             return recursive_adaptive_integrate(&info, Real(-1), Real(1), max_depth, Real(0), error, pL1);
+=======
+            auto u = [&](const Real& t)->K
+            {
+               Real t_sq = t*t;
+               Real inv = 1 / (1 - t_sq);
+               Real w = (1 + t_sq)*inv*inv;
+               Real arg = t*inv;
+               K res = f(arg)*w;
+               return res;
+            };
+            recursive_info<decltype(u)> info = { u, tol };
+            K res = recursive_adaptive_integrate(&info, Real(-1), Real(1), max_depth, Real(0), error, pL1);
+            return res;
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
          }
 
          // Right limit is infinite:
          if ((boost::math::isfinite)(a) && (b >= tools::max_value<Real>()))
          {
+<<<<<<< HEAD
             auto u = [&](const Real& t)->Real
             {
                Real z = 1 / (t + 1);
@@ -1891,6 +1964,17 @@ public:
             };
             recursive_info<decltype(u)> info = { u, tol };
             Real Q = 2 * recursive_adaptive_integrate(&info, Real(-1), Real(1), max_depth, Real(0), error, pL1);
+=======
+            auto u = [&](const Real& t)->K
+            {
+               Real z = 1 / (t + 1);
+               Real arg = 2 * z + a - 1;
+               K res = f(arg)*z*z;
+               return res;
+            };
+            recursive_info<decltype(u)> info = { u, tol };
+            K Q = Real(2) * recursive_adaptive_integrate(&info, Real(-1), Real(1), max_depth, Real(0), error, pL1);
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
             if (pL1)
             {
                *pL1 *= 2;
@@ -1900,14 +1984,22 @@ public:
 
          if ((boost::math::isfinite)(b) && (a <= -tools::max_value<Real>()))
          {
+<<<<<<< HEAD
             auto v = [&](const Real& t)->Real
+=======
+            auto v = [&](const Real& t)->K
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
             {
                Real z = 1 / (t + 1);
                Real arg = 2 * z - 1;
                return f(b - arg) * z * z;
             };
             recursive_info<decltype(v)> info = { v, tol };
+<<<<<<< HEAD
             Real Q = 2 * recursive_adaptive_integrate(&info, Real(-1), Real(1), max_depth, Real(0), error, pL1);
+=======
+            K Q = Real(2) * recursive_adaptive_integrate(&info, Real(-1), Real(1), max_depth, Real(0), error, pL1);
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
             if (pL1)
             {
                *pL1 *= 2;
@@ -1925,7 +2017,11 @@ public:
             return recursive_adaptive_integrate(&info, a, b, max_depth, Real(0), error, pL1);
          }
       }
+<<<<<<< HEAD
       return policies::raise_domain_error(function, "The domain of integration is not sensible; please check the bounds.", a, Policy());
+=======
+      return static_cast<K>(policies::raise_domain_error(function, "The domain of integration is not sensible; please check the bounds.", a, Policy()));
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
    }
 };
 
@@ -1938,4 +2034,7 @@ public:
 #endif
 
 #endif // BOOST_MATH_QUADRATURE_GAUSS_KRONROD_HPP
+<<<<<<< HEAD
 
+=======
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce

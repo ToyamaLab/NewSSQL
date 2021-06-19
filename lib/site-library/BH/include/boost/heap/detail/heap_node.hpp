@@ -12,7 +12,11 @@
 #include <boost/assert.hpp>
 #include <boost/static_assert.hpp>
 #include <boost/intrusive/list.hpp>
+<<<<<<< HEAD
 #include <boost/mpl/if.hpp>
+=======
+#include <boost/type_traits/conditional.hpp>
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 #ifdef BOOST_HEAP_SANITYCHECKS
 #define BOOST_HEAP_ASSERT BOOST_ASSERT
@@ -26,11 +30,18 @@ namespace heap   {
 namespace detail {
 
 namespace bi = boost::intrusive;
+<<<<<<< HEAD
 namespace mpl = boost::mpl;
 
 template <bool auto_unlink = false>
 struct heap_node_base:
     bi::list_base_hook<typename mpl::if_c<auto_unlink,
+=======
+
+template <bool auto_unlink = false>
+struct heap_node_base:
+    bi::list_base_hook<typename boost::conditional<auto_unlink,
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
                                           bi::link_mode<bi::auto_unlink>,
                                           bi::link_mode<bi::safe_link>
                                          >::type
@@ -99,21 +110,48 @@ template <typename Node,
           typename Alloc>
 struct node_cloner
 {
+<<<<<<< HEAD
+=======
+#ifndef BOOST_NO_CXX11_ALLOCATOR
+    typedef std::allocator_traits<Alloc> allocator_traits;
+#endif
+
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     node_cloner(Alloc & allocator):
         allocator(allocator)
     {}
 
     Node * operator() (NodeBase const & node)
     {
+<<<<<<< HEAD
         Node * ret = allocator.allocate(1);
         new (ret) Node(static_cast<Node const &>(node), allocator);
+=======
+#ifdef BOOST_NO_CXX11_ALLOCATOR
+        Node * ret = allocator.allocate(1);
+        new (ret) Node(static_cast<Node const &>(node), allocator);
+#else
+        Node * ret = allocator_traits::allocate(allocator, 1);
+        allocator_traits::construct(allocator, ret, static_cast<Node const &>(node), allocator);
+#endif
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
         return ret;
     }
 
     Node * operator() (NodeBase const & node, Node * parent)
     {
+<<<<<<< HEAD
         Node * ret = allocator.allocate(1);
         new (ret) Node(static_cast<Node const &>(node), allocator, parent);
+=======
+#ifdef BOOST_NO_CXX11_ALLOCATOR
+        Node * ret = allocator.allocate(1);
+        new (ret) Node(static_cast<Node const &>(node), allocator, parent);
+#else
+        Node * ret = allocator_traits::allocate(allocator, 1);
+        allocator_traits::construct(allocator, ret, static_cast<Node const &>(node), allocator, parent);
+#endif
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
         return ret;
     }
 
@@ -132,7 +170,16 @@ template <typename Node,
           typename Alloc>
 struct node_disposer
 {
+<<<<<<< HEAD
     typedef typename Alloc::pointer node_pointer;
+=======
+#ifdef BOOST_NO_CXX11_ALLOCATOR
+    typedef typename Alloc::pointer node_pointer;
+#else
+    typedef std::allocator_traits<Alloc> allocator_traits;
+    typedef typename allocator_traits::pointer node_pointer;
+#endif
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
     node_disposer(Alloc & alloc):
         alloc_(alloc)
@@ -142,8 +189,18 @@ struct node_disposer
     {
         node_pointer n = static_cast<node_pointer>(base);
         n->clear_subtree(alloc_);
+<<<<<<< HEAD
         alloc_.destroy(n);
         alloc_.deallocate(n, 1);
+=======
+#ifdef BOOST_NO_CXX11_ALLOCATOR
+        alloc_.destroy(n);
+        alloc_.deallocate(n, 1);
+#else
+        allocator_traits::destroy(alloc_, n);
+        allocator_traits::deallocate(alloc_, n, 1);
+#endif
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     }
 
     Alloc & alloc_;

@@ -5,8 +5,13 @@
 // Copyright (c) 2009-2015 Mateusz Loskot, London, UK.
 // Copyright (c) 2014-2015 Samuel Debionne, Grenoble, France.
 
+<<<<<<< HEAD
 // This file was modified by Oracle on 2015, 2016, 2017.
 // Modifications copyright (c) 2015-2017, Oracle and/or its affiliates.
+=======
+// This file was modified by Oracle on 2015, 2016, 2017, 2018.
+// Modifications copyright (c) 2015-2018, Oracle and/or its affiliates.
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 // Contributed and/or modified by Vissarion Fysikopoulos, on behalf of Oracle
 // Contributed and/or modified by Menelaos Karavelas, on behalf of Oracle
@@ -19,6 +24,7 @@
 #ifndef BOOST_GEOMETRY_ALGORITHMS_DETAIL_EXPAND_SEGMENT_HPP
 #define BOOST_GEOMETRY_ALGORITHMS_DETAIL_EXPAND_SEGMENT_HPP
 
+<<<<<<< HEAD
 #include <boost/mpl/assert.hpp>
 #include <boost/type_traits/is_same.hpp>
 
@@ -70,6 +76,23 @@ struct segment
 
 }} // namespace detail::expand
 #endif // DOXYGEN_NO_DETAIL
+=======
+
+#include <boost/core/ignore_unused.hpp>
+
+#include <boost/geometry/algorithms/dispatch/expand.hpp>
+
+#include <boost/geometry/core/tags.hpp>
+
+// For backward compatibility
+#include <boost/geometry/strategies/cartesian/expand_segment.hpp>
+#include <boost/geometry/strategies/geographic/expand_segment.hpp>
+#include <boost/geometry/strategies/spherical/expand_segment.hpp>
+
+
+namespace boost { namespace geometry
+{
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 #ifndef DOXYGEN_NO_DISPATCH
 namespace dispatch
@@ -77,12 +100,17 @@ namespace dispatch
 
 template
 <
+<<<<<<< HEAD
     typename Box, typename Segment,
     typename CSTagOut, typename CSTag
+=======
+    typename Box, typename Segment
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 >
 struct expand
     <
         Box, Segment,
+<<<<<<< HEAD
         box_tag, segment_tag,
         CSTagOut, CSTag
     >
@@ -133,6 +161,21 @@ struct expand
         geographic_tag, geographic_tag
     > : detail::expand::segment
 {};
+=======
+        box_tag, segment_tag
+    >
+{
+    template <typename Strategy>
+    static inline void apply(Box& box,
+                             Segment const& segment,
+                             Strategy const& strategy)
+    {
+        boost::ignore_unused(strategy);
+        strategy.apply(box, segment);
+    }
+};
+
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 } // namespace dispatch
 #endif // DOXYGEN_NO_DISPATCH

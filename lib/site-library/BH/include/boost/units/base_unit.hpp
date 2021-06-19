@@ -104,12 +104,17 @@ class base_unit :
         /// check_base_unit will trigger an error earlier
         /// for compilers with less strict name lookup.
         /// INTERNAL ONLY
+<<<<<<< HEAD
         friend Derived* 
+=======
+        friend BOOST_CONSTEXPR Derived* 
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
         check_double_register(const units::base_unit_ordinal<N>&) 
         { return(0); }
 
         /// Register this ordinal
         /// INTERNAL ONLY
+<<<<<<< HEAD
         friend detail::yes 
         boost_units_unit_is_registered(const units::base_unit_ordinal<N>&) 
         { detail::yes result; return(result); }
@@ -119,6 +124,17 @@ class base_unit :
         friend detail::yes 
         boost_units_unit_is_registered(const units::base_unit_pair<Derived, N>&) 
         { detail::yes result; return(result); }
+=======
+        friend BOOST_CONSTEXPR detail::yes 
+        boost_units_unit_is_registered(const units::base_unit_ordinal<N>&) 
+        { return(detail::yes()); }
+        
+        /// But make sure we can identify the current instantiation!
+        /// INTERNAL ONLY
+        friend BOOST_CONSTEXPR detail::yes 
+        boost_units_unit_is_registered(const units::base_unit_pair<Derived, N>&) 
+        { return(detail::yes()); }
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 };
 
 } // namespace units

@@ -94,6 +94,7 @@ namespace boost { namespace spirit { namespace qi
         }
     };
 
+<<<<<<< HEAD
     // reference types need special handling
     template <typename Attribute>
     struct transform_attribute<Attribute&, Attribute>
@@ -104,6 +105,8 @@ namespace boost { namespace spirit { namespace qi
         static void fail(Attribute&) {}
     };
 
+=======
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     // unused_type needs some special handling as well
     template <>
     struct transform_attribute<unused_type, unused_type>
@@ -120,6 +123,7 @@ namespace boost { namespace spirit { namespace qi
     {};
 
     template <typename Attribute>
+<<<<<<< HEAD
     struct transform_attribute<unused_type, Attribute>
       : transform_attribute<unused_type, unused_type>
     {};
@@ -130,6 +134,8 @@ namespace boost { namespace spirit { namespace qi
     {};
 
     template <typename Attribute>
+=======
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     struct transform_attribute<Attribute, unused_type>
       : transform_attribute<unused_type, unused_type>
     {};
@@ -143,6 +149,7 @@ namespace boost { namespace spirit { namespace qi
 ///////////////////////////////////////////////////////////////////////////////
 namespace boost { namespace spirit { namespace traits
 {
+<<<<<<< HEAD
     template <typename Exposed, typename Transformed>
     struct transform_attribute<Exposed, Transformed, qi::domain>
       : qi::transform_attribute<Exposed, Transformed>
@@ -170,6 +177,13 @@ namespace boost { namespace spirit { namespace traits
     void fail_transform(Exposed& dest, Transformed const&)
     {
         return transform_attribute<Exposed, Transformed, qi::domain>::fail(dest);
+=======
+    namespace detail {
+        template <typename Exposed, typename Transformed>
+        struct transform_attribute_base<Exposed, Transformed, qi::domain>
+          : qi::transform_attribute<Exposed, Transformed>
+        {};
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     }
 }}}
 

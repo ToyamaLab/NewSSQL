@@ -44,7 +44,11 @@ namespace boost { namespace container {
 
 #ifndef BOOST_CONTAINER_DOXYGEN_INVOKED
 
+<<<<<<< HEAD
 namespace container_detail {
+=======
+namespace dtl {
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 template <typename Allocator>
 struct is_scoped_allocator_imp
@@ -99,16 +103,28 @@ struct outermost_allocator_imp<MaybeScopedAlloc, true>
    {  return outermost_allocator_imp<outer_type>::get(a.outer_allocator());  }
 };
 
+<<<<<<< HEAD
 }  //namespace container_detail {
 
 template <typename Allocator>
 struct is_scoped_allocator
    : container_detail::is_scoped_allocator_imp<Allocator>
+=======
+}  //namespace dtl {
+
+template <typename Allocator>
+struct is_scoped_allocator
+   : dtl::is_scoped_allocator_imp<Allocator>
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 {};
 
 template <typename Allocator>
 struct outermost_allocator
+<<<<<<< HEAD
    : container_detail::outermost_allocator_imp<Allocator>
+=======
+   : dtl::outermost_allocator_imp<Allocator>
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 {};
 
 template <typename Allocator>
@@ -121,7 +137,11 @@ const typename outermost_allocator<Allocator>::type &
    get_outermost_allocator(const Allocator &a)
 {  return outermost_allocator<Allocator>::get(a);   }
 
+<<<<<<< HEAD
 namespace container_detail {
+=======
+namespace dtl {
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 #if !defined(BOOST_NO_CXX11_VARIADIC_TEMPLATES)
 
@@ -144,6 +164,7 @@ class scoped_allocator_adaptor_base
    typedef allocator_traits<inner_allocator_type>     inner_traits_type;
    typedef scoped_allocator_adaptor
       <OuterAlloc, InnerAllocs...>                    scoped_allocator_type;
+<<<<<<< HEAD
    typedef container_detail::bool_<
       outer_traits_type::propagate_on_container_copy_assignment::value ||
       inner_allocator_type::propagate_on_container_copy_assignment::value
@@ -157,6 +178,21 @@ class scoped_allocator_adaptor_base
       inner_allocator_type::propagate_on_container_swap::value
       > propagate_on_container_swap;
    typedef container_detail::bool_<
+=======
+   typedef dtl::bool_<
+      outer_traits_type::propagate_on_container_copy_assignment::value ||
+      inner_allocator_type::propagate_on_container_copy_assignment::value
+      > propagate_on_container_copy_assignment;
+   typedef dtl::bool_<
+      outer_traits_type::propagate_on_container_move_assignment::value ||
+      inner_allocator_type::propagate_on_container_move_assignment::value
+      > propagate_on_container_move_assignment;
+   typedef dtl::bool_<
+      outer_traits_type::propagate_on_container_swap::value ||
+      inner_allocator_type::propagate_on_container_swap::value
+      > propagate_on_container_swap;
+   typedef dtl::bool_<
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
       outer_traits_type::is_always_equal::value &&
       inner_allocator_type::is_always_equal::value
       > is_always_equal;
@@ -286,6 +322,7 @@ class scoped_allocator_adaptor_base<OuterAlloc, true, BOOST_MOVE_TARG##N>\
    typedef scoped_allocator_adaptor<BOOST_MOVE_TARG##N> inner_allocator_type;\
    typedef scoped_allocator_adaptor<OuterAlloc, BOOST_MOVE_TARG##N> scoped_allocator_type;\
    typedef allocator_traits<inner_allocator_type> inner_traits_type;\
+<<<<<<< HEAD
    typedef container_detail::bool_<\
       outer_traits_type::propagate_on_container_copy_assignment::value ||\
       inner_allocator_type::propagate_on_container_copy_assignment::value\
@@ -295,11 +332,26 @@ class scoped_allocator_adaptor_base<OuterAlloc, true, BOOST_MOVE_TARG##N>\
       inner_allocator_type::propagate_on_container_move_assignment::value\
       > propagate_on_container_move_assignment;\
    typedef container_detail::bool_<\
+=======
+   typedef dtl::bool_<\
+      outer_traits_type::propagate_on_container_copy_assignment::value ||\
+      inner_allocator_type::propagate_on_container_copy_assignment::value\
+      > propagate_on_container_copy_assignment;\
+   typedef dtl::bool_<\
+      outer_traits_type::propagate_on_container_move_assignment::value ||\
+      inner_allocator_type::propagate_on_container_move_assignment::value\
+      > propagate_on_container_move_assignment;\
+   typedef dtl::bool_<\
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
       outer_traits_type::propagate_on_container_swap::value ||\
       inner_allocator_type::propagate_on_container_swap::value\
       > propagate_on_container_swap;\
    \
+<<<<<<< HEAD
    typedef container_detail::bool_<\
+=======
+   typedef dtl::bool_<\
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
       outer_traits_type::is_always_equal::value &&\
       inner_allocator_type::is_always_equal::value\
       > is_always_equal;\
@@ -521,7 +573,11 @@ class scoped_allocator_adaptor_base< OuterAlloc BOOST_CONTAINER_SCOPEDALLOC_DUMM
    }
 };
 
+<<<<<<< HEAD
 }  //namespace container_detail {
+=======
+}  //namespace dtl {
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 #endif   //#ifndef BOOST_CONTAINER_DOXYGEN_INVOKED
 
@@ -578,14 +634,22 @@ template <typename OuterAlloc, BOOST_MOVE_CLASS9>
 class scoped_allocator_adaptor
 #endif
 
+<<<<<<< HEAD
    : public container_detail::scoped_allocator_adaptor_base
+=======
+   : public dtl::scoped_allocator_adaptor_base
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
          <OuterAlloc BOOST_CONTAINER_SCOPEDALLOC_DUMMYTRUE, BOOST_CONTAINER_SCOPEDALLOC_ALLINNER>
 {
    BOOST_COPYABLE_AND_MOVABLE(scoped_allocator_adaptor)
 
    public:
    #ifndef BOOST_CONTAINER_DOXYGEN_INVOKED
+<<<<<<< HEAD
    typedef container_detail::scoped_allocator_adaptor_base
+=======
+   typedef dtl::scoped_allocator_adaptor_base
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
       <OuterAlloc BOOST_CONTAINER_SCOPEDALLOC_DUMMYTRUE, BOOST_CONTAINER_SCOPEDALLOC_ALLINNER> base_type;
    typedef typename base_type::internal_type_t              internal_type_t;
    #endif   //#ifndef BOOST_CONTAINER_DOXYGEN_INVOKED
@@ -810,7 +874,11 @@ class scoped_allocator_adaptor
    template < typename T, class ...Args>
    void construct(T* p, BOOST_FWD_REF(Args)...args)
    {
+<<<<<<< HEAD
       container_detail::dispatch_uses_allocator
+=======
+      dtl::dispatch_uses_allocator
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
          ( (get_outermost_allocator)(this->outer_allocator())
          , this->inner_allocator(), p, ::boost::forward<Args>(args)...);
    }
@@ -823,7 +891,11 @@ class scoped_allocator_adaptor
    template < typename T BOOST_MOVE_I##N BOOST_MOVE_CLASSQ##N >\
    void construct(T* p BOOST_MOVE_I##N BOOST_MOVE_UREFQ##N)\
    {\
+<<<<<<< HEAD
       container_detail::dispatch_uses_allocator\
+=======
+      dtl::dispatch_uses_allocator\
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
          ( (get_outermost_allocator)(this->outer_allocator())\
          , this->inner_allocator(), p BOOST_MOVE_I##N BOOST_MOVE_FWDQ##N);\
    }\
@@ -888,7 +960,11 @@ inline bool operator==(const scoped_allocator_adaptor<OuterA1, BOOST_CONTAINER_S
    #if !defined(BOOST_NO_CXX11_VARIADIC_TEMPLATES) || defined(BOOST_CONTAINER_DOXYGEN_INVOKED)
    const bool has_zero_inner = sizeof...(InnerAllocs) == 0u;
    #else
+<<<<<<< HEAD
    const bool has_zero_inner = boost::container::container_detail::is_same<P0, void>::value;
+=======
+   const bool has_zero_inner = boost::container::dtl::is_same<P0, void>::value;
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
    #endif
    typedef scoped_allocator_operator_equal<has_zero_inner> equal_t;
    return equal_t::equal_outer(a.outer_allocator(), b.outer_allocator()) &&

@@ -24,7 +24,12 @@
 //  formulation
 //
 
+<<<<<<< HEAD
 #include <boost/detail/sp_typeinfo.hpp>
+=======
+#include <boost/smart_ptr/detail/sp_typeinfo_.hpp>
+#include <boost/config.hpp>
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 namespace boost
 {
@@ -91,7 +96,11 @@ store:
     return a;
 }
 
+<<<<<<< HEAD
 class sp_counted_base
+=======
+class BOOST_SYMBOL_VISIBLE sp_counted_base
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 {
 private:
 
@@ -123,8 +132,13 @@ public:
         delete this;
     }
 
+<<<<<<< HEAD
     virtual void * get_deleter( sp_typeinfo const & ti ) = 0;
     virtual void * get_local_deleter( sp_typeinfo const & ti ) = 0;
+=======
+    virtual void * get_deleter( sp_typeinfo_ const & ti ) = 0;
+    virtual void * get_local_deleter( sp_typeinfo_ const & ti ) = 0;
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     virtual void * get_untyped_deleter() = 0;
 
     void add_ref_copy()

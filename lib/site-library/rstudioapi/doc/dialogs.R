@@ -1,7 +1,14 @@
+<<<<<<< HEAD
 ## ----setup, include=FALSE------------------------------------------------
 knitr::opts_chunk$set(eval = FALSE)
 
 ## ------------------------------------------------------------------------
+=======
+## ----setup, include=FALSE-----------------------------------------------------
+knitr::opts_chunk$set(eval = FALSE)
+
+## -----------------------------------------------------------------------------
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 #  # request the path to an existing .csv file on disk
 #  path <- rstudioapi::selectFile(caption = "Select CSV File",
 #                                 filter = "CSV Files (*.csv)",
@@ -18,12 +25,20 @@ knitr::opts_chunk$set(eval = FALSE)
 #  # save data to the path provided by the user
 #  saveRDS(data, file = target)
 
+<<<<<<< HEAD
 ## ------------------------------------------------------------------------
+=======
+## -----------------------------------------------------------------------------
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 #  token <- rstudioapi::askForPassword(
 #    prompt = "Please provide your GitHub access token."
 #  )
 
+<<<<<<< HEAD
 ## ------------------------------------------------------------------------
+=======
+## -----------------------------------------------------------------------------
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 #  rstudioapi::showDialog(title = "Hello, world!",
 #                         message = "You're <b>awesome!</b>",
 #                         url = "http://www.example.com")

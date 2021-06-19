@@ -25,6 +25,7 @@ struct _RTL_CONDITION_VARIABLE;
 struct _RTL_CRITICAL_SECTION;
 struct _RTL_SRWLOCK;
 
+<<<<<<< HEAD
 BOOST_SYMBOL_IMPORT boost::winapi::VOID_ WINAPI
 InitializeConditionVariable(::_RTL_CONDITION_VARIABLE* ConditionVariable);
 
@@ -35,12 +36,28 @@ BOOST_SYMBOL_IMPORT boost::winapi::VOID_ WINAPI
 WakeAllConditionVariable(::_RTL_CONDITION_VARIABLE* ConditionVariable);
 
 BOOST_SYMBOL_IMPORT boost::winapi::BOOL_ WINAPI
+=======
+BOOST_SYMBOL_IMPORT boost::winapi::VOID_ BOOST_WINAPI_WINAPI_CC
+InitializeConditionVariable(::_RTL_CONDITION_VARIABLE* ConditionVariable);
+
+BOOST_SYMBOL_IMPORT boost::winapi::VOID_ BOOST_WINAPI_WINAPI_CC
+WakeConditionVariable(::_RTL_CONDITION_VARIABLE* ConditionVariable);
+
+BOOST_SYMBOL_IMPORT boost::winapi::VOID_ BOOST_WINAPI_WINAPI_CC
+WakeAllConditionVariable(::_RTL_CONDITION_VARIABLE* ConditionVariable);
+
+BOOST_SYMBOL_IMPORT boost::winapi::BOOL_ BOOST_WINAPI_WINAPI_CC
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 SleepConditionVariableCS(
     ::_RTL_CONDITION_VARIABLE* ConditionVariable,
     ::_RTL_CRITICAL_SECTION* CriticalSection,
     boost::winapi::DWORD_ dwMilliseconds);
 
+<<<<<<< HEAD
 BOOST_SYMBOL_IMPORT boost::winapi::BOOL_ WINAPI
+=======
+BOOST_SYMBOL_IMPORT boost::winapi::BOOL_ BOOST_WINAPI_WINAPI_CC
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 SleepConditionVariableSRW(
     ::_RTL_CONDITION_VARIABLE* ConditionVariable,
     ::_RTL_SRWLOCK* SRWLock,
@@ -105,12 +122,21 @@ BOOST_FORCEINLINE BOOL_ SleepConditionVariableSRW(
 }
 
 #if defined( BOOST_USE_WINDOWS_H )
+<<<<<<< HEAD
 const ULONG_ CONDITION_VARIABLE_LOCKMODE_SHARED_ = CONDITION_VARIABLE_LOCKMODE_SHARED;
 #else // defined( BOOST_USE_WINDOWS_H )
 const ULONG_ CONDITION_VARIABLE_LOCKMODE_SHARED_ = 0x00000001;
 #endif // defined( BOOST_USE_WINDOWS_H )
 
 const ULONG_ condition_variable_lockmode_shared = CONDITION_VARIABLE_LOCKMODE_SHARED_;
+=======
+BOOST_CONSTEXPR_OR_CONST ULONG_ CONDITION_VARIABLE_LOCKMODE_SHARED_ = CONDITION_VARIABLE_LOCKMODE_SHARED;
+#else // defined( BOOST_USE_WINDOWS_H )
+BOOST_CONSTEXPR_OR_CONST ULONG_ CONDITION_VARIABLE_LOCKMODE_SHARED_ = 0x00000001;
+#endif // defined( BOOST_USE_WINDOWS_H )
+
+BOOST_CONSTEXPR_OR_CONST ULONG_ condition_variable_lockmode_shared = CONDITION_VARIABLE_LOCKMODE_SHARED_;
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 }
 }

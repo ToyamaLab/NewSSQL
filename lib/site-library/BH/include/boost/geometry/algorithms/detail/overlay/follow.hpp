@@ -1,9 +1,16 @@
 // Boost.Geometry (aka GGL, Generic Geometry Library)
 
 // Copyright (c) 2007-2014 Barend Gehrels, Amsterdam, the Netherlands.
+<<<<<<< HEAD
 
 // This file was modified by Oracle on 2014, 2017.
 // Modifications copyright (c) 2014-2017 Oracle and/or its affiliates.
+=======
+// Copyright (c) 2017 Adam Wulkiewicz, Lodz, Poland.
+
+// This file was modified by Oracle on 2014, 2017, 2018, 2019.
+// Modifications copyright (c) 2014-2019 Oracle and/or its affiliates.
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 // Contributed and/or modified by Menelaos Karavelas, on behalf of Oracle
 // Contributed and/or modified by Adam Wulkiewicz, on behalf of Oracle
 
@@ -59,7 +66,11 @@ template
     typename Polygon,
     typename PtInPolyStrategy
 >
+<<<<<<< HEAD
 static inline bool last_covered_by(Turn const& turn, Operation const& op,
+=======
+static inline bool last_covered_by(Turn const& /*turn*/, Operation const& op,
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
                 LineString const& linestring, Polygon const& polygon,
                 PtInPolyStrategy const& strategy)
 {
@@ -158,7 +169,11 @@ struct action_selector<overlay_intersection, RemoveSpikes>
         typename LineString,
         typename Point,
         typename Operation,
+<<<<<<< HEAD
         typename SideStrategy,
+=======
+        typename Strategy,
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
         typename RobustPolicy
     >
     static inline void enter(LineStringOut& current_piece,
@@ -166,13 +181,21 @@ struct action_selector<overlay_intersection, RemoveSpikes>
                 segment_identifier& segment_id,
                 signed_size_type , Point const& point,
                 Operation const& operation,
+<<<<<<< HEAD
                 SideStrategy const& ,
+=======
+                Strategy const& strategy,
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
                 RobustPolicy const& ,
                 OutputIterator& )
     {
         // On enter, append the intersection point and remember starting point
         // TODO: we don't check on spikes for linestrings (?). Consider this.
+<<<<<<< HEAD
         detail::overlay::append_no_duplicates(current_piece, point);
+=======
+        detail::overlay::append_no_duplicates(current_piece, point, strategy.get_equals_point_point_strategy());
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
         segment_id = operation.seg_id;
     }
 
@@ -183,7 +206,11 @@ struct action_selector<overlay_intersection, RemoveSpikes>
         typename LineString,
         typename Point,
         typename Operation,
+<<<<<<< HEAD
         typename SideStrategy,
+=======
+        typename Strategy,
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
         typename RobustPolicy
     >
     static inline void leave(LineStringOut& current_piece,
@@ -191,7 +218,11 @@ struct action_selector<overlay_intersection, RemoveSpikes>
                 segment_identifier& segment_id,
                 signed_size_type index, Point const& point,
                 Operation const& ,
+<<<<<<< HEAD
                 SideStrategy const& strategy,
+=======
+                Strategy const& strategy,
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
                 RobustPolicy const& robust_policy,
                 OutputIterator& out)
     {
@@ -201,7 +232,11 @@ struct action_selector<overlay_intersection, RemoveSpikes>
             <
                 false, RemoveSpikes
             >::apply(linestring, segment_id, index, strategy, robust_policy, current_piece);
+<<<<<<< HEAD
         detail::overlay::append_no_duplicates(current_piece, point);
+=======
+        detail::overlay::append_no_duplicates(current_piece, point, strategy.get_equals_point_point_strategy());
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
         if (::boost::size(current_piece) > 1)
         {
             *out++ = current_piece;
@@ -259,7 +294,11 @@ struct action_selector<overlay_difference, RemoveSpikes>
         typename LineString,
         typename Point,
         typename Operation,
+<<<<<<< HEAD
         typename SideStrategy,
+=======
+        typename Strategy,
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
         typename RobustPolicy
     >
     static inline void enter(LineStringOut& current_piece,
@@ -267,7 +306,11 @@ struct action_selector<overlay_difference, RemoveSpikes>
                 segment_identifier& segment_id,
                 signed_size_type index, Point const& point,
                 Operation const& operation,
+<<<<<<< HEAD
                 SideStrategy const& strategy,
+=======
+                Strategy const& strategy,
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
                 RobustPolicy const& robust_policy,
                 OutputIterator& out)
     {
@@ -282,7 +325,11 @@ struct action_selector<overlay_difference, RemoveSpikes>
         typename LineString,
         typename Point,
         typename Operation,
+<<<<<<< HEAD
         typename SideStrategy,
+=======
+        typename Strategy,
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
         typename RobustPolicy
     >
     static inline void leave(LineStringOut& current_piece,
@@ -290,7 +337,11 @@ struct action_selector<overlay_difference, RemoveSpikes>
                 segment_identifier& segment_id,
                 signed_size_type index, Point const& point,
                 Operation const& operation,
+<<<<<<< HEAD
                 SideStrategy const& strategy,
+=======
+                Strategy const& strategy,
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
                 RobustPolicy const& robust_policy,
                 OutputIterator& out)
     {
@@ -427,6 +478,11 @@ public :
 
         typedef following::action_selector<OverlayType, RemoveSpikes> action;
 
+<<<<<<< HEAD
+=======
+        typedef typename Strategy::cs_tag cs_tag;
+
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
         typename Strategy::template point_in_geometry_strategy
             <
                 LineString, Polygon
@@ -441,7 +497,14 @@ public :
 #ifdef BOOST_GEOMETRY_SETOPS_LA_OLD_BEHAVIOR
         std::sort(boost::begin(turns), boost::end(turns), sort_on_segment<turn_type>());
 #else
+<<<<<<< HEAD
         typedef relate::turns::less<0, relate::turns::less_op_linear_areal_single<0> > turn_less;
+=======
+        typedef relate::turns::less
+            <
+                0, relate::turns::less_op_linear_areal_single<0>, cs_tag
+            > turn_less;
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
         std::sort(boost::begin(turns), boost::end(turns), turn_less());
 #endif
 

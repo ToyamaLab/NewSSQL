@@ -53,7 +53,11 @@ struct list_node_traits
    BOOST_INTRUSIVE_FORCEINLINE static node_ptr get_previous(const node_ptr & n)
    {  return n->prev_;  }
 
+<<<<<<< HEAD
    BOOST_INTRUSIVE_FORCEINLINE static void set_previous(const node_ptr & n, const node_ptr & prev)
+=======
+   BOOST_INTRUSIVE_FORCEINLINE static void set_previous(node_ptr n, node_ptr prev)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
    {  n->prev_ = prev;  }
 
    BOOST_INTRUSIVE_FORCEINLINE static node_ptr get_next(const const_node_ptr & n)
@@ -62,7 +66,11 @@ struct list_node_traits
    BOOST_INTRUSIVE_FORCEINLINE static node_ptr get_next(const node_ptr & n)
    {  return n->next_;  }
 
+<<<<<<< HEAD
    BOOST_INTRUSIVE_FORCEINLINE static void set_next(const node_ptr & n, const node_ptr & next)
+=======
+   BOOST_INTRUSIVE_FORCEINLINE static void set_next(node_ptr n, node_ptr next)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
    {  n->next_ = next;  }
 };
 

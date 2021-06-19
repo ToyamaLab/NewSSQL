@@ -8,6 +8,10 @@
 #ifndef BOOST_ACCUMULATORS_FRAMEWORK_EXTRACTOR_HPP_EAN_28_10_2005
 #define BOOST_ACCUMULATORS_FRAMEWORK_EXTRACTOR_HPP_EAN_28_10_2005
 
+<<<<<<< HEAD
+=======
+#include <boost/preprocessor/cat.hpp>
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 #include <boost/preprocessor/tuple/rem.hpp>
 #include <boost/preprocessor/array/size.hpp>
 #include <boost/preprocessor/array/data.hpp>
@@ -15,11 +19,25 @@
 #include <boost/preprocessor/seq/to_array.hpp>
 #include <boost/preprocessor/seq/transform.hpp>
 #include <boost/preprocessor/repetition/enum_params.hpp>
+<<<<<<< HEAD
 #include <boost/preprocessor/repetition/enum_trailing_params.hpp>
 #include <boost/preprocessor/repetition/enum_trailing_binary_params.hpp>
 #include <boost/parameter/binding.hpp>
 #include <boost/mpl/apply.hpp>
 #include <boost/mpl/eval_if.hpp>
+=======
+#include <boost/preprocessor/repetition/enum_trailing.hpp>
+#include <boost/preprocessor/repetition/enum_trailing_params.hpp>
+#include <boost/preprocessor/repetition/enum_trailing_binary_params.hpp>
+#include <boost/preprocessor/repetition/repeat.hpp>
+#include <boost/preprocessor/repetition/repeat_from_to.hpp>
+#include <boost/parameter/binding.hpp>
+#include <boost/mpl/bool.hpp>
+#include <boost/mpl/if.hpp>
+#include <boost/mpl/eval_if.hpp>
+#include <boost/mpl/apply.hpp>
+#include <boost/type_traits/remove_const.hpp>
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 #include <boost/type_traits/remove_reference.hpp>
 #include <boost/accumulators/accumulators_fwd.hpp>
 #include <boost/accumulators/framework/parameters/accumulator.hpp>
@@ -33,14 +51,33 @@ namespace detail
     struct accumulator_set_result
     {
         typedef typename as_feature<Feature>::type feature_type;
+<<<<<<< HEAD
         typedef typename mpl::apply<AccumulatorSet, feature_type>::type::result_type type;
+=======
+        typedef typename mpl::apply<
+            typename boost::remove_const<
+                typename boost::remove_reference<AccumulatorSet>::type
+            >::type
+          , feature_type
+        >::type::result_type type;
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     };
 
     template<typename Args, typename Feature>
     struct argument_pack_result
       : accumulator_set_result<
+<<<<<<< HEAD
             typename remove_reference<
                 typename parameter::binding<Args, tag::accumulator>::type
+=======
+            typename boost::remove_reference<
+                typename parameter::binding<
+                    typename boost::remove_const<
+                        typename boost::remove_reference<Args>::type
+                    >::type
+                  , tag::accumulator
+                >::type
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
             >::type
           , Feature
         >
@@ -147,6 +184,11 @@ struct extractor
       , _
     )
 
+<<<<<<< HEAD
+=======
+#undef BOOST_ACCUMULATORS_EXTRACTOR_FUN_OP
+
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     #ifdef BOOST_ACCUMULATORS_DOXYGEN_INVOKED
     /// \overload
     ///
@@ -156,6 +198,11 @@ struct extractor
     #endif
 };
 
+<<<<<<< HEAD
+=======
+}} // namespace boost::accumulators
+
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 /// INTERNAL ONLY
 ///
 #define BOOST_ACCUMULATORS_ARRAY_REM(Array)                                                         \
@@ -224,6 +271,9 @@ struct extractor
       , (3, (Tag, Feature, ParamSeq))                                                               \
     )
 
+<<<<<<< HEAD
 }} // namespace boost::accumulators
 
+=======
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 #endif

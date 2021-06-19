@@ -6,6 +6,7 @@ import java.util.Map;
 import java.util.Set;
 
 import supersql.codegenerator.DecorateList;
+import supersql.codegenerator.Ehtml;
 import supersql.codegenerator.ITFE;
 import supersql.codegenerator.Sass;
 import supersql.common.DB;
@@ -156,11 +157,13 @@ public class Mobile_HTML5_form {
 //		    		if(insertFlag.equals(""))	insertFlag="false";
 //	    		}
 	    	}catch(Exception e){
-	    		Log.info("<Warning> insert関数の引数が不足しています。 ex. insert(\"title\", \"c1:column1, c2:column2, ... \", \"From以下\")");
+	    		Log.info("<Warning> insert関数の引数が不足しています。1 ex. insert(\"title\", \"c1:column1, c2:column2, ... \", \"From以下\")");
 	    		return false;
 	    	}
 			if(columns.trim().equals("") || after_from.equals("")){
-				Log.info("<Warning> insert関数の引数が不足しています。 ex. insert(\"title\", \"c1:column1, c2:column2, ... \", \"From以下\")");
+				Log.info("<Warning> insert関数の引数が不足しています。2 ex. insert(\"title\", \"c1:column1, c2:column2, ... \", \"From以下\")");
+				Log.info("columns.trim() = "+columns.trim());
+				Log.info("after_from = "+after_from);
 	    		return false;
 			}
 			if(after_from.toLowerCase().startsWith("from "))	after_from = after_from.substring("from".length()).trim();
@@ -928,7 +931,11 @@ public class Mobile_HTML5_form {
 		String ret =
 				//20161207 bootstrap
 				"<div class=\"form-group\">\n"+
-				((!type.equals("file"))? "" : "<div style=\"text-align:left; font-size:16.5px\">"+ph+"</div>\n" );
+//<<<<<<< HEAD
+				((!type.equals("file"))? "" : "<div style=\"text-align:left;"+((!Ehtml.isEhtml2())? " font-size:16.5px" : "")+"\">"+ph+"</div>\n" );
+//=======
+//				((!type.equals("file"))? "" : "<div style=\"text-align:left; font-size:16.5px\">"+ph+"</div>\n" );
+//>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 
 		//added by goto 170606 for update(file/image)

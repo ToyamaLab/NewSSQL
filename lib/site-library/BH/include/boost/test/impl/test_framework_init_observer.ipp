@@ -45,6 +45,17 @@ test_init_observer_check& s_tioc_impl() { static test_init_observer_check the_in
 
 } // local namespace
 
+<<<<<<< HEAD
+=======
+
+//____________________________________________________________________________//
+
+// singleton pattern
+BOOST_TEST_SINGLETON_CONS_IMPL(framework_init_observer_t)
+
+//____________________________________________________________________________//
+
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 void
 framework_init_observer_t::clear()
 {

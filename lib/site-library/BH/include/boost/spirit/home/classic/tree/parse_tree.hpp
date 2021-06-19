@@ -210,6 +210,7 @@ pt_parse(
     SkipT const&            skip,
     NodeFactoryT const&   /*dummy_*/ = NodeFactoryT())
 {
+<<<<<<< HEAD
     typedef skip_parser_iteration_policy<SkipT> iter_policy_t;
     typedef pt_match_policy<IteratorT, NodeFactoryT> pt_match_policy_t;
     typedef
@@ -219,6 +220,17 @@ pt_parse(
 
     iter_policy_t iter_policy(skip);
     scanner_policies_t policies(iter_policy);
+=======
+    typedef skip_parser_iteration_policy<SkipT> it_policy_t;
+    typedef pt_match_policy<IteratorT, NodeFactoryT> pt_match_policy_t;
+    typedef
+        scanner_policies<it_policy_t, pt_match_policy_t>
+        scan_policies_t;
+    typedef scanner<IteratorT, scan_policies_t> scanner_t;
+
+    it_policy_t iter_policy(skip);
+    scan_policies_t policies(iter_policy);
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     IteratorT first = first_;
     scanner_t scan(first, last, policies);
     tree_match<IteratorT, NodeFactoryT> hit = p.derived().parse(scan);

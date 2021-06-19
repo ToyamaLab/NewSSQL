@@ -108,15 +108,22 @@ BOOST_SPIRIT_CLASSIC_NAMESPACE_BEGIN
             typename parser_result<self_t, ScannerT>::type
             parse(ScannerT const &scan) const
             {
+<<<<<<< HEAD
                 typedef typename parser_result<self_t, ScannerT>::type
                     result_t;
+=======
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
                 typedef typename parser_result<parser_t, ScannerT>::type
                     body_result_t;
 
                 typename ScannerT::iterator_t save(scan.first);
 
                 std::size_t length = 0;
+<<<<<<< HEAD
                 int eval_length = 0;
+=======
+                std::ptrdiff_t eval_length = 0;
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
                 this->init();
                 while ((eval_length = this->evaluate(scan))>=0)

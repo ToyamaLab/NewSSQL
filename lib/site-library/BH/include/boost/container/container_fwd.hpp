@@ -24,6 +24,10 @@
 //!   - boost::container::vector
 //!   - boost::container::stable_vector
 //!   - boost::container::static_vector
+<<<<<<< HEAD
+=======
+//!   - boost::container::small_vector_base
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 //!   - boost::container::small_vector
 //!   - boost::container::slist
 //!   - boost::container::list
@@ -67,7 +71,11 @@ namespace detail{
    //Create namespace to avoid compilation errors
 }}}
 
+<<<<<<< HEAD
 namespace boost{ namespace container{ namespace container_detail{
+=======
+namespace boost{ namespace container{ namespace dtl{
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
    namespace bi = boost::intrusive;
    namespace bid = boost::intrusive::detail;
 }}}
@@ -88,6 +96,7 @@ namespace boost{ namespace container{ namespace pmr{
 namespace boost {
 namespace container {
 
+<<<<<<< HEAD
 //! Enumeration used to configure ordered associative containers
 //! with a concrete tree implementation.
 enum tree_type_enum
@@ -100,10 +109,18 @@ enum tree_type_enum
 
 #ifndef BOOST_CONTAINER_DOXYGEN_INVOKED
 
+=======
+#ifndef BOOST_CONTAINER_DOXYGEN_INVOKED
+
+template<class T1, class T2>
+struct pair;
+
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 template<class T>
 class new_allocator;
 
 template <class T
+<<<<<<< HEAD
          ,class Allocator = new_allocator<T> >
 class vector;
 
@@ -139,52 +156,127 @@ template <class Key
          ,class Compare  = std::less<Key>
          ,class Allocator = new_allocator<Key>
          ,class Options = tree_assoc_defaults >
+=======
+         ,class Allocator = void
+         ,class Options   = void>
+class vector;
+
+template <class T
+         ,class Allocator = void >
+class stable_vector;
+
+template < class T
+         , std::size_t Capacity
+         , class Options = void>
+class static_vector;
+
+template < class T
+         , class Allocator = void
+         , class Options   = void >
+class small_vector_base;
+
+template < class T
+         , std::size_t N
+         , class Allocator = void
+         , class Options   = void  >
+class small_vector;
+
+template <class T
+         ,class Allocator = void
+         ,class Options   = void>
+class deque;
+
+template <class T
+         ,class Allocator = void >
+class list;
+
+template <class T
+         ,class Allocator = void >
+class slist;
+
+template <class Key
+         ,class Compare  = std::less<Key>
+         ,class Allocator = void
+         ,class Options = void>
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 class set;
 
 template <class Key
          ,class Compare  = std::less<Key>
+<<<<<<< HEAD
          ,class Allocator = new_allocator<Key>
          ,class Options = tree_assoc_defaults >
+=======
+         ,class Allocator = void
+         ,class Options = void >
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 class multiset;
 
 template <class Key
          ,class T
          ,class Compare  = std::less<Key>
+<<<<<<< HEAD
          ,class Allocator = new_allocator<std::pair<const Key, T> >
          ,class Options = tree_assoc_defaults >
+=======
+         ,class Allocator = void
+         ,class Options = void >
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 class map;
 
 template <class Key
          ,class T
          ,class Compare  = std::less<Key>
+<<<<<<< HEAD
          ,class Allocator = new_allocator<std::pair<const Key, T> >
          ,class Options = tree_assoc_defaults >
+=======
+         ,class Allocator = void
+         ,class Options = void >
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 class multimap;
 
 template <class Key
          ,class Compare  = std::less<Key>
+<<<<<<< HEAD
          ,class Allocator = new_allocator<Key> >
+=======
+         ,class Allocator = void >
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 class flat_set;
 
 template <class Key
          ,class Compare  = std::less<Key>
+<<<<<<< HEAD
          ,class Allocator = new_allocator<Key> >
+=======
+         ,class Allocator = void >
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 class flat_multiset;
 
 template <class Key
          ,class T
          ,class Compare  = std::less<Key>
+<<<<<<< HEAD
          ,class Allocator = new_allocator<std::pair<Key, T> > >
+=======
+         ,class Allocator = void >
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 class flat_map;
 
 template <class Key
          ,class T
          ,class Compare  = std::less<Key>
+<<<<<<< HEAD
          ,class Allocator = new_allocator<std::pair<Key, T> > >
+=======
+         ,class Allocator = void >
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 class flat_multimap;
 
 template <class CharT
          ,class Traits = std::char_traits<CharT>
+<<<<<<< HEAD
          ,class Allocator  = new_allocator<CharT> >
 class basic_string;
 
@@ -199,6 +291,13 @@ typedef basic_string
    ,std::char_traits<wchar_t>
    ,new_allocator<wchar_t> >
 wstring;
+=======
+         ,class Allocator  = void >
+class basic_string;
+
+typedef basic_string <char>   string;
+typedef basic_string<wchar_t> wstring;
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 static const std::size_t ADP_nodes_per_block    = 256u;
 static const std::size_t ADP_max_free_blocks    = 2u;
@@ -246,6 +345,7 @@ class synchronized_pool_resource;
 
 }  //namespace pmr {
 
+<<<<<<< HEAD
 #else
 
 //! Default options for tree-based associative containers
@@ -253,6 +353,8 @@ class synchronized_pool_resource;
 //!   - optimize_size<true>
 typedef implementation_defined tree_assoc_defaults;
 
+=======
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 #endif   //#ifndef BOOST_CONTAINER_DOXYGEN_INVOKED
 
 //! Type used to tag that the input range is

@@ -18,6 +18,10 @@ Copyright (c) 1999-2006: Cortex Software GmbH, Kantstrasse 57, Berlin
 #include <boost/icl/detail/design_config.hpp>
 #include <boost/icl/detail/on_absorbtion.hpp>
 #include <boost/icl/detail/interval_map_algo.hpp>
+<<<<<<< HEAD
+=======
+#include <boost/icl/detail/exclusive_less_than.hpp>
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 #include <boost/icl/associative_interval_container.hpp>
 

@@ -1,6 +1,12 @@
 AES                     Create AES block cipher object
 digest                  Create hash function digests for arbitrary R
                         objects
+<<<<<<< HEAD
+=======
+digest2int              hash arbitrary string to integer
+getVDigest              Set a vectorised function for creating hash
+                        function digests
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 hmac                    compute a hash-based message authentication
                         code
 makeRaw                 Create a raw object

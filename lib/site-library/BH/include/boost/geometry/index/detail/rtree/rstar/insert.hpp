@@ -4,6 +4,13 @@
 //
 // Copyright (c) 2011-2015 Adam Wulkiewicz, Lodz, Poland.
 //
+<<<<<<< HEAD
+=======
+// This file was modified by Oracle on 2019.
+// Modifications copyright (c) 2019 Oracle and/or its affiliates.
+// Contributed and/or modified by Adam Wulkiewicz, on behalf of Oracle
+//
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 // Use, modification and distribution is subject to the Boost Software License,
 // Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
 // http://www.boost.org/LICENSE_1_0.txt)
@@ -11,6 +18,11 @@
 #ifndef BOOST_GEOMETRY_INDEX_DETAIL_RTREE_RSTAR_INSERT_HPP
 #define BOOST_GEOMETRY_INDEX_DETAIL_RTREE_RSTAR_INSERT_HPP
 
+<<<<<<< HEAD
+=======
+#include <boost/core/ignore_unused.hpp>
+
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 #include <boost/geometry/index/detail/algorithms/content.hpp>
 
 namespace boost { namespace geometry { namespace index {
@@ -19,6 +31,40 @@ namespace detail { namespace rtree { namespace visitors {
 
 namespace rstar {
 
+<<<<<<< HEAD
+=======
+// Utility to distinguish between default and non-default index strategy
+template <typename Point1, typename Point2, typename Strategy>
+struct comparable_distance_point_point
+{
+    typedef typename Strategy::comparable_distance_point_point_strategy_type strategy_type;
+    typedef typename geometry::comparable_distance_result
+        <
+            Point1, Point2, strategy_type
+        >::type result_type;
+
+    static inline strategy_type get_strategy(Strategy const& strategy)
+    {
+        return strategy.get_comparable_distance_point_point_strategy();
+    }
+};
+
+template <typename Point1, typename Point2>
+struct comparable_distance_point_point<Point1, Point2, default_strategy>
+{
+    typedef default_strategy strategy_type;
+    typedef typename geometry::default_comparable_distance_result
+        <
+            Point1, Point2
+        >::type result_type;
+
+    static inline strategy_type get_strategy(default_strategy const& )
+    {
+        return strategy_type();
+    }
+};
+
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 template <typename Value, typename Options, typename Translator, typename Box, typename Allocators>
 class remove_elements_to_reinsert
 {
@@ -44,10 +90,20 @@ public:
         typedef typename rtree::elements_type<Node>::type elements_type;
         typedef typename elements_type::value_type element_type;
         typedef typename geometry::point_type<Box>::type point_type;
+<<<<<<< HEAD
         // TODO: awulkiew - change second point_type to the point type of the Indexable?
         typedef typename
             geometry::default_comparable_distance_result<point_type>::type
                 comparable_distance_type;
+=======
+        typedef typename index::detail::strategy_type<parameters_type>::type strategy_type;
+        // TODO: awulkiew - change second point_type to the point type of the Indexable?
+        typedef rstar::comparable_distance_point_point
+            <
+                point_type, point_type, strategy_type
+            > comparable_distance_pp;
+        typedef typename comparable_distance_pp::result_type comparable_distance_type;
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
         elements_type & elements = rtree::elements(n);
 
@@ -72,13 +128,23 @@ public:
         // If constructor is used instead of resize() MS implementation leaks here
         sorted_elements.reserve(elements_count);                                                         // MAY THROW, STRONG (V, E: alloc, copy)
         
+<<<<<<< HEAD
+=======
+        typename comparable_distance_pp::strategy_type
+            cdist_strategy = comparable_distance_pp::get_strategy(index::detail::get_strategy(parameters));
+
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
         for ( typename elements_type::const_iterator it = elements.begin() ;
               it != elements.end() ; ++it )
         {
             point_type element_center;
             geometry::centroid( rtree::element_indexable(*it, translator), element_center);
             sorted_elements.push_back(std::make_pair(
+<<<<<<< HEAD
                 geometry::comparable_distance(node_center, element_center),
+=======
+                geometry::comparable_distance(node_center, element_center, cdist_strategy),
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
                 *it));                                                                                  // MAY THROW (V, E: copy)
         }
 
@@ -123,7 +189,11 @@ public:
         }
         BOOST_CATCH_END
 
+<<<<<<< HEAD
         ::boost::ignore_unused_variable_warning(parameters);
+=======
+        ::boost::ignore_unused(parameters);
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     }
 
 private:
@@ -244,13 +314,25 @@ struct level_insert_base
     inline void recalculate_aabb(Node const& n) const
     {
         base::m_traverse_data.current_element().first =
+<<<<<<< HEAD
             elements_box<Box>(rtree::elements(n).begin(), rtree::elements(n).end(), base::m_translator);
+=======
+            elements_box<Box>(rtree::elements(n).begin(), rtree::elements(n).end(),
+                              base::m_translator,
+                              index::detail::get_strategy(base::m_parameters));
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     }
 
     inline void recalculate_aabb(leaf const& n) const
     {
         base::m_traverse_data.current_element().first =
+<<<<<<< HEAD
             values_box<Box>(rtree::elements(n).begin(), rtree::elements(n).end(), base::m_translator);
+=======
+            values_box<Box>(rtree::elements(n).begin(), rtree::elements(n).end(),
+                            base::m_translator,
+                            index::detail::get_strategy(base::m_parameters));
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     }
 
     size_type result_relative_level;

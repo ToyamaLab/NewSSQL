@@ -277,7 +277,11 @@ class bstree_algorithms : public bstree_algorithms_base<NodeTraits>
    //!   node1 and node2 are not equivalent according to the ordering rules.
    //!
    //!Experimental function
+<<<<<<< HEAD
    static void swap_nodes(const node_ptr & node1, const node_ptr & node2)
+=======
+   static void swap_nodes(node_ptr node1, node_ptr node2)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
    {
       if(node1 == node2)
          return;
@@ -301,7 +305,11 @@ class bstree_algorithms : public bstree_algorithms_base<NodeTraits>
    //!   node1 and node2 are not equivalent according to the ordering rules.
    //!
    //!Experimental function
+<<<<<<< HEAD
    static void swap_nodes(const node_ptr & node1, const node_ptr & header1, const node_ptr & node2, const node_ptr & header2)
+=======
+   static void swap_nodes(node_ptr node1, node_ptr header1, node_ptr node2, node_ptr header2)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
    {
       if(node1 == node2)
          return;
@@ -448,7 +456,11 @@ class bstree_algorithms : public bstree_algorithms_base<NodeTraits>
    //!   new_node is not equivalent to node_to_be_replaced according to the
    //!   ordering rules. This function is faster than erasing and inserting
    //!   the node, since no rebalancing and comparison is needed. Experimental function
+<<<<<<< HEAD
    BOOST_INTRUSIVE_FORCEINLINE static void replace_node(const node_ptr & node_to_be_replaced, const node_ptr & new_node)
+=======
+   BOOST_INTRUSIVE_FORCEINLINE static void replace_node(node_ptr node_to_be_replaced, node_ptr new_node)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
    {
       if(node_to_be_replaced == new_node)
          return;
@@ -469,7 +481,11 @@ class bstree_algorithms : public bstree_algorithms_base<NodeTraits>
    //!   new_node is not equivalent to node_to_be_replaced according to the
    //!   ordering rules. This function is faster than erasing and inserting
    //!   the node, since no rebalancing or comparison is needed. Experimental function
+<<<<<<< HEAD
    static void replace_node(const node_ptr & node_to_be_replaced, const node_ptr & header, const node_ptr & new_node)
+=======
+   static void replace_node(node_ptr node_to_be_replaced, node_ptr header, node_ptr new_node)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
    {
       if(node_to_be_replaced == new_node)
          return;
@@ -559,12 +575,20 @@ class bstree_algorithms : public bstree_algorithms_base<NodeTraits>
    //! <b>Throws</b>: Nothing.
    //!
    //! <b>Nodes</b>: If node is inserted in a tree, this function corrupts the tree.
+<<<<<<< HEAD
    BOOST_INTRUSIVE_FORCEINLINE static void init(const node_ptr & node)
+=======
+   BOOST_INTRUSIVE_FORCEINLINE static void init(node_ptr node)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
    {
       NodeTraits::set_parent(node, node_ptr());
       NodeTraits::set_left(node, node_ptr());
       NodeTraits::set_right(node, node_ptr());
+<<<<<<< HEAD
    };
+=======
+   }
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
    //! <b>Effects</b>: Returns true if node is in the same state as if called init(node)
    //!
@@ -576,7 +600,11 @@ class bstree_algorithms : public bstree_algorithms_base<NodeTraits>
       return !NodeTraits::get_parent(node) &&
              !NodeTraits::get_left(node)   &&
              !NodeTraits::get_right(node)  ;
+<<<<<<< HEAD
    };
+=======
+   }
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
    //! <b>Requires</b>: node must not be part of any tree.
    //!
@@ -588,7 +616,11 @@ class bstree_algorithms : public bstree_algorithms_base<NodeTraits>
    //! <b>Throws</b>: Nothing.
    //!
    //! <b>Nodes</b>: If node is inserted in a tree, this function corrupts the tree.
+<<<<<<< HEAD
    BOOST_INTRUSIVE_FORCEINLINE static void init_header(const node_ptr & header)
+=======
+   BOOST_INTRUSIVE_FORCEINLINE static void init_header(node_ptr header)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
    {
       NodeTraits::set_parent(header, node_ptr());
       NodeTraits::set_left(header, header);
@@ -629,7 +661,11 @@ class bstree_algorithms : public bstree_algorithms_base<NodeTraits>
    //!   only be used for more unlink_leftmost_without_rebalance calls.
    //!   This function is normally used to achieve a step by step
    //!   controlled destruction of the tree.
+<<<<<<< HEAD
    static node_ptr unlink_leftmost_without_rebalance(const node_ptr & header)
+=======
+   static node_ptr unlink_leftmost_without_rebalance(node_ptr header)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
    {
       node_ptr leftmost = NodeTraits::get_left(header);
       if (leftmost == header)
@@ -684,7 +720,11 @@ class bstree_algorithms : public bstree_algorithms_base<NodeTraits>
    //! <b>Complexity</b>: Constant.
    //!
    //! <b>Throws</b>: Nothing.
+<<<<<<< HEAD
    static void swap_tree(const node_ptr & header1, const node_ptr & header2)
+=======
+   static void swap_tree(node_ptr header1, node_ptr header2)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
    {
       if(header1 == header2)
          return;
@@ -956,7 +996,11 @@ class bstree_algorithms : public bstree_algorithms_base<NodeTraits>
    //!   previously executed to fill "commit_data". No value should be inserted or
    //!   erased between the "insert_check" and "insert_commit" calls.
    BOOST_INTRUSIVE_FORCEINLINE static void insert_unique_commit
+<<<<<<< HEAD
       (const node_ptr & header, const node_ptr & new_value, const insert_commit_data &commit_data)
+=======
+      (node_ptr header, node_ptr new_value, const insert_commit_data &commit_data)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
    {  return insert_commit(header, new_value, commit_data); }
 
    //! <b>Requires</b>: "header" must be the header node of a tree.
@@ -1112,7 +1156,11 @@ class bstree_algorithms : public bstree_algorithms_base<NodeTraits>
    //! <b>Throws</b>: If "comp" throws.
    template<class NodePtrCompare>
    static node_ptr insert_equal
+<<<<<<< HEAD
       (const node_ptr & h, const node_ptr & hint, const node_ptr & new_node, NodePtrCompare comp
+=======
+      (node_ptr h, node_ptr hint, node_ptr new_node, NodePtrCompare comp
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
          #ifndef BOOST_INTRUSIVE_DOXYGEN_INVOKED
          , std::size_t *pdepth = 0
          #endif
@@ -1138,7 +1186,11 @@ class bstree_algorithms : public bstree_algorithms_base<NodeTraits>
    //! <b>Throws</b>: If "comp" throws.
    template<class NodePtrCompare>
    static node_ptr insert_equal_upper_bound
+<<<<<<< HEAD
       (const node_ptr & h, const node_ptr & new_node, NodePtrCompare comp
+=======
+      (node_ptr h, node_ptr new_node, NodePtrCompare comp
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
          #ifndef BOOST_INTRUSIVE_DOXYGEN_INVOKED
          , std::size_t *pdepth = 0
          #endif
@@ -1164,7 +1216,11 @@ class bstree_algorithms : public bstree_algorithms_base<NodeTraits>
    //! <b>Throws</b>: If "comp" throws.
    template<class NodePtrCompare>
    static node_ptr insert_equal_lower_bound
+<<<<<<< HEAD
       (const node_ptr & h, const node_ptr & new_node, NodePtrCompare comp
+=======
+      (node_ptr h, node_ptr new_node, NodePtrCompare comp
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
          #ifndef BOOST_INTRUSIVE_DOXYGEN_INVOKED
          , std::size_t *pdepth = 0
          #endif
@@ -1191,7 +1247,11 @@ class bstree_algorithms : public bstree_algorithms_base<NodeTraits>
    //! <b>Note</b>: If "pos" is not the successor of the newly inserted "new_node"
    //! tree invariants might be broken.
    static node_ptr insert_before
+<<<<<<< HEAD
       (const node_ptr & header, const node_ptr & pos, const node_ptr & new_node
+=======
+      (node_ptr header, node_ptr pos, node_ptr new_node
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
          #ifndef BOOST_INTRUSIVE_DOXYGEN_INVOKED
          , std::size_t *pdepth = 0
          #endif
@@ -1217,7 +1277,11 @@ class bstree_algorithms : public bstree_algorithms_base<NodeTraits>
    //! tree invariants are broken. This function is slightly faster than
    //! using "insert_before".
    static void push_back
+<<<<<<< HEAD
       (const node_ptr & header, const node_ptr & new_node
+=======
+      (node_ptr header, node_ptr new_node
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
          #ifndef BOOST_INTRUSIVE_DOXYGEN_INVOKED
          , std::size_t *pdepth = 0
          #endif
@@ -1242,7 +1306,11 @@ class bstree_algorithms : public bstree_algorithms_base<NodeTraits>
    //! tree invariants are broken. This function is slightly faster than
    //! using "insert_before".
    static void push_front
+<<<<<<< HEAD
       (const node_ptr & header, const node_ptr & new_node
+=======
+      (node_ptr header, node_ptr new_node
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
          #ifndef BOOST_INTRUSIVE_DOXYGEN_INVOKED
          , std::size_t *pdepth = 0
          #endif
@@ -1292,7 +1360,11 @@ class bstree_algorithms : public bstree_algorithms_base<NodeTraits>
    //! <b>Throws</b>: If cloner functor throws. If this happens target nodes are disposed.
    template <class Cloner, class Disposer>
    static void clone
+<<<<<<< HEAD
       (const const_node_ptr & source_header, const node_ptr & target_header, Cloner cloner, Disposer disposer)
+=======
+      (const const_node_ptr & source_header, node_ptr target_header, Cloner cloner, Disposer disposer)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
    {
       if(!unique(target_header)){
          clear_and_dispose(target_header, disposer);
@@ -1316,7 +1388,11 @@ class bstree_algorithms : public bstree_algorithms_base<NodeTraits>
    //! <b>Complexity</b>: Amortized constant time.
    //!
    //! <b>Throws</b>: Nothing.
+<<<<<<< HEAD
    BOOST_INTRUSIVE_FORCEINLINE static void erase(const node_ptr & header, const node_ptr & z)
+=======
+   BOOST_INTRUSIVE_FORCEINLINE static void erase(node_ptr header, node_ptr z)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
    {
       data_for_rebalance ignored;
       erase(header, z, ignored);
@@ -1336,7 +1412,11 @@ class bstree_algorithms : public bstree_algorithms_base<NodeTraits>
    //! <b>Throws</b>: If the comparison throws.
    template<class NodePtrCompare>
    BOOST_INTRUSIVE_FORCEINLINE static bool transfer_unique
+<<<<<<< HEAD
       (const node_ptr & header1, NodePtrCompare comp, const node_ptr &header2, const node_ptr & z)
+=======
+      (node_ptr header1, NodePtrCompare comp, node_ptr header2, node_ptr z)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
    {
       data_for_rebalance ignored;
       return transfer_unique(header1, comp, header2, z, ignored);
@@ -1353,7 +1433,11 @@ class bstree_algorithms : public bstree_algorithms_base<NodeTraits>
    //! <b>Throws</b>: If the comparison throws.
    template<class NodePtrCompare>
    BOOST_INTRUSIVE_FORCEINLINE static void transfer_equal
+<<<<<<< HEAD
       (const node_ptr & header1, NodePtrCompare comp, const node_ptr &header2, const node_ptr & z)
+=======
+      (node_ptr header1, NodePtrCompare comp, node_ptr header2, node_ptr z)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
    {
       data_for_rebalance ignored;
       transfer_equal(header1, comp, header2, z, ignored);
@@ -1366,7 +1450,11 @@ class bstree_algorithms : public bstree_algorithms_base<NodeTraits>
    //! <b>Complexity</b>: Average complexity is constant time.
    //!
    //! <b>Throws</b>: Nothing.
+<<<<<<< HEAD
    static void unlink(const node_ptr & node)
+=======
+   static void unlink(node_ptr node)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
    {
       node_ptr x = NodeTraits::get_parent(node);
       if(x){
@@ -1383,7 +1471,11 @@ class bstree_algorithms : public bstree_algorithms_base<NodeTraits>
    //! <b>Throws</b>: Nothing.
    //!
    //! <b>Complexity</b>: Linear.
+<<<<<<< HEAD
    static void rebalance(const node_ptr & header)
+=======
+   static void rebalance(node_ptr header)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
    {
       node_ptr root = NodeTraits::get_parent(header);
       if(root){
@@ -1400,7 +1492,11 @@ class bstree_algorithms : public bstree_algorithms_base<NodeTraits>
    //! <b>Throws</b>: Nothing.
    //!
    //! <b>Complexity</b>: Linear.
+<<<<<<< HEAD
    static node_ptr rebalance_subtree(const node_ptr & old_root)
+=======
+   static node_ptr rebalance_subtree(node_ptr old_root)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
    {
       //Taken from:
       //"Tree rebalancing in optimal time and space"
@@ -1476,7 +1572,11 @@ class bstree_algorithms : public bstree_algorithms_base<NodeTraits>
 
    template<class NodePtrCompare>
    static bool transfer_unique
+<<<<<<< HEAD
       (const node_ptr & header1, NodePtrCompare comp, const node_ptr &header2, const node_ptr & z, data_for_rebalance &info)
+=======
+      (node_ptr header1, NodePtrCompare comp, node_ptr header2, node_ptr z, data_for_rebalance &info)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
    {
       insert_commit_data commit_data;
       bool const transferable = insert_unique_check(header1, z, comp, commit_data).second;
@@ -1489,7 +1589,11 @@ class bstree_algorithms : public bstree_algorithms_base<NodeTraits>
 
    template<class NodePtrCompare>
    static void transfer_equal
+<<<<<<< HEAD
       (const node_ptr & header1, NodePtrCompare comp, const node_ptr &header2, const node_ptr & z, data_for_rebalance &info)
+=======
+      (node_ptr header1, NodePtrCompare comp, node_ptr header2, node_ptr z, data_for_rebalance &info)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
    {
       insert_commit_data commit_data;
       insert_equal_upper_bound_check(header1, z, comp, commit_data);
@@ -1497,7 +1601,11 @@ class bstree_algorithms : public bstree_algorithms_base<NodeTraits>
       insert_commit(header1, z, commit_data);
    }
 
+<<<<<<< HEAD
    static void erase(const node_ptr & header, const node_ptr & z, data_for_rebalance &info)
+=======
+   static void erase(node_ptr header, node_ptr z, data_for_rebalance &info)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
    {
       node_ptr y(z);
       node_ptr x;
@@ -1643,7 +1751,11 @@ class bstree_algorithms : public bstree_algorithms_base<NodeTraits>
    {  return NodeTraits::get_right(NodeTraits::get_parent(p)) == p;  }
 
    static void insert_before_check
+<<<<<<< HEAD
       (const node_ptr &header, const node_ptr & pos
+=======
+      (node_ptr header, node_ptr pos
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
       , insert_commit_data &commit_data
          #ifndef BOOST_INTRUSIVE_DOXYGEN_INVOKED
          , std::size_t *pdepth = 0
@@ -1662,7 +1774,11 @@ class bstree_algorithms : public bstree_algorithms_base<NodeTraits>
    }
 
    static void push_back_check
+<<<<<<< HEAD
       (const node_ptr & header, insert_commit_data &commit_data
+=======
+      (node_ptr header, insert_commit_data &commit_data
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
          #ifndef BOOST_INTRUSIVE_DOXYGEN_INVOKED
          , std::size_t *pdepth = 0
          #endif
@@ -1677,7 +1793,11 @@ class bstree_algorithms : public bstree_algorithms_base<NodeTraits>
    }
 
    static void push_front_check
+<<<<<<< HEAD
       (const node_ptr & header, insert_commit_data &commit_data
+=======
+      (node_ptr header, insert_commit_data &commit_data
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
          #ifndef BOOST_INTRUSIVE_DOXYGEN_INVOKED
          , std::size_t *pdepth = 0
          #endif
@@ -1693,7 +1813,11 @@ class bstree_algorithms : public bstree_algorithms_base<NodeTraits>
 
    template<class NodePtrCompare>
    static void insert_equal_check
+<<<<<<< HEAD
       (const node_ptr &header, const node_ptr & hint, const node_ptr & new_node, NodePtrCompare comp
+=======
+      (node_ptr header, node_ptr hint, node_ptr new_node, NodePtrCompare comp
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
       , insert_commit_data &commit_data
       /// @cond
       , std::size_t *pdepth = 0
@@ -1722,7 +1846,11 @@ class bstree_algorithms : public bstree_algorithms_base<NodeTraits>
 
    template<class NodePtrCompare>
    static void insert_equal_upper_bound_check
+<<<<<<< HEAD
       (const node_ptr & h, const node_ptr & new_node, NodePtrCompare comp, insert_commit_data & commit_data, std::size_t *pdepth = 0)
+=======
+      (node_ptr h, node_ptr new_node, NodePtrCompare comp, insert_commit_data & commit_data, std::size_t *pdepth = 0)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
    {
       std::size_t depth = 0;
       node_ptr y(h);
@@ -1741,7 +1869,11 @@ class bstree_algorithms : public bstree_algorithms_base<NodeTraits>
 
    template<class NodePtrCompare>
    static void insert_equal_lower_bound_check
+<<<<<<< HEAD
       (const node_ptr & h, const node_ptr & new_node, NodePtrCompare comp, insert_commit_data & commit_data, std::size_t *pdepth = 0)
+=======
+      (node_ptr h, node_ptr new_node, NodePtrCompare comp, insert_commit_data & commit_data, std::size_t *pdepth = 0)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
    {
       std::size_t depth = 0;
       node_ptr y(h);
@@ -1759,7 +1891,11 @@ class bstree_algorithms : public bstree_algorithms_base<NodeTraits>
    }
 
    static void insert_commit
+<<<<<<< HEAD
       (const node_ptr & header, const node_ptr & new_node, const insert_commit_data &commit_data)
+=======
+      (node_ptr header, node_ptr new_node, const insert_commit_data &commit_data)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
    {
       //Check if commit_data has not been initialized by a insert_unique_check call.
       BOOST_INTRUSIVE_INVARIANT_ASSERT(commit_data.node != node_ptr());
@@ -1785,7 +1921,11 @@ class bstree_algorithms : public bstree_algorithms_base<NodeTraits>
    }
 
    //Fix header and own's parent data when replacing x with own, providing own's old data with parent
+<<<<<<< HEAD
    static void set_child(const node_ptr & header, const node_ptr & new_child, const node_ptr & new_parent, const bool link_left)
+=======
+   static void set_child(node_ptr header, node_ptr new_child, node_ptr new_parent, const bool link_left)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
    {
       if(new_parent == header)
          NodeTraits::set_parent(header, new_child);
@@ -1796,7 +1936,11 @@ class bstree_algorithms : public bstree_algorithms_base<NodeTraits>
    }
 
    // rotate p to left (no header and p's parent fixup)
+<<<<<<< HEAD
    static void rotate_left_no_parent_fix(const node_ptr & p, const node_ptr &p_right)
+=======
+   static void rotate_left_no_parent_fix(node_ptr p, node_ptr p_right)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
    {
       node_ptr p_right_left(NodeTraits::get_left(p_right));
       NodeTraits::set_right(p, p_right_left);
@@ -1808,7 +1952,11 @@ class bstree_algorithms : public bstree_algorithms_base<NodeTraits>
    }
 
    // rotate p to left (with header and p's parent fixup)
+<<<<<<< HEAD
    static void rotate_left(const node_ptr & p, const node_ptr & p_right, const node_ptr & p_parent, const node_ptr & header)
+=======
+   static void rotate_left(node_ptr p, node_ptr p_right, node_ptr p_parent, node_ptr header)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
    {
       const bool p_was_left(NodeTraits::get_left(p_parent) == p);
       rotate_left_no_parent_fix(p, p_right);
@@ -1817,7 +1965,11 @@ class bstree_algorithms : public bstree_algorithms_base<NodeTraits>
    }
 
    // rotate p to right (no header and p's parent fixup)
+<<<<<<< HEAD
    static void rotate_right_no_parent_fix(const node_ptr & p, const node_ptr &p_left)
+=======
+   static void rotate_right_no_parent_fix(node_ptr p, node_ptr p_left)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
    {
       node_ptr p_left_right(NodeTraits::get_right(p_left));
       NodeTraits::set_left(p, p_left_right);
@@ -1829,7 +1981,11 @@ class bstree_algorithms : public bstree_algorithms_base<NodeTraits>
    }
 
    // rotate p to right (with header and p's parent fixup)
+<<<<<<< HEAD
    static void rotate_right(const node_ptr & p, const node_ptr & p_left, const node_ptr & p_parent, const node_ptr & header)
+=======
+   static void rotate_right(node_ptr p, node_ptr p_left, node_ptr p_parent, node_ptr header)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
    {
       const bool p_was_left(NodeTraits::get_left(p_parent) == p);
       rotate_right_no_parent_fix(p, p_left);
@@ -1883,7 +2039,11 @@ class bstree_algorithms : public bstree_algorithms_base<NodeTraits>
       }
    }
 
+<<<<<<< HEAD
    static void vine_to_subtree(const node_ptr & super_root, std::size_t count)
+=======
+   static void vine_to_subtree(node_ptr super_root, std::size_t count)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
    {
       const std::size_t one_szt = 1u;
       std::size_t leaf_nodes = count + one_szt - std::size_t(one_szt << detail::floor_log2(count + one_szt));
@@ -1927,7 +2087,11 @@ class bstree_algorithms : public bstree_algorithms_base<NodeTraits>
 
    template <class Cloner, class Disposer>
    static node_ptr clone_subtree
+<<<<<<< HEAD
       (const const_node_ptr &source_parent, const node_ptr &target_parent
+=======
+      (const const_node_ptr &source_parent, node_ptr target_parent
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
       , Cloner cloner, Disposer disposer
       , node_ptr &leftmost_out, node_ptr &rightmost_out
       )

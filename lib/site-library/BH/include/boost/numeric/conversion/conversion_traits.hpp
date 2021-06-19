@@ -21,6 +21,7 @@ template<class T, class S>
 struct conversion_traits 
     : convdetail::get_conversion_traits<T,S>::type 
 {
+<<<<<<< HEAD
 #if BOOST_WORKAROUND(BOOST_MSVC, <= 1300)
     typedef typename convdetail::get_conversion_traits<T,S>::type base_;
     typedef typename base_::target_type     target_type;
@@ -28,6 +29,8 @@ struct conversion_traits
     typedef typename base_::result_type     result_type;
     typedef typename base_::argument_type   argument_type;
 #endif
+=======
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 } ;
 
 } } // namespace boost::numeric

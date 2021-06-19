@@ -12,9 +12,17 @@ dbClearResult	dbClearResult
 dbColumnInfo	dbColumnInfo
 dbCommit	transactions
 dbConnect	dbConnect
+<<<<<<< HEAD
 dbCreateTable	dbCreateTable
 dbCreateTable,DBIConnection-method	hidden_aliases
 dbDataType	dbDataType
+=======
+dbConnect,DBIConnector-method	hidden_aliases
+dbCreateTable	dbCreateTable
+dbCreateTable,DBIConnection-method	hidden_aliases
+dbDataType	dbDataType
+dbDataType,DBIConnector-method	hidden_aliases
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 dbDataType,DBIObject-method	hidden_aliases
 dbDisconnect	dbDisconnect
 dbDriver	dbDriver
@@ -25,6 +33,11 @@ dbExistsTable	dbExistsTable
 dbExistsTable,DBIConnection,Id-method	hidden_aliases
 dbFetch	dbFetch
 dbFetch,DBIResult-method	hidden_aliases
+<<<<<<< HEAD
+=======
+dbGetConnectArgs	dbGetConnectArgs
+dbGetConnectArgs,DBIConnector-method	hidden_aliases
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 dbGetDBIVersion	dbGetDBIVersion
 dbGetException	dbGetException
 dbGetInfo	dbGetInfo
@@ -37,10 +50,18 @@ dbGetStatement	dbGetStatement
 dbHasCompleted	dbHasCompleted
 DBI	DBI-package
 DBIConnection-class	DBIConnection-class
+<<<<<<< HEAD
+=======
+DBIConnector-class	DBIConnector-class
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 DBIDriver-class	DBIDriver-class
 DBIObject-class	DBIObject-class
 DBIResult-class	DBIResult-class
 dbIsReadOnly	dbIsReadOnly
+<<<<<<< HEAD
+=======
+dbIsReadOnly,DBIConnector-method	hidden_aliases
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 dbIsReadOnly,DBIObject-method	hidden_aliases
 dbIsValid	dbIsValid
 dbListConnections	dbListConnections
@@ -92,6 +113,10 @@ make.db.names.default	make.db.names
 rownames	rownames
 show,AnsiConnection-method	hidden_aliases
 show,DBIConnection-method	hidden_aliases
+<<<<<<< HEAD
+=======
+show,DBIConnector-method	hidden_aliases
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 show,DBIDriver-method	hidden_aliases
 show,DBIResult-method	hidden_aliases
 show,Id-method	hidden_aliases

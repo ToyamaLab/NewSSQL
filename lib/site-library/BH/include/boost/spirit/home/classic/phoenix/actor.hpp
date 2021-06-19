@@ -10,6 +10,10 @@
 
 ///////////////////////////////////////////////////////////////////////////////
 #include <boost/spirit/home/classic/phoenix/tuples.hpp>
+<<<<<<< HEAD
+=======
+#include <boost/type_traits/remove_reference.hpp>
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 ///////////////////////////////////////////////////////////////////////////////
 namespace phoenix {
@@ -120,7 +124,11 @@ template <typename ActorT, typename TupleT>
 struct actor_result {
 
     typedef typename ActorT::template result<TupleT>::type type;
+<<<<<<< HEAD
     typedef typename remove_reference<type>::type plain_type;
+=======
+    typedef typename boost::remove_reference<type>::type plain_type;
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 };
 
 //////////////////////////////////

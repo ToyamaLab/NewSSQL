@@ -8,6 +8,10 @@ export(crosstalkLibs)
 export(filter_checkbox)
 export(filter_select)
 export(filter_slider)
+<<<<<<< HEAD
+=======
+export(getDefaultReactiveDomain)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 export(is.SharedData)
 export(maintain_selection)
 export(scale_color_selection)
@@ -15,7 +19,10 @@ export(scale_fill_selection)
 export(selection_factor)
 import(R6)
 import(htmltools)
+<<<<<<< HEAD
 import(shiny)
+=======
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 importFrom(stats,na.omit)
 importFrom(stats,setNames)
 importFrom(utils,packageVersion)

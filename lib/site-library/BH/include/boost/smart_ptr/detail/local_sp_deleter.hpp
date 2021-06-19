@@ -50,7 +50,11 @@ public:
 
 #endif
 
+<<<<<<< HEAD
     D& deleter()
+=======
+    D& deleter() BOOST_SP_NOEXCEPT
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     {
         return d_;
     }
@@ -74,12 +78,20 @@ template<> class local_sp_deleter<void>
 {
 };
 
+<<<<<<< HEAD
 template<class D> D * get_local_deleter( local_sp_deleter<D> * p )
+=======
+template<class D> D * get_local_deleter( local_sp_deleter<D> * p ) BOOST_SP_NOEXCEPT
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 {
     return &p->deleter();
 }
 
+<<<<<<< HEAD
 inline void * get_local_deleter( local_sp_deleter<void> * /*p*/ )
+=======
+inline void * get_local_deleter( local_sp_deleter<void> * /*p*/ ) BOOST_SP_NOEXCEPT
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 {
     return 0;
 }

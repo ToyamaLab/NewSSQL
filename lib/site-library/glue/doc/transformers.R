@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 ## ---- include = FALSE----------------------------------------------------
 library(glue)
 knitr::opts_chunk$set(collapse = TRUE, comment = "#>")
@@ -10,6 +11,27 @@ collapse_transformer <- function(regex = "[*]$", ...) {
     }
     res <- eval(parse(text = text, keep.source = FALSE), envir)
     glue_collapse(res, ...)
+=======
+## ---- include = FALSE---------------------------------------------------------
+knitr::opts_chunk$set(collapse = TRUE, comment = "#>")
+
+## -----------------------------------------------------------------------------
+library(glue)
+
+## -----------------------------------------------------------------------------
+collapse_transformer <- function(regex = "[*]$", ...) {
+  function(text, envir) {
+    collapse <- grepl(regex, text)
+    if (collapse) {
+      text <- sub(regex, "", text)
+    }
+    res <- identity_transformer(text, envir)
+    if (collapse) {
+      glue_collapse(res, ...)  
+    } else {
+      res
+    }
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
   }
 }
 
@@ -17,7 +39,14 @@ glue("{1:5*}\n{letters[1:5]*}", .transformer = collapse_transformer(sep = ", "))
 
 glue("{1:5*}\n{letters[1:5]*}", .transformer = collapse_transformer(sep = ", ", last = " and "))
 
+<<<<<<< HEAD
 ## ------------------------------------------------------------------------
+=======
+x <- c("one", "two")
+glue("{x}: {1:5*}", .transformer = collapse_transformer(sep = ", "))
+
+## -----------------------------------------------------------------------------
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 shell_transformer <- function(type = c("sh", "csh", "cmd", "cmd2")) {
   type <- match.arg(type)
   function(text, envir) {
@@ -39,6 +68,7 @@ command <- glue_sh("cat {filename}")
 command
 system(command)
 
+<<<<<<< HEAD
 ## ---- eval = require("emo")----------------------------------------------
 emoji_transformer <- function(text, envir) {
   if (grepl("[*]$", text)) {
@@ -56,6 +86,25 @@ glue_ji("one :heart:")
 glue_ji("many :heart*:")
 
 ## ------------------------------------------------------------------------
+=======
+## ---- eval = require("emo")---------------------------------------------------
+#  emoji_transformer <- function(text, envir) {
+#    if (grepl("[*]$", text)) {
+#      text <- sub("[*]$", "", text)
+#      glue_collapse(ji_find(text)$emoji)
+#    } else {
+#      ji(text)
+#    }
+#  }
+#  
+#  glue_ji <- function(..., .envir = parent.frame()) {
+#    glue(..., .open = ":", .close = ":", .envir = .envir, .transformer = emoji_transformer)
+#  }
+#  glue_ji("one :heart:")
+#  glue_ji("many :heart*:")
+
+## -----------------------------------------------------------------------------
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 sprintf_transformer <- function(text, envir) {
   m <- regexpr(":.+$", text)
   if (m != -1) {
@@ -73,7 +122,11 @@ glue_fmt <- function(..., .envir = parent.frame()) {
 }
 glue_fmt("π = {pi:.2}")
 
+<<<<<<< HEAD
 ## ------------------------------------------------------------------------
+=======
+## -----------------------------------------------------------------------------
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 safely_transformer <- function(otherwise = NA) {
   function(text, envir) {
     tryCatch(
@@ -96,3 +149,36 @@ glue_safely("foo: {xyz}", .otherwise = "Error")
 library(crayon)
 glue_safely("foo: {xyz}", .otherwise = quote(glue("{red}Error: {conditionMessage(e)}{reset}")))
 
+<<<<<<< HEAD
+=======
+## -----------------------------------------------------------------------------
+vv_transformer <- function(text, envir) {
+  regex <- "=$"
+  if (!grepl(regex, text)) {
+    return(identity_transformer(text, envir))
+  }
+
+  text <- sub(regex, "", text)
+  res <- identity_transformer(text, envir)
+  n <- length(res)
+  res <- glue_collapse(res, sep = ", ")
+  if (n > 1) {
+    res <- c("[", res, "]")
+  }
+  glue_collapse(c(text, " = ", res))
+}
+
+## -----------------------------------------------------------------------------
+set.seed(1234)
+description <- "some random"
+numbers <- sample(100, 4)
+average <- mean(numbers)
+sum <- sum(numbers)
+
+glue("For {description} {numbers=}, {average=}, {sum=}.", .transformer = vv_transformer)
+
+a <- 3
+b <- 5.6
+glue("{a=}\n{b=}\n{a * 9 + b * 2=}", .transformer = vv_transformer)
+
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce

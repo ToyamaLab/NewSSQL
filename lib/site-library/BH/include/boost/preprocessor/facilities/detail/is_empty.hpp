@@ -31,8 +31,13 @@
 #if BOOST_PP_VARIADICS_MSVC && _MSC_VER <= 1400
 
 #define BOOST_PP_DETAIL_IS_EMPTY_PROCESS(param) \
+<<<<<<< HEAD
 	BOOST_PP_IS_BEGIN_PARENS \
     	( \
+=======
+    BOOST_PP_IS_BEGIN_PARENS \
+        ( \
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
         BOOST_PP_DETAIL_IS_EMPTY_NON_FUNCTION_C param () \
         ) \
 /**/
@@ -40,7 +45,11 @@
 #else
 
 #define BOOST_PP_DETAIL_IS_EMPTY_PROCESS(...) \
+<<<<<<< HEAD
 	BOOST_PP_IS_BEGIN_PARENS \
+=======
+    BOOST_PP_IS_BEGIN_PARENS \
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
         ( \
         BOOST_PP_DETAIL_IS_EMPTY_NON_FUNCTION_C __VA_ARGS__ () \
         ) \

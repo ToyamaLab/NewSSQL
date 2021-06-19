@@ -1,6 +1,10 @@
 The MIT License (MIT)
 
+<<<<<<< HEAD
 Copyright (c) 2018 Plotly, Inc
+=======
+Copyright (c) 2020 Plotly, Inc
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal

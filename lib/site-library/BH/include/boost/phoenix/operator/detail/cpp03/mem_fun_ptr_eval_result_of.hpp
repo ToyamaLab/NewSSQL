@@ -1,14 +1,41 @@
+<<<<<<< HEAD
 /*==============================================================================
     Copyright (c) 2005-2010 Joel de Guzman
     Copyright (c) 2010 Thomas Heller
+=======
+
+#if !BOOST_PHOENIX_IS_ITERATING
+
+#if !defined(BOOST_PHOENIX_DONT_USE_PREPROCESSED_FILES)
+
+#include <boost/phoenix/operator/detail/cpp03/preprocessed/mem_fun_ptr_eval_result_of.hpp>
+
+#else
+
+#if defined(__WAVE__) && defined(BOOST_PHOENIX_CREATE_PREPROCESSED_FILES)
+#pragma wave option(preserve: 2, line: 0, output: "preprocessed/mem_fun_ptr_eval_result_of_" BOOST_PHOENIX_LIMIT_STR ".hpp")
+#endif
+
+/*==============================================================================
+    Copyright (c) 2005-2010 Joel de Guzman
+    Copyright (c) 2010 Thomas Heller
+    Copyright (c) 2018 Kohei Takahashi
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
     Distributed under the Boost Software License, Version 1.0. (See accompanying
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 ==============================================================================*/
+<<<<<<< HEAD
 #if !BOOST_PHOENIX_IS_ITERATING
 
 #ifndef BOOST_PHOENIX_OPERATOR_DETAIL_MEM_FUN_PTR_EVAL_RESULT_OF_HPP
 #define BOOST_PHOENIX_OPERATOR_DETAIL_MEM_FUN_PTR_EVAL_RESULT_OF_HPP
+=======
+
+#if defined(__WAVE__) && defined(BOOST_PHOENIX_CREATE_PREPROCESSED_FILES)
+#pragma wave option(preserve: 1)
+#endif
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 #define BOOST_PHOENIX_MEM_FUN_PTR_EVAL_RESULT_OF_CHILD(Z, N, D)                 \
             typedef                                                             \
@@ -28,9 +55,19 @@
 
 #undef BOOST_PHOENIX_MEM_FUN_PTR_EVAL_RESULT_OF_CHILD
 
+<<<<<<< HEAD
 #endif
 
 #else
+=======
+#if defined(__WAVE__) && defined(BOOST_PHOENIX_CREATE_PREPROCESSED_FILES)
+#pragma wave option(output: null)
+#endif
+
+#endif
+
+#else // BOOST_PHOENIX_ITERATE
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
         template <typename Context, BOOST_PHOENIX_typename_A>
         struct mem_fun_ptr_eval<Context, BOOST_PHOENIX_A>

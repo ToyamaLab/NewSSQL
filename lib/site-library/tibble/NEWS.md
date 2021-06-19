@@ -1,4 +1,366 @@
+<<<<<<< HEAD
 # tibble 1.4.2 (2018-01-22)
+=======
+# tibble 3.0.3
+
+- Fix test compatibility with rlang 0.4.7.
+
+- Fix warning about `needs_dots` arguments with pillar >= 1.4.5 (#798).
+
+
+# tibble 3.0.2
+
+## Bug fixes
+
+- `[[` works with classed indexes again, e.g. created with `glue::glue()` (#778).
+
+- `add_column()` works without warning for 0-column data frames (#786).
+
+- `tribble()` now better handles named inputs (#775) and objects of non-vtrs classes like `lubridate::Period` (#784) and `formattable::formattable` (#785).
+
+## Performance
+
+- Subsetting and subassignment are faster (#780, #790, #794).
+
+- `is.null()` is preferred over `is_null()` for speed.
+
+- Implement continuous benchmarking (#793).
+
+## Compatibility
+
+- `is_vector_s3()` is no longer reexported from pillar (#789).
+
+
+# tibble 3.0.1
+
+## Compatibility fixes
+
+- `[<-.tbl_df()` coerces matrices to data frames (#762).
+
+- Use delayed import for cli to work around unload problems in downstream packages (#754).
+
+
+## Bug fixes
+
+- More soft-deprecation warnings are actually visible.
+
+- If `.name_repair` is a function, no repair messages are shown (#763).
+
+- Remove superseded signal for `as_tibble.list()`, because `as_tibble_row()` only works for size 1.
+
+
+## Enhancements
+
+- `as_tibble(validate = )` now always triggers a deprecation warning.
+
+- Subsetting and subassignment of rows with one-column matrices work again, with a deprecation warning (#760).
+
+- Attempts to update a tibble row with an atomic vector give a clearer error message. Recycling message for subassignment appears only if target size is != 1.
+
+- Tweak title of "Invariants" vignette.
+
+
+# tibble 3.0.0
+
+## Major breaking changes
+
+- Subset assignment ("subassignment") and also subsetting has become stricter. Symptoms:
+
+    - Error: No common type for ...
+    
+    - Error: Assigned data `...` must be compatible with ...
+
+    - `i` must have one dimension, not 2
+    
+    - Error: Lossy cast from ... to ...
+
+    The "invariants" article at https://tibble.tidyverse.org/dev/articles/invariants.html describes the invariants that the operations follow in tibble, and the most important differences to data frames. We tried to make subsetting and subassignment as safe as possible, so that errors are caught early on, while introducing as little friction as possible.
+
+- List classes are no longer automatically treated as vectors. Symptoms:
+
+    - Error: All columns in a tibble must be vectors
+    
+    - Error: Expected a vector, not a `...` object
+
+    If you implement a class that wraps a list as S3 vector, you need to include `"list"` in the class:
+
+    ```r
+    structure(x, class = c("your_s3_class", "list"))
+    ```
+
+    Alternatively, implement a `vec_proxy()` method as described in https://vctrs.r-lib.org/reference/vec_data.html, or construct your class with `list_of()`.
+
+- Added experimental support for inner names for all columns, of the form `tibble(a = c(b = 1))`. Inner names are no longer stripped when creating a tibble. They are maintained for slicing operations but not yet updated when assigning with a row subscript. This is a change that may break existing comparison tests that don't expect names in columns (#630). Symptoms:
+
+    - "names for target but not for current" when comparing
+
+
+## Breaking changes
+
+- `tibble()` now splices anonymous data frames, `tibble(tibble(a = 1), b = a)` is equivalent to `tibble(a = 1, b = a)`. This means that `tibble(iris)` now has five columns, use `tibble(iris = iris)` if the intention is to create a packed data frame (#581).
+
+- The `name-repair` help topic is gone, refer to `?vctrs::vec_as_names` instead.
+
+- `expression()` columns are converted to lists as a workaround for lacking support in vctrs (#657).
+
+- `tribble()` is now stricter when combining values. All values in a column must be compatible, otherwise an error occurs (#204). The criteria for wrapping in a list column are now based on vctrs principles: non-vectors or vectors with `vctrs::vec_size()` unequal 1 are wrapped in lists.
+
+- `$` warns unconditionally if column not found, `[[` doesn't warn.
+
+- `add_row()` now uses `vctrs::vec_rbind()` under the hood, this means that all columns are combined with `vctrs::vec_c()`. In particular, factor columns will be converted to character if one of the columns is a character column.
+
+
+## Soft deprecations
+
+- Soft-deprecate `subclass` argument to `new_tibble()`.
+
+- Soft-deprecate `as_tibble()` without arguments (#683).
+
+- Preparing to move `glimpse()` and `tbl_sum()` to the pillar package. If your package implements these methods, please import the generics from pillar as soon as they become available there.
+
+
+## Features
+
+- Internals now make heavy use of the vctrs package, following most of the invariants defined there. Name repair is the responsibility of vctrs now (#464).
+
+- All errors emitted directly by the package inherit from the `"tibble_error"` and `"rlang_error"` classes. In some cases, `"vctrs_error"` errors may be passed through. The exact subclass is subject to change.
+
+    Example: `tibble(a = quote(b))` raises an error that inherits from `"tibble_error_column_must_be_vector"`, `"tibble_error"` and `"rlang_error"`, and from `"error"` and `"condition"` like all errors. Do not rely on the wording of `"tibble_error_column_must_be_vector"`, this is likely to change.
+
+    Use the following pattern to catch errors emitted by tibble:
+
+    ```r
+    tryCatch(
+      your_code(),
+      tibble_error = function(cnd) {
+      }
+    )
+    ```
+
+- New `tibble_row()` constructs tibbles that have exactly one row, or fails. Non-vector objects are automatically wrapped in a list, vectors (including lists) must have length one (#205).
+
+- New `as_tibble_row()` and `as_tibble_col()` convert a bare vector to a one-row or one-column tibble, respectively. `as_tibble_col()` also works for non-bare vectors. Using `as_tibble()` for bare vectors is superseded (#447).
+
+- `as_tibble.data.frame()` uses implicit row names if asked to create a column from row names. This allows lossless direct conversion of matrices with row names to tibbles (#567, @stufield).
+
+- Implement `str.tbl_df()` (#480).
+
+- `tribble()` now returns columns with `"unspecified"` type for 0-row tibbles.
+
+- `add_row()` and `add_column()` now restore attributes to avoid errors when appending to sf objects or other tibble subclasses (#662).
+
+- `add_column()` gains `.name_repair` argument. If not given, `.data` must have unique columns, with a deprecation message.
+
+- Allow `POSIXlt` columns, they are now better supported by dplyr and other tools thanks to vctrs (#626).
+
+- `tibble()` ignores NULL arguments, named or unnamed (#580).
+
+- `view()` works for remote data sources by applying the same strategy as `print()` and `glimpse()`. The maximum number of rows in this case can be specified using the new `n` argument, by default it is taken from the new `"tibble.view_max"` option (#695).
+
+
+## Output
+
+- Formatting dimensions never uses scientific notation.
+
+- `glimpse()` uses "Rows" and "Columns" instead of "Variables" and "Observations", because we're not sure if the data is tidy here (#614).
+
+- `view()` now uses the created (or passed) title argument (#610, @xvrdm).
+
+
+## Performance
+
+- Construction and subsetting of large data frames is faster now (#717, @romainfrancois).
+
+
+## Internal
+
+- Import lifecycle package (#669).
+
+- `new_tibble()` removes redundant subclasses from the `"class"` attribute.
+
+- Using classed conditions. All classes start with `"tibble_error_"` and also contain `"tibble_error"` (#659).
+
+- The magrittr pipe `%>%` is reexported.
+
+
+# tibble 2.1.3
+
+- Fix compatibility with R 3.5 and earlier, regression introduced in tibble 2.1.2.
+
+
+# tibble 2.1.2
+
+- Relax version requirements.
+
+- Fix test failing after pillar upgrade.
+
+
+# tibble 2.1.1
+
+- Three dots are used even for `"unique"` name repair (#566).
+
+- `add_row()`, `add_case()` and `add_column()` now signal a warning once per session if the input is not a data frame (#575).
+
+- Fix `view()` for the case when an object named `x` exists in the global environment (#579).
+
+
+# tibble 2.0.1
+
+- tibble names can again be set to `NULL` within RStudio, as some R routines within RStudio relied on this behaviour (#563, @kevinushey).
+
+- `as_tibble.matrix(validate = TRUE)` works again, with a lifecycle warning (#558).
+
+- Replace `new_list_along()` by `rep_along()` to support rlang 0.3.1 (#557, @lionel-).
+
+
+# tibble 2.0.0
+
+## Breaking changes
+
+The `tibble()` and `as_tibble()` functions, and the low-level `new_tibble()` constructor, have undergone a major overhaul to improve consistency.  We suspect that package code will be affected more than analysis code.
+
+To improve compatibility with existing code, breaking changes were reduced to a minimum and in some cases replaced with a warning that appears once per session. Call `tibble:::scoped_lifecycle_errors()` when updating your packages or scripts to the new semantics API to turn these warnings into errors. The compatibility code will be removed in tibble 3.0.0.
+
+- All optional arguments have moved past the ellipsis, and must be specified as named arguments. This affects mostly the `n` argument to `as_tibble.table()`, passing `n` unnamed still works (with a warning).
+
+- `new_tibble()` has been optimized for performance, the function no longer strips dimensions from 1d arrays and no longer checks correctness of names or column lengths. (It still checks if the object is named, except for zero-length input.) Use the new `validate_tibble()` if you need these checks (#471).
+
+- The `nrow` argument to `new_tibble()` is now mandatory. The `class` argument replaces the now deprecated `subclass` argument, the latter will be supported quietly for some time (#518).
+
+- Setting names on a tibble via `names(df) <- ...` now also requires minimal names, otherwise a warning is issued once per session (#466).
+
+- In `as_tibble()`, checking names is also enabled by default, even for tibbles, matrices and other matrix-like objects: names must exist, `NA` names are not allowed. Coercing a matrix without column names will trigger a warning once per session. (This corresponds to the `"minimal"` checks described below.).
+
+- The `validate` argument to `as_tibble()` has been deprecated, see below for alternatives. (The `as_tibble.tbl_df()` method has been removed, the `as_tibble.data.frame()` method will be used for tibbles.)
+
+- `as_tibble()` always checks that all columns are 1D or 2D vectors and not of type `POSIXlt`, even with `validate = FALSE` (which is now deprecated).
+
+- Calling `as_tibble()` on a vector now warns once per session.  Use `enframe(name = NULL)` for converting a vector to a one-column tibble, or `enframe()` for converting a named vector to a two-column tibble.
+
+- `data_frame()` and `frame_data()` are soft-deprecated, please use `tibble()` or `tribble()` (#111).
+
+- `tibble_()`, `data_frame_()`, and `lst_()` are soft-deprecated. Please use `tibble()` or `lst()` (#111, #509).
+
+- `as.tibble()` and `as_data_frame()` are officially deprecated and not generic anymore, please use/implement `as_tibble()` (#111).
+
+- `as_tibble.data.frame()` (and also `as_tibble.matrix()`) strip row names by default.  Code that relies on tibbles keeping row names now will see:
+    - a different result when calling `rownames()` or `row.names()`,
+    - rows full of `NA` values when subsetting rows with with a character vector, e.g. `as_tibble(mtcars)["Mazda RX4", ]`.
+    
+    Call `pkgconfig::set_config("tibble::rownames", NA)` to revert to the old behavior of keeping row names. Packages that import _tibble_ can call `set_config()` in their `.onLoad()` function (#114).
+
+- `as_tibble()` drops extra classes, in particular `as_tibble.grouped_df()` now removes grouping (#535).
+
+- `column_to_rownames()` now always coerces to a data frame, because row names are no longer supported in tibbles (#114).
+
+- In all `*_rownames()` functions, the first argument has been renamed to `.data` for consistency (#412).
+
+- Subsetting one row with `[..., , drop = TRUE]` returns a tibble (#442).
+
+- The `print.tbl_df()` method has been removed, the `print.tbl()` method handles printing (#519).
+
+
+## New features
+
+- `tibble()` supports columns that are matrices or data frames (#416).
+
+- The new `.rows` argument to `tibble()` and `as_tibble()` allows specifying the expected number of rows explicitly, even if it's evident from the data.  This allows writing more defensive code.
+
+- Column name repair has more direct support, via the new `.name_repair` argument to `tibble()` and `as_tibble()`. It takes the following values:
+
+  - `"minimal"`: No name repair or checks, beyond basic existence.
+  - `"unique"`: Make sure names are unique and not empty.
+  - `"check_unique"`: (default value), no name repair, but check they are `unique`.
+  - `"universal"`: Make the names `unique` and syntactic.
+  - a function: apply custom name repair (e.g., `.name_repair = make.names` or `.name_repair = ~make.names(., unique = TRUE)` for names in the style of base R).
+
+  The `validate` argument of `as_tibble()` is deprecated but supported (emits a message once per session). Use `.name_repair = "minimal"` instead of `validate = FALSE`, and `.name_repair = "check_unique"` instead of `validate = TRUE`. If you need to support older versions of tibble, pass both `.name_repair` and `validate` arguments in a consistent way, no message will be emitted in this case (#469, @jennybc).
+
+- Row name handling is stricter.  Row names are never (and never were) supported in `tibble()` and `new_tibble()`, and are now stripped by default in `as_tibble()`. The `rownames` argument to `as_tibble()` supports:
+
+    - `NULL`: remove row names (default),
+    - `NA`: keep row names,
+    - A string: the name of the new column that will contain the existing row names,
+      which are no longer present in the result.
+    
+    The old default can be restored by calling `pkgconfig::set_config("tibble::rownames", NA)`, this also works for packages that import _tibble_.
+    
+- `new_tibble()` and `as_tibble()` now also strip the `"dim"` attribute from columns that are one-dimensional arrays. (`tibble()` already did this before.)
+
+- Internally, all `as_tibble()` implementation forward all extra arguments and `...` to `as_tibble.list()` where they are handled.  This means that the common `.rows` and `.name_repair` can be used for all inputs.  We suggest that your implementations of this method do the same.
+
+- `enframe()` (with `name = NULL`) and `deframe()` now support one-column tibbles (#449).
+
+- Improved S4 support by adding `exportClass(tbl_df)` to `NAMESPACE` (#436, @jeffreyhanson and @javierfajnolla).
+
+- New `validate_tibble()` checks a tibble for internal consistency (#471).
+
+- Bring error message for invalid column type in line with allowed matrix/df cols (#465, @maxheld83).
+
+
+## New functions
+
+- Added experimental `view()` function that always returns its input invisibly and calls `utils::View()` only in interactive mode (#373).
+
+
+## Output
+
+- The `set_tidy_names()` and `tidy_names()` helpers the list of new names using a bullet list with at most six items (#406).
+
+- A one-character ellipse (`cli::symbol$ellipsis`) is printed instead of `"..."` where available, this affects `glimpse()` output and truncated lists (#403).
+
+- Column names and types are now formatted identically with `glimpse()` and `print.tbl_df()`.
+
+- `tidy_names()` quotes variable names when reporting on repair (#407).
+
+- All error messages now follow the tidyverse style guide (#223).
+
+- `as_tibble()` prints an informative error message when using the `rownames` argument and the input data frame or matrix does not have row names (#388, @anhqle).
+
+- `column_to_rownames()` uses the real variable name in its error message (#399, @alexwhan).
+
+- Lazy tibbles with exactly 10 rows no longer show "...with more rows" (#371).
+
+- `glimpse()` shows information obtained from `tbl_sum()`, e.g. grouping information for `grouped_df` from dplyr (#550).
+
+## Bug fixes
+
+- `glimpse()` takes coloring into account when computing column width, the output is no longer truncated prematurely when coloring is enabled.
+
+- `glimpse()` disambiguates outputs for factors if the levels contain commas (#384, @anhqle).
+
+- `print.tbl_df()` with a negative value for `n` behaves as if `n` was omitted (#371).
+
+- Fixed output for extra column names that contain spaces.
+
+
+
+## Internal
+
+- Skip dplyr in tests if unavailable (#420, @QuLogic).
+
+- Skip mockr in tests if unavailable (#454, @Enchufa2).
+
+- Use `fansi::strwrap_ctl()` instead of own string wrapping routine.
+
+- `tibble()` uses recycled values during construction but unrecycled values for validation.
+
+- `tibble()` is now faster for very wide tibbles.
+
+- Subsetting with the `[` operator is faster (#544).
+
+- Avoid use of `stop()` in examples if packages are not installed (#453, @Enchufa2).
+
+- Fix `as_tibble()` examples by using correct argument names in `requireNamespace()` call (#424, @michaelweylandt).
+
+- `as_tibble()` checks column length only once (#365, @anhqle).
+
+- Using `rlang::list2()`  (#391, @lionel-).
+
+
+
+# tibble 1.4.2
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 Bug fixes
 ---------
@@ -13,7 +375,11 @@ Features
 --------
 
 - `enframe(NULL)` now returns the same as `enframe(logical())` (#352).
+<<<<<<< HEAD
 - `tribble()` now ignores trailing commas (#342, @LaDilettante).
+=======
+- `tribble()` now ignores trailing commas (#342, @anhqle).
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 - Updated vignettes and website documentation.
 
 Performance
@@ -24,7 +390,11 @@ Performance
 - Only call `nrow()` and `head()` in `glimpse()`, not `ncol()`.
 
 
+<<<<<<< HEAD
 # tibble 1.4.1 (2017-12-24)
+=======
+# tibble 1.4.1
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 ## New formatting
 
@@ -53,7 +423,11 @@ The new pillar package is now responsible for formatting tibbles. Pillar will tr
 - Remove Rcpp dependency (#313, @patperry).
 
 
+<<<<<<< HEAD
 # tibble 1.3.4 (2017-08-21)
+=======
+# tibble 1.3.4
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 ## Bug fixes
 
@@ -72,7 +446,11 @@ The new pillar package is now responsible for formatting tibbles. Pillar will tr
 - `tibble()` gives a consistent error message in the case of duplicate column names (#291).
 
 
+<<<<<<< HEAD
 # tibble 1.3.3 (2017-05-27)
+=======
+# tibble 1.3.3
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 ## Bug fixes
 
@@ -83,7 +461,11 @@ The new pillar package is now responsible for formatting tibbles. Pillar will tr
 - Remove unused import declaration for assertthat.
 
 
+<<<<<<< HEAD
 # tibble 1.3.1 (2017-05-16)
+=======
+# tibble 1.3.1
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 ## Bug fixes
 
@@ -115,7 +497,11 @@ The new pillar package is now responsible for formatting tibbles. Pillar will tr
 - `pkgdown` website.
 
 
+<<<<<<< HEAD
 # tibble 1.3.0 (2017-01-10)
+=======
+# tibble 1.3.0
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 ## Bug fixes
 
@@ -161,7 +547,11 @@ The new pillar package is now responsible for formatting tibbles. Pillar will tr
 - Using registration of native routines.
 
 
+<<<<<<< HEAD
 # tibble 1.2 (2016-08-26)
+=======
+# tibble 1.2
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 ## Bug fixes
 
@@ -192,7 +582,11 @@ The new pillar package is now responsible for formatting tibbles. Pillar will tr
 - Minor changes in vignette (#115, @helix123).
 
 
+<<<<<<< HEAD
 # tibble 1.1 (2016-07-01)
+=======
+# tibble 1.1
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 Follow-up release.
 
@@ -268,7 +662,11 @@ Follow-up release.
 - Use new `expect_output_file()` from `testthat`.
 
 
+<<<<<<< HEAD
 # Version 1.0 (2016-03-21)
+=======
+# Version 1.0
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 - Initial CRAN release
 

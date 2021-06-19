@@ -1,5 +1,9 @@
 //
+<<<<<<< HEAD
 // Copyright (c) Antony Polukhin, 2013-2017.
+=======
+// Copyright (c) 2013-2019 Antony Polukhin.
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 //
 //
 // Distributed under the Boost Software License, Version 1.0. (See accompanying
@@ -32,11 +36,16 @@
 #include <boost/static_assert.hpp>
 #include <boost/throw_exception.hpp>
 #include <boost/core/demangle.hpp>
+<<<<<<< HEAD
+=======
+#include <boost/type_traits/conditional.hpp>
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 #include <boost/type_traits/is_const.hpp>
 #include <boost/type_traits/is_reference.hpp>
 #include <boost/type_traits/is_volatile.hpp>
 #include <boost/type_traits/remove_cv.hpp>
 #include <boost/type_traits/remove_reference.hpp>
+<<<<<<< HEAD
 #include <boost/mpl/if.hpp>
 #include <boost/mpl/or.hpp>
 
@@ -44,13 +53,26 @@
     || (defined(__GNUC__) && __GNUC__ == 4 && __GNUC_MINOR__ > 5 && defined(__GXX_EXPERIMENTAL_CXX0X__)) \
     || (defined(__GNUC__) && __GNUC__ > 4 && __cplusplus >= 201103 ))
 #   include <boost/functional/hash.hpp>
+=======
+
+#if (defined(_MSC_VER) && _MSC_VER > 1600) \
+    || (defined(__GNUC__) && __GNUC__ == 4 && __GNUC_MINOR__ > 5 && defined(__GXX_EXPERIMENTAL_CXX0X__)) \
+    || (defined(__GNUC__) && __GNUC__ > 4 && __cplusplus >= 201103)
+#   define BOOST_TYPE_INDEX_STD_TYPE_INDEX_HAS_HASH_CODE
+#else
+#   include <boost/container_hash/hash.hpp>
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 #endif
 
 #if (defined(__EDG_VERSION__) && __EDG_VERSION__ < 245) \
         || (defined(__sgi) && defined(_COMPILER_VERSION) && _COMPILER_VERSION <= 744)
 #   include <boost/type_traits/is_signed.hpp>
 #   include <boost/type_traits/make_signed.hpp>
+<<<<<<< HEAD
 #   include <boost/mpl/identity.hpp>
+=======
+#   include <boost/type_traits/type_identity.hpp>
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 #endif
 
 #ifdef BOOST_HAS_PRAGMA_ONCE
@@ -180,9 +202,13 @@ inline std::string stl_type_index::pretty_name() const {
 
 
 inline std::size_t stl_type_index::hash_code() const BOOST_NOEXCEPT {
+<<<<<<< HEAD
 #if (defined(_MSC_VER) && _MSC_VER > 1600) \
     || (defined(__GNUC__) && __GNUC__ == 4 && __GNUC_MINOR__ > 5 && defined(__GXX_EXPERIMENTAL_CXX0X__)) \
     || (defined(__GNUC__) && __GNUC__ > 4 && __cplusplus >= 201103)
+=======
+#ifdef BOOST_TYPE_INDEX_STD_TYPE_INDEX_HAS_HASH_CODE
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     return data_->hash_code();
 #else
     return boost::hash_range(raw_name(), raw_name() + std::strlen(raw_name()));
@@ -199,13 +225,21 @@ inline std::size_t stl_type_index::hash_code() const BOOST_NOEXCEPT {
     || (defined(__sgi) && defined(__host_mips)) \
     || (defined(__hpux) && defined(__HP_aCC)) \
     || (defined(linux) && defined(__INTEL_COMPILER) && defined(__ICC))
+<<<<<<< HEAD
 #  define BOOST_CLASSINFO_COMPARE_BY_NAMES
+=======
+#  define BOOST_TYPE_INDEX_CLASSINFO_COMPARE_BY_NAMES
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 # endif
 
 /// @endcond
 
 inline bool stl_type_index::equal(const stl_type_index& rhs) const BOOST_NOEXCEPT {
+<<<<<<< HEAD
 #ifdef BOOST_CLASSINFO_COMPARE_BY_NAMES
+=======
+#ifdef BOOST_TYPE_INDEX_CLASSINFO_COMPARE_BY_NAMES
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     return raw_name() == rhs.raw_name() || !std::strcmp(raw_name(), rhs.raw_name());
 #else
     return !!(*data_ == *rhs.data_);
@@ -213,17 +247,25 @@ inline bool stl_type_index::equal(const stl_type_index& rhs) const BOOST_NOEXCEP
 }
 
 inline bool stl_type_index::before(const stl_type_index& rhs) const BOOST_NOEXCEPT {
+<<<<<<< HEAD
 #ifdef BOOST_CLASSINFO_COMPARE_BY_NAMES
+=======
+#ifdef BOOST_TYPE_INDEX_CLASSINFO_COMPARE_BY_NAMES
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     return raw_name() != rhs.raw_name() && std::strcmp(raw_name(), rhs.raw_name()) < 0;
 #else
     return !!data_->before(*rhs.data_);
 #endif
 }
 
+<<<<<<< HEAD
 #ifdef BOOST_CLASSINFO_COMPARE_BY_NAMES
 #undef BOOST_CLASSINFO_COMPARE_BY_NAMES
 #endif
 
+=======
+#undef BOOST_TYPE_INDEX_CLASSINFO_COMPARE_BY_NAMES
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 
 template <class T>
@@ -236,10 +278,17 @@ inline stl_type_index stl_type_index::type_id() BOOST_NOEXCEPT {
 
         // Old EDG-based compilers seem to mistakenly distinguish 'integral' from 'signed integral'
         // in typeid() expressions. Full template specialization for 'integral' fixes that issue:
+<<<<<<< HEAD
         typedef BOOST_DEDUCED_TYPENAME boost::mpl::if_<
             boost::is_signed<no_cvr_prefinal_t>,
             boost::make_signed<no_cvr_prefinal_t>,
             boost::mpl::identity<no_cvr_prefinal_t>
+=======
+        typedef BOOST_DEDUCED_TYPENAME boost::conditional<
+            boost::is_signed<no_cvr_prefinal_t>::value,
+            boost::make_signed<no_cvr_prefinal_t>,
+            boost::type_identity<no_cvr_prefinal_t>
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
         >::type no_cvr_prefinal_lazy_t;
 
         typedef BOOST_DEDUCED_TYPENAME no_cvr_prefinal_t::type no_cvr_t;
@@ -256,8 +305,13 @@ namespace detail {
 
 template <class T>
 inline stl_type_index stl_type_index::type_id_with_cvr() BOOST_NOEXCEPT {
+<<<<<<< HEAD
     typedef BOOST_DEDUCED_TYPENAME boost::mpl::if_<
         boost::mpl::or_<boost::is_reference<T>, boost::is_const<T>, boost::is_volatile<T> >,
+=======
+    typedef BOOST_DEDUCED_TYPENAME boost::conditional<
+        boost::is_reference<T>::value ||  boost::is_const<T>::value || boost::is_volatile<T>::value,
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
         detail::cvr_saver<T>,
         T
     >::type type;
@@ -277,4 +331,9 @@ inline stl_type_index stl_type_index::type_id_runtime(const T& value) BOOST_NOEX
 
 }} // namespace boost::typeindex
 
+<<<<<<< HEAD
+=======
+#undef BOOST_TYPE_INDEX_STD_TYPE_INDEX_HAS_HASH_CODE
+
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 #endif // BOOST_TYPE_INDEX_STL_TYPE_INDEX_HPP

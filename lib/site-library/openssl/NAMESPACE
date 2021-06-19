@@ -49,8 +49,13 @@ S3method(fingerprint,pubkey)
 S3method(names,cert)
 S3method(names,key)
 S3method(names,pubkey)
+<<<<<<< HEAD
 S3method(print,bignum)
 S3method(print,bytes)
+=======
+S3method(print,aes)
+S3method(print,bignum)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 S3method(print,cert)
 S3method(print,hash)
 S3method(print,key)
@@ -68,6 +73,10 @@ export(aes_keygen)
 export(askpass)
 export(base64_decode)
 export(base64_encode)
+<<<<<<< HEAD
+=======
+export(bcrypt_pbkdf)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 export(bignum)
 export(bignum_mod_exp)
 export(bignum_mod_inv)
@@ -80,10 +89,22 @@ export(download_ssl_cert)
 export(dsa_keygen)
 export(ec_dh)
 export(ec_keygen)
+<<<<<<< HEAD
+=======
+export(ecdsa_parse)
+export(ecdsa_write)
+export(ed25519_keygen)
+export(ed25519_sign)
+export(ed25519_verify)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 export(encrypt_envelope)
 export(fingerprint)
 export(md4)
 export(md5)
+<<<<<<< HEAD
+=======
+export(multihash)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 export(my_key)
 export(my_pubkey)
 export(openssl_config)
@@ -91,11 +112,21 @@ export(rand_bytes)
 export(rand_num)
 export(read_cert)
 export(read_cert_bundle)
+<<<<<<< HEAD
+=======
+export(read_ed25519_key)
+export(read_ed25519_pubkey)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 export(read_key)
 export(read_p12)
 export(read_p7b)
 export(read_pem)
 export(read_pubkey)
+<<<<<<< HEAD
+=======
+export(read_x25519_key)
+export(read_x25519_pubkey)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 export(ripemd160)
 export(rsa_decrypt)
 export(rsa_encrypt)
@@ -114,11 +145,21 @@ export(write_p7b)
 export(write_pem)
 export(write_pkcs1)
 export(write_ssh)
+<<<<<<< HEAD
+=======
+export(x25519_diffie_hellman)
+export(x25519_keygen)
+import(askpass)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 importFrom(utils,.DollarNames)
 useDynLib(openssl,R_RAND_bytes)
 useDynLib(openssl,R_aes_any)
 useDynLib(openssl,R_base64_decode)
 useDynLib(openssl,R_base64_encode)
+<<<<<<< HEAD
+=======
+useDynLib(openssl,R_bcrypt_pbkdf)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 useDynLib(openssl,R_bignum_add)
 useDynLib(openssl,R_bignum_as_character)
 useDynLib(openssl,R_bignum_as_integer)
@@ -134,11 +175,20 @@ useDynLib(openssl,R_bignum_subtract)
 useDynLib(openssl,R_cert_info)
 useDynLib(openssl,R_cert_pubkey)
 useDynLib(openssl,R_cert_verify_cert)
+<<<<<<< HEAD
+=======
+useDynLib(openssl,R_data_sign)
+useDynLib(openssl,R_data_verify)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 useDynLib(openssl,R_derive_pubkey)
 useDynLib(openssl,R_diffie_hellman)
 useDynLib(openssl,R_digest)
 useDynLib(openssl,R_digest_raw)
 useDynLib(openssl,R_download_cert)
+<<<<<<< HEAD
+=======
+useDynLib(openssl,R_dsa_key_build)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 useDynLib(openssl,R_dsa_priv_decompose)
 useDynLib(openssl,R_dsa_pubkey_build)
 useDynLib(openssl,R_dsa_pubkey_decompose)
@@ -155,7 +205,13 @@ useDynLib(openssl,R_hmac_final)
 useDynLib(openssl,R_hmac_init)
 useDynLib(openssl,R_keygen_dsa)
 useDynLib(openssl,R_keygen_ecdsa)
+<<<<<<< HEAD
 useDynLib(openssl,R_keygen_rsa)
+=======
+useDynLib(openssl,R_keygen_ed25519)
+useDynLib(openssl,R_keygen_rsa)
+useDynLib(openssl,R_keygen_x25519)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 useDynLib(openssl,R_md_feed)
 useDynLib(openssl,R_md_final)
 useDynLib(openssl,R_md_init)
@@ -165,6 +221,10 @@ useDynLib(openssl,R_parse_der_cert)
 useDynLib(openssl,R_parse_der_key)
 useDynLib(openssl,R_parse_der_pkcs7)
 useDynLib(openssl,R_parse_der_pubkey)
+<<<<<<< HEAD
+=======
+useDynLib(openssl,R_parse_ecdsa)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 useDynLib(openssl,R_parse_pem)
 useDynLib(openssl,R_parse_pem_cert)
 useDynLib(openssl,R_parse_pem_key)
@@ -181,11 +241,26 @@ useDynLib(openssl,R_pem_write_pubkey)
 useDynLib(openssl,R_pubkey_bitsize)
 useDynLib(openssl,R_pubkey_type)
 useDynLib(openssl,R_pubkey_verify_cert)
+<<<<<<< HEAD
+=======
+useDynLib(openssl,R_read_raw_key_ed25519)
+useDynLib(openssl,R_read_raw_key_x25519)
+useDynLib(openssl,R_read_raw_pubkey_ed25519)
+useDynLib(openssl,R_read_raw_pubkey_x25519)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 useDynLib(openssl,R_rsa_decrypt)
 useDynLib(openssl,R_rsa_encrypt)
 useDynLib(openssl,R_rsa_key_build)
 useDynLib(openssl,R_rsa_priv_decompose)
 useDynLib(openssl,R_rsa_pubkey_build)
 useDynLib(openssl,R_rsa_pubkey_decompose)
+<<<<<<< HEAD
 useDynLib(openssl,R_write_pkcs12)
 useDynLib(openssl,R_write_pkcs7)
+=======
+useDynLib(openssl,R_write_ecdsa)
+useDynLib(openssl,R_write_pkcs12)
+useDynLib(openssl,R_write_pkcs7)
+useDynLib(openssl,R_write_raw_key)
+useDynLib(openssl,R_write_raw_pubkey)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce

@@ -24,6 +24,7 @@ import java.util.Hashtable;
 
 import supersql.codegenerator.CodeGenerator;
 import supersql.codegenerator.DecorateList;
+import supersql.codegenerator.Ehtml;
 import supersql.codegenerator.FuncArg;
 import supersql.codegenerator.Function;
 import supersql.codegenerator.ITFE;
@@ -2484,7 +2485,7 @@ public class Infinitescroll {
 				tmp.append(Func.decos.getStr("class"));
 			}
 
-			//System.out.println("out:path:"+Func.getAtt("default"));
+			//Log.info("out:path:"+Func.getAtt("default"));
 
 			//added by goto 20121217 start
 			//html_env.code.append(" \" src=\"" + path + "/" + Func.getAtt("default") + "\"/>");
@@ -4663,7 +4664,7 @@ public class Infinitescroll {
 							}
 
 							if(isSQL){
-								String b = "require_once '"+fn+"';";
+								String b = "require_once ('"+fn+"');";
 								if(!Start_Parse.sessionFlag)
 									b = "<?php "+b+" ?>\n";
 								else

@@ -1,11 +1,23 @@
 data.table-package	data.table
 %between%	between
 %chin%	chmatch
+<<<<<<< HEAD
 %inrange%	between
 %like%	like
 .BY	special-symbols
 .GRP	special-symbols
 .I	special-symbols
+=======
+%flike%	like
+%ilike%	like
+%inrange%	between
+%like%	like
+.BY	special-symbols
+.EACHI	special-symbols
+.GRP	special-symbols
+.I	special-symbols
+.Last.updated	last.updated
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 .N	special-symbols
 .SD	special-symbols
 :=	assign
@@ -52,6 +64,11 @@ autoindex	datatable-optimize
 autoindexing	datatable-optimize
 between	between
 c.IDate	IDateTime
+<<<<<<< HEAD
+=======
+c.ITime	IDateTime
+cdatatable	cdt
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 chgroup	chmatch
 chmatch	chmatch
 chorder	chmatch
@@ -60,7 +77,10 @@ class:data.table	data.table-class
 copy	copy
 cube	groupingsets
 cube.data.table	groupingsets
+<<<<<<< HEAD
 cut.IDate	IDateTime
+=======
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 data.table	data.table
 data.table-class	data.table-class
 data.table-optimize	datatable-optimize
@@ -74,15 +94,34 @@ duplicated	duplicated
 duplicated.data.table	duplicated
 except	setops
 fastorder	setorder
+<<<<<<< HEAD
 fexcept	setops
 fintersect	setops
 first	first
 forder	setorder
+=======
+fcase	fcase
+fcoalesce	coalesce
+fexcept	setops
+fifelse	fifelse
+fill	nafill
+fintersect	setops
+first	last
+forder	setorder
+forderv	setorder
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 format.ITime	IDateTime
 foverlaps	foverlaps
 frank	frank
 frankv	frank
 fread	fread
+<<<<<<< HEAD
+=======
+froll	froll
+frollapply	froll
+frollmean	froll
+frollsum	froll
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 fsetdiff	setops
 fsetequal	setops
 fsort	fsort
@@ -100,6 +139,10 @@ IDate	IDateTime
 IDate-class	IDateTime
 IDateTime	IDateTime
 IDateTime.default	IDateTime
+<<<<<<< HEAD
+=======
+ifelse	fifelse
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 indices	setkey
 inrange	between
 intersect	setops
@@ -110,6 +153,7 @@ ITime	IDateTime
 ITime-class	IDateTime
 J	J
 key	setkey
+<<<<<<< HEAD
 key2	setkey
 key<-	setkey
 lag	shift
@@ -118,14 +162,37 @@ lead	shift
 like	like
 mday	IDateTime
 mean.IDate	IDateTime
+=======
+key<-	deprecated
+lag	shift
+last	last
+Last.updated	last.updated
+lead	shift
+like	like
+locf	nafill
+mday	IDateTime
+mean.IDate	IDateTime
+mean.ITime	IDateTime
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 melt	melt.data.table
 melt.data.table	melt.data.table
 merge	merge
 merge.data.table	merge
 minute	IDateTime
 month	IDateTime
+<<<<<<< HEAD
 na.omit	na.omit.data.table
 na.omit.data.table	na.omit.data.table
+=======
+moving	froll
+na.fill	nafill
+na.omit	na.omit.data.table
+na.omit.data.table	na.omit.data.table
+nafill	nafill
+nocb	nafill
+openMP	openmp-utils
+openmp	openmp-utils
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 Ops.data.table	data.table
 order	setorder
 patterns	patterns
@@ -140,18 +207,38 @@ rep.IDate	IDateTime
 rep.ITime	IDateTime
 rleid	rleid
 rleidv	rleid
+<<<<<<< HEAD
 rollup	groupingsets
 rollup.data.table	groupingsets
 round.IDate	IDateTime
+=======
+roll	froll
+rollapply	froll
+rolling	froll
+rollmean	froll
+rollsum	froll
+rollup	groupingsets
+rollup.data.table	groupingsets
+round.IDate	IDateTime
+round.ITime	IDateTime
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 rounding	datatable-optimize
 rowid	rowid
 rowidv	rowid
 second	IDateTime
 seq.IDate	IDateTime
+<<<<<<< HEAD
 set	assign
 set2key	setkey
 set2keyv	setkey
 setattr	setattr
+=======
+seq.ITime	IDateTime
+set	assign
+setalloccol	truelength
+setattr	setattr
+setcoalesce	coalesce
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 setcolorder	setcolorder
 setDF	setDF
 setdiff	setops
@@ -162,6 +249,10 @@ setindex	setkey
 setindexv	setkey
 setkey	setkey
 setkeyv	setkey
+<<<<<<< HEAD
+=======
+setnafill	nafill
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 setnames	setattr
 setNumericRounding	setNumericRounding
 setops	setops
@@ -170,20 +261,35 @@ setorderv	setorder
 shift	shift
 shouldPrint	shouldPrint
 SJ	J
+<<<<<<< HEAD
 special-symbols	special-symbols
 split	split
 split.data.table	split
 split.IDate	IDateTime
+=======
+sliding	froll
+special-symbols	special-symbols
+split	split
+split.data.table	split
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 strsplit	tstrsplit
 subset	subset.data.table
 subset.data.table	subset.data.table
 tables	tables
+<<<<<<< HEAD
+=======
+test	test
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 test.data.table	test.data.table
 timetaken	timetaken
 transform	transform.data.table
 transform.data.table	transform.data.table
 transpose	transpose
 truelength	truelength
+<<<<<<< HEAD
+=======
+trunc.ITime	IDateTime
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 tstrsplit	tstrsplit
 union	setops
 unique	duplicated

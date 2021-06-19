@@ -21,6 +21,10 @@
 
 #include <boost/current_function.hpp>
 #include <functional>
+<<<<<<< HEAD
+=======
+#include <cstring>
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 namespace boost
 {
@@ -36,26 +40,62 @@ private:
     typeinfo& operator=( typeinfo const& );
 
     char const * name_;
+<<<<<<< HEAD
 
 public:
 
     explicit typeinfo( char const * name ): name_( name )
+=======
+    void (*lib_id_)();
+
+public:
+
+    typeinfo( char const * name, void (*lib_id)() ): name_( name ), lib_id_( lib_id )
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     {
     }
 
     bool operator==( typeinfo const& rhs ) const
     {
+<<<<<<< HEAD
         return this == &rhs;
+=======
+#if ( defined(_WIN32) || defined(__CYGWIN__) ) && ( defined(__GNUC__) || defined(__clang__) ) && !defined(BOOST_DISABLE_CURRENT_FUNCTION)
+
+        return lib_id_ == rhs.lib_id_? this == &rhs: std::strcmp( name_, rhs.name_ ) == 0;
+
+#else
+
+        return this == &rhs;
+
+#endif
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     }
 
     bool operator!=( typeinfo const& rhs ) const
     {
+<<<<<<< HEAD
         return this != &rhs;
+=======
+        return !( *this == rhs );
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     }
 
     bool before( typeinfo const& rhs ) const
     {
+<<<<<<< HEAD
         return std::less< typeinfo const* >()( this, &rhs );
+=======
+#if ( defined(_WIN32) || defined(__CYGWIN__) ) && ( defined(__GNUC__) || defined(__clang__) ) && !defined(BOOST_DISABLE_CURRENT_FUNCTION)
+
+        return lib_id_ == rhs.lib_id_? std::less< typeinfo const* >()( this, &rhs ): std::strcmp( name_, rhs.name_ ) < 0;
+
+#else
+
+        return std::less< typeinfo const* >()( this, &rhs );
+
+#endif
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     }
 
     char const* name() const
@@ -74,7 +114,11 @@ inline char const * demangled_name( core::typeinfo const & ti )
 namespace detail
 {
 
+<<<<<<< HEAD
 template<class T> struct core_typeid_
+=======
+template<class T> struct BOOST_SYMBOL_VISIBLE core_typeid_
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 {
     static boost::core::typeinfo ti_;
 
@@ -84,6 +128,7 @@ template<class T> struct core_typeid_
     }
 };
 
+<<<<<<< HEAD
 #if defined(__SUNPRO_CC)
 // see #4199, the Sun Studio compiler gets confused about static initialization 
 // constructor arguments. But an assignment works just fine. 
@@ -91,6 +136,13 @@ template<class T> boost::core::typeinfo core_typeid_< T >::ti_ = core_typeid_< T
 #else
 template<class T> boost::core::typeinfo core_typeid_< T >::ti_(core_typeid_< T >::name());
 #endif
+=======
+BOOST_SYMBOL_VISIBLE inline void core_typeid_lib_id()
+{
+}
+
+template<class T> boost::core::typeinfo core_typeid_< T >::ti_( core_typeid_< T >::name(), &core_typeid_lib_id );
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 template<class T> struct core_typeid_< T & >: core_typeid_< T >
 {

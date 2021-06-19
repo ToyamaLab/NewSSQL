@@ -53,4 +53,8 @@ int cpp_main(int argc, char* argv[])
   std::cout << std::endl;
 
   return test_main(argc, argv);
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce

@@ -16,6 +16,10 @@
 #include <boost/graph/properties.hpp>
 #include <boost/graph/graph_concepts.hpp>
 #include <boost/graph/overloading.hpp>
+<<<<<<< HEAD
+=======
+#include <boost/graph/detail/mpi_include.hpp>
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 #include <boost/static_assert.hpp>
 #include <boost/concept/assert.hpp>
 
@@ -100,8 +104,12 @@ namespace boost {
   
 } // namespace boost
 
+<<<<<<< HEAD
 #ifdef BOOST_GRAPH_USE_MPI
 #  include <boost/graph/distributed/connected_components.hpp>
 #endif
+=======
+#include BOOST_GRAPH_MPI_INCLUDE(<boost/graph/distributed/connected_components.hpp>)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 #endif // BOOST_GRAPH_CONNECTED_COMPONENTS_HPP

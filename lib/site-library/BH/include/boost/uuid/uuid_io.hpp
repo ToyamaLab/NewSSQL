@@ -3,7 +3,11 @@
 // Copyright 2009 Andy Tompkins.
 // Distributed under the Boost Software License, Version 1.0. (See
 // accompanying file LICENSE_1_0.txt or copy at
+<<<<<<< HEAD
 // http://www.boost.org/LICENSE_1_0.txt)
+=======
+// https://www.boost.org/LICENSE_1_0.txt)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 // Revision History
 //  20 Mar 2009 - Initial Revision

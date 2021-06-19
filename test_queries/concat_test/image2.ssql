@@ -1,0 +1,4 @@
+GENERATE HTML
+[image(e.id || '.' || ex.extension, './picts')]!
+from employee e, extension ex
+where ex.id = 1

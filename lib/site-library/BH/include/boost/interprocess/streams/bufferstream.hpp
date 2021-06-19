@@ -238,7 +238,11 @@ class basic_bufferbuf
             return pos_type(off_type(-1));
          else {
             this->setp(this->pbase(), this->pbase() + n);
+<<<<<<< HEAD
             this->pbump(off);
+=======
+            this->pbump(static_cast<int>(off));
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
          }
       }
 
@@ -308,7 +312,11 @@ class basic_ibufferstream :
       , basic_streambuf_t(this)
       {}
 
+<<<<<<< HEAD
    ~basic_ibufferstream(){};
+=======
+   ~basic_ibufferstream(){}
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
    public:
    //!Returns the address of the stored

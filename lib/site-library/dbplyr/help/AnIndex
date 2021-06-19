@@ -1,6 +1,13 @@
 dbplyr-package	dbplyr-package
+<<<<<<< HEAD
 add_op_single	lazy_ops
 anti_join.tbl_lazy	join.tbl_sql
+=======
+%>%	reexports
+add_op_single	lazy_ops
+anti_join.tbl_lazy	join.tbl_sql
+arrange.tbl_lazy	arrange.tbl_lazy
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 as.sql	sql
 base_agg	sql_variant
 base_no_win	sql_variant
@@ -10,6 +17,12 @@ base_odbc_win	sql_variant
 base_scalar	sql_variant
 base_win	sql_variant
 build_sql	build_sql
+<<<<<<< HEAD
+=======
+collapse.tbl_sql	collapse.tbl_sql
+collect.tbl_sql	collapse.tbl_sql
+compute.tbl_sql	collapse.tbl_sql
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 copy_lahman	lahman
 copy_nycflights13	nycflights13
 copy_to.src_sql	copy_to.src_sql
@@ -20,6 +33,10 @@ db_copy_to	db_copy_to
 db_sql_render	db_copy_to
 do.tbl_sql	do.tbl_sql
 escape	escape
+<<<<<<< HEAD
+=======
+escape_ansi	escape
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 full_join.tbl_lazy	join.tbl_sql
 has_lahman	lahman
 has_nycflights13	nycflights13
@@ -32,7 +49,10 @@ is.sql	sql
 join.tbl_sql	join.tbl_sql
 join_query	sql_build
 lahman	lahman
+<<<<<<< HEAD
 lahman_df	lahman
+=======
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 lahman_mysql	lahman
 lahman_postgres	lahman
 lahman_sqlite	lahman
@@ -53,6 +73,10 @@ op_single	lazy_ops
 op_sort	lazy_ops
 op_vars	lazy_ops
 partial_eval	partial_eval
+<<<<<<< HEAD
+=======
+reexports	reexports
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 remote_con	remote_name
 remote_name	remote_name
 remote_query	remote_name
@@ -63,6 +87,7 @@ select_query	sql_build
 semi_join.tbl_lazy	join.tbl_sql
 semi_join_query	sql_build
 set_op_query	sql_build
+<<<<<<< HEAD
 simulate_dbi	tbl_lazy
 simulate_hive	tbl_lazy
 simulate_impala	tbl_lazy
@@ -75,13 +100,36 @@ simulate_oracle	tbl_lazy
 simulate_postgres	tbl_lazy
 simulate_sqlite	tbl_lazy
 simulate_teradata	tbl_lazy
+=======
+simulate_access	simulate_dbi
+simulate_dbi	simulate_dbi
+simulate_hive	simulate_dbi
+simulate_impala	simulate_dbi
+simulate_mssql	simulate_dbi
+simulate_mysql	simulate_dbi
+simulate_odbc	simulate_dbi
+simulate_oracle	simulate_dbi
+simulate_postgres	simulate_dbi
+simulate_sqlite	simulate_dbi
+simulate_teradata	simulate_dbi
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 sql	sql
 sql_aggregate	sql_variant
 sql_aggregate_2	sql_variant
 sql_build	sql_build
+<<<<<<< HEAD
 sql_cast	sql_variant
 sql_cot	sql_variant
 sql_escape_logical	sql_escape_logical
+=======
+sql_call2	sql_expr
+sql_cast	sql_variant
+sql_cot	sql_variant
+sql_escape_date	sql_escape_logical
+sql_escape_datetime	sql_escape_logical
+sql_escape_logical	sql_escape_logical
+sql_escape_raw	sql_escape_logical
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 sql_expr	sql_expr
 sql_infix	sql_variant
 sql_log	sql_variant
@@ -92,6 +140,11 @@ sql_paste_infix	sql_variant
 sql_prefix	sql_variant
 sql_quote	sql_quote
 sql_render	sql_build
+<<<<<<< HEAD
+=======
+sql_str_sub	sql_variant
+sql_substr	sql_variant
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 sql_translator	sql_variant
 sql_variant	sql_variant
 sql_vector	escape
@@ -99,9 +152,16 @@ src_dbi	src_dbi
 src_memdb	memdb_frame
 src_sql	src_sql
 src_test	testing
+<<<<<<< HEAD
 tbl.src_dbi	src_dbi
 tbl_dbi	src_dbi
 tbl_lazy	tbl_lazy
+=======
+tbl.src_dbi	tbl.src_dbi
+tbl_dbi	tbl.src_dbi
+tbl_lazy	tbl_lazy
+tbl_memdb	memdb_frame
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 tbl_sql	tbl_sql
 testing	testing
 test_frame	testing

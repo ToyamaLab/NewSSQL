@@ -2,7 +2,11 @@
 // basic_signal_set.hpp
 // ~~~~~~~~~~~~~~~~~~~~
 //
+<<<<<<< HEAD
 // Copyright (c) 2003-2017 Christopher M. Kohlhoff (chris at kohlhoff dot com)
+=======
+// Copyright (c) 2003-2019 Christopher M. Kohlhoff (chris at kohlhoff dot com)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 //
 // Distributed under the Boost Software License, Version 1.0. (See accompanying
 // file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
@@ -17,6 +21,7 @@
 
 #include <boost/asio/detail/config.hpp>
 
+<<<<<<< HEAD
 #if defined(BOOST_ASIO_ENABLE_OLD_SERVICES)
 
 #include <boost/asio/basic_io_object.hpp>
@@ -26,16 +31,33 @@
 #include <boost/asio/signal_set_service.hpp>
 
 #include <boost/asio/detail/push_options.hpp>
+=======
+#include <boost/asio/async_result.hpp>
+#include <boost/asio/detail/handler_type_requirements.hpp>
+#include <boost/asio/detail/io_object_impl.hpp>
+#include <boost/asio/detail/non_const_lvalue.hpp>
+#include <boost/asio/detail/signal_set_service.hpp>
+#include <boost/asio/detail/throw_error.hpp>
+#include <boost/asio/detail/type_traits.hpp>
+#include <boost/asio/error.hpp>
+#include <boost/asio/execution_context.hpp>
+#include <boost/asio/executor.hpp>
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 namespace boost {
 namespace asio {
 
 /// Provides signal functionality.
 /**
+<<<<<<< HEAD
  * The basic_signal_set class template provides the ability to perform an
  * asynchronous wait for one or more signals to occur.
  *
  * Most applications will use the boost::asio::signal_set typedef.
+=======
+ * The basic_signal_set class provides the ability to perform an asynchronous
+ * wait for one or more signals to occur.
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
  *
  * @par Thread Safety
  * @e Distinct @e objects: Safe.@n
@@ -57,7 +79,11 @@ namespace asio {
  * ...
  *
  * // Construct a signal set registered for process termination.
+<<<<<<< HEAD
  * boost::asio::signal_set signals(io_context, SIGINT, SIGTERM);
+=======
+ * boost::asio::signal_set signals(my_context, SIGINT, SIGTERM);
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
  *
  * // Start an asynchronous wait for one of the signals to occur.
  * signals.async_wait(handler);
@@ -92,20 +118,64 @@ namespace asio {
  * that any signals registered using signal_set objects are unblocked in at
  * least one thread.
  */
+<<<<<<< HEAD
 template <typename SignalSetService = signal_set_service>
 class basic_signal_set
   : public basic_io_object<SignalSetService>
 {
 public:
+=======
+template <typename Executor = executor>
+class basic_signal_set
+{
+public:
+  /// The type of the executor associated with the object.
+  typedef Executor executor_type;
+
+  /// Rebinds the signal set type to another executor.
+  template <typename Executor1>
+  struct rebind_executor
+  {
+    /// The signal set type when rebound to the specified executor.
+    typedef basic_signal_set<Executor1> other;
+  };
+
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
   /// Construct a signal set without adding any signals.
   /**
    * This constructor creates a signal set without registering for any signals.
    *
+<<<<<<< HEAD
    * @param io_context The io_context object that the signal set will use to
    * dispatch handlers for any asynchronous operations performed on the set.
    */
   explicit basic_signal_set(boost::asio::io_context& io_context)
     : basic_io_object<SignalSetService>(io_context)
+  {
+=======
+   * @param ex The I/O executor that the signal set will use, by default, to
+   * dispatch handlers for any asynchronous operations performed on the
+   * signal set.
+   */
+  explicit basic_signal_set(const executor_type& ex)
+    : impl_(ex)
+  {
+  }
+
+  /// Construct a signal set without adding any signals.
+  /**
+   * This constructor creates a signal set without registering for any signals.
+   *
+   * @param context An execution context which provides the I/O executor that
+   * the signal set will use, by default, to dispatch handlers for any
+   * asynchronous operations performed on the signal set.
+   */
+  template <typename ExecutionContext>
+  explicit basic_signal_set(ExecutionContext& context,
+      typename enable_if<
+        is_convertible<ExecutionContext&, execution_context&>::value
+      >::type* = 0)
+    : impl_(context)
   {
   }
 
@@ -113,12 +183,42 @@ public:
   /**
    * This constructor creates a signal set and registers for one signal.
    *
-   * @param io_context The io_context object that the signal set will use to
-   * dispatch handlers for any asynchronous operations performed on the set.
+   * @param ex The I/O executor that the signal set will use, by default, to
+   * dispatch handlers for any asynchronous operations performed on the
+   * signal set.
    *
    * @param signal_number_1 The signal number to be added.
    *
    * @note This constructor is equivalent to performing:
+   * @code boost::asio::signal_set signals(ex);
+   * signals.add(signal_number_1); @endcode
+   */
+  basic_signal_set(const executor_type& ex, int signal_number_1)
+    : impl_(ex)
+  {
+    boost::system::error_code ec;
+    impl_.get_service().add(impl_.get_implementation(), signal_number_1, ec);
+    boost::asio::detail::throw_error(ec, "add");
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
+  }
+
+  /// Construct a signal set and add one signal.
+  /**
+   * This constructor creates a signal set and registers for one signal.
+   *
+<<<<<<< HEAD
+   * @param io_context The io_context object that the signal set will use to
+   * dispatch handlers for any asynchronous operations performed on the set.
+=======
+   * @param context An execution context which provides the I/O executor that
+   * the signal set will use, by default, to dispatch handlers for any
+   * asynchronous operations performed on the signal set.
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
+   *
+   * @param signal_number_1 The signal number to be added.
+   *
+   * @note This constructor is equivalent to performing:
+<<<<<<< HEAD
    * @code boost::asio::signal_set signals(io_context);
    * signals.add(signal_number_1); @endcode
    */
@@ -127,6 +227,20 @@ public:
   {
     boost::system::error_code ec;
     this->get_service().add(this->get_implementation(), signal_number_1, ec);
+=======
+   * @code boost::asio::signal_set signals(context);
+   * signals.add(signal_number_1); @endcode
+   */
+  template <typename ExecutionContext>
+  basic_signal_set(ExecutionContext& context, int signal_number_1,
+      typename enable_if<
+        is_convertible<ExecutionContext&, execution_context&>::value
+      >::type* = 0)
+    : impl_(context)
+  {
+    boost::system::error_code ec;
+    impl_.get_service().add(impl_.get_implementation(), signal_number_1, ec);
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     boost::asio::detail::throw_error(ec, "add");
   }
 
@@ -134,14 +248,21 @@ public:
   /**
    * This constructor creates a signal set and registers for two signals.
    *
+<<<<<<< HEAD
    * @param io_context The io_context object that the signal set will use to
    * dispatch handlers for any asynchronous operations performed on the set.
+=======
+   * @param ex The I/O executor that the signal set will use, by default, to
+   * dispatch handlers for any asynchronous operations performed on the
+   * signal set.
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
    *
    * @param signal_number_1 The first signal number to be added.
    *
    * @param signal_number_2 The second signal number to be added.
    *
    * @note This constructor is equivalent to performing:
+<<<<<<< HEAD
    * @code boost::asio::signal_set signals(io_context);
    * signals.add(signal_number_1);
    * signals.add(signal_number_2); @endcode
@@ -154,6 +275,52 @@ public:
     this->get_service().add(this->get_implementation(), signal_number_1, ec);
     boost::asio::detail::throw_error(ec, "add");
     this->get_service().add(this->get_implementation(), signal_number_2, ec);
+=======
+   * @code boost::asio::signal_set signals(ex);
+   * signals.add(signal_number_1);
+   * signals.add(signal_number_2); @endcode
+   */
+  basic_signal_set(const executor_type& ex, int signal_number_1,
+      int signal_number_2)
+    : impl_(ex)
+  {
+    boost::system::error_code ec;
+    impl_.get_service().add(impl_.get_implementation(), signal_number_1, ec);
+    boost::asio::detail::throw_error(ec, "add");
+    impl_.get_service().add(impl_.get_implementation(), signal_number_2, ec);
+    boost::asio::detail::throw_error(ec, "add");
+  }
+
+  /// Construct a signal set and add two signals.
+  /**
+   * This constructor creates a signal set and registers for two signals.
+   *
+   * @param context An execution context which provides the I/O executor that
+   * the signal set will use, by default, to dispatch handlers for any
+   * asynchronous operations performed on the signal set.
+   *
+   * @param signal_number_1 The first signal number to be added.
+   *
+   * @param signal_number_2 The second signal number to be added.
+   *
+   * @note This constructor is equivalent to performing:
+   * @code boost::asio::signal_set signals(context);
+   * signals.add(signal_number_1);
+   * signals.add(signal_number_2); @endcode
+   */
+  template <typename ExecutionContext>
+  basic_signal_set(ExecutionContext& context, int signal_number_1,
+      int signal_number_2,
+      typename enable_if<
+        is_convertible<ExecutionContext&, execution_context&>::value
+      >::type* = 0)
+    : impl_(context)
+  {
+    boost::system::error_code ec;
+    impl_.get_service().add(impl_.get_implementation(), signal_number_1, ec);
+    boost::asio::detail::throw_error(ec, "add");
+    impl_.get_service().add(impl_.get_implementation(), signal_number_2, ec);
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     boost::asio::detail::throw_error(ec, "add");
   }
 
@@ -161,8 +328,14 @@ public:
   /**
    * This constructor creates a signal set and registers for three signals.
    *
+<<<<<<< HEAD
    * @param io_context The io_context object that the signal set will use to
    * dispatch handlers for any asynchronous operations performed on the set.
+=======
+   * @param ex The I/O executor that the signal set will use, by default, to
+   * dispatch handlers for any asynchronous operations performed on the
+   * signal set.
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
    *
    * @param signal_number_1 The first signal number to be added.
    *
@@ -171,11 +344,16 @@ public:
    * @param signal_number_3 The third signal number to be added.
    *
    * @note This constructor is equivalent to performing:
+<<<<<<< HEAD
    * @code boost::asio::signal_set signals(io_context);
+=======
+   * @code boost::asio::signal_set signals(ex);
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
    * signals.add(signal_number_1);
    * signals.add(signal_number_2);
    * signals.add(signal_number_3); @endcode
    */
+<<<<<<< HEAD
   basic_signal_set(boost::asio::io_context& io_context, int signal_number_1,
       int signal_number_2, int signal_number_3)
     : basic_io_object<SignalSetService>(io_context)
@@ -189,6 +367,74 @@ public:
     boost::asio::detail::throw_error(ec, "add");
   }
 
+=======
+  basic_signal_set(const executor_type& ex, int signal_number_1,
+      int signal_number_2, int signal_number_3)
+    : impl_(ex)
+  {
+    boost::system::error_code ec;
+    impl_.get_service().add(impl_.get_implementation(), signal_number_1, ec);
+    boost::asio::detail::throw_error(ec, "add");
+    impl_.get_service().add(impl_.get_implementation(), signal_number_2, ec);
+    boost::asio::detail::throw_error(ec, "add");
+    impl_.get_service().add(impl_.get_implementation(), signal_number_3, ec);
+    boost::asio::detail::throw_error(ec, "add");
+  }
+
+  /// Construct a signal set and add three signals.
+  /**
+   * This constructor creates a signal set and registers for three signals.
+   *
+   * @param context An execution context which provides the I/O executor that
+   * the signal set will use, by default, to dispatch handlers for any
+   * asynchronous operations performed on the signal set.
+   *
+   * @param signal_number_1 The first signal number to be added.
+   *
+   * @param signal_number_2 The second signal number to be added.
+   *
+   * @param signal_number_3 The third signal number to be added.
+   *
+   * @note This constructor is equivalent to performing:
+   * @code boost::asio::signal_set signals(context);
+   * signals.add(signal_number_1);
+   * signals.add(signal_number_2);
+   * signals.add(signal_number_3); @endcode
+   */
+  template <typename ExecutionContext>
+  basic_signal_set(ExecutionContext& context, int signal_number_1,
+      int signal_number_2, int signal_number_3,
+      typename enable_if<
+        is_convertible<ExecutionContext&, execution_context&>::value
+      >::type* = 0)
+    : impl_(context)
+  {
+    boost::system::error_code ec;
+    impl_.get_service().add(impl_.get_implementation(), signal_number_1, ec);
+    boost::asio::detail::throw_error(ec, "add");
+    impl_.get_service().add(impl_.get_implementation(), signal_number_2, ec);
+    boost::asio::detail::throw_error(ec, "add");
+    impl_.get_service().add(impl_.get_implementation(), signal_number_3, ec);
+    boost::asio::detail::throw_error(ec, "add");
+  }
+
+  /// Destroys the signal set.
+  /**
+   * This function destroys the signal set, cancelling any outstanding
+   * asynchronous wait operations associated with the signal set as if by
+   * calling @c cancel.
+   */
+  ~basic_signal_set()
+  {
+  }
+
+  /// Get the executor associated with the object.
+  executor_type get_executor() BOOST_ASIO_NOEXCEPT
+  {
+    return impl_.get_executor();
+  }
+
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
   /// Add a signal to a signal_set.
   /**
    * This function adds the specified signal to the set. It has no effect if the
@@ -201,7 +447,11 @@ public:
   void add(int signal_number)
   {
     boost::system::error_code ec;
+<<<<<<< HEAD
     this->get_service().add(this->get_implementation(), signal_number, ec);
+=======
+    impl_.get_service().add(impl_.get_implementation(), signal_number, ec);
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     boost::asio::detail::throw_error(ec, "add");
   }
 
@@ -214,9 +464,16 @@ public:
    *
    * @param ec Set to indicate what error occurred, if any.
    */
+<<<<<<< HEAD
   BOOST_ASIO_SYNC_OP_VOID add(int signal_number, boost::system::error_code& ec)
   {
     this->get_service().add(this->get_implementation(), signal_number, ec);
+=======
+  BOOST_ASIO_SYNC_OP_VOID add(int signal_number,
+      boost::system::error_code& ec)
+  {
+    impl_.get_service().add(impl_.get_implementation(), signal_number, ec);
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     BOOST_ASIO_SYNC_OP_VOID_RETURN(ec);
   }
 
@@ -235,7 +492,11 @@ public:
   void remove(int signal_number)
   {
     boost::system::error_code ec;
+<<<<<<< HEAD
     this->get_service().remove(this->get_implementation(), signal_number, ec);
+=======
+    impl_.get_service().remove(impl_.get_implementation(), signal_number, ec);
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     boost::asio::detail::throw_error(ec, "remove");
   }
 
@@ -254,7 +515,11 @@ public:
   BOOST_ASIO_SYNC_OP_VOID remove(int signal_number,
       boost::system::error_code& ec)
   {
+<<<<<<< HEAD
     this->get_service().remove(this->get_implementation(), signal_number, ec);
+=======
+    impl_.get_service().remove(impl_.get_implementation(), signal_number, ec);
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     BOOST_ASIO_SYNC_OP_VOID_RETURN(ec);
   }
 
@@ -270,7 +535,11 @@ public:
   void clear()
   {
     boost::system::error_code ec;
+<<<<<<< HEAD
     this->get_service().clear(this->get_implementation(), ec);
+=======
+    impl_.get_service().clear(impl_.get_implementation(), ec);
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     boost::asio::detail::throw_error(ec, "clear");
   }
 
@@ -285,7 +554,11 @@ public:
    */
   BOOST_ASIO_SYNC_OP_VOID clear(boost::system::error_code& ec)
   {
+<<<<<<< HEAD
     this->get_service().clear(this->get_implementation(), ec);
+=======
+    impl_.get_service().clear(impl_.get_implementation(), ec);
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     BOOST_ASIO_SYNC_OP_VOID_RETURN(ec);
   }
 
@@ -313,7 +586,11 @@ public:
   void cancel()
   {
     boost::system::error_code ec;
+<<<<<<< HEAD
     this->get_service().cancel(this->get_implementation(), ec);
+=======
+    impl_.get_service().cancel(impl_.get_implementation(), ec);
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     boost::asio::detail::throw_error(ec, "cancel");
   }
 
@@ -340,7 +617,11 @@ public:
    */
   BOOST_ASIO_SYNC_OP_VOID cancel(boost::system::error_code& ec)
   {
+<<<<<<< HEAD
     this->get_service().cancel(this->get_implementation(), ec);
+=======
+    impl_.get_service().cancel(impl_.get_implementation(), ec);
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     BOOST_ASIO_SYNC_OP_VOID_RETURN(ec);
   }
 
@@ -365,6 +646,7 @@ public:
    *   int signal_number // Indicates which signal occurred.
    * ); @endcode
    * Regardless of whether the asynchronous operation completes immediately or
+<<<<<<< HEAD
    * not, the handler will not be invoked from within this function. Invocation
    * of the handler will be performed in a manner equivalent to using
    * boost::asio::io_context::post().
@@ -381,13 +663,73 @@ public:
     return this->get_service().async_wait(this->get_implementation(),
         BOOST_ASIO_MOVE_CAST(SignalHandler)(handler));
   }
+=======
+   * not, the handler will not be invoked from within this function. On
+   * immediate completion, invocation of the handler will be performed in a
+   * manner equivalent to using boost::asio::post().
+   */
+  template <
+    BOOST_ASIO_COMPLETION_TOKEN_FOR(void (boost::system::error_code, int))
+      SignalHandler BOOST_ASIO_DEFAULT_COMPLETION_TOKEN_TYPE(executor_type)>
+  BOOST_ASIO_INITFN_AUTO_RESULT_TYPE(SignalHandler,
+      void (boost::system::error_code, int))
+  async_wait(
+      BOOST_ASIO_MOVE_ARG(SignalHandler) handler
+        BOOST_ASIO_DEFAULT_COMPLETION_TOKEN(executor_type))
+  {
+    return async_initiate<SignalHandler, void (boost::system::error_code, int)>(
+        initiate_async_wait(this), handler);
+  }
+
+private:
+  // Disallow copying and assignment.
+  basic_signal_set(const basic_signal_set&) BOOST_ASIO_DELETED;
+  basic_signal_set& operator=(const basic_signal_set&) BOOST_ASIO_DELETED;
+
+  class initiate_async_wait
+  {
+  public:
+    typedef Executor executor_type;
+
+    explicit initiate_async_wait(basic_signal_set* self)
+      : self_(self)
+    {
+    }
+
+    executor_type get_executor() const BOOST_ASIO_NOEXCEPT
+    {
+      return self_->get_executor();
+    }
+
+    template <typename SignalHandler>
+    void operator()(BOOST_ASIO_MOVE_ARG(SignalHandler) handler) const
+    {
+      // If you get an error on the following line it means that your handler
+      // does not meet the documented type requirements for a SignalHandler.
+      BOOST_ASIO_SIGNAL_HANDLER_CHECK(SignalHandler, handler) type_check;
+
+      detail::non_const_lvalue<SignalHandler> handler2(handler);
+      self_->impl_.get_service().async_wait(
+          self_->impl_.get_implementation(), handler2.value,
+          self_->impl_.get_implementation_executor());
+    }
+
+  private:
+    basic_signal_set* self_;
+  };
+
+  detail::io_object_impl<detail::signal_set_service, Executor> impl_;
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 };
 
 } // namespace asio
 } // namespace boost
 
+<<<<<<< HEAD
 #include <boost/asio/detail/pop_options.hpp>
 
 #endif // defined(BOOST_ASIO_ENABLE_OLD_SERVICES)
 
+=======
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 #endif // BOOST_ASIO_BASIC_SIGNAL_SET_HPP

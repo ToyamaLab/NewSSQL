@@ -30,10 +30,22 @@ namespace boost {
 namespace atomics {
 namespace detail {
 
+<<<<<<< HEAD
 template< typename T >
 struct emulated_operations
 {
     typedef T storage_type;
+=======
+template< std::size_t Size, bool Signed >
+struct emulated_operations
+{
+    typedef typename make_storage_type< Size >::type storage_type;
+    typedef typename make_storage_type< Size >::aligned aligned_storage_type;
+
+    static BOOST_CONSTEXPR_OR_CONST std::size_t storage_size = Size;
+    static BOOST_CONSTEXPR_OR_CONST bool is_signed = Signed;
+    static BOOST_CONSTEXPR_OR_CONST bool full_cas_based = false;
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
     static BOOST_CONSTEXPR_OR_CONST bool is_always_lock_free = false;
 
@@ -146,12 +158,17 @@ struct emulated_operations
 
 template< std::size_t Size, bool Signed >
 struct operations :
+<<<<<<< HEAD
     public emulated_operations< typename make_storage_type< Size, Signed >::type >
 {
     typedef typename make_storage_type< Size, Signed >::aligned aligned_storage_type;
 
     static BOOST_CONSTEXPR_OR_CONST std::size_t storage_size = Size;
     static BOOST_CONSTEXPR_OR_CONST bool is_signed = Signed;
+=======
+    public emulated_operations< Size, Signed >
+{
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 };
 
 } // namespace detail

@@ -18,6 +18,10 @@
 #include <boost/spirit/home/lex/lexer/lexertl/wrap_action.hpp>
 #include <boost/mpl/bool.hpp>
 #include <boost/algorithm/string/predicate.hpp>
+<<<<<<< HEAD
+=======
+#include <iterator> // for std::iterator_traits
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 namespace boost { namespace spirit { namespace lex { namespace lexertl
 { 
@@ -48,7 +52,11 @@ namespace boost { namespace spirit { namespace lex { namespace lexertl
         {
         protected:
             typedef typename 
+<<<<<<< HEAD
                 boost::detail::iterator_traits<Iterator>::value_type 
+=======
+                std::iterator_traits<Iterator>::value_type 
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
             char_type;
 
         public:
@@ -208,9 +216,14 @@ namespace boost { namespace spirit { namespace lex { namespace lexertl
 
             bool bol_;      // helper storing whether last character was \n
 
+<<<<<<< HEAD
         private:
             // silence MSVC warning C4512: assignment operator could not be generated
             static_data& operator= (static_data const&);
+=======
+            // silence MSVC warning C4512: assignment operator could not be generated
+            BOOST_DELETED_FUNCTION(static_data& operator= (static_data const&))
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
         };
 
         ///////////////////////////////////////////////////////////////////////
@@ -283,9 +296,14 @@ namespace boost { namespace spirit { namespace lex { namespace lexertl
             std::size_t state_;
             std::size_t num_states_;
 
+<<<<<<< HEAD
         private:
             // silence MSVC warning C4512: assignment operator could not be generated
             static_data& operator= (static_data const&);
+=======
+            // silence MSVC warning C4512: assignment operator could not be generated
+            BOOST_DELETED_FUNCTION(static_data& operator= (static_data const&))
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
         };
 
         ///////////////////////////////////////////////////////////////////////
@@ -422,9 +440,14 @@ namespace boost { namespace spirit { namespace lex { namespace lexertl
             mutable bool has_value_;    // 'true' if value_ is valid
             bool has_hold_;     // 'true' if hold_ is valid
 
+<<<<<<< HEAD
         private:
             // silence MSVC warning C4512: assignment operator could not be generated
             static_data& operator= (static_data const&);
+=======
+            // silence MSVC warning C4512: assignment operator could not be generated
+            BOOST_DELETED_FUNCTION(static_data& operator= (static_data const&))
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
         };
 
         ///////////////////////////////////////////////////////////////////////
@@ -562,9 +585,14 @@ namespace boost { namespace spirit { namespace lex { namespace lexertl
             mutable bool has_value_;    // 'true' if value_ is valid
             bool has_hold_;     // 'true' if hold_ is valid
 
+<<<<<<< HEAD
         private:
             // silence MSVC warning C4512: assignment operator could not be generated
             static_data& operator= (static_data const&);
+=======
+            // silence MSVC warning C4512: assignment operator could not be generated
+            BOOST_DELETED_FUNCTION(static_data& operator= (static_data const&))
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
         };
     }
 }}}}

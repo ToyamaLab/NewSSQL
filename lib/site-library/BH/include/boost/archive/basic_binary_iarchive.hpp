@@ -102,6 +102,7 @@ protected:
     }
     void load_override(class_id_type & t){
         library_version_type lvt = this->get_library_version();
+<<<<<<< HEAD
         if(boost::archive::library_version_type(7) < lvt){
             this->detail_common_iarchive::load_override(t);
         }
@@ -113,6 +114,31 @@ protected:
         }
         else{
             int x=0;
+=======
+        /*
+         * library versions:
+         *   boost 1.39 -> 5
+         *   boost 1.43 -> 7
+         *   boost 1.47 -> 9
+         *
+         *
+         * 1) in boost 1.43 and inferior, class_id_type is always a 16bit value, with no check on the library version
+         *   --> this means all archives with version v <= 7 are written with a 16bit class_id_type
+         * 2) in boost 1.44 this load_override has disappeared (and thus boost 1.44 is not backward compatible at all !!)
+         * 3) recent boosts reintroduced load_override with a test on the version :
+         *     - v > 7 : this->detail_common_iarchive::load_override(t, version)
+         *     - v > 6 : 16bit
+         *     - other : 32bit
+         *   --> which is obviously incorrect, see point 1
+         * 
+         * the fix here decodes class_id_type on 16bit for all v <= 7, which seems to be the correct behaviour ...
+         */
+        if(boost::archive::library_version_type(7) < lvt){
+            this->detail_common_iarchive::load_override(t);
+        }
+        else{
+            int_least16_t x=0;
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
             * this->This() >> x;
             t = boost::archive::class_id_type(x);
         }

@@ -8,7 +8,13 @@ glue_col	glue_col
 glue_collapse	glue_collapse
 glue_data	glue
 glue_data_col	glue_col
+<<<<<<< HEAD
 glue_data_sql	glue_sql
+=======
+glue_data_safe	glue_safe
+glue_data_sql	glue_sql
+glue_safe	glue_safe
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 glue_sql	glue_sql
 identity_transformer	identity_transformer
 quoting	quoting

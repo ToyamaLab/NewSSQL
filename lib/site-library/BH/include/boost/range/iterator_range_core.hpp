@@ -42,6 +42,10 @@
 #include <boost/range/algorithm/equal.hpp>
 #include <boost/range/detail/safe_bool.hpp>
 #include <boost/utility/enable_if.hpp>
+<<<<<<< HEAD
+=======
+#include <boost/next_prior.hpp>
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 #include <iterator>
 #include <algorithm>
 #include <cstddef>

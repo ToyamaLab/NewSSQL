@@ -11,9 +11,18 @@
 #ifndef BOOST_COMPUTE_ALGORITHM_FIND_IF_HPP
 #define BOOST_COMPUTE_ALGORITHM_FIND_IF_HPP
 
+<<<<<<< HEAD
 #include <boost/compute/system.hpp>
 #include <boost/compute/command_queue.hpp>
 #include <boost/compute/algorithm/detail/find_if_with_atomics.hpp>
+=======
+#include <boost/static_assert.hpp>
+
+#include <boost/compute/system.hpp>
+#include <boost/compute/command_queue.hpp>
+#include <boost/compute/algorithm/detail/find_if_with_atomics.hpp>
+#include <boost/compute/type_traits/is_device_iterator.hpp>
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 namespace boost {
 namespace compute {
@@ -28,6 +37,10 @@ inline InputIterator find_if(InputIterator first,
                              UnaryPredicate predicate,
                              command_queue &queue = system::default_queue())
 {
+<<<<<<< HEAD
+=======
+    BOOST_STATIC_ASSERT(is_device_iterator<InputIterator>::value);
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     return detail::find_if_with_atomics(first, last, predicate, queue);
 }
 

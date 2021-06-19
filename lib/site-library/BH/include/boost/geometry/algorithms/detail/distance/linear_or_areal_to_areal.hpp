@@ -1,8 +1,15 @@
 // Boost.Geometry (aka GGL, Generic Geometry Library)
 
+<<<<<<< HEAD
 // Copyright (c) 2014, Oracle and/or its affiliates.
 
 // Contributed and/or modified by Menelaos Karavelas, on behalf of Oracle
+=======
+// Copyright (c) 2014, 2019, Oracle and/or its affiliates.
+
+// Contributed and/or modified by Menelaos Karavelas, on behalf of Oracle
+// Contributed and/or modified by Adam Wulkiewicz, on behalf of Oracle
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 // Licensed under the Boost Software License version 1.0.
 // http://www.boost.org/users/license.html
@@ -18,7 +25,10 @@
 
 #include <boost/geometry/algorithms/detail/distance/linear_to_linear.hpp>
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 namespace boost { namespace geometry
 {
 
@@ -41,7 +51,12 @@ struct linear_to_areal
                                     Areal const& areal,
                                     Strategy const& strategy)
     {
+<<<<<<< HEAD
         if ( geometry::intersects(linear, areal) )
+=======
+        if ( geometry::intersects(linear, areal,
+                                  strategy.get_relate_segment_segment_strategy()) )
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
         {
             return 0;
         }
@@ -61,7 +76,10 @@ struct linear_to_areal
     }
 };
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 template <typename Areal1, typename Areal2, typename Strategy>
 struct areal_to_areal
 {
@@ -76,7 +94,12 @@ struct areal_to_areal
                                     Areal2 const& areal2,
                                     Strategy const& strategy)
     {
+<<<<<<< HEAD
         if ( geometry::intersects(areal1, areal2) )
+=======
+        if ( geometry::intersects(areal1, areal2,
+                                  strategy.get_relate_segment_segment_strategy()) )
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
         {
             return 0;
         }
@@ -110,7 +133,10 @@ struct distance
         >
 {};
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 template <typename Areal, typename Linear, typename Strategy>
 struct distance
     <

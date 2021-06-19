@@ -1,7 +1,12 @@
 //
 //=======================================================================
 // Copyright 2002 Marc Wintermantel (wintermantel@even-ag.ch)
+<<<<<<< HEAD
 // ETH Zurich, Center of Structure Technologies (www.imes.ethz.ch/st)
+=======
+// ETH Zurich, Center of Structure Technologies
+// (https://web.archive.org/web/20050307090307/http://www.structures.ethz.ch/)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 //
 // Distributed under the Boost Software License, Version 1.0. (See
 // accompanying file LICENSE_1_0.txt or copy at

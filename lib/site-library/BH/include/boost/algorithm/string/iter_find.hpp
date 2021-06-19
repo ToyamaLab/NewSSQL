@@ -71,7 +71,15 @@ namespace boost {
         inline SequenceSequenceT&
         iter_find(
             SequenceSequenceT& Result,
+<<<<<<< HEAD
             RangeT& Input,
+=======
+#if !defined(BOOST_NO_CXX11_RVALUE_REFERENCES)
+            RangeT&& Input,
+#else
+            RangeT& Input,
+#endif
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
             FinderT Finder )
         {
             BOOST_CONCEPT_ASSERT((
@@ -142,7 +150,15 @@ namespace boost {
         inline SequenceSequenceT&
         iter_split(
             SequenceSequenceT& Result,
+<<<<<<< HEAD
             RangeT& Input,
+=======
+#if !defined(BOOST_NO_CXX11_RVALUE_REFERENCES)
+            RangeT&& Input,
+#else
+            RangeT& Input,
+#endif
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
             FinderT Finder )
         {
             BOOST_CONCEPT_ASSERT((

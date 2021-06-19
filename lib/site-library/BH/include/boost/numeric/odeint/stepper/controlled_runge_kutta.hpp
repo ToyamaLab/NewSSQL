@@ -163,7 +163,11 @@ public:
 
     time_type get_max_dt() { return m_max_dt; }
 
+<<<<<<< HEAD
 private:
+=======
+protected:
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     time_type m_max_dt;
 };
 
@@ -411,10 +415,18 @@ public:
     template< class System , class StateIn , class DerivIn , class StateOut >
     controlled_step_result try_step( System system , const StateIn &in , const DerivIn &dxdt , time_type &t , StateOut &out , time_type &dt )
     {
+<<<<<<< HEAD
         if( !m_step_adjuster.check_step_size_limit(dt) )
         {
             // given dt was above step size limit - adjust and return fail;
             dt = m_step_adjuster.get_max_dt();
+=======
+        unwrapped_step_adjuster &step_adjuster = m_step_adjuster;
+        if( !step_adjuster.check_step_size_limit(dt) )
+        {
+            // given dt was above step size limit - adjust and return fail;
+            dt = step_adjuster.get_max_dt();
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
             return fail;
         }
 
@@ -428,13 +440,21 @@ public:
         if( max_rel_err > 1.0 )
         {
             // error too big, decrease step size and reject this step
+<<<<<<< HEAD
             dt = m_step_adjuster.decrease_step(dt, max_rel_err, m_stepper.error_order());
+=======
+            dt = step_adjuster.decrease_step(dt, max_rel_err, m_stepper.error_order());
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
             return fail;
         } else
         {
             // otherwise, increase step size and accept
             t += dt;
+<<<<<<< HEAD
             dt = m_step_adjuster.increase_step(dt, max_rel_err, m_stepper.stepper_order());
+=======
+            dt = step_adjuster.increase_step(dt, max_rel_err, m_stepper.stepper_order());
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
             return success;
         }
     }
@@ -505,6 +525,10 @@ private:
     stepper_type m_stepper;
     error_checker_type m_error_checker;
     step_adjuster_type m_step_adjuster;
+<<<<<<< HEAD
+=======
+    typedef typename unwrap_reference< step_adjuster_type >::type unwrapped_step_adjuster;
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
     resizer_type m_dxdt_resizer;
     resizer_type m_xerr_resizer;
@@ -584,7 +608,11 @@ public:
             const step_adjuster_type &step_adjuster = step_adjuster_type() ,
             const stepper_type &stepper = stepper_type()
     )
+<<<<<<< HEAD
     : m_stepper( stepper ) , m_error_checker( error_checker ) , m_step_adjuster(step_adjuster) ,
+=======
+    : m_stepper( stepper ) , m_error_checker( error_checker ) , m_step_adjuster(step_adjuster) , 
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
       m_first_call( true )
     { }
 
@@ -751,10 +779,18 @@ public:
     controlled_step_result try_step( System system , const StateIn &in , const DerivIn &dxdt_in , time_type &t ,
             StateOut &out , DerivOut &dxdt_out , time_type &dt )
     {
+<<<<<<< HEAD
         if( !m_step_adjuster.check_step_size_limit(dt) )
         {
             // given dt was above step size limit - adjust and return fail;
             dt = m_step_adjuster.get_max_dt();
+=======
+        unwrapped_step_adjuster &step_adjuster = m_step_adjuster;
+        if( !step_adjuster.check_step_size_limit(dt) )
+        {
+            // given dt was above step size limit - adjust and return fail;
+            dt = step_adjuster.get_max_dt();
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
             return fail;
         }
 
@@ -770,12 +806,20 @@ public:
         if( max_rel_err > 1.0 )
         {
             // error too big, decrease step size and reject this step
+<<<<<<< HEAD
             dt = m_step_adjuster.decrease_step(dt, max_rel_err, m_stepper.error_order());
+=======
+            dt = step_adjuster.decrease_step(dt, max_rel_err, m_stepper.error_order());
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
             return fail;
         }
         // otherwise, increase step size and accept
         t += dt;
+<<<<<<< HEAD
         dt = m_step_adjuster.increase_step(dt, max_rel_err, m_stepper.stepper_order());
+=======
+        dt = step_adjuster.increase_step(dt, max_rel_err, m_stepper.stepper_order());
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
         return success;
     }
 
@@ -903,6 +947,10 @@ private:
     stepper_type m_stepper;
     error_checker_type m_error_checker;
     step_adjuster_type m_step_adjuster;
+<<<<<<< HEAD
+=======
+    typedef typename unwrap_reference< step_adjuster_type >::type unwrapped_step_adjuster;
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
     resizer_type m_dxdt_resizer;
     resizer_type m_xerr_resizer;

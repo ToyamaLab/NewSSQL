@@ -1,10 +1,17 @@
 // Boost.Geometry (aka GGL, Generic Geometry Library)
 
 // Copyright (c) 2007-2014 Barend Gehrels, Amsterdam, the Netherlands.
+<<<<<<< HEAD
 // Copyright (c) 2013-2014 Adam Wulkiewicz, Lodz, Poland.
 
 // This file was modified by Oracle on 2014, 2016, 2017.
 // Modifications copyright (c) 2014-2017, Oracle and/or its affiliates.
+=======
+// Copyright (c) 2013-2017 Adam Wulkiewicz, Lodz, Poland.
+
+// This file was modified by Oracle on 2014, 2016, 2017, 2018, 2019.
+// Modifications copyright (c) 2014-2019, Oracle and/or its affiliates.
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 // Contributed and/or modified by Menelaos Karavelas, on behalf of Oracle
 // Contributed and/or modified by Adam Wulkiewicz, on behalf of Oracle
@@ -33,9 +40,20 @@
 #include <boost/geometry/util/promote_integral.hpp>
 #include <boost/geometry/util/select_calculation_type.hpp>
 
+<<<<<<< HEAD
 #include <boost/geometry/strategies/cartesian/area_surveyor.hpp>
 #include <boost/geometry/strategies/cartesian/distance_pythagoras.hpp>
 #include <boost/geometry/strategies/cartesian/envelope_segment.hpp>
+=======
+#include <boost/geometry/strategies/cartesian/area.hpp>
+#include <boost/geometry/strategies/cartesian/disjoint_box_box.hpp>
+#include <boost/geometry/strategies/cartesian/disjoint_segment_box.hpp>
+#include <boost/geometry/strategies/cartesian/distance_pythagoras.hpp>
+#include <boost/geometry/strategies/cartesian/envelope.hpp>
+#include <boost/geometry/strategies/cartesian/expand_box.hpp>
+#include <boost/geometry/strategies/cartesian/expand_segment.hpp>
+#include <boost/geometry/strategies/cartesian/point_in_point.hpp>
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 #include <boost/geometry/strategies/cartesian/point_in_poly_winding.hpp>
 #include <boost/geometry/strategies/cartesian/side_by_triangle.hpp>
 #include <boost/geometry/strategies/covered_by.hpp>
@@ -45,9 +63,14 @@
 #include <boost/geometry/strategies/side_info.hpp>
 #include <boost/geometry/strategies/within.hpp>
 
+<<<<<<< HEAD
 #include <boost/geometry/policies/robustness/robust_point_type.hpp>
 #include <boost/geometry/policies/robustness/segment_ratio_type.hpp>
 
+=======
+#include <boost/geometry/policies/robustness/rescale_policy_tags.hpp>
+#include <boost/geometry/policies/robustness/robust_point_type.hpp>
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 #if defined(BOOST_GEOMETRY_DEBUG_ROBUSTNESS)
 #  include <boost/geometry/io/wkt/write.hpp>
@@ -71,6 +94,11 @@ template
 >
 struct cartesian_segments
 {
+<<<<<<< HEAD
+=======
+    typedef cartesian_tag cs_tag;
+
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     typedef side::side_by_triangle<CalculationType> side_strategy_type;
 
     static inline side_strategy_type get_side_strategy()
@@ -103,9 +131,14 @@ struct cartesian_segments
     template <typename Geometry>
     struct area_strategy
     {
+<<<<<<< HEAD
         typedef area::surveyor
             <
                 typename point_type<Geometry>::type,
+=======
+        typedef area::cartesian
+            <
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
                 CalculationType
             > type;
     };
@@ -133,17 +166,69 @@ struct cartesian_segments
         return strategy_type();
     }
 
+<<<<<<< HEAD
     typedef envelope::cartesian_segment<CalculationType>
         envelope_strategy_type;
+=======
+    typedef envelope::cartesian<CalculationType> envelope_strategy_type;
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
     static inline envelope_strategy_type get_envelope_strategy()
     {
         return envelope_strategy_type();
     }
 
+<<<<<<< HEAD
     template <typename CoordinateType, typename SegmentRatio>
     struct segment_intersection_info
     {
+=======
+    typedef expand::cartesian_segment expand_strategy_type;
+
+    static inline expand_strategy_type get_expand_strategy()
+    {
+        return expand_strategy_type();
+    }
+
+    typedef within::cartesian_point_point point_in_point_strategy_type;
+
+    static inline point_in_point_strategy_type get_point_in_point_strategy()
+    {
+        return point_in_point_strategy_type();
+    }
+
+    typedef within::cartesian_point_point equals_point_point_strategy_type;
+
+    static inline equals_point_point_strategy_type get_equals_point_point_strategy()
+    {
+        return equals_point_point_strategy_type();
+    }
+
+    typedef disjoint::cartesian_box_box disjoint_box_box_strategy_type;
+
+    static inline disjoint_box_box_strategy_type get_disjoint_box_box_strategy()
+    {
+        return disjoint_box_box_strategy_type();
+    }
+
+    typedef disjoint::segment_box disjoint_segment_box_strategy_type;
+
+    static inline disjoint_segment_box_strategy_type get_disjoint_segment_box_strategy()
+    {
+        return disjoint_segment_box_strategy_type();
+    }
+
+    typedef covered_by::cartesian_point_box disjoint_point_box_strategy_type;
+    typedef covered_by::cartesian_point_box covered_by_point_box_strategy_type;
+    typedef within::cartesian_point_box within_point_box_strategy_type;
+    typedef envelope::cartesian_box envelope_box_strategy_type;
+    typedef expand::cartesian_box expand_box_strategy_type;
+
+    template <typename CoordinateType, typename SegmentRatio>
+    struct segment_intersection_info
+    {
+    private :
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
         typedef typename select_most_precise
             <
                 CoordinateType, double
@@ -179,6 +264,7 @@ struct cartesian_segments
             // division.
             BOOST_GEOMETRY_ASSERT(ratio.denominator() != 0);
 
+<<<<<<< HEAD
             typedef typename promote_integral<CoordinateType>::type promoted_type;
 
             promoted_type const numerator
@@ -196,6 +282,62 @@ struct cartesian_segments
                 <
                     CoordinateType
                 >(numerator * dy_promoted / denominator));
+=======
+            typedef typename promote_integral<CoordinateType>::type calc_type;
+
+            calc_type const numerator
+                = boost::numeric_cast<calc_type>(ratio.numerator());
+            calc_type const denominator
+                = boost::numeric_cast<calc_type>(ratio.denominator());
+            calc_type const dx_calc = boost::numeric_cast<calc_type>(dx);
+            calc_type const dy_calc = boost::numeric_cast<calc_type>(dy);
+
+            set<0>(point, get<0, 0>(segment)
+                   + boost::numeric_cast<CoordinateType>(numerator * dx_calc
+                                                         / denominator));
+            set<1>(point, get<0, 1>(segment)
+                   + boost::numeric_cast<CoordinateType>(numerator * dy_calc
+                                                         / denominator));
+        }
+
+    public :
+        template <typename Point, typename Segment1, typename Segment2>
+        void calculate(Point& point, Segment1 const& a, Segment2 const& b) const
+        {
+            bool use_a = true;
+
+            // Prefer one segment if one is on or near an endpoint
+            bool const a_near_end = robust_ra.near_end();
+            bool const b_near_end = robust_rb.near_end();
+            if (a_near_end && ! b_near_end)
+            {
+                use_a = true;
+            }
+            else if (b_near_end && ! a_near_end)
+            {
+                use_a = false;
+            }
+            else
+            {
+                // Prefer shorter segment
+                promoted_type const len_a = comparable_length_a();
+                promoted_type const len_b = comparable_length_b();
+                if (len_b < len_a)
+                {
+                    use_a = false;
+                }
+                // else use_a is true but was already assigned like that
+            }
+
+            if (use_a)
+            {
+                assign_a(point, a, b);
+            }
+            else
+            {
+                assign_b(point, a, b);
+            }
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
         }
 
         CoordinateType dx_a, dy_a;
@@ -217,6 +359,7 @@ struct cartesian_segments
         // IntersectionPoint = (x1 + r * dx_a, y1 + r * dy_a)
     }
 
+<<<<<<< HEAD
 
     // Relate segments a and b
     template
@@ -282,6 +425,71 @@ struct cartesian_segments
         {
             return equals_point_point(robust_a1, robust_b2)
                 ? Policy::degenerate(a, true)
+=======
+    // Version for non-rescaled policies
+    template
+    <
+        typename UniqueSubRange1,
+        typename UniqueSubRange2,
+        typename Policy
+    >
+    static inline typename Policy::return_type
+        apply(UniqueSubRange1 const& range_p,
+              UniqueSubRange2 const& range_q,
+              Policy const& policy)
+    {
+        // Pass the same ranges both as normal ranges and as robust ranges
+        return apply(range_p, range_q, policy, range_p, range_q);
+    }
+
+    // Main entry-routine, calculating intersections of segments p / q
+    template
+    <
+        typename UniqueSubRange1,
+        typename UniqueSubRange2,
+        typename Policy,
+        typename RobustUniqueSubRange1,
+        typename RobustUniqueSubRange2
+    >
+    static inline typename Policy::return_type
+        apply(UniqueSubRange1 const& range_p,
+              UniqueSubRange2 const& range_q,
+              Policy const&,
+              RobustUniqueSubRange1 const& robust_range_p,
+              RobustUniqueSubRange2 const& robust_range_q)
+    {
+        typedef typename UniqueSubRange1::point_type point1_type;
+        typedef typename UniqueSubRange2::point_type point2_type;
+
+        BOOST_CONCEPT_ASSERT( (concepts::ConstPoint<point1_type>) );
+        BOOST_CONCEPT_ASSERT( (concepts::ConstPoint<point2_type>) );
+
+        // Get robust points (to be omitted later)
+        typedef typename RobustUniqueSubRange1::point_type robust_point1_type;
+        typedef typename RobustUniqueSubRange2::point_type robust_point2_type;
+
+        point1_type const& p1 = range_p.at(0);
+        point1_type const& p2 = range_p.at(1);
+        point2_type const& q1 = range_q.at(0);
+        point2_type const& q2 = range_q.at(1);
+
+        robust_point1_type const& robust_a1 = robust_range_p.at(0);
+        robust_point1_type const& robust_a2 = robust_range_p.at(1);
+        robust_point2_type const& robust_b1 = robust_range_q.at(0);
+        robust_point2_type const& robust_b2 = robust_range_q.at(1);
+
+        using geometry::detail::equals::equals_point_point;
+        bool const a_is_point = equals_point_point(robust_a1, robust_a2, point_in_point_strategy_type());
+        bool const b_is_point = equals_point_point(robust_b1, robust_b2, point_in_point_strategy_type());
+
+        if(a_is_point && b_is_point)
+        {
+            // Take either a or b
+            model::referring_segment<point1_type const> const d(p1, p2);
+
+            return equals_point_point(robust_a1, robust_b2, point_in_point_strategy_type())
+                ? Policy::degenerate(d, true)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
                 : Policy::disjoint()
                 ;
         }
@@ -309,6 +517,7 @@ struct cartesian_segments
 
         typedef typename select_most_precise
             <
+<<<<<<< HEAD
                 typename geometry::coordinate_type<RobustPoint1>::type,
                 typename geometry::coordinate_type<RobustPoint2>::type
             >::type robust_coordinate_type;
@@ -329,6 +538,24 @@ struct cartesian_segments
         sinfo.dx_b = get<1, 0>(b) - get<0, 0>(b);
         sinfo.dy_a = get<1, 1>(a) - get<0, 1>(a); // distance in y-dir
         sinfo.dy_b = get<1, 1>(b) - get<0, 1>(b);
+=======
+                typename geometry::coordinate_type<robust_point1_type>::type,
+                typename geometry::coordinate_type<robust_point2_type>::type
+            >::type robust_coordinate_type;
+
+        typedef segment_ratio<robust_coordinate_type> ratio_type;
+
+        segment_intersection_info
+            <
+                typename select_calculation_type<point1_type, point2_type, CalculationType>::type,
+                ratio_type
+            > sinfo;
+
+        sinfo.dx_a = get<0>(p2) - get<0>(p1); // distance in x-dir
+        sinfo.dx_b = get<0>(q2) - get<0>(q1);
+        sinfo.dy_a = get<1>(p2) - get<1>(p1); // distance in y-dir
+        sinfo.dy_b = get<1>(q2) - get<1>(q1);
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
         robust_coordinate_type const robust_dx_a = get<0>(robust_a2) - get<0>(robust_a1);
         robust_coordinate_type const robust_dx_b = get<0>(robust_b2) - get<0>(robust_b1);
@@ -371,6 +598,14 @@ struct cartesian_segments
             }
         }
 
+<<<<<<< HEAD
+=======
+        // Declare segments, currently necessary for the policies
+        // (segment_crosses, segment_colinear, degenerate, one_degenerate, etc)
+        model::referring_segment<point1_type const> const p(p1, p2);
+        model::referring_segment<point2_type const> const q(q1, q2);
+
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
         if (collinear)
         {
             std::pair<bool, bool> const collinear_use_first
@@ -387,21 +622,33 @@ struct cartesian_segments
 
                 if (collinear_use_first.first)
                 {
+<<<<<<< HEAD
                     return relate_collinear<0, Policy, ratio_type>(a, b,
+=======
+                    return relate_collinear<0, Policy, ratio_type>(p, q,
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
                             robust_a1, robust_a2, robust_b1, robust_b2,
                             a_is_point, b_is_point);
                 }
                 else
                 {
                     // Y direction contains larger segments (maybe dx is zero)
+<<<<<<< HEAD
                     return relate_collinear<1, Policy, ratio_type>(a, b,
+=======
+                    return relate_collinear<1, Policy, ratio_type>(p, q,
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
                             robust_a1, robust_a2, robust_b1, robust_b2,
                             a_is_point, b_is_point);
                 }
             }
         }
 
+<<<<<<< HEAD
         return Policy::segments_crosses(sides, sinfo, a, b);
+=======
+        return Policy::segments_crosses(sides, sinfo, p, q);
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     }
 
 private:

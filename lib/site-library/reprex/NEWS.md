@@ -1,6 +1,34 @@
+<<<<<<< HEAD
 # reprex 0.2.0
 
 reprex has a website: <http://reprex.tidyverse.org>. It includes a contributed article from @njtierney (#103).
+=======
+# reprex 0.3.0
+
+* The `crayon.enabled` option is explicitly set to `FALSE` when rendering the reprex (#238, #239).
+
+* Expression input is once again captured via `substitute()` (as opposed to `rlang::enexpr()`), which is more favorable for reprexes involving tidy eval (#241).
+
+* New venue "html" to render HTML fragments, useful for pasting in sites without markdown but that allow HTML (#236 @cwickham).
+
+* The YAML of reprex's template has been updated in light of the stricter YAML parser used in Pandoc >= 2.2.2.
+
+* `rlang::set_attrs()` has been soft-deprecated and is no longer used internally.
+
+# reprex 0.2.1
+
+* The reprex ad is formatted as superscript for `venue = "gh"` and `venue = "so"`, i.e. it is more subtle (#201).
+
+* New experimental venue "rtf" produces syntax highlighted snippets suitable for pasting into presentation software such as Keynote or PowerPoint. This venue is discussed in [an article](https://reprex.tidyverse.org/articles/articles/rtf.html) (#26).
+
+* Arguments `opts_chunk` and `opts_knit` have been removed from `reprex()`. The same effect has always been achievable via roxygen comments in the reprex code and the examples have always demonstrated this. Overriding knitr options doesn't seem to come up often enough in real-world `reprex()` usage to justify these arguments.
+
+* Internal file system operations use the [fs](https://fs.r-lib.org) package. This should not make any user-facing changes in reprex and we definitely want to know if it does.
+
+# reprex 0.2.0
+
+reprex has a website: <https://reprex.tidyverse.org>. It includes a contributed article from @njtierney (#103).
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 reprex has moved to the [tidyverse Organization](https://github.com/tidyverse). It is installed as part of the [tidyverse meta-package](https://www.tidyverse.org) and is [suggested to those seeking help](https://www.tidyverse.org/help/). 
 

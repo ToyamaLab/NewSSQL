@@ -24,6 +24,10 @@
 #include <algorithm>
 
 #include <boost/concept_check.hpp>
+<<<<<<< HEAD
+=======
+#include <boost/core/ignore_unused.hpp>
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 #include <boost/geometry/core/access.hpp>
 #include <boost/geometry/core/point_type.hpp>
@@ -194,7 +198,11 @@ public :
         subtract_point(w, projected);
 
         Strategy strategy;
+<<<<<<< HEAD
         boost::ignore_unused_variable_warning(strategy);
+=======
+        boost::ignore_unused(strategy);
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
         typename result_type<Point, PointOfSegment>::type result;
 

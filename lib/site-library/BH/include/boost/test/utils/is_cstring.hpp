@@ -5,11 +5,16 @@
 
 //  See http://www.boost.org/libs/test for the library home page.
 //
+<<<<<<< HEAD
 //  File        : $RCSfile$
 //
 //  Version     : $Revision$
 //
 //  Description : defines the is_cstring type trait
+=======
+//! @file
+//! Defines the is_cstring type trait
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 // ***************************************************************************
 
 #ifndef BOOST_TEST_UTILS_IS_CSTRING_HPP
@@ -26,6 +31,13 @@
 #include <boost/test/utils/basic_cstring/basic_cstring_fwd.hpp>
 #include <string>
 
+<<<<<<< HEAD
+=======
+#if defined(BOOST_TEST_STRING_VIEW)
+#include <string_view>
+#endif
+
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 //____________________________________________________________________________//
 
 namespace boost {
@@ -53,6 +65,7 @@ template<>
 struct is_cstring_impl<wchar_t*> : public mpl::true_ {};
 
 template <typename T, bool is_cstring = is_cstring_impl<typename boost::decay<T>::type>::value >
+<<<<<<< HEAD
 struct deduce_cstring_impl;
 
 template <typename T, bool is_cstring >
@@ -63,6 +76,18 @@ struct deduce_cstring_impl<T const, is_cstring> : public deduce_cstring_impl<T, 
 
 template <typename T>
 struct deduce_cstring_impl<T, true> {
+=======
+struct deduce_cstring_transform_impl;
+
+template <typename T, bool is_cstring >
+struct deduce_cstring_transform_impl<T&, is_cstring> : public deduce_cstring_transform_impl<T, is_cstring>{};
+
+template <typename T, bool is_cstring >
+struct deduce_cstring_transform_impl<T const, is_cstring> : public deduce_cstring_transform_impl<T, is_cstring>{};
+
+template <typename T>
+struct deduce_cstring_transform_impl<T, true> {
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     typedef typename boost::add_const<
         typename boost::remove_pointer<
             typename boost::decay<T>::type
@@ -72,7 +97,11 @@ struct deduce_cstring_impl<T, true> {
 };
 
 template <typename T>
+<<<<<<< HEAD
 struct deduce_cstring_impl< T, false > {
+=======
+struct deduce_cstring_transform_impl< T, false > {
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     typedef typename
         boost::remove_const<
             typename boost::remove_reference<T>::type
@@ -80,10 +109,28 @@ struct deduce_cstring_impl< T, false > {
 };
 
 template <typename T>
+<<<<<<< HEAD
 struct deduce_cstring_impl< std::basic_string<T, std::char_traits<T> >, false > {
     typedef boost::unit_test::basic_cstring<typename boost::add_const<T>::type> type;
 };
 
+=======
+struct deduce_cstring_transform_impl< std::basic_string<T, std::char_traits<T> >, false > {
+    typedef boost::unit_test::basic_cstring<typename boost::add_const<T>::type> type;
+};
+
+#if defined(BOOST_TEST_STRING_VIEW)
+template <typename T>
+struct deduce_cstring_transform_impl< std::basic_string_view<T, std::char_traits<T> >, false > {
+private:
+    using sv_t = std::basic_string_view<T, std::char_traits<T> > ;
+  
+public:
+    using type = stringview_cstring_helper<typename boost::add_const<T>::type, sv_t>;
+};
+#endif
+
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 } // namespace ut_detail
 
 template<typename T>
@@ -98,16 +145,32 @@ struct is_cstring_comparable< T, true > : public mpl::true_ {};
 template<typename T>
 struct is_cstring_comparable< std::basic_string<T, std::char_traits<T> >, false > : public mpl::true_ {};
 
+<<<<<<< HEAD
+=======
+#if defined(BOOST_TEST_STRING_VIEW)
+template<typename T>
+struct is_cstring_comparable< std::basic_string_view<T, std::char_traits<T> >, false > : public mpl::true_ {};
+#endif
+
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 template<typename T>
 struct is_cstring_comparable< boost::unit_test::basic_cstring<T>, false > : public mpl::true_ {};
 
 template <class T>
+<<<<<<< HEAD
 struct deduce_cstring {
+=======
+struct deduce_cstring_transform {
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     typedef typename
         boost::remove_const<
             typename boost::remove_reference<T>::type
         >::type U;
+<<<<<<< HEAD
     typedef typename ut_detail::deduce_cstring_impl<typename boost::decay<U>::type>::type type;
+=======
+    typedef typename ut_detail::deduce_cstring_transform_impl<typename boost::decay<U>::type>::type type;
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 };
 
 } // namespace unit_test

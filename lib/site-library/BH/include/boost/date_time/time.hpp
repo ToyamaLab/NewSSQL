@@ -164,7 +164,11 @@ namespace date_time {
     }
     time_type operator+=(const time_duration_type& td)
     {
+<<<<<<< HEAD
       time_ = (time_system::get_time_rep(date(), time_of_day() + td));
+=======
+      time_ = time_system::add_time_duration(time_,td);
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
       return time_type(time_);
     }
     //! subtract time durations
@@ -174,7 +178,11 @@ namespace date_time {
     }
     time_type operator-=(const time_duration_type& td) 
     {
+<<<<<<< HEAD
       time_ = (time_system::get_time_rep(date(), time_of_day() - td));
+=======
+      time_ = time_system::subtract_time_duration(time_, td);
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
       return time_type(time_);
     }
     

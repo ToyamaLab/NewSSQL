@@ -13,13 +13,29 @@
 #include <boost/thread/detail/config.hpp>
 #if defined(BOOST_THREAD_PLATFORM_WIN32)
 #if defined(BOOST_THREAD_PROVIDES_GENERIC_SHARED_MUTEX_ON_WIN)
+<<<<<<< HEAD
 #include <boost/thread/pthread/shared_mutex.hpp>
+=======
+#if defined(BOOST_THREAD_V2_SHARED_MUTEX)
+#include <boost/thread/v2/shared_mutex.hpp>
+#else
+#include <boost/thread/pthread/shared_mutex.hpp>
+#endif
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 #else
 #include <boost/thread/win32/shared_mutex.hpp>
 #endif
 #elif defined(BOOST_THREAD_PLATFORM_PTHREAD)
+<<<<<<< HEAD
 //#include <boost/thread/v2/shared_mutex.hpp>
 #include <boost/thread/pthread/shared_mutex.hpp>
+=======
+#if defined(BOOST_THREAD_V2_SHARED_MUTEX)
+#include <boost/thread/v2/shared_mutex.hpp>
+#else
+#include <boost/thread/pthread/shared_mutex.hpp>
+#endif
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 #else
 #error "Boost threads unavailable on this platform"
 #endif

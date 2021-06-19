@@ -3,8 +3,13 @@
 // Copyright (c) 2007-2012 Barend Gehrels, Amsterdam, the Netherlands.
 // Copyright (c) 2017 Adam Wulkiewicz, Lodz, Poland.
 
+<<<<<<< HEAD
 // This file was modified by Oracle on 2017.
 // Modifications copyright (c) 2017 Oracle and/or its affiliates.
+=======
+// This file was modified by Oracle on 2017, 2018.
+// Modifications copyright (c) 2017-2018 Oracle and/or its affiliates.
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 // Contributed and/or modified by Adam Wulkiewicz, on behalf of Oracle
 
@@ -77,7 +82,11 @@ struct self_section_visitor
     RobustPolicy const& m_rescale_policy;
     Turns& m_turns;
     InterruptPolicy& m_interrupt_policy;
+<<<<<<< HEAD
     std::size_t m_source_index;
+=======
+    int m_source_index;
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     bool m_skip_adjacent;
 
     inline self_section_visitor(Geometry const& g,
@@ -85,7 +94,11 @@ struct self_section_visitor
                                 RobustPolicy const& rp,
                                 Turns& turns,
                                 InterruptPolicy& ip,
+<<<<<<< HEAD
                                 std::size_t source_index,
+=======
+                                int source_index,
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
                                 bool skip_adjacent)
         : m_geometry(g)
         , m_intersection_strategy(is)
@@ -99,7 +112,13 @@ struct self_section_visitor
     template <typename Section>
     inline bool apply(Section const& sec1, Section const& sec2)
     {
+<<<<<<< HEAD
         if (! detail::disjoint::disjoint_box_box(sec1.bounding_box, sec2.bounding_box)
+=======
+        if (! detail::disjoint::disjoint_box_box(sec1.bounding_box,
+                                                 sec2.bounding_box,
+                                                 m_intersection_strategy.get_disjoint_box_box_strategy())
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
                 && ! sec1.duplicate
                 && ! sec2.duplicate)
         {
@@ -135,7 +154,11 @@ struct get_turns
             RobustPolicy const& robust_policy,
             Turns& turns,
             InterruptPolicy& interrupt_policy,
+<<<<<<< HEAD
             std::size_t source_index, bool skip_adjacent)
+=======
+            int source_index, bool skip_adjacent)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     {
         typedef model::box
             <
@@ -154,7 +177,12 @@ struct get_turns
 
         sections_type sec;
         geometry::sectionalize<Reverse, dimensions>(geometry, robust_policy, sec,
+<<<<<<< HEAD
                                                   intersection_strategy.get_envelope_strategy());
+=======
+                                                    intersection_strategy.get_envelope_strategy(),
+                                                    intersection_strategy.get_expand_strategy());
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
         self_section_visitor
             <
@@ -162,13 +190,30 @@ struct get_turns
                 Turns, TurnPolicy, IntersectionStrategy, RobustPolicy, InterruptPolicy
             > visitor(geometry, intersection_strategy, robust_policy, turns, interrupt_policy, source_index, skip_adjacent);
 
+<<<<<<< HEAD
+=======
+        typedef detail::section::get_section_box
+            <
+                typename IntersectionStrategy::expand_box_strategy_type
+            > get_section_box_type;
+        typedef detail::section::overlaps_section_box
+            <
+                typename IntersectionStrategy::disjoint_box_box_strategy_type
+            > overlaps_section_box_type;
+
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
         // false if interrupted
         geometry::partition
             <
                 box_type
             >::apply(sec, visitor,
+<<<<<<< HEAD
                      detail::section::get_section_box(),
                      detail::section::overlaps_section_box());
+=======
+                     get_section_box_type(),
+                     overlaps_section_box_type());
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
         return ! interrupt_policy.has_intersections;
     }
@@ -229,7 +274,11 @@ struct self_get_turn_points
             RobustPolicy const& ,
             Turns& ,
             InterruptPolicy& ,
+<<<<<<< HEAD
             std::size_t /*source_index*/,
+=======
+            int /*source_index*/,
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
             bool /*skip_adjacent*/)
     {
         return true;
@@ -292,7 +341,11 @@ inline void self_turns(Geometry const& geometry,
                        RobustPolicy const& robust_policy,
                        Turns& turns,
                        InterruptPolicy& interrupt_policy,
+<<<<<<< HEAD
                        std::size_t source_index = 0,
+=======
+                       int source_index = 0,
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
                        bool skip_adjacent = false)
 {
     concepts::check<Geometry const>();
@@ -324,6 +377,11 @@ inline void self_turns(Geometry const& geometry,
     \param turns container which will contain intersection points
     \param interrupt_policy policy determining if process is stopped
         when intersection is found
+<<<<<<< HEAD
+=======
+    \param source_index source index for generated turns
+    \param skip_adjacent indicates if adjacent turns should be skipped
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
  */
 template
 <
@@ -339,7 +397,11 @@ inline void self_turns(Geometry const& geometry,
                        RobustPolicy const& robust_policy,
                        Turns& turns,
                        InterruptPolicy& interrupt_policy,
+<<<<<<< HEAD
                        std::size_t source_index = 0,
+=======
+                       int source_index = 0,
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
                        bool skip_adjacent = false)
 {
     concepts::check<Geometry const>();

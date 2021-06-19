@@ -5,9 +5,15 @@ flatten	flatten
 fromJSON	fromJSON
 jsonlite	fromJSON
 minify	prettify
+<<<<<<< HEAD
 prettify	prettify
 prettify, minify	prettify
 rbind.pages	rbind_pages
+=======
+parse_json	read_json
+prettify	prettify
+prettify, minify	prettify
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 rbind_pages	rbind_pages
 read_json	read_json
 serializeJSON	serializeJSON

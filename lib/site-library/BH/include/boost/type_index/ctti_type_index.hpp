@@ -1,5 +1,9 @@
 //
+<<<<<<< HEAD
 // Copyright (c) Antony Polukhin, 2013-2016.
+=======
+// Copyright (c) 2013-2019 Antony Polukhin.
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 //
 //
 // Distributed under the Boost Software License, Version 1.0. (See accompanying
@@ -22,7 +26,11 @@
 #include <boost/type_index/detail/compile_time_type_info.hpp>
 
 #include <cstring>
+<<<<<<< HEAD
 #include <boost/functional/hash.hpp>
+=======
+#include <boost/container_hash/hash.hpp>
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 #include <boost/static_assert.hpp>
 #include <boost/type_traits/remove_cv.hpp>
 #include <boost/type_traits/remove_reference.hpp>

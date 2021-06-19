@@ -1,0 +1,7 @@
+GENERATE HTML
+cross_tab(
+    ["head"],,
+    ["side"]!,
+    "value" || '円'
+)@{side_width=100, null_value='該当なし'}
+FROM temp;

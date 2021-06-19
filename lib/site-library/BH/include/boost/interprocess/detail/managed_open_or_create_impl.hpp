@@ -115,8 +115,13 @@ class managed_open_or_create_impl
          ct_rounded_size
             < sizeof(boost::uint32_t)
             , MemAlignment ? (MemAlignment) :
+<<<<<<< HEAD
                (::boost::container::container_detail::alignment_of
                   < ::boost::container::container_detail::max_align_t >::value)
+=======
+               (::boost::container::dtl::alignment_of
+                  < ::boost::container::dtl::max_align_t >::value)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
             >::value;
 
    managed_open_or_create_impl()

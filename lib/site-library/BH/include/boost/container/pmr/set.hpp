@@ -26,12 +26,20 @@ namespace pmr {
 
 template <class Key
          ,class Compare = std::less<Key>
+<<<<<<< HEAD
          ,class Options = tree_assoc_defaults >
+=======
+         ,class Options = void >
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 using set = boost::container::set<Key, Compare, polymorphic_allocator<Key>, Options>;
 
 template <class Key
          ,class Compare = std::less<Key>
+<<<<<<< HEAD
          ,class Options = tree_assoc_defaults >
+=======
+         ,class Options = void >
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 using multiset = boost::container::multiset<Key, Compare, polymorphic_allocator<Key>, Options>;
 
 #endif
@@ -40,7 +48,11 @@ using multiset = boost::container::multiset<Key, Compare, polymorphic_allocator<
 //! that uses a polymorphic allocator
 template <class Key
          ,class Compare = std::less<Key>
+<<<<<<< HEAD
          ,class Options = tree_assoc_defaults >
+=======
+         ,class Options = void >
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 struct set_of
 {
    typedef boost::container::set<Key, Compare, polymorphic_allocator<Key>, Options> type;
@@ -50,7 +62,11 @@ struct set_of
 //! that uses a polymorphic allocator
 template <class Key
          ,class Compare = std::less<Key>
+<<<<<<< HEAD
          ,class Options = tree_assoc_defaults >
+=======
+         ,class Options = void >
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 struct multiset_of
 {
    typedef boost::container::multiset<Key, Compare, polymorphic_allocator<Key>, Options> type;

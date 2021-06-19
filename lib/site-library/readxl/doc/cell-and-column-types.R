@@ -44,7 +44,11 @@ df <- read_excel(readxl_example("type-me.xlsx"), sheet = "logical_coercion",
 print(df, n = Inf)
 
 ## ----out.width = '70%', echo = FALSE-------------------------------------
+<<<<<<< HEAD
 knitr::include_graphics("type-me-logical.png")
+=======
+knitr::include_graphics("img/type-me-logical.png")
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 ## ------------------------------------------------------------------------
 df <- read_excel(readxl_example("type-me.xlsx"), sheet = "numeric_coercion",
@@ -52,7 +56,11 @@ df <- read_excel(readxl_example("type-me.xlsx"), sheet = "numeric_coercion",
 print(df, n = Inf)
 
 ## ----out.width = '70%', echo = FALSE-------------------------------------
+<<<<<<< HEAD
 knitr::include_graphics("type-me-numeric.png")
+=======
+knitr::include_graphics("img/type-me-numeric.png")
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 ## ------------------------------------------------------------------------
 df <- read_excel(readxl_example("type-me.xlsx"), sheet = "date_coercion",
@@ -60,7 +68,11 @@ df <- read_excel(readxl_example("type-me.xlsx"), sheet = "date_coercion",
 print(df, n = Inf)
 
 ## ----out.width = '70%', echo = FALSE-------------------------------------
+<<<<<<< HEAD
 knitr::include_graphics("type-me-date.png")
+=======
+knitr::include_graphics("img/type-me-date.png")
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 ## ------------------------------------------------------------------------
 df <- read_excel(readxl_example("type-me.xlsx"), sheet = "text_coercion",
@@ -68,5 +80,9 @@ df <- read_excel(readxl_example("type-me.xlsx"), sheet = "text_coercion",
 print(df, n = Inf)
 
 ## ----out.width = '70%', echo = FALSE-------------------------------------
+<<<<<<< HEAD
 knitr::include_graphics("type-me-text.png")
+=======
+knitr::include_graphics("img/type-me-text.png")
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 

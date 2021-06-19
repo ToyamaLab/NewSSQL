@@ -9,8 +9,11 @@
 #ifndef BOOST_MATH_FWD_HPP
 #define BOOST_MATH_FWD_HPP
 
+<<<<<<< HEAD
 #include <boost/cstdint.hpp>
 
+=======
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 namespace boost
 {
 namespace math
@@ -22,6 +25,7 @@ namespace math
 template < typename T >
     class quaternion;
 
+<<<<<<< HEAD
 template < >
     class quaternion< float >;
 template < >
@@ -29,6 +33,8 @@ template < >
 template < >
     class quaternion< long double >;
 
+=======
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 // Also has many function templates (including operators)
 
 
@@ -44,6 +50,7 @@ template < >
 template < >
     class octonion< long double >;
 
+<<<<<<< HEAD
 // Also has many function templates (including operators)
 
 
@@ -90,6 +97,8 @@ template < static_gcd_type Value1, static_gcd_type Value2 >
 template < static_gcd_type Value1, static_gcd_type Value2 >
     struct static_lcm;
 
+=======
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 }  // namespace math
 }  // namespace boost
 

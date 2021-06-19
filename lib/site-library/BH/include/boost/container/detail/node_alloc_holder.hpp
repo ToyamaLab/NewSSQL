@@ -50,13 +50,22 @@
 
 namespace boost {
 namespace container {
+<<<<<<< HEAD
 namespace container_detail {
 
 BOOST_INTRUSIVE_INSTANTIATE_DEFAULT_TYPE_TMPLT(value_compare)
+=======
+namespace dtl {
+
+BOOST_INTRUSIVE_INSTANTIATE_DEFAULT_TYPE_TMPLT(key_compare)
+BOOST_INTRUSIVE_INSTANTIATE_DEFAULT_TYPE_TMPLT(key_equal)
+BOOST_INTRUSIVE_INSTANTIATE_DEFAULT_TYPE_TMPLT(hasher)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 BOOST_INTRUSIVE_INSTANTIATE_DEFAULT_TYPE_TMPLT(predicate_type)
 
 template<class Allocator, class ICont>
 struct node_alloc_holder
+<<<<<<< HEAD
 {
    //If the intrusive container is an associative container, obtain the predicate, which will
    //be of type node_compare<>. If not an associative container value_compare will be a "nat" type.
@@ -72,11 +81,50 @@ struct node_alloc_holder
 
    typedef allocator_traits<Allocator>                            allocator_traits_type;
    typedef typename allocator_traits_type::value_type             value_type;
+=======
+   : public allocator_traits<Allocator>::template
+            portable_rebind_alloc<typename ICont::value_type>::type   //NodeAlloc
+{
+   //If the intrusive container is an associative container, obtain the predicate, which will
+   //be of type node_compare<>. If not an associative container val_compare will be a "nat" type.
+   typedef BOOST_INTRUSIVE_OBTAIN_TYPE_WITH_DEFAULT
+      ( boost::container::dtl::
+      , ICont, key_compare, dtl::nat)                 intrusive_val_compare;
+   //In that case obtain the value predicate from the node predicate via predicate_type
+   //if intrusive_val_compare is node_compare<>, nat otherwise
+   typedef BOOST_INTRUSIVE_OBTAIN_TYPE_WITH_DEFAULT
+      ( boost::container::dtl::
+      , intrusive_val_compare
+      , predicate_type, dtl::nat)                    val_compare;
+
+   //If the intrusive container is a hash container, obtain the predicate, which will
+   //be of type node_compare<>. If not an associative container val_equal will be a "nat" type.
+   typedef BOOST_INTRUSIVE_OBTAIN_TYPE_WITH_DEFAULT
+      (boost::container::dtl::
+         , ICont, key_equal, dtl::nat2)              intrusive_val_equal;
+   typedef BOOST_INTRUSIVE_OBTAIN_TYPE_WITH_DEFAULT
+   (boost::container::dtl::
+      , ICont, hasher, dtl::nat3)                     intrusive_val_hasher;
+   //In that case obtain the value predicate from the node predicate via predicate_type
+   //if intrusive_val_compare is node_compare<>, nat otherwise
+   typedef BOOST_INTRUSIVE_OBTAIN_TYPE_WITH_DEFAULT
+   (boost::container::dtl::
+      , intrusive_val_equal
+      , predicate_type, dtl::nat2)                    val_equal;
+   typedef BOOST_INTRUSIVE_OBTAIN_TYPE_WITH_DEFAULT
+   (boost::container::dtl::
+      , intrusive_val_hasher
+      , predicate_type, dtl::nat3)                    val_hasher;
+
+   typedef allocator_traits<Allocator>                            allocator_traits_type;
+   typedef typename allocator_traits_type::value_type             val_type;
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
    typedef ICont                                                  intrusive_container;
    typedef typename ICont::value_type                             Node;
    typedef typename allocator_traits_type::template
       portable_rebind_alloc<Node>::type                           NodeAlloc;
    typedef allocator_traits<NodeAlloc>                            node_allocator_traits_type;
+<<<<<<< HEAD
    typedef container_detail::allocator_version_traits<NodeAlloc>  node_allocator_version_traits_type;
    typedef Allocator                                              ValAlloc;
    typedef typename node_allocator_traits_type::pointer           NodePtr;
@@ -85,6 +133,16 @@ struct node_alloc_holder
    typedef typename node_allocator_traits_type::difference_type   difference_type;
    typedef container_detail::integral_constant<unsigned,
       boost::container::container_detail::
+=======
+   typedef dtl::allocator_version_traits<NodeAlloc>  node_allocator_version_traits_type;
+   typedef Allocator                                              ValAlloc;
+   typedef typename node_allocator_traits_type::pointer           NodePtr;
+   typedef dtl::scoped_deallocator<NodeAlloc>        Deallocator;
+   typedef typename node_allocator_traits_type::size_type         size_type;
+   typedef typename node_allocator_traits_type::difference_type   difference_type;
+   typedef dtl::integral_constant<unsigned,
+      boost::container::dtl::
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
          version<NodeAlloc>::value>                               alloc_version;
    typedef typename ICont::iterator                               icont_iterator;
    typedef typename ICont::const_iterator                         icont_citerator;
@@ -99,6 +157,7 @@ struct node_alloc_holder
 
    //Constructors for sequence containers
    node_alloc_holder()
+<<<<<<< HEAD
       : members_()
    {}
 
@@ -137,13 +196,99 @@ struct node_alloc_holder
       container_detail::bool_<allocator_traits_type::propagate_on_container_copy_assignment::value> flag;
       container_detail::assign_alloc( static_cast<NodeAlloc &>(this->members_)
                                     , static_cast<const NodeAlloc &>(x.members_), flag);
+=======
+   {}
+
+   explicit node_alloc_holder(const ValAlloc &a)
+      : NodeAlloc(a)
+   {}
+
+   //Constructors for associative containers
+   node_alloc_holder(const val_compare &c, const ValAlloc &a)
+      : NodeAlloc(a), m_icont(typename ICont::key_compare(c))
+   {}
+
+   node_alloc_holder(const val_hasher &hf, const val_equal &eql, const ValAlloc &a)
+      : NodeAlloc(a)
+      , m_icont(typename ICont::bucket_traits()
+         , typename ICont::hasher(hf)
+         , typename ICont::key_equal(eql))
+   {}
+
+   node_alloc_holder(const val_hasher &hf, const ValAlloc &a)
+      : NodeAlloc(a)
+      , m_icont(typename ICont::bucket_traits()
+         , typename ICont::hasher(hf)
+         , typename ICont::key_equal())
+   {}
+
+   node_alloc_holder(const val_hasher &hf)
+      : m_icont(typename ICont::bucket_traits()
+         , typename ICont::hasher(hf)
+         , typename ICont::key_equal())
+   {}
+
+   explicit node_alloc_holder(const node_alloc_holder &x)
+      : NodeAlloc(NodeAllocTraits::select_on_container_copy_construction(x.node_alloc()))
+   {}
+
+   node_alloc_holder(const node_alloc_holder &x, const val_compare &c)
+      : NodeAlloc(NodeAllocTraits::select_on_container_copy_construction(x.node_alloc()))
+      , m_icont(typename ICont::key_compare(c))
+   {}
+
+   node_alloc_holder(const node_alloc_holder &x, const val_hasher &hf, const val_equal &eql)
+      : NodeAlloc(NodeAllocTraits::select_on_container_copy_construction(x.node_alloc()))
+      , m_icont( typename ICont::bucket_traits()
+               , typename ICont::hasher(hf)
+               , typename ICont::key_equal(eql))
+   {}
+
+   node_alloc_holder(const val_hasher &hf, const val_equal &eql)
+      : m_icont(typename ICont::bucket_traits()
+         , typename ICont::hasher(hf)
+         , typename ICont::key_equal(eql))
+   {}
+
+   explicit node_alloc_holder(BOOST_RV_REF(node_alloc_holder) x)
+      : NodeAlloc(boost::move(x.node_alloc()))
+   {  this->icont().swap(x.icont());  }
+
+   explicit node_alloc_holder(const val_compare &c)
+      : m_icont(typename ICont::key_compare(c))
+   {}
+
+   //helpers for move assignments
+   explicit node_alloc_holder(BOOST_RV_REF(node_alloc_holder) x, const val_compare &c)
+      : NodeAlloc(boost::move(x.node_alloc())), m_icont(typename ICont::key_compare(c))
+   {  this->icont().swap(x.icont());  }
+
+   explicit node_alloc_holder(BOOST_RV_REF(node_alloc_holder) x, const val_hasher &hf, const val_equal &eql)
+      : NodeAlloc(boost::move(x.node_alloc()))
+      , m_icont( typename ICont::bucket_traits()
+               , typename ICont::hasher(hf)
+               , typename ICont::key_equal(eql))
+   {  this->icont().swap(x.icont());   }
+
+   void copy_assign_alloc(const node_alloc_holder &x)
+   {
+      dtl::bool_<allocator_traits_type::propagate_on_container_copy_assignment::value> flag;
+      dtl::assign_alloc( static_cast<NodeAlloc &>(*this)
+                       , static_cast<const NodeAlloc &>(x), flag);
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
    }
 
    void move_assign_alloc( node_alloc_holder &x)
    {
+<<<<<<< HEAD
       container_detail::bool_<allocator_traits_type::propagate_on_container_move_assignment::value> flag;
       container_detail::move_alloc( static_cast<NodeAlloc &>(this->members_)
                                   , static_cast<NodeAlloc &>(x.members_), flag);
+=======
+      dtl::bool_<allocator_traits_type::propagate_on_container_move_assignment::value> flag;
+      dtl::move_alloc( static_cast<NodeAlloc &>(*this)
+                     , static_cast<NodeAlloc &>(x), flag);
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
    }
 
    ~node_alloc_holder()
@@ -164,6 +309,7 @@ struct node_alloc_holder
    NodePtr create_node(Args &&...args)
    {
       NodePtr p = this->allocate_one();
+<<<<<<< HEAD
       Deallocator node_deallocator(p, this->node_alloc());
       allocator_traits<NodeAlloc>::construct
          ( this->node_alloc()
@@ -172,6 +318,20 @@ struct node_alloc_holder
       //This does not throw
       typedef typename Node::hook_type hook_type;
       ::new(static_cast<hook_type*>(boost::movelib::to_raw_pointer(p)), boost_container_new_t()) hook_type;
+=======
+      BOOST_TRY{
+         ::new(boost::movelib::iterator_to_raw_pointer(p), boost_container_new_t()) Node;
+         allocator_traits<NodeAlloc>::construct
+            (this->node_alloc()
+            , p->get_real_data_ptr(), boost::forward<Args>(args)...);
+      }
+      BOOST_CATCH(...) {
+         p->destroy_header();
+         this->node_alloc().deallocate(p, 1);
+         BOOST_RETHROW
+      }
+      BOOST_CATCH_END
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
       return (p);
    }
 
@@ -182,6 +342,7 @@ struct node_alloc_holder
    NodePtr create_node(BOOST_MOVE_UREF##N)\
    {\
       NodePtr p = this->allocate_one();\
+<<<<<<< HEAD
       Deallocator node_deallocator(p, this->node_alloc());\
       allocator_traits<NodeAlloc>::construct\
          ( this->node_alloc()\
@@ -190,6 +351,21 @@ struct node_alloc_holder
       node_deallocator.release();\
       typedef typename Node::hook_type hook_type;\
       ::new(static_cast<hook_type*>(boost::movelib::to_raw_pointer(p)), boost_container_new_t()) hook_type;\
+=======
+      BOOST_TRY{\
+         ::new(boost::movelib::iterator_to_raw_pointer(p), boost_container_new_t()) Node;\
+         allocator_traits<NodeAlloc>::construct\
+            ( this->node_alloc()\
+            , p->get_real_data_ptr()\
+             BOOST_MOVE_I##N BOOST_MOVE_FWD##N);\
+      }\
+      BOOST_CATCH(...) {\
+         p->destroy_header();\
+         this->node_alloc().deallocate(p, 1);\
+         BOOST_RETHROW\
+      }\
+      BOOST_CATCH_END\
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
       return (p);\
    }\
    //
@@ -202,12 +378,25 @@ struct node_alloc_holder
    NodePtr create_node_from_it(const It &it)
    {
       NodePtr p = this->allocate_one();
+<<<<<<< HEAD
       Deallocator node_deallocator(p, this->node_alloc());
       ::boost::container::construct_in_place(this->node_alloc(), container_detail::addressof(p->m_data), it);
       node_deallocator.release();
       //This does not throw
       typedef typename Node::hook_type hook_type;
       ::new(static_cast<hook_type*>(boost::movelib::to_raw_pointer(p)), boost_container_new_t()) hook_type;
+=======
+      BOOST_TRY{
+         ::new(boost::movelib::iterator_to_raw_pointer(p), boost_container_new_t()) Node;
+         ::boost::container::construct_in_place(this->node_alloc(), p->get_real_data_ptr(), it);
+      }
+      BOOST_CATCH(...) {
+         p->destroy_header();
+         this->node_alloc().deallocate(p, 1);
+         BOOST_RETHROW
+      }
+      BOOST_CATCH_END
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
       return (p);
    }
 
@@ -215,6 +404,7 @@ struct node_alloc_holder
    NodePtr create_node_from_key(BOOST_FWD_REF(KeyConvertible) key)
    {
       NodePtr p = this->allocate_one();
+<<<<<<< HEAD
       NodeAlloc &na = this->node_alloc();
       Deallocator node_deallocator(p, this->node_alloc());
       node_allocator_traits_type::construct
@@ -231,6 +421,28 @@ struct node_alloc_holder
       //This does not throw
       typedef typename Node::hook_type hook_type;
       ::new(static_cast<hook_type*>(boost::movelib::to_raw_pointer(p)), boost_container_new_t()) hook_type;
+=======
+      BOOST_TRY{
+         ::new(boost::movelib::iterator_to_raw_pointer(p), boost_container_new_t()) Node;
+         NodeAlloc &na = this->node_alloc();
+         node_allocator_traits_type::construct
+            (na, dtl::addressof(p->get_real_data().first), boost::forward<KeyConvertible>(key));
+         BOOST_TRY{
+            node_allocator_traits_type::construct(na, dtl::addressof(p->get_real_data().second));
+         }
+         BOOST_CATCH(...){
+            node_allocator_traits_type::destroy(na, dtl::addressof(p->get_real_data().first));
+            BOOST_RETHROW;
+         }
+         BOOST_CATCH_END
+      }
+      BOOST_CATCH(...) {
+         p->destroy_header();
+         this->node_alloc().deallocate(p, 1);
+         BOOST_RETHROW
+      }
+      BOOST_CATCH_END
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
       return (p);
    }
 
@@ -243,8 +455,13 @@ struct node_alloc_holder
    void swap(node_alloc_holder &x)
    {
       this->icont().swap(x.icont());
+<<<<<<< HEAD
       container_detail::bool_<allocator_traits_type::propagate_on_container_swap::value> flag;
       container_detail::swap_alloc(this->node_alloc(), x.node_alloc(), flag);
+=======
+      dtl::bool_<allocator_traits_type::propagate_on_container_swap::value> flag;
+      dtl::swap_alloc(this->node_alloc(), x.node_alloc(), flag);
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
    }
 
    template<class FwdIterator, class Inserter>
@@ -252,6 +469,7 @@ struct node_alloc_holder
       (FwdIterator beg, difference_type n, Inserter inserter)
    {
       if(n){
+<<<<<<< HEAD
          typedef typename node_allocator_version_traits_type::multiallocation_chain multiallocation_chain;
 
          //Try to allocate memory in a single block
@@ -276,6 +494,34 @@ struct node_alloc_holder
                //This does not throw
                typedef typename Node::hook_type hook_type;
                ::new(static_cast<hook_type*>(p), boost_container_new_t()) hook_type;
+=======
+         typedef typename node_allocator_version_traits_type::multiallocation_chain multiallocation_chain_t;
+
+         //Try to allocate memory in a single block
+         typedef typename multiallocation_chain_t::iterator multialloc_iterator_t;
+         multiallocation_chain_t chain;
+         NodeAlloc &nalloc = this->node_alloc();
+         node_allocator_version_traits_type::allocate_individual(nalloc, n, chain);
+         multialloc_iterator_t itbeg  = chain.begin();
+         multialloc_iterator_t itlast = chain.last();
+         chain.clear();
+
+         Node *p = 0;
+            BOOST_TRY{
+            Deallocator node_deallocator(NodePtr(), nalloc);
+            dtl::scoped_destructor<NodeAlloc> sdestructor(nalloc, 0);
+            while(n){
+               --n;
+               p = boost::movelib::iterator_to_raw_pointer(itbeg);
+               ++itbeg; //Increment iterator before overwriting pointed memory
+               //This does not throw
+               p = ::new(p, boost_container_new_t()) Node;
+               node_deallocator.set(p);
+               //This can throw
+               boost::container::construct_in_place(nalloc, p->get_real_data_ptr(), beg);
+               sdestructor.set(p);
+               ++beg;
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
                //This can throw in some containers (predicate might throw).
                //(sdestructor will destruct the node and node_deallocator will deallocate it in case of exception)
                inserter(*p);
@@ -285,8 +531,14 @@ struct node_alloc_holder
             node_deallocator.release();
          }
          BOOST_CATCH(...){
+<<<<<<< HEAD
             mem.incorporate_after(mem.last(), &*itbeg, &*itlast, n);
             node_allocator_version_traits_type::deallocate_individual(this->node_alloc(), mem);
+=======
+            p->destroy_header();
+            chain.incorporate_after(chain.last(), &*itbeg, &*itlast, n);
+            node_allocator_version_traits_type::deallocate_individual(this->node_alloc(), chain);
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
             BOOST_RETHROW
          }
          BOOST_CATCH_END
@@ -339,7 +591,11 @@ struct node_alloc_holder
       {}
 
       NodePtr operator()(const Node &other) const
+<<<<<<< HEAD
       {  return m_holder.create_node(other.m_data);  }
+=======
+      {  return m_holder.create_node(other.get_real_data());  }
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
       node_alloc_holder &m_holder;
    };
@@ -351,13 +607,19 @@ struct node_alloc_holder
       {}
 
       NodePtr operator()(Node &other)
+<<<<<<< HEAD
       {  //Use m_data instead of get_data to allow moving const key in [multi]map
          return m_holder.create_node(::boost::move(other.m_data));
+=======
+      {  //Use get_real_data() instead of get_real_data to allow moving const key in [multi]map
+         return m_holder.create_node(::boost::move(other.get_real_data()));
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
       }
 
       node_alloc_holder &m_holder;
    };
 
+<<<<<<< HEAD
    struct members_holder
       :  public NodeAlloc
    {
@@ -411,6 +673,30 @@ struct node_alloc_holder
 };
 
 }  //namespace container_detail {
+=======
+   ICont &non_const_icont() const
+   {  return const_cast<ICont&>(this->m_icont);   }
+
+   NodeAlloc &node_alloc()
+   {  return static_cast<NodeAlloc &>(*this);   }
+
+   const NodeAlloc &node_alloc() const
+   {  return static_cast<const NodeAlloc &>(*this);   }
+
+   public:
+   ICont &icont()
+   {  return this->m_icont;   }
+
+   const ICont &icont() const
+   {  return this->m_icont;   }
+
+   private:
+   //The intrusive container
+   ICont m_icont;
+};
+
+}  //namespace dtl {
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 }  //namespace container {
 }  //namespace boost {
 

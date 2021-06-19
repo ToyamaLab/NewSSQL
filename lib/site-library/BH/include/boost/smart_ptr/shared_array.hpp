@@ -225,7 +225,11 @@ public:
         pn.swap(other.pn);
     }
 
+<<<<<<< HEAD
     void * _internal_get_deleter( boost::detail::sp_typeinfo const & ti ) const BOOST_SP_NOEXCEPT
+=======
+    void * _internal_get_deleter( boost::detail::sp_typeinfo_ const & ti ) const BOOST_SP_NOEXCEPT
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     {
         return pn.get_deleter( ti );
     }
@@ -285,7 +289,11 @@ template<class T> void swap(shared_array<T> & a, shared_array<T> & b) BOOST_SP_N
 
 template< class D, class T > D * get_deleter( shared_array<T> const & p ) BOOST_SP_NOEXCEPT
 {
+<<<<<<< HEAD
     return static_cast< D * >( p._internal_get_deleter( BOOST_SP_TYPEID(D) ) );
+=======
+    return static_cast< D * >( p._internal_get_deleter( BOOST_SP_TYPEID_(D) ) );
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 }
 
 } // namespace boost

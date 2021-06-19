@@ -2,7 +2,11 @@
 // ip/impl/address_v4.ipp
 // ~~~~~~~~~~~~~~~~~~~~~~
 //
+<<<<<<< HEAD
 // Copyright (c) 2003-2017 Christopher M. Kohlhoff (chris at kohlhoff dot com)
+=======
+// Copyright (c) 2003-2019 Christopher M. Kohlhoff (chris at kohlhoff dot com)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 //
 // Distributed under the Boost Software License, Version 1.0. (See accompanying
 // file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
@@ -58,7 +62,11 @@ address_v4::address_v4(address_v4::uint_type addr)
       static_cast<boost::asio::detail::u_long_type>(addr));
 }
 
+<<<<<<< HEAD
 address_v4::bytes_type address_v4::to_bytes() const
+=======
+address_v4::bytes_type address_v4::to_bytes() const BOOST_ASIO_NOEXCEPT
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 {
   using namespace std; // For memcpy.
   bytes_type bytes;
@@ -70,7 +78,11 @@ address_v4::bytes_type address_v4::to_bytes() const
   return bytes;
 }
 
+<<<<<<< HEAD
 address_v4::uint_type address_v4::to_uint() const
+=======
+address_v4::uint_type address_v4::to_uint() const BOOST_ASIO_NOEXCEPT
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 {
   return boost::asio::detail::socket_ops::network_to_host_long(addr_.s_addr);
 }
@@ -109,12 +121,20 @@ std::string address_v4::to_string(boost::system::error_code& ec) const
 }
 #endif // !defined(BOOST_ASIO_NO_DEPRECATED)
 
+<<<<<<< HEAD
 bool address_v4::is_loopback() const
+=======
+bool address_v4::is_loopback() const BOOST_ASIO_NOEXCEPT
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 {
   return (to_uint() & 0xFF000000) == 0x7F000000;
 }
 
+<<<<<<< HEAD
 bool address_v4::is_unspecified() const
+=======
+bool address_v4::is_unspecified() const BOOST_ASIO_NOEXCEPT
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 {
   return to_uint() == 0;
 }
@@ -136,7 +156,11 @@ bool address_v4::is_class_c() const
 }
 #endif // !defined(BOOST_ASIO_NO_DEPRECATED)
 
+<<<<<<< HEAD
 bool address_v4::is_multicast() const
+=======
+bool address_v4::is_multicast() const BOOST_ASIO_NOEXCEPT
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 {
   return (to_uint() & 0xF0000000) == 0xE0000000;
 }
@@ -167,8 +191,13 @@ address_v4 make_address_v4(const char* str)
   return addr;
 }
 
+<<<<<<< HEAD
 address_v4 make_address_v4(
     const char* str, boost::system::error_code& ec)
+=======
+address_v4 make_address_v4(const char* str,
+    boost::system::error_code& ec) BOOST_ASIO_NOEXCEPT
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 {
   address_v4::bytes_type bytes;
   if (boost::asio::detail::socket_ops::inet_pton(
@@ -182,13 +211,22 @@ address_v4 make_address_v4(const std::string& str)
   return make_address_v4(str.c_str());
 }
 
+<<<<<<< HEAD
 address_v4 make_address_v4(
     const std::string& str, boost::system::error_code& ec)
+=======
+address_v4 make_address_v4(const std::string& str,
+    boost::system::error_code& ec) BOOST_ASIO_NOEXCEPT
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 {
   return make_address_v4(str.c_str(), ec);
 }
 
+<<<<<<< HEAD
 #if defined(BOOST_ASIO_HAS_STD_STRING_VIEW)
+=======
+#if defined(BOOST_ASIO_HAS_STRING_VIEW)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 address_v4 make_address_v4(string_view str)
 {
@@ -196,12 +234,20 @@ address_v4 make_address_v4(string_view str)
 }
 
 address_v4 make_address_v4(string_view str,
+<<<<<<< HEAD
     boost::system::error_code& ec)
+=======
+    boost::system::error_code& ec) BOOST_ASIO_NOEXCEPT
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 {
   return make_address_v4(static_cast<std::string>(str), ec);
 }
 
+<<<<<<< HEAD
 #endif // defined(BOOST_ASIO_HAS_STD_STRING_VIEW)
+=======
+#endif // defined(BOOST_ASIO_HAS_STRING_VIEW)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 } // namespace ip
 } // namespace asio

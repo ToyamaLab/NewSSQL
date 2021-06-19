@@ -49,7 +49,11 @@ namespace container {
 
 #elif defined(BOOST_NO_EXCEPTIONS)
 
+<<<<<<< HEAD
    inline void throw_bad_alloc()
+=======
+   BOOST_NORETURN inline void throw_bad_alloc()
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
    {
       const char msg[] = "boost::container bad_alloc thrown";
       (void)msg;
@@ -57,7 +61,11 @@ namespace container {
       std::abort();
    }
 
+<<<<<<< HEAD
    inline void throw_out_of_range(const char* str)
+=======
+   BOOST_NORETURN inline void throw_out_of_range(const char* str)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
    {
       const char msg[] = "boost::container out_of_range thrown";
       (void)msg; (void)str;
@@ -65,7 +73,11 @@ namespace container {
       std::abort();
    }
 
+<<<<<<< HEAD
    inline void throw_length_error(const char* str)
+=======
+   BOOST_NORETURN inline void throw_length_error(const char* str)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
    {
       const char msg[] = "boost::container length_error thrown";
       (void)msg; (void)str;
@@ -73,7 +85,11 @@ namespace container {
       std::abort();
    }
 
+<<<<<<< HEAD
    inline void throw_logic_error(const char* str)
+=======
+   BOOST_NORETURN inline void throw_logic_error(const char* str)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
    {
       const char msg[] = "boost::container logic_error thrown";
       (void)msg; (void)str;
@@ -81,7 +97,11 @@ namespace container {
       std::abort();
    }
 
+<<<<<<< HEAD
    inline void throw_runtime_error(const char* str)
+=======
+   BOOST_NORETURN inline void throw_runtime_error(const char* str)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
    {
       const char msg[] = "boost::container runtime_error thrown";
       (void)msg; (void)str;
@@ -102,7 +122,11 @@ namespace container {
    //! <li>If BOOST_NO_EXCEPTIONS and BOOST_CONTAINER_USER_DEFINED_THROW_CALLBACKS are defined
    //!   the user must provide an implementation and the function should not return.</li>
    //! </ul>
+<<<<<<< HEAD
    inline void throw_bad_alloc()
+=======
+   BOOST_NORETURN inline void throw_bad_alloc()
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
    {
       throw std::bad_alloc();
    }
@@ -118,7 +142,11 @@ namespace container {
    //! <li>If BOOST_NO_EXCEPTIONS and BOOST_CONTAINER_USER_DEFINED_THROW_CALLBACKS are defined
    //!   the user must provide an implementation and the function should not return.</li>
    //! </ul>
+<<<<<<< HEAD
    inline void throw_out_of_range(const char* str)
+=======
+   BOOST_NORETURN inline void throw_out_of_range(const char* str)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
    {
       throw std::out_of_range(str);
    }
@@ -134,7 +162,11 @@ namespace container {
    //! <li>If BOOST_NO_EXCEPTIONS and BOOST_CONTAINER_USER_DEFINED_THROW_CALLBACKS are defined
    //!   the user must provide an implementation and the function should not return.</li>
    //! </ul>
+<<<<<<< HEAD
    inline void throw_length_error(const char* str)
+=======
+   BOOST_NORETURN inline void throw_length_error(const char* str)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
    {
       throw std::length_error(str);
    }
@@ -151,7 +183,11 @@ namespace container {
    //! <li>If BOOST_NO_EXCEPTIONS and BOOST_CONTAINER_USER_DEFINED_THROW_CALLBACKS are defined
    //!   the user must provide an implementation and the function should not return.</li>
    //! </ul>
+<<<<<<< HEAD
    inline void throw_logic_error(const char* str)
+=======
+   BOOST_NORETURN inline void throw_logic_error(const char* str)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
    {
       throw std::logic_error(str);
    }
@@ -167,7 +203,11 @@ namespace container {
    //! <li>If BOOST_NO_EXCEPTIONS and BOOST_CONTAINER_USER_DEFINED_THROW_CALLBACKS are defined
    //!   the user must provide an implementation and the function should not return.</li>
    //! </ul>
+<<<<<<< HEAD
    inline void throw_runtime_error(const char* str)
+=======
+   BOOST_NORETURN inline void throw_runtime_error(const char* str)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
    {
       throw std::runtime_error(str);
    }

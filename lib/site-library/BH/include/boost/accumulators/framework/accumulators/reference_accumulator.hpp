@@ -31,7 +31,11 @@ namespace impl
 
         template<typename Args>
         reference_accumulator_impl(Args const &args)
+<<<<<<< HEAD
           : ref(args[parameter::keyword<Tag>::get()])
+=======
+          : ref(args[parameter::keyword<Tag>::instance])
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
         {
         }
 

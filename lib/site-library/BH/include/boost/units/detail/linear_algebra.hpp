@@ -598,8 +598,13 @@ struct set_insert<false> {
 
 template<class Set, class T>
 struct has_key {
+<<<<<<< HEAD
     static const long size = sizeof(Set::lookup((wrap<T>*)0));
     static const bool value = (size == sizeof(set_yes));
+=======
+    BOOST_STATIC_CONSTEXPR long size = sizeof(Set::lookup((wrap<T>*)0));
+    BOOST_STATIC_CONSTEXPR bool value = (size == sizeof(set_yes));
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 };
 
 template<int N>
@@ -826,7 +831,11 @@ struct normalize_units {
         dimensions
     >::type matrix;
     typedef typename make_square_and_invert<matrix>::type type;
+<<<<<<< HEAD
     static const long extra = (type::size::value) - (T::size::value);
+=======
+    BOOST_STATIC_CONSTEXPR long extra = (type::size::value) - (T::size::value);
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 };
 
 // multiply_add_units computes M x V
@@ -977,7 +986,11 @@ struct is_simple_system_impl {
                 typename test::base_dimension_type
             >
         > type;
+<<<<<<< HEAD
         static const bool value = (type::value);
+=======
+        BOOST_STATIC_CONSTEXPR bool value = (type::value);
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     };
 };
 
@@ -1001,7 +1014,11 @@ struct is_simple_system {
             typename test::base_dimension_type
         >
     >::type type;
+<<<<<<< HEAD
     static const bool value = type::value;
+=======
+    BOOST_STATIC_CONSTEXPR bool value = type::value;
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 };
 
 template<bool>

@@ -2,6 +2,14 @@
 
 // Copyright (c) 2007-2012 Barend Gehrels, Amsterdam, the Netherlands.
 
+<<<<<<< HEAD
+=======
+// This file was modified by Oracle on 2018.
+// Modifications copyright (c) 2018, Oracle and/or its affiliates.
+
+// Contributed and/or modified by Adam Wulkiewicz, on behalf of Oracle
+
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 // Use, modification and distribution is subject to the Boost Software License,
 // Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
 // http://www.boost.org/LICENSE_1_0.txt)
@@ -9,6 +17,7 @@
 #ifndef BOOST_GEOMETRY_ALGORITHMS_DETAIL_OVERLAY_CONVERT_RING_HPP
 #define BOOST_GEOMETRY_ALGORITHMS_DETAIL_OVERLAY_CONVERT_RING_HPP
 
+<<<<<<< HEAD
 
 #include <boost/mpl/assert.hpp>
 #include <boost/range.hpp>
@@ -21,6 +30,18 @@
 
 #include <boost/geometry/algorithms/convert.hpp>
 
+=======
+#include <boost/mpl/assert.hpp>
+#include <boost/range/algorithm/reverse.hpp>
+
+#include <boost/geometry/algorithms/convert.hpp>
+#include <boost/geometry/algorithms/detail/ring_identifier.hpp>
+#include <boost/geometry/algorithms/num_points.hpp>
+
+#include <boost/geometry/core/tags.hpp>
+#include <boost/geometry/core/exterior_ring.hpp>
+#include <boost/geometry/core/interior_rings.hpp>
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 namespace boost { namespace geometry
 {

@@ -1,0 +1,4 @@
+Generate HTML
+["manager" , id, "name"]!
+from employee
+where name like '%田%';

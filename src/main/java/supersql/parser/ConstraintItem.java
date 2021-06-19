@@ -71,4 +71,14 @@ public class ConstraintItem {
         }
         return ut;
     }
+
+    @Override
+    public String toString() {
+        return "ConstraintItem{" +
+                "statement='" + statement + '\'' +
+                ", attributes=" + attributes +
+                ", operator='" + operator + '\'' +
+                ", comparison='" + comparison + '\'' +
+                '}';
+    }
 }

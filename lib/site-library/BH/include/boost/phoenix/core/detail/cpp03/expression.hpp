@@ -43,10 +43,17 @@
 
 #define M0(Z, N, D)                                                             \
     BOOST_PP_COMMA_IF(N)                                                        \
+<<<<<<< HEAD
     typename proto::detail::uncvref<typename call_traits<BOOST_PP_CAT(A, N)>::value_type>::type
 
 #define M1(Z, N, D)                                                             \
     BOOST_PP_COMMA_IF(N) typename call_traits<BOOST_PP_CAT(A, N)>::param_type BOOST_PP_CAT(a, N)
+=======
+    typename proto::detail::uncvref<BOOST_PP_CAT(A, N)>::type
+
+#define M1(Z, N, D)                                                             \
+    BOOST_PP_COMMA_IF(N) typename boost::add_reference<typename boost::add_const<BOOST_PP_CAT(A, N)>::type>::type BOOST_PP_CAT(a, N)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 #define BOOST_PHOENIX_ITERATION_PARAMS                                          \
     (3, (1, BOOST_PHOENIX_COMPOSITE_LIMIT,                                      \

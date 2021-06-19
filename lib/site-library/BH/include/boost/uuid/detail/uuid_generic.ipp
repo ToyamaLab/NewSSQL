@@ -2,7 +2,11 @@
  *             Copyright Andy Tompkins 2006.
  * Distributed under the Boost Software License, Version 1.0.
  *    (See accompanying file LICENSE_1_0.txt or copy at
+<<<<<<< HEAD
  *          http://www.boost.org/LICENSE_1_0.txt)
+=======
+ *          https://www.boost.org/LICENSE_1_0.txt)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
  */
 /*!
  * \file   uuid/detail/uuid_generic.ipp

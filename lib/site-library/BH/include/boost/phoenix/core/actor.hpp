@@ -75,6 +75,7 @@ namespace boost { namespace phoenix
         {
             typedef T const & type;
         };
+<<<<<<< HEAD
 
         struct do_assign
         {
@@ -134,6 +135,8 @@ namespace boost { namespace phoenix
             };
         };
 #endif
+=======
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     }
 
     namespace result_of
@@ -202,6 +205,7 @@ namespace boost { namespace phoenix
             >::type
             expr_type;
 
+<<<<<<< HEAD
         BOOST_PROTO_BASIC_EXTENDS(expr_type, actor<expr_type>, phoenix_domain)
 
         // providing operator= to be assignable
@@ -263,6 +267,11 @@ namespace boost { namespace phoenix
         {
             return proto::make_expr<proto::tag::subscript, phoenix_domain>(this->proto_expr_, a0);
         }
+=======
+        BOOST_PROTO_BASIC_EXTENDS(expr_type, actor<Expr>, phoenix_domain)
+        BOOST_PROTO_EXTENDS_SUBSCRIPT()
+        BOOST_PROTO_EXTENDS_ASSIGN()
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
         template <typename Sig>
         struct result;

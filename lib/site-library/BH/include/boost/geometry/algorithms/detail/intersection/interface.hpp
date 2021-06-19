@@ -2,8 +2,13 @@
 
 // Copyright (c) 2007-2012 Barend Gehrels, Amsterdam, the Netherlands.
 
+<<<<<<< HEAD
 // This file was modified by Oracle on 2014, 2017.
 // Modifications copyright (c) 2014-2017, Oracle and/or its affiliates.
+=======
+// This file was modified by Oracle on 2014, 2017, 2019.
+// Modifications copyright (c) 2014-2019, Oracle and/or its affiliates.
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 // Contributed and/or modified by Adam Wulkiewicz, on behalf of Oracle
 
@@ -109,16 +114,36 @@ struct intersection
     <
         typename Geometry1,
         typename Geometry2,
+<<<<<<< HEAD
         typename RobustPolicy,
+=======
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
         typename GeometryOut,
         typename Strategy
     >
     static inline bool apply(Geometry1 const& geometry1,
                              Geometry2 const& geometry2,
+<<<<<<< HEAD
                              RobustPolicy const& robust_policy,
                              GeometryOut & geometry_out,
                              Strategy const& strategy)
     {
+=======
+                             GeometryOut & geometry_out,
+                             Strategy const& strategy)
+    {
+        typedef typename geometry::rescale_overlay_policy_type
+            <
+                Geometry1,
+                Geometry2,
+                typename Strategy::cs_tag
+            >::type rescale_policy_type;
+        
+        rescale_policy_type robust_policy
+            = geometry::get_rescale_policy<rescale_policy_type>(
+                    geometry1, geometry2, strategy);
+
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
         return dispatch::intersection
             <
                 Geometry1,
@@ -131,11 +156,15 @@ struct intersection
     <
         typename Geometry1,
         typename Geometry2,
+<<<<<<< HEAD
         typename RobustPolicy,
+=======
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
         typename GeometryOut
     >
     static inline bool apply(Geometry1 const& geometry1,
                              Geometry2 const& geometry2,
+<<<<<<< HEAD
                              RobustPolicy const& robust_policy,
                              GeometryOut & geometry_out,
                              default_strategy)
@@ -145,12 +174,37 @@ struct intersection
                 Geometry1, Geometry2
             >::type strategy_type;
         
+=======
+                             GeometryOut & geometry_out,
+                             default_strategy)
+    {
+        typedef typename geometry::rescale_overlay_policy_type
+            <
+                Geometry1,
+                Geometry2,
+                typename geometry::cs_tag<Geometry1>::type
+            >::type rescale_policy_type;
+        
+        typename strategy::relate::services::default_strategy
+            <
+                Geometry1, Geometry2
+            >::type strategy;
+
+        rescale_policy_type robust_policy
+            = geometry::get_rescale_policy<rescale_policy_type>(
+                    geometry1, geometry2, strategy);
+
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
         return dispatch::intersection
             <
                 Geometry1,
                 Geometry2
             >::apply(geometry1, geometry2, robust_policy, geometry_out,
+<<<<<<< HEAD
                      strategy_type());
+=======
+                     strategy);
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     }
 };
 
@@ -172,6 +226,7 @@ struct intersection
         concepts::check<Geometry1 const>();
         concepts::check<Geometry2 const>();
         
+<<<<<<< HEAD
         typedef typename geometry::rescale_overlay_policy_type
             <
                 Geometry1,
@@ -185,6 +240,10 @@ struct intersection
         return resolve_strategy::intersection::apply(geometry1,
                                                      geometry2,
                                                      robust_policy,
+=======
+        return resolve_strategy::intersection::apply(geometry1,
+                                                     geometry2,
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
                                                      geometry_out,
                                                      strategy);
     }

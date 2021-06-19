@@ -6,8 +6,11 @@
 
 # include <boost/type_traits/integral_constant.hpp>
 # include <boost/type_traits/remove_cv.hpp>
+<<<<<<< HEAD
 # include <boost/mpl/aux_/lambda_support.hpp>
 # include <boost/mpl/bool.hpp>
+=======
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 # include <boost/detail/workaround.hpp>
 
 namespace boost { namespace detail {
@@ -106,14 +109,20 @@ template<typename T>
 struct is_incrementable :
     public boost::integral_constant<bool, boost::detail::is_incrementable_::impl<T>::value>
 {
+<<<<<<< HEAD
     BOOST_MPL_AUX_LAMBDA_SUPPORT(1,is_incrementable,(T))
+=======
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 };
 
 template<typename T>
 struct is_postfix_incrementable :
     public boost::integral_constant<bool, boost::detail::is_incrementable_::postfix_impl<T>::value>
 {
+<<<<<<< HEAD
     BOOST_MPL_AUX_LAMBDA_SUPPORT(1,is_postfix_incrementable,(T))
+=======
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 };
 
 } // namespace detail

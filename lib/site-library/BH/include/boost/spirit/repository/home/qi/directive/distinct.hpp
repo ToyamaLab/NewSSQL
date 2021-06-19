@@ -56,8 +56,15 @@ namespace boost { namespace spirit
 ///////////////////////////////////////////////////////////////////////////////
 namespace boost { namespace spirit { namespace repository {namespace qi
 {
+<<<<<<< HEAD
     using repository::distinct_type;
     using repository::distinct;
+=======
+#ifndef BOOST_SPIRIT_NO_PREDEFINED_TERMINALS
+    using repository::distinct;
+#endif
+    using repository::distinct_type;
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
     template <typename Subject, typename Tail, typename Modifier>
     struct distinct_parser

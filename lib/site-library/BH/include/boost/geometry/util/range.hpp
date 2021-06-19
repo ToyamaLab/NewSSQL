@@ -2,8 +2,13 @@
 
 // Copyright (c) 2007-2012 Barend Gehrels, Amsterdam, the Netherlands.
 
+<<<<<<< HEAD
 // This file was modified by Oracle on 2013, 2014, 2015, 2016.
 // Modifications copyright (c) 2013-2016 Oracle and/or its affiliates.
+=======
+// This file was modified by Oracle on 2013, 2014, 2015, 2016, 2019.
+// Modifications copyright (c) 2013-2019 Oracle and/or its affiliates.
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 // Contributed and/or modified by Adam Wulkiewicz, on behalf of Oracle
 
@@ -305,7 +310,11 @@ erase(Range & rng,
         it = boost::begin(rng)
                 + std::distance(boost::const_begin(rng), cit);
 
+<<<<<<< HEAD
     return erase(rng, it);
+=======
+    return range::erase(rng, it);
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 }
 
 /*!
@@ -366,16 +375,31 @@ erase(Range & rng,
         last = boost::begin(rng)
                     + std::distance(boost::const_begin(rng), clast);
 
+<<<<<<< HEAD
     return erase(rng, first, last);
+=======
+    return range::erase(rng, first, last);
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 }
 
 // back_inserter
 
 template <class Container>
 class back_insert_iterator
+<<<<<<< HEAD
     : public std::iterator<std::output_iterator_tag, void, void, void, void>
 {
 public:
+=======
+{
+public:
+    typedef std::output_iterator_tag iterator_category;
+    typedef void value_type;
+    typedef void difference_type;
+    typedef void pointer;
+    typedef void reference;
+
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     typedef Container container_type;
 
     explicit back_insert_iterator(Container & c)

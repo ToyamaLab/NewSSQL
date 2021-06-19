@@ -11,11 +11,15 @@
 
 #include <string>
 #include <boost/mpl/bool.hpp>
+<<<<<<< HEAD
 #include <boost/mpl/identity.hpp>
+=======
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 namespace boost { namespace spirit { namespace x3 { namespace traits
 {
     ///////////////////////////////////////////////////////////////////////////
+<<<<<<< HEAD
     // Determine if T is a character type
     ///////////////////////////////////////////////////////////////////////////
     template <typename T>
@@ -134,6 +138,8 @@ namespace boost { namespace spirit { namespace x3 { namespace traits
       : mpl::identity<T> {};
 
     ///////////////////////////////////////////////////////////////////////////
+=======
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     // Get the C string from a string
     ///////////////////////////////////////////////////////////////////////////
     template <typename String>
@@ -142,8 +148,11 @@ namespace boost { namespace spirit { namespace x3 { namespace traits
     template <typename String>
     struct extract_c_string
     {
+<<<<<<< HEAD
         typedef typename char_type_of<String>::type char_type;
 
+=======
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
         template <typename T>
         static T const* call (T* str)
         {
@@ -161,9 +170,13 @@ namespace boost { namespace spirit { namespace x3 { namespace traits
     template <typename T>
     struct extract_c_string<T const>
     {
+<<<<<<< HEAD
         typedef typename extract_c_string<T>::char_type char_type;
 
         static typename extract_c_string<T>::char_type const* call (T const str)
+=======
+        static decltype(auto) call(T const str)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
         {
             return extract_c_string<T>::call(str);
         }
@@ -173,9 +186,13 @@ namespace boost { namespace spirit { namespace x3 { namespace traits
     template <typename T>
     struct extract_c_string<T&>
     {
+<<<<<<< HEAD
         typedef typename extract_c_string<T>::char_type char_type;
 
         static typename extract_c_string<T>::char_type const* call (T& str)
+=======
+        static decltype(auto) call(T& str)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
         {
             return extract_c_string<T>::call(str);
         }
@@ -185,9 +202,13 @@ namespace boost { namespace spirit { namespace x3 { namespace traits
     template <typename T>
     struct extract_c_string<T const&>
     {
+<<<<<<< HEAD
         typedef typename extract_c_string<T>::char_type char_type;
 
         static typename extract_c_string<T>::char_type const* call (T const& str)
+=======
+        static decltype(auto) call(T const& str)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
         {
             return extract_c_string<T>::call(str);
         }
@@ -196,8 +217,11 @@ namespace boost { namespace spirit { namespace x3 { namespace traits
     template <typename T, typename Traits, typename Allocator>
     struct extract_c_string<std::basic_string<T, Traits, Allocator> >
     {
+<<<<<<< HEAD
         typedef T char_type;
 
+=======
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
         typedef std::basic_string<T, Traits, Allocator> string;
 
         static T const* call (string const& str)
@@ -207,29 +231,45 @@ namespace boost { namespace spirit { namespace x3 { namespace traits
     };
 
     template <typename T>
+<<<<<<< HEAD
     typename extract_c_string<T*>::char_type const*
     get_c_string(T* str)
+=======
+    decltype(auto) get_c_string(T* str)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     {
         return extract_c_string<T*>::call(str);
     }
 
     template <typename T>
+<<<<<<< HEAD
     typename extract_c_string<T const*>::char_type const*
     get_c_string(T const* str)
+=======
+    decltype(auto) get_c_string(T const* str)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     {
         return extract_c_string<T const*>::call(str);
     }
 
     template <typename String>
+<<<<<<< HEAD
     typename extract_c_string<String>::char_type const*
     get_c_string(String& str)
+=======
+    decltype(auto) get_c_string(String& str)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     {
         return extract_c_string<String>::call(str);
     }
 
     template <typename String>
+<<<<<<< HEAD
     typename extract_c_string<String>::char_type const*
     get_c_string(String const& str)
+=======
+    decltype(auto) get_c_string(String const& str)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     {
         return extract_c_string<String>::call(str);
     }

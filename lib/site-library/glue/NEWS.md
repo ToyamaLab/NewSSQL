@@ -1,3 +1,57 @@
+<<<<<<< HEAD
+=======
+# glue 1.4.1
+
+* Internal changes for compatibility with vctrs 0.3.0 (#187).
+* `glue_sql()` now replaces missing values correctly when collapsing values (#185).
+* `glue_sql()` now always preserves the type of the column even in the presence of missing values (#130)
+
+# glue 1.4.0
+
+* `.envir = NULL` is now supported and is equivalent to passing `.envir = emptyenv()` (#140)
+
+* New `glue_safe()` and `glue_data_safe()` functions, safer versions of
+  `glue()` that do not execute code, only look up values (using `get()`). These
+  alternatives are useful for things like shiny applications where you do not
+  have control of the input for your glue expressions. (#140)
+
+* Fixed memory access issue and memory leaks found by valgrind.
+
+# glue 1.3.2
+
+* glue now implements vctrs methods. This ensures that vectors of glue
+  strings are compatible with tidyverse packages like tidyr
+  (r-lib/tidyselect#170, tidyverse/tidyr#773, @lionel-).
+
+* Fix a LTO type mismatch warning (#146)
+
+* `glue_sql()` now quotes lists of values appropriate to their type, rather
+  than coercing all values to characters (#153)
+
+* `glue_data()` now implicitly coerces `.x` to a list.
+
+* `glue()` gains the `.trim` argument, like `glue_data()`.
+
+* `single_quote()` `double_quote()` and `backtick()` all return `NA` for `NA`
+  inputs (#135).
+
+* Improve `trim()`'s handling of lines containing only indentation (#162, #163, @alandipert)
+
+# glue 1.3.1
+
+## Features
+
+* `glue()` now has a `+` method to combine strings.
+* `glue_sql()` now collapses zero-length vector into `DBI::SQL("NULL")` (#134 @shrektan).
+
+## Bugfixes and minor changes
+
+* `glue_sql()` now supports unquoting lists of Id objects.
+* `glue_sql()` now quotes characters with NAs appropriately (#115).
+* `glue_sql()` now quotes Dates appropriately (#98).
+* A potential protection error reported by rchk was fixed.
+
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 # glue 1.3.0
 
 ## Breaking changes
@@ -19,6 +73,12 @@
 
 ## Bugfixes and minor changes
 
+<<<<<<< HEAD
+=======
+* Glue now throws an informative error message when it cannot interpolate a
+  function into a string (#114, @haleyjeppson & @ijlyttle).
+
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 * Glue now evaluates unnamed arguments lazily with `delayedAssign()`, so there
   is no performance cost if an argument is not used. (#83, @egnha).
 

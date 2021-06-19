@@ -31,7 +31,11 @@ aligned_alloc(std::size_t alignment, std::size_t size) BOOST_NOEXCEPT
     void* p = std::malloc(sizeof(void*) + n);
     if (p) {
         void* r = static_cast<char*>(p) + sizeof(void*);
+<<<<<<< HEAD
         (void)align(alignment, size, r, n);
+=======
+        (void)boost::alignment::align(alignment, size, r, n);
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
         *(static_cast<void**>(r) - 1) = p;
         p = r;
     }

@@ -13,6 +13,10 @@
 #include <boost/static_assert.hpp>
 #include <boost/concept/assert.hpp>
 #include <boost/heap/heap_concepts.hpp>
+<<<<<<< HEAD
+=======
+#include <boost/type_traits/conditional.hpp>
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 #ifdef BOOST_HEAP_SANITYCHECKS
 #define BOOST_HEAP_ASSERT BOOST_ASSERT
@@ -136,7 +140,11 @@ bool heap_equality(Heap1 const & lhs, Heap2 const & rhs)
 {
     const bool use_ordered_iterators = Heap1::has_ordered_iterators && Heap2::has_ordered_iterators;
 
+<<<<<<< HEAD
     typedef typename boost::mpl::if_c<use_ordered_iterators,
+=======
+    typedef typename boost::conditional<use_ordered_iterators,
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
                                       heap_equivalence_iteration,
                                       heap_equivalence_copy
                                      >::type equivalence_check;
@@ -225,7 +233,11 @@ bool heap_compare(Heap1 const & lhs, Heap2 const & rhs)
 {
     const bool use_ordered_iterators = Heap1::has_ordered_iterators && Heap2::has_ordered_iterators;
 
+<<<<<<< HEAD
     typedef typename boost::mpl::if_c<use_ordered_iterators,
+=======
+    typedef typename boost::conditional<use_ordered_iterators,
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
                                       heap_compare_iteration,
                                       heap_compare_copy
                                      >::type compare_check;

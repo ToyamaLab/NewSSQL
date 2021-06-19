@@ -12,6 +12,7 @@
 
 namespace boost { namespace program_options {
 
+<<<<<<< HEAD
     namespace detail {
         template<class charT, class Iterator>
         std::vector<std::basic_string<charT> > 
@@ -26,6 +27,8 @@ namespace boost { namespace program_options {
         }
     }
 
+=======
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     template<class charT>
     basic_command_line_parser<charT>::
     basic_command_line_parser(const std::vector<
@@ -38,9 +41,13 @@ namespace boost { namespace program_options {
     basic_command_line_parser<charT>::
     basic_command_line_parser(int argc, const charT* const argv[])
     : detail::cmdline(
+<<<<<<< HEAD
         // Explicit template arguments are required by gcc 3.3.1 
         // (at least mingw version), and do no harm on other compilers.
         to_internal(detail::make_vector<charT, const charT* const*>(argv+1, argv+argc+!argc))),
+=======
+        to_internal(std::vector<std::basic_string<charT> >(argv+1, argv+argc))),
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
         m_desc()
     {}
 
@@ -49,7 +56,11 @@ namespace boost { namespace program_options {
     basic_command_line_parser<charT>& 
     basic_command_line_parser<charT>::options(const options_description& desc)
     {
+<<<<<<< HEAD
        detail::cmdline::set_options_description(desc);
+=======
+        detail::cmdline::set_options_description(desc);
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
         m_desc = &desc;
         return *this;
     }

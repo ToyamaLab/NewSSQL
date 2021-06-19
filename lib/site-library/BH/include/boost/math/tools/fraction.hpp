@@ -15,6 +15,10 @@
 #include <boost/type_traits/integral_constant.hpp>
 #include <boost/mpl/if.hpp>
 #include <boost/math/tools/precision.hpp>
+<<<<<<< HEAD
+=======
+#include <boost/math/tools/complex.hpp>
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 namespace boost{ namespace math{ namespace tools{
 
@@ -68,6 +72,25 @@ namespace detail
    {
    };
 
+<<<<<<< HEAD
+=======
+   template <class T, bool = is_complex_type<T>::value>
+   struct tiny_value
+   {
+      static T get() {
+         return tools::min_value<T>(); 
+      }
+   };
+   template <class T>
+   struct tiny_value<T, true>
+   {
+      typedef typename T::value_type value_type;
+      static T get() {
+         return tools::min_value<value_type>();
+      }
+   };
+
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 } // namespace detail
 
 //
@@ -93,14 +116,28 @@ inline typename detail::fraction_traits<Gen>::result_type continued_fraction_b(G
    typedef detail::fraction_traits<Gen> traits;
    typedef typename traits::result_type result_type;
    typedef typename traits::value_type value_type;
+<<<<<<< HEAD
 
    result_type tiny = tools::min_value<result_type>();
+=======
+   typedef typename integer_scalar_type<result_type>::type integer_type;
+   typedef typename scalar_type<result_type>::type scalar_type;
+
+   integer_type const zero(0), one(1);
+
+   result_type tiny = detail::tiny_value<result_type>::get();
+   scalar_type terminator = abs(factor);
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
    value_type v = g();
 
    result_type f, C, D, delta;
    f = traits::b(v);
+<<<<<<< HEAD
    if(f == 0)
+=======
+   if(f == zero)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
       f = tiny;
    C = f;
    D = 0;
@@ -110,6 +147,7 @@ inline typename detail::fraction_traits<Gen>::result_type continued_fraction_b(G
    do{
       v = g();
       D = traits::b(v) + traits::a(v) * D;
+<<<<<<< HEAD
       if(D == 0)
          D = tiny;
       C = traits::b(v) + traits::a(v) / C;
@@ -119,6 +157,17 @@ inline typename detail::fraction_traits<Gen>::result_type continued_fraction_b(G
       delta = C*D;
       f = f * delta;
    }while((fabs(delta - 1) > factor) && --counter);
+=======
+      if(D == result_type(0))
+         D = tiny;
+      C = traits::b(v) + traits::a(v) / C;
+      if(C == zero)
+         C = tiny;
+      D = one/D;
+      delta = C*D;
+      f = f * delta;
+   }while((abs(delta - one) > terminator) && --counter);
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
    max_terms = max_terms - counter;
 
@@ -183,15 +232,29 @@ inline typename detail::fraction_traits<Gen>::result_type continued_fraction_a(G
    typedef detail::fraction_traits<Gen> traits;
    typedef typename traits::result_type result_type;
    typedef typename traits::value_type value_type;
+<<<<<<< HEAD
 
    result_type tiny = tools::min_value<result_type>();
+=======
+   typedef typename integer_scalar_type<result_type>::type integer_type;
+   typedef typename scalar_type<result_type>::type scalar_type;
+
+   integer_type const zero(0), one(1);
+
+   result_type tiny = detail::tiny_value<result_type>::get();
+   scalar_type terminator = abs(factor);
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
    value_type v = g();
 
    result_type f, C, D, delta, a0;
    f = traits::b(v);
    a0 = traits::a(v);
+<<<<<<< HEAD
    if(f == 0)
+=======
+   if(f == zero)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
       f = tiny;
    C = f;
    D = 0;
@@ -201,6 +264,7 @@ inline typename detail::fraction_traits<Gen>::result_type continued_fraction_a(G
    do{
       v = g();
       D = traits::b(v) + traits::a(v) * D;
+<<<<<<< HEAD
       if(D == 0)
          D = tiny;
       C = traits::b(v) + traits::a(v) / C;
@@ -210,6 +274,17 @@ inline typename detail::fraction_traits<Gen>::result_type continued_fraction_a(G
       delta = C*D;
       f = f * delta;
    }while((fabs(delta - 1) > factor) && --counter);
+=======
+      if(D == zero)
+         D = tiny;
+      C = traits::b(v) + traits::a(v) / C;
+      if(C == zero)
+         C = tiny;
+      D = one/D;
+      delta = C*D;
+      f = f * delta;
+   }while((abs(delta - one) > terminator) && --counter);
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
    max_terms = max_terms - counter;
 

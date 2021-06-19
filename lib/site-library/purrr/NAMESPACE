@@ -4,6 +4,7 @@ S3method(as_mapper,character)
 S3method(as_mapper,default)
 S3method(as_mapper,list)
 S3method(as_mapper,numeric)
+<<<<<<< HEAD
 S3method(modify,default)
 S3method(modify_at,default)
 S3method(modify_depth,default)
@@ -12,15 +13,59 @@ export("%>%")
 export("%@%")
 export("%||%")
 export(accumulate)
+=======
+S3method(modify,character)
+S3method(modify,default)
+S3method(modify,double)
+S3method(modify,integer)
+S3method(modify,logical)
+S3method(modify,pairlist)
+S3method(modify2,character)
+S3method(modify2,default)
+S3method(modify2,double)
+S3method(modify2,integer)
+S3method(modify2,logical)
+S3method(modify_at,character)
+S3method(modify_at,default)
+S3method(modify_at,double)
+S3method(modify_at,integer)
+S3method(modify_at,logical)
+S3method(modify_depth,default)
+S3method(modify_if,character)
+S3method(modify_if,default)
+S3method(modify_if,double)
+S3method(modify_if,integer)
+S3method(modify_if,logical)
+S3method(print,purrr_function_compose)
+S3method(print,purrr_function_partial)
+S3method(print,purrr_rate_backoff)
+S3method(print,purrr_rate_delay)
+S3method(rate_sleep,purrr_rate_backoff)
+S3method(rate_sleep,purrr_rate_delay)
+export("%>%")
+export("%@%")
+export("%||%")
+export("pluck<-")
+export(accumulate)
+export(accumulate2)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 export(accumulate_right)
 export(array_branch)
 export(array_tree)
 export(as_function)
 export(as_mapper)
 export(as_vector)
+<<<<<<< HEAD
 export(at_depth)
 export(attr_getter)
 export(auto_browse)
+=======
+export(assign_in)
+export(at_depth)
+export(attr_getter)
+export(auto_browse)
+export(chuck)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 export(compact)
 export(compose)
 export(cross)
@@ -32,7 +77,13 @@ export(cross_n)
 export(detect)
 export(detect_index)
 export(discard)
+<<<<<<< HEAD
 export(every)
+=======
+export(done)
+export(every)
+export(exec)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 export(flatten)
 export(flatten_chr)
 export(flatten_dbl)
@@ -41,6 +92,10 @@ export(flatten_dfc)
 export(flatten_dfr)
 export(flatten_int)
 export(flatten_lgl)
+<<<<<<< HEAD
+=======
+export(flatten_raw)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 export(has_element)
 export(head_while)
 export(imap)
@@ -50,6 +105,12 @@ export(imap_dfc)
 export(imap_dfr)
 export(imap_int)
 export(imap_lgl)
+<<<<<<< HEAD
+=======
+export(imap_raw)
+export(imodify)
+export(insistently)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 export(invoke)
 export(invoke_map)
 export(invoke_map_chr)
@@ -59,6 +120,10 @@ export(invoke_map_dfc)
 export(invoke_map_dfr)
 export(invoke_map_int)
 export(invoke_map_lgl)
+<<<<<<< HEAD
+=======
+export(invoke_map_raw)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 export(is_atomic)
 export(is_bare_atomic)
 export(is_bare_character)
@@ -78,6 +143,10 @@ export(is_list)
 export(is_logical)
 export(is_null)
 export(is_numeric)
+<<<<<<< HEAD
+=======
+export(is_rate)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 export(is_scalar_atomic)
 export(is_scalar_character)
 export(is_scalar_double)
@@ -111,21 +180,41 @@ export(map2_dfc)
 export(map2_dfr)
 export(map2_int)
 export(map2_lgl)
+<<<<<<< HEAD
+=======
+export(map2_raw)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 export(map_at)
 export(map_call)
 export(map_chr)
 export(map_dbl)
+<<<<<<< HEAD
+=======
+export(map_depth)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 export(map_df)
 export(map_dfc)
 export(map_dfr)
 export(map_if)
 export(map_int)
 export(map_lgl)
+<<<<<<< HEAD
 export(modify)
 export(modify_at)
 export(modify_depth)
 export(modify_if)
 export(negate)
+=======
+export(map_raw)
+export(modify)
+export(modify2)
+export(modify_at)
+export(modify_depth)
+export(modify_if)
+export(modify_in)
+export(negate)
+export(none)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 export(partial)
 export(pluck)
 export(pmap)
@@ -136,10 +225,21 @@ export(pmap_dfc)
 export(pmap_dfr)
 export(pmap_int)
 export(pmap_lgl)
+<<<<<<< HEAD
+=======
+export(pmap_raw)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 export(possibly)
 export(prepend)
 export(pwalk)
 export(quietly)
+<<<<<<< HEAD
+=======
+export(rate_backoff)
+export(rate_delay)
+export(rate_reset)
+export(rate_sleep)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 export(rbernoulli)
 export(rdunif)
 export(reduce)
@@ -152,6 +252,10 @@ export(safely)
 export(set_names)
 export(simplify)
 export(simplify_all)
+<<<<<<< HEAD
+=======
+export(slowly)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 export(some)
 export(splice)
 export(tail_while)
@@ -161,6 +265,10 @@ export(vec_depth)
 export(walk)
 export(walk2)
 export(when)
+<<<<<<< HEAD
+=======
+export(zap)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 import(rlang)
 importFrom(magrittr,"%>%")
 useDynLib(purrr, .registration = TRUE)

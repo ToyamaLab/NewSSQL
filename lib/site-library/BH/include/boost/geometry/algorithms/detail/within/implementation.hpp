@@ -4,8 +4,13 @@
 // Copyright (c) 2008-2012 Bruno Lalande, Paris, France.
 // Copyright (c) 2009-2012 Mateusz Loskot, London, UK.
 
+<<<<<<< HEAD
 // This file was modified by Oracle on 2013, 2014, 2017.
 // Modifications copyright (c) 2013-2017 Oracle and/or its affiliates.
+=======
+// This file was modified by Oracle on 2013, 2014, 2017, 2019.
+// Modifications copyright (c) 2013-2019 Oracle and/or its affiliates.
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 // Contributed and/or modified by Adam Wulkiewicz, on behalf of Oracle
 
@@ -19,9 +24,15 @@
 #ifndef BOOST_GEOMETRY_ALGORITHMS_DETAIL_WITHIN_IMPLEMENTATION_HPP
 #define BOOST_GEOMETRY_ALGORITHMS_DETAIL_WITHIN_IMPLEMENTATION_HPP
 
+<<<<<<< HEAD
 
 #include <cstddef>
 
+=======
+#include <cstddef>
+
+#include <boost/core/ignore_unused.hpp>
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 #include <boost/range.hpp>
 
 #include <boost/geometry/algorithms/detail/within/interface.hpp>
@@ -61,7 +72,11 @@ struct use_point_in_geometry
     template <typename Geometry1, typename Geometry2, typename Strategy>
     static inline bool apply(Geometry1 const& geometry1, Geometry2 const& geometry2, Strategy const& strategy)
     {
+<<<<<<< HEAD
         return detail::within::point_in_geometry(geometry1, geometry2, strategy) == 1;
+=======
+        return detail::within::within_point_geometry(geometry1, geometry2, strategy);
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     }
 };
 
@@ -91,7 +106,11 @@ struct within<Point, Box, point_tag, box_tag>
     template <typename Strategy>
     static inline bool apply(Point const& point, Box const& box, Strategy const& strategy)
     {
+<<<<<<< HEAD
         boost::ignore_unused_variable_warning(strategy);
+=======
+        boost::ignore_unused(strategy);
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
         return strategy.apply(point, box);
     }
 };
@@ -103,7 +122,11 @@ struct within<Box1, Box2, box_tag, box_tag>
     static inline bool apply(Box1 const& box1, Box2 const& box2, Strategy const& strategy)
     {
         assert_dimension_equal<Box1, Box2>();
+<<<<<<< HEAD
         boost::ignore_unused_variable_warning(strategy);
+=======
+        boost::ignore_unused(strategy);
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
         return strategy.apply(box1, box2);
     }
 };

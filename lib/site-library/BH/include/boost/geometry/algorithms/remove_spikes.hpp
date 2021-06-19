@@ -42,6 +42,10 @@
 #include <boost/geometry/strategies/default_strategy.hpp>
 
 #include <boost/geometry/util/condition.hpp>
+<<<<<<< HEAD
+=======
+#include <boost/geometry/util/range.hpp>
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 
 /*
@@ -83,7 +87,13 @@ struct range_remove_spikes
             return;
         }
 
+<<<<<<< HEAD
         std::deque<point_type> cleaned;
+=======
+        std::vector<point_type> cleaned;
+        cleaned.reserve(n);
+
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
         for (typename boost::range_iterator<Range const>::type it = boost::begin(range);
             it != boost::end(range); ++it)
         {
@@ -91,20 +101,40 @@ struct range_remove_spikes
             cleaned.push_back(*it);
 
             while(cleaned.size() >= 3
+<<<<<<< HEAD
                && detail::point_is_spike_or_equal(cleaned.back(),
                                                   *(cleaned.end() - 3),
                                                   *(cleaned.end() - 2),
                                                   strategy))
+=======
+                  && detail::is_spike_or_equal(range::at(cleaned, cleaned.size() - 3),
+                                               range::at(cleaned, cleaned.size() - 2),
+                                               range::back(cleaned),
+                                               strategy))
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
             {
                 // Remove pen-ultimate point causing the spike (or which was equal)
                 cleaned.erase(cleaned.end() - 2);
             }
         }
 
+<<<<<<< HEAD
         // For a closed-polygon, remove closing point, this makes checking first point(s) easier and consistent
         if ( BOOST_GEOMETRY_CONDITION(geometry::closure<Range>::value == geometry::closed) )
         {
             cleaned.pop_back();
+=======
+        typedef typename std::vector<point_type>::iterator cleaned_iterator;
+        cleaned_iterator cleaned_b = cleaned.begin();
+        cleaned_iterator cleaned_e = cleaned.end();
+        std::size_t cleaned_count = cleaned.size();
+
+        // For a closed-polygon, remove closing point, this makes checking first point(s) easier and consistent
+        if ( BOOST_GEOMETRY_CONDITION(geometry::closure<Range>::value == geometry::closed) )
+        {
+            --cleaned_e;
+            --cleaned_count;
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
         }
 
         bool found = false;
@@ -112,6 +142,7 @@ struct range_remove_spikes
         {
             found = false;
             // Check for spike in first point
+<<<<<<< HEAD
             int const penultimate = 2;
             while(cleaned.size() >= 3
                && detail::point_is_spike_or_equal(cleaned.front(),
@@ -130,27 +161,68 @@ struct range_remove_spikes
                                                   strategy))
             {
                 cleaned.pop_front();
+=======
+            while(cleaned_count >= 3
+                  && detail::is_spike_or_equal(*(cleaned_e - 2), // prev
+                                               *(cleaned_e - 1), // back
+                                               *(cleaned_b),     // front
+                                               strategy))
+            {
+                --cleaned_e;
+                --cleaned_count;
+                found = true;
+            }
+            // Check for spike in second point
+            while(cleaned_count >= 3
+                  && detail::is_spike_or_equal(*(cleaned_e - 1), // back
+                                               *(cleaned_b),     // front
+                                               *(cleaned_b + 1), // next
+                                               strategy))
+            {
+                ++cleaned_b;
+                --cleaned_count;
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
                 found = true;
             }
         }
         while (found);
 
+<<<<<<< HEAD
         if (cleaned.size() == 2)
         {
             // Ticket #9871: open polygon with only two points.
             // the second point forms, by definition, a spike
             cleaned.pop_back();
+=======
+        if (cleaned_count == 2)
+        {
+            // Ticket #9871: open polygon with only two points.
+            // the second point forms, by definition, a spike
+            --cleaned_e;
+            //--cleaned_count;
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
         }
 
         // Close if necessary
         if ( BOOST_GEOMETRY_CONDITION(geometry::closure<Range>::value == geometry::closed) )
         {
+<<<<<<< HEAD
             cleaned.push_back(cleaned.front());
+=======
+            BOOST_GEOMETRY_ASSERT(cleaned_e != cleaned.end());
+            *cleaned_e = *cleaned_b;
+            ++cleaned_e;
+            //++cleaned_count;
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
         }
 
         // Copy output
         geometry::clear(range);
+<<<<<<< HEAD
         std::copy(cleaned.begin(), cleaned.end(), range::back_inserter(range));
+=======
+        std::copy(cleaned_b, cleaned_e, range::back_inserter(range));
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     }
 };
 

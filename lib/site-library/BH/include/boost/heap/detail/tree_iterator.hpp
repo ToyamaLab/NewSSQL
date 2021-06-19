@@ -13,6 +13,10 @@
 #include <vector>
 
 #include <boost/iterator/iterator_adaptor.hpp>
+<<<<<<< HEAD
+=======
+#include <boost/type_traits/conditional.hpp>
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 #include <queue>
 
 namespace boost  {
@@ -80,7 +84,15 @@ struct unordered_tree_iterator_storage
         return data_.empty();
     }
 
+<<<<<<< HEAD
     std::vector<HandleType, typename Alloc::template rebind<HandleType>::other > data_;
+=======
+#ifdef BOOST_NO_CXX11_ALLOCATOR
+    std::vector<HandleType, typename Alloc::template rebind<HandleType>::other > data_;
+#else
+    std::vector<HandleType, typename std::allocator_traits<Alloc>::template rebind_alloc<HandleType> > data_;
+#endif
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 };
 
 template <typename ValueType,
@@ -133,7 +145,15 @@ struct ordered_tree_iterator_storage:
     }
 
     std::priority_queue<HandleType,
+<<<<<<< HEAD
                         std::vector<HandleType, typename Alloc::template rebind<HandleType>::other>,
+=======
+#ifdef BOOST_NO_CXX11_ALLOCATOR
+                        std::vector<HandleType, typename Alloc::template rebind<HandleType>::other>,
+#else
+                        std::vector<HandleType, typename std::allocator_traits<Alloc>::template rebind_alloc<HandleType> >,
+#endif
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
                         compare_values_by_handle> data_;
 };
 
@@ -187,7 +207,11 @@ class tree_iterator:
 
     friend class boost::iterator_core_access;
 
+<<<<<<< HEAD
     typedef typename boost::mpl::if_c< ordered_iterator,
+=======
+    typedef typename boost::conditional< ordered_iterator,
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
                                        ordered_tree_iterator_storage<ValueType, const Node*, Alloc, ValueCompare, ValueExtractor>,
                                        unordered_tree_iterator_storage<const Node*, Alloc, ValueCompare>
                                      >::type

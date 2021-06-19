@@ -78,10 +78,33 @@ class type_info;
 
 //____________________________________________________________________________//
 
+<<<<<<< HEAD
+=======
+// Sun compiler does not support visibility on enums
+#if defined(__SUNPRO_CC)
+#define BOOST_TEST_ENUM_SYMBOL_VISIBLE
+#else
+#define BOOST_TEST_ENUM_SYMBOL_VISIBLE BOOST_SYMBOL_VISIBLE
+#endif
+
+//____________________________________________________________________________//
+
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 #if defined(BOOST_ALL_DYN_LINK) && !defined(BOOST_TEST_DYN_LINK)
 #  define BOOST_TEST_DYN_LINK
 #endif
 
+<<<<<<< HEAD
+=======
+// in case any of the define from cmake/b2 is set
+#if !defined(BOOST_TEST_DYN_LINK) \
+    && (defined(BOOST_UNIT_TEST_FRAMEWORK_DYN_LINK) \
+        || defined(BOOST_TEST_EXEC_MONITOR_DYN_LINK) \
+        || defined(BOOST_PRG_EXEC_MONITOR_DYN_LINK) )
+#  define BOOST_TEST_DYN_LINK
+#endif
+
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 #if defined(BOOST_TEST_INCLUDED)
 #  undef BOOST_TEST_DYN_LINK
 #endif
@@ -90,12 +113,21 @@ class type_info;
 #  define BOOST_TEST_ALTERNATIVE_INIT_API
 
 #  ifdef BOOST_TEST_SOURCE
+<<<<<<< HEAD
 #    define BOOST_TEST_DECL BOOST_SYMBOL_EXPORT
 #  else
 #    define BOOST_TEST_DECL BOOST_SYMBOL_IMPORT
 #  endif  // BOOST_TEST_SOURCE
 #else
 #  define BOOST_TEST_DECL
+=======
+#    define BOOST_TEST_DECL BOOST_SYMBOL_EXPORT BOOST_SYMBOL_VISIBLE
+#  else
+#    define BOOST_TEST_DECL BOOST_SYMBOL_IMPORT BOOST_SYMBOL_VISIBLE
+#  endif  // BOOST_TEST_SOURCE
+#else
+#  define BOOST_TEST_DECL BOOST_SYMBOL_VISIBLE
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 #endif
 
 #if !defined(BOOST_TEST_MAIN) && defined(BOOST_AUTO_TEST_MAIN)
@@ -124,4 +156,17 @@ class type_info;
 
 #endif /* ifndef BOOST_PP_VARIADICS */
 
+<<<<<<< HEAD
+=======
+//____________________________________________________________________________//
+// string_view support
+//____________________________________________________________________________//
+// note the code should always be compatible with compiled version of boost.test
+// using a pre-c++17 compiler
+
+#ifndef BOOST_NO_CXX17_HDR_STRING_VIEW
+#define BOOST_TEST_STRING_VIEW
+#endif
+
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 #endif // BOOST_TEST_CONFIG_HPP_071894GER

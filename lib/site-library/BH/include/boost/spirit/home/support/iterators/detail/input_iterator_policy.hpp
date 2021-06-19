@@ -9,8 +9,13 @@
 
 #include <boost/spirit/home/support/iterators/multi_pass_fwd.hpp>
 #include <boost/spirit/home/support/iterators/detail/multi_pass.hpp>
+<<<<<<< HEAD
 #include <boost/detail/iterator.hpp> // for boost::detail::iterator_traits
 #include <boost/assert.hpp>
+=======
+#include <boost/assert.hpp>
+#include <iterator> // for std::iterator_traits
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 namespace boost { namespace spirit { namespace iterator_policies
 {
@@ -38,11 +43,16 @@ namespace boost { namespace spirit { namespace iterator_policies
         {
         private:
             typedef
+<<<<<<< HEAD
                 typename boost::detail::iterator_traits<T>::value_type
+=======
+                typename std::iterator_traits<T>::value_type
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
             result_type;
 
         public:
             typedef
+<<<<<<< HEAD
                 typename boost::detail::iterator_traits<T>::difference_type
             difference_type;
             typedef
@@ -53,6 +63,18 @@ namespace boost { namespace spirit { namespace iterator_policies
             pointer;
             typedef
                 typename boost::detail::iterator_traits<T>::reference
+=======
+                typename std::iterator_traits<T>::difference_type
+            difference_type;
+            typedef
+                typename std::iterator_traits<T>::difference_type
+            distance_type;
+            typedef
+                typename std::iterator_traits<T>::pointer
+            pointer;
+            typedef
+                typename std::iterator_traits<T>::reference
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
             reference;
             typedef result_type value_type;
 

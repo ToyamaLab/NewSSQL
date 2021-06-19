@@ -1,8 +1,16 @@
 // Boost.Geometry (aka GGL, Generic Geometry Library)
 
+<<<<<<< HEAD
 // Copyright (c) 2014, Oracle and/or its affiliates.
 
 // Contributed and/or modified by Menelaos Karavelas, on behalf of Oracle
+=======
+// Copyright (c) 2014-2019 Oracle and/or its affiliates.
+
+// Contributed and/or modified by Vissarion Fysikopoulos, on behalf of Oracle
+// Contributed and/or modified by Menelaos Karavelas, on behalf of Oracle
+// Contributed and/or modified by Adam Wulkiewicz, on behalf of Oracle
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 // Licensed under the Boost Software License version 1.0.
 // http://www.boost.org/users/license.html
@@ -27,6 +35,7 @@
 #include <boost/geometry/core/point_type.hpp>
 #include <boost/geometry/core/tags.hpp>
 
+<<<<<<< HEAD
 #include <boost/geometry/util/calculation_type.hpp>
 #include <boost/geometry/util/condition.hpp>
 #include <boost/geometry/util/math.hpp>
@@ -47,6 +56,28 @@
 
 #include <boost/geometry/algorithms/dispatch/distance.hpp>
 
+=======
+#include <boost/geometry/algorithms/detail/assign_box_corners.hpp>
+#include <boost/geometry/algorithms/detail/assign_indexed_point.hpp>
+#include <boost/geometry/algorithms/detail/closest_feature/point_to_range.hpp>
+#include <boost/geometry/algorithms/detail/disjoint/segment_box.hpp>
+#include <boost/geometry/algorithms/detail/distance/default_strategies.hpp>
+#include <boost/geometry/algorithms/detail/distance/is_comparable.hpp>
+#include <boost/geometry/algorithms/detail/equals/point_point.hpp>
+#include <boost/geometry/algorithms/dispatch/distance.hpp>
+#include <boost/geometry/algorithms/not_implemented.hpp>
+
+#include <boost/geometry/policies/compare.hpp>
+
+#include <boost/geometry/util/calculation_type.hpp>
+#include <boost/geometry/util/condition.hpp>
+#include <boost/geometry/util/has_nan_coordinate.hpp>
+#include <boost/geometry/util/math.hpp>
+
+#include <boost/geometry/strategies/disjoint.hpp>
+#include <boost/geometry/strategies/distance.hpp>
+#include <boost/geometry/strategies/tags.hpp>
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 
 namespace boost { namespace geometry
@@ -58,6 +89,23 @@ namespace detail { namespace distance
 {
 
 
+<<<<<<< HEAD
+=======
+// TODO: Take strategy
+template <typename Segment, typename Box>
+inline bool intersects_segment_box(Segment const& segment, Box const& box)
+{
+    typedef typename strategy::disjoint::services::default_strategy
+        <
+            Segment, Box
+        >::type strategy_type;
+
+    return ! detail::disjoint::disjoint_segment_box::apply(segment, box,
+                                                           strategy_type());
+}
+
+
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 template
 <
     typename Segment,
@@ -73,7 +121,11 @@ private:
 
     typedef typename strategy::distance::services::comparable_type
         <
+<<<<<<< HEAD
             Strategy
+=======
+            typename Strategy::distance_ps_strategy::type
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
         >::type comparable_strategy;
 
     typedef detail::closest_feature::point_to_point_range
@@ -100,7 +152,11 @@ public:
                                     Strategy const& strategy,
                                     bool check_intersection = true)
     {
+<<<<<<< HEAD
         if (check_intersection && geometry::intersects(segment, box))
+=======
+        if (check_intersection && intersects_segment_box(segment, box))
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
         {
             return 0;
         }
@@ -108,8 +164,13 @@ public:
         comparable_strategy cstrategy =
             strategy::distance::services::get_comparable
                 <
+<<<<<<< HEAD
                     Strategy
                 >::apply(strategy);
+=======
+                    typename Strategy::distance_ps_strategy::type
+                >::apply(strategy.get_distance_ps_strategy());
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
         // get segment points
         segment_point p[2];
@@ -159,12 +220,20 @@ public:
 
         if (imin < 4)
         {
+<<<<<<< HEAD
             return strategy.apply(box_points[imin], p[0], p[1]);
+=======
+            return strategy.get_distance_ps_strategy().apply(box_points[imin], p[0], p[1]);
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
         }
         else
         {
             unsigned int bimin = imin - 4;
+<<<<<<< HEAD
             return strategy.apply(p[bimin],
+=======
+            return strategy.get_distance_ps_strategy().apply(p[bimin],
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
                                   *bit_min[bimin].first,
                                   *bit_min[bimin].second);
         }
@@ -215,7 +284,11 @@ public:
                                     Strategy const& strategy,
                                     bool check_intersection = true)
     {
+<<<<<<< HEAD
         if (check_intersection && geometry::intersects(segment, box))
+=======
+        if (check_intersection && intersects_segment_box(segment, box))
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
         {
             return 0;
         }
@@ -280,8 +353,12 @@ template
     typename ReturnType,
     typename SegmentPoint,
     typename BoxPoint,
+<<<<<<< HEAD
     typename PPStrategy,
     typename PSStrategy
+=======
+    typename SBStrategy
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 >
 class segment_to_box_2D
 {
@@ -340,10 +417,16 @@ private:
                                        SegmentPoint const& p1,
                                        BoxPoint const& bottom_right,
                                        BoxPoint const& top_right,
+<<<<<<< HEAD
                                        PPStrategy const& pp_strategy,
                                        PSStrategy const& ps_strategy)
         {
             boost::ignore_unused(pp_strategy, ps_strategy);
+=======
+                                       SBStrategy const& sb_strategy)
+        {
+            boost::ignore_unused(sb_strategy);
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
             // the implementation below is written for non-negative slope
             // segments
@@ -355,6 +438,7 @@ private:
 
             LessEqual less_equal;
 
+<<<<<<< HEAD
             if (less_equal(geometry::get<1>(top_right), geometry::get<1>(p0)))
             {
                 // closest box point is the top-right corner
@@ -371,6 +455,31 @@ private:
                     <
                         PSStrategy, BoxPoint, SegmentPoint
                     >::apply(ps_strategy, math::abs(diff));
+=======
+            typename SBStrategy::distance_ps_strategy::type ps_strategy =
+                                sb_strategy.get_distance_ps_strategy();
+
+            if (less_equal(geometry::get<1>(bottom_right), geometry::get<1>(p0)))
+            {
+                //if p0 is in box's band
+                if (less_equal(geometry::get<1>(p0), geometry::get<1>(top_right)))
+                {
+                    // segment & crosses band (TODO:merge with box-box dist)
+                    if (math::equals(geometry::get<0>(p0), geometry::get<0>(p1)))
+                    {
+                        SegmentPoint high = geometry::get<1>(p1) > geometry::get<1>(p0) ? p1 : p0;
+                        if (less_equal(geometry::get<1>(high), geometry::get<1>(top_right)))
+                        {
+                            return cast::apply(ps_strategy.apply(high, bottom_right, top_right));
+                        }
+                        return cast::apply(ps_strategy.apply(top_right, p0, p1));
+                    }
+                    return cast::apply(ps_strategy.apply(p0, bottom_right, top_right));
+                }
+                // distance is realized between the top-right
+                // corner of the box and the segment
+                return cast::apply(ps_strategy.apply(top_right, p0, p1));
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
             }
             else
             {
@@ -381,6 +490,7 @@ private:
         }
     };
 
+<<<<<<< HEAD
 
     // it is assumed here that p0 lies above the box (so the
     // entire segment lies above the box)
@@ -410,16 +520,65 @@ private:
                     <
                         PSStrategy, SegmentPoint, BoxPoint
                     >::apply(ps_strategy, math::abs(diff));
+=======
+    // it is assumed here that p0 lies above the box (so the
+    // entire segment lies above the box)
+
+    template <typename LessEqual>
+    struct above_of_box
+    {
+
+        static inline ReturnType apply(SegmentPoint const& p0,
+                                       SegmentPoint const& p1,
+                                       BoxPoint const& top_left,
+                                       SBStrategy const& sb_strategy)
+        {
+            boost::ignore_unused(sb_strategy);
+            return apply(p0, p1, p0, top_left, sb_strategy);
+        }
+
+        static inline ReturnType apply(SegmentPoint const& p0,
+                                       SegmentPoint const& p1,
+                                       SegmentPoint const& p_max,
+                                       BoxPoint const& top_left,
+                                       SBStrategy const& sb_strategy)
+        {
+            boost::ignore_unused(sb_strategy);
+            typedef cast_to_result<ReturnType> cast;
+            LessEqual less_equal;
+
+            // p0 is above the upper segment of the box (and inside its band)
+            // then compute the vertical (i.e. meridian for spherical) distance
+            if (less_equal(geometry::get<0>(top_left), geometry::get<0>(p_max)))
+            {
+                ReturnType diff =
+                sb_strategy.get_distance_ps_strategy().vertical_or_meridian(
+                                    geometry::get_as_radian<1>(p_max),
+                                    geometry::get_as_radian<1>(top_left));
+
+                return strategy::distance::services::result_from_distance
+                    <
+                        SBStrategy, SegmentPoint, BoxPoint
+                    >::apply(sb_strategy, math::abs(diff));
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
             }
 
             // p0 is to the left of the box, but p1 is above the box
             // in this case the distance is realized between the
             // top-left corner of the box and the segment
+<<<<<<< HEAD
             return cast::apply(ps_strategy.apply(top_left, p0, p1));
         }
     };
 
 
+=======
+            return cast::apply(sb_strategy.get_distance_ps_strategy().
+                                                      apply(top_left, p0, p1));
+        }
+    };
+
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     template <typename LessEqual>
     struct check_right_left_of_box
     {
@@ -429,8 +588,12 @@ private:
                                  BoxPoint const& top_right,
                                  BoxPoint const& bottom_left,
                                  BoxPoint const& bottom_right,
+<<<<<<< HEAD
                                  PPStrategy const& pp_strategy,
                                  PSStrategy const& ps_strategy,
+=======
+                                 SBStrategy const& sb_strategy,
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
                                  ReturnType& result)
         {
             // p0 lies to the right of the box
@@ -440,7 +603,11 @@ private:
                     <
                         LessEqual
                     >::apply(p0, p1, bottom_right, top_right,
+<<<<<<< HEAD
                              pp_strategy, ps_strategy);
+=======
+                             sb_strategy);
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
                 return true;
             }
 
@@ -451,7 +618,11 @@ private:
                     <
                         typename other_compare<LessEqual>::type
                     >::apply(p1, p0, top_left, bottom_left,
+<<<<<<< HEAD
                              pp_strategy, ps_strategy);
+=======
+                             sb_strategy);
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
                 return true;
             }
 
@@ -459,7 +630,10 @@ private:
         }
     };
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     template <typename LessEqual>
     struct check_above_below_of_box
     {
@@ -469,6 +643,7 @@ private:
                                  BoxPoint const& top_right,
                                  BoxPoint const& bottom_left,
                                  BoxPoint const& bottom_right,
+<<<<<<< HEAD
                                  PSStrategy const& ps_strategy,
                                  ReturnType& result)
         {
@@ -479,16 +654,44 @@ private:
                     <
                         typename other_compare<LessEqual>::type
                     >::apply(p1, p0, bottom_right, ps_strategy);
+=======
+                                 SBStrategy const& sb_strategy,
+                                 ReturnType& result)
+        {
+            typedef compare_less_equal<ReturnType, false> GreaterEqual;
+
+            // the segment lies below the box
+            if (geometry::get<1>(p1) < geometry::get<1>(bottom_left))
+            {
+                result = sb_strategy.template segment_below_of_box
+                        <
+                            LessEqual,
+                            ReturnType
+                        >(p0, p1,
+                          top_left, top_right,
+                          bottom_left, bottom_right);
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
                 return true;
             }
 
             // the segment lies above the box
             if (geometry::get<1>(p0) > geometry::get<1>(top_right))
             {
+<<<<<<< HEAD
                 result = above_of_box
                     <
                         LessEqual
                     >::apply(p0, p1, top_left, ps_strategy);
+=======
+                result = (std::min)(above_of_box
+                                    <
+                                        LessEqual
+                                    >::apply(p0, p1, top_left, sb_strategy),
+                                    above_of_box
+                                    <
+                                        GreaterEqual
+                                    >::apply(p1, p0, top_right, sb_strategy));
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
                 return true;
             }
             return false;
@@ -499,6 +702,7 @@ private:
     {
         static inline bool apply(SegmentPoint const& p0,
                                  SegmentPoint const& p1,
+<<<<<<< HEAD
                                  BoxPoint const& bottom_left0,
                                  BoxPoint const& top_right0,
                                  BoxPoint const& bottom_left1,
@@ -533,13 +737,36 @@ private:
 
             //  t_min0 > t_max1
             if (t_min0 * diff1 > t_max1 * diff0)
+=======
+                                 BoxPoint const& corner1,
+                                 BoxPoint const& corner2,
+                                 SBStrategy const& sb_strategy,
+                                 ReturnType& result)
+        {
+            typename SBStrategy::side_strategy_type
+                side_strategy = sb_strategy.get_side_strategy();
+
+            typedef cast_to_result<ReturnType> cast;
+            ReturnType diff1 = cast::apply(geometry::get<1>(p1))
+                               - cast::apply(geometry::get<1>(p0));
+
+            typename SBStrategy::distance_ps_strategy::type ps_strategy =
+                                sb_strategy.get_distance_ps_strategy();
+
+            int sign = diff1 < 0 ? -1 : 1;
+            if (side_strategy.apply(p0, p1, corner1) * sign < 0)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
             {
                 result = cast::apply(ps_strategy.apply(corner1, p0, p1));
                 return true;
             }
+<<<<<<< HEAD
 
             //  t_max0 < t_min1
             if (t_max0 * diff1 < t_min1 * diff0)
+=======
+            if (side_strategy.apply(p0, p1, corner2) * sign > 0)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
             {
                 result = cast::apply(ps_strategy.apply(corner2, p0, p1));
                 return true;
@@ -555,8 +782,12 @@ private:
                                BoxPoint const& top_right,
                                BoxPoint const& bottom_left,
                                BoxPoint const& bottom_right,
+<<<<<<< HEAD
                                PPStrategy const& pp_strategy,
                                PSStrategy const& ps_strategy)
+=======
+                               SBStrategy const& sb_strategy)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     {
         typedef compare_less_equal<ReturnType, true> less_equal;
 
@@ -576,7 +807,11 @@ private:
                     less_equal
                 >::apply(p0, p1,
                          top_left, top_right, bottom_left, bottom_right,
+<<<<<<< HEAD
                          pp_strategy, ps_strategy, result))
+=======
+                         sb_strategy, result))
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
         {
             return result;
         }
@@ -586,16 +821,25 @@ private:
                     less_equal
                 >::apply(p0, p1,
                          top_left, top_right, bottom_left, bottom_right,
+<<<<<<< HEAD
                          ps_strategy, result))
+=======
+                         sb_strategy, result))
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
         {
             return result;
         }
 
         if (check_generic_position::apply(p0, p1,
+<<<<<<< HEAD
                                           bottom_left, top_right,
                                           bottom_left, top_right,
                                           top_left, bottom_right,
                                           ps_strategy, result))
+=======
+                                          top_left, bottom_right,
+                                          sb_strategy, result))
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
         {
             return result;
         }
@@ -612,8 +856,12 @@ private:
                            BoxPoint const& top_right,
                            BoxPoint const& bottom_left,
                            BoxPoint const& bottom_right,
+<<<<<<< HEAD
                            PPStrategy const& pp_strategy,
                            PSStrategy const& ps_strategy)
+=======
+                           SBStrategy const& sb_strategy)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     {
         typedef compare_less_equal<ReturnType, false> greater_equal;
 
@@ -630,7 +878,11 @@ private:
                     greater_equal
                 >::apply(p0, p1,
                          bottom_left, bottom_right, top_left, top_right,
+<<<<<<< HEAD
                          pp_strategy, ps_strategy, result))
+=======
+                         sb_strategy, result))
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
         {
             return result;
         }
@@ -640,16 +892,24 @@ private:
                     greater_equal
                 >::apply(p1, p0,
                          top_right, top_left, bottom_right, bottom_left,
+<<<<<<< HEAD
                          ps_strategy, result))
+=======
+                         sb_strategy, result))
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
         {
             return result;
         }
 
         if (check_generic_position::apply(p0, p1,
                                           bottom_left, top_right,
+<<<<<<< HEAD
                                           top_right, bottom_left,
                                           bottom_left, top_right,
                                           ps_strategy, result))
+=======
+                                          sb_strategy, result))
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
         {
             return result;
         }
@@ -665,10 +925,16 @@ public:
                                    BoxPoint const& top_right,
                                    BoxPoint const& bottom_left,
                                    BoxPoint const& bottom_right,
+<<<<<<< HEAD
                                    PPStrategy const& pp_strategy,
                                    PSStrategy const& ps_strategy)
     {
         BOOST_GEOMETRY_ASSERT( geometry::less<SegmentPoint>()(p0, p1)
+=======
+                                   SBStrategy const& sb_strategy)
+    {
+        BOOST_GEOMETRY_ASSERT( (geometry::less<SegmentPoint, -1, typename SBStrategy::cs_tag>()(p0, p1))
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
                             || geometry::has_nan_coordinate(p0)
                             || geometry::has_nan_coordinate(p1) );
 
@@ -678,12 +944,17 @@ public:
             return negative_slope_segment(p0, p1,
                                           top_left, top_right,
                                           bottom_left, bottom_right,
+<<<<<<< HEAD
                                           pp_strategy, ps_strategy);
+=======
+                                          sb_strategy);
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
         }
 
         return non_negative_slope_segment(p0, p1,
                                           top_left, top_right,
                                           bottom_left, bottom_right,
+<<<<<<< HEAD
                                           pp_strategy, ps_strategy);
     }
 };
@@ -691,14 +962,44 @@ public:
 
 //=========================================================================
 
+=======
+                                          sb_strategy);
+    }
+
+    template <typename LessEqual>
+    static inline ReturnType call_above_of_box(SegmentPoint const& p0,
+                                               SegmentPoint const& p1,
+                                               SegmentPoint const& p_max,
+                                               BoxPoint const& top_left,
+                                               SBStrategy const& sb_strategy)
+    {
+        return above_of_box<LessEqual>::apply(p0, p1, p_max, top_left, sb_strategy);
+    }
+
+    template <typename LessEqual>
+    static inline ReturnType call_above_of_box(SegmentPoint const& p0,
+                                               SegmentPoint const& p1,
+                                               BoxPoint const& top_left,
+                                               SBStrategy const& sb_strategy)
+    {
+        return above_of_box<LessEqual>::apply(p0, p1, top_left, sb_strategy);
+    }
+};
+
+//=========================================================================
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 template
 <
     typename Segment,
     typename Box,
     typename std::size_t Dimension,
+<<<<<<< HEAD
     typename PPStrategy,
     typename PSStrategy
+=======
+    typename SBStrategy
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 >
 class segment_to_box
     : not_implemented<Segment, Box>
@@ -709,10 +1010,16 @@ template
 <
     typename Segment,
     typename Box,
+<<<<<<< HEAD
     typename PPStrategy,
     typename PSStrategy
 >
 class segment_to_box<Segment, Box, 2, PPStrategy, PSStrategy>
+=======
+    typename SBStrategy
+>
+class segment_to_box<Segment, Box, 2, SBStrategy>
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 {
 private:
     typedef typename point_type<Segment>::type segment_point;
@@ -720,12 +1027,16 @@ private:
 
     typedef typename strategy::distance::services::comparable_type
         <
+<<<<<<< HEAD
             PPStrategy
         >::type pp_comparable_strategy;
 
     typedef typename strategy::distance::services::comparable_type
         <
             PSStrategy
+=======
+            SBStrategy
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
         >::type ps_comparable_strategy;
 
     typedef typename strategy::distance::services::return_type
@@ -735,25 +1046,39 @@ private:
 public:
     typedef typename strategy::distance::services::return_type
         <
+<<<<<<< HEAD
             PSStrategy, segment_point, box_point
+=======
+            SBStrategy, segment_point, box_point
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
         >::type return_type;
 
     static inline return_type apply(Segment const& segment,
                                     Box const& box,
+<<<<<<< HEAD
                                     PPStrategy const& pp_strategy,
                                     PSStrategy const& ps_strategy)
+=======
+                                    SBStrategy const& sb_strategy)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     {
         segment_point p[2];
         detail::assign_point_from_index<0>(segment, p[0]);
         detail::assign_point_from_index<1>(segment, p[1]);
 
+<<<<<<< HEAD
         if (geometry::equals(p[0], p[1]))
+=======
+        if (detail::equals::equals_point_point(p[0], p[1],
+                sb_strategy.get_equals_point_point_strategy()))
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
         {
             typedef typename boost::mpl::if_
                 <
                     boost::is_same
                         <
                             ps_comparable_strategy,
+<<<<<<< HEAD
                             PSStrategy
                         >,
                     typename strategy::distance::services::comparable_type
@@ -767,6 +1092,15 @@ public:
                         <
                             segment_point, Box
                         >::type
+=======
+                            SBStrategy
+                        >,
+                    typename strategy::distance::services::comparable_type
+                        <
+                            typename SBStrategy::distance_pb_strategy::type
+                        >::type,
+                    typename SBStrategy::distance_pb_strategy::type
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
                 >::type point_box_strategy_type;
 
             return dispatch::distance
@@ -781,19 +1115,35 @@ public:
         detail::assign_box_corners(box, bottom_left, bottom_right,
                                    top_left, top_right);
 
+<<<<<<< HEAD
         if (geometry::less<segment_point>()(p[0], p[1]))
+=======
+        SBStrategy::mirror(p[0], p[1],
+                           bottom_left, bottom_right,
+                           top_left, top_right);
+
+        typedef geometry::less<segment_point, -1, typename SBStrategy::cs_tag> less_type;
+        if (less_type()(p[0], p[1]))
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
         {
             return segment_to_box_2D
                 <
                     return_type,
                     segment_point,
                     box_point,
+<<<<<<< HEAD
                     PPStrategy,
                     PSStrategy
                 >::apply(p[0], p[1],
                          top_left, top_right, bottom_left, bottom_right,
                          pp_strategy,
                          ps_strategy);
+=======
+                    SBStrategy
+                >::apply(p[0], p[1],
+                         top_left, top_right, bottom_left, bottom_right,
+                         sb_strategy);
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
         }
         else
         {
@@ -802,12 +1152,19 @@ public:
                     return_type,
                     segment_point,
                     box_point,
+<<<<<<< HEAD
                     PPStrategy,
                     PSStrategy
                 >::apply(p[1], p[0],
                          top_left, top_right, bottom_left, bottom_right,
                          pp_strategy,
                          ps_strategy);
+=======
+                    SBStrategy
+                >::apply(p[1], p[0],
+                         top_left, top_right, bottom_left, bottom_right,
+                         sb_strategy);
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
         }
     }
 };
@@ -826,7 +1183,11 @@ template <typename Segment, typename Box, typename Strategy>
 struct distance
     <
         Segment, Box, Strategy, segment_tag, box_tag,
+<<<<<<< HEAD
         strategy_tag_distance_point_segment, false
+=======
+        strategy_tag_distance_segment_box, false
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     >
 {
     typedef typename strategy::distance::services::return_type
@@ -843,6 +1204,7 @@ struct distance
     {
         assert_dimension_equal<Segment, Box>();
 
+<<<<<<< HEAD
         typedef typename boost::mpl::if_
             <
                 boost::is_same
@@ -869,14 +1231,21 @@ struct distance
             >::type pp_strategy_type;
 
 
+=======
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
         return detail::distance::segment_to_box
             <
                 Segment,
                 Box,
                 dimension<Segment>::value,
+<<<<<<< HEAD
                 pp_strategy_type,
                 Strategy
             >::apply(segment, box, pp_strategy_type(), strategy);
+=======
+                Strategy
+            >::apply(segment, box, strategy);
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     }
 };
 

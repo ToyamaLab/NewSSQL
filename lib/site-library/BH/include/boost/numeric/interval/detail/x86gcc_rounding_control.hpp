@@ -15,7 +15,11 @@
 #  error This header only works with GNU CC.
 #endif
 
+<<<<<<< HEAD
 #ifndef __i386__
+=======
+#if !defined(__i386__) && !defined(__x86_64__)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 #  error This header only works on x86 CPUs.
 #endif
 

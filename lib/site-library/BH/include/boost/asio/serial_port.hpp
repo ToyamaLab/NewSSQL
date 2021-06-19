@@ -2,7 +2,11 @@
 // serial_port.hpp
 // ~~~~~~~~~~~~~~~
 //
+<<<<<<< HEAD
 // Copyright (c) 2003-2017 Christopher M. Kohlhoff (chris at kohlhoff dot com)
+=======
+// Copyright (c) 2003-2019 Christopher M. Kohlhoff (chris at kohlhoff dot com)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 // Copyright (c) 2008 Rep Invariant Systems, Inc. (info@repinvariant.com)
 //
 // Distributed under the Boost Software License, Version 1.0. (See accompanying
@@ -21,6 +25,7 @@
 #if defined(BOOST_ASIO_HAS_SERIAL_PORT) \
   || defined(GENERATING_DOCUMENTATION)
 
+<<<<<<< HEAD
 #include <string>
 #include <boost/asio/async_result.hpp>
 #include <boost/asio/basic_io_object.hpp>
@@ -47,10 +52,14 @@
 #endif // defined(BOOST_ASIO_ENABLE_OLD_SERVICES)
 
 #include <boost/asio/detail/push_options.hpp>
+=======
+#include <boost/asio/basic_serial_port.hpp>
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 namespace boost {
 namespace asio {
 
+<<<<<<< HEAD
 #if defined(BOOST_ASIO_ENABLE_OLD_SERVICES)
 // Typedef for the typical usage of a serial port.
 typedef basic_serial_port<> serial_port;
@@ -755,16 +764,23 @@ public:
   }
 };
 #endif // defined(BOOST_ASIO_ENABLE_OLD_SERVICES)
+=======
+/// Typedef for the typical usage of a serial port.
+typedef basic_serial_port<> serial_port;
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 } // namespace asio
 } // namespace boost
 
+<<<<<<< HEAD
 #include <boost/asio/detail/pop_options.hpp>
 
 #if !defined(BOOST_ASIO_ENABLE_OLD_SERVICES)
 # undef BOOST_ASIO_SVC_T
 #endif // !defined(BOOST_ASIO_ENABLE_OLD_SERVICES)
 
+=======
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 #endif // defined(BOOST_ASIO_HAS_SERIAL_PORT)
        //   || defined(GENERATING_DOCUMENTATION)
 

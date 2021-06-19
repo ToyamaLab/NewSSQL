@@ -298,6 +298,18 @@ inline T constant_three_quarters<T>::compute(BOOST_MATH_EXPLICIT_TEMPLATE_TYPE_S
 
 template <class T>
 template<int N>
+<<<<<<< HEAD
+=======
+inline T constant_sixth<T>::compute(BOOST_MATH_EXPLICIT_TEMPLATE_TYPE_SPEC(mpl::int_<N>))
+{
+  BOOST_MATH_STD_USING
+  return static_cast<T>(1) / static_cast<T>(6);
+}
+
+// Pi and related constants.
+template <class T>
+template<int N>
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 inline T constant_pi_minus_three<T>::compute(BOOST_MATH_EXPLICIT_TEMPLATE_TYPE_SPEC(mpl::int_<N>))
 {
    return pi<T, policies::policy<policies::digits2<N> > >() - static_cast<T>(3);
@@ -326,7 +338,18 @@ inline T constant_exp_minus_half<T>::compute(BOOST_MATH_EXPLICIT_TEMPLATE_TYPE_S
    return exp(static_cast<T>(-0.5));
 }
 
+<<<<<<< HEAD
 // Pi
+=======
+template <class T>
+template<int N>
+inline T constant_exp_minus_one<T>::compute(BOOST_MATH_EXPLICIT_TEMPLATE_TYPE_SPEC(mpl::int_<N>))
+{
+  BOOST_MATH_STD_USING
+  return exp(static_cast<T>(-1.));
+}
+
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 template <class T>
 template<int N>
 inline T constant_one_div_root_two<T>::compute(BOOST_MATH_EXPLICIT_TEMPLATE_TYPE_SPEC(mpl::int_<N>))
@@ -356,7 +379,10 @@ inline T constant_root_one_div_pi<T>::compute(BOOST_MATH_EXPLICIT_TEMPLATE_TYPE_
    return sqrt(static_cast<T>(1) / pi<T, policies::policy<policies::digits2<N> > >());
 }
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 template <class T>
 template<int N>
 inline T constant_four_thirds_pi<T>::compute(BOOST_MATH_EXPLICIT_TEMPLATE_TYPE_SPEC(mpl::int_<N>))
@@ -963,6 +989,41 @@ inline T constant_rayleigh_kurtosis<T>::compute(BOOST_MATH_EXPLICIT_TEMPLATE_TYP
    );
 }
 
+<<<<<<< HEAD
 }}}} // namespaces
+=======
+template <class T>
+template<int N>
+inline T constant_log2_e<T>::compute(BOOST_MATH_EXPLICIT_TEMPLATE_TYPE_SPEC(mpl::int_<N>))
+{
+   return 1 / boost::math::constants::ln_two<T>();
+}
+
+template <class T>
+template<int N>
+inline T constant_quarter_pi<T>::compute(BOOST_MATH_EXPLICIT_TEMPLATE_TYPE_SPEC(mpl::int_<N>))
+{
+   return boost::math::constants::pi<T>() / 4;
+}
+
+template <class T>
+template<int N>
+inline T constant_one_div_pi<T>::compute(BOOST_MATH_EXPLICIT_TEMPLATE_TYPE_SPEC(mpl::int_<N>))
+{
+   return 1 / boost::math::constants::pi<T>();
+}
+
+template <class T>
+template<int N>
+inline T constant_two_div_root_pi<T>::compute(BOOST_MATH_EXPLICIT_TEMPLATE_TYPE_SPEC(mpl::int_<N>))
+{
+   return 2 * boost::math::constants::one_div_root_pi<T>();
+}
+
+}
+}
+}
+} // namespaces
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 #endif // BOOST_MATH_CALCULATE_CONSTANTS_CONSTANTS_INCLUDED

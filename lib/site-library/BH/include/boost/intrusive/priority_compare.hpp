@@ -60,14 +60,22 @@ struct priority_compare<void>
 /// @cond
 
 template<class PrioComp, class T>
+<<<<<<< HEAD
 struct get_prio
+=======
+struct get_prio_comp
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 {
    typedef PrioComp type;
 };
 
 
 template<class T>
+<<<<<<< HEAD
 struct get_prio<void, T>
+=======
+struct get_prio_comp<void, T>
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 {
    typedef ::boost::intrusive::priority_compare<T> type;
 };

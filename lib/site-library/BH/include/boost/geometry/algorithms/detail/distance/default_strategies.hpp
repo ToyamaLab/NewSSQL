@@ -110,6 +110,29 @@ struct default_strategy<Box1, Box2, box_tag, box_tag, false>
           >
 {};
 
+<<<<<<< HEAD
+=======
+template <typename Linear, typename Box>
+struct default_strategy<Linear, Box, segment_tag, box_tag, false>
+    : strategy::distance::services::default_strategy
+          <
+              segment_tag, box_tag,
+              typename point_type<Linear>::type,
+              typename point_type<Box>::type
+          >
+{};
+
+template <typename Linear, typename Box>
+struct default_strategy<Linear, Box, linear_tag, box_tag, false>
+    : strategy::distance::services::default_strategy
+          <
+              segment_tag, box_tag,
+              typename point_type<Linear>::type,
+              typename point_type<Box>::type
+          >
+{};
+
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 
 // Helper metafunction for default point-segment strategy retrieval

@@ -1,1 +1,6 @@
+<<<<<<< HEAD
+=======
+backports-package       backports: Reimplementations of Functions
+                        Introduced Since R-3.0.0
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 import                  Import backported functions into your package

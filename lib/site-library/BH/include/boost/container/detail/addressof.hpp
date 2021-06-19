@@ -22,7 +22,11 @@
 
 namespace boost {
 namespace container {
+<<<<<<< HEAD
 namespace container_detail {
+=======
+namespace dtl {
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 template <typename T>
 BOOST_CONTAINER_FORCEINLINE T* addressof(T& obj)
@@ -34,7 +38,11 @@ BOOST_CONTAINER_FORCEINLINE T* addressof(T& obj)
    )));
 }
 
+<<<<<<< HEAD
 }  //namespace container_detail {
+=======
+}  //namespace dtl {
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 }  //namespace container {
 }  //namespace boost {
 

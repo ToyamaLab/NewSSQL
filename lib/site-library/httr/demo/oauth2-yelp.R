@@ -8,7 +8,11 @@ library(httr)
 # but client credential grant
 yelp_endpoint <- oauth_endpoint(
   authorize = NULL,
+<<<<<<< HEAD
   access    = "https://api.yelp.com/oauth2/token"
+=======
+  access = "https://api.yelp.com/oauth2/token"
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 )
 
 # 2. Register an application at https://www.yelp.com/developers/v3/manage_app

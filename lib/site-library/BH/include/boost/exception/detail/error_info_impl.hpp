@@ -35,7 +35,11 @@ boost
             virtual error_info_base * clone() const = 0;
 
             virtual
+<<<<<<< HEAD
             ~error_info_base() throw()
+=======
+            ~error_info_base() BOOST_NOEXCEPT_OR_NOTHROW
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
                 {
                 }
             };
@@ -46,7 +50,11 @@ boost
     error_info:
         public exception_detail::error_info_base
         {
+<<<<<<< HEAD
         error_info_base *
+=======
+        exception_detail::error_info_base *
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
         clone() const
             {
             return new error_info<Tag,T>(*this);
@@ -73,7 +81,11 @@ boost
             }
 #endif
 #endif
+<<<<<<< HEAD
         ~error_info() throw()
+=======
+        ~error_info() BOOST_NOEXCEPT_OR_NOTHROW
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
             {
             }
         value_type const &

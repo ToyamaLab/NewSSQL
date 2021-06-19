@@ -13,8 +13,11 @@
 #ifndef BOOST_VARIANT_DETAIL_APPLY_VISITOR_DELAYED_HPP
 #define BOOST_VARIANT_DETAIL_APPLY_VISITOR_DELAYED_HPP
 
+<<<<<<< HEAD
 #include <boost/variant/detail/generic_result_type.hpp>
 
+=======
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 #include <boost/variant/detail/apply_visitor_unary.hpp>
 #include <boost/variant/detail/apply_visitor_binary.hpp>
 #include <boost/variant/variant_fwd.hpp> // for BOOST_VARIANT_DO_NOT_USE_VARIADIC_TEMPLATES
@@ -63,8 +66,12 @@ public: // structors
 
 public: // N-ary visitor interface
     template <typename... Visitables>
+<<<<<<< HEAD
         BOOST_VARIANT_AUX_GENERIC_RESULT_TYPE(result_type)
     operator()(Visitables&... visitables) const
+=======
+    result_type operator()(Visitables&... visitables) const
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     {
         return apply_visitor(visitor_, visitables...);
     }
@@ -74,8 +81,12 @@ public: // N-ary visitor interface
 public: // unary visitor interface
 
     template <typename Visitable>
+<<<<<<< HEAD
         BOOST_VARIANT_AUX_GENERIC_RESULT_TYPE(result_type)
     operator()(Visitable& visitable) const
+=======
+    result_type operator()(Visitable& visitable) const
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     {
         return apply_visitor(visitor_, visitable);
     }
@@ -83,8 +94,12 @@ public: // unary visitor interface
 public: // binary visitor interface
 
     template <typename Visitable1, typename Visitable2>
+<<<<<<< HEAD
         BOOST_VARIANT_AUX_GENERIC_RESULT_TYPE(result_type)
     operator()(Visitable1& visitable1, Visitable2& visitable2) const
+=======
+    result_type operator()(Visitable1& visitable1, Visitable2& visitable2) const
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     {
         return apply_visitor(visitor_, visitable1, visitable2);
     }

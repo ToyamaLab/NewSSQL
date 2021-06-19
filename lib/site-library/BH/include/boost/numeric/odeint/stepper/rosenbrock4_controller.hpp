@@ -200,7 +200,11 @@ public:
 
 
 
+<<<<<<< HEAD
 private:
+=======
+protected:
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
     template< class StateIn >
     bool resize_m_xerr( const StateIn &x )

@@ -659,8 +659,11 @@ class format_date_parser
              string_type format_str,
              match_results& mr) const
   {
+<<<<<<< HEAD
     bool use_current_char = false;
     
+=======
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     // skip leading whitespace
     while(std::isspace(*sitr) && sitr != stream_end) { ++sitr; } 
 
@@ -701,12 +704,16 @@ class format_date_parser
       }
       else {  //skip past chars in format and in buffer
         itr++;
+<<<<<<< HEAD
         if (use_current_char) {
           use_current_char = false;
         }
         else {
           sitr++;
         }
+=======
+        sitr++;
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
       }
     }
     

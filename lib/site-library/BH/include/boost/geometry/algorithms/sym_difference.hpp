@@ -2,8 +2,13 @@
 
 // Copyright (c) 2007-2015 Barend Gehrels, Amsterdam, the Netherlands.
 
+<<<<<<< HEAD
 // This file was modified by Oracle on 2015, 2017.
 // Modifications copyright (c) 2015-2017 Oracle and/or its affiliates.
+=======
+// This file was modified by Oracle on 2015, 2017, 2019.
+// Modifications copyright (c) 2015-2019 Oracle and/or its affiliates.
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 // Contributed and/or modified by Menelaos Karavelas, on behalf of Oracle
 // Contributed and/or modified by Adam Wulkiewicz, on behalf of Oracle
@@ -234,13 +239,19 @@ template
     typename GeometryOut,
     typename Geometry1,
     typename Geometry2,
+<<<<<<< HEAD
     typename RobustPolicy,
+=======
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     typename OutputIterator,
     typename Strategy
 >
 inline OutputIterator sym_difference_insert(Geometry1 const& geometry1,
             Geometry2 const& geometry2,
+<<<<<<< HEAD
             RobustPolicy const& robust_policy,
+=======
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
             OutputIterator out,
             Strategy const& strategy)
 {
@@ -248,6 +259,20 @@ inline OutputIterator sym_difference_insert(Geometry1 const& geometry1,
     concepts::check<Geometry2 const>();
     concepts::check<GeometryOut>();
 
+<<<<<<< HEAD
+=======
+    typedef typename geometry::rescale_overlay_policy_type
+        <
+            Geometry1,
+            Geometry2,
+            typename Strategy::cs_tag
+        >::type rescale_policy_type;
+
+    rescale_policy_type robust_policy
+            = geometry::get_rescale_policy<rescale_policy_type>(
+                geometry1, geometry2, strategy);
+
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     return dispatch::sym_difference_insert
         <
             Geometry1, Geometry2, GeometryOut
@@ -274,12 +299,19 @@ template
     typename GeometryOut,
     typename Geometry1,
     typename Geometry2,
+<<<<<<< HEAD
     typename RobustPolicy,
     typename OutputIterator
 >
 inline OutputIterator sym_difference_insert(Geometry1 const& geometry1,
             Geometry2 const& geometry2,
             RobustPolicy const& robust_policy, OutputIterator out)
+=======
+    typename OutputIterator
+>
+inline OutputIterator sym_difference_insert(Geometry1 const& geometry1,
+            Geometry2 const& geometry2, OutputIterator out)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 {
     concepts::check<Geometry1 const>();
     concepts::check<Geometry2 const>();
@@ -290,7 +322,11 @@ inline OutputIterator sym_difference_insert(Geometry1 const& geometry1,
             typename cs_tag<GeometryOut>::type
         >::type strategy_type;
 
+<<<<<<< HEAD
     return sym_difference_insert<GeometryOut>(geometry1, geometry2, robust_policy, out, strategy_type());
+=======
+    return sym_difference_insert<GeometryOut>(geometry1, geometry2, out, strategy_type());
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 }
 
 }} // namespace detail::sym_difference
@@ -305,20 +341,30 @@ struct sym_difference
     <
         typename Geometry1,
         typename Geometry2,
+<<<<<<< HEAD
         typename RobustPolicy,
+=======
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
         typename Collection,
         typename Strategy
     >
     static inline void apply(Geometry1 const& geometry1,
                              Geometry2 const& geometry2,
+<<<<<<< HEAD
                              RobustPolicy const& robust_policy,
+=======
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
                              Collection & output_collection,
                              Strategy const& strategy)
     {
         typedef typename boost::range_value<Collection>::type geometry_out;
 
         detail::sym_difference::sym_difference_insert<geometry_out>(
+<<<<<<< HEAD
             geometry1, geometry2, robust_policy,
+=======
+            geometry1, geometry2,
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
             range::back_inserter(output_collection),
             strategy);
     }
@@ -327,19 +373,29 @@ struct sym_difference
     <
         typename Geometry1,
         typename Geometry2,
+<<<<<<< HEAD
         typename RobustPolicy,
+=======
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
         typename Collection
     >
     static inline void apply(Geometry1 const& geometry1,
                              Geometry2 const& geometry2,
+<<<<<<< HEAD
                              RobustPolicy const& robust_policy,
+=======
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
                              Collection & output_collection,
                              default_strategy)
     {
         typedef typename boost::range_value<Collection>::type geometry_out;
         
         detail::sym_difference::sym_difference_insert<geometry_out>(
+<<<<<<< HEAD
             geometry1, geometry2, robust_policy,
+=======
+            geometry1, geometry2,
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
             range::back_inserter(output_collection));
     }
 };
@@ -359,6 +415,7 @@ struct sym_difference
                              Collection& output_collection,
                              Strategy const& strategy)
     {
+<<<<<<< HEAD
         typedef typename geometry::rescale_overlay_policy_type
             <
                 Geometry1,
@@ -371,6 +428,9 @@ struct sym_difference
         
         resolve_strategy::sym_difference::apply(geometry1, geometry2,
                                                 robust_policy,
+=======
+        resolve_strategy::sym_difference::apply(geometry1, geometry2,
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
                                                 output_collection,
                                                 strategy);
     }

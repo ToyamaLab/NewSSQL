@@ -23,7 +23,11 @@
 #include <functional> // unary_function, binary_function
 
 #include <boost/preprocessor/iterate.hpp>
+<<<<<<< HEAD
 #include <boost/detail/workaround.hpp>
+=======
+#include <boost/config/workaround.hpp>
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 // Include the prologue here so that the use of file-level iteration
 // in anything that may be included by function_template.hpp doesn't break

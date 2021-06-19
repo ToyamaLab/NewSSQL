@@ -49,6 +49,15 @@ BOOST_SPIRIT_CLASSIC_NAMESPACE_BEGIN
         {
             typedef typename ScannerT::value_t value_t;
             typedef typename ScannerT::iterator_t iterator_t;
+<<<<<<< HEAD
+=======
+            typedef scanner_policies<
+                no_skipper_iteration_policy<
+                BOOST_DEDUCED_TYPENAME ScannerT::iteration_policy_t>,
+                BOOST_DEDUCED_TYPENAME ScannerT::match_policy_t,
+                BOOST_DEDUCED_TYPENAME ScannerT::action_policy_t
+            > policies_t;
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
             if (!scan.at_end())
             {
@@ -56,7 +65,11 @@ BOOST_SPIRIT_CLASSIC_NAMESPACE_BEGIN
                 if (this->derived().test(ch))
                 {
                     iterator_t save(scan.first);
+<<<<<<< HEAD
                     ++scan.first;
+=======
+                    ++scan.change_policies(policies_t(scan));
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
                     return scan.create_match(1, ch, save, scan.first);
                 }
             }
@@ -584,19 +597,37 @@ BOOST_SPIRIT_CLASSIC_NAMESPACE_BEGIN
         typename parser_result<self_t, ScannerT>::type
         parse(ScannerT const& scan) const
         {
+<<<<<<< HEAD
+=======
+            typedef scanner_policies<
+                no_skipper_iteration_policy<
+                BOOST_DEDUCED_TYPENAME ScannerT::iteration_policy_t>,
+                BOOST_DEDUCED_TYPENAME ScannerT::match_policy_t,
+                BOOST_DEDUCED_TYPENAME ScannerT::action_policy_t
+            > policies_t;
+
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
             typename ScannerT::iterator_t save = scan.first;
             std::size_t len = 0;
 
             if (!scan.at_end() && *scan == '\r')    // CR
             {
+<<<<<<< HEAD
                 ++scan.first;
+=======
+                ++scan.change_policies(policies_t(scan));
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
                 ++len;
             }
 
             // Don't call skipper here
             if (scan.first != scan.last && *scan == '\n')    // LF
             {
+<<<<<<< HEAD
                 ++scan.first;
+=======
+                ++scan.change_policies(policies_t(scan));
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
                 ++len;
             }
 

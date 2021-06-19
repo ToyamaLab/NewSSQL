@@ -4,11 +4,20 @@
 // Copyright (c) 2008-2015 Bruno Lalande, Paris, France.
 // Copyright (c) 2009-2015 Mateusz Loskot, London, UK.
 
+<<<<<<< HEAD
 // This file was modified by Oracle on 2015, 2016.
 // Modifications copyright (c) 2015-2016, Oracle and/or its affiliates.
 
 // Contributed and/or modified by Vissarion Fysikopoulos, on behalf of Oracle
 // Contributed and/or modified by Menelaos Karavelas, on behalf of Oracle
+=======
+// This file was modified by Oracle on 2015, 2016, 2018.
+// Modifications copyright (c) 2015-2018, Oracle and/or its affiliates.
+
+// Contributed and/or modified by Vissarion Fysikopoulos, on behalf of Oracle
+// Contributed and/or modified by Menelaos Karavelas, on behalf of Oracle
+// Contributed and/or modified by Adam Wulkiewicz, on behalf of Oracle
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 // Distributed under the Boost Software License, Version 1.0.
 // (See accompanying file LICENSE_1_0.txt or copy at
@@ -17,19 +26,32 @@
 #ifndef BOOST_GEOMETRY_ALGORITHMS_DETAIL_ENVELOPE_LINEAR_HPP
 #define BOOST_GEOMETRY_ALGORITHMS_DETAIL_ENVELOPE_LINEAR_HPP
 
+<<<<<<< HEAD
 #include <boost/geometry/core/cs.hpp>
 #include <boost/geometry/core/tags.hpp>
 
 #include <boost/geometry/iterators/segment_iterator.hpp>
+=======
+
+#include <boost/geometry/core/tags.hpp>
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 #include <boost/geometry/algorithms/detail/envelope/range.hpp>
 
 #include <boost/geometry/algorithms/dispatch/envelope.hpp>
 
+<<<<<<< HEAD
+=======
+// For backward compatibility
+#include <boost/geometry/strategies/cartesian/envelope.hpp>
+#include <boost/geometry/strategies/spherical/envelope.hpp>
+#include <boost/geometry/strategies/geographic/envelope.hpp>
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 namespace boost { namespace geometry
 {
 
+<<<<<<< HEAD
 #ifndef DOXYGEN_NO_DETAIL
 namespace detail { namespace envelope
 {
@@ -54,11 +76,14 @@ struct envelope_linestring_on_spheroid
 #endif // DOXYGEN_NO_DETAIL
 
 
+=======
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 #ifndef DOXYGEN_NO_DISPATCH
 namespace dispatch
 {
 
 
+<<<<<<< HEAD
 template <typename Linestring, typename CS_Tag>
 struct envelope<Linestring, linestring_tag, CS_Tag>
     : detail::envelope::envelope_range
@@ -104,6 +129,22 @@ struct envelope
             detail::envelope::envelope_linestring_on_spheroid
         >
 {};
+=======
+template <typename Linestring>
+struct envelope<Linestring, linestring_tag>
+    : detail::envelope::envelope_range
+{};
+
+
+template <typename MultiLinestring>
+struct envelope<MultiLinestring, multi_linestring_tag>
+    : detail::envelope::envelope_multi_range
+        <
+            detail::envelope::envelope_range
+        >
+{};
+
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 } // namespace dispatch
 #endif // DOXYGEN_NO_DISPATCH

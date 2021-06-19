@@ -2,7 +2,11 @@
 // bind_executor.hpp
 // ~~~~~~~~~~~~~~~~~
 //
+<<<<<<< HEAD
 // Copyright (c) 2003-2017 Christopher M. Kohlhoff (chris at kohlhoff dot com)
+=======
+// Copyright (c) 2003-2019 Christopher M. Kohlhoff (chris at kohlhoff dot com)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 //
 // Distributed under the Boost Software License, Version 1.0. (See accompanying
 // file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
@@ -548,6 +552,7 @@ private:
   async_result<T, Signature> target_;
 };
 
+<<<<<<< HEAD
 #if !defined(BOOST_ASIO_NO_DEPRECATED)
 
 template <typename T, typename Executor, typename Signature>
@@ -579,6 +584,8 @@ private:
 
 #endif // !defined(BOOST_ASIO_NO_DEPRECATED)
 
+=======
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 template <typename T, typename Executor, typename Allocator>
 struct associated_allocator<executor_binder<T, Executor>, Allocator>
 {

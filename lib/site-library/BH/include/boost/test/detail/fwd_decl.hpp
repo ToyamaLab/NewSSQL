@@ -27,6 +27,10 @@ class  master_test_suite_t;
 class  test_tree_visitor;
 class  test_observer;
 class  test_unit_fixture;
+<<<<<<< HEAD
+=======
+class  global_fixture;
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 // singletons
 class  unit_test_monitor_t;

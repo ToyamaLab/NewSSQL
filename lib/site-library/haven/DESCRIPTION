@@ -1,5 +1,6 @@
 Package: haven
 Title: Import and Export 'SPSS', 'Stata' and 'SAS' Files
+<<<<<<< HEAD
 Version: 1.1.2
 Authors@R: c(
     person("Hadley", "Wickham", , "hadley@rstudio.com", role = c("aut", "cre")),
@@ -11,26 +12,63 @@ Authors@R: c(
   )
 Description: Import foreign statistical formats into R via the embedded
     'ReadStat' C library, <https://github.com/WizardMac/ReadStat>.
+=======
+Version: 2.3.1
+Authors@R: 
+    c(person(given = "Hadley",
+             family = "Wickham",
+             role = c("aut", "cre"),
+             email = "hadley@rstudio.com"),
+      person(given = "Evan",
+             family = "Miller",
+             role = c("aut", "cph"),
+             comment = "Author of included ReadStat code"),
+      person(given = "RStudio",
+             role = c("cph", "fnd")))
+Description: Import foreign statistical formats into R via the
+    embedded 'ReadStat' C library,
+    <https://github.com/WizardMac/ReadStat>.
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 License: MIT + file LICENSE
 URL: http://haven.tidyverse.org, https://github.com/tidyverse/haven,
         https://github.com/WizardMac/ReadStat
 BugReports: https://github.com/tidyverse/haven/issues
+<<<<<<< HEAD
 Depends: R (>= 3.1)
 Imports: forcats (>= 0.2.0), hms, Rcpp (>= 0.11.4), readr (>= 0.1.0),
         tibble
 Suggests: covr, fs, knitr, rmarkdown, testthat
+=======
+Depends: R (>= 3.2)
+Imports: forcats (>= 0.2.0), hms, methods, Rcpp (>= 0.11.4), readr (>=
+        0.1.0), rlang (>= 0.4.0), tibble, tidyselect, vctrs (>= 0.3.0)
+Suggests: covr, fs, knitr, rmarkdown, testthat, pillar (>= 1.4.0), cli,
+        crayon
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 LinkingTo: Rcpp
 VignetteBuilder: knitr
 Encoding: UTF-8
 LazyData: true
+<<<<<<< HEAD
 RoxygenNote: 6.0.1
 SystemRequirements: GNU make
 NeedsCompilation: yes
 Packaged: 2018-06-27 12:37:05 UTC; hadley
+=======
+RoxygenNote: 7.1.0
+SystemRequirements: GNU make
+NeedsCompilation: yes
+Packaged: 2020-06-01 14:26:57 UTC; hadley
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 Author: Hadley Wickham [aut, cre],
   Evan Miller [aut, cph] (Author of included ReadStat code),
   RStudio [cph, fnd]
 Maintainer: Hadley Wickham <hadley@rstudio.com>
 Repository: CRAN
+<<<<<<< HEAD
 Date/Publication: 2018-06-27 14:08:25 UTC
 Built: R 3.5.1; x86_64-apple-darwin17.6.0; 2018-08-21 07:46:16 UTC; unix
+=======
+Date/Publication: 2020-06-01 15:00:06 UTC
+Built: R 4.0.2; x86_64-apple-darwin17.7.0; 2020-08-27 07:51:14 UTC; unix
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
