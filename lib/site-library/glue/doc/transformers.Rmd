@@ -14,11 +14,19 @@ collapsing outputs.
 
 The transformer functions simply take two arguments `text` and `envir`, where
 `text` is the unparsed string inside the glue block and `envir` is the
+<<<<<<< HEAD
 execution environment. Most transformers will then call `eval(parse(text,
 keep.source = FALSE), envir)` which parses and evaluates the code.
 
 You can then supply the transformer function to glue with the `.transformer`
 argument. In this way users can define manipulate the text before parsing and
+=======
+execution environment. Most transformers will then call `eval(parse(text = text,
+keep.source = FALSE), envir)` which parses and evaluates the code.
+
+You can then supply the transformer function to glue with the `.transformer`
+argument. In this way users can manipulate the text before parsing and
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 change the output after evaluation.
 
 It is often useful to write a `glue()` wrapper function which supplies a
@@ -27,6 +35,7 @@ arguments. One important consideration when doing this is to include
 `.envir = parent.frame()` in the wrapper to ensure the evaluation environment
 is correct.
 
+<<<<<<< HEAD
 Some examples implementations of potentially useful transformers follow. The
 aim right now is not to include most of these custom functions within the
 `glue` package. Rather users are encouraged to create custom functions using
@@ -37,6 +46,21 @@ library(glue)
 knitr::opts_chunk$set(collapse = TRUE, comment = "#>")
 ```
 
+=======
+Some example implementations of potentially useful transformers follow. The
+aim right now is not to include most of these custom functions within the
+`glue` package. Rather, users are encouraged to create custom functions using
+transformers to fit their individual needs.
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(collapse = TRUE, comment = "#>")
+```
+
+```{r}
+library(glue)
+```
+
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 ### collapse transformer
 
 A transformer which automatically collapses any glue block ending with `*`.
@@ -44,17 +68,36 @@ A transformer which automatically collapses any glue block ending with `*`.
 ```{r}
 collapse_transformer <- function(regex = "[*]$", ...) {
   function(text, envir) {
+<<<<<<< HEAD
     if (grepl(regex, text)) {
         text <- sub(regex, "", text)
     }
     res <- eval(parse(text = text, keep.source = FALSE), envir)
     glue_collapse(res, ...)
+=======
+    collapse <- grepl(regex, text)
+    if (collapse) {
+      text <- sub(regex, "", text)
+    }
+    res <- identity_transformer(text, envir)
+    if (collapse) {
+      glue_collapse(res, ...)  
+    } else {
+      res
+    }
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
   }
 }
 
 glue("{1:5*}\n{letters[1:5]*}", .transformer = collapse_transformer(sep = ", "))
 
 glue("{1:5*}\n{letters[1:5]*}", .transformer = collapse_transformer(sep = ", ", last = " and "))
+<<<<<<< HEAD
+=======
+
+x <- c("one", "two")
+glue("{x}: {1:5*}", .transformer = collapse_transformer(sep = ", "))
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 ```
 
 ### Shell quoting transformer
@@ -156,3 +199,42 @@ glue_safely("foo: {xyz}", .otherwise = "Error")
 library(crayon)
 glue_safely("foo: {xyz}", .otherwise = quote(glue("{red}Error: {conditionMessage(e)}{reset}")))
 ```
+<<<<<<< HEAD
+=======
+
+### "Variables and Values" transformer
+
+A transformer that expands input of the form `{var_name=}` into `var_name = var_value`, i.e. a shorthand for exposing variable names with their values. This is inspired by an [f-strings feature coming in Python 3.8](https://docs.python.org/3.8/whatsnew/3.8.html#f-strings-now-support-for-quick-and-easy-debugging). It's actually more general: you can use it with an expression input such as `{expr=}`.
+
+```{r}
+vv_transformer <- function(text, envir) {
+  regex <- "=$"
+  if (!grepl(regex, text)) {
+    return(identity_transformer(text, envir))
+  }
+
+  text <- sub(regex, "", text)
+  res <- identity_transformer(text, envir)
+  n <- length(res)
+  res <- glue_collapse(res, sep = ", ")
+  if (n > 1) {
+    res <- c("[", res, "]")
+  }
+  glue_collapse(c(text, " = ", res))
+}
+```
+
+```{r}
+set.seed(1234)
+description <- "some random"
+numbers <- sample(100, 4)
+average <- mean(numbers)
+sum <- sum(numbers)
+
+glue("For {description} {numbers=}, {average=}, {sum=}.", .transformer = vv_transformer)
+
+a <- 3
+b <- 5.6
+glue("{a=}\n{b=}\n{a * 9 + b * 2=}", .transformer = vv_transformer)
+```
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce

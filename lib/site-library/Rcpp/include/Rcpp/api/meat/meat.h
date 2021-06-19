@@ -42,6 +42,12 @@
 #include <Rcpp/api/meat/protection.h>
 #include <Rcpp/api/meat/wrap.h>
 
+<<<<<<< HEAD
 #include <Rcpp/api/meat/module/Module.h>
+=======
+#ifndef RCPP_NO_MODULES
+#include <Rcpp/api/meat/module/Module.h>
+#endif
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 #endif

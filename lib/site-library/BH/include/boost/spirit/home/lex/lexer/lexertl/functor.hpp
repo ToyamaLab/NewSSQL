@@ -11,10 +11,17 @@
 #endif
 
 #include <boost/mpl/bool.hpp>
+<<<<<<< HEAD
 #include <boost/detail/iterator.hpp>
 #include <boost/detail/workaround.hpp>
 #include <boost/spirit/home/lex/lexer/pass_flags.hpp>
 #include <boost/assert.hpp>
+=======
+#include <boost/detail/workaround.hpp>
+#include <boost/spirit/home/lex/lexer/pass_flags.hpp>
+#include <boost/assert.hpp>
+#include <iterator> // for std::iterator_traits
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 #if 0 != __COMO_VERSION__ || !BOOST_WORKAROUND(BOOST_MSVC, <= 1310)
 #define BOOST_SPIRIT_STATIC_EOF 1
@@ -66,7 +73,11 @@ namespace boost { namespace spirit { namespace lex { namespace lexertl
     {
     public:
         typedef typename 
+<<<<<<< HEAD
             boost::detail::iterator_traits<Iterator>::value_type 
+=======
+            std::iterator_traits<Iterator>::value_type 
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
         char_type;
 
     private:
@@ -92,9 +103,14 @@ namespace boost { namespace spirit { namespace lex { namespace lexertl
             T& dst_;
             T const& src_;
 
+<<<<<<< HEAD
         private:
             // silence MSVC warning C4512: assignment operator could not be generated
             assign_on_exit& operator= (assign_on_exit const&);
+=======
+            // silence MSVC warning C4512: assignment operator could not be generated
+            BOOST_DELETED_FUNCTION(assign_on_exit& operator= (assign_on_exit const&))
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
         };
 
     public:

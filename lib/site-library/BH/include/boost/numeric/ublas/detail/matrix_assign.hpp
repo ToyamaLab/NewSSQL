@@ -30,7 +30,11 @@ namespace detail {
     template<class E1, class E2, class S>
     BOOST_UBLAS_INLINE
     bool equals (const matrix_expression<E1> &e1, const matrix_expression<E2> &e2, S epsilon, S min_norm) {
+<<<<<<< HEAD
         return norm_inf (e1 - e2) < epsilon *
+=======
+        return norm_inf (e1 - e2) <= epsilon *
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
                std::max<S> (std::max<S> (norm_inf (e1), norm_inf (e2)), min_norm);
     }
 
@@ -74,7 +78,11 @@ namespace detail {
 #endif
                 if (it2 != it2_end && it2e != it2e_end) {
                     size_type it2_index = it2.index2 (), it2e_index = it2e.index2 ();
+<<<<<<< HEAD
                     while (true) {
+=======
+                    for (;;) {
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
                         difference_type compare2 = it2_index - it2e_index;
                         if (compare2 == 0) {
                             ++ it2, ++ it2e;
@@ -177,7 +185,11 @@ namespace detail {
 #endif
                 if (it1 != it1_end && it1e != it1e_end) {
                     size_type it1_index = it1.index1 (), it1e_index = it1e.index1 ();
+<<<<<<< HEAD
                     while (true) {
+=======
+                    for (;;) {
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
                         difference_type compare2 = it1_index - it1e_index;
                         if (compare2 == 0) {
                             ++ it1, ++ it1e;
@@ -670,7 +682,19 @@ namespace detail {
             size1 = (std::min) (- diff1, it1_size);
             if (size1 > 0) {
                 it1_size -= size1;
+<<<<<<< HEAD
                 if (!functor_type::computed) {
+=======
+//Disabled warning C4127 because the conditional expression is constant
+#ifdef _MSC_VER
+#pragma warning(push)
+#pragma warning(disable: 4127)
+#endif
+                if (!functor_type::computed) {
+#ifdef _MSC_VER
+#pragma warning(pop)
+#endif
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
                     while (-- size1 >= 0) { // zeroing
 #ifndef BOOST_UBLAS_NO_NESTED_CLASS_RELATION
                         typename M::iterator2 it2 (it1.begin ());
@@ -719,7 +743,19 @@ namespace detail {
                 size2 = (std::min) (- diff2, it2_size);
                 if (size2 > 0) {
                     it2_size -= size2;
+<<<<<<< HEAD
                     if (!functor_type::computed) {
+=======
+//Disabled warning C4127 because the conditional expression is constant
+#ifdef _MSC_VER
+#pragma warning(push)
+#pragma warning(disable: 4127)
+#endif
+                    if (!functor_type::computed) {
+#ifdef _MSC_VER
+#pragma warning(pop)
+#endif
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
                         while (-- size2 >= 0)   // zeroing
                             functor_type::apply (*it2, expr_value_type/*zero*/()), ++ it2;
                     } else {
@@ -734,7 +770,19 @@ namespace detail {
             while (-- size2 >= 0)
                 functor_type::apply (*it2, *it2e), ++ it2, ++ it2e;
             size2 = it2_size;
+<<<<<<< HEAD
             if (!functor_type::computed) {
+=======
+//Disabled warning C4127 because the conditional expression is constant
+#ifdef _MSC_VER
+#pragma warning(push)
+#pragma warning(disable: 4127)
+#endif
+            if (!functor_type::computed) {
+#ifdef _MSC_VER
+#pragma warning(pop)
+#endif
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
                 while (-- size2 >= 0)   // zeroing
                     functor_type::apply (*it2, expr_value_type/*zero*/()), ++ it2;
             } else {
@@ -743,7 +791,19 @@ namespace detail {
             ++ it1, ++ it1e;
         }
         size1 = it1_size;
+<<<<<<< HEAD
         if (!functor_type::computed) {
+=======
+//Disabled warning C4127 because the conditional expression is constant
+#ifdef _MSC_VER
+#pragma warning(push)
+#pragma warning(disable: 4127)
+#endif
+        if (!functor_type::computed) {
+#ifdef _MSC_VER
+#pragma warning(pop)
+#endif
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
             while (-- size1 >= 0) { // zeroing
 #ifndef BOOST_UBLAS_NO_NESTED_CLASS_RELATION
                 typename M::iterator2 it2 (it1.begin ());
@@ -802,7 +862,19 @@ namespace detail {
             size2 = (std::min) (- diff2, it2_size);
             if (size2 > 0) {
                 it2_size -= size2;
+<<<<<<< HEAD
                 if (!functor_type::computed) {
+=======
+//Disabled warning C4127 because the conditional expression is constant
+#ifdef _MSC_VER
+#pragma warning(push)
+#pragma warning(disable: 4127)
+#endif
+                if (!functor_type::computed) {
+#ifdef _MSC_VER
+#pragma warning(pop)
+#endif
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
                     while (-- size2 >= 0) { // zeroing
 #ifndef BOOST_UBLAS_NO_NESTED_CLASS_RELATION
                         typename M::iterator1 it1 (it2.begin ());
@@ -851,7 +923,19 @@ namespace detail {
                 size1 = (std::min) (- diff1, it1_size);
                 if (size1 > 0) {
                     it1_size -= size1;
+<<<<<<< HEAD
                     if (!functor_type::computed) {
+=======
+//Disabled warning C4127 because the conditional expression is constant
+#ifdef _MSC_VER
+#pragma warning(push)
+#pragma warning(disable: 4127)
+#endif
+                    if (!functor_type::computed) {
+#ifdef _MSC_VER
+#pragma warning(pop)
+#endif
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
                         while (-- size1 >= 0)   // zeroing
                             functor_type::apply (*it1, expr_value_type/*zero*/()), ++ it1;
                     } else {
@@ -866,7 +950,20 @@ namespace detail {
             while (-- size1 >= 0)
                 functor_type::apply (*it1, *it1e), ++ it1, ++ it1e;
             size1 = it1_size;
+<<<<<<< HEAD
             if (!functor_type::computed) {
+=======
+//Disabled warning C4127 because the conditional expression is constant
+#ifdef _MSC_VER
+#pragma warning(push)
+#pragma warning(disable: 4127)
+#endif
+            if (!functor_type::computed) {
+
+#ifdef _MSC_VER
+#pragma warning(pop)
+#endif
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
                 while (-- size1 >= 0)   // zeroing
                     functor_type::apply (*it1, expr_value_type/*zero*/()), ++ it1;
             } else {
@@ -875,7 +972,19 @@ namespace detail {
             ++ it2, ++ it2e;
         }
         size2 = it2_size;
+<<<<<<< HEAD
         if (!functor_type::computed) {
+=======
+//Disabled warning C4127 because the conditional expression is constant
+#ifdef _MSC_VER
+#pragma warning(push)
+#pragma warning(disable: 4127)
+#endif
+        if (!functor_type::computed) {
+#ifdef _MSC_VER
+#pragma warning(pop)
+#endif
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
             while (-- size2 >= 0) { // zeroing
 #ifndef BOOST_UBLAS_NO_NESTED_CLASS_RELATION
                 typename M::iterator1 it1 (it2.begin ());
@@ -903,7 +1012,20 @@ namespace detail {
     void matrix_assign (M &m, const matrix_expression<E> &e, sparse_tag, row_major_tag) {
         typedef F<typename M::iterator2::reference, typename E::value_type> functor_type;
         // R unnecessary, make_conformant not required
+<<<<<<< HEAD
         BOOST_STATIC_ASSERT ((!functor_type::computed));
+=======
+
+//Disabled warning C4127 because the conditional expression is constant
+#ifdef _MSC_VER
+#pragma warning(push)
+#pragma warning(disable: 4127)
+#endif
+        BOOST_STATIC_ASSERT ((!functor_type::computed));
+#ifdef _MSC_VER
+#pragma warning(pop)
+#endif
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
         BOOST_UBLAS_CHECK (m.size1 () == e ().size1 (), bad_size ());
         BOOST_UBLAS_CHECK (m.size2 () == e ().size2 (), bad_size ());
         typedef typename M::value_type value_type;
@@ -935,7 +1057,20 @@ namespace detail {
     void matrix_assign (M &m, const matrix_expression<E> &e, sparse_tag, column_major_tag) {
         typedef F<typename M::iterator1::reference, typename E::value_type> functor_type;
         // R unnecessary, make_conformant not required
+<<<<<<< HEAD
         BOOST_STATIC_ASSERT ((!functor_type::computed));
+=======
+
+//Disabled warning C4127 because the conditional expression is constant
+#ifdef _MSC_VER
+#pragma warning(push)
+#pragma warning(disable: 4127)
+#endif
+        BOOST_STATIC_ASSERT ((!functor_type::computed));
+#ifdef _MSC_VER
+#pragma warning(pop)
+#endif
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
         BOOST_UBLAS_CHECK (m.size1 () == e ().size1 (), bad_size ());
         BOOST_UBLAS_CHECK (m.size2 () == e ().size2 (), bad_size ());
         typedef typename M::value_type value_type;
@@ -1002,7 +1137,11 @@ namespace detail {
 #endif
                 if (it2 != it2_end && it2e != it2e_end) {
                     size_type it2_index = it2.index2 (), it2e_index = it2e.index2 ();
+<<<<<<< HEAD
                     while (true) {
+=======
+                    for (;;) {
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
                         difference_type compare2 = it2_index - it2e_index;
                         if (compare2 == 0) {
                             functor_type::apply (*it2, *it2e);
@@ -1013,7 +1152,19 @@ namespace detail {
                             } else
                                 break;
                         } else if (compare2 < 0) {
+<<<<<<< HEAD
                             if (!functor_type::computed) {
+=======
+//Disabled warning C4127 because the conditional expression is constant
+#ifdef _MSC_VER
+#pragma warning(push)
+#pragma warning(disable: 4127)
+#endif
+                            if (!functor_type::computed) {
+#ifdef _MSC_VER
+#pragma warning(pop)
+#endif
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
                                 functor_type::apply (*it2, expr_value_type/*zero*/());
                                 ++ it2;
                             } else
@@ -1031,7 +1182,19 @@ namespace detail {
                         }
                     }
                 }
+<<<<<<< HEAD
                 if (!functor_type::computed) {
+=======
+//Disabled warning C4127 because the conditional expression is constant
+#ifdef _MSC_VER
+#pragma warning(push)
+#pragma warning(disable: 4127)
+#endif
+                if (!functor_type::computed) {
+#ifdef _MSC_VER
+#pragma warning(pop)
+#endif
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
                     while (it2 != it2_end) {    // zeroing
                         functor_type::apply (*it2, expr_value_type/*zero*/());
                         ++ it2;
@@ -1041,7 +1204,19 @@ namespace detail {
                 }
                 ++ it1, ++ it1e;
             } else if (compare < 0) {
+<<<<<<< HEAD
                 if (!functor_type::computed) {
+=======
+//Disabled warning C4127 because the conditional expression is constant
+#ifdef _MSC_VER
+#pragma warning(push)
+#pragma warning(disable: 4127)
+#endif
+                if (!functor_type::computed) {
+#ifdef _MSC_VER
+#pragma warning(pop)
+#endif
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 #ifndef BOOST_UBLAS_NO_NESTED_CLASS_RELATION
                     typename M::iterator2 it2 (it1.begin ());
                     typename M::iterator2 it2_end (it1.end ());
@@ -1061,7 +1236,19 @@ namespace detail {
                 increment (it1e, it1e_end, compare);
             }
         }
+<<<<<<< HEAD
         if (!functor_type::computed) {
+=======
+//Disabled warning C4127 because the conditional expression is constant
+#ifdef _MSC_VER
+#pragma warning(push)
+#pragma warning(disable: 4127)
+#endif
+        if (!functor_type::computed) {
+#ifdef _MSC_VER
+#pragma warning(pop)
+#endif
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
             while (it1 != it1_end) {
 #ifndef BOOST_UBLAS_NO_NESTED_CLASS_RELATION
                 typename M::iterator2 it2 (it1.begin ());
@@ -1125,7 +1312,11 @@ namespace detail {
 #endif
                 if (it1 != it1_end && it1e != it1e_end) {
                     size_type it1_index = it1.index1 (), it1e_index = it1e.index1 ();
+<<<<<<< HEAD
                     while (true) {
+=======
+                    for (;;) {
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
                         difference_type compare2 = it1_index - it1e_index;
                         if (compare2 == 0) {
                             functor_type::apply (*it1, *it1e);
@@ -1136,7 +1327,19 @@ namespace detail {
                             } else
                                 break;
                         } else if (compare2 < 0) {
+<<<<<<< HEAD
                             if (!functor_type::computed) {
+=======
+//Disabled warning C4127 because the conditional expression is constant
+#ifdef _MSC_VER
+#pragma warning(push)
+#pragma warning(disable: 4127)
+#endif
+                            if (!functor_type::computed) {
+#ifdef _MSC_VER
+#pragma warning(pop)
+#endif
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
                                 functor_type::apply (*it1, expr_value_type/*zero*/()); // zeroing
                                 ++ it1;
                             } else
@@ -1154,7 +1357,19 @@ namespace detail {
                         }
                     }
                 }
+<<<<<<< HEAD
                 if (!functor_type::computed) {
+=======
+//Disabled warning C4127 because the conditional expression is constant
+#ifdef _MSC_VER
+#pragma warning(push)
+#pragma warning(disable: 4127)
+#endif
+                if (!functor_type::computed) {
+#ifdef _MSC_VER
+#pragma warning(pop)
+#endif
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
                     while (it1 != it1_end) {    // zeroing
                         functor_type::apply (*it1, expr_value_type/*zero*/());
                         ++ it1;
@@ -1164,7 +1379,19 @@ namespace detail {
                 }
                 ++ it2, ++ it2e;
             } else if (compare < 0) {
+<<<<<<< HEAD
                 if (!functor_type::computed) {
+=======
+//Disabled warning C4127 because the conditional expression is constant
+#ifdef _MSC_VER
+#pragma warning(push)
+#pragma warning(disable: 4127)
+#endif
+                if (!functor_type::computed) {
+#ifdef _MSC_VER
+#pragma warning(pop)
+#endif
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 #ifndef BOOST_UBLAS_NO_NESTED_CLASS_RELATION
                     typename M::iterator1 it1 (it2.begin ());
                     typename M::iterator1 it1_end (it2.end ());
@@ -1184,7 +1411,19 @@ namespace detail {
                 increment (it2e, it2e_end, compare);
             }
         }
+<<<<<<< HEAD
         if (!functor_type::computed) {
+=======
+//Disabled warning C4127 because the conditional expression is constant
+#ifdef _MSC_VER
+#pragma warning(push)
+#pragma warning(disable: 4127)
+#endif
+        if (!functor_type::computed) {
+#ifdef _MSC_VER
+#pragma warning(pop)
+#endif
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
             while (it2 != it2_end) {
 #ifndef BOOST_UBLAS_NO_NESTED_CLASS_RELATION
                 typename M::iterator1 it1 (it2.begin ());
@@ -1390,7 +1629,11 @@ namespace detail {
 #endif
                 if (it2 != it2_end && it2e != it2e_end) {
                     size_type it2_index = it2.index2 (), it2e_index = it2e.index2 ();
+<<<<<<< HEAD
                     while (true) {
+=======
+                    for (;;) {
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
                         difference_type compare2 = it2_index - it2e_index;
                         if (compare2 == 0) {
                             functor_type::apply (*it2, *it2e);
@@ -1515,7 +1758,11 @@ namespace detail {
 #endif
                 if (it1 != it1_end && it1e != it1e_end) {
                     size_type it1_index = it1.index1 (), it1e_index = it1e.index1 ();
+<<<<<<< HEAD
                     while (true) {
+=======
+                    for (;;) {
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
                         difference_type compare2 = it1_index - it1e_index;
                         if (compare2 == 0) {
                             functor_type::apply (*it1, *it1e);

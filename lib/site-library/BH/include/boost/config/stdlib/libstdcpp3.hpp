@@ -78,6 +78,10 @@
 #  include <unistd.h>
 #endif
 
+<<<<<<< HEAD
+=======
+#ifndef __VXWORKS__ // VxWorks uses Dinkum, not GNU STL with GCC 
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 #if defined(__GLIBCXX__) || (defined(__GLIBCPP__) && __GLIBCPP__>=20020514) // GCC >= 3.1.0
 #  define BOOST_STD_EXTENSION_NAMESPACE __gnu_cxx
 #  define BOOST_HAS_SLIST
@@ -91,6 +95,10 @@
 #   define BOOST_HASH_MAP_HEADER <backward/hash_map>
 # endif
 #endif
+<<<<<<< HEAD
+=======
+#endif
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 //
 // Decide whether we have C++11 support turned on:
@@ -123,7 +131,17 @@
 //
 #ifdef __clang__
 
+<<<<<<< HEAD
 #if __has_include(<experimental/memory_resource>)
+=======
+#if __has_include(<memory_resource>)
+#  define BOOST_LIBSTDCXX_VERSION 90100
+#elif __has_include(<charconv>)
+#  define BOOST_LIBSTDCXX_VERSION 80100
+#elif __has_include(<variant>)
+#  define BOOST_LIBSTDCXX_VERSION 70100
+#elif __has_include(<experimental/memory_resource>)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 #  define BOOST_LIBSTDCXX_VERSION 60100
 #elif __has_include(<experimental/any>)
 #  define BOOST_LIBSTDCXX_VERSION 50100
@@ -229,6 +247,10 @@ extern "C" char *gets (char *__s);
 #  define BOOST_NO_CXX11_HDR_RATIO
 #  define BOOST_NO_CXX11_HDR_SYSTEM_ERROR
 #  define BOOST_NO_CXX11_SMART_PTR
+<<<<<<< HEAD
+=======
+#  define BOOST_NO_CXX11_HDR_EXCEPTION
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 #else
 #  define BOOST_HAS_TR1_COMPLEX_INVERSE_TRIG 
 #  define BOOST_HAS_TR1_COMPLEX_OVERLOADS 
@@ -292,6 +314,7 @@ extern "C" char *gets (char *__s);
 #endif
 
 //
+<<<<<<< HEAD
 //  C++17 features in GCC 6.1 and later
 //
 #if (BOOST_LIBSTDCXX_VERSION < 60100) || (__cplusplus <= 201402L)
@@ -299,6 +322,16 @@ extern "C" char *gets (char *__s);
 #endif
 #if (BOOST_LIBSTDCXX_VERSION < 70100) || (__cplusplus <= 201402L)
 #  define BOOST_NO_CXX17_STD_APPLY
+=======
+//  C++17 features in GCC 7.1 and later
+//
+#if (BOOST_LIBSTDCXX_VERSION < 70100) || (__cplusplus <= 201402L)
+#  define BOOST_NO_CXX17_STD_INVOKE
+#  define BOOST_NO_CXX17_STD_APPLY
+#  define BOOST_NO_CXX17_HDR_OPTIONAL
+#  define BOOST_NO_CXX17_HDR_STRING_VIEW
+#  define BOOST_NO_CXX17_HDR_VARIANT
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 #endif
 
 #if defined(__has_include)

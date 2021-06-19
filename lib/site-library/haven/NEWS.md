@@ -1,3 +1,118 @@
+<<<<<<< HEAD
+=======
+# haven 2.3.1
+
+* Add missing methods so `median()`, `quantile()` and `summary()` work
+  once more (#520).
+  
+* Add missing cast methods (#522).
+
+# haven 2.3.0
+
+* `labelled()` gains the necessary support to work seemlessly in dplyr 1.0.0,
+  tidyr 1.0.0, and other packages that use vctrs (@mikmart, #496).
+
+* `labelled()` vectors now explicitly inherit from the corresponding base
+  types (e.g. integer, double, or character) (#509).
+
+* ReadStat update, including `read_sas()` supports for "any" encoding (#482),
+  and fixes for compiler warnings.
+
+# haven 2.2.0
+
+## Partial reading
+
+Thanks to the hard work of @mikmart, all `read_*()` functions gain three new arguments that allow you to read in only part of a large file:
+
+* `col_select`: selects columns to read with a tidyselect interface (#248).
+* `skip`: skips rows before reading data (#370).
+* `n_max`: limits the number of rows to read.
+
+This also brings with it a deprecation: `cols_only` in `read_sas()` has been deprecated in favour of the new `col_select` argument.
+
+## Minor improvements and bug fixes
+
+* `as_factor()` allows non-unique labels when `levels = "label"`. This fixes 
+  a particularly annoying printing bug (#424, @gergness)
+
+* `read_sas()` now supports (IS|E|B)8601(DT|DA|TM) date/time formats (@mikmart).
+
+* All `write_` functions gain a `.name_repair` argument that controls
+  what happens when the input dataset has repeated column names (#436).
+
+* All `write_` functions can now write labelled vectors with `NULL` labels 
+  (#442).
+
+* `write_dta()` can now write dataset labels with the `label` argument, 
+  which defaults to the `label` attribute of the input data frame, if present
+  (@gorcha, #449).
+
+* `write_dta()` works better with Stata 15, thanks to updated ReadStat (#461)
+
+# haven 2.1.1
+
+* Fixes for R CMD check
+
+# haven 2.1.0
+
+## Improved labelling
+
+`labelled` objects get pretty printing that shows the labels and NA values when inside of a `tbl_df`. Turn this behaviour off with behavior using `option(haven.show_pillar_labels = FALSE)` (#340, @gergness).
+
+`labelled()` and `labelled_spss()` now allow `NULL` labels. This makes both classes more flexible, allowing you to use them for their other attributes (#219).
+
+`labelled()` tests that value labels are unique (@larmarange, #364)
+
+## Minor improvements and bug fixes
+
+*   `as_factor()`:
+
+    * Is faster when input doesn't contain any missing values (@hughparsonage).
+    * Added `labelled` method for backward compatbility (#414).
+    * `data.frame` method now correctly passes `...` along (#407, @zkamvar).
+
+*   `write_dta()` now checks that the labelled values are integers, not the 
+    values themselves (#401).
+
+*   Updated to latest ReadStat from @evanmiller:
+
+    * `read_por()` can now read files from SPSS 25 (#412)
+    * `read_por()` now uses base-30 instead of base-10 for the exponent (#413)
+    * `read_sas()` can read zero column file (#420)
+    * `read_sav()` reads long strings (#381)
+    * `read_sav()` has greater memory limit allowing it to read more labels (#418)
+    * `read_spss()` reads long variable labels (#422)
+    * `write_sav()` no longer creates incorrect column names when >10k columns (#410)
+    * `write_sav()` no longer crashes when writing long label names (#395)
+  
+# haven 2.0.0
+
+## BREAKING CHANGES
+
+*   `labelled()` and `labelled_spss()` now produce objects with class
+    "haven_labelled" and "haven_labelled_spss". Previously, the "labelled"
+    class name clashed with the labelled class defined by Hmisc (#329).
+    
+    Unfortunately I couldn't come up with a way to fix this problem except
+    to change the class name; it seems reasonable that haven should be the one 
+    to change names given that Hmisc has been around much longer. This
+    will require some changes to packages that use haven, but shouldn't
+    affect user code.
+
+## Minor improvements
+
+* `labelled()` and `labelled_spss()` now support adding the `label`
+  attribute to the resulting object. The `label` is a short,
+  human-readable description of the object, and is now also used
+  when printing, and can be easily removed using the new `zap_label()`
+  function. (#362, @huftis)
+  
+  Previously, the `label` attribute was supported both when reading
+  and writing SPSS files, but it was not possible to actually create
+  objects in R having the `label` attribute using the constructors
+  `labelled()` or `labelled_spss()`.
+
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 # haven 1.1.2
 
 * haven can read and write non-ASCII paths in R 3.5 (#371).

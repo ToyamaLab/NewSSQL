@@ -13,10 +13,19 @@
 
 #include <iterator>
 
+<<<<<<< HEAD
+=======
+#include <boost/static_assert.hpp>
+
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 #include <boost/compute/system.hpp>
 #include <boost/compute/command_queue.hpp>
 #include <boost/compute/algorithm/merge.hpp>
 #include <boost/compute/container/vector.hpp>
+<<<<<<< HEAD
+=======
+#include <boost/compute/type_traits/is_device_iterator.hpp>
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 namespace boost {
 namespace compute {
@@ -31,6 +40,10 @@ inline void inplace_merge(Iterator first,
                           Iterator last,
                           command_queue &queue = system::default_queue())
 {
+<<<<<<< HEAD
+=======
+    BOOST_STATIC_ASSERT(is_device_iterator<Iterator>::value);
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     BOOST_ASSERT(first < middle && middle < last);
 
     typedef typename std::iterator_traits<Iterator>::value_type T;

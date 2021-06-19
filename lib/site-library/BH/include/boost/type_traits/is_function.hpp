@@ -11,6 +11,7 @@
 #ifndef BOOST_TT_IS_FUNCTION_HPP_INCLUDED
 #define BOOST_TT_IS_FUNCTION_HPP_INCLUDED
 
+<<<<<<< HEAD
 #include <boost/type_traits/is_reference.hpp>
 #include <boost/type_traits/detail/config.hpp>
 
@@ -98,5 +99,19 @@ template <class T> struct is_function<T&&> : public false_type {};
 #endif
 #endif
 } // namespace boost
+=======
+#include <boost/type_traits/detail/config.hpp>
+#include <boost/config/workaround.hpp>
+
+#ifdef BOOST_TT_HAS_ASCCURATE_IS_FUNCTION
+
+#include <boost/type_traits/detail/is_function_cxx_11.hpp>
+
+#else
+
+#include <boost/type_traits/detail/is_function_cxx_03.hpp>
+
+#endif
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 #endif // BOOST_TT_IS_FUNCTION_HPP_INCLUDED

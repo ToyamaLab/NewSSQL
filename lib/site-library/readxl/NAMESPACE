@@ -12,6 +12,10 @@ export(read_excel)
 export(read_xls)
 export(read_xlsx)
 export(readxl_example)
+<<<<<<< HEAD
+=======
+export(readxl_progress)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 importFrom(Rcpp,sourceCpp)
 importFrom(cellranger,anchored)
 importFrom(cellranger,cell_cols)

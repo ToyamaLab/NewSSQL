@@ -34,7 +34,14 @@
 #endif
 #ifdef BOOST_MSVC
 #  pragma warning(push)
+<<<<<<< HEAD
 #  pragma warning(disable: 4800 4706)
+=======
+#  pragma warning(disable: 4706)
+#if BOOST_MSVC < 1910
+#pragma warning(disable:4800)
+#endif
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 #endif
 
 namespace boost{
@@ -64,7 +71,11 @@ struct saved_matched_paren : public saved_state
 {
    int index;
    sub_match<BidiIterator> sub;
+<<<<<<< HEAD
    saved_matched_paren(int i, const sub_match<BidiIterator>& s) : saved_state(1), index(i), sub(s){};
+=======
+   saved_matched_paren(int i, const sub_match<BidiIterator>& s) : saved_state(1), index(i), sub(s){}
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 };
 
 template <class BidiIterator>
@@ -72,7 +83,11 @@ struct saved_position : public saved_state
 {
    const re_syntax_base* pstate;
    BidiIterator position;
+<<<<<<< HEAD
    saved_position(const re_syntax_base* ps, BidiIterator pos, int i) : saved_state(i), pstate(ps), position(pos){};
+=======
+   saved_position(const re_syntax_base* ps, BidiIterator pos, int i) : saved_state(i), pstate(ps), position(pos){}
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 };
 
 template <class BidiIterator>
@@ -80,7 +95,11 @@ struct saved_assertion : public saved_position<BidiIterator>
 {
    bool positive;
    saved_assertion(bool p, const re_syntax_base* ps, BidiIterator pos) 
+<<<<<<< HEAD
       : saved_position<BidiIterator>(ps, pos, saved_type_assertion), positive(p){};
+=======
+      : saved_position<BidiIterator>(ps, pos, saved_type_assertion), positive(p){}
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 };
 
 template <class BidiIterator>
@@ -1797,7 +1816,11 @@ bool perl_matcher<BidiIterator, Allocator, traits>::unwind_recursion_pop(bool r)
    // Backtracking out of a recursion, we must pop state off the recursion
    // stack unconditionally to ensure matched pushes and pops:
    saved_state* pmp = static_cast<saved_state*>(m_backup_state);
+<<<<<<< HEAD
    if (!r)
+=======
+   if (!r && !recursion_stack.empty())
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
    {
       *m_presult = recursion_stack.back().results;
       position = recursion_stack.back().location_of_start;
@@ -1834,6 +1857,10 @@ bool perl_matcher<BidiIterator, Allocator, traits>::unwind_commit(bool b)
       // If we stop because we just unwound an assertion, put the
       // commit state back on the stack again:
       //
+<<<<<<< HEAD
+=======
+      m_unwound_lookahead = false;
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
       saved_state* pmp = m_backup_state;
       --pmp;
       if(pmp < m_stack_base)

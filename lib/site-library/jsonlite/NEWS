@@ -1,3 +1,26 @@
+<<<<<<< HEAD
+=======
+1.7.0
+ - Add support for 'sf' classes in toJSON() conform GeoJSON spec.
+ - Fix a unit test due to a change in rgdal
+
+1.6.1
+ - Fix bug in C_collapse_array_pretty_inner declarationdetected by CRAN LTO
+ - Better handing of NA in timestamps with POSIXt = 'mongo'
+ - The 'raw' parameter in toJSON gains options 'int' and 'js'
+
+1.6
+ - Add parse_json() wrapper that does not guess if a string is actually a file/url
+ - Fix a few rchk warnings (mostly false positives)
+ - Add asJSON method for hms
+ - Do not require is.vector() for unbox to support values with attributes e.g. factor or tzone
+ - write_json now suppresses recoding of strings on windows, fixes #226
+ - Hide internal libyajl symbols from shlib
+ - Remove C calls R connection API which are no longer allowed on CRAN. This may
+   lead to about 5% performance decrease for parsing from connections.
+ - Remove deprecated rbind.pages function
+
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 1.5
  - Workaround for #180. fromJSON() first checks for literal json, then filename
  - Rename rbind.pages to rbind_pages to fix warning in R-devel (requested by CRAN)

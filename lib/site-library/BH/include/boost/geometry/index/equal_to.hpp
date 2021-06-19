@@ -2,6 +2,13 @@
 //
 // Copyright (c) 2011-2016 Adam Wulkiewicz, Lodz, Poland.
 //
+<<<<<<< HEAD
+=======
+// This file was modified by Oracle on 2019.
+// Modifications copyright (c) 2019 Oracle and/or its affiliates.
+// Contributed and/or modified by Adam Wulkiewicz, on behalf of Oracle
+//
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 // Use, modification and distribution is subject to the Boost Software License,
 // Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
 // http://www.boost.org/LICENSE_1_0.txt)
@@ -12,12 +19,18 @@
 #include <boost/geometry/algorithms/detail/equals/interface.hpp>
 #include <boost/geometry/index/indexable.hpp>
 
+<<<<<<< HEAD
 namespace boost { namespace geometry { namespace index { namespace detail {
+=======
+namespace boost { namespace geometry { namespace index { namespace detail
+{
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 template <typename Geometry,
           typename Tag = typename geometry::tag<Geometry>::type>
 struct equals
 {
+<<<<<<< HEAD
     inline static bool apply(Geometry const& g1, Geometry const& g2)
     {
         return geometry::equals(g1, g2);
@@ -28,6 +41,68 @@ template <typename Geometry, typename Tag>
 struct equals<Geometry *, Tag>
 {
     inline static bool apply(const Geometry * g1, const Geometry * g2)
+=======
+    template <typename Strategy>
+    inline static bool apply(Geometry const& g1, Geometry const& g2, Strategy const&)
+    {
+        return geometry::equals(g1, g2);
+    }
+};
+
+template <typename Geometry>
+struct equals<Geometry, point_tag>
+{
+    inline static bool apply(Geometry const& g1, Geometry const& g2, default_strategy const&)
+    {
+        return geometry::equals(g1, g2);
+    }
+
+    template <typename Strategy>
+    inline static bool apply(Geometry const& g1, Geometry const& g2, Strategy const&)
+    {
+        return geometry::equals(g1, g2, typename Strategy::within_point_point_strategy_type());
+    }
+};
+
+template <typename Geometry>
+struct equals<Geometry, box_tag>
+{
+    inline static bool apply(Geometry const& g1, Geometry const& g2, default_strategy const&)
+    {
+        return geometry::equals(g1, g2);
+    }
+
+    template <typename Strategy>
+    inline static bool apply(Geometry const& g1, Geometry const& g2, Strategy const&)
+    {
+        // NOTE: there is no strategy for equals(box, box) so pass dummy variable
+        // TODO: there should be a strategy even if it is the same for all CSes in case undefined_cs was used
+        return geometry::equals(g1, g2, 0);
+    }
+};
+
+template <typename Geometry>
+struct equals<Geometry, segment_tag>
+{
+    inline static bool apply(Geometry const& g1, Geometry const& g2, default_strategy const&)
+    {
+        return geometry::equals(g1, g2);
+    }
+
+    template <typename Strategy>
+    inline static bool apply(Geometry const& g1, Geometry const& g2, Strategy const& s)
+    {
+        return geometry::equals(g1, g2, s.get_relate_segment_segment_strategy());
+    }
+};
+
+
+template <typename Geometry, typename Tag>
+struct equals<Geometry *, Tag>
+{
+    template <typename Strategy>
+    inline static bool apply(const Geometry * g1, const Geometry * g2, Strategy const&)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     {
         return g1 == g2;
     }
@@ -36,7 +111,12 @@ struct equals<Geometry *, Tag>
 template <typename T>
 struct equals<T, void>
 {
+<<<<<<< HEAD
     inline static bool apply(T const& v1, T const& v2)
+=======
+    template <typename Strategy>
+    inline static bool apply(T const& v1, T const& v2, Strategy const&)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     {
         return v1 == v2;
     }
@@ -45,7 +125,12 @@ struct equals<T, void>
 template <typename T>
 struct equals<T *, void>
 {
+<<<<<<< HEAD
     inline static bool apply(const T * v1, const T * v2)
+=======
+    template <typename Strategy>
+    inline static bool apply(const T * v1, const T * v2, Strategy const&)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     {
         return v1 == v2;
     }
@@ -54,19 +139,34 @@ struct equals<T *, void>
 template <typename Tuple, size_t I, size_t N>
 struct tuple_equals
 {
+<<<<<<< HEAD
     inline static bool apply(Tuple const& t1, Tuple const& t2)
     {
         typedef typename boost::tuples::element<I, Tuple>::type T;
 
         return equals<T>::apply(boost::get<I>(t1), boost::get<I>(t2))
             && tuple_equals<Tuple, I+1, N>::apply(t1, t2);
+=======
+    template <typename Strategy>
+    inline static bool apply(Tuple const& t1, Tuple const& t2, Strategy const& strategy)
+    {
+        typedef typename boost::tuples::element<I, Tuple>::type T;
+
+        return equals<T>::apply(boost::get<I>(t1), boost::get<I>(t2), strategy)
+            && tuple_equals<Tuple, I + 1, N>::apply(t1, t2, strategy);
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     }
 };
 
 template <typename Tuple, size_t I>
 struct tuple_equals<Tuple, I, I>
 {
+<<<<<<< HEAD
     inline static bool apply(Tuple const&, Tuple const&)
+=======
+    template <typename Strategy>
+    inline static bool apply(Tuple const&, Tuple const&, Strategy const&)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     {
         return true;
     }
@@ -102,9 +202,16 @@ struct equal_to
     \param r Second value.
     \return true if values are equal.
     */
+<<<<<<< HEAD
     inline bool operator()(Value const& l, Value const& r) const
     {
         return detail::equals<Value>::apply(l ,r);
+=======
+    template <typename Strategy>
+    inline bool operator()(Value const& l, Value const& r, Strategy const& strategy) const
+    {
+        return detail::equals<Value>::apply(l, r, strategy);
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     }
 };
 
@@ -130,10 +237,19 @@ struct equal_to<std::pair<T1, T2>, false>
     \param r Second value.
     \return true if values are equal.
     */
+<<<<<<< HEAD
     inline bool operator()(std::pair<T1, T2> const& l, std::pair<T1, T2> const& r) const
     {
         return detail::equals<T1>::apply(l.first, r.first)
             && detail::equals<T2>::apply(l.second, r.second);
+=======
+    template <typename Strategy>
+    inline bool operator()(std::pair<T1, T2> const& l, std::pair<T1, T2> const& r,
+                           Strategy const& strategy) const
+    {
+        return detail::equals<T1>::apply(l.first, r.first, strategy)
+            && detail::equals<T2>::apply(l.second, r.second, strategy);
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     }
 };
 
@@ -159,11 +275,21 @@ struct equal_to<boost::tuple<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9>, false>
     \param r Second value.
     \return true if values are equal.
     */
+<<<<<<< HEAD
     inline bool operator()(value_type const& l, value_type const& r) const
     {
         return detail::tuple_equals<
             value_type, 0, boost::tuples::length<value_type>::value
         >::apply(l ,r);
+=======
+    template <typename Strategy>
+    inline bool operator()(value_type const& l, value_type const& r,
+                           Strategy const& strategy) const
+    {
+        return detail::tuple_equals<
+            value_type, 0, boost::tuples::length<value_type>::value
+        >::apply(l, r, strategy);
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     }
 };
 
@@ -178,19 +304,34 @@ namespace boost { namespace geometry { namespace index { namespace detail {
 template <typename Tuple, size_t I, size_t N>
 struct std_tuple_equals
 {
+<<<<<<< HEAD
     inline static bool apply(Tuple const& t1, Tuple const& t2)
     {
         typedef typename std::tuple_element<I, Tuple>::type T;
 
         return equals<T>::apply(std::get<I>(t1), std::get<I>(t2))
             && std_tuple_equals<Tuple, I+1, N>::apply(t1, t2);
+=======
+    template <typename Strategy>
+    inline static bool apply(Tuple const& t1, Tuple const& t2, Strategy const& strategy)
+    {
+        typedef typename std::tuple_element<I, Tuple>::type T;
+
+        return equals<T>::apply(std::get<I>(t1), std::get<I>(t2), strategy)
+            && std_tuple_equals<Tuple, I + 1, N>::apply(t1, t2, strategy);
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     }
 };
 
 template <typename Tuple, size_t I>
 struct std_tuple_equals<Tuple, I, I>
 {
+<<<<<<< HEAD
     inline static bool apply(Tuple const&, Tuple const&)
+=======
+    template <typename Strategy>
+    inline static bool apply(Tuple const&, Tuple const&, Strategy const&)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     {
         return true;
     }
@@ -218,11 +359,20 @@ struct equal_to<std::tuple<Args...>, false>
     \param r Second value.
     \return true if values are equal.
     */
+<<<<<<< HEAD
     bool operator()(value_type const& l, value_type const& r) const
     {
         return detail::std_tuple_equals<
             value_type, 0, std::tuple_size<value_type>::value
         >::apply(l ,r);
+=======
+    template <typename Strategy>
+    bool operator()(value_type const& l, value_type const& r, Strategy const& strategy) const
+    {
+        return detail::std_tuple_equals<
+            value_type, 0, std::tuple_size<value_type>::value
+        >::apply(l, r, strategy);
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     }
 };
 
@@ -258,7 +408,17 @@ struct equal_to
     */
     inline bool operator()(Value const& l, Value const& r) const
     {
+<<<<<<< HEAD
         return detail::equal_to<Value>::operator()(l ,r);
+=======
+        return detail::equal_to<Value>::operator()(l, r, default_strategy());
+    }
+
+    template <typename Strategy>
+    inline bool operator()(Value const& l, Value const& r, Strategy const& strategy) const
+    {
+        return detail::equal_to<Value>::operator()(l, r, strategy);
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     }
 };
 

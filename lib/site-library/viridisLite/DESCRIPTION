@@ -38,4 +38,8 @@ Author: Simon Garnier [aut, cre],
   Cédric Scherer [ctb, cph]
 Repository: CRAN
 Date/Publication: 2018-02-01 22:45:56 UTC
+<<<<<<< HEAD
 Built: R 3.5.1; ; 2018-08-18 07:12:51 UTC; unix
+=======
+Built: R 4.0.2; ; 2020-08-27 07:28:48 UTC; unix
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce

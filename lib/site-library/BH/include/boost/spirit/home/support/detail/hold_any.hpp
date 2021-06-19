@@ -25,7 +25,11 @@
 #include <boost/static_assert.hpp>
 #include <boost/mpl/bool.hpp>
 #include <boost/assert.hpp>
+<<<<<<< HEAD
 #include <boost/detail/sp_typeinfo.hpp>
+=======
+#include <boost/core/typeinfo.hpp>
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 #include <stdexcept>
 #include <typeinfo>
@@ -45,11 +49,19 @@ namespace boost { namespace spirit
     struct bad_any_cast
       : std::bad_cast
     {
+<<<<<<< HEAD
         bad_any_cast(boost::detail::sp_typeinfo const& src, boost::detail::sp_typeinfo const& dest)
           : from(src.name()), to(dest.name())
         {}
 
         virtual const char* what() const throw() { return "bad any cast"; }
+=======
+        bad_any_cast(boost::core::typeinfo const& src, boost::core::typeinfo const& dest)
+          : from(src.name()), to(dest.name())
+        {}
+
+        virtual const char* what() const BOOST_NOEXCEPT_OR_NOTHROW { return "bad any cast"; }
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
         const char* from;
         const char* to;
@@ -61,7 +73,11 @@ namespace boost { namespace spirit
         template <typename Char>
         struct fxn_ptr_table
         {
+<<<<<<< HEAD
             boost::detail::sp_typeinfo const& (*get_type)();
+=======
+            boost::core::typeinfo const& (*get_type)();
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
             void (*static_delete)(void**);
             void (*destruct)(void**);
             void (*clone)(void* const*, void**);
@@ -80,9 +96,15 @@ namespace boost { namespace spirit
             template<typename T, typename Char>
             struct type
             {
+<<<<<<< HEAD
                 static boost::detail::sp_typeinfo const& get_type()
                 {
                     return BOOST_SP_TYPEID(T);
+=======
+                static boost::core::typeinfo const& get_type()
+                {
+                    return BOOST_CORE_TYPEID(T);
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
                 }
                 static void static_delete(void** x)
                 {
@@ -101,13 +123,21 @@ namespace boost { namespace spirit
                     *reinterpret_cast<T*>(dest) =
                         *reinterpret_cast<T const*>(src);
                 }
+<<<<<<< HEAD
                 static std::basic_istream<Char>& 
+=======
+                static std::basic_istream<Char>&
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
                 stream_in (std::basic_istream<Char>& i, void** obj)
                 {
                     i >> *reinterpret_cast<T*>(obj);
                     return i;
                 }
+<<<<<<< HEAD
                 static std::basic_ostream<Char>& 
+=======
+                static std::basic_ostream<Char>&
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
                 stream_out(std::basic_ostream<Char>& o, void* const* obj)
                 {
                     o << *reinterpret_cast<T const*>(obj);
@@ -123,9 +153,15 @@ namespace boost { namespace spirit
             template<typename T, typename Char>
             struct type
             {
+<<<<<<< HEAD
                 static boost::detail::sp_typeinfo const& get_type()
                 {
                     return BOOST_SP_TYPEID(T);
+=======
+                static boost::core::typeinfo const& get_type()
+                {
+                    return BOOST_CORE_TYPEID(T);
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
                 }
                 static void static_delete(void** x)
                 {
@@ -146,13 +182,21 @@ namespace boost { namespace spirit
                     **reinterpret_cast<T**>(dest) =
                         **reinterpret_cast<T* const*>(src);
                 }
+<<<<<<< HEAD
                 static std::basic_istream<Char>& 
+=======
+                static std::basic_istream<Char>&
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
                 stream_in(std::basic_istream<Char>& i, void** obj)
                 {
                     i >> **reinterpret_cast<T**>(obj);
                     return i;
                 }
+<<<<<<< HEAD
                 static std::basic_ostream<Char>& 
+=======
+                static std::basic_ostream<Char>&
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
                 stream_out(std::basic_ostream<Char>& o, void* const* obj)
                 {
                     o << **reinterpret_cast<T* const*>(obj);
@@ -198,7 +242,11 @@ namespace boost { namespace spirit
             // value of the required type to the hold_any instance you want to
             // stream to. This assignment has to be executed before the actual
             // call to the operator>>().
+<<<<<<< HEAD
             BOOST_ASSERT(false && 
+=======
+            BOOST_ASSERT(false &&
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
                 "Tried to insert from a std istream into an empty "
                 "hold_any instance");
             return i;
@@ -222,10 +270,15 @@ namespace boost { namespace spirit
         explicit basic_hold_any(T const& x)
           : table(spirit::detail::get_table<T>::template get<Char>()), object(0)
         {
+<<<<<<< HEAD
             if (spirit::detail::get_table<T>::is_small::value)
                 new (&object) T(x);
             else
                 object = new T(x);
+=======
+            new_object(object, x,
+                typename spirit::detail::get_table<T>::is_small());
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
         }
 
         basic_hold_any()
@@ -297,6 +350,21 @@ namespace boost { namespace spirit
             return *this;
         }
 
+<<<<<<< HEAD
+=======
+        template <typename T>
+        static void new_object(void*& object, T const& x, mpl::true_)
+        {
+            new (&object) T(x);
+        }
+
+        template <typename T>
+        static void new_object(void*& object, T const& x, mpl::false_)
+        {
+            object = new T(x);
+        }
+
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
         // assignment operator
 #ifdef BOOST_HAS_RVALUE_REFS
         template <typename T>
@@ -317,6 +385,14 @@ namespace boost { namespace spirit
             return assign(x);
         }
 #endif
+<<<<<<< HEAD
+=======
+        // copy assignment operator
+        basic_hold_any& operator=(basic_hold_any const& x)
+        {
+            return assign(x);
+        }
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
         // utility functions
         basic_hold_any& swap(basic_hold_any& x)
@@ -326,7 +402,11 @@ namespace boost { namespace spirit
             return *this;
         }
 
+<<<<<<< HEAD
         boost::detail::sp_typeinfo const& type() const
+=======
+        boost::core::typeinfo const& type() const
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
         {
             return table->get_type();
         }
@@ -334,8 +414,13 @@ namespace boost { namespace spirit
         template <typename T>
         T const& cast() const
         {
+<<<<<<< HEAD
             if (type() != BOOST_SP_TYPEID(T))
               throw bad_any_cast(type(), BOOST_SP_TYPEID(T));
+=======
+            if (type() != BOOST_CORE_TYPEID(T))
+              throw bad_any_cast(type(), BOOST_CORE_TYPEID(T));
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
             return spirit::detail::get_table<T>::is_small::value ?
                 *reinterpret_cast<T const*>(&object) :
@@ -369,14 +454,22 @@ namespace boost { namespace spirit
     // because spirit::hold_any is used only in contexts where these operators
     // do exist
         template <typename Char_>
+<<<<<<< HEAD
         friend inline std::basic_istream<Char_>& 
+=======
+        friend inline std::basic_istream<Char_>&
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
         operator>> (std::basic_istream<Char_>& i, basic_hold_any<Char_>& obj)
         {
             return obj.table->stream_in(i, &obj.object);
         }
 
         template <typename Char_>
+<<<<<<< HEAD
         friend inline std::basic_ostream<Char_>& 
+=======
+        friend inline std::basic_ostream<Char_>&
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
         operator<< (std::basic_ostream<Char_>& o, basic_hold_any<Char_> const& obj)
         {
             return obj.table->stream_out(o, &obj.object);
@@ -398,7 +491,11 @@ namespace boost { namespace spirit
     template <typename T, typename Char>
     inline T* any_cast (basic_hold_any<Char>* operand)
     {
+<<<<<<< HEAD
         if (operand && operand->type() == BOOST_SP_TYPEID(T)) {
+=======
+        if (operand && operand->type() == BOOST_CORE_TYPEID(T)) {
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
             return spirit::detail::get_table<T>::is_small::value ?
                 reinterpret_cast<T*>(&operand->object) :
                 reinterpret_cast<T*>(operand->object);
@@ -420,7 +517,11 @@ namespace boost { namespace spirit
 
         nonref* result = any_cast<nonref>(&operand);
         if(!result)
+<<<<<<< HEAD
             boost::throw_exception(bad_any_cast(operand.type(), BOOST_SP_TYPEID(T)));
+=======
+            boost::throw_exception(bad_any_cast(operand.type(), BOOST_CORE_TYPEID(T)));
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
         return *result;
     }
 

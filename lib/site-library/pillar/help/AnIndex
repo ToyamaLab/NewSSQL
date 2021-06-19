@@ -1,15 +1,29 @@
 pillar-package	pillar-package
+<<<<<<< HEAD
 colonnade	colonnade
 dim_desc	dim_desc
 expect_known_display	expect_known_display
 extra_cols	extra_cols
 extra_cols.squeezed_colonnade	extra_cols
+=======
+align	align
+colonnade	colonnade
+deprecated	deprecated
+dim_desc	dim_desc
+expect_known_display	expect_known_display
+extra_cols	extra_cols
+extra_cols.pillar_squeezed_colonnade	extra_cols
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 format.pillar_shaft	pillar_shaft
 format_type_sum	format_type_sum
 format_type_sum.default	format_type_sum
 get_extent	get_extent
 get_max_extent	get_extent
+<<<<<<< HEAD
 is_vector_s3	type_sum
+=======
+is_vector_s3	deprecated
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 new_ornament	new_ornament
 new_pillar_shaft	new_pillar_shaft
 new_pillar_shaft_simple	new_pillar_shaft
@@ -26,6 +40,10 @@ pillar_shaft.factor	pillar_shaft
 pillar_shaft.list	pillar_shaft
 pillar_shaft.logical	pillar_shaft
 pillar_shaft.numeric	pillar_shaft
+<<<<<<< HEAD
+=======
+pillar_shaft.pillar_vertical	pillar_shaft
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 pillar_shaft.POSIXt	pillar_shaft
 print.pillar_shaft	pillar_shaft
 squeeze	colonnade

@@ -26,10 +26,17 @@ export(is.value)
 export(is.warning)
 export(new_output_handler)
 export(parse_all)
+<<<<<<< HEAD
+=======
+export(remove_hooks)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 export(replay)
 export(set_hooks)
 export(try_capture_stack)
 import(grDevices)
 import(graphics)
+<<<<<<< HEAD
 import(stringr)
+=======
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 import(utils)

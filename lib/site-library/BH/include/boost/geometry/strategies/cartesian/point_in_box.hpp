@@ -4,8 +4,13 @@
 // Copyright (c) 2008-2015 Bruno Lalande, Paris, France.
 // Copyright (c) 2009-2015 Mateusz Loskot, London, UK.
 
+<<<<<<< HEAD
 // This file was modified by Oracle on 2015-2017.
 // Modifications copyright (c) 2015-2017, Oracle and/or its affiliates.
+=======
+// This file was modified by Oracle on 2015-2018.
+// Modifications copyright (c) 2015-2018, Oracle and/or its affiliates.
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 // Contributed and/or modified by Adam Wulkiewicz, on behalf of Oracle
 
@@ -22,6 +27,10 @@
 
 #include <boost/geometry/core/access.hpp>
 #include <boost/geometry/core/coordinate_dimension.hpp>
+<<<<<<< HEAD
+=======
+#include <boost/geometry/core/cs.hpp>
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 #include <boost/geometry/strategies/covered_by.hpp>
 #include <boost/geometry/strategies/within.hpp>
 #include <boost/geometry/util/normalize_spheroidal_coordinates.hpp>
@@ -33,6 +42,13 @@ namespace boost { namespace geometry { namespace strategy
 namespace within
 {
 
+<<<<<<< HEAD
+=======
+#ifndef DOXYGEN_NO_DETAIL
+namespace detail
+{
+
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 struct within_coord
 {
     template <typename Value1, typename Value2>
@@ -101,7 +117,11 @@ struct longitude_range
             <
                 Value1, Value2
             >::type calc_t;
+<<<<<<< HEAD
         typedef typename coordinate_system<Geometry>::type::units units_t;
+=======
+        typedef typename geometry::detail::cs_angular_units<Geometry>::type units_t;
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
         typedef math::detail::constants_on_spheroid<calc_t, units_t> constants;
 
         if (CoordCheck::apply(value, min_value, max_value))
@@ -142,18 +162,29 @@ struct covered_by_range<Geometry, 0, spherical_tag>
 template
 <
     template <typename, std::size_t, typename> class SubStrategy,
+<<<<<<< HEAD
     typename Point,
     typename Box,
+=======
+    typename CSTag, // cartesian_tag or spherical_tag
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     std::size_t Dimension,
     std::size_t DimensionCount
 >
 struct relate_point_box_loop
 {
+<<<<<<< HEAD
     static inline bool apply(Point const& point, Box const& box)
     {
         typedef typename tag_cast<typename cs_tag<Point>::type, spherical_tag>::type cs_tag_t;
 
         if (! SubStrategy<Point, Dimension, cs_tag_t>::apply(get<Dimension>(point),
+=======
+    template <typename Point, typename Box>
+    static inline bool apply(Point const& point, Box const& box)
+    {
+        if (! SubStrategy<Point, Dimension, CSTag>::apply(get<Dimension>(point),
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
                     get<min_corner, Dimension>(box),
                     get<max_corner, Dimension>(box))
             )
@@ -164,7 +195,11 @@ struct relate_point_box_loop
         return relate_point_box_loop
             <
                 SubStrategy,
+<<<<<<< HEAD
                 Point, Box,
+=======
+                CSTag,
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
                 Dimension + 1, DimensionCount
             >::apply(point, box);
     }
@@ -174,18 +209,28 @@ struct relate_point_box_loop
 template
 <
     template <typename, std::size_t, typename> class SubStrategy,
+<<<<<<< HEAD
     typename Point,
     typename Box,
     std::size_t DimensionCount
 >
 struct relate_point_box_loop<SubStrategy, Point, Box, DimensionCount, DimensionCount>
 {
+=======
+    typename CSTag,
+    std::size_t DimensionCount
+>
+struct relate_point_box_loop<SubStrategy, CSTag, DimensionCount, DimensionCount>
+{
+    template <typename Point, typename Box>
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     static inline bool apply(Point const& , Box const& )
     {
         return true;
     }
 };
 
+<<<<<<< HEAD
 
 template
 <
@@ -202,10 +247,26 @@ struct point_in_box
                 SubStrategy,
                 Point, Box,
                 0, dimension<Point>::type::value
+=======
+} // namespace detail
+#endif // DOXYGEN_NO_DETAIL
+
+struct cartesian_point_box
+{
+    template <typename Point, typename Box>
+    static inline bool apply(Point const& point, Box const& box)
+    {
+        return detail::relate_point_box_loop
+            <
+                detail::within_range,
+                cartesian_tag,
+                0, dimension<Point>::value
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
             >::apply(point, box);
     }
 };
 
+<<<<<<< HEAD
 
 } // namespace within
 
@@ -214,6 +275,25 @@ struct point_in_box
 
 
 namespace within { namespace services
+=======
+struct spherical_point_box
+{
+    template <typename Point, typename Box>
+    static inline bool apply(Point const& point, Box const& box)
+    {
+        return detail::relate_point_box_loop
+            <
+                detail::within_range,
+                spherical_tag,
+                0, dimension<Point>::value
+            >::apply(point, box);
+    }
+};
+
+
+#ifndef DOXYGEN_NO_STRATEGY_SPECIALIZATIONS
+namespace services
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 {
 
 template <typename Point, typename Box>
@@ -225,7 +305,11 @@ struct default_strategy
         cartesian_tag, cartesian_tag
     >
 {
+<<<<<<< HEAD
     typedef within::point_in_box<Point, Box> type;
+=======
+    typedef within::cartesian_point_box type;
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 };
 
 // spherical_equatorial_tag, spherical_polar_tag and geographic_cat are casted to spherical_tag
@@ -238,6 +322,7 @@ struct default_strategy
         spherical_tag, spherical_tag
     >
 {
+<<<<<<< HEAD
     typedef within::point_in_box<Point, Box> type;
 };
 
@@ -246,6 +331,51 @@ struct default_strategy
 
 
 namespace covered_by { namespace services
+=======
+    typedef within::spherical_point_box type;
+};
+
+
+} // namespace services
+#endif // DOXYGEN_NO_STRATEGY_SPECIALIZATIONS
+
+} // namespace within
+
+namespace covered_by
+{
+
+struct cartesian_point_box
+{
+    template <typename Point, typename Box>
+    static inline bool apply(Point const& point, Box const& box)
+    {
+        return within::detail::relate_point_box_loop
+            <
+                within::detail::covered_by_range,
+                cartesian_tag,
+                0, dimension<Point>::value
+            >::apply(point, box);
+    }
+};
+
+struct spherical_point_box
+{
+    template <typename Point, typename Box>
+    static inline bool apply(Point const& point, Box const& box)
+    {
+        return within::detail::relate_point_box_loop
+            <
+                within::detail::covered_by_range,
+                spherical_tag,
+                0, dimension<Point>::value
+            >::apply(point, box);
+    }
+};
+
+
+#ifndef DOXYGEN_NO_STRATEGY_SPECIALIZATIONS
+namespace services
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 {
 
 
@@ -258,11 +388,15 @@ struct default_strategy
         cartesian_tag, cartesian_tag
     >
 {
+<<<<<<< HEAD
     typedef within::point_in_box
                 <
                     Point, Box,
                     within::covered_by_range
                 > type;
+=======
+    typedef covered_by::cartesian_point_box type;
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 };
 
 // spherical_equatorial_tag, spherical_polar_tag and geographic_cat are casted to spherical_tag
@@ -275,6 +409,7 @@ struct default_strategy
         spherical_tag, spherical_tag
     >
 {
+<<<<<<< HEAD
     typedef within::point_in_box
                 <
                     Point, Box,
@@ -287,6 +422,17 @@ struct default_strategy
 
 
 #endif // DOXYGEN_NO_STRATEGY_SPECIALIZATIONS
+=======
+    typedef covered_by::spherical_point_box type;
+};
+
+
+} // namespace services
+#endif // DOXYGEN_NO_STRATEGY_SPECIALIZATIONS
+
+
+} // namespace covered_by
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 
 }}} // namespace boost::geometry::strategy

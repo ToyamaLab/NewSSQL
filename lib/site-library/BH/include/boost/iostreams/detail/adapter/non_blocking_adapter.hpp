@@ -28,7 +28,11 @@ public:
     { 
         std::streamsize result = 0;
         while (result < n) {
+<<<<<<< HEAD
             std::streamsize amt = iostreams::read(device_, s, n);
+=======
+            std::streamsize amt = iostreams::read(device_, s + result, n - result);
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
             if (amt == -1)
                 break;
             result += amt;

@@ -42,6 +42,10 @@ And you can also write two chunks successively like this:
 
 ```{r test-chisq5}
 sum(x^2) # chi-square distribution with df 5
+<<<<<<< HEAD
+=======
+```
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 ```{r test-chisq4}
 sum((x - mean(x))^2) # df is 4 now
 ```

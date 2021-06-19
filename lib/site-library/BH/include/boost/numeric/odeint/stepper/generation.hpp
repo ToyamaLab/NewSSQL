@@ -29,6 +29,10 @@
 #include <boost/numeric/odeint/stepper/generation/generation_runge_kutta_dopri5.hpp>
 #include <boost/numeric/odeint/stepper/generation/generation_runge_kutta_fehlberg78.hpp>
 
+<<<<<<< HEAD
+=======
+#include <boost/numeric/odeint/stepper/generation/generation_controlled_adams_b_m.hpp>
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 #include <boost/numeric/odeint/stepper/generation/generation_rosenbrock4.hpp>
 

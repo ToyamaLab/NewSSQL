@@ -11,6 +11,11 @@
 #ifndef BOOST_COMPUTE_ALGORITHM_INNER_PRODUCT_HPP
 #define BOOST_COMPUTE_ALGORITHM_INNER_PRODUCT_HPP
 
+<<<<<<< HEAD
+=======
+#include <boost/static_assert.hpp>
+
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 #include <boost/compute/system.hpp>
 #include <boost/compute/functional.hpp>
 #include <boost/compute/command_queue.hpp>
@@ -19,6 +24,10 @@
 #include <boost/compute/iterator/transform_iterator.hpp>
 #include <boost/compute/iterator/zip_iterator.hpp>
 #include <boost/compute/functional/detail/unpack.hpp>
+<<<<<<< HEAD
+=======
+#include <boost/compute/type_traits/is_device_iterator.hpp>
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 namespace boost {
 namespace compute {
@@ -36,6 +45,11 @@ inline T inner_product(InputIterator1 first1,
                        T init,
                        command_queue &queue = system::default_queue())
 {
+<<<<<<< HEAD
+=======
+    BOOST_STATIC_ASSERT(is_device_iterator<InputIterator1>::value);
+    BOOST_STATIC_ASSERT(is_device_iterator<InputIterator2>::value);
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     typedef typename std::iterator_traits<InputIterator1>::value_type input_type;
 
     ptrdiff_t n = std::distance(first1, last1);
@@ -72,6 +86,11 @@ inline T inner_product(InputIterator1 first1,
                        BinaryTransformFunction transform_function,
                        command_queue &queue = system::default_queue())
 {
+<<<<<<< HEAD
+=======
+    BOOST_STATIC_ASSERT(is_device_iterator<InputIterator1>::value);
+    BOOST_STATIC_ASSERT(is_device_iterator<InputIterator2>::value);
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     typedef typename std::iterator_traits<InputIterator1>::value_type value_type;
 
     size_t count = detail::iterator_range_size(first1, last1);

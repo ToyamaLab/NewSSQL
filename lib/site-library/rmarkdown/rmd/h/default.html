@@ -1,16 +1,29 @@
 <!DOCTYPE html>
 
+<<<<<<< HEAD
 <html xmlns="http://www.w3.org/1999/xhtml"$if(lang)$ lang="$lang$" xml:lang="$lang$"$endif$>
+=======
+<html$if(lang)$ lang="$lang$" xml:lang="$lang$"$endif$>
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 <head>
 
 <meta charset="utf-8" />
+<<<<<<< HEAD
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="generator" content="pandoc" />
 
 $if(theme)$
 $else$
 <meta name="viewport" content="width=device-width, initial-scale=1">
+=======
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+$if(theme)$
+$else$
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 $endif$
 
 $for(author-meta)$
@@ -49,6 +62,7 @@ $endif$
 
 $if(highlighting-css)$
 <style type="text/css">code{white-space: pre;}</style>
+<<<<<<< HEAD
 <style type="text/css">
 $highlighting-css$
 $if(code_folding)$
@@ -57,6 +71,44 @@ div.sourceCode {
 }
 $endif$
 </style>
+=======
+<style type="text/css" data-origin="pandoc">
+$highlighting-css$
+
+$if(code_folding)$
+.sourceCode .row {
+  width: 100%;
+}
+.sourceCode {
+  overflow-x: auto;
+}
+.code-folding-btn {
+  margin-right: -30px;
+}
+$endif$
+</style>
+<script>
+// apply pandoc div.sourceCode style to pre.sourceCode instead
+(function() {
+  var sheets = document.styleSheets;
+  for (var i = 0; i < sheets.length; i++) {
+    if (sheets[i].ownerNode.dataset["origin"] !== "pandoc") continue;
+    try { var rules = sheets[i].cssRules; } catch (e) { continue; }
+    for (var j = 0; j < rules.length; j++) {
+      var rule = rules[j];
+      // check if there is a div.sourceCode rule
+      if (rule.type !== rule.STYLE_RULE || rule.selectorText !== "div.sourceCode") continue;
+      var style = rule.style.cssText;
+      // check if color or background-color is set
+      if (rule.style.color === '' && rule.style.backgroundColor === '') continue;
+      // replace div.sourceCode by a pre.sourceCode rule
+      sheets[i].deleteRule(j);
+      sheets[i].insertRule('pre.sourceCode{' + style + '}', j);
+    }
+  }
+})();
+</script>
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 $if(theme)$
 <style type="text/css">
   pre:not([class]) {
@@ -117,9 +169,13 @@ $for(css)$
 <link rel="stylesheet" href="$css$" $if(html5)$$else$type="text/css" $endif$/>
 $endfor$
 
+<<<<<<< HEAD
 </head>
 
 <body>
+=======
+
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 $if(theme)$
 <style type = "text/css">
@@ -134,7 +190,10 @@ code {
 }
 img {
   max-width:100%;
+<<<<<<< HEAD
   height: auto;
+=======
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 }
 .tabbed-pane {
   padding-top: 12px;
@@ -145,6 +204,12 @@ img {
 button.code-folding-btn:focus {
   outline: none;
 }
+<<<<<<< HEAD
+=======
+summary {
+  display: list-item;
+}
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 </style>
 
 $if(kable-scroll)$
@@ -186,7 +251,10 @@ body {
   padding-top: $header_padding$px;
   margin-top: -$header_padding$px;
 }
+<<<<<<< HEAD
 
+=======
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 .section h2 {
   padding-top: $header_padding$px;
   margin-top: -$header_padding$px;
@@ -207,6 +275,46 @@ body {
   padding-top: $header_padding$px;
   margin-top: -$header_padding$px;
 }
+<<<<<<< HEAD
+=======
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #ffffff;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 </style>
 
 <script>
@@ -226,6 +334,7 @@ $$(document).ready(function () {
   menuAnchor.closest('li.dropdown').addClass('active');
 });
 </script>
+<<<<<<< HEAD
 
 $endif$
 
@@ -293,6 +402,76 @@ $endif$
     var toc = $$("#$idprefix$TOC").tocify(options).data("toc-tocify");
 });
 </script>
+=======
+$endif$
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "&#xe258;";
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+$if(code_menu)$
+<style type="text/css">
+.code-folding-btn { margin-bottom: 4px; }
+</style>
+$endif$
+
+
+$if(toc_float)$
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 <style type="text/css">
 
@@ -306,6 +485,7 @@ $endif$
 }
 }
 
+<<<<<<< HEAD
 $if(toc_print)$
 $else$
 @media print {
@@ -314,6 +494,20 @@ $else$
 }
 }
 $endif$
+=======
+@media print {
+$if(toc_print)$
+$else$
+#$idprefix$TOC {
+  display: none !important;
+}
+$endif$
+.toc-content {
+  /* see https://github.com/w3c/csswg-drafts/issues/4434 */
+  float: right;
+}
+}
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 .toc-content {
   padding-left: 30px;
@@ -349,8 +543,11 @@ div.tocify {
 
 .tocify-subheader .tocify-item {
   font-size: 0.90em;
+<<<<<<< HEAD
   padding-left: 25px;
   text-indent: 0;
+=======
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 }
 
 .tocify .list-group-item {
@@ -369,9 +566,32 @@ $endif$
 
 </style>
 
+<<<<<<< HEAD
 <!-- setup 3col/9col grid for toc_float and main content  -->
 <div class="row-fluid">
 <div class="col-xs-12 col-sm-4 col-md-3">
+=======
+$endif$
+
+$endif$
+
+</head>
+
+<body>
+
+$if(theme)$
+
+<div class="container-fluid main-container">
+
+$if(toc_float)$
+
+<!-- setup 3col/9col grid for toc_float and main content  -->
+<div class="row-fluid">
+<div class="col-xs-12 col-sm-4 col-md-3">
+$if(toc-title)$
+<h2 id="$idprefix$toc-title">$toc-title$</h2>
+$endif$
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 <div id="$idprefix$TOC" class="tocify">
 </div>
 </div>
@@ -413,11 +633,19 @@ $endif$
 $if(title)$
 <h1 class="title toc-ignore">$title$</h1>
 $if(subtitle)$
+<<<<<<< HEAD
 <h3 class="subtitle"><em>$subtitle$</em></h3>
 $endif$
 $for(author)$
 $if(author.name)$
 <h4 class="author"><em>$author.name$</em></h4>
+=======
+<h3 class="subtitle">$subtitle$</h3>
+$endif$
+$for(author)$
+$if(author.name)$
+<h4 class="author">$author.name$</h4>
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 $if(author.affiliation)$
 <address class="author_afil">
 $author.affiliation$<br>$endif$
@@ -426,11 +654,19 @@ $if(author.email)$
 </address>
 $endif$
 $else$
+<<<<<<< HEAD
 <h4 class="author"><em>$author$</em></h4>
 $endif$
 $endfor$
 $if(date)$
 <h4 class="date"><em>$date$</em></h4>
+=======
+<h4 class="author">$author$</h4>
+$endif$
+$endfor$
+$if(date)$
+<h4 class="date">$date$</h4>
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 $endif$
 $if(abstract)$
 <div class="abstract">
@@ -448,6 +684,12 @@ $if(toc_float)$
 $else$
 $if(toc)$
 <div id="$idprefix$TOC">
+<<<<<<< HEAD
+=======
+$if(toc-title)$
+<h2 id="$idprefix$toc-title">$toc-title$</h2>
+$endif$
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 $toc$
 </div>
 $endif$
@@ -493,6 +735,74 @@ $$(document).ready(function () {
 $endif$
 
 </script>
+<<<<<<< HEAD
+=======
+
+<!-- tabsets -->
+
+<script>
+$$(document).ready(function () {
+  window.buildTabsets("$idprefix$TOC");
+});
+
+$$(document).ready(function () {
+  $$('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $$(this).parent().toggleClass('nav-tabs-open')
+  });
+});
+</script>
+$endif$
+
+<!-- code folding -->
+$if(code_menu)$
+<script>
+$$(document).ready(function () {
+$if(source_embed)$
+  window.initializeSourceEmbed("$source_embed$");
+$endif$
+$if(code_folding)$
+  window.initializeCodeFolding("$code_folding$" === "show");
+$endif$
+});
+</script>
+$endif$
+
+$if(toc_float)$
+<script>
+$$(document).ready(function ()  {
+
+    // move toc-ignore selectors from section div to header
+    $$('div.section.toc-ignore')
+        .removeClass('toc-ignore')
+        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
+    // establish options
+    var options = {
+      selectors: "$toc_selectors$",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_');
+      },
+      ignoreSelector: ".toc-ignore",
+      scrollTo: 0
+    };
+$if(toc_collapsed)$
+    options.showAndHide = true;
+$else$
+    options.showAndHide = false;
+$endif$
+$if(toc_smooth_scroll)$
+    options.smoothScroll = true;
+$else$
+    options.smoothScroll = false;
+$endif$
+
+    // tocify
+    var toc = $$("#$idprefix$TOC").tocify(options).data("toc-tocify");
+});
+</script>
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 $endif$
 
 $if(mathjax-url)$

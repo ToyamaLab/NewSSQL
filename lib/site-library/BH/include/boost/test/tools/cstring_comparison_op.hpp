@@ -41,8 +41,13 @@ struct name<Lhs,Rhs,typename boost::enable_if_c<                    \
      && unit_test::is_cstring_comparable<Rhs>::value)               \
     >::type >                                                       \
 {                                                                   \
+<<<<<<< HEAD
     typedef typename unit_test::deduce_cstring<Lhs>::type lhs_char_type; \
     typedef typename unit_test::deduce_cstring<Rhs>::type rhs_char_type; \
+=======
+    typedef typename unit_test::deduce_cstring_transform<Lhs>::type lhs_char_type; \
+    typedef typename unit_test::deduce_cstring_transform<Rhs>::type rhs_char_type; \
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 public:                                                             \
     typedef assertion_result result_type;                           \
                                                                     \

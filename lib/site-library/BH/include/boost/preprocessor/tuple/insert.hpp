@@ -23,13 +23,21 @@
 # /* BOOST_PP_TUPLE_INSERT */
 #
 # define BOOST_PP_TUPLE_INSERT(tuple, i, elem) \
+<<<<<<< HEAD
 	BOOST_PP_ARRAY_TO_TUPLE(BOOST_PP_ARRAY_INSERT(BOOST_PP_TUPLE_TO_ARRAY(tuple), i, elem)) \
+=======
+    BOOST_PP_ARRAY_TO_TUPLE(BOOST_PP_ARRAY_INSERT(BOOST_PP_TUPLE_TO_ARRAY(tuple), i, elem)) \
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 /**/
 #
 # /* BOOST_PP_TUPLE_INSERT_D */
 #
 # define BOOST_PP_TUPLE_INSERT_D(d, tuple, i, elem) \
+<<<<<<< HEAD
 	BOOST_PP_ARRAY_TO_TUPLE(BOOST_PP_ARRAY_INSERT_D(d, BOOST_PP_TUPLE_TO_ARRAY(tuple), i, elem)) \
+=======
+    BOOST_PP_ARRAY_TO_TUPLE(BOOST_PP_ARRAY_INSERT_D(d, BOOST_PP_TUPLE_TO_ARRAY(tuple), i, elem)) \
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 /**/
 #
 # endif // BOOST_PP_VARIADICS

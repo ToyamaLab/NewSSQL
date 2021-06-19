@@ -7,6 +7,11 @@
 # pragma once
 #endif
 
+<<<<<<< HEAD
+=======
+#include <boost/config.hpp>
+
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 //
 //  boost/checked_delete.hpp
 //
@@ -26,7 +31,11 @@ namespace boost
 
 // verify that types are complete for increased safety
 
+<<<<<<< HEAD
 template<class T> inline void checked_delete(T * x)
+=======
+template<class T> inline void checked_delete(T * x) BOOST_NOEXCEPT
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 {
     // intentionally complex - simplification causes regressions
     typedef char type_must_be_complete[ sizeof(T)? 1: -1 ];
@@ -34,7 +43,11 @@ template<class T> inline void checked_delete(T * x)
     delete x;
 }
 
+<<<<<<< HEAD
 template<class T> inline void checked_array_delete(T * x)
+=======
+template<class T> inline void checked_array_delete(T * x) BOOST_NOEXCEPT
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 {
     typedef char type_must_be_complete[ sizeof(T)? 1: -1 ];
     (void) sizeof(type_must_be_complete);
@@ -46,7 +59,11 @@ template<class T> struct checked_deleter
     typedef void result_type;
     typedef T * argument_type;
 
+<<<<<<< HEAD
     void operator()(T * x) const
+=======
+    void operator()(T * x) const BOOST_NOEXCEPT
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     {
         // boost:: disables ADL
         boost::checked_delete(x);
@@ -58,7 +75,11 @@ template<class T> struct checked_array_deleter
     typedef void result_type;
     typedef T * argument_type;
 
+<<<<<<< HEAD
     void operator()(T * x) const
+=======
+    void operator()(T * x) const BOOST_NOEXCEPT
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     {
         boost::checked_array_delete(x);
     }

@@ -1,6 +1,10 @@
 // Boost.Geometry
 
+<<<<<<< HEAD
 // Copyright (c) 2015-2017 Oracle and/or its affiliates.
+=======
+// Copyright (c) 2015-2018 Oracle and/or its affiliates.
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 // Contributed and/or modified by Vissarion Fysikopoulos, on behalf of Oracle
 // Contributed and/or modified by Adam Wulkiewicz, on behalf of Oracle
@@ -12,7 +16,13 @@
 #ifndef BOOST_GEOMETRY_FORMULAS_AREA_FORMULAS_HPP
 #define BOOST_GEOMETRY_FORMULAS_AREA_FORMULAS_HPP
 
+<<<<<<< HEAD
 #include <boost/geometry/formulas/flattening.hpp>
+=======
+#include <boost/geometry/core/radian_access.hpp>
+#include <boost/geometry/formulas/flattening.hpp>
+#include <boost/geometry/util/math.hpp>
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 #include <boost/math/special_functions/hypot.hpp>
 
 namespace boost { namespace geometry { namespace formula
@@ -45,7 +55,11 @@ public:
         Evaluate the polynomial in x using Horner's method.
     */
     template <typename NT, typename IteratorType>
+<<<<<<< HEAD
     static inline NT horner_evaluate(NT x,
+=======
+    static inline NT horner_evaluate(NT const& x,
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
                                      IteratorType begin,
                                      IteratorType end)
     {
@@ -64,7 +78,11 @@ public:
         https://en.wikipedia.org/wiki/Clenshaw_algorithm
     */
     template <typename NT, typename IteratorType>
+<<<<<<< HEAD
     static inline NT clenshaw_sum(NT cosx,
+=======
+    static inline NT clenshaw_sum(NT const& cosx,
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
                                   IteratorType begin,
                                   IteratorType end)
     {
@@ -166,7 +184,11 @@ public:
                s/case\sCT(/case /g; s/):/:/g'
     */
 
+<<<<<<< HEAD
     static inline void evaluate_coeffs_n(CT n, CT coeffs_n[])
+=======
+    static inline void evaluate_coeffs_n(CT const& n, CT coeffs_n[])
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     {
 
         switch (SeriesOrder) {
@@ -245,7 +267,11 @@ public:
     /*
        Expand in k2 and ep2.
     */
+<<<<<<< HEAD
     static inline void evaluate_coeffs_ep(CT ep, CT coeffs_n[])
+=======
+    static inline void evaluate_coeffs_ep(CT const& ep, CT coeffs_n[])
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     {
         switch (SeriesOrder) {
         case 0:
@@ -323,6 +349,7 @@ public:
         Given the set of coefficients coeffs1[] evaluate on var2 and return
         the set of coefficients coeffs2[]
     */
+<<<<<<< HEAD
     static inline void evaluate_coeffs_var2(CT var2,
                                             CT coeffs1[],
                                             CT coeffs2[]){
@@ -330,11 +357,27 @@ public:
         for(std::size_t i = 0; i <= SeriesOrder; i++){
             end = begin + SeriesOrder + 1 - i;
             coeffs2[i] = ((i==0) ? CT(1) : pow(var2,int(i)))
+=======
+
+    static inline void evaluate_coeffs_var2(CT const& var2,
+                                            CT const coeffs1[],
+                                            CT coeffs2[])
+    {
+        std::size_t begin(0), end(0);
+        for(std::size_t i = 0; i <= SeriesOrder; i++)
+        {
+            end = begin + SeriesOrder + 1 - i;
+            coeffs2[i] = ((i==0) ? CT(1) : math::pow(var2, int(i)))
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
                         * horner_evaluate(var2, coeffs1 + begin, coeffs1 + end);
             begin = end;
         }
     }
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     /*
         Compute the spherical excess of a geodesic (or shperical) segment
     */
@@ -403,13 +446,20 @@ public:
     */
     template <
                 template <typename, bool, bool, bool, bool, bool> class Inverse,
+<<<<<<< HEAD
                 //typename AzimuthStrategy,
+=======
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
                 typename PointOfSegment,
                 typename SpheroidConst
              >
     static inline return_type_ellipsoidal ellipsoidal(PointOfSegment const& p1,
                                                       PointOfSegment const& p2,
+<<<<<<< HEAD
                                                       SpheroidConst spheroid_const)
+=======
+                                                      SpheroidConst const& spheroid_const)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     {
         return_type_ellipsoidal result;
 

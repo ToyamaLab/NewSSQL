@@ -4,8 +4,13 @@
 // Copyright (c) 2008-2012 Bruno Lalande, Paris, France.
 // Copyright (c) 2009-2012 Mateusz Loskot, London, UK.
 
+<<<<<<< HEAD
 // This file was modified by Oracle on 2014.
 // Modifications copyright (c) 2014 Oracle and/or its affiliates.
+=======
+// This file was modified by Oracle on 2014, 2018.
+// Modifications copyright (c) 2014-2018 Oracle and/or its affiliates.
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 // Contributed and/or modified by Adam Wulkiewicz, on behalf of Oracle
 
@@ -25,6 +30,12 @@ namespace boost { namespace geometry
 
 // Tags defining strategies linked to coordinate systems
 
+<<<<<<< HEAD
+=======
+/// Tag used for undefined coordinate system
+struct cs_undefined_tag {};
+
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 /// Tag used for casting spherical/geographic coordinate systems
 struct spherical_tag {};
 

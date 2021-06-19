@@ -30,6 +30,10 @@ xml_child	xml_children
 xml_children	xml_children
 xml_comment	xml_comment
 xml_contents	xml_children
+<<<<<<< HEAD
+=======
+xml_document-class	oldclass
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 xml_double	xml_text
 xml_dtd	xml_dtd
 xml_find_all	xml_find_all
@@ -42,10 +46,19 @@ xml_has_attr	xml_attr
 xml_integer	xml_text
 xml_length	xml_children
 xml_missing	xml_missing
+<<<<<<< HEAD
+=======
+xml_missing-class	oldclass
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 xml_name	xml_name
 xml_name<-	xml_name
 xml_new_document	xml_new_document
 xml_new_root	xml_new_document
+<<<<<<< HEAD
+=======
+xml_node-class	oldclass
+xml_nodeset-class	oldclass
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 xml_ns	xml_ns
 xml_ns_rename	xml_ns
 xml_ns_strip	xml_ns_strip

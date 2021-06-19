@@ -169,12 +169,30 @@ namespace impl
                 this->tail_means_.begin()
               , this->tail_means_.end()
               , this->tail_means_.begin()
+<<<<<<< HEAD
               , std::bind2nd(numeric::functional::divides<typename array_type::value_type const, float_type const>(), factor)
+=======
+#ifdef BOOST_NO_CXX98_BINDERS
+              , std::bind(numeric::functional::divides<typename array_type::value_type const, float_type const>(), std::placeholders::_1, factor)
+#else
+              , std::bind2nd(numeric::functional::divides<typename array_type::value_type const, float_type const>(), factor)
+#endif
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
             );
 
             return make_iterator_range(this->tail_means_);
         }
 
+<<<<<<< HEAD
+=======
+        // make this accumulator serializeable
+        template<class Archive>
+        void serialize(Archive & ar, const unsigned int file_version)
+        {
+            ar & tail_means_;
+        }
+
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     private:
 
         mutable array_type tail_means_;

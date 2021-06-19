@@ -1,5 +1,9 @@
 as_factor	as_factor
 as_factor.data.frame	as_factor
+<<<<<<< HEAD
+=======
+as_factor.haven_labelled	as_factor
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 as_factor.labelled	as_factor
 format_tagged_na	tagged_na
 is.labelled	labelled
@@ -17,12 +21,20 @@ read_spss	read_spss
 read_stata	read_dta
 read_xpt	read_xpt
 tagged_na	tagged_na
+<<<<<<< HEAD
+=======
+vec_arith.haven_labelled	vec_arith.haven_labelled
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 write_dta	read_dta
 write_sas	read_sas
 write_sav	read_spss
 write_xpt	read_xpt
 zap_empty	zap_empty
 zap_formats	zap_formats
+<<<<<<< HEAD
+=======
+zap_label	zap_label
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 zap_labels	zap_labels
 zap_missing	zap_missing
 zap_widths	zap_widths

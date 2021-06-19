@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 /* Copyright 2003-2014 Joaquin M Lopez Munoz.
+=======
+/* Copyright 2003-2018 Joaquin M Lopez Munoz.
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
  * Distributed under the Boost Software License, Version 1.0.
  * (See accompanying file LICENSE_1_0.txt or copy at
  * http://www.boost.org/LICENSE_1_0.txt)
@@ -36,7 +40,11 @@ class bidir_node_iterator:
   public bidirectional_iterator_helper<
     bidir_node_iterator<Node>,
     typename Node::value_type,
+<<<<<<< HEAD
     std::ptrdiff_t,
+=======
+    typename Node::difference_type,
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     const typename Node::value_type*,
     const typename Node::value_type&>
 {

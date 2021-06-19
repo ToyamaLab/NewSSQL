@@ -1,7 +1,11 @@
 Package: knitr
 Type: Package
 Title: A General-Purpose Package for Dynamic Report Generation in R
+<<<<<<< HEAD
 Version: 1.20
+=======
+Version: 1.29
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 Authors@R: c(
     person("Yihui", "Xie", role = c("aut", "cre"), email = "xie@yihui.name", comment = c(ORCID = "0000-0003-0645-5666")),
     person("Adam", "Vogt", role = "ctb"),
@@ -11,16 +15,31 @@ Authors@R: c(
     person("Aron", "Atkins", role = "ctb"),
     person("Aaron", "Wolen", role = "ctb"),
     person("Ashley", "Manton", role = "ctb"),
+<<<<<<< HEAD
     person("Ben", "Baumer", role = "ctb"),
     person("Brian", "Diggs", role = "ctb"),
+=======
+    person("Atsushi", "Yasumoto", role = "ctb", comment = c(ORCID = "0000-0002-8335-495X")),
+    person("Ben", "Baumer", role = "ctb"),
+    person("Brian", "Diggs", role = "ctb"),
+    person("Brian", "Zhang", role = "ctb"),
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     person("Cassio", "Pereira", role = "ctb"),
     person("Christophe", "Dervieux", role = "ctb"),
     person("David", "Hugh-Jones", role = "ctb"),
     person("David", "Robinson", role = "ctb"),
+<<<<<<< HEAD
     person("Donald", "Arseneau", role = c("ctb", "cph"), comment = "the framed package at inst/misc/framed.sty"),
     person("Doug", "Hemken", role = "ctb"),
     person("Duncan", "Murdoch", role = "ctb"),
     person("Elio", "Campitelli", role = "ctb"),
+=======
+    person("Doug", "Hemken", role = "ctb"),
+    person("Duncan", "Murdoch", role = "ctb"),
+    person("Elio", "Campitelli", role = "ctb"),
+    person("Ellis", "Hughes", role = "ctb"),
+    person("Emily", "Riederer", role = "ctb"),
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     person("Fabian", "Hirschmann", role = "ctb"),
     person("Fitch", "Simeon", role = "ctb"),
     person("Forest", "Fang", role = "ctb"),
@@ -28,6 +47,10 @@ Authors@R: c(
     person("Garrick", "Aden-Buie", role = "ctb"),
     person("Gregoire", "Detrez", role = "ctb"),
     person("Hadley", "Wickham", role = "ctb"),
+<<<<<<< HEAD
+=======
+    person("Hao", "Zhu", role = "ctb"),
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     person("Heewon", "Jeon", role = "ctb"),
     person("Henrik", "Bengtsson", role = "ctb"),
     person("Hiroaki", "Yutani", role = "ctb"),
@@ -59,13 +82,26 @@ Authors@R: c(
     person(c("Kevin", "K."), "Smith", role = "ctb"),
     person("Kirill", "Mueller", role = "ctb"),
     person("Kohske", "Takahashi", role = "ctb"),
+<<<<<<< HEAD
+=======
+    person("Lorenz", "Walthert", role = "ctb"),
+    person("Lucas", "Gallindo", role = "ctb"),
+    person("Marius", "Hofert", role = "ctb"),
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     person("Martin", "Modrák", role = "ctb"),
     person("Michael", "Chirico", role = "ctb"),
     person("Michael", "Friendly", role = "ctb"),
     person("Michal", "Bojanowski", role = "ctb"),
     person("Michel", "Kuhlmann", role = "ctb"),
+<<<<<<< HEAD
     person("Nacho", "Caballero", role = "ctb"),
     person("Nick", "Salkowski", role = "ctb"),
+=======
+    person("Miller", "Patrick", role = "ctb"),
+    person("Nacho", "Caballero", role = "ctb"),
+    person("Nick", "Salkowski", role = "ctb"),
+    person("Niels Richard", "Hansen", role = "ctb"),
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     person("Noam", "Ross", role = "ctb"),
     person("Obada", "Mahdi", role = "ctb"),
     person("Qiang", "Li", role = "ctb"),
@@ -83,6 +119,10 @@ Authors@R: c(
     person("Thibaut", "Assus", role = "ctb"),
     person("Thibaut", "Lamadon", role = "ctb"),
     person("Thomas", "Leeper", role = "ctb"),
+<<<<<<< HEAD
+=======
+    person("Tim", "Mastny", role = "ctb"),
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     person("Tom", "Torsney-Weir", role = "ctb"),
     person("Trevor", "Davis", role = "ctb"),
     person("Viktoras", "Veitas", role = "ctb"),
@@ -90,6 +130,7 @@ Authors@R: c(
     person("Wush", "Wu", role = "ctb"),
     person("Zachary", "Foster", role = "ctb")
     )
+<<<<<<< HEAD
 Maintainer: Yihui Xie <xie@yihui.name>
 Description: Provides a general-purpose tool for dynamic report generation in R
     using Literate Programming techniques.
@@ -102,6 +143,20 @@ Suggests: formatR, testit, digest, rgl (>= 0.95.1201), codetools,
         jpeg, xml2, httr, DBI (>= 0.4-1), showtext, tibble
 License: GPL
 URL: https://yihui.name/knitr/
+=======
+Description: Provides a general-purpose tool for dynamic report generation in R
+    using Literate Programming techniques.
+Depends: R (>= 3.2.3)
+Imports: evaluate (>= 0.10), highr, markdown, stringr (>= 0.6), yaml
+        (>= 2.1.19), methods, xfun (>= 0.15), tools
+Suggests: formatR, testit, digest, rgl (>= 0.95.1201), codetools,
+        rmarkdown, htmlwidgets (>= 0.7), webshot, tikzDevice (>= 0.10),
+        tinytex, reticulate (>= 1.4), JuliaCall (>= 0.11.1), magick,
+        png, jpeg, gifski, xml2 (>= 1.2.0), httr, DBI (>= 0.4-1),
+        showtext, tibble, sass, ragg, styler (>= 1.2.0)
+License: GPL
+URL: https://yihui.org/knitr/
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 BugReports: https://github.com/yihui/knitr/issues
 Encoding: UTF-8
 VignetteBuilder: knitr
@@ -115,12 +170,20 @@ Collate: 'block.R' 'cache.R' 'utils.R' 'citation.R' 'hooks-html.R'
         'hooks-extra.R' 'hooks-latex.R' 'hooks-md.R' 'hooks-rst.R'
         'hooks-textile.R' 'hooks.R' 'output.R' 'package.R' 'pandoc.R'
         'params.R' 'parser.R' 'pattern.R' 'rocco.R' 'spin.R' 'table.R'
+<<<<<<< HEAD
         'template.R' 'utils-base64.R' 'utils-conversion.R'
         'utils-rd2html.R' 'utils-sweave.R' 'utils-upload.R'
         'utils-vignettes.R' 'zzz.R'
 RoxygenNote: 6.0.1
 NeedsCompilation: no
 Packaged: 2018-02-19 20:23:59 UTC; yihui
+=======
+        'template.R' 'utils-conversion.R' 'utils-rd2html.R'
+        'utils-sweave.R' 'utils-upload.R' 'utils-vignettes.R' 'zzz.R'
+RoxygenNote: 7.1.0
+NeedsCompilation: no
+Packaged: 2020-06-23 04:37:45 UTC; yihui
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 Author: Yihui Xie [aut, cre] (<https://orcid.org/0000-0003-0645-5666>),
   Adam Vogt [ctb],
   Alastair Andrew [ctb],
@@ -130,16 +193,31 @@ Author: Yihui Xie [aut, cre] (<https://orcid.org/0000-0003-0645-5666>),
   Aron Atkins [ctb],
   Aaron Wolen [ctb],
   Ashley Manton [ctb],
+<<<<<<< HEAD
   Ben Baumer [ctb],
   Brian Diggs [ctb],
+=======
+  Atsushi Yasumoto [ctb] (<https://orcid.org/0000-0002-8335-495X>),
+  Ben Baumer [ctb],
+  Brian Diggs [ctb],
+  Brian Zhang [ctb],
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
   Cassio Pereira [ctb],
   Christophe Dervieux [ctb],
   David Hugh-Jones [ctb],
   David Robinson [ctb],
+<<<<<<< HEAD
   Donald Arseneau [ctb, cph] (the framed package at inst/misc/framed.sty),
   Doug Hemken [ctb],
   Duncan Murdoch [ctb],
   Elio Campitelli [ctb],
+=======
+  Doug Hemken [ctb],
+  Duncan Murdoch [ctb],
+  Elio Campitelli [ctb],
+  Ellis Hughes [ctb],
+  Emily Riederer [ctb],
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
   Fabian Hirschmann [ctb],
   Fitch Simeon [ctb],
   Forest Fang [ctb],
@@ -147,6 +225,10 @@ Author: Yihui Xie [aut, cre] (<https://orcid.org/0000-0003-0645-5666>),
   Garrick Aden-Buie [ctb],
   Gregoire Detrez [ctb],
   Hadley Wickham [ctb],
+<<<<<<< HEAD
+=======
+  Hao Zhu [ctb],
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
   Heewon Jeon [ctb],
   Henrik Bengtsson [ctb],
   Hiroaki Yutani [ctb],
@@ -179,13 +261,26 @@ Author: Yihui Xie [aut, cre] (<https://orcid.org/0000-0003-0645-5666>),
   Kevin K. Smith [ctb],
   Kirill Mueller [ctb],
   Kohske Takahashi [ctb],
+<<<<<<< HEAD
+=======
+  Lorenz Walthert [ctb],
+  Lucas Gallindo [ctb],
+  Marius Hofert [ctb],
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
   Martin Modrák [ctb],
   Michael Chirico [ctb],
   Michael Friendly [ctb],
   Michal Bojanowski [ctb],
   Michel Kuhlmann [ctb],
+<<<<<<< HEAD
   Nacho Caballero [ctb],
   Nick Salkowski [ctb],
+=======
+  Miller Patrick [ctb],
+  Nacho Caballero [ctb],
+  Nick Salkowski [ctb],
+  Niels Richard Hansen [ctb],
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
   Noam Ross [ctb],
   Obada Mahdi [ctb],
   Qiang Li [ctb],
@@ -203,12 +298,23 @@ Author: Yihui Xie [aut, cre] (<https://orcid.org/0000-0003-0645-5666>),
   Thibaut Assus [ctb],
   Thibaut Lamadon [ctb],
   Thomas Leeper [ctb],
+<<<<<<< HEAD
+=======
+  Tim Mastny [ctb],
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
   Tom Torsney-Weir [ctb],
   Trevor Davis [ctb],
   Viktoras Veitas [ctb],
   Weicheng Zhu [ctb],
   Wush Wu [ctb],
   Zachary Foster [ctb]
+<<<<<<< HEAD
 Repository: CRAN
 Date/Publication: 2018-02-20 10:11:46 UTC
 Built: R 3.5.1; ; 2018-08-21 07:41:27 UTC; unix
+=======
+Maintainer: Yihui Xie <xie@yihui.name>
+Repository: CRAN
+Date/Publication: 2020-06-23 06:20:05 UTC
+Built: R 4.0.2; ; 2020-08-27 07:46:26 UTC; unix
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce

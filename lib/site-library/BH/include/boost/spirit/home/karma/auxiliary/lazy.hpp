@@ -139,9 +139,14 @@ namespace boost { namespace spirit { namespace karma
         Function func;
         Modifiers modifiers;
 
+<<<<<<< HEAD
     private:
         // silence MSVC warning C4512: assignment operator could not be generated
         lazy_generator& operator= (lazy_generator const&);
+=======
+        // silence MSVC warning C4512: assignment operator could not be generated
+        BOOST_DELETED_FUNCTION(lazy_generator& operator= (lazy_generator const&))
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     };
 
     ///////////////////////////////////////////////////////////////////////////

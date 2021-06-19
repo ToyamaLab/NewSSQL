@@ -644,7 +644,11 @@ namespace boost { namespace numeric { namespace ublas {
     template<class T>
     T
     ZeroElement (T) {
+<<<<<<< HEAD
         return T(0.0);
+=======
+        return static_cast<T> (0);
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     }
 
     template<class T>
@@ -662,6 +666,7 @@ namespace boost { namespace numeric { namespace ublas {
     template<class T>
     T
     OneElement (T) {
+<<<<<<< HEAD
         return T(0.0);
     }
 
@@ -669,6 +674,9 @@ namespace boost { namespace numeric { namespace ublas {
     vector<T>
     OneElement (vector<T>) {
         return zero_vector<T> ();
+=======
+        return static_cast<T> (1);
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     }
 
     template<class T>
@@ -677,6 +685,7 @@ namespace boost { namespace numeric { namespace ublas {
         return identity_matrix<T> ();
     }
 
+<<<<<<< HEAD
 //    template<>
 //    float
 //    ZeroElement (float) {
@@ -781,6 +790,8 @@ namespace boost { namespace numeric { namespace ublas {
 //    OneElement (matrix<std::complex<double> >) {
 //        return identity_matrix<std::complex<double> > ();
 //    }
+=======
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
     template<class E1, class E2>
     bool

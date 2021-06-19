@@ -13,6 +13,11 @@
 #define BOOST_ALGORITHM_COPY_IF_HPP
 
 #include <utility>    // for std::pair, std::make_pair
+<<<<<<< HEAD
+=======
+
+#include <boost/config.hpp>
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 #include <boost/range/begin.hpp>
 #include <boost/range/end.hpp>
 
@@ -29,7 +34,11 @@ namespace boost { namespace algorithm {
 /// \param p        A predicate for testing the elements of the range
 /// \note           This function is part of the C++2011 standard library.
 template<typename InputIterator, typename OutputIterator, typename Predicate> 
+<<<<<<< HEAD
 OutputIterator copy_if ( InputIterator first, InputIterator last, OutputIterator result, Predicate p )
+=======
+BOOST_CXX14_CONSTEXPR OutputIterator copy_if ( InputIterator first, InputIterator last, OutputIterator result, Predicate p )
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 {
     for ( ; first != last; ++first )
         if (p(*first))
@@ -47,7 +56,11 @@ OutputIterator copy_if ( InputIterator first, InputIterator last, OutputIterator
 /// \param p        A predicate for testing the elements of the range
 ///
 template<typename Range, typename OutputIterator, typename Predicate>
+<<<<<<< HEAD
 OutputIterator copy_if ( const Range &r, OutputIterator result, Predicate p )
+=======
+BOOST_CXX14_CONSTEXPR OutputIterator copy_if ( const Range &r, OutputIterator result, Predicate p )
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 {
     return boost::algorithm::copy_if (boost::begin (r), boost::end(r), result, p);
 }
@@ -64,7 +77,11 @@ OutputIterator copy_if ( const Range &r, OutputIterator result, Predicate p )
 /// \param p        A predicate for testing the elements of the range
 ///
 template<typename InputIterator, typename OutputIterator, typename Predicate> 
+<<<<<<< HEAD
 std::pair<InputIterator, OutputIterator>
+=======
+BOOST_CXX14_CONSTEXPR std::pair<InputIterator, OutputIterator>
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 copy_while ( InputIterator first, InputIterator last, OutputIterator result, Predicate p )
 {
     for ( ; first != last && p(*first); ++first )
@@ -82,7 +99,11 @@ copy_while ( InputIterator first, InputIterator last, OutputIterator result, Pre
 /// \param p        A predicate for testing the elements of the range
 ///
 template<typename Range, typename OutputIterator, typename Predicate>
+<<<<<<< HEAD
 std::pair<typename boost::range_iterator<const Range>::type, OutputIterator> 
+=======
+BOOST_CXX14_CONSTEXPR std::pair<typename boost::range_iterator<const Range>::type, OutputIterator> 
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 copy_while ( const Range &r, OutputIterator result, Predicate p )
 {
     return boost::algorithm::copy_while (boost::begin (r), boost::end(r), result, p);
@@ -100,7 +121,11 @@ copy_while ( const Range &r, OutputIterator result, Predicate p )
 /// \param p        A predicate for testing the elements of the range
 ///
 template<typename InputIterator, typename OutputIterator, typename Predicate> 
+<<<<<<< HEAD
 std::pair<InputIterator, OutputIterator>
+=======
+BOOST_CXX14_CONSTEXPR std::pair<InputIterator, OutputIterator>
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 copy_until ( InputIterator first, InputIterator last, OutputIterator result, Predicate p )
 {
     for ( ; first != last && !p(*first); ++first )
@@ -118,7 +143,11 @@ copy_until ( InputIterator first, InputIterator last, OutputIterator result, Pre
 /// \param p        A predicate for testing the elements of the range
 ///
 template<typename Range, typename OutputIterator, typename Predicate>
+<<<<<<< HEAD
 std::pair<typename boost::range_iterator<const Range>::type, OutputIterator> 
+=======
+BOOST_CXX14_CONSTEXPR std::pair<typename boost::range_iterator<const Range>::type, OutputIterator> 
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 copy_until ( const Range &r, OutputIterator result, Predicate p )
 {
     return boost::algorithm::copy_until (boost::begin (r), boost::end(r), result, p);

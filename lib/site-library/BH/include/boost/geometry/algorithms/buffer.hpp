@@ -4,8 +4,13 @@
 // Copyright (c) 2008-2012 Bruno Lalande, Paris, France.
 // Copyright (c) 2009-2012 Mateusz Loskot, London, UK.
 
+<<<<<<< HEAD
 // This file was modified by Oracle on 2017.
 // Modifications copyright (c) 2017 Oracle and/or its affiliates.
+=======
+// This file was modified by Oracle on 2017, 2019.
+// Modifications copyright (c) 2017, 2019 Oracle and/or its affiliates.
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 // Contributed and/or modified by Adam Wulkiewicz, on behalf of Oracle
 
 // Parts of Boost.Geometry are redesigned from Geodan's Geographic Library
@@ -37,11 +42,16 @@
 #include <boost/geometry/geometries/box.hpp>
 #include <boost/geometry/util/math.hpp>
 
+<<<<<<< HEAD
+=======
+#include <boost/geometry/algorithms/detail/buffer/buffer_box.hpp>
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 #include <boost/geometry/algorithms/detail/buffer/buffer_inserter.hpp>
 
 namespace boost { namespace geometry
 {
 
+<<<<<<< HEAD
 
 #ifndef DOXYGEN_NO_DETAIL
 namespace detail { namespace buffer
@@ -83,6 +93,8 @@ inline void buffer_box(BoxIn const& box_in, T const& distance, BoxOut& box_out)
 }} // namespace detail::buffer
 #endif // DOXYGEN_NO_DETAIL
 
+=======
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 #ifndef DOXYGEN_NO_DISPATCH
 namespace dispatch
 {
@@ -264,7 +276,15 @@ inline void buffer(GeometryIn const& geometry_in,
     concepts::check<polygon_type>();
 
     typedef typename point_type<GeometryIn>::type point_type;
+<<<<<<< HEAD
     typedef typename rescale_policy_type<point_type>::type rescale_policy_type;
+=======
+    typedef typename rescale_policy_type
+        <
+            point_type,
+            typename geometry::cs_tag<point_type>::type
+        >::type rescale_policy_type;
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
     geometry_out.clear();
 
@@ -284,7 +304,12 @@ inline void buffer(GeometryIn const& geometry_in,
         >::type intersection_strategy;
 
     rescale_policy_type rescale_policy
+<<<<<<< HEAD
             = boost::geometry::get_rescale_policy<rescale_policy_type>(box);
+=======
+            = boost::geometry::get_rescale_policy<rescale_policy_type>(
+                box, intersection_strategy);
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
     detail::buffer::buffer_inserter<polygon_type>(geometry_in, range::back_inserter(geometry_out),
                 distance_strategy,

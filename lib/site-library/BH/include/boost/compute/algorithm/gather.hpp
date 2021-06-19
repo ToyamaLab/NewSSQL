@@ -11,6 +11,11 @@
 #ifndef BOOST_COMPUTE_ALGORITHM_GATHER_HPP
 #define BOOST_COMPUTE_ALGORITHM_GATHER_HPP
 
+<<<<<<< HEAD
+=======
+#include <boost/static_assert.hpp>
+
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 #include <boost/compute/command_queue.hpp>
 #include <boost/compute/detail/iterator_range_size.hpp>
 #include <boost/compute/detail/meta_kernel.hpp>
@@ -18,6 +23,10 @@
 #include <boost/compute/iterator/buffer_iterator.hpp>
 #include <boost/compute/system.hpp>
 #include <boost/compute/type_traits/type_name.hpp>
+<<<<<<< HEAD
+=======
+#include <boost/compute/type_traits/is_device_iterator.hpp>
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 namespace boost {
 namespace compute {
@@ -72,6 +81,13 @@ inline void gather(MapIterator first,
                    OutputIterator result,
                    command_queue &queue = system::default_queue())
 {
+<<<<<<< HEAD
+=======
+    BOOST_STATIC_ASSERT(is_device_iterator<InputIterator>::value);
+    BOOST_STATIC_ASSERT(is_device_iterator<MapIterator>::value);
+    BOOST_STATIC_ASSERT(is_device_iterator<OutputIterator>::value);
+
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     detail::gather_kernel<InputIterator, MapIterator, OutputIterator> kernel;
     
     kernel.set_range(first, last, input, result);

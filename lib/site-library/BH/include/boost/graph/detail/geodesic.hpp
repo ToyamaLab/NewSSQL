@@ -33,7 +33,11 @@ namespace boost
 //         pages = {466--484},
 //         priority = {0},
 //         title = {A Graph-theoretic perspective on centrality},
+<<<<<<< HEAD
 //         url = {http://dx.doi.org/10.1016/j.socnet.2005.11.005},
+=======
+//         url = {https://doi.org/10.1016/j.socnet.2005.11.005},
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 //             volume = {28},
 //             year = {2006}
 //         }
@@ -82,8 +86,16 @@ namespace detail {
     // Similar to std::plus<T>, but maximizes parameters
     // rather than adding them.
     template <typename T>
+<<<<<<< HEAD
     struct maximize : public std::binary_function<T, T, T>
     {
+=======
+    struct maximize
+    {
+        typedef T result_type;
+        typedef T first_argument_type;
+        typedef T second_argument_type;
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
         T operator ()(T x, T y) const
         { BOOST_USING_STD_MAX(); return max BOOST_PREVENT_MACRO_SUBSTITUTION (x, y); }
     };
@@ -93,11 +105,18 @@ namespace detail {
     // types, but should be specialized for those types that have
     // discrete notions of reciprocals.
     template <typename T>
+<<<<<<< HEAD
     struct reciprocal : public std::unary_function<T, T>
     {
         typedef std::unary_function<T, T> function_type;
         typedef typename function_type::result_type result_type;
         typedef typename function_type::argument_type argument_type;
+=======
+    struct reciprocal
+    {
+        typedef T result_type;
+        typedef T argument_type;
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
         T operator ()(T t)
         { return T(1) / t; }
     };

@@ -9,12 +9,24 @@ export(curl_download)
 export(curl_echo)
 export(curl_escape)
 export(curl_fetch_disk)
+<<<<<<< HEAD
+=======
+export(curl_fetch_echo)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 export(curl_fetch_memory)
 export(curl_fetch_multi)
 export(curl_fetch_stream)
 export(curl_options)
+<<<<<<< HEAD
 export(curl_unescape)
 export(curl_version)
+=======
+export(curl_symbols)
+export(curl_unescape)
+export(curl_upload)
+export(curl_version)
+export(file_writer)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 export(form_data)
 export(form_file)
 export(handle_cookies)
@@ -38,6 +50,10 @@ export(nslookup)
 export(parse_date)
 export(parse_headers)
 export(parse_headers_list)
+<<<<<<< HEAD
+=======
+export(send_mail)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 useDynLib(curl,R_curl_connection)
 useDynLib(curl,R_curl_escape)
 useDynLib(curl,R_curl_fetch_disk)
@@ -49,6 +65,11 @@ useDynLib(curl,R_get_bundle)
 useDynLib(curl,R_get_handle_cookies)
 useDynLib(curl,R_get_handle_response)
 useDynLib(curl,R_get_proxy_for_url)
+<<<<<<< HEAD
+=======
+useDynLib(curl,R_handle_getcustom)
+useDynLib(curl,R_handle_getheaders)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 useDynLib(curl,R_handle_reset)
 useDynLib(curl,R_handle_setform)
 useDynLib(curl,R_handle_setheaders)
@@ -60,10 +81,20 @@ useDynLib(curl,R_multi_list)
 useDynLib(curl,R_multi_new)
 useDynLib(curl,R_multi_run)
 useDynLib(curl,R_multi_setopt)
+<<<<<<< HEAD
+=======
+useDynLib(curl,R_new_file_writer)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 useDynLib(curl,R_new_handle)
 useDynLib(curl,R_nslookup)
 useDynLib(curl,R_proxy_info)
 useDynLib(curl,R_set_bundle)
 useDynLib(curl,R_split_string)
 useDynLib(curl,R_total_handles)
+<<<<<<< HEAD
 useDynLib(curl,R_windows_build)
+=======
+useDynLib(curl,R_total_writers)
+useDynLib(curl,R_windows_build)
+useDynLib(curl,R_write_file_writer)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce

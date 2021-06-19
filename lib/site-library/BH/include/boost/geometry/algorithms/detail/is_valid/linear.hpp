@@ -1,6 +1,10 @@
 // Boost.Geometry (aka GGL, Generic Geometry Library)
 
+<<<<<<< HEAD
 // Copyright (c) 2014-2017, Oracle and/or its affiliates.
+=======
+// Copyright (c) 2014-2019, Oracle and/or its affiliates.
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 // Contributed and/or modified by Menelaos Karavelas, on behalf of Oracle
 // Contributed and/or modified by Adam Wulkiewicz, on behalf of Oracle
@@ -63,7 +67,15 @@ struct is_valid_linestring
                 Linestring,
                 3u,
                 true,
+<<<<<<< HEAD
                 not_equal_to<typename point_type<Linestring>::type>
+=======
+                not_equal_to
+                    <
+                        typename point_type<Linestring>::type,
+                        typename Strategy::equals_point_point_strategy_type
+                    >
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
             >::apply(linestring);
 
         if (num_distinct < 2u)

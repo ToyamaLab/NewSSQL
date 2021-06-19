@@ -18,7 +18,11 @@
 #include <utility>
 #include <vector>
 #include <cstddef>
+<<<<<<< HEAD
 #include <boost/iterator.hpp>
+=======
+#include <iterator>
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 #include <boost/iterator/counting_iterator.hpp>
 #include <boost/range/irange.hpp>
 #include <boost/graph/graph_traits.hpp>
@@ -110,12 +114,23 @@ namespace boost {
     // need rewrite this using boost::iterator_adaptor
     template <class V, class Iter>
     class val_out_edge_iterator
+<<<<<<< HEAD
       : public boost::iterator<std::input_iterator_tag, std::pair<V,V>,
          std::ptrdiff_t, std::pair<V,V>*, const std::pair<V,V> >
+=======
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     {
       typedef val_out_edge_iterator self;
       typedef std::pair<V,V> Edge;
     public:
+<<<<<<< HEAD
+=======
+      typedef std::input_iterator_tag iterator_category;
+      typedef std::pair<V,V> value_type;
+      typedef std::ptrdiff_t difference_type;
+      typedef std::pair<V,V>* pointer;
+      typedef const std::pair<V,V> reference;
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
       val_out_edge_iterator() { }
       val_out_edge_iterator(V s, Iter i) : _source(s), _iter(i) { }
       Edge operator*() const { return Edge(_source, *_iter); }

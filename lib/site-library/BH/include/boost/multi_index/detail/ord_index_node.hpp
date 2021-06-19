@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 /* Copyright 2003-2015 Joaquin M Lopez Munoz.
+=======
+/* Copyright 2003-2019 Joaquin M Lopez Munoz.
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
  * Distributed under the Boost Software License, Version 1.0.
  * (See accompanying file LICENSE_1_0.txt or copy at
  * http://www.boost.org/LICENSE_1_0.txt)
@@ -42,7 +46,11 @@
 
 #include <boost/config.hpp> /* keep it first to prevent nasty warns in MSVC */
 #include <cstddef>
+<<<<<<< HEAD
 #include <boost/detail/allocator_utilities.hpp>
+=======
+#include <boost/multi_index/detail/allocator_traits.hpp>
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 #include <boost/multi_index/detail/raw_ptr.hpp>
 
 #if !defined(BOOST_MULTI_INDEX_DISABLE_COMPRESSED_ORDERED_INDEX_NODES)
@@ -68,6 +76,7 @@ template<typename AugmentPolicy,typename Allocator>
 struct ordered_index_node_impl; /* fwd decl. */
 
 template<typename AugmentPolicy,typename Allocator>
+<<<<<<< HEAD
 struct ordered_index_node_std_base
 {
   typedef typename
@@ -82,6 +91,33 @@ struct ordered_index_node_std_base
   >::type::const_pointer                             const_pointer;
   typedef ordered_index_color&                       color_ref;
   typedef pointer&                                   parent_ref;
+=======
+struct ordered_index_node_traits
+{
+  typedef typename rebind_alloc_for<
+    Allocator,
+    ordered_index_node_impl<AugmentPolicy,Allocator>
+  >::type                                            allocator;
+  typedef allocator_traits<allocator>                alloc_traits;
+  typedef typename alloc_traits::pointer             pointer;
+  typedef typename alloc_traits::const_pointer       const_pointer;
+  typedef typename alloc_traits::difference_type     difference_type;
+  typedef typename alloc_traits::size_type           size_type;
+};
+
+template<typename AugmentPolicy,typename Allocator>
+struct ordered_index_node_std_base
+{
+  typedef ordered_index_node_traits<
+    AugmentPolicy,Allocator>                    node_traits;
+  typedef typename node_traits::allocator       node_allocator;
+  typedef typename node_traits::pointer         pointer;
+  typedef typename node_traits::const_pointer   const_pointer;
+  typedef typename node_traits::difference_type difference_type;
+  typedef typename node_traits::size_type       size_type;
+  typedef ordered_index_color&                  color_ref;
+  typedef pointer&                              parent_ref;
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
   ordered_index_color& color(){return color_;}
   ordered_index_color  color()const{return color_;}
@@ -120,14 +156,29 @@ private:
 template<typename AugmentPolicy,typename Allocator>
 struct ordered_index_node_compressed_base
 {
+<<<<<<< HEAD
   typedef ordered_index_node_impl<
     AugmentPolicy,Allocator>*            pointer;
   typedef const ordered_index_node_impl<
     AugmentPolicy,Allocator>*            const_pointer;
+=======
+  typedef ordered_index_node_traits<
+    AugmentPolicy,Allocator>                    node_traits;
+  typedef ordered_index_node_impl<
+    AugmentPolicy,Allocator>*                   pointer;
+  typedef const ordered_index_node_impl<
+    AugmentPolicy,Allocator>*                   const_pointer;
+  typedef typename node_traits::difference_type difference_type;
+  typedef typename node_traits::size_type       size_type;
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
   struct color_ref
   {
     color_ref(uintptr_type* r_):r(r_){}
+<<<<<<< HEAD
+=======
+    color_ref(const color_ref& x):r(x.r){}
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     
     operator ordered_index_color()const
     {
@@ -153,6 +204,10 @@ struct ordered_index_node_compressed_base
   struct parent_ref
   {
     parent_ref(uintptr_type* r_):r(r_){}
+<<<<<<< HEAD
+=======
+    parent_ref(const parent_ref& x):r(x.r){}
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     
     operator pointer()const
     {
@@ -217,10 +272,14 @@ struct ordered_index_node_impl_base:
         ordered_index_node_compressed_base<AugmentPolicy,Allocator>
        >::value%2)||
       !(is_same<
+<<<<<<< HEAD
         typename boost::detail::allocator::rebind_to<
           Allocator,
           ordered_index_node_impl<AugmentPolicy,Allocator>
         >::type::pointer,
+=======
+        typename ordered_index_node_traits<AugmentPolicy,Allocator>::pointer,
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
         ordered_index_node_impl<AugmentPolicy,Allocator>*>::value),
       ordered_index_node_std_base<AugmentPolicy,Allocator>,
       ordered_index_node_compressed_base<AugmentPolicy,Allocator>
@@ -566,7 +625,11 @@ template<typename AugmentPolicy,typename Super>
 struct ordered_index_node_trampoline:
   ordered_index_node_impl<
     AugmentPolicy,
+<<<<<<< HEAD
     typename boost::detail::allocator::rebind_to<
+=======
+    typename rebind_alloc_for<
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
       typename Super::allocator_type,
       char
     >::type
@@ -574,7 +637,11 @@ struct ordered_index_node_trampoline:
 {
   typedef ordered_index_node_impl<
     AugmentPolicy,
+<<<<<<< HEAD
     typename boost::detail::allocator::rebind_to<
+=======
+    typename rebind_alloc_for<
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
       typename Super::allocator_type,
       char
     >::type
@@ -589,11 +656,21 @@ private:
   typedef ordered_index_node_trampoline<AugmentPolicy,Super> trampoline;
 
 public:
+<<<<<<< HEAD
   typedef typename trampoline::impl_type     impl_type;
   typedef typename trampoline::color_ref     impl_color_ref;
   typedef typename trampoline::parent_ref    impl_parent_ref;
   typedef typename trampoline::pointer       impl_pointer;
   typedef typename trampoline::const_pointer const_impl_pointer;
+=======
+  typedef typename trampoline::impl_type       impl_type;
+  typedef typename trampoline::color_ref       impl_color_ref;
+  typedef typename trampoline::parent_ref      impl_parent_ref;
+  typedef typename trampoline::pointer         impl_pointer;
+  typedef typename trampoline::const_pointer   const_impl_pointer;
+  typedef typename trampoline::difference_type difference_type;
+  typedef typename trampoline::size_type       size_type;
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
   impl_color_ref      color(){return trampoline::color();}
   ordered_index_color color()const{return trampoline::color();}

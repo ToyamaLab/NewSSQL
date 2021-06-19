@@ -32,6 +32,10 @@
 #include <boost/interprocess/detail/utilities.hpp>
 #include <boost/intrusive/pointer_traits.hpp>
 #include <boost/move/adl_move_swap.hpp>
+<<<<<<< HEAD
+=======
+#include <boost/move/core.hpp>
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 #include <iosfwd>               // for std::basic_ostream
 
@@ -48,8 +52,13 @@ namespace interprocess {
 //!intrusive_ptr<T, offset_ptr<void> > defines a class with a offset_ptr<T> member.
 //!Relies on unqualified calls to:
 //!
+<<<<<<< HEAD
 //!  void intrusive_ptr_add_ref(T * p);
 //!  void intrusive_ptr_release(T * p);
+=======
+//!  void intrusive_ptr_add_ref(T * p) BOOST_NOEXCEPT;
+//!  void intrusive_ptr_release(T * p) BOOST_NOEXCEPT;
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 //!
 //!  with (p != 0)
 //!
@@ -72,56 +81,114 @@ class intrusive_ptr
    typedef pointer this_type::*unspecified_bool_type;
    #endif   //#ifndef BOOST_INTERPROCESS_DOXYGEN_INVOKED
 
+<<<<<<< HEAD
    public:
    //!Constructor. Initializes internal pointer to 0.
    //!Does not throw
    intrusive_ptr(): m_ptr(0)
+=======
+   BOOST_COPYABLE_AND_MOVABLE(intrusive_ptr)
+
+   public:
+   //!Constructor. Initializes internal pointer to 0.
+   //!Does not throw
+   intrusive_ptr() BOOST_NOEXCEPT
+	   : m_ptr(0)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
    {}
 
    //!Constructor. Copies pointer and if "p" is not zero and
    //!"add_ref" is true calls intrusive_ptr_add_ref(to_raw_pointer(p)).
    //!Does not throw
+<<<<<<< HEAD
    intrusive_ptr(const pointer &p, bool add_ref = true): m_ptr(p)
+=======
+   intrusive_ptr(const pointer &p, bool add_ref = true) BOOST_NOEXCEPT
+	   : m_ptr(p)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
    {
       if(m_ptr != 0 && add_ref) intrusive_ptr_add_ref(ipcdetail::to_raw_pointer(m_ptr));
    }
 
    //!Copy constructor. Copies the internal pointer and if "p" is not
    //!zero calls intrusive_ptr_add_ref(to_raw_pointer(p)). Does not throw
+<<<<<<< HEAD
    intrusive_ptr(intrusive_ptr const & rhs)
+=======
+   intrusive_ptr(intrusive_ptr const & rhs) BOOST_NOEXCEPT
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
       :  m_ptr(rhs.m_ptr)
    {
       if(m_ptr != 0) intrusive_ptr_add_ref(ipcdetail::to_raw_pointer(m_ptr));
    }
 
+<<<<<<< HEAD
    //!Constructor from related. Copies the internal pointer and if "p" is not
    //!zero calls intrusive_ptr_add_ref(to_raw_pointer(p)). Does not throw
    template<class U> intrusive_ptr
       (intrusive_ptr<U, VP> const & rhs)
+=======
+   //!Move constructor. Moves the internal pointer. Does not throw
+   intrusive_ptr(BOOST_RV_REF(intrusive_ptr) rhs) BOOST_NOEXCEPT
+	   : m_ptr(rhs.m_ptr) 
+   {
+	   rhs.m_ptr = 0;
+   }
+
+   //!Constructor from related. Copies the internal pointer and if "p" is not
+   //!zero calls intrusive_ptr_add_ref(to_raw_pointer(p)). Does not throw
+   template<class U> intrusive_ptr(intrusive_ptr<U, VP> const & rhs) BOOST_NOEXCEPT
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
       :  m_ptr(rhs.get())
    {
       if(m_ptr != 0) intrusive_ptr_add_ref(ipcdetail::to_raw_pointer(m_ptr));
    }
 
+<<<<<<< HEAD
    //!Destructor. If internal pointer is not 0, calls
    //!intrusive_ptr_release(to_raw_pointer(m_ptr)). Does not throw
    ~intrusive_ptr()
    {
       if(m_ptr != 0) intrusive_ptr_release(ipcdetail::to_raw_pointer(m_ptr));
+=======
+   //!Destructor. Calls reset(). Does not throw
+   ~intrusive_ptr()
+   {
+      reset();
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
    }
 
    //!Assignment operator. Equivalent to intrusive_ptr(r).swap(*this).
    //!Does not throw
+<<<<<<< HEAD
    intrusive_ptr & operator=(intrusive_ptr const & rhs)
+=======
+   intrusive_ptr & operator=(BOOST_COPY_ASSIGN_REF(intrusive_ptr) rhs) BOOST_NOEXCEPT
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
    {
       this_type(rhs).swap(*this);
       return *this;
    }
 
+<<<<<<< HEAD
    //!Assignment from related. Equivalent to intrusive_ptr(r).swap(*this).
    //!Does not throw
    template<class U> intrusive_ptr & operator=
       (intrusive_ptr<U, VP> const & rhs)
+=======
+   //!Move Assignment operator
+   //!Does not throw
+   intrusive_ptr & operator=(BOOST_RV_REF(intrusive_ptr) rhs) BOOST_NOEXCEPT 
+   {
+	   rhs.swap(*this);
+	   rhs.reset();
+	   return *this;
+   }
+
+   //!Assignment from related. Equivalent to intrusive_ptr(r).swap(*this).
+   //!Does not throw
+   template<class U> intrusive_ptr & operator=(intrusive_ptr<U, VP> const & rhs) BOOST_NOEXCEPT
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
    {
       this_type(rhs).swap(*this);
       return *this;
@@ -129,50 +196,98 @@ class intrusive_ptr
 
    //!Assignment from pointer. Equivalent to intrusive_ptr(r).swap(*this).
    //!Does not throw
+<<<<<<< HEAD
    intrusive_ptr & operator=(pointer rhs)
+=======
+   intrusive_ptr & operator=(pointer rhs) BOOST_NOEXCEPT
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
    {
       this_type(rhs).swap(*this);
       return *this;
    }
 
+<<<<<<< HEAD
    //!Returns a reference to the internal pointer.
    //!Does not throw
    pointer &get()
+=======
+   //!Release internal pointer and set it to 0. If internal pointer is not 0, calls
+   //!intrusive_ptr_release(to_raw_pointer(m_ptr)). Does not throw
+   void reset() BOOST_NOEXCEPT {
+      if(m_ptr != 0) {
+        pointer ptr = m_ptr;
+        m_ptr = 0;
+        intrusive_ptr_release(ipcdetail::to_raw_pointer(ptr));
+      }
+   }
+
+   //!Returns a reference to the internal pointer.
+   //!Does not throw
+   pointer &get() BOOST_NOEXCEPT
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
    {  return m_ptr;  }
 
    //!Returns a reference to the internal pointer.
    //!Does not throw
+<<<<<<< HEAD
    const pointer &get() const
+=======
+   const pointer &get() const BOOST_NOEXCEPT
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
    {  return m_ptr;  }
 
    //!Returns *get().
    //!Does not throw
+<<<<<<< HEAD
    T & operator*() const
+=======
+   T & operator*() const BOOST_NOEXCEPT
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
    {  return *m_ptr; }
 
    //!Returns *get().
    //!Does not throw
+<<<<<<< HEAD
    const pointer &operator->() const
+=======
+   const pointer &operator->() const BOOST_NOEXCEPT
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
    {  return m_ptr;  }
 
    //!Returns get().
    //!Does not throw
+<<<<<<< HEAD
    pointer &operator->()
+=======
+   pointer &operator->() BOOST_NOEXCEPT
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
    {  return m_ptr;  }
 
    //!Conversion to boolean.
    //!Does not throw
+<<<<<<< HEAD
    operator unspecified_bool_type () const
+=======
+   operator unspecified_bool_type () const BOOST_NOEXCEPT
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
    {  return m_ptr == 0? 0: &this_type::m_ptr;  }
 
    //!Not operator.
    //!Does not throw
+<<<<<<< HEAD
    bool operator! () const
+=======
+   bool operator! () const BOOST_NOEXCEPT
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
    {  return m_ptr == 0;   }
 
    //!Exchanges the contents of the two smart pointers.
    //!Does not throw
+<<<<<<< HEAD
    void swap(intrusive_ptr & rhs)
+=======
+   void swap(intrusive_ptr & rhs) BOOST_NOEXCEPT
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
    {  ::boost::adl_move_swap(m_ptr, rhs.m_ptr);  }
 
    #if !defined(BOOST_INTERPROCESS_DOXYGEN_INVOKED)
@@ -185,49 +300,77 @@ class intrusive_ptr
 //!Does not throw
 template<class T, class U, class VP> inline
 bool operator==(intrusive_ptr<T, VP> const & a,
+<<<<<<< HEAD
                 intrusive_ptr<U, VP> const & b)
+=======
+                intrusive_ptr<U, VP> const & b) BOOST_NOEXCEPT
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 {  return a.get() == b.get(); }
 
 //!Returns a.get() != b.get().
 //!Does not throw
 template<class T, class U, class VP> inline
 bool operator!=(intrusive_ptr<T, VP> const & a,
+<<<<<<< HEAD
                 intrusive_ptr<U, VP> const & b)
+=======
+                intrusive_ptr<U, VP> const & b) BOOST_NOEXCEPT
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 {  return a.get() != b.get(); }
 
 //!Returns a.get() == b.
 //!Does not throw
 template<class T, class VP> inline
 bool operator==(intrusive_ptr<T, VP> const & a,
+<<<<<<< HEAD
                        const typename intrusive_ptr<T, VP>::pointer &b)
+=======
+                       const typename intrusive_ptr<T, VP>::pointer &b) BOOST_NOEXCEPT
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 {  return a.get() == b; }
 
 //!Returns a.get() != b.
 //!Does not throw
 template<class T, class VP> inline
 bool operator!=(intrusive_ptr<T, VP> const & a,
+<<<<<<< HEAD
                 const typename intrusive_ptr<T, VP>::pointer &b)
+=======
+                const typename intrusive_ptr<T, VP>::pointer &b) BOOST_NOEXCEPT
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 {  return a.get() != b; }
 
 //!Returns a == b.get().
 //!Does not throw
 template<class T, class VP> inline
 bool operator==(const typename intrusive_ptr<T, VP>::pointer &a,
+<<<<<<< HEAD
                 intrusive_ptr<T, VP> const & b)
+=======
+                intrusive_ptr<T, VP> const & b) BOOST_NOEXCEPT
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 {  return a == b.get(); }
 
 //!Returns a != b.get().
 //!Does not throw
 template<class T, class VP> inline
 bool operator!=(const typename intrusive_ptr<T, VP>::pointer &a,
+<<<<<<< HEAD
                        intrusive_ptr<T, VP> const & b)
+=======
+                       intrusive_ptr<T, VP> const & b) BOOST_NOEXCEPT
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 {  return a != b.get(); }
 
 //!Returns a.get() < b.get().
 //!Does not throw
 template<class T, class VP> inline
 bool operator<(intrusive_ptr<T, VP> const & a,
+<<<<<<< HEAD
                intrusive_ptr<T, VP> const & b)
+=======
+               intrusive_ptr<T, VP> const & b) BOOST_NOEXCEPT
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 {
    return std::less<typename intrusive_ptr<T, VP>::pointer>()
       (a.get(), b.get());
@@ -237,34 +380,54 @@ bool operator<(intrusive_ptr<T, VP> const & a,
 //!Does not throw
 template<class T, class VP> inline
 void swap(intrusive_ptr<T, VP> & lhs,
+<<<<<<< HEAD
           intrusive_ptr<T, VP> & rhs)
+=======
+          intrusive_ptr<T, VP> & rhs) BOOST_NOEXCEPT
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 {  lhs.swap(rhs); }
 
 // operator<<
 template<class E, class T, class Y, class VP>
 inline std::basic_ostream<E, T> & operator<<
+<<<<<<< HEAD
    (std::basic_ostream<E, T> & os, intrusive_ptr<Y, VP> const & p)
+=======
+   (std::basic_ostream<E, T> & os, intrusive_ptr<Y, VP> const & p) BOOST_NOEXCEPT
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 {  os << p.get(); return os;  }
 
 //!Returns p.get().
 //!Does not throw
 template<class T, class VP>
 inline typename boost::interprocess::intrusive_ptr<T, VP>::pointer
+<<<<<<< HEAD
    to_raw_pointer(intrusive_ptr<T, VP> p)
+=======
+   to_raw_pointer(intrusive_ptr<T, VP> p) BOOST_NOEXCEPT
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 {  return p.get();   }
 
 /*Emulates static cast operator. Does not throw*/
 /*
 template<class T, class U, class VP>
 inline boost::interprocess::intrusive_ptr<T, VP> static_pointer_cast
+<<<<<<< HEAD
    (boost::interprocess::intrusive_ptr<U, VP> const & p)
+=======
+   (boost::interprocess::intrusive_ptr<U, VP> const & p) BOOST_NOEXCEPT
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 {  return do_static_cast<U>(p.get());  }
 */
 /*Emulates const cast operator. Does not throw*/
 /*
 template<class T, class U, class VP>
 inline boost::interprocess::intrusive_ptr<T, VP> const_pointer_cast
+<<<<<<< HEAD
    (boost::interprocess::intrusive_ptr<U, VP> const & p)
+=======
+   (boost::interprocess::intrusive_ptr<U, VP> const & p) BOOST_NOEXCEPT
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 {  return do_const_cast<U>(p.get());   }
 */
 
@@ -272,7 +435,11 @@ inline boost::interprocess::intrusive_ptr<T, VP> const_pointer_cast
 /*
 template<class T, class U, class VP>
 inline boost::interprocess::intrusive_ptr<T, VP> dynamic_pointer_cast
+<<<<<<< HEAD
    (boost::interprocess::intrusive_ptr<U, VP> const & p)
+=======
+   (boost::interprocess::intrusive_ptr<U, VP> const & p) BOOST_NOEXCEPT
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 {  return do_dynamic_cast<U>(p.get()); }
 */
 
@@ -280,7 +447,11 @@ inline boost::interprocess::intrusive_ptr<T, VP> dynamic_pointer_cast
 /*
 template<class T, class U, class VP>
 inline boost::interprocess::intrusive_ptr<T, VP>reinterpret_pointer_cast
+<<<<<<< HEAD
    (boost::interprocess::intrusive_ptr<U, VP> const & p)
+=======
+   (boost::interprocess::intrusive_ptr<U, VP> const & p) BOOST_NOEXCEPT
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 {  return do_reinterpret_cast<U>(p.get());   }
 */
 
@@ -292,7 +463,11 @@ inline boost::interprocess::intrusive_ptr<T, VP>reinterpret_pointer_cast
 //!Returns p.get().
 //!Does not throw
 template<class T, class VP>
+<<<<<<< HEAD
 inline T *to_raw_pointer(boost::interprocess::intrusive_ptr<T, VP> p)
+=======
+inline T *to_raw_pointer(boost::interprocess::intrusive_ptr<T, VP> p) BOOST_NOEXCEPT
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 {  return p.get();   }
 #endif
 

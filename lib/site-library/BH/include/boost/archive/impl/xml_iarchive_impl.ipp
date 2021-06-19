@@ -11,7 +11,10 @@
 #include <boost/config.hpp>
 #include <cstring> // memcpy
 #include <cstddef> // NULL
+<<<<<<< HEAD
 #include <exception>
+=======
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 #if defined(BOOST_NO_STDC_NAMESPACE)
 namespace std{ 
@@ -34,6 +37,10 @@ namespace std{
 #include <boost/archive/dinkumware.hpp>
 #endif
 
+<<<<<<< HEAD
+=======
+#include <boost/core/uncaught_exceptions.hpp>
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 #include <boost/core/no_exceptions_support.hpp>
 
 #include <boost/archive/xml_archive_exception.hpp>
@@ -189,7 +196,11 @@ xml_iarchive_impl<Archive>::xml_iarchive_impl(
 template<class Archive>
 BOOST_ARCHIVE_DECL
 xml_iarchive_impl<Archive>::~xml_iarchive_impl(){
+<<<<<<< HEAD
     if(std::uncaught_exception())
+=======
+    if(boost::core::uncaught_exceptions() > 0)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
         return;
     if(0 == (this->get_flags() & no_header)){
         gimpl->windup(is);

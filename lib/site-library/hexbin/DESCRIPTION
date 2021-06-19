@@ -1,5 +1,9 @@
 Package: hexbin
+<<<<<<< HEAD
 Version: 1.27.2
+=======
+Version: 1.28.1
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 Title: Hexagonal Binning Routines
 Author: Dan Carr <dcarr@voxel.galaxy.gmu.edu>, ported by Nicholas
         Lewin-Koh and Martin Maechler <maechler@stat.math.ethz.ch>,
@@ -8,16 +12,30 @@ Author: Dan Carr <dcarr@voxel.galaxy.gmu.edu>, ported by Nicholas
 Maintainer: Edzer Pebesma <edzer.pebesma@uni-muenster.de>
 Depends: R (>= 2.0.1), methods
 Imports: lattice, grid, graphics, grDevices, stats, utils
+<<<<<<< HEAD
 Suggests: marray, affy, Biobase, limma
+=======
+Suggests: marray, affy, Biobase, limma, knitr
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 Description: Binning and plotting functions for hexagonal bins.
 Collate: lattice.R BTC.R BTY.R grid.hexagons.R grid.hexlegend.R hbox.R
         hdiffplot.R hexbinList.R hexbinplot.R hexbin.s4.R hexpanel.R
         hexplom.R hexPlotMA.R hexutil.R hexViewport.R HO.R LINGRAY.R
         LOCS.R MAG.R RB.R smoothHexbin.R
 License: GPL-2
+<<<<<<< HEAD
 NeedsCompilation: yes
 URL: http://github.com/edzer/hexbin
 Packaged: 2018-01-15 16:56:46 UTC; edzer
 Repository: CRAN
 Date/Publication: 2018-01-15 18:56:40 UTC
 Built: R 3.5.1; x86_64-apple-darwin17.6.0; 2018-10-01 07:29:18 UTC; unix
+=======
+VignetteBuilder: knitr
+NeedsCompilation: yes
+URL: http://github.com/edzer/hexbin
+Packaged: 2020-02-03 13:36:39 UTC; edzer
+Repository: CRAN
+Date/Publication: 2020-02-03 16:20:02 UTC
+Built: R 4.0.2; x86_64-apple-darwin17.7.0; 2020-08-27 07:55:02 UTC; unix
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce

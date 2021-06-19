@@ -3,8 +3,13 @@
 // Copyright (c) 2011-2012 Barend Gehrels, Amsterdam, the Netherlands.
 // Copyright (c) 2017 Adam Wulkiewicz, Lodz, Poland.
 
+<<<<<<< HEAD
 // This file was modified by Oracle on 2017.
 // Modifications copyright (c) 2017 Oracle and/or its affiliates.
+=======
+// This file was modified by Oracle on 2017, 2019.
+// Modifications copyright (c) 2017, 2019 Oracle and/or its affiliates.
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 // Contributed and/or modified by Adam Wulkiewicz, on behalf of Oracle
 
 // Use, modification and distribution is subject to the Boost Software License,
@@ -150,7 +155,11 @@ inline bool has_self_intersections(Geometry const& geometry,
         >::type strategy;
 
     rescale_policy_type robust_policy
+<<<<<<< HEAD
             = geometry::get_rescale_policy<rescale_policy_type>(geometry);
+=======
+        = geometry::get_rescale_policy<rescale_policy_type>(geometry, strategy);
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
     return has_self_intersections(geometry, strategy, robust_policy,
                                   throw_on_self_intersection);

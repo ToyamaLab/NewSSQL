@@ -37,7 +37,11 @@ namespace runtime {
 // **************             runtime::param_error             ************** //
 // ************************************************************************** //
 
+<<<<<<< HEAD
 class param_error : public std::exception {
+=======
+class BOOST_SYMBOL_VISIBLE param_error : public std::exception {
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 public:
     ~param_error() BOOST_NOEXCEPT_OR_NOTHROW {}
 
@@ -55,13 +59,21 @@ protected:
 
 //____________________________________________________________________________//
 
+<<<<<<< HEAD
 class init_error : public param_error {
+=======
+class BOOST_SYMBOL_VISIBLE init_error : public param_error {
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 protected:
     explicit    init_error( cstring param_name ) : param_error( param_name ) {}
     ~init_error() BOOST_NOEXCEPT_OR_NOTHROW {}
 };
 
+<<<<<<< HEAD
 class input_error : public param_error {
+=======
+class BOOST_SYMBOL_VISIBLE input_error : public param_error {
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 protected:
     explicit    input_error( cstring param_name ) : param_error( param_name ) {}
     ~input_error() BOOST_NOEXCEPT_OR_NOTHROW {}
@@ -70,7 +82,11 @@ protected:
 //____________________________________________________________________________//
 
 template<typename Derived, typename Base>
+<<<<<<< HEAD
 class specific_param_error : public Base {
+=======
+class BOOST_SYMBOL_VISIBLE specific_param_error : public Base {
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 protected:
     explicit    specific_param_error( cstring param_name ) : Base( param_name ) {}
     ~specific_param_error() BOOST_NOEXCEPT_OR_NOTHROW {}
@@ -86,7 +102,11 @@ public:
     {
         this->msg.append( val );
 
+<<<<<<< HEAD
         return reinterpret_cast<Derived&&>(*this);
+=======
+        return static_cast<Derived&&>(*this);
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     }
 
     //____________________________________________________________________________//
@@ -96,7 +116,11 @@ public:
     {
         this->msg.append( unit_test::utils::string_cast( val ) );
 
+<<<<<<< HEAD
         return reinterpret_cast<Derived&&>(*this);
+=======
+        return static_cast<Derived&&>(*this);
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     }
 
     //____________________________________________________________________________//
@@ -133,7 +157,11 @@ public:
 // ************************************************************************** //
 
 #define SPECIFIC_EX_TYPE( type, base )                  \
+<<<<<<< HEAD
 class type : public specific_param_error<type,base> {   \
+=======
+class BOOST_SYMBOL_VISIBLE type : public specific_param_error<type,base> {   \
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 public:                                                 \
     explicit type( cstring param_name = cstring() )     \
     : specific_param_error<type,base>( param_name )     \
@@ -155,7 +183,11 @@ SPECIFIC_EX_TYPE( missing_req_arg, input_error );
 
 #undef SPECIFIC_EX_TYPE
 
+<<<<<<< HEAD
 class ambiguous_param : public specific_param_error<ambiguous_param, input_error> {
+=======
+class BOOST_SYMBOL_VISIBLE ambiguous_param : public specific_param_error<ambiguous_param, input_error> {
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 public:
 #ifndef BOOST_NO_CXX11_RVALUE_REFERENCES
     explicit    ambiguous_param( std::vector<cstring>&& amb_candidates )
@@ -171,7 +203,11 @@ public:
     std::vector<cstring> m_amb_candidates;
 };
 
+<<<<<<< HEAD
 class unrecognized_param : public specific_param_error<unrecognized_param, input_error> {
+=======
+class BOOST_SYMBOL_VISIBLE unrecognized_param : public specific_param_error<unrecognized_param, input_error> {
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 public:
 #ifndef BOOST_NO_CXX11_RVALUE_REFERENCES
     explicit    unrecognized_param( std::vector<cstring>&& type_candidates )

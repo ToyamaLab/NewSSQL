@@ -18,8 +18,13 @@ namespace boost { namespace type_of {
 
 #else
 
+<<<<<<< HEAD
 #include <boost/type_traits/is_function.hpp> 
 #include <boost/utility/enable_if.hpp>
+=======
+#include <boost/type_traits/enable_if.hpp>
+#include <boost/type_traits/is_function.hpp> 
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 namespace boost { namespace type_of {
 # ifdef BOOST_NO_SFINAE
@@ -27,11 +32,19 @@ namespace boost { namespace type_of {
     T& ensure_obj(const T&);
 # else
     template<typename T>
+<<<<<<< HEAD
         typename enable_if<is_function<T>, T&>::type
         ensure_obj(T&);
 
     template<typename T>
         typename disable_if<is_function<T>, T&>::type
+=======
+        typename enable_if_<is_function<T>::value, T&>::type
+        ensure_obj(T&);
+
+    template<typename T>
+        typename enable_if_<!is_function<T>::value, T&>::type
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
         ensure_obj(const T&);
 # endif
 }}

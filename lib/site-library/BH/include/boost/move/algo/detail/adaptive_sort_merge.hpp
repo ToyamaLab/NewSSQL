@@ -49,7 +49,13 @@
 #include <boost/move/adl_move_swap.hpp>
 #include <boost/move/algo/detail/insertion_sort.hpp>
 #include <boost/move/algo/detail/merge_sort.hpp>
+<<<<<<< HEAD
 #include <boost/move/algo/detail/merge.hpp>
+=======
+#include <boost/move/algo/detail/heap_sort.hpp>
+#include <boost/move/algo/detail/merge.hpp>
+#include <boost/move/algo/detail/is_sorted.hpp>
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 #include <boost/assert.hpp>
 #include <boost/cstdint.hpp>
 
@@ -84,11 +90,34 @@
    #define BOOST_MOVE_ADAPTIVE_SORT_INVARIANT(L)
 #endif
 
+<<<<<<< HEAD
 
 
 namespace boost {
 namespace movelib {
 
+=======
+namespace boost {
+namespace movelib {
+
+#if defined(BOOST_MOVE_ADAPTIVE_SORT_INVARIANTS)
+
+bool is_sorted(::order_perf_type *first, ::order_perf_type *last, ::order_type_less)
+{
+   if (first != last) {
+      const order_perf_type *next = first, *cur(first);
+      while (++next != last) {
+         if (!(cur->key < next->key || (cur->key == next->key && cur->val < next->val)))
+            return false;
+         cur = next;
+      }
+   }
+   return true;
+}
+
+#endif   //BOOST_MOVE_ADAPTIVE_SORT_INVARIANTS
+
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 namespace detail_adaptive {
 
 static const std::size_t AdaptiveSortInsertionSortThreshold = 16;
@@ -113,6 +142,7 @@ const T &max_value(const T &a, const T &b)
    return a > b ? a : b;
 }
 
+<<<<<<< HEAD
 template<class ForwardIt, class Pred>
 bool is_sorted(ForwardIt const first, ForwardIt last, Pred pred)
 {
@@ -158,6 +188,8 @@ bool is_sorted_and_unique(ForwardIt first, ForwardIt last, Pred pred)
    return true;
 }
 
+=======
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 template<class ForwardIt, class Pred, class V>
 typename iterator_traits<ForwardIt>::size_type
    count_if_with(ForwardIt first, ForwardIt last, Pred pred, const V &v)
@@ -171,6 +203,7 @@ typename iterator_traits<ForwardIt>::size_type
    return count;
 }
 
+<<<<<<< HEAD
 template<class T, class RandRawIt = T*>
 class adaptive_xbuf
 {
@@ -401,6 +434,8 @@ class range_xbuf
    Iterator const m_cap;
 };
 
+=======
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 template<class RandIt, class Compare>
 RandIt skip_until_merge
@@ -414,6 +449,7 @@ RandIt skip_until_merge
 }
 
 
+<<<<<<< HEAD
 template<class RandIt1, class RandIt2, class RandItB, class Compare, class Op>
 RandItB op_buffered_partial_merge_to_range1_and_buffer
    ( RandIt1 first1, RandIt1 const last1
@@ -452,6 +488,8 @@ RandItB op_buffered_partial_merge_to_range1_and_buffer
    return lastb;
 }
 
+=======
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 template<class RandItKeys, class RandIt>
 void swap_and_update_key
    ( RandItKeys const key_next
@@ -473,6 +511,52 @@ void swap_and_update_key
    }
 }
 
+<<<<<<< HEAD
+=======
+template<class RandItKeys>
+void update_key
+(RandItKeys const key_next
+   , RandItKeys const key_range2
+   , RandItKeys &key_mid)
+{
+   if (key_next != key_range2) {
+      ::boost::adl_move_swap(*key_next, *key_range2);
+      if (key_next == key_mid) {
+         key_mid = key_range2;
+      }
+      else if (key_mid == key_range2) {
+         key_mid = key_next;
+      }
+   }
+}
+
+template<class RandItKeys, class RandIt, class RandIt2, class Op>
+RandIt2 buffer_and_update_key
+(RandItKeys const key_next
+   , RandItKeys const key_range2
+   , RandItKeys &key_mid
+   , RandIt begin
+   , RandIt end
+   , RandIt with
+   , RandIt2 buffer
+   , Op op)
+{
+   if (begin != with) {
+      while(begin != end) {
+         op(three_way_t(), begin++, with++, buffer++);
+      }
+      ::boost::adl_move_swap(*key_next, *key_range2);
+      if (key_next == key_mid) {
+         key_mid = key_range2;
+      }
+      else if (key_mid == key_range2) {
+         key_mid = key_next;
+      }
+   }
+   return buffer;
+}
+
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 ///////////////////////////////////////////////////////////////////////////////
 //
 //                         MERGE BUFFERLESS
@@ -523,7 +607,11 @@ static SizeType needed_keys_count(SizeType n_block_a, SizeType n_block_b)
 template<class RandItKeys, class KeyCompare, class RandIt, class Compare>
 typename iterator_traits<RandIt>::size_type
    find_next_block
+<<<<<<< HEAD
       ( RandItKeys key_first
+=======
+      ( RandItKeys const key_first
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
       , KeyCompare key_comp
       , RandIt const first
       , typename iterator_traits<RandIt>::size_type const l_block
@@ -554,7 +642,11 @@ typename iterator_traits<RandIt>::size_type
 
 template<class RandItKeys, class KeyCompare, class RandIt, class Compare>
 void merge_blocks_bufferless
+<<<<<<< HEAD
    ( RandItKeys key_first
+=======
+   ( RandItKeys const key_first
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
    , KeyCompare key_comp
    , RandIt const first
    , typename iterator_traits<RandIt>::size_type const l_block
@@ -567,7 +659,11 @@ void merge_blocks_bufferless
    typedef typename iterator_traits<RandIt>::size_type size_type;
    size_type const key_count = needed_keys_count(n_block_a, n_block_b); (void)key_count;
    //BOOST_ASSERT(n_block_a || n_block_b);
+<<<<<<< HEAD
    BOOST_MOVE_ADAPTIVE_SORT_INVARIANT(is_sorted_and_unique(key_first, key_first + key_count, key_comp));
+=======
+   BOOST_MOVE_ADAPTIVE_SORT_INVARIANT(boost::movelib::is_sorted_and_unique(key_first, key_first + key_count, key_comp));
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
    BOOST_MOVE_ADAPTIVE_SORT_INVARIANT(!n_block_b || n_block_a == count_if_with(key_first, key_first + key_count, key_comp, key_first[n_block_a]));
 
    size_type n_bef_irreg2 = 0;
@@ -581,11 +677,19 @@ void merge_blocks_bufferless
       RandItKeys key_range2(key_first);
 
       size_type min_check = n_block_a == n_block_left ? 0u : n_block_a;
+<<<<<<< HEAD
       size_type max_check = min_value(min_check+1, n_block_left);
       for (RandIt f = first+l_irreg1; n_block_left; --n_block_left, ++key_range2, f += l_block, min_check -= min_check != 0, max_check -= max_check != 0) {
          size_type const next_key_idx = find_next_block(key_range2, key_comp, f, l_block, min_check, max_check, comp);
          RandItKeys const key_next(key_range2 + next_key_idx);
          max_check = min_value(max_value(max_check, next_key_idx+2), n_block_left);
+=======
+      size_type max_check = min_value<size_type>(min_check+1, n_block_left);
+      for (RandIt f = first+l_irreg1; n_block_left; --n_block_left, ++key_range2, f += l_block, min_check -= min_check != 0, max_check -= max_check != 0) {
+         size_type const next_key_idx = find_next_block(key_range2, key_comp, f, l_block, min_check, max_check, comp);
+         RandItKeys const key_next(key_range2 + next_key_idx);
+         max_check = min_value<size_type>(max_value<size_type>(max_check, next_key_idx+size_type(2)), n_block_left);
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
          RandIt const first_min = f + next_key_idx*l_block;
 
@@ -597,18 +701,28 @@ void merge_blocks_bufferless
          n_bef_irreg2 += l_irreg_pos_count;
 
          swap_and_update_key(key_next, key_range2, key_mid, f, f + l_block, first_min);
+<<<<<<< HEAD
          BOOST_MOVE_ADAPTIVE_SORT_INVARIANT(is_sorted(f, f+l_block, comp));
          BOOST_MOVE_ADAPTIVE_SORT_INVARIANT(is_sorted(first_min, first_min + l_block, comp));
          BOOST_MOVE_ADAPTIVE_SORT_INVARIANT((f == (first+l_irreg1)) || !comp(*f, *(f-l_block)));
       }
    }
    BOOST_MOVE_ADAPTIVE_SORT_INVARIANT(is_sorted(first+l_irreg1+n_bef_irreg2*l_block, first_irr2, comp));
+=======
+         BOOST_MOVE_ADAPTIVE_SORT_INVARIANT(boost::movelib::is_sorted(f, f+l_block, comp));
+         BOOST_MOVE_ADAPTIVE_SORT_INVARIANT(boost::movelib::is_sorted(first_min, first_min + l_block, comp));
+         BOOST_MOVE_ADAPTIVE_SORT_INVARIANT((f == (first+l_irreg1)) || !comp(*f, *(f-l_block)));
+      }
+   }
+   BOOST_MOVE_ADAPTIVE_SORT_INVARIANT(boost::movelib::is_sorted(first+l_irreg1+n_bef_irreg2*l_block, first_irr2, comp));
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
    RandIt first1 = first;
    RandIt last1  = first+l_irreg1;
    RandItKeys const key_end (key_first+n_bef_irreg2);
    bool is_range1_A = true;
 
+<<<<<<< HEAD
    for( ; key_first != key_end; ++key_first){
       bool is_range2_A = key_mid == (key_first+key_count) || key_comp(*key_first, *key_mid);
       first1 = is_range1_A == is_range2_A
@@ -658,6 +772,18 @@ void buffered_merge
       , XBuf &xbuf)
 {
    op_buffered_merge(first, middle, last, comp, move_op(), xbuf);
+=======
+   for(RandItKeys key_next = key_first; key_next != key_end; ++key_next){
+      bool is_range2_A = key_mid == (key_first+key_count) || key_comp(*key_next, *key_mid);
+      first1 = is_range1_A == is_range2_A
+         ? last1 : partial_merge_bufferless(first1, last1, last1 + l_block, &is_range1_A, comp);
+      last1 += l_block;
+      BOOST_MOVE_ADAPTIVE_SORT_INVARIANT(boost::movelib::is_sorted(first, first1, comp));
+   }
+
+   merge_bufferless(is_range1_A ? first1 : last1, first_irr2, last_irr2, comp);
+   BOOST_MOVE_ADAPTIVE_SORT_INVARIANT(boost::movelib::is_sorted(first, last_irr2, comp));
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 }
 
 // Complexity: 2*distance(first, last)+max_collected^2/2
@@ -890,11 +1016,49 @@ void stable_sort( RandIt first, RandIt last, Compare comp, XBuf & xbuf)
 }
 
 template<class RandIt, class Comp, class XBuf>
+<<<<<<< HEAD
+=======
+void unstable_sort( RandIt first, RandIt last
+                    , Comp comp
+                    , XBuf & xbuf)
+{
+   heap_sort(first, last, comp);(void)xbuf;
+}
+
+template<class RandIt, class Compare, class XBuf>
+void stable_merge
+      ( RandIt first, RandIt const middle, RandIt last
+      , Compare comp
+      , XBuf &xbuf)
+{
+   BOOST_ASSERT(xbuf.empty());
+   typedef typename iterator_traits<RandIt>::size_type   size_type;
+   size_type const len1  = size_type(middle-first);
+   size_type const len2  = size_type(last-middle);
+   size_type const l_min = min_value<size_type>(len1, len2);
+   if(xbuf.capacity() >= l_min){
+      buffered_merge(first, middle, last, comp, xbuf);
+      xbuf.clear();
+   }
+   else{
+      //merge_bufferless(first, middle, last, comp);
+      merge_adaptive_ONlogN(first, middle, last, comp, xbuf.begin(), xbuf.capacity());
+   }
+   BOOST_MOVE_ADAPTIVE_SORT_INVARIANT(boost::movelib::is_sorted(first, last, boost::movelib::unantistable(comp)));
+}
+
+template<class RandIt, class Comp, class XBuf>
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 void initialize_keys( RandIt first, RandIt last
                     , Comp comp
                     , XBuf & xbuf)
 {
+<<<<<<< HEAD
    stable_sort(first, last, comp, xbuf);
+=======
+   unstable_sort(first, last, comp, xbuf);
+   BOOST_ASSERT(boost::movelib::is_sorted_and_unique(first, last, comp));
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 }
 
 template<class RandIt, class U>
@@ -905,11 +1069,16 @@ void initialize_keys( RandIt first, RandIt last
    typedef typename iterator_traits<RandIt>::value_type value_type;
    std::size_t count = std::size_t(last - first);
    for(std::size_t i = 0; i != count; ++i){
+<<<<<<< HEAD
       *first = value_type(i);
+=======
+      *first = static_cast<value_type>(i);
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
       ++first;
    }
 }
 
+<<<<<<< HEAD
 template<class RandIt>
 void move_data_backward( RandIt cur_pos
               , typename iterator_traits<RandIt>::size_type const l_data
@@ -944,6 +1113,8 @@ void move_data_forward( RandIt cur_pos
    }
 }
 
+=======
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 template <class Unsigned>
 Unsigned calculate_total_combined(Unsigned const len, Unsigned const l_prev_merged, Unsigned *pl_irreg_combined = 0)
 {
@@ -994,6 +1165,7 @@ void combine_params
    }
 }
 
+<<<<<<< HEAD
 template<class RandIt1, class RandIt2, class RandItB, class Compare, class Op>
 RandItB op_buffered_partial_merge_and_swap_to_range1_and_buffer
    ( RandIt1 first1, RandIt1 const last1
@@ -1031,6 +1203,9 @@ RandItB op_buffered_partial_merge_and_swap_to_range1_and_buffer
 
    return lastb;
 }
+=======
+
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 //////////////////////////////////
 //
@@ -1072,10 +1247,21 @@ OutputIt op_partial_merge
 }
 
 //////////////////////////////////
+<<<<<<< HEAD
 //
 //    partial_merge_and_swap
 //
 //////////////////////////////////
+=======
+//////////////////////////////////
+//////////////////////////////////
+//
+//    op_partial_merge_and_save
+//
+//////////////////////////////////
+//////////////////////////////////
+//////////////////////////////////
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 template<class InputIt1, class InputIt2, class OutputIt, class Compare, class Op>
 OutputIt op_partial_merge_and_swap_impl
    (InputIt1 &r_first1, InputIt1 const last1, InputIt2 &r_first2, InputIt2 const last2, InputIt2 &r_first_min, OutputIt d_first, Compare comp, Op op)
@@ -1111,6 +1297,85 @@ OutputIt op_partial_merge_and_swap
                     : op_partial_merge_and_swap_impl(r_first1, last1, r_first2, last2, r_first_min, d_first, antistable<Compare>(comp), op);
 }
 
+<<<<<<< HEAD
+=======
+template<class RandIt1, class RandIt2, class RandItB, class Compare, class Op>
+RandItB op_buffered_partial_merge_and_swap_to_range1_and_buffer
+   ( RandIt1 first1, RandIt1 const last1
+   , RandIt2 &rfirst2, RandIt2 const last2, RandIt2 &rfirst_min
+   , RandItB &rfirstb, Compare comp, Op op )
+{
+   RandItB firstb = rfirstb;
+   RandItB lastb  = firstb;
+   RandIt2 first2 = rfirst2;
+
+   //Move to buffer while merging
+   //Three way moves need less moves when op is swap_op so use it
+   //when merging elements from range2 to the destination occupied by range1
+   if(first1 != last1 && first2 != last2){
+      RandIt2 first_min = rfirst_min;
+      op(four_way_t(), first2++, first_min++, first1++, lastb++);
+
+      while(first1 != last1){
+         if(first2 == last2){
+            lastb = op(forward_t(), first1, last1, firstb);
+            break;
+         }
+
+         if(comp(*first_min, *firstb)){
+            op( four_way_t(), first2++, first_min++, first1++, lastb++);
+         }
+         else{
+            op(three_way_t(), firstb++, first1++, lastb++);
+         }
+      }
+      rfirst2 = first2;
+      rfirstb = firstb;
+      rfirst_min = first_min;
+   }
+
+   return lastb;
+}
+
+template<class RandIt1, class RandIt2, class RandItB, class Compare, class Op>
+RandItB op_buffered_partial_merge_to_range1_and_buffer
+   ( RandIt1 first1, RandIt1 const last1
+   , RandIt2 &rfirst2, RandIt2 const last2
+   , RandItB &rfirstb, Compare comp, Op op )
+{
+   RandItB firstb = rfirstb;
+   RandItB lastb  = firstb;
+   RandIt2 first2 = rfirst2;
+
+   //Move to buffer while merging
+   //Three way moves need less moves when op is swap_op so use it
+   //when merging elements from range2 to the destination occupied by range1
+   if(first1 != last1 && first2 != last2){
+      op(three_way_t(), first2++, first1++, lastb++);
+
+      while(true){
+         if(first1 == last1){
+            break;
+         }
+         if(first2 == last2){
+            lastb = op(forward_t(), first1, last1, firstb);
+            break;
+         }
+         if (comp(*first2, *firstb)) {
+            op(three_way_t(), first2++, first1++, lastb++);
+         }
+         else {
+            op(three_way_t(), firstb++, first1++, lastb++);
+         }
+      }
+      rfirst2 = first2;
+      rfirstb = firstb;
+   }
+
+   return lastb;
+}
+
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 template<class RandIt, class RandItBuf, class Compare, class Op>
 RandIt op_partial_merge_and_save_impl
    ( RandIt first1, RandIt const last1, RandIt &rfirst2, RandIt last2, RandIt first_min
@@ -1162,7 +1427,19 @@ RandIt op_partial_merge_and_save
       ;
 }
 
+<<<<<<< HEAD
 
+=======
+//////////////////////////////////
+//////////////////////////////////
+//////////////////////////////////
+//
+//    op_merge_blocks_with_irreg
+//
+//////////////////////////////////
+//////////////////////////////////
+//////////////////////////////////
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 template<class RandItKeys, class KeyCompare, class RandIt, class RandIt2, class OutputIt, class Compare, class Op>
 OutputIt op_merge_blocks_with_irreg
@@ -1183,19 +1460,32 @@ OutputIt op_merge_blocks_with_irreg
 
    for(; n_block_left; --n_block_left, ++key_first, min_check -= min_check != 0, max_check -= max_check != 0){
       size_type next_key_idx = find_next_block(key_first, key_comp, first_reg, l_block, min_check, max_check, comp);  
+<<<<<<< HEAD
       max_check = min_value(max_value(max_check, next_key_idx+2), n_block_left);
+=======
+      max_check = min_value<size_type>(max_value<size_type>(max_check, next_key_idx+size_type(2)), n_block_left);
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
       RandIt const last_reg  = first_reg + l_block;
       RandIt first_min = first_reg + next_key_idx*l_block;
       RandIt const last_min  = first_min + l_block; (void)last_min;
 
+<<<<<<< HEAD
       BOOST_MOVE_ADAPTIVE_SORT_INVARIANT(is_sorted(first_reg, last_reg, comp));
       BOOST_MOVE_ADAPTIVE_SORT_INVARIANT(!next_key_idx || is_sorted(first_min, last_min, comp));
+=======
+      BOOST_MOVE_ADAPTIVE_SORT_INVARIANT(boost::movelib::is_sorted(first_reg, last_reg, comp));
+      BOOST_MOVE_ADAPTIVE_SORT_INVARIANT(!next_key_idx || boost::movelib::is_sorted(first_min, last_min, comp));
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
       BOOST_MOVE_ADAPTIVE_SORT_INVARIANT((!next_key_idx || !comp(*first_reg, *first_min )));
 
       OutputIt orig_dest = dest; (void)orig_dest;
       dest = next_key_idx ? op_partial_merge_and_swap(first_irr, last_irr, first_reg, last_reg, first_min, dest, comp, op, is_stable)
                           : op_partial_merge         (first_irr, last_irr, first_reg, last_reg, dest, comp, op, is_stable);
+<<<<<<< HEAD
       BOOST_MOVE_ADAPTIVE_SORT_INVARIANT(is_sorted(orig_dest, dest, comp));
+=======
+      BOOST_MOVE_ADAPTIVE_SORT_INVARIANT(boost::movelib::is_sorted(orig_dest, dest, comp));
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
       if(first_reg == dest){
          dest = next_key_idx ? ::boost::adl_move_swap_ranges(first_min, last_min, first_reg)
@@ -1209,12 +1499,29 @@ OutputIt op_merge_blocks_with_irreg
       RandItKeys const key_next(key_first + next_key_idx);
       swap_and_update_key(key_next, key_first, key_mid, last_reg, last_reg, first_min);
 
+<<<<<<< HEAD
       BOOST_MOVE_ADAPTIVE_SORT_INVARIANT(is_sorted(orig_dest, dest, comp));
+=======
+      BOOST_MOVE_ADAPTIVE_SORT_INVARIANT(boost::movelib::is_sorted(orig_dest, dest, comp));
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
       first_reg = last_reg;
    }
    return dest;
 }
 
+<<<<<<< HEAD
+=======
+//////////////////////////////////
+//////////////////////////////////
+//////////////////////////////////
+//
+//    op_merge_blocks_left/right
+//
+//////////////////////////////////
+//////////////////////////////////
+//////////////////////////////////
+
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 template<class RandItKeys, class KeyCompare, class RandIt, class Compare, class Op>
 void op_merge_blocks_left
    ( RandItKeys const key_first
@@ -1230,7 +1537,11 @@ void op_merge_blocks_left
    typedef typename iterator_traits<RandIt>::size_type size_type;
    size_type const key_count = needed_keys_count(n_block_a, n_block_b); (void)key_count;
 //   BOOST_ASSERT(n_block_a || n_block_b);
+<<<<<<< HEAD
    BOOST_MOVE_ADAPTIVE_SORT_INVARIANT(is_sorted_and_unique(key_first, key_first + key_count, key_comp));
+=======
+   BOOST_MOVE_ADAPTIVE_SORT_INVARIANT(boost::movelib::is_sorted_and_unique(key_first, key_first + key_count, key_comp));
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
    BOOST_MOVE_ADAPTIVE_SORT_INVARIANT(!n_block_b || n_block_a == count_if_with(key_first, key_first + key_count, key_comp, key_first[n_block_a]));
 
    size_type n_block_b_left = n_block_b;
@@ -1251,17 +1562,30 @@ void op_merge_blocks_left
    //Process all regular blocks before the irregular B block
    ////////////////////////////////////////////////////////////////////////////
    size_type min_check = n_block_a == n_block_left ? 0u : n_block_a;
+<<<<<<< HEAD
    size_type max_check = min_value(min_check+1, n_block_left);
    for (; n_block_left; --n_block_left, ++key_range2, min_check -= min_check != 0, max_check -= max_check != 0) {
       size_type const next_key_idx = find_next_block(key_range2, key_comp, first2, l_block, min_check, max_check, comp);
       max_check = min_value(max_value(max_check, next_key_idx+2), n_block_left);
+=======
+   size_type max_check = min_value<size_type>(min_check+size_type(1), n_block_left);
+   for (; n_block_left; --n_block_left, ++key_range2, min_check -= min_check != 0, max_check -= max_check != 0) {
+      size_type const next_key_idx = find_next_block(key_range2, key_comp, first2, l_block, min_check, max_check, comp);
+      max_check = min_value<size_type>(max_value<size_type>(max_check, next_key_idx+size_type(2)), n_block_left);
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
       RandIt const first_min = first2 + next_key_idx*l_block;
       RandIt const last_min  = first_min + l_block; (void)last_min;
       RandIt const last2  = first2 + l_block;
 
+<<<<<<< HEAD
       BOOST_MOVE_ADAPTIVE_SORT_INVARIANT(is_sorted(first1, last1, comp));
       BOOST_MOVE_ADAPTIVE_SORT_INVARIANT(is_sorted(first2, last2, comp));
       BOOST_MOVE_ADAPTIVE_SORT_INVARIANT(!n_block_left || is_sorted(first_min, last_min, comp));
+=======
+      BOOST_MOVE_ADAPTIVE_SORT_INVARIANT(boost::movelib::is_sorted(first1, last1, comp));
+      BOOST_MOVE_ADAPTIVE_SORT_INVARIANT(boost::movelib::is_sorted(first2, last2, comp));
+      BOOST_MOVE_ADAPTIVE_SORT_INVARIANT(!n_block_left || boost::movelib::is_sorted(first_min, last_min, comp));
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
       //Check if irregular b block should go here.
       //If so, break to the special code handling the irregular block
@@ -1302,7 +1626,11 @@ void op_merge_blocks_left
                (buffer, buffer+(last1-first1), first2, last2, first_min, buf_beg, buf_end, comp, op, is_range1_A);
          }
          (void)unmerged;
+<<<<<<< HEAD
          BOOST_MOVE_ADAPTIVE_SORT_INVARIANT(is_sorted(first-l_block, unmerged, comp));
+=======
+         BOOST_MOVE_ADAPTIVE_SORT_INVARIANT(boost::movelib::is_sorted(first-l_block, unmerged, comp));
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
          swap_and_update_key( key_next, key_range2, key_mid, first2, last2
                             , last_min - size_type(last2 - first2));
@@ -1351,7 +1679,11 @@ void op_merge_blocks_left
    else if(!is_buffer_middle){
       buffer = op(forward_t(), first1, last1, buffer);
    }
+<<<<<<< HEAD
    BOOST_MOVE_ADAPTIVE_SORT_INVARIANT(is_sorted(first-l_block, buffer, comp));
+=======
+   BOOST_MOVE_ADAPTIVE_SORT_INVARIANT(boost::movelib::is_sorted(first-l_block, buffer, comp));
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
    ////////////////////////////////////////////////////////////////////////////
    //Process irregular B block and remaining A blocks
@@ -1360,7 +1692,11 @@ void op_merge_blocks_left
       ( key_range2, key_mid, key_comp, first2, first_irr2, last_irr2
       , buffer, l_block, n_block_left, min_check, max_check, comp, false, op);
    buffer = op(forward_t(), first_irr2, last_irr2, buffer);(void)buffer;
+<<<<<<< HEAD
    BOOST_MOVE_ADAPTIVE_SORT_INVARIANT(is_sorted(first-l_block, buffer, comp));
+=======
+   BOOST_MOVE_ADAPTIVE_SORT_INVARIANT(boost::movelib::is_sorted(first-l_block, buffer, comp));
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 }
 
 // first - first element to merge.
@@ -1394,7 +1730,10 @@ void merge_blocks_left
    }
 }
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 // first - first element to merge.
 // [first+l_block*(n_bef_irreg2+n_aft_irreg2)+l_irreg2, first+l_block*(n_bef_irreg2+n_aft_irreg2+1)+l_irreg2) - buffer
 // l_block - length of regular blocks. First nblocks are stable sorted by 1st elements and key-coded
@@ -1426,6 +1765,18 @@ void merge_blocks_right
       , inverse<Compare>(comp), xbuf_used);
 }
 
+<<<<<<< HEAD
+=======
+//////////////////////////////////
+//////////////////////////////////
+//////////////////////////////////
+//
+//    op_merge_blocks_with_buf
+//
+//////////////////////////////////
+//////////////////////////////////
+//////////////////////////////////
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 template<class RandItKeys, class KeyCompare, class RandIt, class Compare, class Op, class RandItBuf>
 void op_merge_blocks_with_buf
    ( RandItKeys key_first
@@ -1443,7 +1794,11 @@ void op_merge_blocks_with_buf
    typedef typename iterator_traits<RandIt>::size_type size_type;
    size_type const key_count = needed_keys_count(n_block_a, n_block_b); (void)key_count;
    //BOOST_ASSERT(n_block_a || n_block_b);
+<<<<<<< HEAD
    BOOST_MOVE_ADAPTIVE_SORT_INVARIANT(is_sorted_and_unique(key_first, key_first + key_count, key_comp));
+=======
+   BOOST_MOVE_ADAPTIVE_SORT_INVARIANT(boost::movelib::is_sorted_and_unique(key_first, key_first + key_count, key_comp));
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
    BOOST_MOVE_ADAPTIVE_SORT_INVARIANT(!n_block_b || n_block_a == count_if_with(key_first, key_first + key_count, key_comp, key_first[n_block_a]));
 
    size_type n_block_b_left = n_block_b;
@@ -1458,6 +1813,10 @@ void op_merge_blocks_with_buf
    RandIt first2 = last1;
    RandIt const first_irr2 = first2 + n_block_left*l_block;
    bool is_range1_A = true;
+<<<<<<< HEAD
+=======
+   const size_type len = l_block * n_block_a + l_block * n_block_b + l_irreg1 + l_irreg2; (void)len;
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
    RandItKeys key_range2(key_first);
 
@@ -1465,18 +1824,31 @@ void op_merge_blocks_with_buf
    //Process all regular blocks before the irregular B block
    ////////////////////////////////////////////////////////////////////////////
    size_type min_check = n_block_a == n_block_left ? 0u : n_block_a;
+<<<<<<< HEAD
    size_type max_check = min_value(min_check+1, n_block_left);
    for (; n_block_left; --n_block_left, ++key_range2, min_check -= min_check != 0, max_check -= max_check != 0) {
       size_type const next_key_idx = find_next_block(key_range2, key_comp, first2, l_block, min_check, max_check, comp);
       max_check = min_value(max_value(max_check, next_key_idx+2), n_block_left);
+=======
+   size_type max_check = min_value<size_type>(min_check+size_type(1), n_block_left);
+   for (; n_block_left; --n_block_left, ++key_range2, min_check -= min_check != 0, max_check -= max_check != 0) {
+      size_type const next_key_idx = find_next_block(key_range2, key_comp, first2, l_block, min_check, max_check, comp);
+      max_check = min_value<size_type>(max_value<size_type>(max_check, next_key_idx+size_type(2)), n_block_left);
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
       RandIt       first_min = first2 + next_key_idx*l_block;
       RandIt const last_min  = first_min + l_block; (void)last_min;
       RandIt const last2  = first2 + l_block;
 
       bool const buffer_empty = buffer == buffer_end; (void)buffer_empty;
+<<<<<<< HEAD
       BOOST_MOVE_ADAPTIVE_SORT_INVARIANT(buffer_empty ? is_sorted(first1, last1, comp) : is_sorted(buffer, buffer_end, comp));
       BOOST_MOVE_ADAPTIVE_SORT_INVARIANT(is_sorted(first2, last2, comp));
       BOOST_MOVE_ADAPTIVE_SORT_INVARIANT(!n_block_left || is_sorted(first_min, last_min, comp));
+=======
+      BOOST_MOVE_ADAPTIVE_SORT_INVARIANT(buffer_empty ? boost::movelib::is_sorted(first1, last1, comp) : boost::movelib::is_sorted(buffer, buffer_end, comp));
+      BOOST_MOVE_ADAPTIVE_SORT_INVARIANT(boost::movelib::is_sorted(first2, last2, comp));
+      BOOST_MOVE_ADAPTIVE_SORT_INVARIANT(!n_block_left || boost::movelib::is_sorted(first_min, last_min, comp));
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
       //Check if irregular b block should go here.
       //If so, break to the special code handling the irregular block
@@ -1492,6 +1864,7 @@ void op_merge_blocks_with_buf
          BOOST_MOVE_ADAPTIVE_SORT_INVARIANT((first1 == last1) || (buffer_empty ? !comp(*first_min, last1[-1]) : !comp(*first_min, buffer_end[-1])));
          //If buffered, put those elements in place
          RandIt res = op(forward_t(), buffer, buffer_end, first1);
+<<<<<<< HEAD
          buffer    = buffer_end = buf_first;
          BOOST_ASSERT(buffer_empty || res == last1); (void)res;
          swap_and_update_key(key_next, key_range2, key_mid, first2, last2, first_min);
@@ -1502,11 +1875,28 @@ void op_merge_blocks_with_buf
       }
       else {
          RandIt const unmerged = op_partial_merge_and_save(first1, last1, first2, last2, first_min, buffer, buffer_end, comp, op, is_range1_A);
+=======
+         BOOST_MOVE_ADAPTIVE_SORT_PRINT_L2("   merge_blocks_w_fwd: ", len);
+         buffer    = buffer_end = buf_first;
+         BOOST_ASSERT(buffer_empty || res == last1); (void)res;
+         //swap_and_update_key(key_next, key_range2, key_mid, first2, last2, first_min);
+         buffer_end = buffer_and_update_key(key_next, key_range2, key_mid, first2, last2, first_min, buffer = buf_first, op);
+         BOOST_MOVE_ADAPTIVE_SORT_PRINT_L2("   merge_blocks_w_swp: ", len);
+         BOOST_MOVE_ADAPTIVE_SORT_INVARIANT(boost::movelib::is_sorted(first2, last2, comp));
+         BOOST_MOVE_ADAPTIVE_SORT_INVARIANT(boost::movelib::is_sorted(first_min, last_min, comp));
+         first1 = first2;
+         BOOST_MOVE_ADAPTIVE_SORT_INVARIANT(boost::movelib::is_sorted(first, first1, comp));
+      }
+      else {
+         RandIt const unmerged = op_partial_merge_and_save(first1, last1, first2, last2, first_min, buffer, buffer_end, comp, op, is_range1_A);
+         BOOST_MOVE_ADAPTIVE_SORT_PRINT_L2("   merge_blocks_w_mrs: ", len);
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
          bool const is_range_1_empty = buffer == buffer_end;
          BOOST_ASSERT(is_range_1_empty || (buffer_end-buffer) == (last1+l_block-unmerged));
          if(is_range_1_empty){
             buffer    = buffer_end = buf_first;
             first_min = last_min - (last2 - first2);
+<<<<<<< HEAD
          }
          else{
             first_min = last_min;
@@ -1518,36 +1908,71 @@ void op_merge_blocks_with_buf
          is_range1_A ^= is_range_1_empty;
          first1 = unmerged;
          BOOST_MOVE_ADAPTIVE_SORT_INVARIANT(is_sorted(first, unmerged, comp));
+=======
+            //swap_and_update_key(key_next, key_range2, key_mid, first2, last2, first_min);
+            buffer_end = buffer_and_update_key(key_next, key_range2, key_mid, first2, last2, first_min, buf_first, op);
+         }
+         else{
+            first_min = last_min;
+            //swap_and_update_key(key_next, key_range2, key_mid, first2, last2, first_min);
+            update_key(key_next, key_range2, key_mid);
+         }
+         BOOST_MOVE_ADAPTIVE_SORT_INVARIANT(!is_range_1_empty || (last_min-first_min) == (last2-unmerged));
+         BOOST_MOVE_ADAPTIVE_SORT_PRINT_L2("   merge_blocks_w_swp: ", len);
+         BOOST_MOVE_ADAPTIVE_SORT_INVARIANT(boost::movelib::is_sorted(first_min, last_min, comp));
+         is_range1_A ^= is_range_1_empty;
+         first1 = unmerged;
+         BOOST_MOVE_ADAPTIVE_SORT_INVARIANT(boost::movelib::is_sorted(first, unmerged, comp));
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
       }
       BOOST_ASSERT( (is_range2_A && n_block_a_left) || (!is_range2_A && n_block_b_left));
       is_range2_A ? --n_block_a_left : --n_block_b_left;
       last1 += l_block;
       first2 = last2;
    }
+<<<<<<< HEAD
 
    RandIt res = op(forward_t(), buffer, buffer_end, first1); (void)res;
    BOOST_MOVE_ADAPTIVE_SORT_INVARIANT(is_sorted(first, res, comp));
+=======
+   RandIt res = op(forward_t(), buffer, buffer_end, first1); (void)res;
+   BOOST_MOVE_ADAPTIVE_SORT_INVARIANT(boost::movelib::is_sorted(first, res, comp));
+   BOOST_MOVE_ADAPTIVE_SORT_PRINT_L2("   merge_blocks_w_fwd: ", len);
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
    ////////////////////////////////////////////////////////////////////////////
    //Process irregular B block and remaining A blocks
    ////////////////////////////////////////////////////////////////////////////
    RandIt const last_irr2 = first_irr2 + l_irreg2;
    op(forward_t(), first_irr2, first_irr2+l_irreg2, buf_first);
+<<<<<<< HEAD
+=======
+   BOOST_MOVE_ADAPTIVE_SORT_PRINT_L2("   merge_blocks_w_fwir:", len);
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
    buffer = buf_first;
    buffer_end = buffer+l_irreg2;
 
    reverse_iterator<RandItBuf> rbuf_beg(buffer_end);
    RandIt dest = op_merge_blocks_with_irreg
       ((make_reverse_iterator)(key_first + n_block_b + n_block_a), (make_reverse_iterator)(key_mid), inverse<KeyCompare>(key_comp)
+<<<<<<< HEAD
       , (make_reverse_iterator)(first_irr2), rbuf_beg
       , (make_reverse_iterator)(buffer), (make_reverse_iterator)(last_irr2)
       , l_block, n_block_left, 0, n_block_left
       , inverse<Compare>(comp), true, op).base();
    BOOST_MOVE_ADAPTIVE_SORT_INVARIANT(is_sorted(dest, last_irr2, comp));
+=======
+      , (make_reverse_iterator)(first_irr2), rbuf_beg, (make_reverse_iterator)(buffer), (make_reverse_iterator)(last_irr2)
+      , l_block, n_block_left, 0, n_block_left
+      , inverse<Compare>(comp), true, op).base();
+   BOOST_MOVE_ADAPTIVE_SORT_INVARIANT(boost::movelib::is_sorted(dest, last_irr2, comp));
+   BOOST_MOVE_ADAPTIVE_SORT_PRINT_L2("   merge_blocks_w_irg: ", len);
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
    buffer_end = rbuf_beg.base();
    BOOST_ASSERT((dest-last1) == (buffer_end-buffer));
    op_merge_with_left_placed(is_range1_A ? first1 : last1, last1, dest, buffer, buffer_end, comp, op);
+<<<<<<< HEAD
 
    BOOST_MOVE_ADAPTIVE_SORT_INVARIANT(is_sorted(first, last_irr2, comp));
 }
@@ -1575,6 +2000,21 @@ void merge_blocks_with_buf
          (key_first, key_comp, first, l_block, l_irreg1, n_block_a, n_block_b, l_irreg2, comp, swap_op(), buf_first);
    }
 }
+=======
+   BOOST_MOVE_ADAPTIVE_SORT_PRINT_L2("   merge_with_left_plc:", len);
+   BOOST_MOVE_ADAPTIVE_SORT_INVARIANT(boost::movelib::is_sorted(first, last_irr2, comp));
+}
+
+//////////////////////////////////
+//////////////////////////////////
+//////////////////////////////////
+//
+//  op_insertion_sort_step_left/right
+//
+//////////////////////////////////
+//////////////////////////////////
+//////////////////////////////////
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 template<class RandIt, class Compare, class Op>
 typename iterator_traits<RandIt>::size_type
@@ -1596,6 +2036,44 @@ typename iterator_traits<RandIt>::size_type
    return s;
 }
 
+<<<<<<< HEAD
+=======
+template<class RandIt, class Compare, class Op>
+void op_merge_right_step_once
+      ( RandIt first_block
+      , typename iterator_traits<RandIt>::size_type const elements_in_blocks
+      , typename iterator_traits<RandIt>::size_type const l_build_buf
+      , Compare comp
+      , Op op)
+{
+   typedef typename iterator_traits<RandIt>::size_type size_type;
+   size_type restk = elements_in_blocks%(2*l_build_buf);
+   size_type p = elements_in_blocks - restk;
+   BOOST_ASSERT(0 == (p%(2*l_build_buf)));
+
+   if(restk <= l_build_buf){
+      op(backward_t(),first_block+p, first_block+p+restk, first_block+p+restk+l_build_buf);
+   }
+   else{
+      op_merge_right(first_block+p, first_block+p+l_build_buf, first_block+p+restk, first_block+p+restk+l_build_buf, comp, op);
+   }
+   while(p>0){
+      p -= 2*l_build_buf;
+      op_merge_right(first_block+p, first_block+p+l_build_buf, first_block+p+2*l_build_buf, first_block+p+3*l_build_buf, comp, op);
+   }
+}
+
+
+//////////////////////////////////
+//////////////////////////////////
+//////////////////////////////////
+//
+//    insertion_sort_step
+//
+//////////////////////////////////
+//////////////////////////////////
+//////////////////////////////////
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 template<class RandIt, class Compare>
 typename iterator_traits<RandIt>::size_type
    insertion_sort_step
@@ -1616,6 +2094,18 @@ typename iterator_traits<RandIt>::size_type
    return s;
 }
 
+<<<<<<< HEAD
+=======
+//////////////////////////////////
+//////////////////////////////////
+//////////////////////////////////
+//
+//    op_merge_left_step_multiple
+//
+//////////////////////////////////
+//////////////////////////////////
+//////////////////////////////////
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 template<class RandIt, class Compare, class Op>
 typename iterator_traits<RandIt>::size_type  
    op_merge_left_step_multiple
@@ -1633,17 +2123,29 @@ typename iterator_traits<RandIt>::size_type
       RandIt pos = first_block;
       while((elements_in_blocks - p0) > 2*l_merged) {
          op_merge_left(pos-l_merged, pos, pos+l_merged, pos+2*l_merged, comp, op);
+<<<<<<< HEAD
          BOOST_MOVE_ADAPTIVE_SORT_INVARIANT(is_sorted(pos-l_merged, pos+l_merged, comp));
+=======
+         BOOST_MOVE_ADAPTIVE_SORT_INVARIANT(boost::movelib::is_sorted(pos-l_merged, pos+l_merged, comp));
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
          p0 += 2*l_merged;
          pos = first_block+p0;
       }
       if((elements_in_blocks-p0) > l_merged) {
          op_merge_left(pos-l_merged, pos, pos+l_merged, first_block+elements_in_blocks, comp, op);
+<<<<<<< HEAD
          BOOST_MOVE_ADAPTIVE_SORT_INVARIANT(is_sorted(pos-l_merged, pos-l_merged+(first_block+elements_in_blocks-pos), comp));
       }
       else {
          op(forward_t(), pos, first_block+elements_in_blocks, pos-l_merged);
          BOOST_MOVE_ADAPTIVE_SORT_INVARIANT(is_sorted(pos-l_merged, first_block+elements_in_blocks-l_merged, comp));
+=======
+         BOOST_MOVE_ADAPTIVE_SORT_INVARIANT(boost::movelib::is_sorted(pos-l_merged, pos-l_merged+(first_block+elements_in_blocks-pos), comp));
+      }
+      else {
+         op(forward_t(), pos, first_block+elements_in_blocks, pos-l_merged);
+         BOOST_MOVE_ADAPTIVE_SORT_INVARIANT(boost::movelib::is_sorted(pos-l_merged, first_block+elements_in_blocks-l_merged, comp));
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
       }
       first_block -= l_merged;
       l_left_space -= l_merged;
@@ -1651,6 +2153,7 @@ typename iterator_traits<RandIt>::size_type
    return l_merged;
 }
 
+<<<<<<< HEAD
 template<class RandIt, class Compare, class Op>
 void op_merge_right_step_once
       ( RandIt first_block
@@ -2460,6 +2963,8 @@ void adaptive_merge_impl
    }
 }
 
+=======
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 }  //namespace detail_adaptive {
 }  //namespace movelib {

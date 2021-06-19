@@ -1,3 +1,36 @@
+<<<<<<< HEAD
+=======
+# backports 1.1.9
+* Added backports for `str2lang()` and `str2expression()` (#42)
+  Thanks to @dmurdoch.
+* `import()` imported too many functions and has been fixed.
+
+# backports 1.1.8
+* Added backport for `tools::vignetteInfo()` for R versions prior to 3.6.0
+* Fixed import of `list2DF()` and `deparse1()`
+
+# backports 1.1.7
+* Added backport for `deparse1()` for R versions prior to 4.0.0.
+* Added backport for `list2DF()` for R versions prior to 4.0.0.
+
+# backports 1.1.6
+* Added backport for `R_user_dir()` for R versions prior to 4.0.0.
+* Added `dQuote()` and `sQuote()` with support for argument `q` for R versions prior to 3.6.0.
+
+# backports 1.1.5
+* Changed license from GPL-2 to GPL-2 or GPL-3.
+* Added backport for `isTRUE()` implementing the new behaviour introduced in R 3.5.0.
+
+# backports 1.1.4
+* Fixed import of `warningCondition()` and `errorCondition()`.
+
+# backports 1.1.3
+
+* Added `warningCondition()` and `errorCondition()` for R versions prior to 3.6.0.
+* Added `capture.output()` with support for argument `type` for R versions prior to 3.3.0.
+* Added `URLencode()` with support for argument `repeated` for R versions prior to 3.2.0.
+
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 # backports 1.1.2
 
 * Improved import mechanism.

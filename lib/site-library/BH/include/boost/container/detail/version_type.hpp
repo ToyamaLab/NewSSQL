@@ -32,6 +32,7 @@
 
 namespace boost{
 namespace container {
+<<<<<<< HEAD
 namespace container_detail {
 
 template <class T, unsigned V>
@@ -41,10 +42,20 @@ struct version_type
     typedef T type;
 
     version_type(const version_type<T, 0>&);
+=======
+namespace dtl {
+
+template <class T, unsigned V>
+struct version_type
+    : public dtl::integral_constant<unsigned, V>
+{
+    typedef T type;
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 };
 
 namespace impl{
 
+<<<<<<< HEAD
 template <class T,
           bool = container_detail::is_convertible<version_type<T, 0>, typename T::version>::value>
 struct extract_version
@@ -56,6 +67,12 @@ template <class T>
 struct extract_version<T, true>
 {
    static const unsigned value = T::version::value;
+=======
+template <class T>
+struct extract_version
+{
+   typedef typename T::version type;
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 };
 
 template <class T>
@@ -79,14 +96,22 @@ struct version
 template <class T>
 struct version<T, true>
 {
+<<<<<<< HEAD
    static const unsigned value = extract_version<T>::value;
+=======
+   static const unsigned value = extract_version<T>::type::value;
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 };
 
 }  //namespace impl
 
 template <class T>
 struct version
+<<<<<<< HEAD
    : public container_detail::integral_constant<unsigned, impl::version<T>::value>
+=======
+   : public dtl::integral_constant<unsigned, impl::version<T>::value>
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 {};
 
 template<class T, unsigned N>
@@ -96,11 +121,19 @@ struct is_version
       is_same< typename version<T>::type, integral_constant<unsigned, N> >::value;
 };
 
+<<<<<<< HEAD
 }  //namespace container_detail {
 
 typedef container_detail::integral_constant<unsigned, 0> version_0;
 typedef container_detail::integral_constant<unsigned, 1> version_1;
 typedef container_detail::integral_constant<unsigned, 2> version_2;
+=======
+}  //namespace dtl {
+
+typedef dtl::integral_constant<unsigned, 0> version_0;
+typedef dtl::integral_constant<unsigned, 1> version_1;
+typedef dtl::integral_constant<unsigned, 2> version_2;
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 }  //namespace container {
 }  //namespace boost{

@@ -24,7 +24,11 @@
 
 #if defined( BOOST_SP_DISABLE_DEPRECATED )
 #pragma GCC diagnostic push
+<<<<<<< HEAD
 // #pragma GCC diagnostic ignored "-Wdeprecated-declarations"
+=======
+//#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 #endif
 
 namespace boost

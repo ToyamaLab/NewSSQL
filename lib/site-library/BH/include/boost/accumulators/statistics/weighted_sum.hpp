@@ -55,6 +55,16 @@ namespace impl
             return this->weighted_sum_;
         }
 
+<<<<<<< HEAD
+=======
+        // make this accumulator serializeable
+        template<class Archive>
+        void serialize(Archive & ar, const unsigned int file_version)
+        {
+            ar & weighted_sum_;
+        }
+
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     private:
 
         weighted_sample weighted_sum_;

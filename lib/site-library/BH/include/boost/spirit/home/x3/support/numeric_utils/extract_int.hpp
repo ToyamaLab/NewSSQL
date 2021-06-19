@@ -62,8 +62,12 @@ namespace boost { namespace spirit { namespace x3
             extract_type;
 
             Iterator save = first;
+<<<<<<< HEAD
             if (!extract_type::parse(first, last,
                 detail::cast_unsigned<T>::call(attr)))
+=======
+            if (!extract_type::parse(first, last, attr))
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
             {
                 first = save;
                 return false;

@@ -103,6 +103,7 @@ namespace boost
             T m_to;
         };
 
+<<<<<<< HEAD
         template< class Pred, class SinglePassRange >
         inline replaced_if_range<Pred, SinglePassRange>
         operator|(
@@ -110,6 +111,11 @@ namespace boost
             const replace_if_holder<
                 Pred,
                 BOOST_DEDUCED_TYPENAME range_value<SinglePassRange>::type>& f)
+=======
+        template< class Pred, class SinglePassRange, class Value >
+        inline replaced_if_range<Pred, SinglePassRange>
+        operator|(SinglePassRange& r, const replace_if_holder<Pred, Value>& f)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
         {
             BOOST_RANGE_CONCEPT_ASSERT((
                 SinglePassRangeConcept<SinglePassRange>));
@@ -118,6 +124,7 @@ namespace boost
                 r, f.pred(), f.to());
         }
 
+<<<<<<< HEAD
         template< class Pred, class SinglePassRange >
         inline replaced_if_range<Pred, const SinglePassRange>
         operator|(
@@ -125,6 +132,11 @@ namespace boost
             const replace_if_holder<
                 Pred,
                 BOOST_DEDUCED_TYPENAME range_value<SinglePassRange>::type>& f)
+=======
+        template< class Pred, class SinglePassRange, class Value >
+        inline replaced_if_range<Pred, const SinglePassRange>
+        operator|(const SinglePassRange& r, const replace_if_holder<Pred, Value>& f)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
         {
             BOOST_RANGE_CONCEPT_ASSERT((
                 SinglePassRangeConcept<const SinglePassRange>));
@@ -145,10 +157,16 @@ namespace boost
                     range_detail::forwarder2TU<range_detail::replace_if_holder>();
         }
 
+<<<<<<< HEAD
         template<class Pred, class SinglePassRange>
         inline replaced_if_range<Pred, SinglePassRange>
         replace_if(SinglePassRange& rng, Pred pred,
                    BOOST_DEDUCED_TYPENAME range_value<SinglePassRange>::type to)
+=======
+        template< class Pred, class SinglePassRange, class Value >
+        inline replaced_if_range<Pred, SinglePassRange>
+        replace_if(SinglePassRange& rng, Pred pred, Value to)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
         {
             BOOST_RANGE_CONCEPT_ASSERT((
                 SinglePassRangeConcept<SinglePassRange>));
@@ -157,12 +175,18 @@ namespace boost
                 rng, pred, to);
         }
 
+<<<<<<< HEAD
         template<class Pred, class SinglePassRange>
         inline replaced_if_range<Pred, const SinglePassRange>
         replace_if(
             const SinglePassRange& rng,
             Pred pred,
             BOOST_DEDUCED_TYPENAME range_value<const SinglePassRange>::type to)
+=======
+        template< class Pred, class SinglePassRange, class Value >
+        inline replaced_if_range<Pred, const SinglePassRange>
+        replace_if(const SinglePassRange& rng, Pred pred, Value to)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
         {
             BOOST_RANGE_CONCEPT_ASSERT((
                 SinglePassRangeConcept<const SinglePassRange>));

@@ -23,6 +23,10 @@
 #include <iterator>         //  For std::iterator_traits
 #include <cassert>
 
+<<<<<<< HEAD
+=======
+#include <boost/config.hpp>
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 #include <boost/range/begin.hpp>
 #include <boost/range/end.hpp>
 #include <boost/mpl/identity.hpp>      // for identity
@@ -46,7 +50,11 @@ namespace boost { namespace algorithm {
 ///                 p ( a, b ) returns a boolean.
 ///
   template<typename T, typename Pred> 
+<<<<<<< HEAD
   T const & clamp ( T const& val, 
+=======
+  BOOST_CXX14_CONSTEXPR T const & clamp ( T const& val, 
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     typename boost::mpl::identity<T>::type const & lo, 
     typename boost::mpl::identity<T>::type const & hi, Pred p )
   {
@@ -68,11 +76,19 @@ namespace boost { namespace algorithm {
 /// \param hi    The upper bound of the range to be clamped to
 ///
   template<typename T> 
+<<<<<<< HEAD
   T const& clamp ( const T& val, 
     typename boost::mpl::identity<T>::type const & lo, 
     typename boost::mpl::identity<T>::type const & hi )
   {
     return (clamp) ( val, lo, hi, std::less<T>());
+=======
+  BOOST_CXX14_CONSTEXPR T const& clamp ( const T& val, 
+    typename boost::mpl::identity<T>::type const & lo, 
+    typename boost::mpl::identity<T>::type const & hi )
+  {
+    return boost::algorithm::clamp ( val, lo, hi, std::less<T>());
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
   } 
 
 /// \fn clamp_range ( InputIterator first, InputIterator last, OutputIterator out, 
@@ -87,13 +103,21 @@ namespace boost { namespace algorithm {
 /// \param hi    The upper bound of the range to be clamped to
 ///
   template<typename InputIterator, typename OutputIterator> 
+<<<<<<< HEAD
   OutputIterator clamp_range ( InputIterator first, InputIterator last, OutputIterator out,
+=======
+  BOOST_CXX14_CONSTEXPR OutputIterator clamp_range ( InputIterator first, InputIterator last, OutputIterator out,
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     typename std::iterator_traits<InputIterator>::value_type const & lo, 
     typename std::iterator_traits<InputIterator>::value_type const & hi )
   {
   // this could also be written with bind and std::transform
     while ( first != last )
+<<<<<<< HEAD
         *out++ = clamp ( *first++, lo, hi );
+=======
+        *out++ = boost::algorithm::clamp ( *first++, lo, hi );
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     return out;
   } 
 
@@ -108,12 +132,20 @@ namespace boost { namespace algorithm {
 /// \param hi    The upper bound of the range to be clamped to
 ///
   template<typename Range, typename OutputIterator> 
+<<<<<<< HEAD
   typename boost::disable_if_c<boost::is_same<Range, OutputIterator>::value, OutputIterator>::type
+=======
+  BOOST_CXX14_CONSTEXPR typename boost::disable_if_c<boost::is_same<Range, OutputIterator>::value, OutputIterator>::type
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
   clamp_range ( const Range &r, OutputIterator out,
     typename std::iterator_traits<typename boost::range_iterator<const Range>::type>::value_type const & lo, 
     typename std::iterator_traits<typename boost::range_iterator<const Range>::type>::value_type const & hi )
   {
+<<<<<<< HEAD
     return clamp_range ( boost::begin ( r ), boost::end ( r ), out, lo, hi );
+=======
+    return boost::algorithm::clamp_range ( boost::begin ( r ), boost::end ( r ), out, lo, hi );
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
   } 
 
 
@@ -133,13 +165,21 @@ namespace boost { namespace algorithm {
 
 ///
   template<typename InputIterator, typename OutputIterator, typename Pred> 
+<<<<<<< HEAD
   OutputIterator clamp_range ( InputIterator first, InputIterator last, OutputIterator out,
+=======
+  BOOST_CXX14_CONSTEXPR OutputIterator clamp_range ( InputIterator first, InputIterator last, OutputIterator out,
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     typename std::iterator_traits<InputIterator>::value_type const & lo, 
     typename std::iterator_traits<InputIterator>::value_type const & hi, Pred p )
   {
   // this could also be written with bind and std::transform
     while ( first != last )
+<<<<<<< HEAD
         *out++ = clamp ( *first++, lo, hi, p );
+=======
+        *out++ = boost::algorithm::clamp ( *first++, lo, hi, p );
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     return out;
   } 
 
@@ -160,13 +200,21 @@ namespace boost { namespace algorithm {
 //  Disable this template if the first two parameters are the same type;
 //  In that case, the user will get the two iterator version.
   template<typename Range, typename OutputIterator, typename Pred> 
+<<<<<<< HEAD
   typename boost::disable_if_c<boost::is_same<Range, OutputIterator>::value, OutputIterator>::type
+=======
+  BOOST_CXX14_CONSTEXPR typename boost::disable_if_c<boost::is_same<Range, OutputIterator>::value, OutputIterator>::type
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
   clamp_range ( const Range &r, OutputIterator out,
     typename std::iterator_traits<typename boost::range_iterator<const Range>::type>::value_type const & lo, 
     typename std::iterator_traits<typename boost::range_iterator<const Range>::type>::value_type const & hi,
     Pred p )
   {
+<<<<<<< HEAD
     return clamp_range ( boost::begin ( r ), boost::end ( r ), out, lo, hi, p );
+=======
+    return boost::algorithm::clamp_range ( boost::begin ( r ), boost::end ( r ), out, lo, hi, p );
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
   } 
 
 

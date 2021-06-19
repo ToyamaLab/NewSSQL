@@ -4,6 +4,13 @@
 //
 // Copyright (c) 2011-2015 Adam Wulkiewicz, Lodz, Poland.
 //
+<<<<<<< HEAD
+=======
+// This file was modified by Oracle on 2019.
+// Modifications copyright (c) 2019 Oracle and/or its affiliates.
+// Contributed and/or modified by Adam Wulkiewicz, on behalf of Oracle
+//
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 // Use, modification and distribution is subject to the Boost Software License,
 // Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
 // http://www.boost.org/LICENSE_1_0.txt)
@@ -16,6 +23,10 @@
 #include <boost/geometry/algorithms/detail/expand_by_epsilon.hpp>
 #include <boost/geometry/util/condition.hpp>
 
+<<<<<<< HEAD
+=======
+#include <boost/geometry/index/detail/algorithms/bounds.hpp>
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 #include <boost/geometry/index/detail/algorithms/content.hpp>
 
 namespace boost { namespace geometry { namespace index {
@@ -43,7 +54,11 @@ public:
     template <typename Indexable>
     static inline size_t apply(internal_node & n,
                                Indexable const& indexable,
+<<<<<<< HEAD
                                parameters_type const& /*parameters*/,
+=======
+                               parameters_type const& parameters,
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
                                size_t /*node_relative_level*/)
     {
         children_type & children = rtree::elements(n);
@@ -65,7 +80,12 @@ public:
 
             // expanded child node's box
             Box box_exp(ch_i.first);
+<<<<<<< HEAD
             geometry::expand(box_exp, indexable);
+=======
+            index::detail::expand(box_exp, indexable,
+                                  index::detail::get_strategy(parameters));
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
             // areas difference
             content_type content = index::detail::content(box_exp);
@@ -274,7 +294,13 @@ protected:
         // NOTE: This is actually only needed because conditionally the bounding
         //       object may be expanded below. Otherwise the indexable could be
         //       directly used instead
+<<<<<<< HEAD
         index::detail::bounds(rtree::element_indexable(m_element, m_translator), m_element_bounds);
+=======
+        index::detail::bounds(rtree::element_indexable(m_element, m_translator),
+                              m_element_bounds,
+                              index::detail::get_strategy(m_parameters));
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 #ifdef BOOST_GEOMETRY_INDEX_EXPERIMENTAL_ENLARGE_BY_EPSILON
         // Enlarge it in case if it's not bounding geometry type.
@@ -300,10 +326,17 @@ protected:
             apply(n, rtree::element_indexable(m_element, m_translator), m_parameters, m_leafs_level - m_traverse_data.current_level);
 
         // expand the node to contain value
+<<<<<<< HEAD
         geometry::expand(
             rtree::elements(n)[choosen_node_index].first,
             m_element_bounds
             /*rtree::element_indexable(m_element, m_translator)*/);
+=======
+        index::detail::expand(
+            rtree::elements(n)[choosen_node_index].first,
+            m_element_bounds,
+            index::detail::get_strategy(m_parameters));
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
         // next traversing step
         traverse_apply_visitor(visitor, n, choosen_node_index);                                                 // MAY THROW (V, E: alloc, copy, N:alloc)

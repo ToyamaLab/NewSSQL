@@ -4,10 +4,18 @@
     Distributed under the Boost Software License, Version 1.0. (See accompanying
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 =============================================================================*/
+<<<<<<< HEAD
 #if !defined(SPIRIT_ALTERNATIVE_DETAIL_JAN_07_2013_1245PM)
 #define SPIRIT_ALTERNATIVE_DETAIL_JAN_07_2013_1245PM
 
 #include <boost/spirit/home/x3/support/traits/attribute_of.hpp>
+=======
+#if !defined(BOOST_SPIRIT_X3_ALTERNATIVE_DETAIL_JAN_07_2013_1245PM)
+#define BOOST_SPIRIT_X3_ALTERNATIVE_DETAIL_JAN_07_2013_1245PM
+
+#include <boost/spirit/home/x3/support/traits/attribute_of.hpp>
+#include <boost/spirit/home/x3/support/traits/pseudo_attribute.hpp>
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 #include <boost/spirit/home/x3/support/traits/is_variant.hpp>
 #include <boost/spirit/home/x3/support/traits/tuple_traits.hpp>
 #include <boost/spirit/home/x3/support/traits/move_to.hpp>
@@ -244,9 +252,17 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
     bool parse_alternative(Parser const& p, Iterator& first, Iterator const& last
       , Context const& context, RContext& rcontext, Attribute& attr)
     {
+<<<<<<< HEAD
         typedef detail::pass_variant_attribute<Parser, Attribute, Context> pass;
 
         typename pass::type attr_ = pass::call(attr);
+=======
+        using pass = detail::pass_variant_attribute<Parser, Attribute, Context>;
+        using pseudo = traits::pseudo_attribute<Context, typename pass::type, Iterator>;
+
+        typename pseudo::type attr_ = pseudo::call(first, last, pass::call(attr));
+
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
         if (p.parse(first, last, context, rcontext, attr_))
         {
             move_if_not_alternative<typename pass::is_alternative>::call(attr_, attr);
@@ -255,7 +271,10 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
         return false;
     }
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     template <typename Left, typename Right, typename Context, typename RContext>
     struct parse_into_container_impl<alternative<Left, Right>, Context, RContext>
     {

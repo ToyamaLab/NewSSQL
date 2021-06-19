@@ -109,6 +109,26 @@ struct converter_target_type <void_result_to_python >
         return 0;
     }
 };
+<<<<<<< HEAD
+=======
+
+// Generation of ret moved from caller_arity<N>::impl::signature to here due to "feature" in MSVC 15.7.2 with /O2
+// which left the ret uninitialized and caused segfaults in Python interpreter.
+template<class Policies, class Sig> const signature_element* get_ret()
+{
+    typedef BOOST_DEDUCED_TYPENAME Policies::template extract_return_type<Sig>::type rtype;
+    typedef typename select_result_converter<Policies, rtype>::type result_converter;
+
+    static const signature_element ret = {
+        (is_void<rtype>::value ? "void" : type_id<rtype>().name())
+        , &detail::converter_target_type<result_converter>::get_pytype
+        , boost::detail::indirect_traits::is_reference_to_non_const<rtype>::value 
+    };
+
+    return &ret;
+};
+
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 #endif
 
     
@@ -229,6 +249,7 @@ struct caller_arity<N>
         {
             const signature_element * sig = detail::signature<Sig>::elements();
 #ifndef BOOST_PYTHON_NO_PY_SIGNATURES
+<<<<<<< HEAD
 
             typedef BOOST_DEDUCED_TYPENAME Policies::template extract_return_type<Sig>::type rtype;
             typedef typename select_result_converter<Policies, rtype>::type result_converter;
@@ -239,6 +260,14 @@ struct caller_arity<N>
                 , boost::detail::indirect_traits::is_reference_to_non_const<rtype>::value 
             };
             py_func_sig_info res = {sig, &ret };
+=======
+            // MSVC 15.7.2, when compiling to /O2 left the static const signature_element ret, 
+            // originally defined here, uninitialized. This in turn led to SegFault in Python interpreter.
+            // Issue is resolved by moving the generation of ret to separate function in detail namespace (see above).
+            const signature_element * ret = detail::get_ret<Policies, Sig>();
+
+            py_func_sig_info res = {sig, ret };
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 #else
             py_func_sig_info res = {sig, sig };
 #endif

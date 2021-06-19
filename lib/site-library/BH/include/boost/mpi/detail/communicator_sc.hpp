@@ -50,6 +50,7 @@ communicator::isend(int dest, int tag, const skeleton_proxy<T>& proxy) const
 
   *archive << proxy.object;
   request result = isend(dest, tag, *archive);
+<<<<<<< HEAD
   result.m_data = archive;
   return result;
 }
@@ -90,6 +91,12 @@ namespace detail {
   };
 }
 
+=======
+  result.preserve(archive);
+  return result;
+}
+
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 } } // end namespace boost::mpi
 
 #endif // BOOST_MPI_COMMUNICATOR_SC_HPP

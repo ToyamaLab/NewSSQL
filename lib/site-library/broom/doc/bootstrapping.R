@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 ## ----setup, include = FALSE----------------------------------------------
 knitr::opts_chunk$set(
   collapse = TRUE,
@@ -86,3 +87,12 @@ ggplot(splines_aug, aes(x, y)) +
     geom_point() +
     geom_line(aes(y = .fitted, group = id), alpha = 0.2)
 
+=======
+## ----setup, include = FALSE---------------------------------------------------
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  message = FALSE
+)
+
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce

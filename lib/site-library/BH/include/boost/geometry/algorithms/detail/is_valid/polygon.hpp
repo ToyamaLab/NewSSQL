@@ -2,7 +2,11 @@
 
 // Copyright (c) 2017 Adam Wulkiewicz, Lodz, Poland.
 
+<<<<<<< HEAD
 // Copyright (c) 2014-2017, Oracle and/or its affiliates.
+=======
+// Copyright (c) 2014-2019, Oracle and/or its affiliates.
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 // Contributed and/or modified by Menelaos Karavelas, on behalf of Oracle
 // Contributed and/or modified by Adam Wulkiewicz, on behalf of Oracle
@@ -76,7 +80,10 @@ template <typename Polygon, bool CheckRingValidityOnly = false>
 class is_valid_polygon
 {
 protected:
+<<<<<<< HEAD
     typedef debug_validity_phase<Polygon> debug_phase;
+=======
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
     template <typename VisitPolicy, typename Strategy>
     struct per_ring
@@ -121,6 +128,10 @@ protected:
                                  VisitPolicy& visitor,
                                  Strategy const& strategy)
         {
+<<<<<<< HEAD
+=======
+            typedef debug_validity_phase<Polygon> debug_phase;
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
             typedef typename ring_type<Polygon>::type ring_type;
 
             // check validity of exterior ring
@@ -180,29 +191,62 @@ protected:
     template <typename EnvelopeStrategy>
     struct expand_box
     {
+<<<<<<< HEAD
         explicit expand_box(EnvelopeStrategy const& strategy) : m_strategy(strategy) {}
+=======
+        explicit expand_box(EnvelopeStrategy const& strategy)
+            : m_strategy(strategy)
+        {}
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
         template <typename Box, typename Iterator>
         inline void apply(Box& total, partition_item<Iterator, Box> const& item) const
         {
+<<<<<<< HEAD
             geometry::expand(total, item.get_envelope(m_strategy));
+=======
+            geometry::expand(total,
+                             item.get_envelope(m_strategy),
+                             m_strategy.get_box_expand_strategy());
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
         }
 
         EnvelopeStrategy const& m_strategy;
     };
 
+<<<<<<< HEAD
     template <typename EnvelopeStrategy>
     struct overlaps_box
     {
         explicit overlaps_box(EnvelopeStrategy const& strategy) : m_strategy(strategy) {}
+=======
+    template <typename EnvelopeStrategy, typename DisjointBoxBoxStrategy>
+    struct overlaps_box
+    {
+        explicit overlaps_box(EnvelopeStrategy const& envelope_strategy,
+                              DisjointBoxBoxStrategy const& disjoint_strategy)
+            : m_envelope_strategy(envelope_strategy)
+            , m_disjoint_strategy(disjoint_strategy)
+        {}
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
         template <typename Box, typename Iterator>
         inline bool apply(Box const& box, partition_item<Iterator, Box> const& item) const
         {
+<<<<<<< HEAD
             return ! geometry::disjoint(item.get_envelope(m_strategy), box);
         }
 
         EnvelopeStrategy const& m_strategy;
+=======
+            return ! geometry::disjoint(item.get_envelope(m_envelope_strategy),
+                                        box,
+                                        m_disjoint_strategy);
+        }
+
+        EnvelopeStrategy const& m_envelope_strategy;
+        DisjointBoxBoxStrategy const& m_disjoint_strategy;
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     };
 
 
@@ -217,6 +261,7 @@ protected:
             , m_strategy(strategy)
         {}
 
+<<<<<<< HEAD
         template <typename Item>
         inline bool is_within(Item const& first, Item const& second)
         {
@@ -230,13 +275,27 @@ protected:
                     && geometry::within(point, second, m_strategy);
         }
 
+=======
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
         template <typename Iterator, typename Box>
         inline bool apply(partition_item<Iterator, Box> const& item1,
                           partition_item<Iterator, Box> const& item2)
         {
+<<<<<<< HEAD
             if (! items_overlap
                 && (is_within(*item1.get(), *item2.get())
                   || is_within(*item2.get(), *item1.get())))
+=======
+            typedef boost::mpl::vector
+                <
+                    geometry::de9im::static_mask<'T'>,
+                    geometry::de9im::static_mask<'*', 'T'>,
+                    geometry::de9im::static_mask<'*', '*', '*', 'T'>
+                > relate_mask_t;
+
+            if ( ! items_overlap
+              && geometry::relate(*item1.get(), *item2.get(), relate_mask_t(), m_strategy) )
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
             {
                 items_overlap = true;
                 return false; // interrupt
@@ -326,6 +385,7 @@ protected:
         }
 
         // prepare strategies
+<<<<<<< HEAD
         typedef typename Strategy::template point_in_geometry_strategy
             <
                 inter_ring_type, inter_ring_type
@@ -339,13 +399,37 @@ protected:
         // call partition to check if interior rings are disjoint from
         // each other
         item_visitor_type<in_interior_strategy_type> item_visitor(in_interior_strategy);
+=======
+        typedef typename Strategy::envelope_strategy_type envelope_strategy_type;
+        envelope_strategy_type const envelope_strategy
+            = strategy.get_envelope_strategy();
+        typedef typename Strategy::disjoint_box_box_strategy_type disjoint_box_box_strategy_type;
+        disjoint_box_box_strategy_type const disjoint_strategy
+            = strategy.get_disjoint_box_box_strategy();
+
+        // call partition to check if interior rings are disjoint from
+        // each other
+        item_visitor_type<Strategy> item_visitor(strategy);
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
         geometry::partition
             <
                 box_type
             >::apply(ring_iterators, item_visitor,
+<<<<<<< HEAD
                      expand_box<envelope_strategy_type>(envelope_strategy),
                      overlaps_box<envelope_strategy_type>(envelope_strategy));
+=======
+                     expand_box
+                        <
+                            envelope_strategy_type
+                        >(envelope_strategy),
+                     overlaps_box
+                        <
+                            envelope_strategy_type,
+                            disjoint_box_box_strategy_type
+                        >(envelope_strategy, disjoint_strategy));
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
         if (item_visitor.items_overlap)
         {
@@ -417,7 +501,15 @@ protected:
                 <
                     TurnIterator
                 >::value_type turn_type;
+<<<<<<< HEAD
             typedef complement_graph<typename turn_type::point_type> graph;
+=======
+            typedef complement_graph
+                <
+                    typename turn_type::point_type,
+                    typename Strategy::cs_tag
+                > graph;
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
             graph g(geometry::num_interior_rings(polygon) + 1);
             for (TurnIterator tit = first; tit != beyond; ++tit)
@@ -464,9 +556,16 @@ public:
         }
 
         // compute turns and check if all are acceptable
+<<<<<<< HEAD
         debug_phase::apply(3);
 
         typedef has_valid_self_turns<Polygon> has_valid_turns;
+=======
+        typedef debug_validity_phase<Polygon> debug_phase;
+        debug_phase::apply(3);
+
+        typedef has_valid_self_turns<Polygon, typename Strategy::cs_tag> has_valid_turns;
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
         std::deque<typename has_valid_turns::turn_type> turns;
         bool has_invalid_turns

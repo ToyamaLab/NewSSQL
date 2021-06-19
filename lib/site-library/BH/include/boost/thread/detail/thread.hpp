@@ -18,6 +18,12 @@
 #if defined BOOST_THREAD_USES_DATETIME
 #include <boost/thread/xtime.hpp>
 #endif
+<<<<<<< HEAD
+=======
+#if defined BOOST_THREAD_PROVIDES_INTERRUPTIONS
+#include <boost/thread/interruption.hpp>
+#endif
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 #include <boost/thread/detail/thread_heap_alloc.hpp>
 #include <boost/thread/detail/make_tuple_indices.hpp>
 #include <boost/thread/detail/invoke.hpp>
@@ -36,6 +42,10 @@
 #include <boost/type_traits/is_same.hpp>
 #include <boost/type_traits/decay.hpp>
 #include <boost/functional/hash.hpp>
+<<<<<<< HEAD
+=======
+#include <boost/thread/detail/platform_time.hpp>
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 #ifdef BOOST_THREAD_USES_CHRONO
 #include <boost/chrono/system_clocks.hpp>
 #include <boost/chrono/ceil.hpp>
@@ -155,6 +165,7 @@ namespace boost
         };
 #endif
     }
+<<<<<<< HEAD
 namespace thread_detail {
 #ifdef BOOST_THREAD_USES_CHRONO
 #if defined(BOOST_THREAD_HAS_CONDATTR_SET_CLOCK_MONOTONIC)
@@ -164,6 +175,9 @@ namespace thread_detail {
 #endif
 #endif
 }
+=======
+
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     class BOOST_THREAD_DECL thread
     {
     public:
@@ -462,16 +476,21 @@ namespace thread_detail {
         }
 
         class id;
+<<<<<<< HEAD
 #ifdef BOOST_THREAD_PLATFORM_PTHREAD
         inline id get_id()  const BOOST_NOEXCEPT;
 #else
         id get_id() const BOOST_NOEXCEPT;
 #endif
 
+=======
+        id get_id() const BOOST_NOEXCEPT;
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
         bool joinable() const BOOST_NOEXCEPT;
     private:
         bool join_noexcept();
+<<<<<<< HEAD
     public:
         inline void join();
 
@@ -490,10 +509,24 @@ namespace thread_detail {
           return try_join_until(chrono::steady_clock::now() + rel_time);
         }
 #endif
+=======
+        bool do_try_join_until_noexcept(detail::internal_platform_timepoint const &timeout, bool& res);
+        bool do_try_join_until(detail::internal_platform_timepoint const &timeout);
+    public:
+        void join();
+
+#ifdef BOOST_THREAD_USES_CHRONO
+        template <class Duration>
+        bool try_join_until(const chrono::time_point<detail::internal_chrono_clock, Duration>& t)
+        {
+          return do_try_join_until(boost::detail::internal_platform_timepoint(t));
+        }
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
         template <class Clock, class Duration>
         bool try_join_until(const chrono::time_point<Clock, Duration>& t)
         {
+<<<<<<< HEAD
           using namespace chrono;
           bool joined= false;
           do {
@@ -561,6 +594,62 @@ namespace thread_detail {
         inline bool timed_join(TimeDuration const& rel_time)
         {
             return timed_join(get_system_time()+rel_time);
+=======
+          typedef typename common_type<Duration, typename Clock::duration>::type common_duration;
+          common_duration d(t - Clock::now());
+          d = (std::min)(d, common_duration(chrono::milliseconds(BOOST_THREAD_POLL_INTERVAL_MILLISECONDS)));
+          while ( ! try_join_until(detail::internal_chrono_clock::now() + d) )
+          {
+            d = t - Clock::now();
+            if ( d <= common_duration::zero() ) return false; // timeout occurred
+            d = (std::min)(d, common_duration(chrono::milliseconds(BOOST_THREAD_POLL_INTERVAL_MILLISECONDS)));
+          }
+          return true;
+        }
+
+        template <class Rep, class Period>
+        bool try_join_for(const chrono::duration<Rep, Period>& rel_time)
+        {
+          return try_join_until(chrono::steady_clock::now() + rel_time);
+        }
+#endif
+#if defined BOOST_THREAD_USES_DATETIME
+        bool timed_join(const system_time& abs_time)
+        {
+          const detail::real_platform_timepoint ts(abs_time);
+#if defined BOOST_THREAD_INTERNAL_CLOCK_IS_MONO
+          detail::platform_duration d(ts - detail::real_platform_clock::now());
+          d = (std::min)(d, detail::platform_milliseconds(BOOST_THREAD_POLL_INTERVAL_MILLISECONDS));
+          while ( ! do_try_join_until(detail::internal_platform_clock::now() + d) )
+          {
+            d = ts - detail::real_platform_clock::now();
+            if ( d <= detail::platform_duration::zero() ) return false; // timeout occurred
+            d = (std::min)(d, detail::platform_milliseconds(BOOST_THREAD_POLL_INTERVAL_MILLISECONDS));
+          }
+          return true;
+#else
+          return do_try_join_until(ts);
+#endif
+        }
+
+        template<typename TimeDuration>
+        bool timed_join(TimeDuration const& rel_time)
+        {
+          detail::platform_duration d(rel_time);
+#if defined(BOOST_THREAD_HAS_MONO_CLOCK) && !defined(BOOST_THREAD_INTERNAL_CLOCK_IS_MONO)
+          const detail::mono_platform_timepoint ts(detail::mono_platform_clock::now() + d);
+          d = (std::min)(d, detail::platform_milliseconds(BOOST_THREAD_POLL_INTERVAL_MILLISECONDS));
+          while ( ! do_try_join_until(detail::internal_platform_clock::now() + d) )
+          {
+            d = ts - detail::mono_platform_clock::now();
+            if ( d <= detail::platform_duration::zero() ) return false; // timeout occurred
+            d = (std::min)(d, detail::platform_milliseconds(BOOST_THREAD_POLL_INTERVAL_MILLISECONDS));
+          }
+          return true;
+#else
+          return do_try_join_until(detail::internal_platform_clock::now() + d);
+#endif
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
         }
 #endif
         void detach();
@@ -614,11 +703,16 @@ namespace thread_detail {
     namespace this_thread
     {
 #ifdef BOOST_THREAD_PLATFORM_PTHREAD
+<<<<<<< HEAD
         inline thread::id get_id() BOOST_NOEXCEPT;
+=======
+        thread::id get_id() BOOST_NOEXCEPT;
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 #else
         thread::id BOOST_THREAD_DECL get_id() BOOST_NOEXCEPT;
 #endif
 
+<<<<<<< HEAD
 #if defined BOOST_THREAD_PROVIDES_INTERRUPTIONS
         void BOOST_THREAD_DECL interruption_point();
         bool BOOST_THREAD_DECL interruption_enabled() BOOST_NOEXCEPT;
@@ -627,6 +721,10 @@ namespace thread_detail {
 
 #if defined BOOST_THREAD_USES_DATETIME
         inline BOOST_SYMBOL_VISIBLE void sleep(xtime const& abs_time)
+=======
+#if defined BOOST_THREAD_USES_DATETIME
+        inline BOOST_SYMBOL_VISIBLE void sleep(::boost::xtime const& abs_time)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
         {
             sleep(system_time(abs_time));
         }
@@ -745,7 +843,11 @@ namespace thread_detail {
     };
 
 #ifdef BOOST_THREAD_PLATFORM_PTHREAD
+<<<<<<< HEAD
     thread::id thread::get_id() const BOOST_NOEXCEPT
+=======
+    inline thread::id thread::get_id() const BOOST_NOEXCEPT
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     {
     #if defined BOOST_THREAD_PROVIDES_BASIC_THREAD_ID
         return const_cast<thread*>(this)->native_handle();
@@ -768,7 +870,11 @@ namespace thread_detail {
         }
     }
 #endif
+<<<<<<< HEAD
     void thread::join() {
+=======
+    inline void thread::join() {
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
         if (this_thread::get_id() == get_id())
           boost::throw_exception(thread_resource_error(static_cast<int>(system::errc::resource_deadlock_would_occur), "boost thread: trying joining itself"));
 
@@ -777,11 +883,15 @@ namespace thread_detail {
         );
     }
 
+<<<<<<< HEAD
 #ifdef BOOST_THREAD_PLATFORM_PTHREAD
     bool thread::do_try_join_until(struct timespec const &timeout)
 #else
     bool thread::do_try_join_until(uintmax_t timeout)
 #endif
+=======
+    inline bool thread::do_try_join_until(detail::internal_platform_timepoint const &timeout)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     {
         if (this_thread::get_id() == get_id())
           boost::throw_exception(thread_resource_error(static_cast<int>(system::errc::resource_deadlock_would_occur), "boost thread: trying joining itself"));
@@ -847,6 +957,10 @@ namespace thread_detail {
         };
 
         void BOOST_THREAD_DECL add_thread_exit_function(thread_exit_function_base*);
+<<<<<<< HEAD
+=======
+//#ifndef BOOST_NO_EXCEPTIONS
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
         struct shared_state_base;
 #if defined(BOOST_THREAD_PLATFORM_WIN32)
         inline void make_ready_at_thread_exit(shared_ptr<shared_state_base> as)
@@ -860,6 +974,10 @@ namespace thread_detail {
 #else
         void BOOST_THREAD_DECL make_ready_at_thread_exit(shared_ptr<shared_state_base> as);
 #endif
+<<<<<<< HEAD
+=======
+//#endif
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     }
 
     namespace this_thread

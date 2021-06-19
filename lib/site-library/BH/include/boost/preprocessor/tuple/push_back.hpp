@@ -23,7 +23,11 @@
 # /* BOOST_PP_TUPLE_PUSH_BACK */
 #
 # define BOOST_PP_TUPLE_PUSH_BACK(tuple, elem) \
+<<<<<<< HEAD
 	BOOST_PP_ARRAY_TO_TUPLE(BOOST_PP_ARRAY_PUSH_BACK(BOOST_PP_TUPLE_TO_ARRAY(tuple), elem)) \
+=======
+    BOOST_PP_ARRAY_TO_TUPLE(BOOST_PP_ARRAY_PUSH_BACK(BOOST_PP_TUPLE_TO_ARRAY(tuple), elem)) \
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 /**/
 #
 # endif // BOOST_PP_VARIADICS

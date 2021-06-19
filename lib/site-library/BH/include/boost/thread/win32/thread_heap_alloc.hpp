@@ -12,7 +12,11 @@
 #include <boost/throw_exception.hpp>
 #include <boost/core/no_exceptions_support.hpp>
 
+<<<<<<< HEAD
 #include <boost/detail/winapi/heap_memory.hpp>
+=======
+#include <boost/winapi/heap_memory.hpp>
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 #include <boost/config/abi_prefix.hpp>
 
@@ -22,7 +26,11 @@ namespace boost
     {
         inline void* allocate_raw_heap_memory(unsigned size)
         {
+<<<<<<< HEAD
             void* const heap_memory=detail::winapi::HeapAlloc(detail::winapi::GetProcessHeap(),0,size);
+=======
+            void* const heap_memory=winapi::HeapAlloc(winapi::GetProcessHeap(),0,size);
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
             if(!heap_memory)
             {
                 boost::throw_exception(std::bad_alloc());
@@ -32,7 +40,11 @@ namespace boost
 
         inline void free_raw_heap_memory(void* heap_memory)
         {
+<<<<<<< HEAD
             BOOST_VERIFY(detail::winapi::HeapFree(detail::winapi::GetProcessHeap(),0,heap_memory)!=0);
+=======
+            BOOST_VERIFY(winapi::HeapFree(winapi::GetProcessHeap(),0,heap_memory)!=0);
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
         }
 #if defined(BOOST_THREAD_PROVIDES_VARIADIC_THREAD) && ! defined (BOOST_NO_CXX11_RVALUE_REFERENCES)
         template<typename T,typename... Args>

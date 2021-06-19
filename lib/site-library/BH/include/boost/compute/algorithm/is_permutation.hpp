@@ -13,12 +13,21 @@
 
 #include <iterator>
 
+<<<<<<< HEAD
+=======
+#include <boost/static_assert.hpp>
+
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 #include <boost/compute/system.hpp>
 #include <boost/compute/command_queue.hpp>
 #include <boost/compute/container/vector.hpp>
 #include <boost/compute/detail/iterator_range_size.hpp>
 #include <boost/compute/algorithm/equal.hpp>
 #include <boost/compute/algorithm/sort.hpp>
+<<<<<<< HEAD
+=======
+#include <boost/compute/type_traits/is_device_iterator.hpp>
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 namespace boost {
 namespace compute {
@@ -44,6 +53,11 @@ inline bool is_permutation(InputIterator1 first1,
                            InputIterator2 last2,
                            command_queue &queue = system::default_queue())
 {
+<<<<<<< HEAD
+=======
+    BOOST_STATIC_ASSERT(is_device_iterator<InputIterator1>::value);
+    BOOST_STATIC_ASSERT(is_device_iterator<InputIterator2>::value);
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     typedef typename std::iterator_traits<InputIterator1>::value_type value_type1;
     typedef typename std::iterator_traits<InputIterator2>::value_type value_type2;
 

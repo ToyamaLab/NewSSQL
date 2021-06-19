@@ -2,7 +2,11 @@
 // ip/basic_endpoint.hpp
 // ~~~~~~~~~~~~~~~~~~~~~
 //
+<<<<<<< HEAD
 // Copyright (c) 2003-2017 Christopher M. Kohlhoff (chris at kohlhoff dot com)
+=======
+// Copyright (c) 2003-2019 Christopher M. Kohlhoff (chris at kohlhoff dot com)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 //
 // Distributed under the Boost Software License, Version 1.0. (See accompanying
 // file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
@@ -57,7 +61,11 @@ public:
 #endif
 
   /// Default constructor.
+<<<<<<< HEAD
   basic_endpoint()
+=======
+  basic_endpoint() BOOST_ASIO_NOEXCEPT
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     : impl_()
   {
   }
@@ -79,7 +87,11 @@ public:
    * @endcode
    */
   basic_endpoint(const InternetProtocol& internet_protocol,
+<<<<<<< HEAD
       unsigned short port_num)
+=======
+      unsigned short port_num) BOOST_ASIO_NOEXCEPT
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     : impl_(internet_protocol.family(), port_num)
   {
   }
@@ -87,27 +99,44 @@ public:
   /// Construct an endpoint using a port number and an IP address. This
   /// constructor may be used for accepting connections on a specific interface
   /// or for making a connection to a remote endpoint.
+<<<<<<< HEAD
   basic_endpoint(const boost::asio::ip::address& addr, unsigned short port_num)
+=======
+  basic_endpoint(const boost::asio::ip::address& addr,
+      unsigned short port_num) BOOST_ASIO_NOEXCEPT
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     : impl_(addr, port_num)
   {
   }
 
   /// Copy constructor.
+<<<<<<< HEAD
   basic_endpoint(const basic_endpoint& other)
+=======
+  basic_endpoint(const basic_endpoint& other) BOOST_ASIO_NOEXCEPT
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     : impl_(other.impl_)
   {
   }
 
 #if defined(BOOST_ASIO_HAS_MOVE) || defined(GENERATING_DOCUMENTATION)
   /// Move constructor.
+<<<<<<< HEAD
   basic_endpoint(basic_endpoint&& other)
+=======
+  basic_endpoint(basic_endpoint&& other) BOOST_ASIO_NOEXCEPT
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     : impl_(other.impl_)
   {
   }
 #endif // defined(BOOST_ASIO_HAS_MOVE) || defined(GENERATING_DOCUMENTATION)
 
   /// Assign from another endpoint.
+<<<<<<< HEAD
   basic_endpoint& operator=(const basic_endpoint& other)
+=======
+  basic_endpoint& operator=(const basic_endpoint& other) BOOST_ASIO_NOEXCEPT
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
   {
     impl_ = other.impl_;
     return *this;
@@ -115,7 +144,11 @@ public:
 
 #if defined(BOOST_ASIO_HAS_MOVE) || defined(GENERATING_DOCUMENTATION)
   /// Move-assign from another endpoint.
+<<<<<<< HEAD
   basic_endpoint& operator=(basic_endpoint&& other)
+=======
+  basic_endpoint& operator=(basic_endpoint&& other) BOOST_ASIO_NOEXCEPT
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
   {
     impl_ = other.impl_;
     return *this;
@@ -123,7 +156,11 @@ public:
 #endif // defined(BOOST_ASIO_HAS_MOVE) || defined(GENERATING_DOCUMENTATION)
 
   /// The protocol associated with the endpoint.
+<<<<<<< HEAD
   protocol_type protocol() const
+=======
+  protocol_type protocol() const BOOST_ASIO_NOEXCEPT
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
   {
     if (impl_.is_v4())
       return InternetProtocol::v4();
@@ -131,19 +168,31 @@ public:
   }
 
   /// Get the underlying endpoint in the native type.
+<<<<<<< HEAD
   data_type* data()
+=======
+  data_type* data() BOOST_ASIO_NOEXCEPT
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
   {
     return impl_.data();
   }
 
   /// Get the underlying endpoint in the native type.
+<<<<<<< HEAD
   const data_type* data() const
+=======
+  const data_type* data() const BOOST_ASIO_NOEXCEPT
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
   {
     return impl_.data();
   }
 
   /// Get the underlying size of the endpoint in the native type.
+<<<<<<< HEAD
   std::size_t size() const
+=======
+  std::size_t size() const BOOST_ASIO_NOEXCEPT
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
   {
     return impl_.size();
   }
@@ -155,75 +204,119 @@ public:
   }
 
   /// Get the capacity of the endpoint in the native type.
+<<<<<<< HEAD
   std::size_t capacity() const
+=======
+  std::size_t capacity() const BOOST_ASIO_NOEXCEPT
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
   {
     return impl_.capacity();
   }
 
   /// Get the port associated with the endpoint. The port number is always in
   /// the host's byte order.
+<<<<<<< HEAD
   unsigned short port() const
+=======
+  unsigned short port() const BOOST_ASIO_NOEXCEPT
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
   {
     return impl_.port();
   }
 
   /// Set the port associated with the endpoint. The port number is always in
   /// the host's byte order.
+<<<<<<< HEAD
   void port(unsigned short port_num)
+=======
+  void port(unsigned short port_num) BOOST_ASIO_NOEXCEPT
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
   {
     impl_.port(port_num);
   }
 
   /// Get the IP address associated with the endpoint.
+<<<<<<< HEAD
   boost::asio::ip::address address() const
+=======
+  boost::asio::ip::address address() const BOOST_ASIO_NOEXCEPT
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
   {
     return impl_.address();
   }
 
   /// Set the IP address associated with the endpoint.
+<<<<<<< HEAD
   void address(const boost::asio::ip::address& addr)
+=======
+  void address(const boost::asio::ip::address& addr) BOOST_ASIO_NOEXCEPT
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
   {
     impl_.address(addr);
   }
 
   /// Compare two endpoints for equality.
   friend bool operator==(const basic_endpoint<InternetProtocol>& e1,
+<<<<<<< HEAD
       const basic_endpoint<InternetProtocol>& e2)
+=======
+      const basic_endpoint<InternetProtocol>& e2) BOOST_ASIO_NOEXCEPT
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
   {
     return e1.impl_ == e2.impl_;
   }
 
   /// Compare two endpoints for inequality.
   friend bool operator!=(const basic_endpoint<InternetProtocol>& e1,
+<<<<<<< HEAD
       const basic_endpoint<InternetProtocol>& e2)
+=======
+      const basic_endpoint<InternetProtocol>& e2) BOOST_ASIO_NOEXCEPT
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
   {
     return !(e1 == e2);
   }
 
   /// Compare endpoints for ordering.
   friend bool operator<(const basic_endpoint<InternetProtocol>& e1,
+<<<<<<< HEAD
       const basic_endpoint<InternetProtocol>& e2)
+=======
+      const basic_endpoint<InternetProtocol>& e2) BOOST_ASIO_NOEXCEPT
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
   {
     return e1.impl_ < e2.impl_;
   }
 
   /// Compare endpoints for ordering.
   friend bool operator>(const basic_endpoint<InternetProtocol>& e1,
+<<<<<<< HEAD
       const basic_endpoint<InternetProtocol>& e2)
+=======
+      const basic_endpoint<InternetProtocol>& e2) BOOST_ASIO_NOEXCEPT
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
   {
     return e2.impl_ < e1.impl_;
   }
 
   /// Compare endpoints for ordering.
   friend bool operator<=(const basic_endpoint<InternetProtocol>& e1,
+<<<<<<< HEAD
       const basic_endpoint<InternetProtocol>& e2)
+=======
+      const basic_endpoint<InternetProtocol>& e2) BOOST_ASIO_NOEXCEPT
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
   {
     return !(e2 < e1);
   }
 
   /// Compare endpoints for ordering.
   friend bool operator>=(const basic_endpoint<InternetProtocol>& e1,
+<<<<<<< HEAD
       const basic_endpoint<InternetProtocol>& e2)
+=======
+      const basic_endpoint<InternetProtocol>& e2) BOOST_ASIO_NOEXCEPT
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
   {
     return !(e1 < e2);
   }

@@ -25,7 +25,11 @@
 // last known and checked version is 4001:
 #if (__KCC_VERSION > 4001)
 #  if defined(BOOST_ASSERT_CONFIG)
+<<<<<<< HEAD
 #     error "Unknown compiler version - please run the configure tests and report the results"
+=======
+#     error "boost: Unknown compiler version - please run the configure tests and report the results"
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 #  endif
 #endif
 

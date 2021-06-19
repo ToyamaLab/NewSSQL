@@ -252,7 +252,11 @@ namespace boost {
                  n = i - j;
              }
          private:
+<<<<<<< HEAD
              BOOST_DEDUCED_TYPENAME RandomAccessIteratorConcept::difference_type n;
+=======
+             BOOST_DEDUCED_TYPENAME BidirectionalIteratorConcept<Iterator>::difference_type n;
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
              Iterator i;
              Iterator j;
  #endif

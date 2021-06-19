@@ -658,7 +658,11 @@ namespace boost
       BOOST_SIGNALS2_SIGNAL_CLASS_NAME(BOOST_SIGNALS2_NUM_ARGS)(const combiner_type &combiner_arg = combiner_type(),
         const group_compare_type &group_compare = group_compare_type()):
         _pimpl(new impl_class(combiner_arg, group_compare))
+<<<<<<< HEAD
       {};
+=======
+      {}
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
       virtual ~BOOST_SIGNALS2_SIGNAL_CLASS_NAME(BOOST_SIGNALS2_NUM_ARGS)()
       {
       }
@@ -670,7 +674,11 @@ namespace boost
       {
         using std::swap;
         swap(_pimpl, other._pimpl);
+<<<<<<< HEAD
       };
+=======
+      }
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
       
       BOOST_SIGNALS2_SIGNAL_CLASS_NAME(BOOST_SIGNALS2_NUM_ARGS) & 
         operator=(BOOST_SIGNALS2_SIGNAL_CLASS_NAME(BOOST_SIGNALS2_NUM_ARGS) && rhs)

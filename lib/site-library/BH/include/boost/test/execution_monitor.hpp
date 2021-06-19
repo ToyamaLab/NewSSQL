@@ -111,7 +111,12 @@ namespace boost {
 ///
 /// @section DesignRationale Design Rationale
 ///
+<<<<<<< HEAD
 /// The Execution Monitor design assumes that it can be used when no (or almost no) memory available. Also the Execution Monitor is intended to be portable to as many platforms as possible.
+=======
+/// The Execution Monitor design assumes that it can be used when no (or almost no) memory available. Also the Execution Monitor
+/// is intended to be portable to as many platforms as possible.
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 ///
 /// @section UserGuide User's guide
 /// The Execution Monitor is designed to solve the problem of executing potentially dangerous function that may result in any number of error conditions,
@@ -237,7 +242,11 @@ protected:
 /// this class never allocates any memory and assumes that strings it refers to are either some constants or live in a some kind of persistent (preallocated) memory.
 // ************************************************************************** //
 
+<<<<<<< HEAD
 class BOOST_TEST_DECL execution_exception {
+=======
+class BOOST_SYMBOL_VISIBLE execution_exception {
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     typedef boost::unit_test::const_string const_string;
 public:
     /// These values are sometimes used as program return codes.
@@ -337,9 +346,15 @@ public:
 
     ///  Specifies the seconds that elapse before a timer_error occurs.
     ///
+<<<<<<< HEAD
     /// The @em p_timeout property is an integer timeout (in seconds) for monitored function execution. Use this parameter to monitor code with possible deadlocks
     /// or indefinite loops. This feature is only available for some operating systems (not yet Microsoft Windows).
     unit_test::readwrite_property<unsigned>  p_timeout;
+=======
+    /// The @em p_timeout property is an integer timeout (in microseconds) for monitored function execution. Use this parameter to monitor code with possible deadlocks
+    /// or infinite loops. This feature is only available for some operating systems (not yet Microsoft Windows).
+    unit_test::readwrite_property<unsigned long int>  p_timeout;
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
     ///  Should monitor use alternative stack for the signal catching.
     ///
@@ -515,8 +530,17 @@ enum masks {
     BOOST_FPE_ALL       = MCW_EM,
 
 #elif !defined(BOOST_TEST_FPE_SUPPORT_WITH_GLIBC_EXTENSIONS__)/* *** */
+<<<<<<< HEAD
     BOOST_FPE_ALL       = BOOST_FPE_OFF,
 
+=======
+    BOOST_FPE_DIVBYZERO = BOOST_FPE_OFF,
+    BOOST_FPE_INEXACT   = BOOST_FPE_OFF,
+    BOOST_FPE_INVALID   = BOOST_FPE_OFF,
+    BOOST_FPE_OVERFLOW  = BOOST_FPE_OFF,
+    BOOST_FPE_UNDERFLOW = BOOST_FPE_OFF,
+    BOOST_FPE_ALL       = BOOST_FPE_OFF,
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 #else /* *** */
 
 #if defined(FE_DIVBYZERO)

@@ -1,6 +1,10 @@
 /*==============================================================================
     Copyright (c) 2001-2011 Joel de Guzman
     Copyright (c) 2010      Bryce Lelbach
+<<<<<<< HEAD
+=======
+    Copyright (c) 2014      Tomoki Imai
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
     Distributed under the Boost Software License, Version 1.0. (See accompanying
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
@@ -126,6 +130,7 @@ namespace boost { namespace spirit
     inline Iterator get_line_start(Iterator lower_bound, Iterator current)
     {
         Iterator latest = lower_bound;
+<<<<<<< HEAD
       
         for (Iterator i = lower_bound; i != current; ++i) {
           switch (*i) {
@@ -137,6 +142,32 @@ namespace boost { namespace spirit
       
         return latest;
     }
+=======
+        bool prev_was_newline = false;
+        for (Iterator i = lower_bound; i != current; ++i) {
+            if (prev_was_newline) {
+                latest = i;
+            }
+            prev_was_newline = (*i == '\r') || (*i == '\n');
+        }
+        if (prev_was_newline) {
+            latest = current;
+        }
+        return latest;
+    }
+
+    template <class Iterator>
+    inline Iterator get_line_end(Iterator current, Iterator upper_bound)
+    {
+        for (Iterator i = current; i != upper_bound; ++i) {
+            if ((*i == '\n') || (*i == '\r')) {
+                return i;
+            }
+        }
+        return upper_bound;
+    }
+
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     
     template <class Iterator>
     inline iterator_range<Iterator>
@@ -145,11 +176,15 @@ namespace boost { namespace spirit
                      Iterator upper_bound)
     {
         Iterator first = get_line_start(lower_bound, current);
+<<<<<<< HEAD
         Iterator last = get_line_start(current, upper_bound);
       
         if (last == current)
           last = upper_bound;
       
+=======
+        Iterator last = get_line_end(current, upper_bound);
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
         return iterator_range<Iterator>(first, last);
     }
     

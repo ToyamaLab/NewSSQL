@@ -24,4 +24,8 @@ Author: Patrick O. Perry [aut, cph, cre],
 Maintainer: Patrick O. Perry <patperry@gmail.com>
 Repository: CRAN
 Date/Publication: 2018-05-24 17:09:15 UTC
+<<<<<<< HEAD
 Built: R 3.5.1; x86_64-apple-darwin17.6.0; 2018-08-18 07:12:00 UTC; unix
+=======
+Built: R 4.0.2; x86_64-apple-darwin17.7.0; 2020-08-27 07:30:24 UTC; unix
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce

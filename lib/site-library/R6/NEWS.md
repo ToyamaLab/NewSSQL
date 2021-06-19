@@ -1,9 +1,48 @@
+<<<<<<< HEAD
 R6 2.2.2
 ========
 
 * Fixed [#108](https://github.com/wch/R6/issues/108): When an object with a `super` object and an active binding in the `super` object was cloned, the new object's `super` object did not get the active binding -- it was a normal function.
 
 * Fixed [#119](https://github.com/wch/R6/issues/119): When a class had two levels of inheritance, an instance of that class's `super` object could contain methods that had an incorrect enclosing environment.
+=======
+R6 2.4.1
+========
+
+* Cloning active bindings previously relied on buggy behavior in `as.list.environment()`, which would return the active binding's function definition rather than the value from invoking the function. In R 4.0, the behavior will chang so that it returns the value. R6 now no longer relies on this buggy behavior. ([#192](https://github.com/r-lib/R6/pull/192))
+
+R6 2.4.0
+========
+
+* Fixed [#146](https://github.com/r-lib/R6/issues/146): Finalizers can now be private methods. ([#181](https://github.com/r-lib/R6/pull/181))
+
+* Fixed [#167](https://github.com/r-lib/R6/issues/167): Finalizers now run on cloned objects. ([#180](https://github.com/r-lib/R6/pull/180))
+
+R6 2.3.0
+========
+
+* Vignettes are no longer included as part of the source package because of their large size. Documentation is now at https://r6.r-lib.org/.
+
+* Fixed [#125](https://github.com/r-lib/R6/issues/125): The `print.R6` method now always returns the object that was passed to it.
+
+* Fixed [#155](https://github.com/r-lib/R6/issues/155): In some cases, a cloned object's methods could refer to the wrong `super` object. ([#156](https://github.com/r-lib/R6/pull/156))
+
+* Fixed [#94](https://github.com/r-lib/R6/issues/94), [#133](https://github.com/r-lib/R6/issues/133): When cloning an object which contained a function that is *not* a method, the corresponding function in the new object would have its environment changed, as though it were a method. Now it no longer has a changed environment. ([#156](https://github.com/r-lib/R6/pull/156))
+
+* Fixed [#121](https://github.com/r-lib/R6/issues/121): If a `finalize` method was present, it would prevent objects passed to `initialize` from getting GC'd.
+
+* Fixed [#158](https://github.com/r-lib/R6/issues/158): If a `$set` method of an R6 generator object is given the value `NULL`, it previously removed the named item. Now it adds the named item with the value `NULL`.
+
+* Fixed [#159](https://github.com/r-lib/R6/issues/159): Printing an R6 object containing a large vector was slow.
+
+
+R6 2.2.2
+========
+
+* Fixed [#108](https://github.com/r-lib/R6/issues/108): When an object with a `super` object and an active binding in the `super` object was cloned, the new object's `super` object did not get the active binding -- it was a normal function.
+
+* Fixed [#119](https://github.com/r-lib/R6/issues/119): When a class had two levels of inheritance, an instance of that class's `super` object could contain methods that had an incorrect enclosing environment.
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 
 R6 2.2.1
@@ -16,11 +55,19 @@ R6 2.2.1
 R6 2.2.0
 ========
 
+<<<<<<< HEAD
 * Classes can define finalizers explicitly, by defining a public `finalize` method. ([#92](https://github.com/wch/R6/issues/92), [#93](https://github.com/wch/R6/pull/93))
 
 * Added function `is.R6()` and `is.R6Class()`. ([#95](https://github.com/wch/R6/pull/95))
 
 * Fixed [#96](https://github.com/wch/R6/issues/96): R6 now avoids using `$` and `[[` after the class has been assigned to the object. This allows the user to provide their own methods for `$` and `[[` without causing problems to R6's operation.
+=======
+* Classes can define finalizers explicitly, by defining a public `finalize` method. ([#92](https://github.com/r-lib/R6/issues/92), [#93](https://github.com/r-lib/R6/pull/93))
+
+* Added function `is.R6()` and `is.R6Class()`. ([#95](https://github.com/r-lib/R6/pull/95))
+
+* Fixed [#96](https://github.com/r-lib/R6/issues/96): R6 now avoids using `$` and `[[` after the class has been assigned to the object. This allows the user to provide their own methods for `$` and `[[` without causing problems to R6's operation.
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 R6 2.1.3
 ========

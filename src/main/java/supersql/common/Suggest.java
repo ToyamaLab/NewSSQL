@@ -109,7 +109,10 @@ public class Suggest {
 	    		//no such column: w.namee
 	    		//no such table: sa
 		    	error_tableName_or_columnName = error.substring(error.lastIndexOf(":")+1).trim();
+	    	}else if(driver.contains("sqlserver")){
+	    		//TODO
 	    	}
+	    	
 
 	    	if(error_tableName_or_columnName.contains(".")){
 	    		error_tableAlias = error_tableName_or_columnName.substring(0,error_tableName_or_columnName.indexOf("."));

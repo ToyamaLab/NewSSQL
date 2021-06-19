@@ -265,6 +265,15 @@ public:
    */
   static bool is_main_thread();
   
+<<<<<<< HEAD
+=======
+  /** @brief MPI version.
+   *
+   * Returns a pair with the version and sub-version number.
+   */
+  static std::pair<int, int> version();
+
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 private:
   /// Whether this environment object called MPI_Init
   bool i_initialized;

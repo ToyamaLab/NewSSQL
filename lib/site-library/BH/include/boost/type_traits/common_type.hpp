@@ -13,6 +13,13 @@
 #include <boost/type_traits/decay.hpp>
 #include <boost/type_traits/declval.hpp>
 #include <boost/detail/workaround.hpp>
+<<<<<<< HEAD
+=======
+#include <boost/type_traits/is_complete.hpp>
+#include <boost/type_traits/is_void.hpp>
+#include <boost/type_traits/is_array.hpp>
+#include <boost/static_assert.hpp>
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 #if defined(BOOST_NO_CXX11_DECLTYPE)
 #include <boost/type_traits/detail/common_type_impl.hpp>
@@ -75,6 +82,10 @@ struct common_type: common_type<typename common_type<T1, T2>::type, T3, T4, T5, 
 
 template<class T> struct common_type<T>: boost::decay<T>
 {
+<<<<<<< HEAD
+=======
+   BOOST_STATIC_ASSERT_MSG(::boost::is_complete<T>::value || ::boost::is_void<T>::value || ::boost::is_array<T>::value, "Arguments to common_type must both be complete types");
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 };
 
 // two arguments
@@ -138,6 +149,11 @@ template<class T1, class T2> struct common_type_decay_helper<T1, T2, T1, T2>: co
 
 template<class T1, class T2> struct common_type<T1, T2>: type_traits_detail::common_type_decay_helper<T1, T2>
 {
+<<<<<<< HEAD
+=======
+   BOOST_STATIC_ASSERT_MSG(::boost::is_complete<T1>::value || ::boost::is_void<T1>::value || ::boost::is_array<T1>::value, "Arguments to common_type must both be complete types");
+   BOOST_STATIC_ASSERT_MSG(::boost::is_complete<T2>::value || ::boost::is_void<T2>::value || ::boost::is_array<T2>::value, "Arguments to common_type must both be complete types");
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 };
 
 } // namespace boost

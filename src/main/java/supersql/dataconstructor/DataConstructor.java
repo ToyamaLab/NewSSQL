@@ -5,16 +5,15 @@ import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
-import java.lang.reflect.Array;
 import java.util.*;
-import java.util.regex.Pattern;
 
-//import jdk.nashorns.internal.objects.Global;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
+import supersql.codegenerator.AttributeItem;
+import supersql.codegenerator.Debug;
 import supersql.common.GlobalEnv;
 import supersql.common.Log;
 import supersql.db.ConnectDB;
@@ -22,8 +21,6 @@ import supersql.db.GetFromDB;
 import supersql.extendclass.ExtList;
 import supersql.extendclass.QueryBuffer;
 import supersql.parser.*;
-
-import javax.xml.bind.SchemaOutputResolver;
 
 public class DataConstructor {
 
@@ -242,8 +239,8 @@ public class DataConstructor {
 		GlobalEnv.afterSchemaToData = System.currentTimeMillis();
 		data_info = sep_data_info;
 
-		Log.out("## Result ##");
-		Log.out(data_info);
+		Log.info("## Result ##");
+		Log.info(data_info);
 	}
 
 //	private ExtList schemaToDataFromApi(Start_Parse parser, MakeSQL msql,
@@ -356,21 +353,19 @@ public class DataConstructor {
 			//make nested_tuples for each trees from forest
 			if(GlobalEnv.isMultiQuery()){
 //				System.out.println("isCtab:::"+Preprocessor.getCtabList());
-				GlobalEnv.headSet = new HashMap<>();
 				for (int i = 0; i < GlobalEnv.sameTree_set.size(); i++) {
 					ArrayList<QueryBuffer> qb = GlobalEnv.sameTree_set.get(i);
 					for (int j = 0; j < qb.size(); j++) {
 						QueryBuffer q = qb.get(j);
-//						q.showDebug();
 						if(Preprocessor.isCtab()){
-//							Log.info("Making All Pattern");
+							//Log.info("Making All Pattern");
 							Long makeAllPatternStart = System.currentTimeMillis();
 							q.makeAllPattern();
 							Long makeAllPatternEnd = System.currentTimeMillis();
 //							Log.info("Make All Pattern Time taken: " + (makeAllPatternEnd - makeAllPatternStart) + "ms");
 						}
 						ExtList flatResult = new ExtList(q.getResult());
-//						q.showDebug();
+//						q.showDebug("before: ");
 						ExtList sep_bak = new ExtList();
 						copySepSch(q.sep_sch, sep_bak);
 //						Log.info("Making Tree");
@@ -379,7 +374,7 @@ public class DataConstructor {
 						Long makeTreeEnd = System.currentTimeMillis();
 //						Log.info("Make Tree Time taken: " + (makeTreeEnd - makeTreeStart) + "ms");
 						q.sep_sch = sep_bak;
-//						q.showDebug();
+//						q.showDebug("after: ");
 					}
 				}
 				GlobalEnv.sameForest_set = new ArrayList<>();
@@ -406,7 +401,6 @@ public class DataConstructor {
 					QueryBuffer resultQB = qb.get(0);
 //					System.out.println();
 //					Log.info("Merging From This QueryBuffer");
-//					resultQB.showDebug();
 					for (int j = 1; j < qb.size(); j++) {
 						QueryBuffer q = qb.get(j);
 //						System.out.println();
@@ -419,7 +413,6 @@ public class DataConstructor {
 //						Log.info("\tEnd forest!!!");
 //						Log.info("\tTime taken: " + (mqbEnd - mqbStart) + "ms");
 //						System.out.println("resultQB");
-//						resultQB.showDebug();
 					}
 					last.add(resultQB);
 //					System.out.println("++++++");
@@ -436,10 +429,9 @@ public class DataConstructor {
 				}
 //				System.out.println("sep_data_info::"+sep_data_info);
 
-			}else {
+			} else {
 				ExtList result = new ExtList();
-
-				if(GlobalEnv.isNoForestDiv() || !isForest){
+				if(GlobalEnv.isNoForestDiv() || sep_sch.size() == 1 || !isForest){
 					if(GlobalEnv.isOrderFrom()){
 						for (ArrayList<QueryBuffer> qb: GlobalEnv.qbs){
 							for(QueryBuffer q: qb){
@@ -452,8 +444,7 @@ public class DataConstructor {
 					}else {
 						result = makeTree(sep_sch, (ExtList) sep_data_info.get(0));
 					}
-
-				}else {
+				} else {
 					if(GlobalEnv.isMultiGB() || GlobalEnv.isOrderFrom()) {
 						for (ArrayList<QueryBuffer> qb: GlobalEnv.qbs){
 							for(QueryBuffer q: qb){
@@ -485,6 +476,7 @@ public class DataConstructor {
 		} else {
 			getTuples(sep_sch, sep_data_info);
 			start = System.nanoTime();
+			Log.info("I'm in not msql ");
 			sep_data_info = MakeTree(qd.getSchema());
 //			 System.out.println(sep_data_info);
 			end = System.nanoTime();
@@ -641,8 +633,13 @@ public class DataConstructor {
 
 		tmp_sep_sch_new.add(tmp_sep_sch1);
 		ExtList tmp_sep_sch1_bak = new ExtList();
+		ExtList tmp_sep_sch_new_bak = new ExtList();
 		copySepSch(tmp_sep_sch1, tmp_sep_sch1_bak);
+		copySepSch(tmp_sep_sch_new, tmp_sep_sch_new_bak);
 		for(Map.Entry<ExtList, ExtList> entry: dep_set.entrySet()){
+			ExtList tmp_sep_sch_new_restore = new ExtList();
+			copySepSch(tmp_sep_sch_new_bak, tmp_sep_sch_new_restore);
+			tmp_sep_sch_new = tmp_sep_sch_new_restore;
 			ExtList newValue = makeTree(tmp_sep_sch_new, entry.getValue());
 			dep_set.put(entry.getKey(), newValue);
 		}
@@ -860,6 +857,10 @@ public class DataConstructor {
 
 	private ExtList[] getTuples(ExtList sep_sch, ExtList sep_data_info) {
 
+		for(int i=0; i < sep_sch.size(); i++){
+			Log.info("getsep_sch "+ sep_sch.get(i));
+			Log.info("getsep_data_info "+ sep_data_info.get(i));
+		}
 		long start, end;
 		start = System.nanoTime();
 
@@ -915,6 +916,9 @@ public class DataConstructor {
 
 	}
 
+	/*
+	[0, [1], [2], 3]を[[0, [1], 3], [0, [2], 3]]に分割する
+	 */
 	private ExtList divideSepSch(ExtList list){
 		ExtList sameList = new ExtList();
 		ExtList result = new ExtList();
@@ -933,7 +937,7 @@ public class DataConstructor {
 				sameList.add(factor);
 				if(result.size() > 0){
 					for (int j = 0; j < result.size(); j++) {
-						((ExtList)result.get(j)).add(factor);
+						((ExtList)result.get(j)).add(Integer.parseInt(factor.toString()));
 					}
 				}
 			}
@@ -978,6 +982,11 @@ public class DataConstructor {
 //		sep.add(resultss);
 		retQB = new QueryBuffer(resultss.unnest());
 		retQB.sep_sch = resultss;
+		// attsを混ぜる
+		HashMap<Integer, AttributeItem> mergedAtts = new HashMap();
+		mergedAtts.putAll(qb1.getAtts());
+		mergedAtts.putAll(qb2.getAtts());
+		retQB.setAtts(mergedAtts);
 
 		ExtList synthesizedResult = new ExtList();
 		ExtList attributeList = new ExtList();
@@ -992,8 +1001,8 @@ public class DataConstructor {
 				//同じ属性番号探し
 		for (int j = 0; j < compSchf.size(); j++) {
 			for (int k = 0; k < qb1.getSchf().size(); k++) {
-				if((int)compSchf.get(j) == (int)((ExtList)qb1.getSchf()).get(k)){
-					sameAttNum.add((int)compSchf.get(j));
+				if(Integer.parseInt(compSchf.get(j).toString()) == Integer.parseInt(((ExtList) qb1.getSchf()).get(k).toString())){
+					sameAttNum.add(Integer.parseInt(compSchf.get(j).toString()));
 				}
 			}
 		}
@@ -1018,7 +1027,7 @@ public class DataConstructor {
 				}else{
 					//全部同じだったら合成
 					ExtList tmpResult = new ExtList();
-					int max = Math.max((int)qb1.getSchf().get(qb1.getSchf().size() - 1), (int)compSchf.get(compSchf.size() - 1));
+					int max = Math.max(Integer.parseInt(qb1.getSchf().get(qb1.getSchf().size() - 1).toString()), Integer.parseInt(compSchf.get(compSchf.size() - 1).toString()));
 //								System.out.println("max:"+max);
 //								System.out.println("qb.scfh:"+qb.getSchf());
 //								System.out.println("qb.result:"+qb.getResult());
@@ -1054,7 +1063,7 @@ public class DataConstructor {
 
 	private ExtList getFromDB(MakeSQL msql, ExtList sep_sch,
 			ExtList sep_data_info) {
-
+		System.out.println("sep_sch: " + sep_sch.get(0));
 		// MakeSQL
 		long start, end;
 		start = System.nanoTime();
@@ -1116,43 +1125,58 @@ public class DataConstructor {
 //			System.out.println();
 			Log.info("Make SQL Time:" + (makesql_end - makesql_start) + "ms");
 			for (int i = 0; i < SQL_queries.size(); i++) {
-				Log.info("Query is : " + SQL_queries.get(i));
+				Log.out("Query is : " + SQL_queries.get(i));
 			}
 		} else {
 			//if the query contains aggregations, divide query.
 			makesql_start = System.currentTimeMillis();
-			if(!isForest){
-				ExtList result = divideSepSch(sep_sch);
-//				System.out.println("result:::"+result);
+			for (int i = 0; i < sep_sch.size(); i++) {
+				ExtList result;
 				ArrayList<QueryBuffer> qb = new ArrayList<>();
-				for (int j = 0; j < result.size(); j++) {
+				boolean singleValue = false;
+				if (sep_sch.get(i) instanceof ExtList) {
+					result = divideSepSch(sep_sch.getExtList(i));
+				} else {
 					ExtList tmp = new ExtList();
-					tmp.add(result.get(j));
-//					System.out.println("sep_sch is "+result.get(j));
-					qb = new ArrayList<>(msql.makeMultipleSQL(tmp));
-					for (QueryBuffer q : qb) {
-						q.forestNum = 0;
-						q.treeNum = 0;
-					}
-					GlobalEnv.qbs.add(qb);
+					final String att = sep_sch.get(i).toString();
+					tmp.add(sep_sch.get(i));
+					result = divideSepSch(tmp);
+					// 集約じゃなかったら
+					if (Preprocessor.getAggregateList().stream().filter(s -> s.toString().split(" ")[0].equals(att)).count() == 0) singleValue = true;
 				}
-			}else {
-				for (int i = 0; i < treeNum; i++) {
-					ExtList result = divideSepSch((ExtList) sep_sch.get(i));
-					ArrayList<QueryBuffer> qb = new ArrayList<>();
-					for (int j = 0; j < result.size(); j++) {
-						ExtList tmp = new ExtList();
-						tmp.add(result.get(j));
-//					System.out.println("sep_sch is "+result.get(j));
-						qb = new ArrayList<>(msql.makeMultipleSQL(tmp));
+				/*
+				 最も低レベルの場所に属性 or 文字列が置いてあったら特殊な場合として扱う
+				 sep_schが[0, 1, [2]]みたいな時, divideすると[[0]]みたいなのができるので
+				 そう言う時は[0]を渡すようにする。なおこの場合の0, 1は本来しない置き方(文字列 or 集約のみ)な気がします
+				 */
+				if (result.size() == 1 && result.get(0) instanceof ExtList) {
+					if (result.getExtList(0).size() == 1 && !(result.getExtList(0).get(0) instanceof ExtList)) {
+						qb = new ArrayList<>(msql.makeMultipleSQL(result.getExtList(0)));
+						
+						if (singleValue) {
+							ExtList buf = new ExtList();
+							buf.add(sep_sch.get(i));
+							qb.get(0).sep_sch = buf;
+						}
 						for (QueryBuffer q : qb) {
 							q.forestNum = i;
 						}
 						GlobalEnv.qbs.add(qb);
+						continue;
 					}
 				}
+				for (int j = 0; j < result.size(); j++) {
+					ExtList tmp = new ExtList();
+					ExtList n = result.getExtList(j);
+					tmp.add(n);
+					qb = new ArrayList<>(msql.makeMultipleSQL(tmp));
+					for (QueryBuffer q : qb) {
+						q.forestNum = i;
+						q.treeNum = i;
+					}
+					GlobalEnv.qbs.add(qb);
+				}
 			}
-//			System.out.println("sep_sch_final:::"+sep_sch);
 		}
 		ArrayList<ArrayList<QueryBuffer>> fromGroupQBS = new ArrayList<>();
 		if(GlobalEnv.isMultiGB()){
@@ -1387,12 +1411,13 @@ public class DataConstructor {
 		else{
 			for (ArrayList<QueryBuffer> qb: GlobalEnv.qbs) {
 				for (QueryBuffer q: qb) {
-//					q.showDebug();
+//					q.showDebug("getFromDB: ");
 				}
 			}
 		}
 		GlobalEnv.beforeMakeTree = System.currentTimeMillis();
 		if(GlobalEnv.isMultiQuery()) {
+			GlobalEnv.headSet = new HashMap<>();
 //			System.out.println();
 //			Log.info("Merging Same Tree");
 			Long mergeTreeStart = System.currentTimeMillis();
@@ -1431,7 +1456,15 @@ public class DataConstructor {
 //					System.out.println();
 //					Log.info("Merge Start From This QueryBuffer!!!");
 //					qb_result.showDebug();
+					if(Preprocessor.isCtab()) qb_result.makeAllPattern();
 					for (int j = 1; j < tree.size(); j++) {
+						if(Preprocessor.isCtab()){
+//							Log.info("Making All Pattern");
+							Long makeAllPatternStart = System.currentTimeMillis();
+							tree.get(j).makeAllPattern();
+							Long makeAllPatternEnd = System.currentTimeMillis();
+//							Log.info("Make All Pattern Time taken: " + (makeAllPatternEnd - makeAllPatternStart) + "ms");
+						}
 //						System.out.println();
 //						Log.info("\tMerging tree!!!");
 //						tree.get(j).showDebug("\t");
@@ -1443,7 +1476,7 @@ public class DataConstructor {
 					qb_result.treeNum = tree.get(0).treeNum;
 					qb_result.forestNum = tree.get(0).forestNum;
 //					System.out.println("qb_result");
-//					qb_result.showDebug();
+//					qb_result.showDebug("tree_merged: ");
 //					System.out.println("--------");
 					GlobalEnv.sameTree_set.remove(i);
 					ArrayList<QueryBuffer> tmp = new ArrayList<>();
@@ -1499,7 +1532,6 @@ public class DataConstructor {
 		start = System.nanoTime();
 
 		TreeGenerator tg = new TreeGenerator();
-
 		sep_data_info = tg.makeTree(sep_sch, sep_data_info);
 
 		//terui start

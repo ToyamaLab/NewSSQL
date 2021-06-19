@@ -2,7 +2,11 @@
 // detail/handler_alloc_helpers.hpp
 // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 //
+<<<<<<< HEAD
 // Copyright (c) 2003-2017 Christopher M. Kohlhoff (chris at kohlhoff dot com)
+=======
+// Copyright (c) 2003-2019 Christopher M. Kohlhoff (chris at kohlhoff dot com)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 //
 // Distributed under the Boost Software License, Version 1.0. (See accompanying
 // file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
@@ -194,7 +198,11 @@ struct get_hook_allocator<Handler, std::allocator<T> >
   } \
   /**/
 
+<<<<<<< HEAD
 #define BOOST_ASIO_DEFINE_HANDLER_ALLOCATOR_PTR(op) \
+=======
+#define BOOST_ASIO_DEFINE_TAGGED_HANDLER_ALLOCATOR_PTR(purpose, op) \
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
   struct ptr \
   { \
     const Alloc* a; \
@@ -207,9 +215,16 @@ struct get_hook_allocator<Handler, std::allocator<T> >
     static op* allocate(const Alloc& a) \
     { \
       typedef typename ::boost::asio::detail::get_recycling_allocator< \
+<<<<<<< HEAD
         Alloc>::type recycling_allocator_type; \
       BOOST_ASIO_REBIND_ALLOC(recycling_allocator_type, op) a1( \
             ::boost::asio::detail::get_recycling_allocator<Alloc>::get(a)); \
+=======
+        Alloc, purpose>::type recycling_allocator_type; \
+      BOOST_ASIO_REBIND_ALLOC(recycling_allocator_type, op) a1( \
+            ::boost::asio::detail::get_recycling_allocator< \
+              Alloc, purpose>::get(a)); \
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
       return a1.allocate(1); \
     } \
     void reset() \
@@ -222,9 +237,16 @@ struct get_hook_allocator<Handler, std::allocator<T> >
       if (v) \
       { \
         typedef typename ::boost::asio::detail::get_recycling_allocator< \
+<<<<<<< HEAD
           Alloc>::type recycling_allocator_type; \
         BOOST_ASIO_REBIND_ALLOC(recycling_allocator_type, op) a1( \
               ::boost::asio::detail::get_recycling_allocator<Alloc>::get(*a)); \
+=======
+          Alloc, purpose>::type recycling_allocator_type; \
+        BOOST_ASIO_REBIND_ALLOC(recycling_allocator_type, op) a1( \
+              ::boost::asio::detail::get_recycling_allocator< \
+                Alloc, purpose>::get(*a)); \
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
         a1.deallocate(static_cast<op*>(v), 1); \
         v = 0; \
       } \
@@ -232,6 +254,14 @@ struct get_hook_allocator<Handler, std::allocator<T> >
   } \
   /**/
 
+<<<<<<< HEAD
+=======
+#define BOOST_ASIO_DEFINE_HANDLER_ALLOCATOR_PTR(op) \
+  BOOST_ASIO_DEFINE_TAGGED_HANDLER_ALLOCATOR_PTR( \
+      ::boost::asio::detail::thread_info_base::default_tag, op ) \
+  /**/
+
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 #include <boost/asio/detail/pop_options.hpp>
 
 #endif // BOOST_ASIO_DETAIL_HANDLER_ALLOC_HELPERS_HPP

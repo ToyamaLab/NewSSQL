@@ -26,7 +26,11 @@ class atomic_count
 {
 public:
 
+<<<<<<< HEAD
     explicit atomic_count( long v ): value_( v )
+=======
+    explicit atomic_count( long v ): value_( static_cast< std::int_least32_t >( v ) )
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     {
     }
 

@@ -41,4 +41,29 @@
 #undef BOOST_TT_TRAIT_OP
 #undef BOOST_TT_FORBIDDEN_IF
 
+<<<<<<< HEAD
+=======
+#if defined(BOOST_TT_HAS_ACCURATE_BINARY_OPERATOR_DETECTION)
+
+namespace boost {
+
+   template <class R>
+   struct has_pre_increment<bool, R> : public false_type {};
+   template <>
+   struct has_pre_increment<bool, boost::binary_op_detail::dont_care> : public false_type {};
+   template <>
+   struct has_pre_increment<bool, void> : public false_type {};
+
+   template <class R>
+   struct has_pre_increment<bool&, R> : public false_type {};
+   template <>
+   struct has_pre_increment<bool&, boost::binary_op_detail::dont_care> : public false_type {};
+   template <>
+   struct has_pre_increment<bool&, void> : public false_type {};
+
+}
+
+#endif
+
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 #endif

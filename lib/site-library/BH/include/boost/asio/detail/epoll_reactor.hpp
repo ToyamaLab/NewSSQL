@@ -2,7 +2,11 @@
 // detail/epoll_reactor.hpp
 // ~~~~~~~~~~~~~~~~~~~~~~~~
 //
+<<<<<<< HEAD
 // Copyright (c) 2003-2017 Christopher M. Kohlhoff (chris at kohlhoff dot com)
+=======
+// Copyright (c) 2003-2019 Christopher M. Kohlhoff (chris at kohlhoff dot com)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 //
 // Distributed under the Boost Software License, Version 1.0. (See accompanying
 // file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
@@ -32,6 +36,13 @@
 #include <boost/asio/detail/wait_op.hpp>
 #include <boost/asio/execution_context.hpp>
 
+<<<<<<< HEAD
+=======
+#if defined(BOOST_ASIO_HAS_TIMERFD)
+# include <sys/timerfd.h>
+#endif // defined(BOOST_ASIO_HAS_TIMERFD)
+
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 #include <boost/asio/detail/push_options.hpp>
 
 namespace boost {

@@ -10,13 +10,21 @@
 //
 //  boost/current_function.hpp - BOOST_CURRENT_FUNCTION
 //
+<<<<<<< HEAD
 //  Copyright (c) 2002 Peter Dimov and Multi Media Ltd.
+=======
+//  Copyright 2002-2018 Peter Dimov
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 //
 //  Distributed under the Boost Software License, Version 1.0.
 //  See accompanying file LICENSE_1_0.txt or copy at
 //  http://www.boost.org/LICENSE_1_0.txt
 //
+<<<<<<< HEAD
 //  http://www.boost.org/libs/assert/current_function.html
+=======
+//  http://www.boost.org/libs/assert
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 //
 
 namespace boost
@@ -32,7 +40,11 @@ inline void current_function_helper()
 
 # define BOOST_CURRENT_FUNCTION "(unknown)"
 
+<<<<<<< HEAD
 #elif defined(__GNUC__) || (defined(__MWERKS__) && (__MWERKS__ >= 0x3000)) || (defined(__ICC) && (__ICC >= 600)) || defined(__ghs__)
+=======
+#elif defined(__GNUC__) || (defined(__MWERKS__) && (__MWERKS__ >= 0x3000)) || (defined(__ICC) && (__ICC >= 600)) || defined(__ghs__) || defined(__clang__)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 # define BOOST_CURRENT_FUNCTION __PRETTY_FUNCTION__
 

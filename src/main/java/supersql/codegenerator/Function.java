@@ -25,6 +25,10 @@ public class Function extends Operand {
 		Args.add(fa);
 	}
 
+	public void removeArg() {
+		Args.remove(Args.size()-1);
+	}
+	
 	//taji added
 	public FuncArg getArg(int i) {
 		return Args.get(i);

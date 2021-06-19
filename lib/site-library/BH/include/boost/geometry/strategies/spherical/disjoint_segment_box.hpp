@@ -1,6 +1,10 @@
 // Boost.Geometry
 
+<<<<<<< HEAD
 // Copyright (c) 2017 Oracle and/or its affiliates.
+=======
+// Copyright (c) 2017-2019 Oracle and/or its affiliates.
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 // Contributed and/or modified by Vissarion Fysikopoulos, on behalf of Oracle
 // Contributed and/or modified by Adam Wulkiewicz, on behalf of Oracle
@@ -29,8 +33,18 @@
 #include <boost/geometry/algorithms/detail/assign_indexed_point.hpp>
 #include <boost/geometry/algorithms/detail/disjoint/segment_box.hpp>
 
+<<<<<<< HEAD
 #include <boost/geometry/strategies/spherical/azimuth.hpp>
 #include <boost/geometry/strategies/disjoint.hpp>
+=======
+// TODO: spherical_point_box currently defined in the same file as cartesian
+#include <boost/geometry/strategies/cartesian/point_in_box.hpp>
+#include <boost/geometry/strategies/disjoint.hpp>
+#include <boost/geometry/strategies/normalize.hpp>
+#include <boost/geometry/strategies/spherical/azimuth.hpp>
+#include <boost/geometry/strategies/spherical/disjoint_box_box.hpp>
+
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 namespace boost { namespace geometry { namespace strategy { namespace disjoint
 {
@@ -41,6 +55,7 @@ namespace boost { namespace geometry { namespace strategy { namespace disjoint
 // other strategies that are used are intersection and covered_by strategies.
 struct segment_box_spherical
 {
+<<<<<<< HEAD
     template <typename Segment, typename Box>
     struct point_in_geometry_strategy
         : services::default_strategy
@@ -57,6 +72,13 @@ struct segment_box_spherical
         typedef typename point_in_geometry_strategy<Segment, Box>::type strategy_type;
 
         return strategy_type();
+=======
+    typedef covered_by::spherical_point_box disjoint_point_box_strategy_type;
+
+    static inline disjoint_point_box_strategy_type get_disjoint_point_box_strategy()
+    {
+        return disjoint_point_box_strategy_type();
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     }
 
     template <typename Segment, typename Box>
@@ -67,7 +89,17 @@ struct segment_box_spherical
         geometry::strategy::azimuth::spherical<CT> azimuth_strategy;
 
         return geometry::detail::disjoint::disjoint_segment_box_sphere_or_spheroid
+<<<<<<< HEAD
                 <spherical_equatorial_tag>::apply(segment, box, azimuth_strategy);
+=======
+                <
+                    spherical_equatorial_tag
+                >::apply(segment, box,
+                         azimuth_strategy,
+                         strategy::normalize::spherical_point(),
+                         strategy::covered_by::spherical_point_box(),
+                         strategy::disjoint::spherical_box_box());
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     }
 };
 

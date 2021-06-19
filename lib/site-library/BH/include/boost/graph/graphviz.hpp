@@ -27,6 +27,10 @@
 #include <boost/graph/dll_import_export.hpp>
 #include <boost/graph/compressed_sparse_row_graph.hpp>
 #include <boost/graph/iteration_macros.hpp>
+<<<<<<< HEAD
+=======
+#include <boost/graph/detail/mpi_include.hpp>
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 #include <boost/spirit/include/classic_multi_pass.hpp>
 #include <boost/lexical_cast.hpp>
 #include <boost/static_assert.hpp>
@@ -616,12 +620,20 @@ namespace boost {
 /////////////////////////////////////////////////////////////////////////////
 // Graph reader exceptions
 /////////////////////////////////////////////////////////////////////////////
+<<<<<<< HEAD
 struct graph_exception : public std::exception {
+=======
+struct BOOST_SYMBOL_VISIBLE graph_exception : public std::exception {
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
   virtual ~graph_exception() throw() {}
   virtual const char* what() const throw() = 0;
 };
 
+<<<<<<< HEAD
 struct bad_parallel_edge : public graph_exception {
+=======
+struct BOOST_SYMBOL_VISIBLE bad_parallel_edge : public graph_exception {
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
   std::string from;
   std::string to;
   mutable std::string statement;
@@ -639,7 +651,11 @@ struct bad_parallel_edge : public graph_exception {
   }
 };
 
+<<<<<<< HEAD
 struct directed_graph_error : public graph_exception {
+=======
+struct BOOST_SYMBOL_VISIBLE directed_graph_error : public graph_exception {
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
   virtual ~directed_graph_error() throw() {}
   virtual const char* what() const throw() {
     return
@@ -648,7 +664,11 @@ struct directed_graph_error : public graph_exception {
   }
 };
 
+<<<<<<< HEAD
 struct undirected_graph_error : public graph_exception {
+=======
+struct BOOST_SYMBOL_VISIBLE undirected_graph_error : public graph_exception {
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
   virtual ~undirected_graph_error() throw() {}
   virtual const char* what() const throw() {
     return
@@ -657,7 +677,11 @@ struct undirected_graph_error : public graph_exception {
   }
 };
 
+<<<<<<< HEAD
 struct bad_graphviz_syntax: public graph_exception {
+=======
+struct BOOST_SYMBOL_VISIBLE bad_graphviz_syntax: public graph_exception {
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
   std::string errmsg;
   bad_graphviz_syntax(const std::string& errmsg)
     : errmsg(errmsg) {}
@@ -951,8 +975,12 @@ bool read_graphviz(std::istream& in, MutableGraph& graph,
 
 } // namespace boost
 
+<<<<<<< HEAD
 #ifdef BOOST_GRAPH_USE_MPI
 #  include <boost/graph/distributed/graphviz.hpp>
 #endif
+=======
+#include BOOST_GRAPH_MPI_INCLUDE(<boost/graph/distributed/graphviz.hpp>)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 #endif // BOOST_GRAPHVIZ_HPP

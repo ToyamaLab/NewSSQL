@@ -23,7 +23,11 @@ struct encode_type_impl<V, R(*)(BOOST_PP_ENUM_PARAMS(n, P) ...)>
 };
 
 template<class Iter>
+<<<<<<< HEAD
 struct decode_type_impl<boost::mpl::size_t<FUN_PTR_ID + n>, Iter>
+=======
+struct decode_type_impl<boost::type_of::constant<std::size_t,FUN_PTR_ID + n>, Iter>
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 {
     typedef Iter iter0;
     BOOST_TYPEOF_DECODE_PARAMS(BOOST_PP_INC(n))
@@ -32,7 +36,11 @@ struct decode_type_impl<boost::mpl::size_t<FUN_PTR_ID + n>, Iter>
 };
 
 template<class Iter>
+<<<<<<< HEAD
 struct decode_type_impl<boost::mpl::size_t<FUN_VAR_PTR_ID + n>, Iter>
+=======
+struct decode_type_impl<boost::type_of::constant<std::size_t,FUN_VAR_PTR_ID + n>, Iter>
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 {
     typedef Iter iter0;
     BOOST_TYPEOF_DECODE_PARAMS(BOOST_PP_INC(n))
@@ -59,7 +67,11 @@ struct decode_type_impl<boost::mpl::size_t<FUN_VAR_PTR_ID + n>, Iter>
     };
 
     template<class Iter>
+<<<<<<< HEAD
     struct decode_type_impl<boost::mpl::size_t<FUN_REF_ID + n>, Iter>
+=======
+    struct decode_type_impl<boost::type_of::constant<std::size_t,FUN_REF_ID + n>, Iter>
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     {
         typedef Iter iter0;
         BOOST_TYPEOF_DECODE_PARAMS(BOOST_PP_INC(n))
@@ -68,7 +80,11 @@ struct decode_type_impl<boost::mpl::size_t<FUN_VAR_PTR_ID + n>, Iter>
     };
 
     template<class Iter>
+<<<<<<< HEAD
     struct decode_type_impl<boost::mpl::size_t<FUN_VAR_REF_ID + n>, Iter>
+=======
+    struct decode_type_impl<boost::type_of::constant<std::size_t,FUN_VAR_REF_ID + n>, Iter>
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     {
         typedef Iter iter0;
         BOOST_TYPEOF_DECODE_PARAMS(BOOST_PP_INC(n))
@@ -93,7 +109,11 @@ struct decode_type_impl<boost::mpl::size_t<FUN_VAR_PTR_ID + n>, Iter>
     };
 
     template<class Iter>
+<<<<<<< HEAD
     struct decode_type_impl<boost::mpl::size_t<FUN_ID + n>, Iter>
+=======
+    struct decode_type_impl<boost::type_of::constant<std::size_t,FUN_ID + n>, Iter>
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     {
         typedef Iter iter0;
         BOOST_TYPEOF_DECODE_PARAMS(BOOST_PP_INC(n))
@@ -102,7 +122,11 @@ struct decode_type_impl<boost::mpl::size_t<FUN_VAR_PTR_ID + n>, Iter>
     };
 
     template<class Iter>
+<<<<<<< HEAD
     struct decode_type_impl<boost::mpl::size_t<FUN_VAR_ID + n>, Iter>
+=======
+    struct decode_type_impl<boost::type_of::constant<std::size_t,FUN_VAR_ID + n>, Iter>
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     {
         typedef Iter iter0;
         BOOST_TYPEOF_DECODE_PARAMS(BOOST_PP_INC(n))

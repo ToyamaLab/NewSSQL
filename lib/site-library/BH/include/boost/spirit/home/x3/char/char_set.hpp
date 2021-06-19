@@ -37,6 +37,7 @@ namespace boost { namespace spirit { namespace x3
           : from(from_), to(to_) {}
 
         template <typename Char, typename Context>
+<<<<<<< HEAD
         bool test(Char ch_, Context& context) const
         {
 
@@ -44,6 +45,14 @@ namespace boost { namespace spirit { namespace x3
             return ((sizeof(Char) <= sizeof(char_type)) || encoding::ischar(ch_))
                         && (get_case_compare<encoding>(context)(ch, from) >= 0 )
                         && (get_case_compare<encoding>(context)(ch , to) <= 0 );
+=======
+        bool test(Char ch_, Context const& context) const
+        {
+
+            char_type ch = char_type(ch_);  // optimize for token based parsing
+            return (get_case_compare<encoding>(context)(ch, from) >= 0)
+               && (get_case_compare<encoding>(context)(ch , to) <= 0);
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
         }
 
         char_type from, to;
@@ -67,6 +76,7 @@ namespace boost { namespace spirit { namespace x3
         {
             using spirit::x3::detail::cast_char;
 
+<<<<<<< HEAD
             typedef typename
                 remove_const<
                     typename traits::char_type_of<String>::type
@@ -79,6 +89,13 @@ namespace boost { namespace spirit { namespace x3
             while (ch)
             {
                 in_type next = *definition++;
+=======
+            auto* definition = traits::get_c_string(str);
+            auto ch = *definition++;
+            while (ch)
+            {
+                auto next = *definition++;
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
                 if (next == '-')
                 {
                     next = *definition++;
@@ -104,8 +121,12 @@ namespace boost { namespace spirit { namespace x3
         template <typename Char, typename Context>
         bool test(Char ch_, Context const& context) const
         {
+<<<<<<< HEAD
             return ((sizeof(Char) <= sizeof(char_type)) || encoding::ischar(ch_))
                 && get_case_compare<encoding>(context).in_set(ch_,chset);
+=======
+            return get_case_compare<encoding>(context).in_set(ch_, chset);
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
         }
 
         support::detail::basic_chset<char_type> chset;

@@ -5,10 +5,18 @@
 // Copyright (c) 2009-2014 Mateusz Loskot, London, UK.
 // Copyright (c) 2013-2014 Adam Wulkiewicz, Lodz, Poland.
 
+<<<<<<< HEAD
 // This file was modified by Oracle on 2014.
 // Modifications copyright (c) 2014, Oracle and/or its affiliates.
 
 // Contributed and/or modified by Menelaos Karavelas, on behalf of Oracle
+=======
+// This file was modified by Oracle on 2014, 2019.
+// Modifications copyright (c) 2014-2019, Oracle and/or its affiliates.
+
+// Contributed and/or modified by Menelaos Karavelas, on behalf of Oracle
+// Contributed and/or modified by Adam Wulkiewicz, on behalf of Oracle
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 // Parts of Boost.Geometry are redesigned from Geodan's Geographic Library
 // (geolib/GGL), copyright (c) 1995-2010 Geodan, Amsterdam, the Netherlands.
@@ -39,13 +47,20 @@
 #include <boost/geometry/strategies/tags.hpp>
 
 #include <boost/geometry/algorithms/assign.hpp>
+<<<<<<< HEAD
 #include <boost/geometry/algorithms/covered_by.hpp>
 #include <boost/geometry/algorithms/within.hpp>
+=======
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 #include <boost/geometry/algorithms/detail/closest_feature/geometry_to_range.hpp>
 #include <boost/geometry/algorithms/detail/closest_feature/point_to_range.hpp>
 #include <boost/geometry/algorithms/detail/distance/is_comparable.hpp>
 #include <boost/geometry/algorithms/detail/distance/iterator_selector.hpp>
+<<<<<<< HEAD
+=======
+#include <boost/geometry/algorithms/detail/within/point_in_geometry.hpp>
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 #include <boost/geometry/algorithms/dispatch/distance.hpp>
 
@@ -160,7 +175,13 @@ struct point_to_ring
                                     Ring const& ring,
                                     Strategy const& strategy)
     {
+<<<<<<< HEAD
         if (geometry::within(point, ring))
+=======
+        // TODO: pass strategy
+        if (within::within_point_geometry(point, ring,
+                                          strategy.get_point_in_geometry_strategy()))
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
         {
             return return_type(0);
         }
@@ -204,7 +225,13 @@ private:
         {
             for (InteriorRingIterator it = first; it != last; ++it)
             {
+<<<<<<< HEAD
                 if (geometry::within(point, *it))
+=======
+                // TODO: pass strategy
+                if (within::within_point_geometry(point, *it,
+                                                  strategy.get_point_in_geometry_strategy()))
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
                 {
                     // the point is inside a polygon hole, so its distance
                     // to the polygon its distance to the polygon's
@@ -233,7 +260,13 @@ public:
                                     Polygon const& polygon,
                                     Strategy const& strategy)
     {
+<<<<<<< HEAD
         if (!geometry::covered_by(point, exterior_ring(polygon)))
+=======
+        // TODO: pass strategy
+        if (! within::covered_by_point_geometry(point, exterior_ring(polygon),
+                                                strategy.get_point_in_geometry_strategy()))
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
         {
             // the point is outside the exterior ring, so its distance
             // to the polygon is its distance to the polygon's exterior ring
@@ -330,7 +363,13 @@ struct point_to_multigeometry<Point, MultiPolygon, Strategy, true>
                                     MultiPolygon const& multipolygon,
                                     Strategy const& strategy)
     {
+<<<<<<< HEAD
         if (geometry::covered_by(point, multipolygon))
+=======
+        // TODO: pass strategy
+        if (within::covered_by_point_geometry(point, multipolygon,
+                                              strategy.get_point_in_geometry_strategy()))
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
         {
             return 0;
         }

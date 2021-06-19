@@ -10,11 +10,18 @@
 #pragma once
 #endif
 
+<<<<<<< HEAD
 #include <boost/detail/iterator.hpp>
+=======
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 #include <boost/spirit/home/support/detail/lexer/state_machine.hpp>
 #include <boost/spirit/home/support/detail/lexer/consts.hpp>
 #include <boost/spirit/home/support/detail/lexer/size_t.hpp>
 #include <boost/spirit/home/support/detail/lexer/char_traits.hpp>
+<<<<<<< HEAD
+=======
+#include <iterator> // for std::iterator_traits
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 #include <vector>
 
 namespace boost { namespace spirit { namespace lex { namespace lexertl
@@ -25,8 +32,12 @@ namespace boost { namespace spirit { namespace lex { namespace lexertl
     {
     public:
         typedef std::vector<std::size_t> size_t_vector;
+<<<<<<< HEAD
         typedef typename boost::detail::iterator_traits<Iterator>::value_type 
             char_type;
+=======
+        typedef typename std::iterator_traits<Iterator>::value_type char_type;
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
         static std::size_t next (
             boost::lexer::basic_state_machine<char_type> const& state_machine_
@@ -74,7 +85,11 @@ namespace boost { namespace spirit { namespace lex { namespace lexertl
                 else
                 {
                     typedef typename 
+<<<<<<< HEAD
                         boost::detail::iterator_traits<Iterator>::value_type 
+=======
+                        std::iterator_traits<Iterator>::value_type 
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
                     value_type;
                     typedef typename 
                         boost::lexer::char_traits<value_type>::index_type 
@@ -188,7 +203,11 @@ namespace boost { namespace spirit { namespace lex { namespace lexertl
                 else
                 {
                     typedef typename 
+<<<<<<< HEAD
                         boost::detail::iterator_traits<Iterator>::value_type 
+=======
+                        std::iterator_traits<Iterator>::value_type 
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
                     value_type;
                     typedef typename 
                         boost::lexer::char_traits<value_type>::index_type 

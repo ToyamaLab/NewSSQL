@@ -5,8 +5,13 @@
 // Copyright (c) 2009-2014 Mateusz Loskot, London, UK.
 // Copyright (c) 2014-2017 Adam Wulkiewicz, Lodz, Poland.
 
+<<<<<<< HEAD
 // This file was modified by Oracle on 2017.
 // Modifications copyright (c) 2017 Oracle and/or its affiliates.
+=======
+// This file was modified by Oracle on 2017, 2019.
+// Modifications copyright (c) 2017, 2019 Oracle and/or its affiliates.
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 // Contributed and/or modified by Adam Wulkiewicz, on behalf of Oracle
 
@@ -42,13 +47,20 @@
 
 #include <boost/geometry/strategies/cartesian/side_by_triangle.hpp>
 #include <boost/geometry/strategies/spherical/ssf.hpp>
+<<<<<<< HEAD
+=======
+#include <boost/geometry/strategies/normalize.hpp>
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 
 namespace boost { namespace geometry
 {
 
+<<<<<<< HEAD
 // TODO: dispatch only by SideStrategy instead of Geometry/CSTag?
 
+=======
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 // Since these vectors (though ray would be a better name) are used in the
 // implementation of equals() for Areal geometries the internal representation
 // should be consistent with the side strategy.
@@ -159,7 +171,12 @@ private:
 };
 
 // Compatible with spherical_side_formula which currently
+<<<<<<< HEAD
 // is the default spherical and geographical strategy
+=======
+// is the default spherical_equatorial and geographic strategy
+// so CSTag is spherical_equatorial_tag or geographic_tag
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 template <typename T, typename Geometry, typename CT, typename CSTag>
 struct collected_vector
     <
@@ -168,8 +185,13 @@ struct collected_vector
 {
     typedef T type;
     
+<<<<<<< HEAD
     typedef typename coordinate_system<Geometry>::type cs_type;
     typedef model::point<T, 2, cs_type> point_type;
+=======
+    typedef typename geometry::detail::cs_angular_units<Geometry>::type units_type;
+    typedef model::point<T, 2, cs::spherical_equatorial<units_type> > point_type;
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     typedef model::point<T, 3, cs::cartesian> vector_type;
 
     collected_vector()
@@ -179,7 +201,13 @@ struct collected_vector
     collected_vector(Point const& p1, Point const& p2)
         : origin(get<0>(p1), get<1>(p1))
     {
+<<<<<<< HEAD
         origin = detail::return_normalized<point_type>(origin);
+=======
+        origin = detail::return_normalized<point_type>(
+                    origin,
+                    strategy::normalize::spherical_point());
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
         using namespace geometry::formula;
         prev = sph_to_cart3d<vector_type>(p1);
@@ -290,7 +318,11 @@ struct collected_vector
 
 private:
     template <typename Point>
+<<<<<<< HEAD
     Point polar_to_equatorial(Point const& p)
+=======
+    Point to_equatorial(Point const& p)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     {
         typedef typename coordinate_type<Point>::type coord_type;
 
@@ -309,6 +341,12 @@ private:
 };
 
 
+<<<<<<< HEAD
+=======
+// TODO: specialize collected_vector for geographic_tag
+
+
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 #ifndef DOXYGEN_NO_DETAIL
 namespace detail { namespace collect_vectors
 {

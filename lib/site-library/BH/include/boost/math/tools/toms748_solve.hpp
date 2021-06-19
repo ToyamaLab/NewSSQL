@@ -302,6 +302,15 @@ std::pair<T, T> toms748_solve(F f, const T& ax, const T& bx, const T& fax, const
 
    static const char* function = "boost::math::tools::toms748_solve<%1%>";
 
+<<<<<<< HEAD
+=======
+   //
+   // Sanity check - are we allowed to iterate at all?
+   //
+   if (max_iter == 0)
+      return std::make_pair(ax, bx);
+
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
    boost::uintmax_t count = max_iter;
    T a, b, fa, fb, c, u, fu, a0, b0, d, fd, e, fe;
    static const T mu = 0.5f;
@@ -477,6 +486,11 @@ inline std::pair<T, T> toms748_solve(F f, const T& ax, const T& bx, const T& fax
 template <class F, class T, class Tol, class Policy>
 inline std::pair<T, T> toms748_solve(F f, const T& ax, const T& bx, Tol tol, boost::uintmax_t& max_iter, const Policy& pol)
 {
+<<<<<<< HEAD
+=======
+   if (max_iter <= 2)
+      return std::make_pair(ax, bx);
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
    max_iter -= 2;
    std::pair<T, T> r = toms748_solve(f, ax, bx, f(ax), f(bx), tol, max_iter, pol);
    max_iter += 2;

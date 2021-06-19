@@ -1,6 +1,10 @@
 // Boost.Geometry
 
+<<<<<<< HEAD
 // Copyright (c) 2017, Oracle and/or its affiliates.
+=======
+// Copyright (c) 2017-2018, Oracle and/or its affiliates.
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 // Contributed and/or modified by Vissarion Fysikopoulos, on behalf of Oracle
 // Contributed and/or modified by Adam Wulkiewicz, on behalf of Oracle
 
@@ -77,6 +81,7 @@ struct default_strategy<Box, MultiPoint, box_tag, multi_point_tag, 2, 0>
         >
 {};
 
+<<<<<<< HEAD
 template <typename Box1, typename Box2>
 struct default_strategy<Box1, Box2, box_tag, box_tag, 2, 2>
 {
@@ -84,6 +89,8 @@ struct default_strategy<Box1, Box2, box_tag, box_tag, 2, 2>
     typedef geometry::default_strategy type;
 };
 
+=======
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 } // namespace services
 #endif // DOXYGEN_NO_STRATEGY_SPECIALIZATIONS
 

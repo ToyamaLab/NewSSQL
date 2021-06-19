@@ -2,7 +2,11 @@
 // asio.hpp
 // ~~~~~~~~
 //
+<<<<<<< HEAD
 // Copyright (c) 2003-2017 Christopher M. Kohlhoff (chris at kohlhoff dot com)
+=======
+// Copyright (c) 2003-2019 Christopher M. Kohlhoff (chris at kohlhoff dot com)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 //
 // Distributed under the Boost Software License, Version 1.0. (See accompanying
 // file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
@@ -20,6 +24,10 @@
 #include <boost/asio/associated_allocator.hpp>
 #include <boost/asio/associated_executor.hpp>
 #include <boost/asio/async_result.hpp>
+<<<<<<< HEAD
+=======
+#include <boost/asio/awaitable.hpp>
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 #include <boost/asio/basic_datagram_socket.hpp>
 #include <boost/asio/basic_deadline_timer.hpp>
 #include <boost/asio/basic_io_object.hpp>
@@ -27,6 +35,10 @@
 #include <boost/asio/basic_seq_packet_socket.hpp>
 #include <boost/asio/basic_serial_port.hpp>
 #include <boost/asio/basic_signal_set.hpp>
+<<<<<<< HEAD
+=======
+#include <boost/asio/basic_socket.hpp>
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 #include <boost/asio/basic_socket_acceptor.hpp>
 #include <boost/asio/basic_socket_iostream.hpp>
 #include <boost/asio/basic_socket_streambuf.hpp>
@@ -42,6 +54,7 @@
 #include <boost/asio/buffered_write_stream_fwd.hpp>
 #include <boost/asio/buffered_write_stream.hpp>
 #include <boost/asio/buffers_iterator.hpp>
+<<<<<<< HEAD
 #include <boost/asio/completion_condition.hpp>
 #include <boost/asio/connect.hpp>
 #include <boost/asio/coroutine.hpp>
@@ -49,6 +62,16 @@
 #include <boost/asio/deadline_timer_service.hpp>
 #include <boost/asio/deadline_timer.hpp>
 #include <boost/asio/defer.hpp>
+=======
+#include <boost/asio/co_spawn.hpp>
+#include <boost/asio/completion_condition.hpp>
+#include <boost/asio/compose.hpp>
+#include <boost/asio/connect.hpp>
+#include <boost/asio/coroutine.hpp>
+#include <boost/asio/deadline_timer.hpp>
+#include <boost/asio/defer.hpp>
+#include <boost/asio/detached.hpp>
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 #include <boost/asio/dispatch.hpp>
 #include <boost/asio/error.hpp>
 #include <boost/asio/execution_context.hpp>
@@ -62,7 +85,10 @@
 #include <boost/asio/handler_alloc_hook.hpp>
 #include <boost/asio/handler_continuation_hook.hpp>
 #include <boost/asio/handler_invoke_hook.hpp>
+<<<<<<< HEAD
 #include <boost/asio/handler_type.hpp>
+=======
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 #include <boost/asio/high_resolution_timer.hpp>
 #include <boost/asio/io_context.hpp>
 #include <boost/asio/io_context_strand.hpp>
@@ -75,6 +101,11 @@
 #include <boost/asio/ip/address_v6.hpp>
 #include <boost/asio/ip/address_v6_iterator.hpp>
 #include <boost/asio/ip/address_v6_range.hpp>
+<<<<<<< HEAD
+=======
+#include <boost/asio/ip/network_v4.hpp>
+#include <boost/asio/ip/network_v6.hpp>
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 #include <boost/asio/ip/bad_address_cast.hpp>
 #include <boost/asio/ip/basic_endpoint.hpp>
 #include <boost/asio/ip/basic_resolver.hpp>
@@ -86,7 +117,10 @@
 #include <boost/asio/ip/multicast.hpp>
 #include <boost/asio/ip/resolver_base.hpp>
 #include <boost/asio/ip/resolver_query_base.hpp>
+<<<<<<< HEAD
 #include <boost/asio/ip/resolver_service.hpp>
+=======
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 #include <boost/asio/ip/tcp.hpp>
 #include <boost/asio/ip/udp.hpp>
 #include <boost/asio/ip/unicast.hpp>
@@ -105,6 +139,7 @@
 #include <boost/asio/posix/descriptor.hpp>
 #include <boost/asio/posix/descriptor_base.hpp>
 #include <boost/asio/posix/stream_descriptor.hpp>
+<<<<<<< HEAD
 #include <boost/asio/posix/stream_descriptor_service.hpp>
 #include <boost/asio/post.hpp>
 #include <boost/asio/raw_socket_service.hpp>
@@ -122,16 +157,37 @@
 #include <boost/asio/steady_timer.hpp>
 #include <boost/asio/strand.hpp>
 #include <boost/asio/stream_socket_service.hpp>
+=======
+#include <boost/asio/post.hpp>
+#include <boost/asio/read.hpp>
+#include <boost/asio/read_at.hpp>
+#include <boost/asio/read_until.hpp>
+#include <boost/asio/redirect_error.hpp>
+#include <boost/asio/serial_port.hpp>
+#include <boost/asio/serial_port_base.hpp>
+#include <boost/asio/signal_set.hpp>
+#include <boost/asio/socket_base.hpp>
+#include <boost/asio/steady_timer.hpp>
+#include <boost/asio/strand.hpp>
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 #include <boost/asio/streambuf.hpp>
 #include <boost/asio/system_context.hpp>
 #include <boost/asio/system_executor.hpp>
 #include <boost/asio/system_timer.hpp>
+<<<<<<< HEAD
 #include <boost/asio/thread_pool.hpp>
 #include <boost/asio/time_traits.hpp>
+=======
+#include <boost/asio/this_coro.hpp>
+#include <boost/asio/thread_pool.hpp>
+#include <boost/asio/time_traits.hpp>
+#include <boost/asio/use_awaitable.hpp>
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 #include <boost/asio/use_future.hpp>
 #include <boost/asio/uses_executor.hpp>
 #include <boost/asio/version.hpp>
 #include <boost/asio/wait_traits.hpp>
+<<<<<<< HEAD
 #include <boost/asio/waitable_timer_service.hpp>
 #include <boost/asio/windows/basic_handle.hpp>
 #include <boost/asio/windows/basic_object_handle.hpp>
@@ -145,6 +201,17 @@
 #include <boost/asio/windows/random_access_handle_service.hpp>
 #include <boost/asio/windows/stream_handle.hpp>
 #include <boost/asio/windows/stream_handle_service.hpp>
+=======
+#include <boost/asio/windows/basic_object_handle.hpp>
+#include <boost/asio/windows/basic_overlapped_handle.hpp>
+#include <boost/asio/windows/basic_random_access_handle.hpp>
+#include <boost/asio/windows/basic_stream_handle.hpp>
+#include <boost/asio/windows/object_handle.hpp>
+#include <boost/asio/windows/overlapped_handle.hpp>
+#include <boost/asio/windows/overlapped_ptr.hpp>
+#include <boost/asio/windows/random_access_handle.hpp>
+#include <boost/asio/windows/stream_handle.hpp>
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 #include <boost/asio/write.hpp>
 #include <boost/asio/write_at.hpp>
 

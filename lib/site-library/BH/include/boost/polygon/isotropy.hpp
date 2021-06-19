@@ -40,12 +40,15 @@ typedef boost::ulong_long_type polygon_ulong_long_type;
 //typedef long long polygon_long_long_type;
 //typedef unsigned long long polygon_ulong_long_type;
 #endif
+<<<<<<< HEAD
 #include <boost/mpl/size_t.hpp>
 #include <boost/mpl/protect.hpp>
 #include <boost/utility/enable_if.hpp>
 #include <boost/mpl/bool.hpp>
 #include <boost/mpl/and.hpp>
 #include <boost/mpl/or.hpp>
+=======
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 #else
 
 #ifdef _WIN32
@@ -57,6 +60,7 @@ typedef boost::ulong_long_type polygon_ulong_long_type;
 #define BOOST_POLYGON_USE_LONG_LONG
 typedef long long polygon_long_long_type;
 typedef unsigned long long polygon_ulong_long_type;
+<<<<<<< HEAD
 
   namespace boost {
     template <bool B, class T   = void>
@@ -105,6 +109,8 @@ typedef unsigned long long polygon_ulong_long_type;
     struct lazy_disable_if : public lazy_disable_if_c<Cond::value, T> {};
   }
 
+=======
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 #endif
 
 namespace boost { namespace polygon{
@@ -266,6 +272,7 @@ namespace boost { namespace polygon{
   template <>
   struct geometry_concept<long double> { typedef coordinate_concept type; };
 
+<<<<<<< HEAD
 #ifndef BOOST_POLYGON_NO_DEPS
   struct gtl_no : mpl::bool_<false> {};
   struct gtl_yes : mpl::bool_<true> {};
@@ -282,6 +289,8 @@ namespace boost { namespace polygon{
 //  template <typename T, typename T2, typename T3, typename T4>
 //  struct gtl_or_4 : mpl::or_<T, T2, T3, T4> {};
 #else
+=======
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
   struct gtl_no { static const bool value = false; };
   struct gtl_yes { typedef gtl_yes type;
     static const bool value = true; };
@@ -300,7 +309,10 @@ namespace boost { namespace polygon{
   template <typename T, typename T2, typename T3, typename T4>
   struct gtl_and_4 { typedef typename gtl_and_3<
                        T, T2, typename gtl_and<T3, T4>::type>::type type; };
+<<<<<<< HEAD
 #endif
+=======
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
   template <typename T, typename T2>
   struct gtl_or { typedef gtl_yes type; };
   template <typename T>
@@ -348,6 +360,21 @@ namespace boost { namespace polygon{
   struct area_type_by_domain<manhattan_domain, coordinate_type> {
     typedef typename coordinate_traits<coordinate_type>::manhattan_area_type type; };
 
+<<<<<<< HEAD
+=======
+  template<bool E, class R = void>
+  struct enable_if_ {
+      typedef R type;
+  };
+
+  template<class R>
+  struct enable_if_<false, R> { };
+
+  template<class E, class R = void>
+  struct enable_if
+      : enable_if_<E::value, R> { };
+
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
   struct y_c_edist : gtl_yes {};
 
   template <typename coordinate_type_1, typename coordinate_type_2>

@@ -1,5 +1,9 @@
 /*
+<<<<<<< HEAD
 Copyright 2017 Glen Joseph Fernandes
+=======
+Copyright 2017-2019 Glen Joseph Fernandes
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 (glenjofe@gmail.com)
 
 Distributed under the Boost Software License, Version 1.0.
@@ -14,6 +18,7 @@ Distributed under the Boost Software License, Version 1.0.
 namespace boost {
 namespace detail {
 
+<<<<<<< HEAD
 template<class>
 struct lsp_if_array { };
 
@@ -31,6 +36,9 @@ struct lsp_if_size_array<T[N]> {
 };
 
 class lsp_array_base
+=======
+class BOOST_SYMBOL_VISIBLE lsp_array_base
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     : public local_counted_base {
 public:
     void set(sp_counted_base* base) BOOST_SP_NOEXCEPT {
@@ -84,6 +92,7 @@ private:
 } /* detail */
 
 template<class T, class A>
+<<<<<<< HEAD
 inline typename detail::lsp_if_array<T>::type
 allocate_local_shared(const A& allocator, std::size_t count)
 {
@@ -221,6 +230,110 @@ allocate_local_shared_noinit(const A& allocator)
     result.release();
     return local_shared_ptr<T>(detail::lsp_internal_constructor_tag(),
         reinterpret_cast<type*>(start), &local);
+=======
+inline typename enable_if_<is_unbounded_array<T>::value,
+    local_shared_ptr<T> >::type
+allocate_local_shared(const A& allocator, std::size_t count)
+{
+    typedef typename detail::sp_array_element<T>::type element;
+    typedef typename detail::sp_bind_allocator<A, element>::type other;
+    typedef detail::lsp_array_state<other> state;
+    typedef detail::sp_array_base<state> base;
+    detail::sp_array_result<other, base> result(allocator, count);
+    base* node = result.get();
+    element* start = detail::sp_array_start<element>(node);
+    ::new(static_cast<void*>(node)) base(allocator, start, count);
+    detail::lsp_array_base& local = node->state().base();
+    local.set(node);
+    result.release();
+    return local_shared_ptr<T>(detail::lsp_internal_constructor_tag(), start,
+        &local);
+}
+
+template<class T, class A>
+inline typename enable_if_<is_bounded_array<T>::value,
+    local_shared_ptr<T> >::type
+allocate_local_shared(const A& allocator)
+{
+    enum {
+        count = extent<T>::value
+    };
+    typedef typename detail::sp_array_element<T>::type element;
+    typedef typename detail::sp_bind_allocator<A, element>::type other;
+    typedef detail::lsp_size_array_state<other, count> state;
+    typedef detail::sp_array_base<state> base;
+    detail::sp_array_result<other, base> result(allocator, count);
+    base* node = result.get();
+    element* start = detail::sp_array_start<element>(node);
+    ::new(static_cast<void*>(node)) base(allocator, start, count);
+    detail::lsp_array_base& local = node->state().base();
+    local.set(node);
+    result.release();
+    return local_shared_ptr<T>(detail::lsp_internal_constructor_tag(), start,
+        &local);
+}
+
+template<class T, class A>
+inline typename enable_if_<is_unbounded_array<T>::value,
+    local_shared_ptr<T> >::type
+allocate_local_shared(const A& allocator, std::size_t count,
+    const typename remove_extent<T>::type& value)
+{
+    typedef typename detail::sp_array_element<T>::type element;
+    typedef typename detail::sp_bind_allocator<A, element>::type other;
+    typedef detail::lsp_array_state<other> state;
+    typedef detail::sp_array_base<state> base;
+    detail::sp_array_result<other, base> result(allocator, count);
+    base* node = result.get();
+    element* start = detail::sp_array_start<element>(node);
+    ::new(static_cast<void*>(node)) base(allocator, start, count, value);
+    detail::lsp_array_base& local = node->state().base();
+    local.set(node);
+    result.release();
+    return local_shared_ptr<T>(detail::lsp_internal_constructor_tag(), start,
+        &local);
+}
+
+template<class T, class A>
+inline typename enable_if_<is_bounded_array<T>::value,
+    local_shared_ptr<T> >::type
+allocate_local_shared(const A& allocator,
+    const typename remove_extent<T>::type& value)
+{
+    enum {
+        count = extent<T>::value
+    };
+    typedef typename detail::sp_array_element<T>::type element;
+    typedef typename detail::sp_bind_allocator<A, element>::type other;
+    typedef detail::lsp_size_array_state<other, count> state;
+    typedef detail::sp_array_base<state> base;
+    detail::sp_array_result<other, base> result(allocator, count);
+    base* node = result.get();
+    element* start = detail::sp_array_start<element>(node);
+    ::new(static_cast<void*>(node)) base(allocator, start, count, value);
+    detail::lsp_array_base& local = node->state().base();
+    local.set(node);
+    result.release();
+    return local_shared_ptr<T>(detail::lsp_internal_constructor_tag(), start,
+        &local);
+}
+
+template<class T, class A>
+inline typename enable_if_<is_unbounded_array<T>::value,
+    local_shared_ptr<T> >::type
+allocate_local_shared_noinit(const A& allocator, std::size_t count)
+{
+    return boost::allocate_local_shared<T>(boost::noinit_adapt(allocator),
+        count);
+}
+
+template<class T, class A>
+inline typename enable_if_<is_bounded_array<T>::value,
+    local_shared_ptr<T> >::type
+allocate_local_shared_noinit(const A& allocator)
+{
+    return boost::allocate_local_shared<T>(boost::noinit_adapt(allocator));
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 }
 
 } /* boost */

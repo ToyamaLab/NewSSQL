@@ -2,7 +2,11 @@
 // local/basic_endpoint.hpp
 // ~~~~~~~~~~~~~~~~~~~~~~~~
 //
+<<<<<<< HEAD
 // Copyright (c) 2003-2017 Christopher M. Kohlhoff (chris at kohlhoff dot com)
+=======
+// Copyright (c) 2003-2019 Christopher M. Kohlhoff (chris at kohlhoff dot com)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 // Derived from a public domain implementation written by Daniel Casimiro.
 //
 // Distributed under the Boost Software License, Version 1.0. (See accompanying
@@ -61,7 +65,11 @@ public:
 #endif
 
   /// Default constructor.
+<<<<<<< HEAD
   basic_endpoint()
+=======
+  basic_endpoint() BOOST_ASIO_NOEXCEPT
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
   {
   }
 
@@ -77,6 +85,17 @@ public:
   {
   }
 
+<<<<<<< HEAD
+=======
+  #if defined(BOOST_ASIO_HAS_STRING_VIEW)
+  /// Construct an endpoint using the specified path name.
+  basic_endpoint(string_view path_name)
+    : impl_(path_name)
+  {
+  }
+  #endif // defined(BOOST_ASIO_HAS_STRING_VIEW)
+
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
   /// Copy constructor.
   basic_endpoint(const basic_endpoint& other)
     : impl_(other.impl_)

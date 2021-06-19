@@ -21,7 +21,11 @@ struct encode_type_impl<V, P0 P1::*>
 };
 
 template<class Iter>
+<<<<<<< HEAD
 struct decode_type_impl<boost::mpl::size_t<PTR_DATA_MEM_ID>, Iter>
+=======
+struct decode_type_impl<boost::type_of::constant<std::size_t,PTR_DATA_MEM_ID>, Iter>
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 {
     typedef Iter iter0;
     BOOST_TYPEOF_DECODE_PARAMS(2)
@@ -29,7 +33,11 @@ struct decode_type_impl<boost::mpl::size_t<PTR_DATA_MEM_ID>, Iter>
     template<class T> struct workaround{
         typedef p0 T::* type;
     };
+<<<<<<< HEAD
     typedef typename decode_type_impl<boost::mpl::size_t<PTR_DATA_MEM_ID>, Iter>::template workaround<p1>::type type;
+=======
+    typedef typename decode_type_impl<boost::type_of::constant<std::size_t,PTR_DATA_MEM_ID>, Iter>::template workaround<p1>::type type;
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     typedef iter2 iter;
 };
 

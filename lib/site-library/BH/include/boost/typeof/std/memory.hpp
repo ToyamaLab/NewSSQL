@@ -12,6 +12,12 @@
 
 BOOST_TYPEOF_REGISTER_TEMPLATE(std::allocator, 1)
 BOOST_TYPEOF_REGISTER_TEMPLATE(std::raw_storage_iterator, 2)
+<<<<<<< HEAD
 BOOST_TYPEOF_REGISTER_TEMPLATE(std::auto_ptr, 1)
+=======
+#ifndef BOOST_NO_AUTO_PTR
+BOOST_TYPEOF_REGISTER_TEMPLATE(std::auto_ptr, 1)
+#endif//BOOST_NO_AUTO_PTR
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 #endif//BOOST_TYPEOF_STD_memory_hpp_INCLUDED

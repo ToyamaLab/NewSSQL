@@ -2,6 +2,10 @@
 
 //  (C) Copyright Darin Adler 2000
 //  (C) Copyright Beman Dawes 2006, 2009, 2014
+<<<<<<< HEAD
+=======
+//  (C) Copyright Peter Dimov 2019
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 //  Distributed under the Boost Software License, Version 1.0.
 //  See http://www.boost.org/LICENSE_1_0.txt
@@ -21,6 +25,7 @@
 #ifndef BOOST_ENDIAN_BUFFERS_HPP
 #define BOOST_ENDIAN_BUFFERS_HPP
 
+<<<<<<< HEAD
 #if defined(_MSC_VER)  
 # pragma warning(push)  
 # pragma warning(disable:4365)  // conversion ... signed/unsigned mismatch
@@ -29,11 +34,30 @@
 #ifdef BOOST_ENDIAN_LOG
 # include <iostream>
 #endif
+=======
+#if defined(_MSC_VER)
+# pragma warning(push)
+# pragma warning(disable: 4127)  // conditional expression is constant
+#endif
+
+#include <boost/endian/detail/endian_store.hpp>
+#include <boost/endian/detail/endian_load.hpp>
+#include <boost/core/scoped_enum.hpp>
+#include <boost/predef/other/endian.h>
+#include <boost/static_assert.hpp>
+#include <boost/cstdint.hpp>
+#include <boost/config.hpp>
+#include <boost/config/workaround.hpp>
+#include <iosfwd>
+#include <climits>
+#include <cstring>
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 #if defined(__BORLANDC__) || defined( __CODEGEARC__)
 # pragma pack(push, 1)
 #endif
 
+<<<<<<< HEAD
 #include <boost/config.hpp>
 #include <boost/predef/detail/endian_compat.h>
 #include <boost/endian/conversion.hpp>
@@ -44,6 +68,8 @@
 #include <iosfwd>
 #include <climits>
 
+=======
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 # if CHAR_BIT != 8
 #   error Platforms with CHAR_BIT != 8 are not supported
 # endif
@@ -54,7 +80,12 @@
 #   define BOOST_ENDIAN_DEFAULT_CONSTRUCT = default;  // C++0x
 # endif
 
+<<<<<<< HEAD
 # if defined(BOOST_NO_CXX11_DEFAULTED_FUNCTIONS) && defined(BOOST_ENDIAN_FORCE_PODNESS)
+=======
+// g++ pre-4.6 does not support unrestricted unions, but we have no Config macro for that
+# if (defined(BOOST_NO_CXX11_DEFAULTED_FUNCTIONS) || BOOST_WORKAROUND(BOOST_GCC, < 40600)) && defined(BOOST_ENDIAN_FORCE_PODNESS)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 #   define BOOST_ENDIAN_NO_CTORS
 # endif
 
@@ -100,6 +131,15 @@ namespace endian
   typedef endian_buffer<order::little, uint32_t, 32, align::yes> little_uint32_buf_at;
   typedef endian_buffer<order::little, uint64_t, 64, align::yes> little_uint64_buf_at;
 
+<<<<<<< HEAD
+=======
+  // aligned floating point buffers
+  typedef endian_buffer<order::big, float, 32, align::yes>       big_float32_buf_at;
+  typedef endian_buffer<order::big, double, 64, align::yes>      big_float64_buf_at;
+  typedef endian_buffer<order::little, float, 32, align::yes>    little_float32_buf_at;
+  typedef endian_buffer<order::little, double, 64, align::yes>   little_float64_buf_at;
+
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
   // aligned native endian typedefs are not provided because
   // <cstdint> types are superior for this use case
 
@@ -143,7 +183,11 @@ namespace endian
   typedef endian_buffer<order::little, uint_least64_t, 56>  little_uint56_buf_t;
   typedef endian_buffer<order::little, uint_least64_t, 64>  little_uint64_buf_t;
 
+<<<<<<< HEAD
 # ifdef BOOST_BIG_ENDIAN
+=======
+# if BOOST_ENDIAN_BIG_BYTE
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
   // unaligned native endian signed integer buffers
   typedef big_int8_buf_t   native_int8_buf_t;
   typedef big_int16_buf_t  native_int16_buf_t;
@@ -185,6 +229,17 @@ namespace endian
   typedef little_uint64_buf_t  native_uint64_buf_t;
 # endif
 
+<<<<<<< HEAD
+=======
+  // unaligned floating point buffers
+  typedef endian_buffer<order::big, float, 32, align::no>       big_float32_buf_t;
+  typedef endian_buffer<order::big, double, 64, align::no>      big_float64_buf_t;
+  typedef endian_buffer<order::little, float, 32, align::no>    little_float32_buf_t;
+  typedef endian_buffer<order::little, double, 64, align::no>   little_float64_buf_t;
+  typedef endian_buffer<order::native, float, 32, align::no>    native_float32_buf_t;
+  typedef endian_buffer<order::native, double, 64, align::no>   native_float64_buf_t;
+
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
   // Stream inserter
   template <class charT, class traits, BOOST_SCOPED_ENUM(order) Order, class T,
     std::size_t n_bits, BOOST_SCOPED_ENUM(align) A>
@@ -195,7 +250,11 @@ namespace endian
     return os << x.value();
   }
 
+<<<<<<< HEAD
   // Stream extractor 
+=======
+  // Stream extractor
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
   template <class charT, class traits, BOOST_SCOPED_ENUM(order) Order, class T,
     std::size_t n_bits, BOOST_SCOPED_ENUM(align) A>
   std::basic_istream<charT, traits>&
@@ -210,6 +269,7 @@ namespace endian
 
 //----------------------------------  end synopsis  ------------------------------------//
 
+<<<<<<< HEAD
   namespace detail
   {
 
@@ -500,6 +560,170 @@ namespace endian
       protected:
         T m_value;
     };
+=======
+//  endian_buffer class template specializations  --------------------------------------//
+
+//  Specializations that represent unaligned bytes.
+//  Taking an integer type as a parameter provides a nice way to pass both
+//  the size and signedness of the desired integer and get the appropriate
+//  corresponding integer type for the interface.
+
+// Q: Should endian_buffer supply "value_type operator value_type() const noexcept"?
+// A: No. The rationale for endian_buffers is to prevent high-cost hidden
+//    conversions. If an implicit conversion operator is supplied, hidden conversions
+//    can occur.
+
+//  unaligned endian_buffer specialization
+
+template< BOOST_SCOPED_ENUM(order) Order, class T, std::size_t n_bits >
+class endian_buffer<Order, T, n_bits, align::no>
+{
+private:
+
+    BOOST_STATIC_ASSERT( (n_bits/8)*8 == n_bits );
+
+    unsigned char value_[ n_bits / 8 ];
+
+public:
+
+    typedef T value_type;
+
+#ifndef BOOST_ENDIAN_NO_CTORS
+
+    endian_buffer() BOOST_ENDIAN_DEFAULT_CONSTRUCT
+
+    explicit endian_buffer( T val ) BOOST_NOEXCEPT
+    {
+        boost::endian::endian_store<T, n_bits / 8, Order>( value_, val );
+    }
+
+#endif
+
+    endian_buffer& operator=( T val ) BOOST_NOEXCEPT
+    {
+        boost::endian::endian_store<T, n_bits / 8, Order>( value_, val );
+        return *this;
+    }
+
+    value_type value() const BOOST_NOEXCEPT
+    {
+        return boost::endian::endian_load<T, n_bits / 8, Order>( value_ );
+    }
+
+    unsigned char const * data() const BOOST_NOEXCEPT
+    {
+        return value_;
+    }
+
+    unsigned char * data() BOOST_NOEXCEPT
+    {
+        return value_;
+    }
+};
+
+// aligned specializations; only n_bits == 16/32/64 supported
+
+// aligned endian_buffer specialization
+
+template< BOOST_SCOPED_ENUM(order) Order, class T, std::size_t n_bits >
+class endian_buffer<Order, T, n_bits, align::yes>
+{
+private:
+
+    BOOST_STATIC_ASSERT( (n_bits/8)*8 == n_bits );
+    BOOST_STATIC_ASSERT( sizeof(T) == n_bits/8 );
+
+    union
+    {
+        unsigned char value_[ n_bits / 8 ];
+        T align_;
+    };
+
+public:
+
+    typedef T value_type;
+
+#ifndef BOOST_ENDIAN_NO_CTORS
+
+    endian_buffer() BOOST_ENDIAN_DEFAULT_CONSTRUCT
+
+    explicit endian_buffer( T val ) BOOST_NOEXCEPT
+    {
+        boost::endian::endian_store<T, n_bits / 8, Order>( value_, val );
+    }
+
+#endif
+
+    endian_buffer& operator=( T val ) BOOST_NOEXCEPT
+    {
+        boost::endian::endian_store<T, n_bits / 8, Order>( value_, val );
+        return *this;
+    }
+
+    value_type value() const BOOST_NOEXCEPT
+    {
+        return boost::endian::endian_load<T, n_bits / 8, Order>( value_ );
+    }
+
+    unsigned char const * data() const BOOST_NOEXCEPT
+    {
+        return value_;
+    }
+
+    unsigned char * data() BOOST_NOEXCEPT
+    {
+        return value_;
+    }
+};
+
+// aligned native endian_buffer specialization
+
+template< class T, std::size_t n_bits >
+class endian_buffer<order::native, T, n_bits, align::yes>
+{
+private:
+
+    BOOST_STATIC_ASSERT( (n_bits/8)*8 == n_bits );
+    BOOST_STATIC_ASSERT( sizeof(T) == n_bits/8 );
+
+    T value_;
+
+public:
+
+    typedef T value_type;
+
+#ifndef BOOST_ENDIAN_NO_CTORS
+
+    endian_buffer() BOOST_ENDIAN_DEFAULT_CONSTRUCT
+
+    explicit endian_buffer( T val ) BOOST_NOEXCEPT: value_( val )
+    {
+    }
+
+#endif
+
+    endian_buffer& operator=( T val ) BOOST_NOEXCEPT
+    {
+        value_ = val;
+        return *this;
+    }
+
+    value_type value() const BOOST_NOEXCEPT
+    {
+        return value_;
+    }
+
+    unsigned char const * data() const BOOST_NOEXCEPT
+    {
+        return reinterpret_cast< unsigned char const* >( &value_ );
+    }
+
+    unsigned char * data() BOOST_NOEXCEPT
+    {
+        return reinterpret_cast< unsigned char* >( &value_ );
+    }
+};
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 } // namespace endian
 } // namespace boost
@@ -508,8 +732,14 @@ namespace endian
 # pragma pack(pop)
 #endif
 
+<<<<<<< HEAD
 #if defined(_MSC_VER)  
 # pragma warning(pop)  
 #endif 
+=======
+#if defined(_MSC_VER)
+# pragma warning(pop)
+#endif
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 #endif // BOOST_ENDIAN_BUFFERS_HPP

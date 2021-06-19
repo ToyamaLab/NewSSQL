@@ -1374,13 +1374,21 @@ namespace impl {
             <OperationT, actor<BaseT>, B>::type type;
 
         static type
+<<<<<<< HEAD
         construct(actor<BaseT> const& _0, B const& _1)
+=======
+        construct(actor<BaseT> const& _0_, B const& _1_)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
         {
             typedef typename make_composite
                     <OperationT, actor<BaseT>, B>::composite_type
                 ret_t;
             
+<<<<<<< HEAD
             return ret_t(OperationT(), _0, as_actor<B>::convert(_1));
+=======
+            return ret_t(OperationT(), _0_, as_actor<B>::convert(_1_));
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
         }
     };
 
@@ -1392,13 +1400,21 @@ namespace impl {
             <OperationT, A, actor<BaseT> >::type type;
 
         static type
+<<<<<<< HEAD
         construct(A const& _0, actor<BaseT> const& _1)
+=======
+        construct(A const& _0_, actor<BaseT> const& _1_)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
         {
             typedef typename make_composite
                     <OperationT, A, actor<BaseT> >::composite_type
                 ret_t;
 
+<<<<<<< HEAD
             return ret_t(OperationT(), as_actor<A>::convert(_0), _1);
+=======
+            return ret_t(OperationT(), as_actor<A>::convert(_0_), _1_);
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
         }
     };
 
@@ -1410,13 +1426,21 @@ namespace impl {
             <OperationT, actor<BaseA>, actor<BaseB> >::type type;
 
         static type
+<<<<<<< HEAD
         construct(actor<BaseA> const& _0, actor<BaseB> const& _1)
+=======
+        construct(actor<BaseA> const& _0_, actor<BaseB> const& _1_)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
         {
             typedef typename make_composite
                     <OperationT, actor<BaseA>, actor<BaseB> >::composite_type
                 ret_t;
 
+<<<<<<< HEAD
             return ret_t(OperationT(), _0, _1);
+=======
+            return ret_t(OperationT(), _0_, _1_);
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
         }
     };
 

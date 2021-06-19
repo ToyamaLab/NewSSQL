@@ -9,8 +9,11 @@
 #if !defined(SPIRIT_X3_REPEAT_APRIL_16_2014_0848AM)
 #define SPIRIT_X3_REPEAT_APRIL_16_2014_0848AM
 
+<<<<<<< HEAD
 #include <boost/function_types/function_type.hpp>
 #include <boost/function_types/parameter_types.hpp>
+=======
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 #include <boost/spirit/home/x3/core/parser.hpp>
 #include <boost/spirit/home/x3/operator/kleene.hpp>
 
@@ -98,10 +101,16 @@ namespace boost { namespace spirit { namespace x3
     struct repeat_gen
     {
         template<typename Subject>
+<<<<<<< HEAD
         kleene<typename extension::as_parser<Subject>::value_type>
         operator[](Subject const& subject) const
         {
             return { as_parser(subject) };
+=======
+        auto operator[](Subject const& subject) const
+        {
+            return *as_parser(subject);
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
         }
 
         template <typename T>

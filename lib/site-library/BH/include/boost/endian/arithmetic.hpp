@@ -2,6 +2,10 @@
 
 //  (C) Copyright Darin Adler 2000
 //  (C) Copyright Beman Dawes 2006, 2009, 2014
+<<<<<<< HEAD
+=======
+//  (C) Copyright Peter Dimov 2019
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 //  Distributed under the Boost Software License, Version 1.0.
 //  See http://www.boost.org/LICENSE_1_0.txt
@@ -21,6 +25,7 @@
 #ifndef BOOST_ENDIAN_ARITHMETIC_HPP
 #define BOOST_ENDIAN_ARITHMETIC_HPP
 
+<<<<<<< HEAD
 #if defined(_MSC_VER)  
 # pragma warning(push)  
 # pragma warning(disable:4365)  // conversion ... signed/unsigned mismatch
@@ -48,6 +53,27 @@
 #include <iosfwd>
 #include <climits>
 
+=======
+#if defined(_MSC_VER)
+# pragma warning(push)
+# pragma warning(disable:4365)  // conversion ... signed/unsigned mismatch
+#endif
+
+#include <boost/endian/buffers.hpp>
+#include <boost/core/scoped_enum.hpp>
+#include <boost/predef/other/endian.h>
+#include <boost/static_assert.hpp>
+#include <boost/cstdint.hpp>
+#include <boost/config.hpp>
+#include <boost/config/workaround.hpp>
+#include <iosfwd>
+#include <climits>
+
+#if defined(__BORLANDC__) || defined( __CODEGEARC__)
+# pragma pack(push, 1)
+#endif
+
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 # if CHAR_BIT != 8
 #   error Platforms with CHAR_BIT != 8 are not supported
 # endif
@@ -58,7 +84,12 @@
 #   define BOOST_ENDIAN_DEFAULT_CONSTRUCT = default;  // C++0x
 # endif
 
+<<<<<<< HEAD
 # if defined(BOOST_NO_CXX11_DEFAULTED_FUNCTIONS) && defined(BOOST_ENDIAN_FORCE_PODNESS)
+=======
+// g++ pre-4.6 does not support unrestricted unions, but we have no Config macro for that
+# if (defined(BOOST_NO_CXX11_DEFAULTED_FUNCTIONS) || BOOST_WORKAROUND(BOOST_GCC, < 40600)) && defined(BOOST_ENDIAN_FORCE_PODNESS)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 #   define BOOST_ENDIAN_NO_CTORS
 # endif
 
@@ -76,7 +107,11 @@ namespace endian
 {
 
   template <BOOST_SCOPED_ENUM(order) Order, class T, std::size_t n_bits,
+<<<<<<< HEAD
     BOOST_SCOPED_ENUM(align) A = align::no>
+=======
+    BOOST_SCOPED_ENUM(align) Align = align::no>
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
       class endian_arithmetic;
 
   // big endian signed integer aligned types
@@ -103,6 +138,15 @@ namespace endian
   typedef endian_arithmetic<order::little, uint32_t, 32, align::yes>  little_uint32_at;
   typedef endian_arithmetic<order::little, uint64_t, 64, align::yes>  little_uint64_at;
 
+<<<<<<< HEAD
+=======
+  // aligned floating point types
+  typedef endian_arithmetic<order::big, float, 32, align::yes>        big_float32_at;
+  typedef endian_arithmetic<order::big, double, 64, align::yes>       big_float64_at;
+  typedef endian_arithmetic<order::little, float, 32, align::yes>     little_float32_at;
+  typedef endian_arithmetic<order::little, double, 64, align::yes>    little_float64_at;
+
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
   // aligned native endian typedefs are not provided because
   // <cstdint> types are superior for this use case
 
@@ -146,7 +190,11 @@ namespace endian
   typedef endian_arithmetic<order::little, uint_least64_t, 56>  little_uint56_t;
   typedef endian_arithmetic<order::little, uint_least64_t, 64>  little_uint64_t;
 
+<<<<<<< HEAD
 # ifdef BOOST_BIG_ENDIAN
+=======
+# if BOOST_ENDIAN_BIG_BYTE
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
   // native endian signed integer unaligned types
   typedef big_int8_t   native_int8_t;
   typedef big_int16_t  native_int16_t;
@@ -188,6 +236,7 @@ namespace endian
   typedef little_uint64_t  native_uint64_t;
 # endif
 
+<<<<<<< HEAD
 # ifdef BOOST_ENDIAN_DEPRECATED_NAMES
 
   typedef order endianness;
@@ -398,6 +447,166 @@ namespace endian
         }
         operator value_type() const BOOST_NOEXCEPT { return this->value(); }
     };
+=======
+  // unaligned floating point types
+  typedef endian_arithmetic<order::big, float, 32, align::no>        big_float32_t;
+  typedef endian_arithmetic<order::big, double, 64, align::no>       big_float64_t;
+  typedef endian_arithmetic<order::little, float, 32, align::no>     little_float32_t;
+  typedef endian_arithmetic<order::little, double, 64, align::no>    little_float64_t;
+  typedef endian_arithmetic<order::native, float, 32, align::no>     native_float32_t;
+  typedef endian_arithmetic<order::native, double, 64, align::no>    native_float64_t;
+
+//----------------------------------  end synopsis  ------------------------------------//
+
+template <BOOST_SCOPED_ENUM(order) Order, class T, std::size_t n_bits,
+    BOOST_SCOPED_ENUM(align) Align>
+class endian_arithmetic:
+    public endian_buffer<Order, T, n_bits, Align>
+{
+private:
+
+    typedef endian_buffer<Order, T, n_bits, Align> inherited;
+
+public:
+
+    typedef T value_type;
+
+#ifndef BOOST_ENDIAN_NO_CTORS
+
+    endian_arithmetic() BOOST_ENDIAN_DEFAULT_CONSTRUCT
+
+    BOOST_ENDIAN_EXPLICIT_OPT endian_arithmetic( T val ) BOOST_NOEXCEPT: inherited( val )
+    {
+    }
+
+#endif
+
+    endian_arithmetic& operator=( T val ) BOOST_NOEXCEPT
+    {
+        inherited::operator=( val );
+        return *this;
+    }
+
+    operator value_type() const BOOST_NOEXCEPT
+    {
+        return this->value();
+    }
+
+    // operators
+
+    T operator+() const BOOST_NOEXCEPT
+    {
+        return this->value();
+    }
+
+    endian_arithmetic& operator+=( T y ) BOOST_NOEXCEPT
+    {
+        *this = static_cast<T>( this->value() + y );
+        return *this;
+    }
+
+    endian_arithmetic& operator-=( T y ) BOOST_NOEXCEPT
+    {
+        *this = static_cast<T>( this->value() - y );
+        return *this;
+    }
+
+    endian_arithmetic& operator*=( T y ) BOOST_NOEXCEPT
+    {
+        *this = static_cast<T>( this->value() * y );
+        return *this;
+    }
+
+    endian_arithmetic& operator/=( T y ) BOOST_NOEXCEPT
+    {
+        *this = static_cast<T>( this->value() / y );
+        return *this;
+    }
+
+    endian_arithmetic& operator%=( T y ) BOOST_NOEXCEPT
+    {
+        *this = static_cast<T>( this->value() % y );
+        return *this;
+    }
+
+    endian_arithmetic& operator&=( T y ) BOOST_NOEXCEPT
+    {
+        *this = static_cast<T>( this->value() & y );
+        return *this;
+    }
+
+    endian_arithmetic& operator|=( T y ) BOOST_NOEXCEPT
+    {
+        *this = static_cast<T>( this->value() | y );
+        return *this;
+    }
+
+    endian_arithmetic& operator^=( T y ) BOOST_NOEXCEPT
+    {
+        *this = static_cast<T>( this->value() ^ y );
+        return *this;
+    }
+
+    endian_arithmetic& operator<<=( T y ) BOOST_NOEXCEPT
+    {
+        *this = static_cast<T>( this->value() << y );
+        return *this;
+    }
+
+    endian_arithmetic& operator>>=( T y ) BOOST_NOEXCEPT
+    {
+        *this = static_cast<T>( this->value() >> y );
+        return *this;
+    }
+
+    endian_arithmetic& operator++() BOOST_NOEXCEPT
+    {
+        *this += 1;
+        return *this;
+    }
+
+    endian_arithmetic& operator--() BOOST_NOEXCEPT
+    {
+        *this -= 1;
+        return *this;
+    }
+
+    endian_arithmetic operator++(int) BOOST_NOEXCEPT
+    {
+        endian_arithmetic tmp( *this );
+        *this += 1;
+        return tmp;
+    }
+
+    endian_arithmetic operator--(int) BOOST_NOEXCEPT
+    {
+        endian_arithmetic tmp( *this );
+        *this -= 1;
+        return tmp;
+    }
+
+    template<class Ch, class Tr>
+    friend std::basic_ostream<Ch, Tr>&
+    operator<<( std::basic_ostream<Ch, Tr>& os, endian_arithmetic const& x )
+    {
+        return os << x.value();
+    }
+
+    template<class Ch, class Tr>
+    friend std::basic_istream<Ch, Tr>&
+    operator>>( std::basic_istream<Ch, Tr>& is, endian_arithmetic& x )
+    {
+        T i;
+
+        if( is >> i )
+        {
+            x = i;
+        }
+
+        return is;
+    }
+};
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 } // namespace endian
 } // namespace boost
@@ -406,8 +615,14 @@ namespace endian
 # pragma pack(pop)
 #endif
 
+<<<<<<< HEAD
 #if defined(_MSC_VER)  
 # pragma warning(pop)  
 #endif 
+=======
+#if defined(_MSC_VER)
+# pragma warning(pop)
+#endif
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 #endif // BOOST_ENDIAN_ARITHMETIC_HPP

@@ -20,6 +20,10 @@
 
 #include <boost/test/tree/decorator.hpp>
 #include <boost/test/tree/fixture.hpp>
+<<<<<<< HEAD
+=======
+#include <boost/test/framework.hpp>
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 #include <boost/test/tools/assertion_result.hpp>
 
@@ -42,7 +46,11 @@ namespace boost {
 namespace unit_test {
 
 namespace framework {
+<<<<<<< HEAD
 class state;
+=======
+  class state;
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 }
 
 // ************************************************************************** //
@@ -113,8 +121,11 @@ protected:
     test_unit( const_string tu_name, const_string tc_file, std::size_t tc_line, test_unit_type t );
     // Master test suite constructor
     explicit                            test_unit( const_string module_name );
+<<<<<<< HEAD
 
 private:
+=======
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 };
 
 // ************************************************************************** //
@@ -175,11 +186,29 @@ public:
     void            add( test_unit_generator const& gen, unsigned timeout = 0 );
 
     /// @overload
+<<<<<<< HEAD
     void            add( test_unit_generator const& gen, decorator::collector& decorators );
 
     //! Removes a test from the test suite.
     void            remove( test_unit_id id );
 
+=======
+    void            add( test_unit_generator const& gen, decorator::collector_t& decorators );
+  
+    /// @overload
+    void            add( boost::shared_ptr<test_unit_generator> gen_ptr, decorator::collector_t& decorators );
+
+    //! Removes a test from the test suite.
+    void            remove( test_unit_id id );
+  
+    //! Generates all the delayed test_units from the generators
+    void            generate( );
+
+    //! Check for duplicates name in test cases
+    //!
+    //! Raises a setup_error if there are duplicates
+    void            check_for_duplicate_test_cases();
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
     // access methods
     test_unit_id    get( const_string tu_name ) const;
@@ -199,6 +228,11 @@ protected:
 
     test_unit_id_list   m_children;
     children_per_rank   m_ranked_children; ///< maps child sibling rank to list of children with that rank
+<<<<<<< HEAD
+=======
+  
+    std::vector< std::pair<boost::shared_ptr<test_unit_generator>, std::vector<decorator::base_ptr> > > m_generators; /// lazy evaluation
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 };
 
 // ************************************************************************** //
@@ -206,12 +240,26 @@ protected:
 // ************************************************************************** //
 
 class BOOST_TEST_DECL master_test_suite_t : public test_suite {
+<<<<<<< HEAD
 public:
     master_test_suite_t();
 
     // Data members
     int      argc;
     char**   argv;
+=======
+private:
+    master_test_suite_t();
+    master_test_suite_t(const master_test_suite_t&); // undefined
+    master_test_suite_t& operator=(master_test_suite_t const &); // undefined
+  
+public:
+    // Data members
+    int      argc;
+    char**   argv;
+  
+    friend BOOST_TEST_DECL master_test_suite_t& boost::unit_test::framework::master_test_suite();
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 };
 
 // ************************************************************************** //

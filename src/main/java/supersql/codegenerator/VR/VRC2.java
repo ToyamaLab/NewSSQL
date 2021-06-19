@@ -2,6 +2,9 @@ package supersql.codegenerator.VR;
 
 import java.io.Serializable;
 
+import org.w3c.dom.Element;
+
+import supersql.codegenerator.CodeGenerator;
 import supersql.codegenerator.Connector;
 import supersql.codegenerator.ITFE;
 import supersql.codegenerator.Manager;
@@ -13,6 +16,7 @@ public class VRC2 extends Connector implements Serializable {
 
 	private VREnv vrEnv;
 	private VREnv vrEnv2;
+	
 
 	public VRC2(Manager manager, VREnv henv, VREnv henv2) {
 		this.vrEnv = henv;
@@ -51,9 +55,6 @@ public class VRC2 extends Connector implements Serializable {
 		} else {
 			classname = VREnv.getClassID(this);
 		}
-		
-		vrEnv.append_css_def_td(VREnv.getClassID(this), this.decos);
-
 
 		if (!GlobalEnv.isOpt()) {
 			if (vrEnv.decorationStartFlag.size() > 0) {
@@ -168,24 +169,45 @@ public class VRC2 extends Connector implements Serializable {
 				vrEnv2.code.append(" form=\"" + VREnv.getFormNumber()
 				+ "\" ");
 			}
-			
 
 			vrEnv2.code.append(">");
 		}
 		//B
 
 		int i = 0;
-
+		if(CodeGenerator.getMedia().equalsIgnoreCase("unity_dv")){
+			Element connector = vrEnv.xml.createElement("Connector"+VRC1.j);
+			connector.setAttribute("type","C2");
+			vrEnv.currentNode = vrEnv.currentNode.appendChild(connector);
+			VRC1.j++;
+		}
 		while (this.hasMoreItems()) {
 			vrEnv.cNum++;
 			vrEnv.xmlDepth++;
 			ITFE tfe = tfes.get(i);
 
-			
+			if(VRAttribute.genre.equals("")){// kotani 16/10/04
+				if(vrEnv.gLevel == 0){
+					VRAttribute.groupcount++;
+				}
+			}
+
 			this.worknextItem();
 			i++;
 			vrEnv.cNum--;
 			vrEnv.xmlDepth--;
+		}
+		
+		if(CodeGenerator.getMedia().equalsIgnoreCase("unity_dv")){
+			vrEnv.currentNode = vrEnv.currentNode.getParentNode();
+			VRC1.j--;
+		}
+
+		//TODO: check what this if does
+		if(VRAttribute.gjudge == 0){
+			if(VRAttribute.billnum >= 2){
+				VRAttribute.billnum = 0;
+			}
 		}
 
 		vrEnv2.code.append("</tfe>");

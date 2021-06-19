@@ -53,6 +53,19 @@ public class Mobile_HTML5Attribute extends Attribute {
 	}
 	//Attribute��work�᥽�å�
 	public String work(ExtList data_info) {
+		
+		//tbt acc 180806
+		if(GlobalEnv.joinFlag){
+			// if (Incremental.flag || Ehtml.flag) {
+			Mobile_HTML5CONCAT.joinClassID = Mobile_HTML5Env.getClassID(this);
+			Mobile_HTML5CONCAT.joinDecos = this.decos;
+			// html_env.append_css_def_td(Mobile_HTML5CONCAT.joinClassID, this.decos);
+			if ((!Incremental.flag && !Ehtml.flag) || !Ehtml.isEhtml2()) ;
+			else	html_env.append_css_def_td(Mobile_HTML5CONCAT.joinClassID, this.decos);
+			return this.getStr(data_info);
+		}
+		//tbt end
+		
 		/*
         if(GlobalEnv.getSelectFlg())
         	data_info = (ExtList) data_info.get(0);
@@ -64,7 +77,7 @@ public class Mobile_HTML5Attribute extends Attribute {
 		//	  	}
 		//		HTMLEnv.divWidth = "";
 
-		if (Incremental.flag || Ehtml.flag) {
+		if (Ehtml.infinitescroll_flag && (Incremental.flag || Ehtml.flag)) {
 			Infinitescroll.Attributes(this, html_env,html_env2, data_info);
 			return null;
 		} else {
@@ -226,7 +239,53 @@ public class Mobile_HTML5Attribute extends Attribute {
 				if(whichForm == 0){ //normal process (not form)
 					//***APPEND DATABASE VALUE***//
 					Log.out(data_info);
-					if(Mobile_HTML5_dynamic.dynamicDisplay || Mobile_HTML5_stream.streamDisplay || Mobile_HTML5_form.form){
+//<<<<<<< HEAD
+					
+					// added by masato 20150924 incremental update
+					if (Incremental.flag || Ehtml.flag) {
+						// modified by masato 20151201 XMLの要素名をTFE******に変更
+						// Incremental.outXMLData(htmlEnv.xmlDepth, "<" +
+						// Items.get(0) + tfe + ">" + this.getStr(data_info) + "</"
+						// + Items.get(0) + ">\n");
+						String outType = "div";
+
+						if (html_env.xmlDepth != 0) {
+							// 親のoutTypeを継承
+							outType = html_env.outTypeList.get(html_env.xmlDepth - 1);
+						}
+						if (decos.containsKey("table") || !outType.equals("div")) {
+							html_env.outTypeList.add(html_env.xmlDepth, "table");
+						} else {
+							html_env.outTypeList.add(html_env.xmlDepth, "div");
+						}
+						if (decos.containsKey("div")) {
+							html_env.outTypeList.add(html_env.xmlDepth, "div");
+						}
+						Log.info("out:"+html_env.outTypeList);
+						String data = this.getStr(data_info)
+								.replaceAll("<", "&lt;");
+						data = data.replaceAll(">", "&gt;");
+						
+						if (!Ehtml.infinitescroll_flag) {
+							String cid = Mobile_HTML5Env.getClassID(this);
+							Incremental.outXMLData(
+									html_env.xmlDepth,
+									"<"+cid+" outType=\'"
+											+ html_env.outTypeList.get(html_env.xmlDepth)
+											+ "\'>" + data + "</"+cid+">\n");
+						} else {
+							Incremental.outXMLData(
+									html_env.xmlDepth,
+									"<Value outType=\'"
+											+ html_env.outTypeList.get(html_env.xmlDepth)
+											+ "\' class=\'" + Mobile_HTML5Env.getClassID(this)
+											+ "'>" + data + "</Value>\n");
+						}
+
+					}else if(Mobile_HTML5_dynamic.dynamicDisplay || Mobile_HTML5_stream.streamDisplay || Mobile_HTML5_form.form){
+//=======
+//					if(Mobile_HTML5_dynamic.dynamicDisplay || Mobile_HTML5_stream.streamDisplay || Mobile_HTML5_form.form){
+//>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 						//20131118 dynamic
 						if(Mobile_HTML5_dynamic.dynamicDisplay){
 							html_env.code.append( Mobile_HTML5_dynamic.dynamicAttributeProcess(this, html_env, decos) );
@@ -268,6 +327,12 @@ public class Mobile_HTML5Attribute extends Attribute {
 								html_env.code.append("</div>\n");
 						}
 						Log.out("</A>");
+					}
+					
+					// added by masato 20151124 for plink
+					if (html_env.plinkFlag) {
+						Incremental.outXMLData(html_env.xmlDepth, "</PostLink>\n");
+
 					}
 
 					/*
@@ -379,6 +444,16 @@ public class Mobile_HTML5Attribute extends Attribute {
 			html_env2.code.append(string_tmp);
 			Log.out(string_tmp);
 		}
+		
+		// added by masato 20151124 for plink
+		if (html_env.plinkFlag) {
+			String tmp = "";
+			for (int i = 0; i < html_env.valueArray.size(); i++) {
+				tmp += " value" + (i + 1) + "='" + html_env.valueArray.get(i) + "'";
+			}
+			Incremental.outXMLData(html_env.xmlDepth, "<PostLink target='" + html_env.linkUrl + "'" + tmp + ">\n");
+		}
+		
 
 		createForm(data_info);
 

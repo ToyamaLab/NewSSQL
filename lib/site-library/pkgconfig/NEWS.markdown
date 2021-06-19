@@ -1,4 +1,11 @@
 
+<<<<<<< HEAD
+=======
+# 2.0.3
+
+No user visible changes.
+
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 # 2.0.2
 
 No user visible changes, work around a CRAN check false positive.

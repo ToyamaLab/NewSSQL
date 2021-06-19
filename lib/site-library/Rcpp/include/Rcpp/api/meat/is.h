@@ -148,6 +148,11 @@ namespace Rcpp {
         return TYPEOF(x) == REALSXP && Rf_inherits(x, "POSIXt");
     }
 
+<<<<<<< HEAD
+=======
+#ifndef RCPP_NO_MODULES
+
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     inline bool is_module_object_internal(SEXP obj, const char* clazz){
         Environment env(obj);
         SEXP sexp = env.get(".cppclass");
@@ -161,6 +166,11 @@ namespace Rcpp {
         return is_module_object_internal(x, typeid(CLASS).name());
     }
 
+<<<<<<< HEAD
+=======
+#endif
+
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
   } // namespace internal
 } // namespace Rcpp

@@ -36,6 +36,12 @@
                ::boost::is_void< Rhs_noptr >::value\
             )\
          )\
+<<<<<<< HEAD
+=======
+      ) || \
+      (\
+         ::boost::type_traits_detail::is_likely_stateless_lambda<Lhs_noref>::value\
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
       )\
       )
 

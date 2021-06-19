@@ -16,10 +16,13 @@
 #include <boost/preprocessor/empty.hpp>
 #include <boost/preprocessor/control/if.hpp>
 #include <boost/preprocessor/comparison/less.hpp>
+<<<<<<< HEAD
 #include <boost/type_traits/add_reference.hpp>
 #include <boost/type_traits/is_const.hpp>
 #include <boost/type_traits/add_const.hpp>
 #include <boost/type_traits/remove_const.hpp>
+=======
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 #include <boost/fusion/adapted/struct/detail/extension.hpp>
 #include <boost/fusion/adapted/struct/detail/adapt_base.hpp>

@@ -31,9 +31,13 @@ namespace boost { namespace spirit
 
 namespace boost { namespace spirit { namespace karma
 {
+<<<<<<< HEAD
 #ifndef BOOST_SPIRIT_NO_PREDEFINED_TERMINALS
     using spirit::attr_cast;
 #endif
+=======
+    using spirit::attr_cast;
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
     ///////////////////////////////////////////////////////////////////////////
     // attr_cast_generator consumes the attribute of subject generator without

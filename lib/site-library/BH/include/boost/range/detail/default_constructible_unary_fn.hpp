@@ -32,6 +32,26 @@ public:
         : m_impl(source)
     {
     }
+<<<<<<< HEAD
+=======
+    default_constructible_unary_fn_wrapper(const default_constructible_unary_fn_wrapper& source)
+        : m_impl(source.m_impl)
+    {
+    }
+    default_constructible_unary_fn_wrapper& operator=(const default_constructible_unary_fn_wrapper& source)
+    {
+        if (source.m_impl)
+        {
+            // Lambda are not copy/move assignable.
+            m_impl.emplace(*source.m_impl);
+        }
+        else
+        {
+            m_impl.reset();
+        }
+        return *this;
+    }
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     template<typename Arg>
     R operator()(const Arg& arg) const
     {

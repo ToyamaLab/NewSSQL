@@ -161,52 +161,86 @@ class generic_hook
       < NodeTraits
       , Tag, LinkMode, BaseHookType>                  hooktags;
 
+<<<<<<< HEAD
    node_ptr this_ptr()
    {  return pointer_traits<node_ptr>::pointer_to(static_cast<node&>(*this)); }
 
    const_node_ptr this_ptr() const
+=======
+   BOOST_INTRUSIVE_FORCEINLINE node_ptr this_ptr()
+   {  return pointer_traits<node_ptr>::pointer_to(static_cast<node&>(*this)); }
+
+   BOOST_INTRUSIVE_FORCEINLINE const_node_ptr this_ptr() const
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
    {  return pointer_traits<const_node_ptr>::pointer_to(static_cast<const node&>(*this)); }
 
    public:
    /// @endcond
 
+<<<<<<< HEAD
    generic_hook()
+=======
+   BOOST_INTRUSIVE_FORCEINLINE generic_hook()
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
    {
       if(hooktags::safemode_or_autounlink){
          node_algorithms::init(this->this_ptr());
       }
    }
 
+<<<<<<< HEAD
    generic_hook(const generic_hook& )
+=======
+   BOOST_INTRUSIVE_FORCEINLINE generic_hook(const generic_hook& )
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
    {
       if(hooktags::safemode_or_autounlink){
          node_algorithms::init(this->this_ptr());
       }
    }
 
+<<<<<<< HEAD
    generic_hook& operator=(const generic_hook& )
    {  return *this;  }
 
    ~generic_hook()
+=======
+   BOOST_INTRUSIVE_FORCEINLINE generic_hook& operator=(const generic_hook& )
+   {  return *this;  }
+
+   BOOST_INTRUSIVE_FORCEINLINE ~generic_hook()
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
    {
       destructor_impl
          (*this, detail::link_dispatch<hooktags::link_mode>());
    }
 
+<<<<<<< HEAD
    void swap_nodes(generic_hook &other)
+=======
+   BOOST_INTRUSIVE_FORCEINLINE void swap_nodes(generic_hook &other)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
    {
       node_algorithms::swap_nodes
          (this->this_ptr(), other.this_ptr());
    }
 
+<<<<<<< HEAD
    bool is_linked() const
+=======
+   BOOST_INTRUSIVE_FORCEINLINE bool is_linked() const
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
    {
       //is_linked() can be only used in safe-mode or auto-unlink
       BOOST_STATIC_ASSERT(( hooktags::safemode_or_autounlink ));
       return !node_algorithms::unique(this->this_ptr());
    }
 
+<<<<<<< HEAD
    void unlink()
+=======
+   BOOST_INTRUSIVE_FORCEINLINE void unlink()
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
    {
       BOOST_STATIC_ASSERT(( (int)hooktags::link_mode == (int)auto_unlink ));
       node_ptr n(this->this_ptr());

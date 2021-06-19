@@ -23,4 +23,8 @@ Author: Jennifer Bryan [cre, aut],
 Maintainer: Jennifer Bryan <jenny@stat.ubc.ca>
 Repository: CRAN
 Date/Publication: 2016-07-27 03:17:48
+<<<<<<< HEAD
 Built: R 3.5.1; ; 2018-08-21 07:41:20 UTC; unix
+=======
+Built: R 4.0.2; ; 2020-08-27 07:48:36 UTC; unix
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce

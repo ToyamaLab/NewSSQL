@@ -13,9 +13,16 @@
 
 #include <boost/units/config.hpp>
 
+<<<<<<< HEAD
 /// A convenience macro that allows definition of static
 /// constants in headers in an ODR-safe way.
 #define BOOST_UNITS_STATIC_CONSTANT(name, type)             \
+=======
+#if defined(BOOST_NO_CXX11_CONSTEXPR) || defined(BOOST_UNITS_DOXYGEN)
+/// A convenience macro that allows definition of static
+/// constants in headers in an ODR-safe way.
+# define BOOST_UNITS_STATIC_CONSTANT(name, type)            \
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 template<bool b>                                            \
 struct name##_instance_t                                    \
 {                                                           \
@@ -29,6 +36,13 @@ namespace                                                   \
                                                             \
 template<bool b>                                            \
 const type name##_instance_t<b>::instance
+<<<<<<< HEAD
+=======
+#else
+# define BOOST_UNITS_STATIC_CONSTANT(name, type)            \
+BOOST_STATIC_CONSTEXPR type name
+#endif
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 /// A convenience macro for static constants with auto 
 /// type deduction. 

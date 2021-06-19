@@ -19,6 +19,12 @@
 #ifndef BOOST_PROGRESS_HPP
 #define BOOST_PROGRESS_HPP
 
+<<<<<<< HEAD
+=======
+#include <boost/config/header_deprecated.hpp>
+BOOST_HEADER_DEPRECATED( "the facilities in <boost/timer/timer.hpp> or <boost/timer/progress_display.hpp>" )
+
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 #include <boost/timer.hpp>
 #include <boost/noncopyable.hpp>
 #include <boost/cstdint.hpp>  // for uintmax_t

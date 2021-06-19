@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 /* Copyright 2003-2015 Joaquin M Lopez Munoz.
+=======
+/* Copyright 2003-2019 Joaquin M Lopez Munoz.
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
  * Distributed under the Boost Software License, Version 1.0.
  * (See accompanying file LICENSE_1_0.txt or copy at
  * http://www.boost.org/LICENSE_1_0.txt)
@@ -30,17 +34,42 @@ namespace multi_index{
 
 /* mem_fun implements a read-only key extractor based on a given non-const
  * member function of a class.
+<<<<<<< HEAD
  * const_mem_fun does the same for const member functions.
  * Additionally, mem_fun  and const_mem_fun are overloaded to support
  * referece_wrappers of T and "chained pointers" to T's. By chained pointer
  * to T we  mean a type P such that, given a p of Type P
+=======
+ * Also, the following variations are provided:
+ *   const_mem_fun:    const member functions
+ *   volatile_mem_fun: volatile member functions
+ *   cv_mem_fun:       const volatile member functions
+ *   ref_mem_fun:      ref-qualifed member functions (C++11)
+ *   cref_mem_fun:     const ref-qualifed member functions (C++11)
+ *   vref_mem_fun:     volatile ref-qualifed member functions (C++11)
+ *   cvref_mem_fun:    const volatile ref-qualifed member functions (C++11)
+ *
+ * All of these classes are overloaded to support boost::referece_wrappers
+ * of T and "chained pointers" to T's. By chained pointer to T we mean a type
+ * P such that, given a p of Type P
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
  *   *...n...*x is convertible to T&, for some n>=1.
  * Examples of chained pointers are raw and smart pointers, iterators and
  * arbitrary combinations of these (vg. T** or unique_ptr<T*>.)
  */
 
+<<<<<<< HEAD
 template<class Class,typename Type,Type (Class::*PtrToMemberFunction)()const>
 struct const_mem_fun
+=======
+namespace detail{
+
+template<
+  class Class,typename Type,
+  typename PtrToMemberFunctionType,PtrToMemberFunctionType PtrToMemberFunction
+>
+struct const_mem_fun_impl
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 {
   typedef typename remove_reference<Type>::type result_type;
 
@@ -74,8 +103,16 @@ struct const_mem_fun
   }
 };
 
+<<<<<<< HEAD
 template<class Class,typename Type,Type (Class::*PtrToMemberFunction)()>
 struct mem_fun
+=======
+template<
+  class Class,typename Type,
+  typename PtrToMemberFunctionType,PtrToMemberFunctionType PtrToMemberFunction
+>
+struct mem_fun_impl
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 {
   typedef typename remove_reference<Type>::type result_type;
 
@@ -104,6 +141,65 @@ struct mem_fun
   }
 };
 
+<<<<<<< HEAD
+=======
+} /* namespace multi_index::detail */
+
+template<class Class,typename Type,Type (Class::*PtrToMemberFunction)()const>
+struct const_mem_fun:detail::const_mem_fun_impl<
+  Class,Type,Type (Class::*)()const,PtrToMemberFunction
+>{};
+
+template<
+  class Class,typename Type,
+  Type (Class::*PtrToMemberFunction)()const volatile
+>
+struct cv_mem_fun:detail::const_mem_fun_impl<
+  Class,Type,Type (Class::*)()const volatile,PtrToMemberFunction
+>{};
+
+template<class Class,typename Type,Type (Class::*PtrToMemberFunction)()>
+struct mem_fun:
+  detail::mem_fun_impl<Class,Type,Type (Class::*)(),PtrToMemberFunction>{};
+
+template<
+  class Class,typename Type,Type (Class::*PtrToMemberFunction)()volatile
+>
+struct volatile_mem_fun:detail::mem_fun_impl<
+  Class,Type,Type (Class::*)()volatile,PtrToMemberFunction
+>{};
+
+#if !defined(BOOST_NO_CXX11_REF_QUALIFIERS)
+
+template<
+  class Class,typename Type,Type (Class::*PtrToMemberFunction)()const&
+>
+struct cref_mem_fun:detail::const_mem_fun_impl<
+  Class,Type,Type (Class::*)()const&,PtrToMemberFunction
+>{};
+
+template<
+  class Class,typename Type,
+  Type (Class::*PtrToMemberFunction)()const volatile&
+>
+struct cvref_mem_fun:detail::const_mem_fun_impl<
+  Class,Type,Type (Class::*)()const volatile&,PtrToMemberFunction
+>{};
+
+template<class Class,typename Type,Type (Class::*PtrToMemberFunction)()&>
+struct ref_mem_fun:
+  detail::mem_fun_impl<Class,Type,Type (Class::*)()&,PtrToMemberFunction>{};
+
+template<
+  class Class,typename Type,Type (Class::*PtrToMemberFunction)()volatile&
+>
+struct vref_mem_fun:detail::mem_fun_impl<
+  Class,Type,Type (Class::*)()volatile&,PtrToMemberFunction
+>{};
+
+#endif
+
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 /* MSVC++ 6.0 has problems with const member functions as non-type template
  * parameters, somehow it takes them as non-const. const_mem_fun_explicit
  * workarounds this deficiency by accepting an extra type parameter that
@@ -119,7 +215,12 @@ struct mem_fun
 
 template<
   class Class,typename Type,
+<<<<<<< HEAD
   typename PtrToMemberFunctionType,PtrToMemberFunctionType PtrToMemberFunction>
+=======
+  typename PtrToMemberFunctionType,PtrToMemberFunctionType PtrToMemberFunction
+>
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 struct const_mem_fun_explicit
 {
   typedef typename remove_reference<Type>::type result_type;
@@ -156,7 +257,12 @@ struct const_mem_fun_explicit
 
 template<
   class Class,typename Type,
+<<<<<<< HEAD
   typename PtrToMemberFunctionType,PtrToMemberFunctionType PtrToMemberFunction>
+=======
+  typename PtrToMemberFunctionType,PtrToMemberFunctionType PtrToMemberFunction
+>
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 struct mem_fun_explicit
 {
   typedef typename remove_reference<Type>::type result_type;

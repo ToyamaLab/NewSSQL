@@ -2,7 +2,11 @@
 // io_context.hpp
 // ~~~~~~~~~~~~~~
 //
+<<<<<<< HEAD
 // Copyright (c) 2003-2017 Christopher M. Kohlhoff (chris at kohlhoff dot com)
+=======
+// Copyright (c) 2003-2019 Christopher M. Kohlhoff (chris at kohlhoff dot com)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 //
 // Distributed under the Boost Software License, Version 1.0. (See accompanying
 // file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
@@ -532,9 +536,15 @@ public:
    *
    * throws an exception.
    */
+<<<<<<< HEAD
   template <typename CompletionHandler>
   BOOST_ASIO_INITFN_RESULT_TYPE(CompletionHandler, void ())
   dispatch(BOOST_ASIO_MOVE_ARG(CompletionHandler) handler);
+=======
+  template <typename LegacyCompletionHandler>
+  BOOST_ASIO_INITFN_AUTO_RESULT_TYPE(LegacyCompletionHandler, void ())
+  dispatch(BOOST_ASIO_MOVE_ARG(LegacyCompletionHandler) handler);
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
   /// (Deprecated: Use boost::asio::post().) Request the io_context to invoke
   /// the given handler and return immediately.
@@ -559,9 +569,15 @@ public:
    *
    * throws an exception.
    */
+<<<<<<< HEAD
   template <typename CompletionHandler>
   BOOST_ASIO_INITFN_RESULT_TYPE(CompletionHandler, void ())
   post(BOOST_ASIO_MOVE_ARG(CompletionHandler) handler);
+=======
+  template <typename LegacyCompletionHandler>
+  BOOST_ASIO_INITFN_AUTO_RESULT_TYPE(LegacyCompletionHandler, void ())
+  post(BOOST_ASIO_MOVE_ARG(LegacyCompletionHandler) handler);
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
   /// (Deprecated: Use boost::asio::bind_executor().) Create a new handler that
   /// automatically dispatches the wrapped handler on the io_context.
@@ -595,6 +611,14 @@ public:
 #endif // !defined(BOOST_ASIO_NO_DEPRECATED)
 
 private:
+<<<<<<< HEAD
+=======
+#if !defined(BOOST_ASIO_NO_DEPRECATED)
+  struct initiate_dispatch;
+  struct initiate_post;
+#endif // !defined(BOOST_ASIO_NO_DEPRECATED)
+
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
   // Helper function to add the implementation.
   BOOST_ASIO_DECL impl_type& add_impl(impl_type* impl);
 
@@ -769,10 +793,13 @@ public:
   /// Get the io_context associated with the work.
   boost::asio::io_context& get_io_context();
 
+<<<<<<< HEAD
   /// (Deprecated: Use get_io_context().) Get the io_context associated with the
   /// work.
   boost::asio::io_context& get_io_service();
 
+=======
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 private:
   // Prevent assignment.
   void operator=(const work& other);
@@ -790,11 +817,14 @@ public:
   /// Get the io_context object that owns the service.
   boost::asio::io_context& get_io_context();
 
+<<<<<<< HEAD
 #if !defined(BOOST_ASIO_NO_DEPRECATED)
   /// Get the io_context object that owns the service.
   boost::asio::io_context& get_io_service();
 #endif // !defined(BOOST_ASIO_NO_DEPRECATED)
 
+=======
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 private:
   /// Destroy all user-defined handler objects owned by the service.
   BOOST_ASIO_DECL virtual void shutdown();

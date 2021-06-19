@@ -141,15 +141,26 @@
     >\
     struct encode_type_impl<V, Name<BOOST_PP_ENUM_PARAMS(Size, P)> >\
     {\
+<<<<<<< HEAD
         typedef typename boost::type_of::push_back<V, boost::mpl::size_t<ID> >::type V0;\
+=======
+        typedef typename boost::type_of::push_back<V, boost::type_of::constant<std::size_t,ID> >::type V0;\
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
         BOOST_PP_SEQ_FOR_EACH_I(BOOST_TYPEOF_REGISTER_TEMPLATE_ENCODE_PARAM, ~, Params)\
         typedef BOOST_PP_CAT(V, Size) type;\
     };\
     template<class Iter>\
+<<<<<<< HEAD
     struct decode_type_impl<boost::mpl::size_t<ID>, Iter>\
     {\
         typedef decode_type_impl<boost::mpl::size_t<ID>, Iter> self_t;\
         typedef boost::mpl::size_t<ID> self_id;\
+=======
+    struct decode_type_impl<boost::type_of::constant<std::size_t,ID>, Iter>\
+    {\
+        typedef decode_type_impl<boost::type_of::constant<std::size_t,ID>, Iter> self_t;\
+        typedef boost::type_of::constant<std::size_t,ID> self_id;\
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
         typedef Iter iter0;\
         BOOST_PP_SEQ_FOR_EACH_I(BOOST_TYPEOF_REGISTER_TEMPLATE_DECODE_PARAM, ~, Params)\
         BOOST_TYPEOF_TYPEDEF_DECODED_TYPE(Name, Params)\

@@ -16,6 +16,10 @@
 #define BOOST_TEST_UTILS_XML_PRINTER_HPP
 
 // Boost.Test
+<<<<<<< HEAD
+=======
+#include <boost/test/detail/global_typedef.hpp>
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 #include <boost/test/utils/basic_cstring/basic_cstring.hpp>
 #include <boost/test/utils/custom_manip.hpp>
 #include <boost/test/utils/foreach.hpp>
@@ -26,6 +30,10 @@
 
 // STL
 #include <iostream>
+<<<<<<< HEAD
+=======
+#include <map>
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 #include <boost/test/detail/suppress_warnings.hpp>
 

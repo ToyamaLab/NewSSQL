@@ -11,6 +11,7 @@
 #ifndef BOOST_COMPUTE_CL_EXT_HPP
 #define BOOST_COMPUTE_CL_EXT_HPP
 
+<<<<<<< HEAD
 #if defined(BOOST_COMPUTE_MAX_CL_VERSION)
 #  if !defined(CL_USE_DEPRECATED_OPENCL_2_1_APIS) && BOOST_COMPUTE_MAX_CL_VERSION < 202
 #    define CL_USE_DEPRECATED_OPENCL_2_1_APIS
@@ -28,6 +29,9 @@
 #    define CL_USE_DEPRECATED_OPENCL_1_0_APIS
 #  endif
 #endif
+=======
+#include "detail/cl_versions.hpp"
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 #if defined(__APPLE__)
 #include <OpenCL/cl_ext.h>

@@ -1,7 +1,12 @@
 library(httr)
 
 # 1. Create endpoint
+<<<<<<< HEAD
 withings <- oauth_endpoint(base_url = "https://oauth.withings.com/account",
+=======
+withings <- oauth_endpoint(
+  base_url = "https://oauth.withings.com/account",
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
   "request_token",
   "authorize",
   "access_token"

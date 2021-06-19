@@ -1,0 +1,4 @@
+GENERATE HTML {
+   t.id, [e.manager, [e.id]!]!
+}
+from employee e, team t

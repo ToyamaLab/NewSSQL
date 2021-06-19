@@ -21,13 +21,23 @@ http://www.boost.org/LICENSE_1_0.txt)
 
     [[`linux`] [__predef_detection__]]
     [[`__linux`] [__predef_detection__]]
+<<<<<<< HEAD
+=======
+    [[`__linux__`] [__predef_detection__]]
+    [[`__gnu_linux__`] [__predef_detection__]]
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     ]
  */
 
 #define BOOST_OS_LINUX BOOST_VERSION_NUMBER_NOT_AVAILABLE
 
 #if !defined(BOOST_PREDEF_DETAIL_OS_DETECTED) && ( \
+<<<<<<< HEAD
     defined(linux) || defined(__linux) \
+=======
+    defined(linux) || defined(__linux) || \
+    defined(__linux__) || defined(__gnu_linux__) \
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     )
 #   undef BOOST_OS_LINUX
 #   define BOOST_OS_LINUX BOOST_VERSION_NUMBER_AVAILABLE

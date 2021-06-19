@@ -1,0 +1,7 @@
+GENERATE HTML
+cross_tab(
+    ['当月末','前月末比']!,
+    ['基準価格'!'純資産総額']!,
+    [x.b, y.c! x.b, y.c]!
+)
+FROM x, y

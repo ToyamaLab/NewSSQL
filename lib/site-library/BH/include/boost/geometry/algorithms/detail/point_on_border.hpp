@@ -4,8 +4,13 @@
 // Copyright (c) 2008-2012 Bruno Lalande, Paris, France.
 // Copyright (c) 2009-2012 Mateusz Loskot, London, UK.
 
+<<<<<<< HEAD
 // This file was modified by Oracle on 2017.
 // Modifications copyright (c) 2017 Oracle and/or its affiliates.
+=======
+// This file was modified by Oracle on 2017, 2018.
+// Modifications copyright (c) 2017-2018 Oracle and/or its affiliates.
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 // Contributed and/or modified by Adam Wulkiewicz, on behalf of Oracle
 
 // Parts of Boost.Geometry are redesigned from Geodan's Geographic Library
@@ -56,6 +61,7 @@ struct get_point
     }
 };
 
+<<<<<<< HEAD
 template<typename Point, std::size_t Dimension, std::size_t DimensionCount>
 struct midpoint_helper
 {
@@ -82,18 +88,26 @@ struct midpoint_helper<Point, DimensionCount, DimensionCount>
 
 
 template <bool Midpoint>
+=======
+
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 struct point_on_range
 {
     // Version with iterator
     template<typename Point, typename Iterator>
     static inline bool apply(Point& point, Iterator begin, Iterator end)
     {
+<<<<<<< HEAD
         Iterator it = begin;
         if (it == end)
+=======
+        if (begin == end)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
         {
             return false;
         }
 
+<<<<<<< HEAD
         if (! Midpoint)
         {
             geometry::detail::conversion::convert_point_to_point(*it, point);
@@ -117,40 +131,58 @@ struct point_on_range
                 >::apply(point, *prev, *it);
         }
         return false;
+=======
+        geometry::detail::conversion::convert_point_to_point(*begin, point);
+        return true;
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     }
 
     // Version with range
     template<typename Point, typename Range>
     static inline bool apply(Point& point, Range const& range)
     {
+<<<<<<< HEAD
         typedef typename geometry::cs_tag<Point>::type cs_tag;
         BOOST_STATIC_ASSERT((! Midpoint || boost::is_same<cs_tag, cartesian_tag>::value));
 
+=======
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
         return apply(point, boost::begin(range), boost::end(range));
     }
 };
 
 
+<<<<<<< HEAD
 template <bool Midpoint>
+=======
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 struct point_on_polygon
 {
     template<typename Point, typename Polygon>
     static inline bool apply(Point& point, Polygon const& polygon)
     {
+<<<<<<< HEAD
         return point_on_range
             <
                 Midpoint
             >::apply(point, exterior_ring(polygon));
+=======
+        return point_on_range::apply(point, exterior_ring(polygon));
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     }
 };
 
 
+<<<<<<< HEAD
 template <bool Midpoint>
+=======
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 struct point_on_box
 {
     template<typename Point, typename Box>
     static inline bool apply(Point& point, Box const& box)
     {
+<<<<<<< HEAD
         if (BOOST_GEOMETRY_CONDITION(Midpoint))
         {
             Point p1, p2;
@@ -167,6 +199,9 @@ struct point_on_box
             detail::assign::assign_box_2d_corner<min_corner, min_corner>(box, point);
         }
 
+=======
+        detail::assign::assign_box_2d_corner<min_corner, min_corner>(box, point);
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
         return true;
     }
 };
@@ -206,6 +241,7 @@ namespace dispatch
 {
 
 
+<<<<<<< HEAD
 template
 <
     typename GeometryTag,
@@ -251,15 +287,60 @@ struct point_on_border<multi_polygon_tag, Midpoint>
     : detail::point_on_border::point_on_multi
         <
             detail::point_on_border::point_on_polygon<Midpoint>
+=======
+template <typename GeometryTag>
+struct point_on_border
+{};
+
+template <>
+struct point_on_border<point_tag>
+    : detail::point_on_border::get_point
+{};
+
+template <>
+struct point_on_border<linestring_tag>
+    : detail::point_on_border::point_on_range
+{};
+
+template <>
+struct point_on_border<ring_tag>
+    : detail::point_on_border::point_on_range
+{};
+
+template <>
+struct point_on_border<polygon_tag>
+    : detail::point_on_border::point_on_polygon
+{};
+
+template <>
+struct point_on_border<box_tag>
+    : detail::point_on_border::point_on_box
+{};
+
+
+template <>
+struct point_on_border<multi_polygon_tag>
+    : detail::point_on_border::point_on_multi
+        <
+            detail::point_on_border::point_on_polygon
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
         >
 {};
 
 
+<<<<<<< HEAD
 template <bool Midpoint>
 struct point_on_border<multi_linestring_tag, Midpoint>
     : detail::point_on_border::point_on_multi
         <
             detail::point_on_border::point_on_range<Midpoint>
+=======
+template <>
+struct point_on_border<multi_linestring_tag>
+    : detail::point_on_border::point_on_multi
+        <
+            detail::point_on_border::point_on_range
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
         >
 {};
 
@@ -286,12 +367,17 @@ inline bool point_on_border(Point& point, Geometry const& geometry)
 
     return dispatch::point_on_border
             <
+<<<<<<< HEAD
                 typename tag<Geometry>::type,
                 false
+=======
+                typename tag<Geometry>::type
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
             >::apply(point, geometry);
 }
 
 
+<<<<<<< HEAD
 /*!
 \tparam Midpoint boolean flag, true if the point should not be a vertex, but some point
     in between of two vertices
@@ -313,6 +399,8 @@ inline bool point_on_border(Point& point, Geometry const& geometry)
 }
 */
 
+=======
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 }} // namespace boost::geometry
 
 

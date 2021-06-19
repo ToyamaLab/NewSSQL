@@ -50,6 +50,7 @@ namespace boost { namespace numeric
 
         template<typename Left, typename Right>
         struct outer_product<Left, Right, std_vector_tag, std_vector_tag>
+<<<<<<< HEAD
           : std::binary_function<
                 Left
               , Right
@@ -61,6 +62,11 @@ namespace boost { namespace numeric
                 >
             >
         {
+=======
+        {
+            typedef Left first_argument_type;
+            typedef Right second_argument_type;
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
             typedef
                 ublas::matrix<
                     typename functional::multiplies<
@@ -160,6 +166,16 @@ namespace impl
             return this->cov_;
         }
 
+<<<<<<< HEAD
+=======
+        // make this accumulator serializeable
+        template<class Archive>
+        void serialize(Archive & ar, const unsigned int file_version)
+        { 
+            ar & cov_;
+        }
+
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     private:
         result_type cov_;
     };

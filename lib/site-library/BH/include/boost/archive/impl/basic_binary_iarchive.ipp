@@ -22,7 +22,11 @@ namespace std{
 #endif
 
 #include <boost/detail/workaround.hpp>
+<<<<<<< HEAD
 #include <boost/detail/endian.hpp>
+=======
+#include <boost/predef/other/endian.h>
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 #include <boost/archive/basic_binary_iarchive.hpp>
 
@@ -89,7 +93,11 @@ basic_binary_iarchive<Archive>::init(void){
     {
         int v = 0;
         v = this->This()->m_sb.sbumpc();
+<<<<<<< HEAD
         #if defined(BOOST_LITTLE_ENDIAN)
+=======
+        #if BOOST_ENDIAN_LITTLE_BYTE
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
         if(v < 6){
             ;
         }
@@ -111,7 +119,11 @@ basic_binary_iarchive<Archive>::init(void){
             // version 8+ followed by a zero
             this->This()->m_sb.sbumpc();
         }
+<<<<<<< HEAD
         #elif defined(BOOST_BIG_ENDIAN)
+=======
+        #elif BOOST_ENDIAN_BIG_BYTE
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
         if(v == 0)
             v = this->This()->m_sb.sbumpc();
         #endif

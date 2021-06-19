@@ -2,7 +2,11 @@
 // execution_context.hpp
 // ~~~~~~~~~~~~~~~~~~~~~
 //
+<<<<<<< HEAD
 // Copyright (c) 2003-2017 Christopher M. Kohlhoff (chris at kohlhoff dot com)
+=======
+// Copyright (c) 2003-2019 Christopher M. Kohlhoff (chris at kohlhoff dot com)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 //
 // Distributed under the Boost Software License, Version 1.0. (See accompanying
 // file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
@@ -110,13 +114,21 @@ public:
   class id;
   class service;
 
+<<<<<<< HEAD
 protected:
+=======
+public:
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
   /// Constructor.
   BOOST_ASIO_DECL execution_context();
 
   /// Destructor.
   BOOST_ASIO_DECL ~execution_context();
 
+<<<<<<< HEAD
+=======
+protected:
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
   /// Shuts down all services in the context.
   /**
    * This function is implemented as follows:

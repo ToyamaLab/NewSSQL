@@ -2,7 +2,11 @@ Package: fansi
 Title: ANSI Control Sequence Aware String Functions
 Description: Counterparts to R string manipulation functions that account for
    the effects of ANSI text formatting control sequences.
+<<<<<<< HEAD
 Version: 0.3.0
+=======
+Version: 0.4.1
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 Authors@R: c(
     person("Brodie", "Gaslam", email="brodie.gaslam@yahoo.com",
     role=c("aut", "cre")),
@@ -18,16 +22,30 @@ URL: https://github.com/brodieG/fansi
 BugReports: https://github.com/brodieG/fansi/issues
 VignetteBuilder: knitr
 Suggests: unitizer, knitr, rmarkdown
+<<<<<<< HEAD
 RoxygenNote: 6.0.1
+=======
+RoxygenNote: 6.1.1
+Encoding: UTF-8
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 Collate: 'constants.R' 'fansi-package.R' 'has.R' 'internal.R' 'load.R'
         'misc.R' 'nchar.R' 'strip.R' 'strwrap.R' 'strtrim.R'
         'strsplit.R' 'substr2.R' 'tohtml.R' 'unhandled.R'
 NeedsCompilation: yes
+<<<<<<< HEAD
 Packaged: 2018-08-09 19:30:25 UTC; bg
+=======
+Packaged: 2020-01-06 01:58:57 UTC; bg
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 Author: Brodie Gaslam [aut, cre],
   Elliott Sales De Andrade [ctb],
   R Core Team [cph] (UTF8 byte length calcs from src/util.c)
 Maintainer: Brodie Gaslam <brodie.gaslam@yahoo.com>
 Repository: CRAN
+<<<<<<< HEAD
 Date/Publication: 2018-08-13 14:40:11 UTC
 Built: R 3.5.1; x86_64-apple-darwin17.6.0; 2018-08-18 07:11:55 UTC; unix
+=======
+Date/Publication: 2020-01-08 23:01:29 UTC
+Built: R 4.0.2; x86_64-apple-darwin17.7.0; 2020-08-27 07:29:20 UTC; unix
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce

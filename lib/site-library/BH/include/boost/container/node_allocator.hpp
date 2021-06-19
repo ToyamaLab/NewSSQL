@@ -74,6 +74,7 @@ class node_allocator
    typedef T *                                  pointer;
    typedef const T *                            const_pointer;
    typedef typename ::boost::container::
+<<<<<<< HEAD
       container_detail::unvoid_ref<T>::type     reference;
    typedef typename ::boost::container::
       container_detail::unvoid_ref<const T>::type     const_reference;
@@ -87,6 +88,21 @@ class node_allocator
    typedef boost::container::container_detail::
       basic_multiallocation_chain<void*>              multiallocation_chain_void;
    typedef boost::container::container_detail::
+=======
+      dtl::unvoid_ref<T>::type     reference;
+   typedef typename ::boost::container::
+      dtl::unvoid_ref<const T>::type     const_reference;
+   typedef std::size_t                          size_type;
+   typedef std::ptrdiff_t                       difference_type;
+
+   typedef boost::container::dtl::
+      version_type<self_t, Version>             version;
+
+   #ifndef BOOST_CONTAINER_DOXYGEN_INVOKED
+   typedef boost::container::dtl::
+      basic_multiallocation_chain<void*>              multiallocation_chain_void;
+   typedef boost::container::dtl::
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
       transform_multiallocation_chain
          <multiallocation_chain_void, T>              multiallocation_chain;
    #endif   //#ifndef BOOST_CONTAINER_DOXYGEN_INVOKED
@@ -148,9 +164,15 @@ class node_allocator
          boost::container::throw_bad_alloc();
 
       if(Version == 1 && count == 1){
+<<<<<<< HEAD
          typedef container_detail::shared_node_pool
             <sizeof(T), NodesPerBlock> shared_pool_t;
          typedef container_detail::singleton_default<shared_pool_t> singleton_t;
+=======
+         typedef dtl::shared_node_pool
+            <sizeof(T), NodesPerBlock> shared_pool_t;
+         typedef dtl::singleton_default<shared_pool_t> singleton_t;
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
          return pointer(static_cast<T*>(singleton_t::instance().allocate_node()));
       }
       else{
@@ -167,9 +189,15 @@ class node_allocator
    {
       (void)count;
       if(Version == 1 && count == 1){
+<<<<<<< HEAD
          typedef container_detail::shared_node_pool
             <sizeof(T), NodesPerBlock> shared_pool_t;
          typedef container_detail::singleton_default<shared_pool_t> singleton_t;
+=======
+         typedef dtl::shared_node_pool
+            <sizeof(T), NodesPerBlock> shared_pool_t;
+         typedef dtl::singleton_default<shared_pool_t> singleton_t;
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
          singleton_t::instance().deallocate_node(ptr);
       }
       else{
@@ -180,9 +208,15 @@ class node_allocator
    //!Deallocates all free blocks of the pool
    static void deallocate_free_blocks() BOOST_NOEXCEPT_OR_NOTHROW
    {
+<<<<<<< HEAD
       typedef container_detail::shared_node_pool
          <sizeof(T), NodesPerBlock> shared_pool_t;
       typedef container_detail::singleton_default<shared_pool_t> singleton_t;
+=======
+      typedef dtl::shared_node_pool
+         <sizeof(T), NodesPerBlock> shared_pool_t;
+      typedef dtl::singleton_default<shared_pool_t> singleton_t;
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
       singleton_t::instance().deallocate_free_blocks();
    }
 
@@ -210,9 +244,15 @@ class node_allocator
    pointer allocate_one()
    {
       BOOST_STATIC_ASSERT(( Version > 1 ));
+<<<<<<< HEAD
       typedef container_detail::shared_node_pool
          <sizeof(T), NodesPerBlock> shared_pool_t;
       typedef container_detail::singleton_default<shared_pool_t> singleton_t;
+=======
+      typedef dtl::shared_node_pool
+         <sizeof(T), NodesPerBlock> shared_pool_t;
+      typedef dtl::singleton_default<shared_pool_t> singleton_t;
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
       return (pointer)singleton_t::instance().allocate_node();
    }
 
@@ -221,9 +261,15 @@ class node_allocator
    void allocate_individual(std::size_t num_elements, multiallocation_chain &chain)
    {
       BOOST_STATIC_ASSERT(( Version > 1 ));
+<<<<<<< HEAD
       typedef container_detail::shared_node_pool
          <sizeof(T), NodesPerBlock> shared_pool_t;
       typedef container_detail::singleton_default<shared_pool_t> singleton_t;
+=======
+      typedef dtl::shared_node_pool
+         <sizeof(T), NodesPerBlock> shared_pool_t;
+      typedef dtl::singleton_default<shared_pool_t> singleton_t;
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
       typename shared_pool_t::multiallocation_chain ch;
       singleton_t::instance().allocate_nodes(num_elements, ch);
       chain.incorporate_after(chain.before_begin(), (T*)&*ch.begin(), (T*)&*ch.last(), ch.size());
@@ -235,18 +281,30 @@ class node_allocator
    void deallocate_one(pointer p) BOOST_NOEXCEPT_OR_NOTHROW
    {
       BOOST_STATIC_ASSERT(( Version > 1 ));
+<<<<<<< HEAD
       typedef container_detail::shared_node_pool
          <sizeof(T), NodesPerBlock> shared_pool_t;
       typedef container_detail::singleton_default<shared_pool_t> singleton_t;
+=======
+      typedef dtl::shared_node_pool
+         <sizeof(T), NodesPerBlock> shared_pool_t;
+      typedef dtl::singleton_default<shared_pool_t> singleton_t;
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
       singleton_t::instance().deallocate_node(p);
    }
 
    void deallocate_individual(multiallocation_chain &chain) BOOST_NOEXCEPT_OR_NOTHROW
    {
       BOOST_STATIC_ASSERT(( Version > 1 ));
+<<<<<<< HEAD
       typedef container_detail::shared_node_pool
          <sizeof(T), NodesPerBlock> shared_pool_t;
       typedef container_detail::singleton_default<shared_pool_t> singleton_t;
+=======
+      typedef dtl::shared_node_pool
+         <sizeof(T), NodesPerBlock> shared_pool_t;
+      typedef dtl::singleton_default<shared_pool_t> singleton_t;
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
       typename shared_pool_t::multiallocation_chain ch(&*chain.begin(), &*chain.last(), chain.size());
       singleton_t::instance().deallocate_nodes(ch);
    }

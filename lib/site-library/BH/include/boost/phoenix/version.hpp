@@ -16,6 +16,7 @@
 ///////////////////////////////////////////////////////////////////////////////
 #define BOOST_PHOENIX_VERSION   0x3200    // 3.2.0
 
+<<<<<<< HEAD
 // boost/predef is not in Boost before 1.55.0
 #include <boost/version.hpp>
 #if BOOST_VERSION >= 105500
@@ -28,5 +29,9 @@
 #ifdef BOOST_PHOENIX_HAVE_BOOST_PREDEF
 #define BOOST_PHOENIX_VERSION_NUMBER = BOOST_VERSION_NUMBER(3,2,0)
 #endif
+=======
+#include <boost/predef/version_number.h>
+#define BOOST_PHOENIX_VERSION_NUMBER = BOOST_VERSION_NUMBER(3,2,0)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 #endif

@@ -11,9 +11,18 @@
 #ifndef BOOST_COMPUTE_ALGORITHM_BINARY_SEARCH_HPP
 #define BOOST_COMPUTE_ALGORITHM_BINARY_SEARCH_HPP
 
+<<<<<<< HEAD
 #include <boost/compute/system.hpp>
 #include <boost/compute/command_queue.hpp>
 #include <boost/compute/algorithm/lower_bound.hpp>
+=======
+#include <boost/static_assert.hpp>
+
+#include <boost/compute/system.hpp>
+#include <boost/compute/command_queue.hpp>
+#include <boost/compute/algorithm/lower_bound.hpp>
+#include <boost/compute/type_traits/is_device_iterator.hpp>
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 namespace boost {
 namespace compute {
@@ -28,6 +37,10 @@ inline bool binary_search(InputIterator first,
                           const T &value,
                           command_queue &queue = system::default_queue())
 {
+<<<<<<< HEAD
+=======
+    BOOST_STATIC_ASSERT(is_device_iterator<InputIterator>::value);
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     InputIterator position = lower_bound(first, last, value, queue);
 
     return position != last && position.read(queue) == value;

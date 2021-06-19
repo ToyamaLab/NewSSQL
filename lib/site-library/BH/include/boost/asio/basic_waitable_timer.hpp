@@ -2,7 +2,11 @@
 // basic_waitable_timer.hpp
 // ~~~~~~~~~~~~~~~~~~~~~~~~
 //
+<<<<<<< HEAD
 // Copyright (c) 2003-2017 Christopher M. Kohlhoff (chris at kohlhoff dot com)
+=======
+// Copyright (c) 2003-2019 Christopher M. Kohlhoff (chris at kohlhoff dot com)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 //
 // Distributed under the Boost Software License, Version 1.0. (See accompanying
 // file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
@@ -17,16 +21,28 @@
 
 #include <boost/asio/detail/config.hpp>
 #include <cstddef>
+<<<<<<< HEAD
 #include <boost/asio/basic_io_object.hpp>
 #include <boost/asio/detail/handler_type_requirements.hpp>
 #include <boost/asio/detail/throw_error.hpp>
 #include <boost/asio/error.hpp>
+=======
+#include <boost/asio/detail/chrono_time_traits.hpp>
+#include <boost/asio/detail/deadline_timer_service.hpp>
+#include <boost/asio/detail/handler_type_requirements.hpp>
+#include <boost/asio/detail/io_object_impl.hpp>
+#include <boost/asio/detail/non_const_lvalue.hpp>
+#include <boost/asio/detail/throw_error.hpp>
+#include <boost/asio/error.hpp>
+#include <boost/asio/executor.hpp>
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 #include <boost/asio/wait_traits.hpp>
 
 #if defined(BOOST_ASIO_HAS_MOVE)
 # include <utility>
 #endif // defined(BOOST_ASIO_HAS_MOVE)
 
+<<<<<<< HEAD
 #if defined(BOOST_ASIO_ENABLE_OLD_SERVICES)
 # include <boost/asio/waitable_timer_service.hpp>
 #else // defined(BOOST_ASIO_ENABLE_OLD_SERVICES)
@@ -37,6 +53,8 @@
       detail::chrono_time_traits<Clock, WaitTraits> >
 #endif // defined(BOOST_ASIO_ENABLE_OLD_SERVICES)
 
+=======
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 #include <boost/asio/detail/push_options.hpp>
 
 namespace boost {
@@ -47,8 +65,13 @@ namespace asio {
 
 // Forward declaration with defaulted arguments.
 template <typename Clock,
+<<<<<<< HEAD
     typename WaitTraits = boost::asio::wait_traits<Clock>
     BOOST_ASIO_SVC_TPARAM_DEF2(= waitable_timer_service<Clock, WaitTraits>)>
+=======
+    typename WaitTraits = boost::asio::wait_traits<Clock>,
+    typename Executor = executor>
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 class basic_waitable_timer;
 
 #endif // !defined(BOOST_ASIO_BASIC_WAITABLE_TIMER_FWD_DECL)
@@ -76,7 +99,11 @@ class basic_waitable_timer;
  * Performing a blocking wait (C++11):
  * @code
  * // Construct a timer without setting an expiry time.
+<<<<<<< HEAD
  * boost::asio::steady_timer timer(io_context);
+=======
+ * boost::asio::steady_timer timer(my_context);
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
  *
  * // Set an expiry time relative to now.
  * timer.expires_after(std::chrono::seconds(5));
@@ -99,7 +126,11 @@ class basic_waitable_timer;
  * ...
  *
  * // Construct a timer with an absolute expiry time.
+<<<<<<< HEAD
  * boost::asio::steady_timer timer(io_context,
+=======
+ * boost::asio::steady_timer timer(my_context,
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
  *     std::chrono::steady_clock::now() + std::chrono::seconds(60));
  *
  * // Start an asynchronous wait.
@@ -145,6 +176,7 @@ class basic_waitable_timer;
  * @li If a wait handler is cancelled, the boost::system::error_code passed to
  * it contains the value boost::asio::error::operation_aborted.
  */
+<<<<<<< HEAD
 template <typename Clock, typename WaitTraits BOOST_ASIO_SVC_TPARAM>
 class basic_waitable_timer
   : BOOST_ASIO_SVC_ACCESS basic_io_object<BOOST_ASIO_SVC_T>
@@ -152,6 +184,22 @@ class basic_waitable_timer
 public:
   /// The type of the executor associated with the object.
   typedef io_context::executor_type executor_type;
+=======
+template <typename Clock, typename WaitTraits, typename Executor>
+class basic_waitable_timer
+{
+public:
+  /// The type of the executor associated with the object.
+  typedef Executor executor_type;
+
+  /// Rebinds the timer type to another executor.
+  template <typename Executor1>
+  struct rebind_executor
+  {
+    /// The timer type when rebound to the specified executor.
+    typedef basic_waitable_timer<Clock, WaitTraits, Executor1> other;
+  };
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
   /// The clock type.
   typedef Clock clock_type;
@@ -171,11 +219,38 @@ public:
    * expires_at() or expires_after() functions must be called to set an expiry
    * time before the timer can be waited on.
    *
+<<<<<<< HEAD
    * @param io_context The io_context object that the timer will use to dispatch
    * handlers for any asynchronous operations performed on the timer.
    */
   explicit basic_waitable_timer(boost::asio::io_context& io_context)
     : basic_io_object<BOOST_ASIO_SVC_T>(io_context)
+  {
+=======
+   * @param ex The I/O executor that the timer will use, by default, to
+   * dispatch handlers for any asynchronous operations performed on the timer.
+   */
+  explicit basic_waitable_timer(const executor_type& ex)
+    : impl_(ex)
+  {
+  }
+
+  /// Constructor.
+  /**
+   * This constructor creates a timer without setting an expiry time. The
+   * expires_at() or expires_after() functions must be called to set an expiry
+   * time before the timer can be waited on.
+   *
+   * @param context An execution context which provides the I/O executor that
+   * the timer will use, by default, to dispatch handlers for any asynchronous
+   * operations performed on the timer.
+   */
+  template <typename ExecutionContext>
+  explicit basic_waitable_timer(ExecutionContext& context,
+      typename enable_if<
+        is_convertible<ExecutionContext&, execution_context&>::value
+      >::type* = 0)
+    : impl_(context)
   {
   }
 
@@ -183,18 +258,56 @@ public:
   /**
    * This constructor creates a timer and sets the expiry time.
    *
-   * @param io_context The io_context object that the timer will use to dispatch
-   * handlers for any asynchronous operations performed on the timer.
+   * @param ex The I/O executor object that the timer will use, by default, to
+   * dispatch handlers for any asynchronous operations performed on the timer.
    *
    * @param expiry_time The expiry time to be used for the timer, expressed
    * as an absolute time.
    */
+  basic_waitable_timer(const executor_type& ex, const time_point& expiry_time)
+    : impl_(ex)
+  {
+    boost::system::error_code ec;
+    impl_.get_service().expires_at(impl_.get_implementation(), expiry_time, ec);
+    boost::asio::detail::throw_error(ec, "expires_at");
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
+  }
+
+  /// Constructor to set a particular expiry time as an absolute time.
+  /**
+   * This constructor creates a timer and sets the expiry time.
+   *
+<<<<<<< HEAD
+   * @param io_context The io_context object that the timer will use to dispatch
+   * handlers for any asynchronous operations performed on the timer.
+=======
+   * @param context An execution context which provides the I/O executor that
+   * the timer will use, by default, to dispatch handlers for any asynchronous
+   * operations performed on the timer.
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
+   *
+   * @param expiry_time The expiry time to be used for the timer, expressed
+   * as an absolute time.
+   */
+<<<<<<< HEAD
   basic_waitable_timer(boost::asio::io_context& io_context,
       const time_point& expiry_time)
     : basic_io_object<BOOST_ASIO_SVC_T>(io_context)
   {
     boost::system::error_code ec;
     this->get_service().expires_at(this->get_implementation(), expiry_time, ec);
+=======
+  template <typename ExecutionContext>
+  explicit basic_waitable_timer(ExecutionContext& context,
+      const time_point& expiry_time,
+      typename enable_if<
+        is_convertible<ExecutionContext&, execution_context&>::value
+      >::type* = 0)
+    : impl_(context)
+  {
+    boost::system::error_code ec;
+    impl_.get_service().expires_at(impl_.get_implementation(), expiry_time, ec);
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     boost::asio::detail::throw_error(ec, "expires_at");
   }
 
@@ -202,12 +315,38 @@ public:
   /**
    * This constructor creates a timer and sets the expiry time.
    *
+<<<<<<< HEAD
    * @param io_context The io_context object that the timer will use to dispatch
    * handlers for any asynchronous operations performed on the timer.
+=======
+   * @param ex The I/O executor that the timer will use, by default, to
+   * dispatch handlers for any asynchronous operations performed on the timer.
    *
    * @param expiry_time The expiry time to be used for the timer, relative to
    * now.
    */
+  basic_waitable_timer(const executor_type& ex, const duration& expiry_time)
+    : impl_(ex)
+  {
+    boost::system::error_code ec;
+    impl_.get_service().expires_after(
+        impl_.get_implementation(), expiry_time, ec);
+    boost::asio::detail::throw_error(ec, "expires_after");
+  }
+
+  /// Constructor to set a particular expiry time relative to now.
+  /**
+   * This constructor creates a timer and sets the expiry time.
+   *
+   * @param context An execution context which provides the I/O executor that
+   * the timer will use, by default, to dispatch handlers for any asynchronous
+   * operations performed on the timer.
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
+   *
+   * @param expiry_time The expiry time to be used for the timer, relative to
+   * now.
+   */
+<<<<<<< HEAD
   basic_waitable_timer(boost::asio::io_context& io_context,
       const duration& expiry_time)
     : basic_io_object<BOOST_ASIO_SVC_T>(io_context)
@@ -215,6 +354,19 @@ public:
     boost::system::error_code ec;
     this->get_service().expires_after(
         this->get_implementation(), expiry_time, ec);
+=======
+  template <typename ExecutionContext>
+  explicit basic_waitable_timer(ExecutionContext& context,
+      const duration& expiry_time,
+      typename enable_if<
+        is_convertible<ExecutionContext&, execution_context&>::value
+      >::type* = 0)
+    : impl_(context)
+  {
+    boost::system::error_code ec;
+    impl_.get_service().expires_after(
+        impl_.get_implementation(), expiry_time, ec);
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     boost::asio::detail::throw_error(ec, "expires_after");
   }
 
@@ -227,10 +379,18 @@ public:
    * occur.
    *
    * @note Following the move, the moved-from object is in the same state as if
+<<<<<<< HEAD
    * constructed using the @c basic_waitable_timer(io_context&) constructor.
    */
   basic_waitable_timer(basic_waitable_timer&& other)
     : basic_io_object<BOOST_ASIO_SVC_T>(std::move(other))
+=======
+   * constructed using the @c basic_waitable_timer(const executor_type&)
+   * constructor.
+   */
+  basic_waitable_timer(basic_waitable_timer&& other)
+    : impl_(std::move(other.impl_))
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
   {
   }
 
@@ -243,11 +403,20 @@ public:
    * occur.
    *
    * @note Following the move, the moved-from object is in the same state as if
+<<<<<<< HEAD
    * constructed using the @c basic_waitable_timer(io_context&) constructor.
    */
   basic_waitable_timer& operator=(basic_waitable_timer&& other)
   {
     basic_io_object<BOOST_ASIO_SVC_T>::operator=(std::move(other));
+=======
+   * constructed using the @c basic_waitable_timer(const executor_type&)
+   * constructor.
+   */
+  basic_waitable_timer& operator=(basic_waitable_timer&& other)
+  {
+    impl_ = std::move(other.impl_);
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     return *this;
   }
 #endif // defined(BOOST_ASIO_HAS_MOVE) || defined(GENERATING_DOCUMENTATION)
@@ -261,6 +430,7 @@ public:
   {
   }
 
+<<<<<<< HEAD
 #if defined(BOOST_ASIO_ENABLE_OLD_SERVICES)
   // These functions are provided by basic_io_object<>.
 #else // defined(BOOST_ASIO_ENABLE_OLD_SERVICES)
@@ -300,6 +470,13 @@ public:
     return basic_io_object<BOOST_ASIO_SVC_T>::get_executor();
   }
 #endif // defined(BOOST_ASIO_ENABLE_OLD_SERVICES)
+=======
+  /// Get the executor associated with the object.
+  executor_type get_executor() BOOST_ASIO_NOEXCEPT
+  {
+    return impl_.get_executor();
+  }
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
   /// Cancel any asynchronous operations that are waiting on the timer.
   /**
@@ -326,7 +503,11 @@ public:
   std::size_t cancel()
   {
     boost::system::error_code ec;
+<<<<<<< HEAD
     std::size_t s = this->get_service().cancel(this->get_implementation(), ec);
+=======
+    std::size_t s = impl_.get_service().cancel(impl_.get_implementation(), ec);
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     boost::asio::detail::throw_error(ec, "cancel");
     return s;
   }
@@ -357,7 +538,11 @@ public:
    */
   std::size_t cancel(boost::system::error_code& ec)
   {
+<<<<<<< HEAD
     return this->get_service().cancel(this->get_implementation(), ec);
+=======
+    return impl_.get_service().cancel(impl_.get_implementation(), ec);
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
   }
 #endif // !defined(BOOST_ASIO_NO_DEPRECATED)
 
@@ -388,8 +573,13 @@ public:
   std::size_t cancel_one()
   {
     boost::system::error_code ec;
+<<<<<<< HEAD
     std::size_t s = this->get_service().cancel_one(
         this->get_implementation(), ec);
+=======
+    std::size_t s = impl_.get_service().cancel_one(
+        impl_.get_implementation(), ec);
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     boost::asio::detail::throw_error(ec, "cancel_one");
     return s;
   }
@@ -422,7 +612,11 @@ public:
    */
   std::size_t cancel_one(boost::system::error_code& ec)
   {
+<<<<<<< HEAD
     return this->get_service().cancel_one(this->get_implementation(), ec);
+=======
+    return impl_.get_service().cancel_one(impl_.get_implementation(), ec);
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
   }
 
   /// (Deprecated: Use expiry().) Get the timer's expiry time as an absolute
@@ -433,7 +627,11 @@ public:
    */
   time_point expires_at() const
   {
+<<<<<<< HEAD
     return this->get_service().expires_at(this->get_implementation());
+=======
+    return impl_.get_service().expires_at(impl_.get_implementation());
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
   }
 #endif // !defined(BOOST_ASIO_NO_DEPRECATED)
 
@@ -444,7 +642,11 @@ public:
    */
   time_point expiry() const
   {
+<<<<<<< HEAD
     return this->get_service().expiry(this->get_implementation());
+=======
+    return impl_.get_service().expiry(impl_.get_implementation());
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
   }
 
   /// Set the timer's expiry time as an absolute time.
@@ -472,8 +674,13 @@ public:
   std::size_t expires_at(const time_point& expiry_time)
   {
     boost::system::error_code ec;
+<<<<<<< HEAD
     std::size_t s = this->get_service().expires_at(
         this->get_implementation(), expiry_time, ec);
+=======
+    std::size_t s = impl_.get_service().expires_at(
+        impl_.get_implementation(), expiry_time, ec);
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     boost::asio::detail::throw_error(ec, "expires_at");
     return s;
   }
@@ -505,8 +712,13 @@ public:
   std::size_t expires_at(const time_point& expiry_time,
       boost::system::error_code& ec)
   {
+<<<<<<< HEAD
     return this->get_service().expires_at(
         this->get_implementation(), expiry_time, ec);
+=======
+    return impl_.get_service().expires_at(
+        impl_.get_implementation(), expiry_time, ec);
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
   }
 #endif // !defined(BOOST_ASIO_NO_DEPRECATED)
 
@@ -535,8 +747,13 @@ public:
   std::size_t expires_after(const duration& expiry_time)
   {
     boost::system::error_code ec;
+<<<<<<< HEAD
     std::size_t s = this->get_service().expires_after(
         this->get_implementation(), expiry_time, ec);
+=======
+    std::size_t s = impl_.get_service().expires_after(
+        impl_.get_implementation(), expiry_time, ec);
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     boost::asio::detail::throw_error(ec, "expires_after");
     return s;
   }
@@ -549,7 +766,11 @@ public:
    */
   duration expires_from_now() const
   {
+<<<<<<< HEAD
     return this->get_service().expires_from_now(this->get_implementation());
+=======
+    return impl_.get_service().expires_from_now(impl_.get_implementation());
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
   }
 
   /// (Deprecated: Use expires_after().) Set the timer's expiry time relative
@@ -578,8 +799,13 @@ public:
   std::size_t expires_from_now(const duration& expiry_time)
   {
     boost::system::error_code ec;
+<<<<<<< HEAD
     std::size_t s = this->get_service().expires_from_now(
         this->get_implementation(), expiry_time, ec);
+=======
+    std::size_t s = impl_.get_service().expires_from_now(
+        impl_.get_implementation(), expiry_time, ec);
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     boost::asio::detail::throw_error(ec, "expires_from_now");
     return s;
   }
@@ -610,8 +836,13 @@ public:
   std::size_t expires_from_now(const duration& expiry_time,
       boost::system::error_code& ec)
   {
+<<<<<<< HEAD
     return this->get_service().expires_from_now(
         this->get_implementation(), expiry_time, ec);
+=======
+    return impl_.get_service().expires_from_now(
+        impl_.get_implementation(), expiry_time, ec);
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
   }
 #endif // !defined(BOOST_ASIO_NO_DEPRECATED)
 
@@ -625,7 +856,11 @@ public:
   void wait()
   {
     boost::system::error_code ec;
+<<<<<<< HEAD
     this->get_service().wait(this->get_implementation(), ec);
+=======
+    impl_.get_service().wait(impl_.get_implementation(), ec);
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     boost::asio::detail::throw_error(ec, "wait");
   }
 
@@ -638,7 +873,11 @@ public:
    */
   void wait(boost::system::error_code& ec)
   {
+<<<<<<< HEAD
     this->get_service().wait(this->get_implementation(), ec);
+=======
+    impl_.get_service().wait(impl_.get_implementation(), ec);
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
   }
 
   /// Start an asynchronous wait on the timer.
@@ -661,6 +900,7 @@ public:
    *   const boost::system::error_code& error // Result of operation.
    * ); @endcode
    * Regardless of whether the asynchronous operation completes immediately or
+<<<<<<< HEAD
    * not, the handler will not be invoked from within this function. Invocation
    * of the handler will be performed in a manner equivalent to using
    * boost::asio::io_context::post().
@@ -686,6 +926,23 @@ public:
 
     return init.result.get();
 #endif // defined(BOOST_ASIO_ENABLE_OLD_SERVICES)
+=======
+   * not, the handler will not be invoked from within this function. On
+   * immediate completion, invocation of the handler will be performed in a
+   * manner equivalent to using boost::asio::post().
+   */
+  template <
+      BOOST_ASIO_COMPLETION_TOKEN_FOR(void (boost::system::error_code))
+        WaitHandler BOOST_ASIO_DEFAULT_COMPLETION_TOKEN_TYPE(executor_type)>
+  BOOST_ASIO_INITFN_AUTO_RESULT_TYPE(WaitHandler,
+      void (boost::system::error_code))
+  async_wait(
+      BOOST_ASIO_MOVE_ARG(WaitHandler) handler
+        BOOST_ASIO_DEFAULT_COMPLETION_TOKEN(executor_type))
+  {
+    return async_initiate<WaitHandler, void (boost::system::error_code)>(
+        initiate_async_wait(this), handler);
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
   }
 
 private:
@@ -693,6 +950,46 @@ private:
   basic_waitable_timer(const basic_waitable_timer&) BOOST_ASIO_DELETED;
   basic_waitable_timer& operator=(
       const basic_waitable_timer&) BOOST_ASIO_DELETED;
+<<<<<<< HEAD
+=======
+
+  class initiate_async_wait
+  {
+  public:
+    typedef Executor executor_type;
+
+    explicit initiate_async_wait(basic_waitable_timer* self)
+      : self_(self)
+    {
+    }
+
+    executor_type get_executor() const BOOST_ASIO_NOEXCEPT
+    {
+      return self_->get_executor();
+    }
+
+    template <typename WaitHandler>
+    void operator()(BOOST_ASIO_MOVE_ARG(WaitHandler) handler) const
+    {
+      // If you get an error on the following line it means that your handler
+      // does not meet the documented type requirements for a WaitHandler.
+      BOOST_ASIO_WAIT_HANDLER_CHECK(WaitHandler, handler) type_check;
+
+      detail::non_const_lvalue<WaitHandler> handler2(handler);
+      self_->impl_.get_service().async_wait(
+          self_->impl_.get_implementation(), handler2.value,
+          self_->impl_.get_implementation_executor());
+    }
+
+  private:
+    basic_waitable_timer* self_;
+  };
+
+  detail::io_object_impl<
+    detail::deadline_timer_service<
+      detail::chrono_time_traits<Clock, WaitTraits> >,
+    executor_type > impl_;
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 };
 
 } // namespace asio
@@ -700,8 +997,11 @@ private:
 
 #include <boost/asio/detail/pop_options.hpp>
 
+<<<<<<< HEAD
 #if !defined(BOOST_ASIO_ENABLE_OLD_SERVICES)
 # undef BOOST_ASIO_SVC_T
 #endif // !defined(BOOST_ASIO_ENABLE_OLD_SERVICES)
 
+=======
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 #endif // BOOST_ASIO_BASIC_WAITABLE_TIMER_HPP

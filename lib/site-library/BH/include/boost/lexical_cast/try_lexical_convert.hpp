@@ -1,6 +1,10 @@
 // Copyright Kevlin Henney, 2000-2005.
 // Copyright Alexander Nasonov, 2006-2010.
+<<<<<<< HEAD
 // Copyright Antony Polukhin, 2011-2016.
+=======
+// Copyright Antony Polukhin, 2011-2019.
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 //
 // Distributed under the Boost Software License, Version 1.0. (See
 // accompanying file LICENSE_1_0.txt or copy at
@@ -27,6 +31,7 @@
     !(defined(__INTEL_COMPILER) || defined(__ICL) || defined(__ICC) || defined(__ECC)) && \
     (__GNUC__ > 4 || (__GNUC__ == 4 && __GNUC_MINOR__ >= 6)))
 #pragma GCC diagnostic push
+<<<<<<< HEAD
 // #pragma GCC diagnostic ignored "-Wuninitialized"
 #endif
 
@@ -34,6 +39,17 @@
 #include <boost/mpl/bool.hpp>
 #include <boost/mpl/identity.hpp>
 #include <boost/mpl/if.hpp>
+=======
+//#pragma GCC diagnostic ignored "-Wuninitialized"
+//#pragma GCC diagnostic ignored "-Wsign-conversion"
+#endif
+
+
+#include <string>
+#include <boost/type_traits/is_integral.hpp>
+#include <boost/type_traits/type_identity.hpp>
+#include <boost/type_traits/conditional.hpp>
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 #include <boost/type_traits/is_same.hpp>
 #include <boost/type_traits/is_arithmetic.hpp>
 
@@ -72,8 +88,14 @@ namespace boost {
         template<typename Target, typename Source>
         struct is_arithmetic_and_not_xchars
         {
+<<<<<<< HEAD
             typedef boost::mpl::bool_<
                     !(boost::detail::is_character<Target>::value) &&
+=======
+            typedef boost::integral_constant<
+                bool,
+                !(boost::detail::is_character<Target>::value) &&
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
                     !(boost::detail::is_character<Source>::value) &&
                     boost::is_arithmetic<Source>::value &&
                     boost::is_arithmetic<Target>::value
@@ -91,8 +113,14 @@ namespace boost {
         template<typename Target, typename Source>
         struct is_xchar_to_xchar 
         {
+<<<<<<< HEAD
             typedef boost::mpl::bool_<
                      sizeof(Source) == sizeof(Target) &&
+=======
+            typedef boost::integral_constant<
+                bool,
+                sizeof(Source) == sizeof(Target) &&
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
                      sizeof(Source) == sizeof(char) &&
                      boost::detail::is_character<Target>::value &&
                      boost::detail::is_character<Source>::value
@@ -162,7 +190,12 @@ namespace boost {
         {
             typedef BOOST_DEDUCED_TYPENAME boost::detail::array_to_pointer_decay<Source>::type src;
 
+<<<<<<< HEAD
             typedef boost::mpl::bool_<
+=======
+            typedef boost::integral_constant<
+                bool,
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
                 boost::detail::is_xchar_to_xchar<Target, src >::value ||
                 boost::detail::is_char_array_to_stdstring<Target, src >::value ||
                 boost::detail::is_char_array_to_booststring<Target, src >::value ||
@@ -181,11 +214,19 @@ namespace boost {
 
             // We do evaluate second `if_` lazily to avoid unnecessary instantiations
             // of `shall_we_copy_with_dynamic_check_t` and improve compilation times.
+<<<<<<< HEAD
             typedef BOOST_DEDUCED_TYPENAME boost::mpl::if_c<
                 shall_we_copy_t::value,
                 boost::mpl::identity<boost::detail::copy_converter_impl<Target, src > >,
                 boost::mpl::if_<
                      shall_we_copy_with_dynamic_check_t,
+=======
+            typedef BOOST_DEDUCED_TYPENAME boost::conditional<
+                shall_we_copy_t::value,
+                boost::type_identity<boost::detail::copy_converter_impl<Target, src > >,
+                boost::conditional<
+                     shall_we_copy_with_dynamic_check_t::value,
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
                      boost::detail::dynamic_num_converter_impl<Target, src >,
                      boost::detail::lexical_converter_impl<Target, src >
                 >

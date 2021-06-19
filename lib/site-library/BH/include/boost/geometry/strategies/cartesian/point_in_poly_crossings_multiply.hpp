@@ -4,6 +4,14 @@
 // Copyright (c) 2008-2012 Bruno Lalande, Paris, France.
 // Copyright (c) 2009-2012 Mateusz Loskot, London, UK.
 
+<<<<<<< HEAD
+=======
+// This file was modified by Oracle on 2018, 2019.
+// Modifications copyright (c) 2018, 2019, Oracle and/or its affiliates.
+
+// Contributed and/or modified by Adam Wulkiewicz, on behalf of Oracle
+
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 // Parts of Boost.Geometry are redesigned from Geodan's Geographic Library
 // (geolib/GGL), copyright (c) 1995-2010 Geodan, Amsterdam, the Netherlands.
 
@@ -15,6 +23,10 @@
 #define BOOST_GEOMETRY_STRATEGIES_CARTESIAN_POINT_IN_POLY_CROSSINGS_MULTIPLY_HPP
 
 
+<<<<<<< HEAD
+=======
+#include <boost/geometry/core/access.hpp>
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 #include <boost/geometry/core/coordinate_type.hpp>
 #include <boost/geometry/util/select_calculation_type.hpp>
 
@@ -41,18 +53,35 @@ namespace strategy { namespace within
 
 template
 <
+<<<<<<< HEAD
     typename Point,
     typename PointOfSegment = Point,
+=======
+    typename Point_,                   // for backward compatibility
+    typename PointOfSegment_ = Point_, // for backward compatibility
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     typename CalculationType = void
 >
 class crossings_multiply
 {
+<<<<<<< HEAD
     typedef typename select_calculation_type
         <
             Point,
             PointOfSegment,
             CalculationType
         >::type calculation_type;
+=======
+    template <typename Point, typename PointOfSegment>
+    struct calculation_type
+        : select_calculation_type
+            <
+                Point,
+                PointOfSegment,
+                CalculationType
+            >
+    {};
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
     class flags
     {
@@ -73,20 +102,37 @@ class crossings_multiply
 
 public :
 
+<<<<<<< HEAD
     typedef Point point_type;
     typedef PointOfSegment segment_point_type;
     typedef flags state_type;
 
+=======
+    typedef flags state_type;
+
+    template <typename Point, typename PointOfSegment>
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     static inline bool apply(Point const& point,
             PointOfSegment const& seg1, PointOfSegment const& seg2,
             flags& state)
     {
+<<<<<<< HEAD
         calculation_type const tx = get<0>(point);
         calculation_type const ty = get<1>(point);
         calculation_type const x0 = get<0>(seg1);
         calculation_type const y0 = get<1>(seg1);
         calculation_type const x1 = get<0>(seg2);
         calculation_type const y1 = get<1>(seg2);
+=======
+        typedef typename calculation_type<Point, PointOfSegment>::type calc_t;
+
+        calc_t const tx = get<0>(point);
+        calc_t const ty = get<1>(point);
+        calc_t const x0 = get<0>(seg1);
+        calc_t const y0 = get<1>(seg1);
+        calc_t const x1 = get<0>(seg2);
+        calc_t const y1 = get<1>(seg2);
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
         if (state.first)
         {

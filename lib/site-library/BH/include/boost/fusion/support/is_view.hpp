@@ -9,12 +9,19 @@
 
 #include <boost/fusion/support/config.hpp>
 #include <boost/mpl/bool.hpp>
+<<<<<<< HEAD
 #include <boost/fusion/support/detail/is_view.hpp>
+=======
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 #include <boost/fusion/support/tag_of.hpp>
 
 namespace boost { namespace fusion
 {
     // Special tags:
+<<<<<<< HEAD
+=======
+    struct non_fusion_tag;
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     struct sequence_facade_tag;
     struct boost_tuple_tag; // boost::tuples::tuple tag
     struct boost_array_tag; // boost::array tag
@@ -28,8 +35,21 @@ namespace boost { namespace fusion
         {
             template <typename T>
             struct apply
+<<<<<<< HEAD
                 : detail::fusion_is_view<T>
             {};
+=======
+            {
+                typedef typename T::is_view type;
+            };
+        };
+
+        template <>
+        struct is_view_impl<non_fusion_tag>
+        {
+            template <typename T>
+            struct apply : mpl::false_ {};
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
         };
 
         template <>

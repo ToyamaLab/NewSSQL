@@ -2,7 +2,11 @@
 // posix/descriptor.hpp
 // ~~~~~~~~~~~~~~~~~~~~
 //
+<<<<<<< HEAD
 // Copyright (c) 2003-2017 Christopher M. Kohlhoff (chris at kohlhoff dot com)
+=======
+// Copyright (c) 2003-2019 Christopher M. Kohlhoff (chris at kohlhoff dot com)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 //
 // Distributed under the Boost Software License, Version 1.0. (See accompanying
 // file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
@@ -17,6 +21,7 @@
 
 #include <boost/asio/detail/config.hpp>
 
+<<<<<<< HEAD
 #if !defined(BOOST_ASIO_ENABLE_OLD_SERVICES)
 
 #if defined(BOOST_ASIO_HAS_POSIX_STREAM_DESCRIPTOR) \
@@ -38,11 +43,18 @@
 #define BOOST_ASIO_SVC_T boost::asio::detail::reactive_descriptor_service
 
 #include <boost/asio/detail/push_options.hpp>
+=======
+#if defined(BOOST_ASIO_HAS_POSIX_STREAM_DESCRIPTOR) \
+  || defined(GENERATING_DOCUMENTATION)
+
+#include <boost/asio/posix/basic_descriptor.hpp>
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 namespace boost {
 namespace asio {
 namespace posix {
 
+<<<<<<< HEAD
 /// Provides POSIX descriptor functionality.
 /**
  * The posix::descriptor class template provides the ability to wrap a
@@ -629,11 +641,16 @@ protected:
   {
   }
 };
+=======
+/// Typedef for the typical usage of basic_descriptor.
+typedef basic_descriptor<> descriptor;
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 } // namespace posix
 } // namespace asio
 } // namespace boost
 
+<<<<<<< HEAD
 #include <boost/asio/detail/pop_options.hpp>
 
 #undef BOOST_ASIO_SVC_T
@@ -642,5 +659,9 @@ protected:
        //   || defined(GENERATING_DOCUMENTATION)
 
 #endif // !defined(BOOST_ASIO_ENABLE_OLD_SERVICES)
+=======
+#endif // defined(BOOST_ASIO_HAS_POSIX_STREAM_DESCRIPTOR)
+       // || defined(GENERATING_DOCUMENTATION)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 #endif // BOOST_ASIO_POSIX_DESCRIPTOR_HPP

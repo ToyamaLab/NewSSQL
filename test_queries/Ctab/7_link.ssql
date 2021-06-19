@@ -1,4 +1,4 @@
 foreach e.id
 GENERATE HTML
-[{'名前', e.name}@{width=200}!image(e.pict, "./pict")@{width=200}!{'給料', e.salary||'円'}@{width=200}!{'生年', e.byear || '年'}@{width=200}]!
+[{'名前', e.name}@{width=200}!image(e.pict, './pict')@{width=200}!{'給料', e.salary||'円'}@{width=200}!{'生年', e.byear || '年'}@{width=200}]!
 FROM employee e

@@ -426,6 +426,7 @@ namespace detail
       >::type iterator_category;
 
       // Needed for some broken libraries (see below)
+<<<<<<< HEAD
       typedef boost::iterator<
           iterator_category
         , Value
@@ -435,6 +436,18 @@ namespace detail
         , typename access::pointer
         , typename access::reference
       > workaround_iterator_base;
+=======
+      struct workaround_iterator_base
+      {
+        typedef typename iterator_archetype_base::iterator_category iterator_category;
+        typedef Value value_type;
+        typedef typename traversal_archetype_base<
+              Value, AccessCategory, TraversalCategory
+          >::difference_type difference_type;
+        typedef typename access::pointer pointer;
+        typedef typename access::reference reference;
+      };
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
   };
 }
 

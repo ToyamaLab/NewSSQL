@@ -2,7 +2,11 @@
 // detail/work_dispatcher.hpp
 // ~~~~~~~~~~~~~~~~~~~~~~~~~~
 //
+<<<<<<< HEAD
 // Copyright (c) 2003-2017 Christopher M. Kohlhoff (chris at kohlhoff dot com)
+=======
+// Copyright (c) 2003-2019 Christopher M. Kohlhoff (chris at kohlhoff dot com)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 //
 // Distributed under the Boost Software License, Version 1.0. (See accompanying
 // file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
@@ -30,9 +34,16 @@ template <typename Handler>
 class work_dispatcher
 {
 public:
+<<<<<<< HEAD
   work_dispatcher(Handler& handler)
     : work_((get_associated_executor)(handler)),
       handler_(BOOST_ASIO_MOVE_CAST(Handler)(handler))
+=======
+  template <typename CompletionHandler>
+  explicit work_dispatcher(BOOST_ASIO_MOVE_ARG(CompletionHandler) handler)
+    : work_((get_associated_executor)(handler)),
+      handler_(BOOST_ASIO_MOVE_CAST(CompletionHandler)(handler))
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
   {
   }
 

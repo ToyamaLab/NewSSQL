@@ -1,5 +1,7 @@
 package supersql;
 
+import java.util.Arrays;
+
 import supersql.codegenerator.CodeGenerator;
 import supersql.codegenerator.Responsive.Responsive;
 import supersql.common.GlobalEnv;
@@ -34,11 +36,13 @@ public class FrontEnd {
 
 	public void execSuperSQL(String[] args) {
 		start = System.currentTimeMillis();
+		//Log.info("0");
 
 		GlobalEnv.setGlobalEnv(args);
 		if(GlobalEnv.versionProcess())	return;	//added by goto 170612  for --version
 
 		Log.info("//Entering SuperSQL System//");
+//		Log.info("1");
 
 		parser = new Start_Parse(); //read file & parse query
 		Log.out("tfe_tree:"+parser.list_tfe);
@@ -47,6 +51,7 @@ public class FrontEnd {
 				Log.info("// Parser completed normally //");
 			return;
 		}
+//		Log.info("2");
 
 		afterparser = System.currentTimeMillis();
 		afterdc = 0;
@@ -54,9 +59,13 @@ public class FrontEnd {
 		aftersql = 0;
 
 		if (GlobalEnv.getErrFlag() == 0) {
+//			Log.info("2-1");
 			CodeGenerator codegenerator = parser.getcodegenerator();
+//			Log.info("2-2");
 			if (GlobalEnv.getErrFlag() == 0) {
+//				Log.info("2-2-1");
 				codegenerator.CodeGenerator(parser);
+//				Log.info("2-2-2");
 				GlobalEnv.beforedc = System.currentTimeMillis();
 				DataConstructor dc = new DataConstructor(parser);
 				GlobalEnv.afterdc2 = System.currentTimeMillis();
@@ -66,13 +75,19 @@ public class FrontEnd {
 //				Log.info("MakeTree time : " + (GlobalEnv.afterMakeTree - GlobalEnv.beforeMakeTree) + "ms");
 //				Log.info("DataConstruct Time : " + (GlobalEnv.afterdc2 - GlobalEnv.beforedc) + "ms");
 //				System.exit(0);
+//				Log.info("2-2-3");
 				if (GlobalEnv.getErrFlag() == 0) {
+//					Log.info("2-2-3-1");
 					codegenerator.generateCode(parser, dc.getData());
+//					Log.info("2-2-3-2");
 			        Responsive.process(codegenerator, parser, dc.getData());	//added by goto 20161217  for responsive
+//					Log.info("2-2-3-3");
 					aftercg = System.currentTimeMillis();
 				}
 			}
+//			Log.info("2-3");
 		}
+//		Log.info("3");
 
 		long end = System.currentTimeMillis();
 //		Log.info("Parsing Time : " + (afterparser - start) + "msec");

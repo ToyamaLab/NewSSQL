@@ -108,6 +108,11 @@ plain_report_formatter::test_unit_report_start( test_unit const& tu, std::ostrea
         descr = "has passed";
     else if( tr.p_skipped )
         descr = "was skipped";
+<<<<<<< HEAD
+=======
+    else if( tr.p_timed_out )
+        descr = "has timed out";
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     else if( tr.p_aborted )
         descr = "was aborted";
     else
@@ -122,8 +127,14 @@ plain_report_formatter::test_unit_report_start( test_unit const& tu, std::ostrea
         return;
     }
 
+<<<<<<< HEAD
     counter_t total_assertions  = tr.p_assertions_passed + tr.p_assertions_failed;
     counter_t total_tc          = tr.p_test_cases_passed + tr.p_test_cases_warned + tr.p_test_cases_failed + tr.p_test_cases_skipped;
+=======
+    // aborted test case within failed ones, timed-out TC exclusive with failed/aborted
+    counter_t total_assertions  = tr.p_assertions_passed + tr.p_assertions_failed;
+    counter_t total_tc          = tr.p_test_cases_passed + tr.p_test_cases_warned + tr.p_test_cases_failed + tr.p_test_cases_skipped + tr.p_test_cases_timed_out;
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
     if( total_assertions > 0 || total_tc > 0 || tr.p_warnings_failed > 0)
         ostr << " with:";
@@ -134,6 +145,11 @@ plain_report_formatter::test_unit_report_start( test_unit const& tu, std::ostrea
     print_stat_value( ostr, tr.p_test_cases_passed , m_indent, total_tc        , "test case", "passed" );
     print_stat_value( ostr, tr.p_test_cases_warned , m_indent, total_tc        , "test case", "passed with warnings" );
     print_stat_value( ostr, tr.p_test_cases_failed , m_indent, total_tc        , "test case", "failed" );
+<<<<<<< HEAD
+=======
+    print_stat_value( ostr, tr.p_test_cases_timed_out, m_indent, total_tc      , "test case", "timed-out" );
+    print_stat_value( ostr, tr.p_test_suites_timed_out, m_indent, tr.p_test_suites, "test suite", "timed-out" );
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     print_stat_value( ostr, tr.p_test_cases_skipped, m_indent, total_tc        , "test case", "skipped" );
     print_stat_value( ostr, tr.p_test_cases_aborted, m_indent, total_tc        , "test case", "aborted" );
     print_stat_value( ostr, tr.p_assertions_passed , m_indent, total_assertions, "assertion", "passed" );
@@ -174,6 +190,15 @@ plain_report_formatter::do_confirmation_report( test_unit const& tu, std::ostrea
         return;
     }
 
+<<<<<<< HEAD
+=======
+    if( tr.p_timed_out ) {
+        ostr << "*** The test " << tu.p_type_name << ' ' << quote() << tu.full_name() << " has timed out"
+             << "; see standard output for details\n";
+        return;
+    }
+
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     if( tr.p_aborted ) {
         ostr << "*** The test " << tu.p_type_name << ' ' << quote() << tu.full_name() << " was aborted"
              << "; see standard output for details\n";

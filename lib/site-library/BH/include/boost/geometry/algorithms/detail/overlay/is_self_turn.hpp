@@ -1,6 +1,10 @@
 // Boost.Geometry (aka GGL, Generic Geometry Library)
 
 // Copyright (c) 2017-2017 Barend Gehrels, Amsterdam, the Netherlands.
+<<<<<<< HEAD
+=======
+// Copyright (c) 2017 Adam Wulkiewicz, Lodz, Poland.
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 // Use, modification and distribution is subject to the Boost Software License,
 // Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
@@ -34,13 +38,18 @@ template <>
 struct is_self_turn_check<overlay_buffer>
 {
     template <typename Turn>
+<<<<<<< HEAD
     static inline bool apply(Turn const& turn)
+=======
+    static inline bool apply(Turn const& /*turn*/)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     {
         return false;
     }
 };
 
 template <>
+<<<<<<< HEAD
 struct is_self_turn_check<overlay_dissolve_union>
 {
     template <typename Turn>
@@ -55,6 +64,12 @@ struct is_self_turn_check<overlay_dissolve_intersection>
 {
     template <typename Turn>
     static inline bool apply(Turn const& turn)
+=======
+struct is_self_turn_check<overlay_dissolve>
+{
+    template <typename Turn>
+    static inline bool apply(Turn const& /*turn*/)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     {
         return false;
     }

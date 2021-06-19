@@ -24,7 +24,11 @@ namespace boost { namespace spirit { namespace x3
         template <typename Char, typename Context>
         bool test(Char ch_, Context const&) const
         {
+<<<<<<< HEAD
             return ((sizeof(Char) <= sizeof(char_type)) || encoding::ischar(ch_));
+=======
+            return encoding::ischar(ch_);
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
         }
 
         template <typename Char>

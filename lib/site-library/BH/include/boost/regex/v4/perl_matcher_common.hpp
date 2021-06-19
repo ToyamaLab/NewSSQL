@@ -36,7 +36,13 @@
 #endif
 #ifdef BOOST_MSVC
 #  pragma warning(push)
+<<<<<<< HEAD
 #  pragma warning(disable: 4800)
+=======
+#if BOOST_MSVC < 1910
+#pragma warning(disable:4800)
+#endif
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 #endif
 
 namespace boost{
@@ -476,12 +482,22 @@ bool perl_matcher<BidiIterator, Allocator, traits>::match_word_boundary()
    }
    else
    {
+<<<<<<< HEAD
       b = (m_match_flags & match_not_eow) ? true : false;
+=======
+      if (m_match_flags & match_not_eow)
+         return false;
+      b = false;
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
    }
    if((position == backstop) && ((m_match_flags & match_prev_avail) == 0))
    {
       if(m_match_flags & match_not_bow)
+<<<<<<< HEAD
          b ^= true;
+=======
+         return false;
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
       else
          b ^= false;
    }

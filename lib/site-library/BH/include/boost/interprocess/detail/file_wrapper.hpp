@@ -113,12 +113,22 @@ class file_wrapper
    bool priv_open_or_create(ipcdetail::create_enum_t type, const char *filename, mode_t mode, const permissions &perm);
 
    file_handle_t  m_handle;
+<<<<<<< HEAD
    mode_t      m_mode;
    std::string       m_filename;
 };
 
 inline file_wrapper::file_wrapper()
    :  m_handle(file_handle_t(ipcdetail::invalid_file()))
+=======
+   mode_t         m_mode;
+   std::string    m_filename;
+};
+
+inline file_wrapper::file_wrapper()
+   : m_handle(file_handle_t(ipcdetail::invalid_file()))
+   , m_mode(read_only), m_filename()
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 {}
 
 inline file_wrapper::~file_wrapper()

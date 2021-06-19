@@ -73,9 +73,14 @@ namespace boost { namespace spirit { namespace qi
 
         Value value_;
 
+<<<<<<< HEAD
     private:
         // silence MSVC warning C4512: assignment operator could not be generated
         attr_parser& operator= (attr_parser const&);
+=======
+        // silence MSVC warning C4512: assignment operator could not be generated
+        BOOST_DELETED_FUNCTION(attr_parser& operator= (attr_parser const&))
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     };
 
     ///////////////////////////////////////////////////////////////////////////

@@ -2,7 +2,11 @@
 // packaged_task.hpp
 // ~~~~~~~~~~~~~~~~~
 //
+<<<<<<< HEAD
 // Copyright (c) 2003-2017 Christopher M. Kohlhoff (chris at kohlhoff dot com)
+=======
+// Copyright (c) 2003-2019 Christopher M. Kohlhoff (chris at kohlhoff dot com)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 //
 // Distributed under the Boost Software License, Version 1.0. (See accompanying
 // file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
@@ -16,11 +20,19 @@
 #endif // defined(_MSC_VER) && (_MSC_VER >= 1200)
 
 #include <boost/asio/detail/config.hpp>
+<<<<<<< HEAD
 
 #if defined(BOOST_ASIO_HAS_STD_FUTURE) \
   || defined(GENERATING_DOCUMENTATION)
 
 #include <future>
+=======
+#include <boost/asio/detail/future.hpp>
+
+#if defined(BOOST_ASIO_HAS_STD_FUTURE_CLASS) \
+  || defined(GENERATING_DOCUMENTATION)
+
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 #include <boost/asio/async_result.hpp>
 #include <boost/asio/detail/type_traits.hpp>
 #include <boost/asio/detail/variadic_templates.hpp>
@@ -122,7 +134,11 @@ private:
 
 #include <boost/asio/detail/pop_options.hpp>
 
+<<<<<<< HEAD
 #endif // defined(BOOST_ASIO_HAS_STD_FUTURE)
+=======
+#endif // defined(BOOST_ASIO_HAS_STD_FUTURE_CLASS)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
        //   || defined(GENERATING_DOCUMENTATION)
 
 #endif // BOOST_ASIO_PACKAGED_TASK_HPP

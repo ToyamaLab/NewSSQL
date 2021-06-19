@@ -44,6 +44,7 @@ namespace boost { namespace spirit { namespace traits
     }
 
     // This is the default case: the plain attribute values
+<<<<<<< HEAD
     template <typename Attribute, typename Exposed, typename Enable/*= void*/>
     struct extract_from_attribute
     {
@@ -70,14 +71,54 @@ namespace boost { namespace spirit { namespace traits
         {
             return extract_from<Exposed>(fusion::at_c<0>(attr), ctx);
         }
+=======
+    template <typename Attribute, typename Exposed
+      , bool IsOneElemSeq = traits::one_element_sequence<Attribute>::value>
+    struct extract_from_attribute_base
+    {
+        typedef Attribute const& type;
+
+        template <typename Context>
+        static type call(Attribute const& attr, Context&)
+        {
+            return attr;
+        }
+    };
+
+    // This handles the case where the attribute is a single element fusion
+    // sequence. We silently extract the only element and treat it as the
+    // attribute to generate output from.
+    template <typename Attribute, typename Exposed>
+    struct extract_from_attribute_base<Attribute, Exposed, true>
+    {
+        typedef typename remove_const<
+            typename remove_reference<
+                typename fusion::result_of::at_c<Attribute, 0>::type
+            >::type
+        >::type elem_type;
+
+        typedef typename result_of::extract_from<Exposed, elem_type>::type type;
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
         template <typename Context>
         static type call(Attribute const& attr, Context& ctx)
         {
+<<<<<<< HEAD
             return call(attr, ctx, is_one_element_sequence());
         }
     };
 
+=======
+            return extract_from<Exposed>(fusion::at_c<0>(attr), ctx);
+        }
+    };
+
+    template <typename Attribute, typename Exposed, typename Enable/*= void*/>
+    struct extract_from_attribute
+      : extract_from_attribute_base<Attribute, Exposed>
+    {};
+
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     // This handles optional attributes.
     template <typename Attribute, typename Exposed>
     struct extract_from_attribute<boost::optional<Attribute>, Exposed>

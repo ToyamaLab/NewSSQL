@@ -25,10 +25,17 @@ namespace boost {
 namespace interprocess {
 namespace ipcdetail {
 
+<<<<<<< HEAD
 using boost::container::container_detail::tuple;
 using boost::container::container_detail::build_number_seq;
 using boost::container::container_detail::index_tuple;
 using boost::container::container_detail::get;
+=======
+using boost::container::dtl::tuple;
+using boost::container::dtl::build_number_seq;
+using boost::container::dtl::index_tuple;
+using boost::container::dtl::get;
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 }}}   //namespace boost { namespace interprocess { namespace ipcdetail {
 

@@ -26,7 +26,10 @@
 #include <boost/python/str.hpp>
 #include <boost/python/extract.hpp>
 
+<<<<<<< HEAD
 #include <memory>
+=======
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 #include <map>
 
 #include <boost/function/function3.hpp>
@@ -37,6 +40,10 @@
 #include <boost/serialization/split_free.hpp>
 #include <boost/serialization/array.hpp>
 #include <boost/serialization/array_wrapper.hpp>
+<<<<<<< HEAD
+=======
+#include <boost/smart_ptr/scoped_array.hpp>
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 #include <boost/assert.hpp>
 
@@ -442,7 +449,11 @@ load_impl(Archiver& ar, boost::python::object& obj,
   int len;
   ar >> len;
 
+<<<<<<< HEAD
   std::auto_ptr<char> string(new char[len]);
+=======
+  boost::scoped_array<char> string(new char[len]);
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
   ar >> boost::serialization::make_array(string.get(), len);
   boost::python::str py_string(string.get(), len);
   obj = boost::python::pickle::loads(py_string);

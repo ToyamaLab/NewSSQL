@@ -402,6 +402,7 @@ public class HTMLAttribute extends Attribute {
 	// Attribute鐃緒申work鐃潤ソ鐃獣ワ申
 	@Override
 	public String work(ExtList data_info) {
+		Log.out("----Attribute----");
 		/*
 		 * if(GlobalEnv.getSelectFlg()) data_info = (ExtList) data_info.get(0);
 		 */
@@ -411,12 +412,57 @@ public class HTMLAttribute extends Attribute {
 		String classname;
 		classname = Modifier.getClassName(decos, HTMLEnv.getClassID(this));
 		String link_a_tag_str = "";
+		
+		
+//		// added by masato 20150924 incremental update
+//		if (Incremental.flag || Ehtml.flag) {
+//			// modified by masato 20151201 XMLの要素名をTFE******に変更
+//			// Incremental.outXMLData(htmlEnv.xmlDepth, "<" +
+//			// Items.get(0) + tfe + ">" + this.getStr(data_info) + "</"
+//			// + Items.get(0) + ">\n");
+//			String outType = "div";
+//
+//			if (htmlEnv.xmlDepth != 0) {
+//				// 親のoutTypeを継承
+//				outType = htmlEnv.outTypeList.get(htmlEnv.xmlDepth - 1);
+//			}
+//			if (decos.containsKey("table") || !outType.equals("div")) {
+//				htmlEnv.outTypeList.add(htmlEnv.xmlDepth, "table");
+//			} else {
+//				htmlEnv.outTypeList.add(htmlEnv.xmlDepth, "div");
+//			}
+//			if (decos.containsKey("div")) {
+//				htmlEnv.outTypeList.add(htmlEnv.xmlDepth, "div");
+//			}
+//			Log.info("out:"+htmlEnv.outTypeList);
+//			String data = this.getStr(data_info)
+//					.replaceAll("<", "&lt;");
+//			data = data.replaceAll(">", "&gt;");
+//			Incremental.outXMLData(
+//					htmlEnv.xmlDepth,
+//					"<Value outType=\'"
+//							+ htmlEnv.outTypeList.get(htmlEnv.xmlDepth)
+//							+ "\' class=\'" + HTMLEnv.getClassID(this)
+//							+ "'>" + data + "</Value>\n");
+//
+//		}
+//		Incremental.outXMLData(1, classname);	//Test
+		
+		
+		HTMLEnv.start_table("HTMLAttribute", decos, htmlEnv);
+		
 		//tbt acc 180806
 		if(GlobalEnv.joinFlag){
-			System.out.println(data_info);
+			// if (Incremental.flag || Ehtml.flag) {
+			HTMLCONCAT.joinClassID = HTMLEnv.getClassID(this);
+			HTMLCONCAT.joinDecos = this.decos;
+			// htmlEnv.append_css_def_td(HTMLCONCAT.joinClassID, this.decos);
+			if ((!Incremental.flag && !Ehtml.flag) || !Ehtml.isEhtml2()) ;
+			else	htmlEnv.append_css_def_td(HTMLCONCAT.joinClassID, this.decos);
 			return this.getStr(data_info);
 		}
 		//tbt end
+//		Incremental.outXMLData(1, classname);	//Test
 
 		htmlEnv.append_css_def_td(HTMLEnv.getClassID(this), this.decos);
 		if (GlobalEnv.isOpt()) {
@@ -427,6 +473,7 @@ public class HTMLAttribute extends Attribute {
 
 			} else {
 				if (htmlEnv.decorationStartFlag.size() > 0) {
+					HTMLDecoration.fronts.get(0).append(HTMLEnv.getNewTableBorderDIV_start());
 					if (htmlEnv.decorationEndFlag.get(0)) {
 						// do nothing
 					} else if (htmlEnv.decorationStartFlag.get(0)) {
@@ -436,7 +483,7 @@ public class HTMLAttribute extends Attribute {
 						if (decos.getConditions().size() > 0) {
 							HTMLDecoration.ends.get(0).append(" " + computeStringForDecoration(data_info));
 						}
-						HTMLDecoration.ends.get(0).append(" att\">");
+						HTMLDecoration.ends.get(0).append(" att\" "+HTMLEnv.getNewTableBorderStyle()+">");
 					} else {
 						HTMLDecoration.ends.get(0).append("<table" + htmlEnv.getOutlineModeAtt());
 						HTMLDecoration.ends.get(0).append(" class=\"");
@@ -444,11 +491,11 @@ public class HTMLAttribute extends Attribute {
 						if (decos.getConditions().size() > 0) {
 							HTMLDecoration.ends.get(0).append(" " + computeStringForDecoration(data_info));
 						}
-						HTMLDecoration.ends.get(0).append(" att\">");
+						HTMLDecoration.ends.get(0).append(" att\" "+HTMLEnv.getNewTableBorderStyle()+">");
 					}
 				} else {
-					htmlEnv.code.append("<table" + htmlEnv.getOutlineModeAtt()
-							+ " ");
+					htmlEnv.code.append(HTMLEnv.getNewTableBorderDIV_start());
+					htmlEnv.code.append("<table" + htmlEnv.getOutlineModeAtt() + " ");
 					htmlEnv.code.append("class=\"att");
 					// tk
 					// start/////////////////////////////////////////////////////////
@@ -465,7 +512,7 @@ public class HTMLAttribute extends Attribute {
 					}
 					htmlEnv.code.append("\"");
 					htmlEnv.code.append(Modifier.getIdModifierValue(decos));
-					htmlEnv.code.append(">");
+					htmlEnv.code.append(HTMLEnv.getNewTableBorderStyle()+">");
 				}
 			}
 
@@ -486,7 +533,6 @@ public class HTMLAttribute extends Attribute {
 
 			if (htmlEnv.linkFlag > 0 || htmlEnv.sinvokeFlag) {
 				String s = "";
-
 				if (htmlEnv.draggable) {
 					s += "<div id=\"" + htmlEnv.dragDivId
 							+ "\" class=\"draggable\"";
@@ -504,19 +550,16 @@ public class HTMLAttribute extends Attribute {
 					// ������ʤ�
 					// 2.ITC�μ½��Ķ��Ǥϥ����
 					// ������ʤ�
-					String fileDir = new File(htmlEnv.linkUrl)
-							.getAbsoluteFile().getParent();
+					String fileDir = new File(htmlEnv.linkUrl).getAbsoluteFile().getParent();
 					if (fileDir.length() < htmlEnv.linkUrl.length()
-							&& fileDir.equals(htmlEnv.linkUrl.substring(0,
-									fileDir.length()))) {
-						String relative_path = htmlEnv.linkUrl
-								.substring(fileDir.length() + 1);
+							&& fileDir.equals(htmlEnv.linkUrl.substring(0,fileDir.length()))) 
+					{
+						String relative_path = htmlEnv.linkUrl.substring(fileDir.length() + 1);
 						s += "<A href=\"" + relative_path
 								+ "\" ";
 					} else
 						s += "<A href=\"" + htmlEnv.linkUrl
 								+ "\" ";
-
 					// html_env.code.append("<A href=\"" + html_env.linkurl +
 					// "\" ";
 					// added by goto 20120614 end
@@ -582,17 +625,14 @@ public class HTMLAttribute extends Attribute {
 					link_a_tag_str = s;
 
 				Log.out("<A href=\"" + htmlEnv.linkUrl + "\">");
-			}
-
+			} 
 			// added by masato 20151124 for plink
 			if (htmlEnv.plinkFlag) {
 				String tmp = "";
 				for (int i = 0; i < htmlEnv.valueArray.size(); i++) {
-					tmp += " value" + (i + 1) + "='"
-							+ htmlEnv.valueArray.get(i) + "'";
+					tmp += " value" + (i + 1) + "='" + htmlEnv.valueArray.get(i) + "'";
 				}
-				Incremental.outXMLData(htmlEnv.xmlDepth, "<PostLink target='"
-						+ htmlEnv.linkUrl + "'" + tmp + ">\n");
+				Incremental.outXMLData(htmlEnv.xmlDepth, "<PostLink target='" + htmlEnv.linkUrl + "'" + tmp + ">\n");
 			}
 			// Log.out("data_info: "+this.getStr(data_info));
 
@@ -626,12 +666,22 @@ public class HTMLAttribute extends Attribute {
 					String data = this.getStr(data_info)
 							.replaceAll("<", "&lt;");
 					data = data.replaceAll(">", "&gt;");
-					Incremental.outXMLData(
-							htmlEnv.xmlDepth,
-							"<Value outType=\'"
-									+ htmlEnv.outTypeList.get(htmlEnv.xmlDepth)
-									+ "\' class=\'" + HTMLEnv.getClassID(this)
-									+ "'>" + data + "</Value>\n");
+					
+					if (!Ehtml.infinitescroll_flag) {
+						String cid = HTMLEnv.getClassID(this);
+						Incremental.outXMLData(
+								htmlEnv.xmlDepth,
+								"<"+cid+" outType=\'"
+										+ htmlEnv.outTypeList.get(htmlEnv.xmlDepth)
+										+ "\'>" + data + "</"+cid+">\n");
+					} else {
+						Incremental.outXMLData(
+								htmlEnv.xmlDepth,
+								"<Value outType=\'"
+										+ htmlEnv.outTypeList.get(htmlEnv.xmlDepth)
+										+ "\' class=\'" + HTMLEnv.getClassID(this)
+										+ "'>" + data + "</Value>\n");
+					}
 
 				} else if (this.getStr(data_info).contains("ggplot")) {
 					String width = "700";
@@ -715,11 +765,14 @@ public class HTMLAttribute extends Attribute {
 					} else {
 						HTMLDecoration.ends.get(0).append("</td></tr></table>\n");
 					}
+					HTMLDecoration.ends.get(0).append(HTMLEnv.getNewTableBorderDIV_end());
 				} else {
 					htmlEnv.code.append("</td></tr></table>\n");
+					htmlEnv.code.append(HTMLEnv.getNewTableBorderDIV_end());
 					Log.out("</td></tr></table>");
 				}
 			}
+			HTMLEnv.end_table("HTMLAttribute");
 
 			Log.out("TFEId = " + HTMLEnv.getClassID(this));
 			// html_env.append_css_def_td(HTMLEnv.getClassID(this), this.decos);

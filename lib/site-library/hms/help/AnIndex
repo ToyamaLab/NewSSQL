@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 as.character.hms	hms
 as.data.frame.hms	hms
 as.hms	hms
@@ -12,8 +13,30 @@ as.POSIXlt.hms	hms
 format.hms	hms
 hms	hms
 is.hms	hms
+=======
+hms-package	hms-package
+as.character.hms	hms
+as.hms	Deprecated
+as.hms.default	Deprecated
+as.hms.POSIXlt	Deprecated
+as.hms.POSIXt	Deprecated
+as.POSIXct.hms	hms
+as.POSIXlt.hms	hms
+as_hms	hms
+Deprecated	Deprecated
+format.hms	hms
+hms	hms
+is.hms	Deprecated
+is_hms	hms
+new_hms	hms
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 parse_hm	parse_hms
 parse_hms	parse_hms
 print.hms	hms
 round_hms	round_hms
 trunc_hms	round_hms
+<<<<<<< HEAD
+=======
+vec_cast.hms	vec_cast.hms
+vec_ptype2.hms	vec_ptype2.hms
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce

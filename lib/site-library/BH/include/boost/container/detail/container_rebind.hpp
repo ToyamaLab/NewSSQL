@@ -19,11 +19,19 @@
 #endif
 
 #include <boost/container/allocator_traits.hpp>
+<<<<<<< HEAD
+=======
+#include <boost/container/container_fwd.hpp>
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 
 namespace boost {
 namespace container {
+<<<<<<< HEAD
 namespace container_detail {
+=======
+namespace dtl {
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
    template <class Cont, class U>
    struct container_rebind;
@@ -33,14 +41,22 @@ namespace container_detail {
    template <template <class, class, class...> class Cont, typename V, typename A, class... An, class U>
    struct container_rebind<Cont<V, A, An...>, U>
    {
+<<<<<<< HEAD
       typedef Cont<U, typename allocator_traits<A>::template portable_rebind_alloc<U>::type, An...> type;
+=======
+      typedef Cont<U, typename allocator_traits<typename real_allocator<V, A>::type>::template portable_rebind_alloc<U>::type, An...> type;
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
    };
 
    //Needed for non-conforming compilers like GCC 4.3
    template <template <class, class> class Cont, typename V, typename A, class U>
    struct container_rebind<Cont<V, A>, U>
    {
+<<<<<<< HEAD
       typedef Cont<U, typename allocator_traits<A>::template portable_rebind_alloc<U>::type> type;
+=======
+      typedef Cont<U, typename allocator_traits<typename real_allocator<V, A>::type>::template portable_rebind_alloc<U>::type> type;
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
    };
 
    template <template <class> class Cont, typename V, class U>
@@ -49,6 +65,7 @@ namespace container_detail {
       typedef Cont<U> type;
    };
 
+<<<<<<< HEAD
    //for small_vector,static_vector
 
    template <template <class, std::size_t, class, class...> class Cont, typename V, std::size_t N, typename A, class... An, class U>
@@ -70,6 +87,8 @@ namespace container_detail {
       typedef Cont<U, N> type;
    };
 
+=======
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 #else //C++03 compilers
 
    template <template <class> class Cont  //0arg
@@ -85,7 +104,11 @@ namespace container_detail {
       , class U>
       struct container_rebind<Cont<V, A>, U>
    {
+<<<<<<< HEAD
       typedef Cont<U, typename allocator_traits<A>::template portable_rebind_alloc<U>::type> type;
+=======
+      typedef Cont<U, typename allocator_traits<typename real_allocator<V, A>::type>::template portable_rebind_alloc<U>::type> type;
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
    };
 
    template <template <class, class, class> class Cont  //1arg
@@ -93,7 +116,11 @@ namespace container_detail {
       , class U>
       struct container_rebind<Cont<V, A, P0>, U>
    {
+<<<<<<< HEAD
       typedef Cont<U, typename allocator_traits<A>::template portable_rebind_alloc<U>::type, P0> type;
+=======
+      typedef Cont<U, typename allocator_traits<typename real_allocator<V, A>::type>::template portable_rebind_alloc<U>::type, P0> type;
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
    };
 
    template <template <class, class, class, class> class Cont  //2arg
@@ -101,7 +128,11 @@ namespace container_detail {
       , class U>
       struct container_rebind<Cont<V, A, P0, P1>, U>
    {
+<<<<<<< HEAD
       typedef Cont<U, typename allocator_traits<A>::template portable_rebind_alloc<U>::type, P0, P1> type;
+=======
+      typedef Cont<U, typename allocator_traits<typename real_allocator<V, A>::type>::template portable_rebind_alloc<U>::type, P0, P1> type;
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
    };
 
    template <template <class, class, class, class, class> class Cont  //3arg
@@ -109,7 +140,11 @@ namespace container_detail {
       , class U>
       struct container_rebind<Cont<V, A, P0, P1, P2>, U>
    {
+<<<<<<< HEAD
       typedef Cont<U, typename allocator_traits<A>::template portable_rebind_alloc<U>::type, P0, P1, P2> type;
+=======
+      typedef Cont<U, typename allocator_traits<typename real_allocator<V, A>::type>::template portable_rebind_alloc<U>::type, P0, P1, P2> type;
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
    };
 
    template <template <class, class, class, class, class, class> class Cont  //4arg
@@ -117,7 +152,11 @@ namespace container_detail {
       , class U>
       struct container_rebind<Cont<V, A, P0, P1, P2, P3>, U>
    {
+<<<<<<< HEAD
       typedef Cont<U, typename allocator_traits<A>::template portable_rebind_alloc<U>::type, P0, P1, P2, P3> type;
+=======
+      typedef Cont<U, typename allocator_traits<typename real_allocator<V, A>::type>::template portable_rebind_alloc<U>::type, P0, P1, P2, P3> type;
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
    };
 
    template <template <class, class, class, class, class, class, class> class Cont  //5arg
@@ -125,7 +164,11 @@ namespace container_detail {
       , class U>
       struct container_rebind<Cont<V, A, P0, P1, P2, P3, P4>, U>
    {
+<<<<<<< HEAD
       typedef Cont<U, typename allocator_traits<A>::template portable_rebind_alloc<U>::type, P0, P1, P2, P3, P4> type;
+=======
+      typedef Cont<U, typename allocator_traits<typename real_allocator<V, A>::type>::template portable_rebind_alloc<U>::type, P0, P1, P2, P3, P4> type;
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
    };
 
    template <template <class, class, class, class, class, class, class, class> class Cont  //6arg
@@ -133,7 +176,11 @@ namespace container_detail {
       , class U>
       struct container_rebind<Cont<V, A, P0, P1, P2, P3, P4, P5>, U>
    {
+<<<<<<< HEAD
       typedef Cont<U, typename allocator_traits<A>::template portable_rebind_alloc<U>::type, P0, P1, P2, P3, P4, P5> type;
+=======
+      typedef Cont<U, typename allocator_traits<typename real_allocator<V, A>::type>::template portable_rebind_alloc<U>::type, P0, P1, P2, P3, P4, P5> type;
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
    };
 
    template <template <class, class, class, class, class, class, class, class, class> class Cont  //7arg
@@ -141,7 +188,11 @@ namespace container_detail {
       , class U>
       struct container_rebind<Cont<V, A, P0, P1, P2, P3, P4, P5, P6>, U>
    {
+<<<<<<< HEAD
       typedef Cont<U, typename allocator_traits<A>::template portable_rebind_alloc<U>::type, P0, P1, P2, P3, P4, P5, P6> type;
+=======
+      typedef Cont<U, typename allocator_traits<typename real_allocator<V, A>::type>::template portable_rebind_alloc<U>::type, P0, P1, P2, P3, P4, P5, P6> type;
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
    };
 
    template <template <class, class, class, class, class, class, class, class, class, class> class Cont  //8arg
@@ -149,7 +200,11 @@ namespace container_detail {
       , class U>
       struct container_rebind<Cont<V, A, P0, P1, P2, P3, P4, P5, P6, P7>, U>
    {
+<<<<<<< HEAD
       typedef Cont<U, typename allocator_traits<A>::template portable_rebind_alloc<U>::type, P0, P1, P2, P3, P4, P5, P6, P7> type;
+=======
+      typedef Cont<U, typename allocator_traits<typename real_allocator<V, A>::type>::template portable_rebind_alloc<U>::type, P0, P1, P2, P3, P4, P5, P6, P7> type;
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
    };
 
    template <template <class, class, class, class, class, class, class, class, class, class, class> class Cont  //9arg
@@ -157,6 +212,7 @@ namespace container_detail {
       , class U>
       struct container_rebind<Cont<V, A, P0, P1, P2, P3, P4, P5, P6, P7, P8>, U>
    {
+<<<<<<< HEAD
       typedef Cont<U, typename allocator_traits<A>::template portable_rebind_alloc<U>::type, P0, P1, P2, P3, P4, P5, P6, P7, P8> type;
    };
 
@@ -252,6 +308,28 @@ namespace container_detail {
 #endif   //!defined(BOOST_NO_CXX11_VARIADIC_TEMPLATES)
 
 }  //namespace container_detail {
+=======
+      typedef Cont<U, typename allocator_traits<typename real_allocator<V, A>::type>::template portable_rebind_alloc<U>::type, P0, P1, P2, P3, P4, P5, P6, P7, P8> type;
+   };
+
+#endif   //!defined(BOOST_NO_CXX11_VARIADIC_TEMPLATES)
+
+   //for small_vector,static_vector
+
+   template <typename V, std::size_t N, typename A, class U>
+   struct container_rebind<small_vector<V, N, A>, U>
+   {
+      typedef small_vector<U, N, typename allocator_traits<typename real_allocator<V, A>::type>::template portable_rebind_alloc<U>::type> type;
+   };
+
+   template <typename V, std::size_t N, typename O, class U>
+   struct container_rebind<static_vector<V, N, O>, U>
+   {
+      typedef static_vector<U, N, O> type;
+   };
+
+}  //namespace dtl {
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 }  //namespace container {
 }  //namespace boost {
 

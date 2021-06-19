@@ -3,8 +3,13 @@
 // Copyright (c) 2007-2012 Barend Gehrels, Amsterdam, the Netherlands.
 // Copyright (c) 2013 Adam Wulkiewicz, Lodz, Poland.
 
+<<<<<<< HEAD
 // This file was modified by Oracle on 2013, 2014, 2016, 2017.
 // Modifications copyright (c) 2013-2017 Oracle and/or its affiliates.
+=======
+// This file was modified by Oracle on 2013, 2014, 2016, 2017, 2019.
+// Modifications copyright (c) 2013-2019 Oracle and/or its affiliates.
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 // Contributed and/or modified by Adam Wulkiewicz, on behalf of Oracle
 
 // Parts of Boost.Geometry are redesigned from Geodan's Geographic Library
@@ -62,7 +67,11 @@ struct winding_base_type
 template <typename Point, typename PointOfSegment, typename CalculationType>
 struct winding_base_type<Point, PointOfSegment, CalculationType, cartesian_tag>
 {
+<<<<<<< HEAD
     typedef within::cartesian_winding<Point, PointOfSegment, CalculationType> type;
+=======
+    typedef within::cartesian_winding<void, void, CalculationType> type;
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 };
 
 template <typename Point, typename PointOfSegment, typename CalculationType>
@@ -70,8 +79,11 @@ struct winding_base_type<Point, PointOfSegment, CalculationType, spherical_tag>
 {
     typedef within::detail::spherical_winding_base
         <
+<<<<<<< HEAD
             Point,
             PointOfSegment,
+=======
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
             typename strategy::side::services::default_strategy
                 <
                     typename cs_tag<Point>::type

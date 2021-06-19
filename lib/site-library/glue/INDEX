@@ -2,6 +2,10 @@ as_glue                 Coerce object to glue
 glue                    Format and interpolate a string
 glue_col                Construct strings with color
 glue_collapse           Collapse a character vector
+<<<<<<< HEAD
+=======
+glue_safe               Safely interpolate strings
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 glue_sql                Interpolate strings with SQL escaping
 identity_transformer    Parse and Evaluate R code
 quoting                 Quoting operators

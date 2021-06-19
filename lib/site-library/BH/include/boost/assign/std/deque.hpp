@@ -18,12 +18,20 @@
 
 #include <boost/assign/list_inserter.hpp>
 #include <boost/config.hpp>
+<<<<<<< HEAD
+=======
+#include <boost/move/utility.hpp>
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 #include <deque>
 
 namespace boost
 {
 namespace assign
 {
+<<<<<<< HEAD
+=======
+#if defined(BOOST_NO_CXX11_RVALUE_REFERENCES)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
     template< class V, class A, class V2 >
     inline list_inserter< assign_detail::call_push_back< std::deque<V,A> >, V > 
@@ -31,7 +39,22 @@ namespace assign
     {
         return push_back( c )( v );
     }
+<<<<<<< HEAD
         
+=======
+
+#else
+
+    template< class V, class A, class V2 >
+    inline list_inserter< assign_detail::call_push_back< std::deque<V, A> >, V >
+    operator+=(std::deque<V, A>& c, V2&& v)
+    {
+        return push_back(c)(boost::forward<V2>(v));
+    }
+
+#endif
+
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 }
 }
 

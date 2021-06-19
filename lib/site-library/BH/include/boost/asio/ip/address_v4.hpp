@@ -2,7 +2,11 @@
 // ip/address_v4.hpp
 // ~~~~~~~~~~~~~~~~~
 //
+<<<<<<< HEAD
 // Copyright (c) 2003-2017 Christopher M. Kohlhoff (chris at kohlhoff dot com)
+=======
+// Copyright (c) 2003-2019 Christopher M. Kohlhoff (chris at kohlhoff dot com)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 //
 // Distributed under the Boost Software License, Version 1.0. (See accompanying
 // file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
@@ -61,7 +65,11 @@ public:
 #endif
 
   /// Default constructor.
+<<<<<<< HEAD
   address_v4()
+=======
+  address_v4() BOOST_ASIO_NOEXCEPT
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
   {
     addr_.s_addr = 0;
   }
@@ -73,21 +81,33 @@ public:
   BOOST_ASIO_DECL explicit address_v4(uint_type addr);
 
   /// Copy constructor.
+<<<<<<< HEAD
   address_v4(const address_v4& other)
+=======
+  address_v4(const address_v4& other) BOOST_ASIO_NOEXCEPT
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     : addr_(other.addr_)
   {
   }
 
 #if defined(BOOST_ASIO_HAS_MOVE)
   /// Move constructor.
+<<<<<<< HEAD
   address_v4(address_v4&& other)
+=======
+  address_v4(address_v4&& other) BOOST_ASIO_NOEXCEPT
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     : addr_(other.addr_)
   {
   }
 #endif // defined(BOOST_ASIO_HAS_MOVE)
 
   /// Assign from another address.
+<<<<<<< HEAD
   address_v4& operator=(const address_v4& other)
+=======
+  address_v4& operator=(const address_v4& other) BOOST_ASIO_NOEXCEPT
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
   {
     addr_ = other.addr_;
     return *this;
@@ -95,7 +115,11 @@ public:
 
 #if defined(BOOST_ASIO_HAS_MOVE)
   /// Move-assign from another address.
+<<<<<<< HEAD
   address_v4& operator=(address_v4&& other)
+=======
+  address_v4& operator=(address_v4&& other) BOOST_ASIO_NOEXCEPT
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
   {
     addr_ = other.addr_;
     return *this;
@@ -103,10 +127,17 @@ public:
 #endif // defined(BOOST_ASIO_HAS_MOVE)
 
   /// Get the address in bytes, in network byte order.
+<<<<<<< HEAD
   BOOST_ASIO_DECL bytes_type to_bytes() const;
 
   /// Get the address as an unsigned integer in host byte order
   BOOST_ASIO_DECL uint_type to_uint() const;
+=======
+  BOOST_ASIO_DECL bytes_type to_bytes() const BOOST_ASIO_NOEXCEPT;
+
+  /// Get the address as an unsigned integer in host byte order
+  BOOST_ASIO_DECL uint_type to_uint() const BOOST_ASIO_NOEXCEPT;
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 #if !defined(BOOST_ASIO_NO_DEPRECATED)
   /// Get the address as an unsigned long in host byte order
@@ -141,10 +172,17 @@ public:
 #endif // !defined(BOOST_ASIO_NO_DEPRECATED)
 
   /// Determine whether the address is a loopback address.
+<<<<<<< HEAD
   BOOST_ASIO_DECL bool is_loopback() const;
 
   /// Determine whether the address is unspecified.
   BOOST_ASIO_DECL bool is_unspecified() const;
+=======
+  BOOST_ASIO_DECL bool is_loopback() const BOOST_ASIO_NOEXCEPT;
+
+  /// Determine whether the address is unspecified.
+  BOOST_ASIO_DECL bool is_unspecified() const BOOST_ASIO_NOEXCEPT;
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 #if !defined(BOOST_ASIO_NO_DEPRECATED)
   /// (Deprecated: Use network_v4 class.) Determine whether the address is a
@@ -161,58 +199,103 @@ public:
 #endif // !defined(BOOST_ASIO_NO_DEPRECATED)
 
   /// Determine whether the address is a multicast address.
+<<<<<<< HEAD
   BOOST_ASIO_DECL bool is_multicast() const;
 
   /// Compare two addresses for equality.
   friend bool operator==(const address_v4& a1, const address_v4& a2)
+=======
+  BOOST_ASIO_DECL bool is_multicast() const BOOST_ASIO_NOEXCEPT;
+
+  /// Compare two addresses for equality.
+  friend bool operator==(const address_v4& a1,
+      const address_v4& a2) BOOST_ASIO_NOEXCEPT
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
   {
     return a1.addr_.s_addr == a2.addr_.s_addr;
   }
 
   /// Compare two addresses for inequality.
+<<<<<<< HEAD
   friend bool operator!=(const address_v4& a1, const address_v4& a2)
+=======
+  friend bool operator!=(const address_v4& a1,
+      const address_v4& a2) BOOST_ASIO_NOEXCEPT
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
   {
     return a1.addr_.s_addr != a2.addr_.s_addr;
   }
 
   /// Compare addresses for ordering.
+<<<<<<< HEAD
   friend bool operator<(const address_v4& a1, const address_v4& a2)
+=======
+  friend bool operator<(const address_v4& a1,
+      const address_v4& a2) BOOST_ASIO_NOEXCEPT
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
   {
     return a1.to_uint() < a2.to_uint();
   }
 
   /// Compare addresses for ordering.
+<<<<<<< HEAD
   friend bool operator>(const address_v4& a1, const address_v4& a2)
+=======
+  friend bool operator>(const address_v4& a1,
+      const address_v4& a2) BOOST_ASIO_NOEXCEPT
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
   {
     return a1.to_uint() > a2.to_uint();
   }
 
   /// Compare addresses for ordering.
+<<<<<<< HEAD
   friend bool operator<=(const address_v4& a1, const address_v4& a2)
+=======
+  friend bool operator<=(const address_v4& a1,
+      const address_v4& a2) BOOST_ASIO_NOEXCEPT
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
   {
     return a1.to_uint() <= a2.to_uint();
   }
 
   /// Compare addresses for ordering.
+<<<<<<< HEAD
   friend bool operator>=(const address_v4& a1, const address_v4& a2)
+=======
+  friend bool operator>=(const address_v4& a1,
+      const address_v4& a2) BOOST_ASIO_NOEXCEPT
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
   {
     return a1.to_uint() >= a2.to_uint();
   }
 
   /// Obtain an address object that represents any address.
+<<<<<<< HEAD
   static address_v4 any()
+=======
+  static address_v4 any() BOOST_ASIO_NOEXCEPT
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
   {
     return address_v4();
   }
 
   /// Obtain an address object that represents the loopback address.
+<<<<<<< HEAD
   static address_v4 loopback()
+=======
+  static address_v4 loopback() BOOST_ASIO_NOEXCEPT
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
   {
     return address_v4(0x7F000001);
   }
 
   /// Obtain an address object that represents the broadcast address.
+<<<<<<< HEAD
   static address_v4 broadcast()
+=======
+  static address_v4 broadcast() BOOST_ASIO_NOEXCEPT
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
   {
     return address_v4(0xFFFFFFFF);
   }
@@ -262,8 +345,13 @@ BOOST_ASIO_DECL address_v4 make_address_v4(const char* str);
 /**
  * @relates address_v4
  */
+<<<<<<< HEAD
 BOOST_ASIO_DECL address_v4 make_address_v4(
     const char* str, boost::system::error_code& ec);
+=======
+BOOST_ASIO_DECL address_v4 make_address_v4(const char* str,
+    boost::system::error_code& ec) BOOST_ASIO_NOEXCEPT;
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 /// Create an IPv4 address from an IP address string in dotted decimal form.
 /**
@@ -275,10 +363,17 @@ BOOST_ASIO_DECL address_v4 make_address_v4(const std::string& str);
 /**
  * @relates address_v4
  */
+<<<<<<< HEAD
 BOOST_ASIO_DECL address_v4 make_address_v4(
     const std::string& str, boost::system::error_code& ec);
 
 #if defined(BOOST_ASIO_HAS_STD_STRING_VIEW) \
+=======
+BOOST_ASIO_DECL address_v4 make_address_v4(const std::string& str,
+    boost::system::error_code& ec) BOOST_ASIO_NOEXCEPT;
+
+#if defined(BOOST_ASIO_HAS_STRING_VIEW) \
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
   || defined(GENERATING_DOCUMENTATION)
 
 /// Create an IPv4 address from an IP address string in dotted decimal form.
@@ -291,10 +386,17 @@ BOOST_ASIO_DECL address_v4 make_address_v4(string_view str);
 /**
  * @relates address_v4
  */
+<<<<<<< HEAD
 BOOST_ASIO_DECL address_v4 make_address_v4(
     string_view str, boost::system::error_code& ec);
 
 #endif // defined(BOOST_ASIO_HAS_STD_STRING_VIEW)
+=======
+BOOST_ASIO_DECL address_v4 make_address_v4(string_view str,
+    boost::system::error_code& ec) BOOST_ASIO_NOEXCEPT;
+
+#endif // defined(BOOST_ASIO_HAS_STRING_VIEW)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
        //  || defined(GENERATING_DOCUMENTATION)
 
 #if !defined(BOOST_ASIO_NO_IOSTREAM)

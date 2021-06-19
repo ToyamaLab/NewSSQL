@@ -1,10 +1,18 @@
+<<<<<<< HEAD
 ## ----echo = FALSE--------------------------------------------------------
+=======
+## ----echo = FALSE-------------------------------------------------------------
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 library(magrittr)
 library(xml2)
 knitr::opts_chunk$set(echo = FALSE)
 r <- rprojroot::is_r_package$make_fix_file()
 
+<<<<<<< HEAD
 ## ----error=TRUE----------------------------------------------------------
+=======
+## ----error=TRUE---------------------------------------------------------------
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 rd_db <- tools::Rd_db(dir = r())
 
 Links <- tools::findHTMLlinks()
@@ -31,6 +39,7 @@ xml_topic <- function(name, patcher) {
 
   xx <- x %>% xml_find_first("/html/body")
   xx %>% xml_find_first("//table") %>% xml_remove()
+<<<<<<< HEAD
   patcher(xx)
 }
 
@@ -38,6 +47,15 @@ asis_topic <- function(name, patcher = identity) {
   xml <- lapply(name, xml_topic, patcher = patcher)
   asis <- sapply(xml, as.character) %>% paste(collapse = "\n")
   knitr::asis_output(asis)
+=======
+  xx %>% xml_find_all("//pre") %>% xml_set_attr("class", "r")
+  patcher(xx)
+}
+
+out_topic <- function(name, patcher = identity) {
+  xml <- lapply(name, xml_topic, patcher = patcher)
+  sapply(xml, as.character) %>% paste(collapse = "\n")
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 }
 
 patch_package_doc <- function(x) {
@@ -119,7 +137,10 @@ patch_method_doc <- function(x) {
   x
 }
 
+<<<<<<< HEAD
 asis_topic("DBI-package", patch_package_doc)
+=======
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 topics <- c(
   "dbDataType",
   "dbConnect",
@@ -149,5 +170,24 @@ topics <- c(
   "dbWithTransaction"
 )
 
+<<<<<<< HEAD
 asis_topic(topics, patch_method_doc)
+=======
+html <- c(
+  out_topic("DBI-package", patch_package_doc),
+  out_topic(topics, patch_method_doc)
+)
+
+temp_html <- tempfile(fileext = ".html")
+temp_md <- tempfile(fileext = ".md")
+
+#temp_html <- "out.html"
+#temp_md <- "out.md"
+
+#html <- '<html><body><pre class="r">\na\nb\n</pre></body></html>'
+
+writeLines(html, temp_html)
+rmarkdown::pandoc_convert(temp_html, "gfm", verbose = FALSE, output = temp_md)
+knitr::asis_output(paste(readLines(temp_md), collapse = "\n"))
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 

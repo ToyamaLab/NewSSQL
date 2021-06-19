@@ -2,7 +2,11 @@
 // detail/base_from_completion_cond.hpp
 // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 //
+<<<<<<< HEAD
 // Copyright (c) 2003-2017 Christopher M. Kohlhoff (chris at kohlhoff dot com)
+=======
+// Copyright (c) 2003-2019 Christopher M. Kohlhoff (chris at kohlhoff dot com)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 //
 // Distributed under the Boost Software License, Version 1.0. (See accompanying
 // file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
@@ -28,8 +32,14 @@ template <typename CompletionCondition>
 class base_from_completion_cond
 {
 protected:
+<<<<<<< HEAD
   explicit base_from_completion_cond(CompletionCondition completion_condition)
     : completion_condition_(completion_condition)
+=======
+  explicit base_from_completion_cond(CompletionCondition& completion_condition)
+    : completion_condition_(
+        BOOST_ASIO_MOVE_CAST(CompletionCondition)(completion_condition))
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
   {
   }
 

@@ -43,7 +43,11 @@
 
 #if defined(BOOST_GCC) && (BOOST_GCC >= 40700)
 #pragma GCC diagnostic push
+<<<<<<< HEAD
 // #pragma GCC diagnostic ignored "-Wunused-local-typedefs"
+=======
+//#pragma GCC diagnostic ignored "-Wunused-local-typedefs"
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 #endif
 
 namespace boost {

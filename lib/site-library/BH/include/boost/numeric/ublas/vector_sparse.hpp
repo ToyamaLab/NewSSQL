@@ -13,6 +13,34 @@
 #ifndef _BOOST_UBLAS_VECTOR_SPARSE_
 #define _BOOST_UBLAS_VECTOR_SPARSE_
 
+<<<<<<< HEAD
+=======
+#include <boost/config.hpp>
+
+// In debug mode, MSCV enables iterator debugging, which additional checks are
+// executed for consistency. So, when two iterators are compared, it is tested
+// that they point to elements of the same container. If the check fails, then
+// the program is aborted.
+//
+// When matrices MVOV are traversed by column and then by row, the previous
+// check fails.
+//
+// MVOV::iterator2 iter2 = mvov.begin2();
+// for (; iter2 != mvov.end() ; iter2++) {
+//    MVOV::iterator1 iter1 = iter2.begin();
+//    .....
+// }
+//
+// These additional checks in iterators are disabled in this file, but their
+// status are restored at the end of file.
+// https://msdn.microsoft.com/en-us/library/hh697468.aspx
+#ifdef BOOST_MSVC
+#define _BACKUP_ITERATOR_DEBUG_LEVEL _ITERATOR_DEBUG_LEVEL
+#undef _ITERATOR_DEBUG_LEVEL
+#define _ITERATOR_DEBUG_LEVEL 0
+#endif
+
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 #include <boost/numeric/ublas/storage_sparse.hpp>
 #include <boost/numeric/ublas/vector_expression.hpp>
 #include <boost/numeric/ublas/detail/vector_assign.hpp>
@@ -372,7 +400,11 @@ namespace boost { namespace numeric { namespace ublas {
 
         // Reserving
         BOOST_UBLAS_INLINE
+<<<<<<< HEAD
         void reserve (size_type non_zeros = 0, bool preserve = true) {
+=======
+				void reserve (size_type non_zeros, bool /*preserve*/ = true) {
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
             detail::map_reserve (data (), restrict_capacity (non_zeros));
         }
 
@@ -2212,4 +2244,13 @@ namespace boost { namespace numeric { namespace ublas {
 
 }}}
 
+<<<<<<< HEAD
+=======
+#ifdef BOOST_MSVC
+#undef _ITERATOR_DEBUG_LEVEL
+#define _ITERATOR_DEBUG_LEVEL _BACKUP_ITERATOR_DEBUG_LEVEL
+#undef _BACKUP_ITERATOR_DEBUG_LEVEL
+#endif
+
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 #endif

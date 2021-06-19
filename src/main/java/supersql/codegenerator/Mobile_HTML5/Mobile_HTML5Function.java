@@ -33,6 +33,7 @@ import supersql.codegenerator.Manager;
 import supersql.codegenerator.Sass;
 import supersql.codegenerator.Compiler.Compiler;
 import supersql.codegenerator.Compiler.PHP.PHP;
+import supersql.codegenerator.Responsive.Responsive;
 import supersql.codegenerator.infinitescroll.Infinitescroll;
 import supersql.common.GlobalEnv;
 import supersql.common.Log;
@@ -83,6 +84,9 @@ public class Mobile_HTML5Function extends Function {
 	public static String updateFile;
 
 	public boolean link1 = false; //added by goto 20161025 for link1/foreach1
+	
+	public static boolean Mobile_HTML5FunctionFlag = false;
+	
 
 	public Mobile_HTML5Function()
 	{
@@ -104,11 +108,14 @@ public class Mobile_HTML5Function extends Function {
 		//    	Log.out("condition= " + this.getAtt("condition"));
 
 		String FuncName = this.getFuncName();
+		
+		// Mobile_HTML5FunctionFlag = true;		// NG
 
 		String ret = "";	//20131201 nesting function
 
 
-		if (Incremental.flag || Ehtml.flag) {
+//		if (Incremental.flag || Ehtml.flag) {
+		if (Ehtml.isInfinitescroll()) {
 			ret = Infinitescroll.Funciton(this, html_env, html_env2, FuncName, data_info);
 			html_env.code.append( Function.checkNestingLevel(ret) );
 			return ret;
@@ -129,10 +136,17 @@ public class Mobile_HTML5Function extends Function {
 				}
 			} else if (FuncName.equalsIgnoreCase("sinvoke") || FuncName.equalsIgnoreCase("link")) {
 				Func_sinvoke(data_info, 1);
-			} else if (FuncName.equalsIgnoreCase("glink")) {	//added by goto 20161109 for plink/glink
-				Func_sinvoke(data_info, 2);
-			} else if (FuncName.equalsIgnoreCase("plink")) {	//added by goto 20161109 for plink/glink
-				Func_sinvoke(data_info, 3);
+//			} else if (FuncName.equalsIgnoreCase("glink")) {	//added by goto 20161109 for plink/glink
+//				Func_sinvoke(data_info, 2);
+//			} else if (FuncName.equalsIgnoreCase("plink")) {	//added by goto 20161109 for plink/glink
+//				Func_sinvoke(data_info, 3);
+				
+			// added by masato 20151124 for plink in ehtml
+			} else if (FuncName.equalsIgnoreCase("plink")) {
+				Func_plink(data_info);
+			} else if (FuncName.equalsIgnoreCase("glink")) {
+				 Func_glink(data_info);						// TODO
+				
 			} else if (FuncName.equalsIgnoreCase("null")) {
 				Func_null();
 			}
@@ -354,6 +368,9 @@ public class Mobile_HTML5Function extends Function {
 			html_env.code.append( Function.checkNestingLevel(ret) );//20131201 nesting function
 
 		}
+		
+		// Mobile_HTML5FunctionFlag = false;	// NG
+		
 		Log.out("TFEId = " + Mobile_HTML5Env.getClassID(this));
 		html_env.append_css_def_td(Mobile_HTML5Env.getClassID(this), this.decos);
 		return ret;	//20131201 nesting function
@@ -441,6 +458,7 @@ public class Mobile_HTML5Function extends Function {
 
 
 	private void Func_imagefile() {
+		Mobile_HTML5FunctionFlag = true;
 
 		/*
 		 * ImageFile function : <td> <img src="${imgpath}/"+att /> </td>
@@ -512,14 +530,22 @@ public class Mobile_HTML5Function extends Function {
 				html_env.code.append(" target=\"" + decos.getStr("target")+"\" ");
 			if(decos.containsKey("class"))
 				html_env.code.append(" class=\"" + decos.getStr("class") + "\" ");
+			html_env.code.append(" "+getDeco(decos));
 			html_env.code.append(">\n");
 
 			Log.out("<A href=\"" + html_env.linkurl + "\">");
 		}
+		// added by masato 20151124 for plink
+		if (html_env.plinkFlag) {
+			String tmp = "";
+			for (int i = 0; i < html_env.valueArray.size(); i++) {
+				tmp += " value" + (i + 1) + "='" + html_env.valueArray.get(i) + "'";
+			}
+			Incremental.outXMLData(html_env.xmlDepth, "<PostLink target='" + html_env.linkUrl + "'" + tmp + ">\n");
+		}
 		//tk/////////////////////////////////////////////////////////////////////////////////
 
-		if(decos.containsKey("lightbox"))
-		{
+		if(decos.containsKey("lightbox")) {
 			Date d1 = new Date();
 			SimpleDateFormat sdf = new SimpleDateFormat("yyyymmddHHmmss");
 			String today = sdf.format(d1);
@@ -538,153 +564,212 @@ public class Mobile_HTML5Function extends Function {
 
 			}
 			html_env.code.append("</a>");
-		}
-		else{
-			//added by goto 20121217 start
-			//html_env.code.append("<img class=\"" + HTMLEnv.getClassID(this) +" ");
-			if(type.matches(".") || type.matches("normal")){					//type==null
-				//20130206
-				//defaultは下記の1行のみ
+		} else {
+			// added by masato 20151124 image function for xml
+			if (Ehtml.isEhtml()) {
+				Incremental.outXMLData(html_env.xmlDepth, "<img class=\'"
+						+ html_env.getClassID(this) + "\' src='" + path + "/"
+						+ this.Args.get(0).getStr() + "'></img>\n");
+
+			} else {
+				//added by goto 20121217 start
 				//html_env.code.append("<img class=\"" + HTMLEnv.getClassID(this) +" ");
-
-				//        		//20130206
-				if (decos.containsKey("effect") && decos.getStr("effect").matches("bound")){
-					//String display_type = decos.getStr("display-type");//.replace("\"", "") +"\" " );
-					//this.getAtt("display-type", "null");
-					//Log.info("bound!");
-					//System.out.println("type="+type);
-					html_env.code.append("<div id=\"bounce\" class=\"ui-widget-content ui-corner-all\">" +
-							"<img class=\"" + Mobile_HTML5Env.getClassID(this) +" ");
-				}else{
-					html_env.code.append("<img class=\"" + Mobile_HTML5Env.getClassID(this) +" ");
-				}
-
-				//added by goto 20130312  "Default width: 100%"
-				if(!decos.containsKey("width")){
-					if(!Sass.isBootstrapFlg()){
-						html_env.code.append("\" width=\"100% " );
+				if(type.matches(".") || type.matches("normal")){					//type==null
+					//20130206
+					//defaultは下記の1行のみ
+					//html_env.code.append("<img class=\"" + HTMLEnv.getClassID(this) +" ");
+	
+					//        		//20130206
+					if (decos.containsKey("effect") && decos.getStr("effect").matches("bound")){
+						//String display_type = decos.getStr("display-type");//.replace("\"", "") +"\" " );
+						//this.getAtt("display-type", "null");
+						//Log.info("bound!");
+						//System.out.println("type="+type);
+						html_env.code.append("<div id=\"bounce\" class=\"ui-widget-content ui-corner-all\">" +
+								"<img class=\"" + Mobile_HTML5Env.getClassID(this) +" ");
+					}else{
+						html_env.code.append("<img class=\"" + Mobile_HTML5Env.getClassID(this) +" ");
 					}
+	
+					//added by goto 20130312  "Default width: 100%"
+					if(!decos.containsKey("width")){
+						if(!Sass.isBootstrapFlg()){
+							html_env.code.append("\" width=\"100% " );
+						}
+					}
+					//        		//20130205
+					//        		if (decos.containsKey("display-type") && decos.getStr("display-type").matches("fisheye")){
+					//	                //String display_type = decos.getStr("display-type");//.replace("\"", "") +"\" " );
+					//	                //this.getAtt("display-type", "null");
+					//	                Log.info("fisheye!");
+					//	                //System.out.println("type="+type);
+					//	                html_env.code.append("<div id=\"fisheye\" class=\"fisheye\">\n" +
+					//        			"<div class=\"fisheyeContainter\">" +
+					//	                		"<a href=\"#\" class=\"fisheyeItem\"><img class=\"" + HTMLEnv.getClassID(this) +" ");
+					//        		}else{
+					//               // if(display_type.matches("null") || !display_type.matches("fisheye")){	//display_type=null;
+					//                	html_env.code.append("<img class=\"" + HTMLEnv.getClassID(this) +" ");
+					//                }
 				}
-				//        		//20130205
-				//        		if (decos.containsKey("display-type") && decos.getStr("display-type").matches("fisheye")){
-				//	                //String display_type = decos.getStr("display-type");//.replace("\"", "") +"\" " );
-				//	                //this.getAtt("display-type", "null");
-				//	                Log.info("fisheye!");
-				//	                //System.out.println("type="+type);
-				//	                html_env.code.append("<div id=\"fisheye\" class=\"fisheye\">\n" +
-				//        			"<div class=\"fisheyeContainter\">" +
-				//	                		"<a href=\"#\" class=\"fisheyeItem\"><img class=\"" + HTMLEnv.getClassID(this) +" ");
-				//        		}else{
-				//               // if(display_type.matches("null") || !display_type.matches("fisheye")){	//display_type=null;
-				//                	html_env.code.append("<img class=\"" + HTMLEnv.getClassID(this) +" ");
-				//                }
-			}
-			//        	else if(type=="slideshow"){	//type==slideshow
-			//        		html_env.code.append("<a href="
-			//
-			//
-			//        	}
-
-			html_env2.code.append("<VALUE type=\"img\" class=\"" + Mobile_HTML5Env.getClassID(this) +" ");
-			if(decos.containsKey("class"))
-				html_env.code.append(decos.getStr("class"));
-
-			//System.out.println("out:path:"+this.getAtt("default"));
-
-			//added by goto 20121217 start
-			//html_env.code.append(" \" src=\"" + path + "/" + this.getAtt("default") + "\"/>");
-			if(type.matches(".") || type.matches("normal")){					//type==null
-
-
-				//TODO 20131106
-				String url = "";
-				//url = this.getAtt("default"); 	//TODO
-				try{
-					FuncArg fa1 = (FuncArg) this.Args.get(0);
-					url = fa1.getStr();
-				}catch(Exception e){ return; }
-
-
-				//added 20130703  For external URLs.
+//<<<<<<< HEAD
+				//        	else if(type=="slideshow"){	//type==slideshow
+				//        		html_env.code.append("<a href="
+				//
+				//
+				//        	}
+	
+				html_env2.code.append("<VALUE type=\"img\" class=\"" + Mobile_HTML5Env.getClassID(this) +" ");
+				if(decos.containsKey("class"))
+					html_env.code.append(decos.getStr("class"));
+	
+				//Log.info("out:path:"+this.getAtt("default"));
+	
+				//added by goto 20121217 start
+//=======
+//				//        		//20130205
+//				//        		if (decos.containsKey("display-type") && decos.getStr("display-type").matches("fisheye")){
+//				//	                //String display_type = decos.getStr("display-type");//.replace("\"", "") +"\" " );
+//				//	                //this.getAtt("display-type", "null");
+//				//	                Log.info("fisheye!");
+//				//	                //System.out.println("type="+type);
+//				//	                html_env.code.append("<div id=\"fisheye\" class=\"fisheye\">\n" +
+//				//        			"<div class=\"fisheyeContainter\">" +
+//				//	                		"<a href=\"#\" class=\"fisheyeItem\"><img class=\"" + HTMLEnv.getClassID(this) +" ");
+//				//        		}else{
+//				//               // if(display_type.matches("null") || !display_type.matches("fisheye")){	//display_type=null;
+//				//                	html_env.code.append("<img class=\"" + HTMLEnv.getClassID(this) +" ");
+//				//                }
+//			}
+//			//        	else if(type=="slideshow"){	//type==slideshow
+//			//        		html_env.code.append("<a href="
+//			//
+//			//
+//			//        	}
+//
+//			html_env2.code.append("<VALUE type=\"img\" class=\"" + Mobile_HTML5Env.getClassID(this) +" ");
+//			if(decos.containsKey("class"))
+//				html_env.code.append(decos.getStr("class"));
+//
+//			//System.out.println("out:path:"+this.getAtt("default"));
+//
+//			//added by goto 20121217 start
+//			//html_env.code.append(" \" src=\"" + path + "/" + this.getAtt("default") + "\"/>");
+//			if(type.matches(".") || type.matches("normal")){					//type==null
+//
+//
+//				//TODO 20131106
+//				String url = "";
+//				//url = this.getAtt("default"); 	//TODO
+//				try{
+//					FuncArg fa1 = (FuncArg) this.Args.get(0);
+//					url = fa1.getStr();
+//				}catch(Exception e){ return; }
+//
+//
+//				//added 20130703  For external URLs.
+//>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 				//html_env.code.append(" \" src=\"" + path + "/" + this.getAtt("default") + "\"/>");
-				if(url.startsWith("http://") || url.startsWith("https://")){
-					html_env.code.append(" \" src=\"" + url + "\"/>");
-				}else{
-					html_env.code.append(" \" src=\"" + path + "/" + url + "\"/>");
-					if(Sass.isBootstrapFlg()){
-						html_env.code.append("\n</DIV>\n");
+				if(type.matches(".") || type.matches("normal")){					//type==null
+	
+	
+					//TODO 20131106
+					String url = "";
+					//url = this.getAtt("default"); 	//TODO
+					try{
+						FuncArg fa1 = (FuncArg) this.Args.get(0);
+						url = fa1.getStr();
+					}catch(Exception e){ return; }
+	
+	
+					//added 20130703  For external URLs.
+					//html_env.code.append(" \" src=\"" + path + "/" + this.getAtt("default") + "\"/>");
+					if(url.startsWith("http://") || url.startsWith("https://")){
+						html_env.code.append(" \" src=\"" + url + "\"/ "+getDeco(decos)+">");
+					}else{
+						html_env.code.append(" \" src=\"" + path + "/" + url + "\"/ "+getDeco(decos)+">");
+						if(Sass.isBootstrapFlg()){
+							html_env.code.append("\n</DIV>\n");
+						}
 					}
+	
+					//20130206
+					if (decos.containsKey("effect") && decos.getStr("effect").matches("bound"))
+						html_env.code.append("</div>");
+	
+	
+					//        		//20130205
+					//        		html_env.code.append(" \" src=\"" + path + "/" + this.getAtt("default") + "\"/>" +
+					//        				"<span>"+this.getAtt("default")+"</span></a></div></div>");
+				}else if(type.matches("slideshow")){	//type==slideshow
+					//System.out.println("slideshowFlg="+slideshowFlg+"  lio="+html_env.code.lastIndexOf("</TD"));
+					//tableタグの削除
+					if(slideshowFlg!=true){
+						//html_env.code.substring(0,html_env.code.lastIndexOf("<TABLE"));
+						html_env.code.append("<div data-role=\"page\" data-add-back-btn=\"true\" id=\"p-gallery\">\n");
+						html_env.code.append("<ul id=\"Gallery\" class=\"gallery\">\n");
+						slideshowFlg=true;
+					}else
+						html_env.code.delete(html_env.code.lastIndexOf("</ul>"),html_env.code.length());
+	
+					slideshowNum++;
+	
+					//column : 列数(<li>のwidthで指定)
+					String column = this.getAtt("column", "null");
+					if(column.matches("null")){	//column==null
+						column = "3";			//default
+					}
+					//        		Log.info(column);
+					int li_width = 100/Integer.parseInt(column);
+					html_env.code.append(
+							"<li style=\"width:"+li_width+"%;\"><a href=\""+path+"/"+this.getAtt("default")+"\" rel=\"external\">" +
+									"<img src=\"" + path + "/" + this.getAtt("default") + "\" class=\"" + Mobile_HTML5Env.getClassID(this) +"\" alt=\""+slideshowNum+"\" /></a></li>\n");
+	
+					//        		//column : 列数(<li>のwidthで指定)
+					//                String column = this.getAtt("column", ".");
+					//                if(type.matches(".")){	//column==null
+					//            		html_env.code.append(
+					//            				"<li><a href=\""+path+"/"+this.getAtt("default")+"\" rel=\"external\">" +
+					//            				//"<li><a href=\""+path+"/"+this.getAtt("default")+"\" class=\"" + HTMLEnv.getClassID(this) +"\" rel=\"external\">" +
+					//            				//"<img src=\"" + path + "/" + this.getAtt("default") + "\" alt=\""+slideshowNum+"\" /></a></li>\n");
+					//            				//"<img src=\"" + path + "/" + this.getAtt("default") + "\" alt=\""+slideshowNum+"\" /></a></li>\n");
+					//            				//"<img src=\"" + path + "/" + this.getAtt("default") + "\" height=100 alt=\""+slideshowNum+"\" /></a></li>\n");
+					//            				"<img src=\"" + path + "/" + this.getAtt("default") + "\" class=\"" + HTMLEnv.getClassID(this) +"\" alt=\""+slideshowNum+"\" /></a></li>\n");
+					//            				//"<img src=\"" + path + "/" + this.getAtt("default") + "\" /*alt=\"num\"*/ />");
+					//        		}else{
+					//        			Log.info(column);
+					//        			int li_width = 100/Integer.parseInt(column);
+					//	        		html_env.code.append(
+					//	        				"<li style=\"width:"+li_width+"%;\"><a href=\""+path+"/"+this.getAtt("default")+"\" rel=\"external\">" +
+					//	        				"<img src=\"" + path + "/" + this.getAtt("default") + "\" class=\"" + HTMLEnv.getClassID(this) +"\" alt=\""+slideshowNum+"\" /></a></li>\n");
+					//        		}
 				}
-
-				//20130206
-				if (decos.containsKey("effect") && decos.getStr("effect").matches("bound"))
-					html_env.code.append("</div>");
-
-
-				//        		//20130205
-				//        		html_env.code.append(" \" src=\"" + path + "/" + this.getAtt("default") + "\"/>" +
-				//        				"<span>"+this.getAtt("default")+"</span></a></div></div>");
-			}else if(type.matches("slideshow")){	//type==slideshow
-				//System.out.println("slideshowFlg="+slideshowFlg+"  lio="+html_env.code.lastIndexOf("</TD"));
-				//tableタグの削除
-				if(slideshowFlg!=true){
-					//html_env.code.substring(0,html_env.code.lastIndexOf("<TABLE"));
-					html_env.code.append("<div data-role=\"page\" data-add-back-btn=\"true\" id=\"p-gallery\">\n");
-					html_env.code.append("<ul id=\"Gallery\" class=\"gallery\">\n");
-					slideshowFlg=true;
-				}else
-					html_env.code.delete(html_env.code.lastIndexOf("</ul>"),html_env.code.length());
-
-				slideshowNum++;
-
-				//column : 列数(<li>のwidthで指定)
-				String column = this.getAtt("column", "null");
-				if(column.matches("null")){	//column==null
-					column = "3";			//default
+				html_env2.code.append(" \" src=\"" + path + "/" + this.getAtt("default") + "\" ");
+				if(decos.containsKey("width")){
+					html_env2.code.append("width=\"" + decos.getStr("width").replace("\"", "")+"\" " );
 				}
-				//        		Log.info(column);
-				int li_width = 100/Integer.parseInt(column);
-				html_env.code.append(
-						"<li style=\"width:"+li_width+"%;\"><a href=\""+path+"/"+this.getAtt("default")+"\" rel=\"external\">" +
-								"<img src=\"" + path + "/" + this.getAtt("default") + "\" class=\"" + Mobile_HTML5Env.getClassID(this) +"\" alt=\""+slideshowNum+"\" /></a></li>\n");
-
-				//        		//column : 列数(<li>のwidthで指定)
-				//                String column = this.getAtt("column", ".");
-				//                if(type.matches(".")){	//column==null
-				//            		html_env.code.append(
-				//            				"<li><a href=\""+path+"/"+this.getAtt("default")+"\" rel=\"external\">" +
-				//            				//"<li><a href=\""+path+"/"+this.getAtt("default")+"\" class=\"" + HTMLEnv.getClassID(this) +"\" rel=\"external\">" +
-				//            				//"<img src=\"" + path + "/" + this.getAtt("default") + "\" alt=\""+slideshowNum+"\" /></a></li>\n");
-				//            				//"<img src=\"" + path + "/" + this.getAtt("default") + "\" alt=\""+slideshowNum+"\" /></a></li>\n");
-				//            				//"<img src=\"" + path + "/" + this.getAtt("default") + "\" height=100 alt=\""+slideshowNum+"\" /></a></li>\n");
-				//            				"<img src=\"" + path + "/" + this.getAtt("default") + "\" class=\"" + HTMLEnv.getClassID(this) +"\" alt=\""+slideshowNum+"\" /></a></li>\n");
-				//            				//"<img src=\"" + path + "/" + this.getAtt("default") + "\" /*alt=\"num\"*/ />");
-				//        		}else{
-				//        			Log.info(column);
-				//        			int li_width = 100/Integer.parseInt(column);
-				//	        		html_env.code.append(
-				//	        				"<li style=\"width:"+li_width+"%;\"><a href=\""+path+"/"+this.getAtt("default")+"\" rel=\"external\">" +
-				//	        				"<img src=\"" + path + "/" + this.getAtt("default") + "\" class=\"" + HTMLEnv.getClassID(this) +"\" alt=\""+slideshowNum+"\" /></a></li>\n");
-				//        		}
+				if(decos.containsKey("height")){
+					html_env2.code.append("height=\"" + decos.getStr("height").replace("\"", "") +"\" " );
+				}
+				html_env2.code.append(" ></VALUE>");
 			}
-			html_env2.code.append(" \" src=\"" + path + "/" + this.getAtt("default") + "\" ");
-			if(decos.containsKey("width")){
-				html_env2.code.append("width=\"" + decos.getStr("width").replace("\"", "")+"\" " );
-			}
-			if(decos.containsKey("height")){
-				html_env2.code.append("height=\"" + decos.getStr("height").replace("\"", "") +"\" " );
-			}
-			html_env2.code.append(" ></VALUE>");
 		}
 		//tk  to make hyper link to image///////////////////////////////////////////////////////////////////////////////////
 		if (html_env.link_flag > 0 || html_env.sinvoke_flag) {
 			html_env.code.append("</a>");
 		}
 		//tk///////////////////////////////////////////////////////////////////////////////////
+		
+		// added by masato 20151124 for plink
+		if (html_env.plinkFlag) {
+			Incremental.outXMLData(html_env.xmlDepth, "</PostLink>\n");
+		}
+		Mobile_HTML5FunctionFlag = false;
 		return;
 	}
-
+	
 	private void Func_imagefile_bs() {
+		Mobile_HTML5FunctionFlag = true;
+		
 		/*
 		 * ImageFile function : <td> <img src="${imgpath}/"+att /> </td>
 		 */
@@ -734,13 +819,21 @@ public class Mobile_HTML5Function extends Function {
 				html_env.code.append(" target=\"" + decos.getStr("target")+"\" ");
 			if(decos.containsKey("class"))
 				html_env.code.append(" class=\"" + decos.getStr("class") + "\" ");
+			html_env.code.append(" "+getDeco(decos));
 			html_env.code.append(">\n");
 
 			Log.out("<A href=\"" + html_env.linkurl + "\">");
 		}
+		// added by masato 20151124 for plink
+		if (html_env.plinkFlag) {
+			String tmp = "";
+			for (int i = 0; i < html_env.valueArray.size(); i++) {
+				tmp += " value" + (i + 1) + "='" + html_env.valueArray.get(i) + "'";
+			}
+			Incremental.outXMLData(html_env.xmlDepth, "<PostLink target='" + html_env.linkUrl + "'" + tmp + ">\n");
+		}
 
-		if(decos.containsKey("lightbox"))
-		{
+		if(decos.containsKey("lightbox")) {
 			Date d1 = new Date();
 			SimpleDateFormat sdf = new SimpleDateFormat("yyyymmddHHmmss");
 			String today = sdf.format(d1);
@@ -759,106 +852,162 @@ public class Mobile_HTML5Function extends Function {
 
 			}
 			html_env.code.append("</a>");
-		}
-		else{
-			if(type.matches(".") || type.matches("normal")){					//type==null
-				if (decos.containsKey("effect") && decos.getStr("effect").matches("bound")){
-					html_env.code.append("<div id=\"bounce\" class=\"ui-widget-content ui-corner-all\">" +
-							"<img class=\"" + Mobile_HTML5Env.getClassID(this) +" ");
-				}else{
-					if(!Sass.isBootstrapFlg()){
-						html_env.code.append("<img class=\"" + Mobile_HTML5Env.getClassID(this) +" ");
-					}else if(Sass.isBootstrapFlg()){
-						//						if(Sass.outofloopFlg.peekFirst()){
-						//							Sass.makeClass(Mobile_HTML5Env.getClassID(this));
-						//							Sass.defineGridBasic(Mobile_HTML5Env.getClassID(this), decos);
-						//							Sass.closeBracket();
-						//						}
-						if(this.decos.containsKey("slide")){
-							if(this.decos.get("slide").equals("true")){
-								html_env.code.append("<div class=\"item active\">");
-							}else{
-								html_env.code.append("<div class=\"item\">");
+//<<<<<<< HEAD
+		} else {
+			// added by masato 20151124 image function for xml
+			if (Ehtml.isEhtml()) {
+				Incremental.outXMLData(html_env.xmlDepth, "<img class=\'"
+						+ html_env.getClassID(this) + "\' src='" + path + "/"
+						+ this.Args.get(0).getStr() + "'></img>\n");
+
+			} else {
+				if (type.matches(".") || type.matches("normal")) { //type==null
+					if (decos.containsKey("effect")
+							&& decos.getStr("effect").matches("bound")) {
+						html_env.code
+								.append("<div id=\"bounce\" class=\"ui-widget-content ui-corner-all\">"
+										+ "<img class=\""
+										+ Mobile_HTML5Env.getClassID(this)
+										+ " ");
+					} else {
+						if (!Sass.isBootstrapFlg()) {
+							html_env.code.append("<img class=\""
+									+ Mobile_HTML5Env.getClassID(this) + " ");
+						} else if (Sass.isBootstrapFlg()) {
+							//						if(Sass.outofloopFlg.peekFirst()){
+							//							Sass.makeClass(Mobile_HTML5Env.getClassID(this));
+							//							Sass.defineGridBasic(Mobile_HTML5Env.getClassID(this), decos);
+							//							Sass.closeBracket();
+							//						}
+							if (this.decos.containsKey("slide")) {
+								if (this.decos.get("slide").equals("true")) {
+									html_env.code
+											.append("<div class=\"item active\">");
+								} else {
+									html_env.code
+											.append("<div class=\"item\">");
+								}
+								html_env.code.append("<img ");
+							} else {
+								//							html_env.code.append("<div class=\"" + Mobile_HTML5Env.getClassID(this) + "\">");
+								html_env.code
+										.append("<img class=\"img-responsive ");
+//=======
+//		}
+//		else{
+//			if(type.matches(".") || type.matches("normal")){					//type==null
+//				if (decos.containsKey("effect") && decos.getStr("effect").matches("bound")){
+//					html_env.code.append("<div id=\"bounce\" class=\"ui-widget-content ui-corner-all\">" +
+//							"<img class=\"" + Mobile_HTML5Env.getClassID(this) +" ");
+//				}else{
+//					if(!Sass.isBootstrapFlg()){
+//						html_env.code.append("<img class=\"" + Mobile_HTML5Env.getClassID(this) +" ");
+//					}else if(Sass.isBootstrapFlg()){
+//						//						if(Sass.outofloopFlg.peekFirst()){
+//						//							Sass.makeClass(Mobile_HTML5Env.getClassID(this));
+//						//							Sass.defineGridBasic(Mobile_HTML5Env.getClassID(this), decos);
+//						//							Sass.closeBracket();
+//						//						}
+//						if(this.decos.containsKey("slide")){
+//							if(this.decos.get("slide").equals("true")){
+//								html_env.code.append("<div class=\"item active\">");
+//							}else{
+//								html_env.code.append("<div class=\"item\">");
+//>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 							}
-							html_env.code.append("<img ");
-						}else{
-							//							html_env.code.append("<div class=\"" + Mobile_HTML5Env.getClassID(this) + "\">");
-							html_env.code.append("<img class=\"img-responsive ");
+						}
+					}
+
+					if (!decos.containsKey("width")) {
+						if (!Sass.isBootstrapFlg()) {
+							html_env.code.append("\" width=\"100% ");
 						}
 					}
 				}
+				html_env2.code.append("<VALUE type=\"img\" class=\""
+						+ Mobile_HTML5Env.getClassID(this) + " ");
+				if (decos.containsKey("class"))
+					html_env.code.append(decos.getStr("class"));
+				if (type.matches(".") || type.matches("normal")) { //type==null
 
-				if(!decos.containsKey("width")){
-					if(!Sass.isBootstrapFlg()){
-						html_env.code.append("\" width=\"100% " );
+					//TODO 20131106
+					String url = "";
+					//url = this.getAtt("default"); 	//TODO
+					try {
+						FuncArg fa1 = (FuncArg) this.Args.get(0);
+						url = fa1.getStr();
+					} catch (Exception e) {
+						return;
 					}
-				}
-			}
 
-			html_env2.code.append("<VALUE type=\"img\" class=\"" + Mobile_HTML5Env.getClassID(this) +" ");
-			if(decos.containsKey("class"))
-				html_env.code.append(decos.getStr("class"));
-
-			if(type.matches(".") || type.matches("normal")){					//type==null
-
-				//TODO 20131106
-				String url = "";
-				//url = this.getAtt("default"); 	//TODO
-				try{
-					FuncArg fa1 = (FuncArg) this.Args.get(0);
-					url = fa1.getStr();
-				}catch(Exception e){ return; }
-
-				if(url.startsWith("http://") || url.startsWith("https://")){
-					html_env.code.append(" \" src=\"" + url + "\"/>");
-				}else{
-					html_env.code.append(" \" src=\"" + path + "/" + url + "\"/>");
-					//					html_env.code.append("</div>");
-					if(Sass.isBootstrapFlg()){
-						//						html_env.code.append("\n</DIV>\n");
+					if (url.startsWith("http://") || url.startsWith("https://")) {
+						html_env.code.append(" \" src=\"" + url + "\"/ "+getDeco(decos)+">");
+					} else {
+						html_env.code.append(" \" src=\"" + path + "/" + url+ "\" "+getDeco(decos)+"/>");
+						//					html_env.code.append("</div>");
+						if (Sass.isBootstrapFlg()) {
+							//						html_env.code.append("\n</DIV>\n");
+						}
 					}
+
+					//20130206
+					if (decos.containsKey("effect")
+							&& decos.getStr("effect").matches("bound"))
+						html_env.code.append("</div>");
+
+				} else if (type.matches("slideshow")) { //type==slideshow
+					if (slideshowFlg != true) {
+						html_env.code
+								.append("<div data-role=\"page\" data-add-back-btn=\"true\" id=\"p-gallery\">\n");
+						html_env.code
+								.append("<ul id=\"Gallery\" class=\"gallery\">\n");
+						slideshowFlg = true;
+					} else
+						html_env.code.delete(
+								html_env.code.lastIndexOf("</ul>"),
+								html_env.code.length());
+
+					slideshowNum++;
+
+					//column : 列数(<li>のwidthで指定)
+					String column = this.getAtt("column", "null");
+					if (column.matches("null")) { //column==null
+						column = "3"; //default
+					}
+					//	        		Log.info(column);
+					int li_width = 100 / Integer.parseInt(column);
+					html_env.code.append("<li style=\"width:" + li_width
+							+ "%;\"><a href=\"" + path + "/"
+							+ this.getAtt("default") + "\" rel=\"external\">"
+							+ "<img src=\"" + path + "/"
+							+ this.getAtt("default") + "\" class=\""
+							+ Mobile_HTML5Env.getClassID(this) + "\" alt=\""
+							+ slideshowNum + "\" /></a></li>\n");
 				}
-
-				//20130206
-				if (decos.containsKey("effect") && decos.getStr("effect").matches("bound"))
-					html_env.code.append("</div>");
-
-
-			}else if(type.matches("slideshow")){	//type==slideshow
-				if(slideshowFlg!=true){
-					html_env.code.append("<div data-role=\"page\" data-add-back-btn=\"true\" id=\"p-gallery\">\n");
-					html_env.code.append("<ul id=\"Gallery\" class=\"gallery\">\n");
-					slideshowFlg=true;
-				}else
-					html_env.code.delete(html_env.code.lastIndexOf("</ul>"),html_env.code.length());
-
-				slideshowNum++;
-
-				//column : 列数(<li>のwidthで指定)
-				String column = this.getAtt("column", "null");
-				if(column.matches("null")){	//column==null
-					column = "3";			//default
+				html_env2.code.append(" \" src=\"" + path + "/"
+						+ this.getAtt("default") + "\" ");
+				if (decos.containsKey("width")) {
+					html_env2.code.append("width=\""
+							+ decos.getStr("width").replace("\"", "") + "\" ");
 				}
-				//	        		Log.info(column);
-				int li_width = 100/Integer.parseInt(column);
-				html_env.code.append(
-						"<li style=\"width:"+li_width+"%;\"><a href=\""+path+"/"+this.getAtt("default")+"\" rel=\"external\">" +
-								"<img src=\"" + path + "/" + this.getAtt("default") + "\" class=\"" + Mobile_HTML5Env.getClassID(this) +"\" alt=\""+slideshowNum+"\" /></a></li>\n");
+				if (decos.containsKey("height")) {
+					html_env2.code.append("height=\""
+							+ decos.getStr("height").replace("\"", "") + "\" ");
+				}
+				html_env2.code.append(" ></VALUE>");
 			}
-			html_env2.code.append(" \" src=\"" + path + "/" + this.getAtt("default") + "\" ");
-			if(decos.containsKey("width")){
-				html_env2.code.append("width=\"" + decos.getStr("width").replace("\"", "")+"\" " );
-			}
-			if(decos.containsKey("height")){
-				html_env2.code.append("height=\"" + decos.getStr("height").replace("\"", "") +"\" " );
-			}
-			html_env2.code.append(" ></VALUE>");
 		}
 		//tk  to make hyper link to image///////////////////////////////////////////////////////////////////////////////////
 		if (html_env.link_flag > 0 || html_env.sinvoke_flag) {
 			html_env.code.append("</a>");
 		}
 		//tk///////////////////////////////////////////////////////////////////////////////////
+		
+		// added by masato 20151124 for plink
+		if (html_env.plinkFlag) {
+			Incremental.outXMLData(html_env.xmlDepth, "</PostLink>\n");
+		}
+		Mobile_HTML5FunctionFlag = false;
 		return;
 	}
 
@@ -993,8 +1142,15 @@ public class Mobile_HTML5Function extends Function {
 				}
 
 			}catch(Exception e){		//引数2つの場合
-				statement = getTextAnchor(url, name);
-				//statement = "<a href=\""+url+"\""+transition()+prefetch()+target(url)+">"+name+"</a>";
+				// added by masato 20151124 anchor function for xml
+				if (Ehtml.isEhtml()) {
+					// statement = "<" + fa1 + " func='anchor' url='"+ url +
+					// "'>" + name + "</" + fa1 + ">\n";
+					statement = "<Anchor url='" + url + "'>" + "<" + fa1 + ">"
+							+ name + "</" + fa1 + "></Anchor>\n";
+				} else
+					statement = getTextAnchor(url, name);
+					//statement = "<a href=\""+url+"\""+transition()+prefetch()+target(url)+">"+name+"</a>";
 			}
 
 		}catch(Exception e){	//引数1つの場合
@@ -1003,6 +1159,10 @@ public class Mobile_HTML5Function extends Function {
 		}
 
 		//    	// 各引数毎に処理した結果をHTMLに書きこむ
+		// added by masato 20151124 anchor function for xml
+		if (Ehtml.isEhtml()) {
+			Incremental.outXMLData(html_env.xmlDepth, statement);
+		}
 		//    	html_env.code.append(statement);
 		return statement;
 	}
@@ -2824,8 +2984,33 @@ public class Mobile_HTML5Function extends Function {
 
 			if(s_array[i].replaceAll(" ","").contains("@{")){
 				str = s_array[i].substring(s_array[i].lastIndexOf("@")+1);	//@以下の文字列
-				at_array[i] = str;
+//				at_array[i] = str;
 				//Log.e(str);
+				
+				//201911 @{val=}	//TODO ehtmlだとval=''のクォーテーションのエスケープが必要なためうまくいかない 
+				//@{val=△,〜} -> =(△)@{,〜}
+				if (str.replaceAll(" ","").contains("val=")) {
+					String valstr = "";
+					Log.i("str = "+str);
+//					str = str.replaceAll(" ","");
+					String str_l = str.substring(0, str.indexOf("val"));
+					String str_r = str.substring(str.indexOf("val")+3);
+					str_r = str.substring(str.indexOf("=")+1).trim();
+					Log.i("str_l = "+str_l);
+					Log.i("str_r = "+str_r);
+					String str_r_startsWith = str_r.substring(0, 1);	// ' or "
+					valstr = str_r.substring(1, str_r.indexOf(str_r_startsWith));
+					str_r = str_r.substring(str_r.indexOf(str_r_startsWith)+1);
+					if (str_r.contains(",")) 
+						str_r = str_r.substring(str_r.indexOf(",")+1);
+					Log.i("str_r = "+str_r);
+					Log.i("valstr = "+valstr);
+					str = str_l + str_r;
+					Log.i("str = "+str);
+				}
+				
+				at_array[i] = str;
+				
 				if(str.contains("='")){
 					//image='', file=''
 					String l = str.substring(str.indexOf("='")+2);
@@ -2905,6 +3090,14 @@ public class Mobile_HTML5Function extends Function {
 					$gps_array[i] = "";
 					a = a.substring(0,a.indexOf("=")).trim() + a.substring(a.indexOf("}")+1).trim();
 					s_array[i] = s_array[i].substring(0,s_array[i].indexOf("=")).trim() + s_array[i].substring(s_array[i].indexOf("}")+1).trim();
+				}else if(a.contains("(") && a.contains(")")){
+					String x = s_array[i];
+					text_array[i] = x.substring(x.indexOf("(")+"(".length(), x.indexOf(")"));
+					$session_array[i] = "";
+					$time_array[i] = "";
+					$gps_array[i] = "";
+					a = a.substring(0,a.indexOf("=")).trim() + a.substring(a.indexOf(")")+1).trim();
+					s_array[i] = s_array[i].substring(0,s_array[i].indexOf("=")).trim() + s_array[i].substring(s_array[i].indexOf(")")+1).trim();
 				}else{
 					$session_array[i] = "";
 					$time_array[i] = "";
@@ -3107,10 +3300,22 @@ public class Mobile_HTML5Function extends Function {
 						//セレクトボックス ex){出席|欠席|その他}@{selectbox もしくは select}
 						//チェックボックス ex){出席|欠席|その他}@{checkbox もしくは check}
 						//※ DBから値を取得する場合の記述例：{select name, id from movie}@{sql, selectbox}
-						statement += "   <div data-role=\"controlgroup\">\n" +
-								"		<div style=\"text-align:left; font-size:16.5px\">"+s_name_array[i]+"</div>\n";
-						update_statement += "   <div data-role=\"controlgroup\">\n" +
-								"		<div style=\"text-align:left; font-size:16.5px\">"+s_name_array[i]+"</div>\n";
+//<<<<<<< HEAD
+						if (!at.contains("noplaceholder") && inputType.equals("select")) {
+							statement += "   <div data-role=\"controlgroup\" style=\"padding: 15px 0px 15px 0px;\">\n";
+							update_statement += "   <div data-role=\"controlgroup\" style=\"padding: 15px 0px 15px 0px;\">\n";
+						}else{
+							statement += "   <div data-role=\"controlgroup\" style=\"padding: 15px 0px 15px 0px;\">\n" +
+									"		<div style=\"text-align:left;"+((!Ehtml.isEhtml2())? " font-size:16.5px" : "")+"\">"+s_name_array[i]+":</div>\n";
+							update_statement += "   <div data-role=\"controlgroup\" style=\"padding: 15px 0px 15px 0px;\">\n" +
+									"		<div style=\"text-align:left;"+((!Ehtml.isEhtml2())? " font-size:16.5px" : "")+"\">"+s_name_array[i]+":</div>\n";
+						}
+//=======
+//						statement += "   <div data-role=\"controlgroup\">\n" +
+//								"		<div style=\"text-align:left; font-size:16.5px\">"+s_name_array[i]+"</div>\n";
+//						update_statement += "   <div data-role=\"controlgroup\">\n" +
+//								"		<div style=\"text-align:left; font-size:16.5px\">"+s_name_array[i]+"</div>\n";
+//>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 						insertWordCount++;
 
 						if(inputType.equals("select")){
@@ -3120,8 +3325,10 @@ public class Mobile_HTML5Function extends Function {
 							//							statement += "		<select name=\""+name+"\" data-native-menu=\"false\">\n";
 							//							update_statement += "		<select name=\""+name+"\" data-native-menu=\"false\">\n";	//TODO?
 							//20161207 bootstrap
-							statement += "		<select class=\"form-control\" name=\""+name+"\">\n";
-							update_statement += "		<select class=\"form-control\" name=\""+name+"\">\n";	//TODO?
+
+							String placeholder_for_select = "			<option value=\"\" style=\"background: #00001c;\" disabled selected>"+s_name_array[i]+"</option>\n";
+							statement += "		<select class=\"form-control\" name=\""+name+"\">\n" + placeholder_for_select;
+							update_statement += "		<select class=\"form-control\" name=\""+name+"\">\n" + placeholder_for_select;	//TODO?
 						}
 						for(int k=1; k<=pipeCount; k++){
 							String val = ss.substring(0,ss.indexOf("|")).trim();
@@ -3163,17 +3370,32 @@ public class Mobile_HTML5Function extends Function {
 							else if(inputType.equals("select")){
 								//セレクトボックス
 								if(!isSQL){
-									statement += "			<option value=\""+insert_val+"\""+((k>1)? (""):(" selected"))+">"+val+"</option>\n";
-									update_statement += "			<option value=\""+insert_val+"\""+((k>1)? (""):(" selected"))+">"+val+"</option>\n";	//TODO?
+									if (!at.contains("noplaceholder")) {
+										statement += "			<option value=\""+insert_val+"\">"+val+"</option>\n";
+										update_statement += "			<option value=\""+insert_val+"\">"+val+"</option>\n";	//TODO?
+									}else{
+										statement += "			<option value=\""+insert_val+"\""+((k>1)? (""):(" selected"))+">"+val+"</option>\n";
+										update_statement += "			<option value=\""+insert_val+"\""+((k>1)? (""):(" selected"))+">"+val+"</option>\n";	//TODO?
+									}
 								}else{
 									//DBから値を取得する処理 ex){select name, id from movie}@{sql, selectbox}
-									php_echo +=
-											"			echo '			<option value=\"'.$insert_val.'\"'.(($i != $checked_num)? '' : ' selected').'>'.$val.'</option>\n';\n";
+//<<<<<<< HEAD
+									if (!at.contains("noplaceholder")) {
+										php_echo +=
+												"			echo '			<option value=\"'.$insert_val.'\">'.$val.'</option>\n';\n";
+									}else{
+										php_echo +=
+												"			echo '			<option value=\"'.$insert_val.'\"'.(($i != $checked_num)? '' : ' selected').'>'.$val.'</option>\n';\n";
+									}
+//=======
+//									php_echo +=
+//											"			echo '			<option value=\"'.$insert_val.'\"'.(($i != $checked_num)? '' : ' selected').'>'.$val.'</option>\n';\n";
+//>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 								}
 							}
 
 							if(isSQL){
-								String b = "require_once '"+fn+"';";
+								String b = "require_once ('"+fn+"');";
 								if(!Start_Parse.sessionFlag)
 									b = "<?php "+b+" ?>\n";
 								else
@@ -4155,7 +4377,7 @@ public class Mobile_HTML5Function extends Function {
 			statement +=
 					"<!-- Check"+checkCount+" start -->\n" +
 							"<form method=\"post\" action=\"\" target=\"dummy_ifr\">\n" +
-							"   <div data-role=\"controlgroup\">\n";
+							"   <div data-role=\"controlgroup\" style=\"padding: 15px 0px 15px 0px;\">\n";
 			//	    			"	<div data-role=\"fieldcontain\">\n" +
 			//	    			"		<fieldset data-role=\"controlgroup\" style=\"width:100%;\">\n";
 			for(int i=0;i<columnNum;i++){
@@ -5807,6 +6029,123 @@ public class Mobile_HTML5Function extends Function {
 		html_env.sinvoke_flag = false;
 		return;
 	}
+	
+
+//	// added by masato 20151124 for plink
+//	// plink(属性名, '***.php', 受け渡す値1(*.id), 受け渡す値2(*.id)...)
+//	private void Func_plink(ExtList data_info) {
+//		// リンク先phpファイル
+//		String target = this.Args.get(1).toString();
+//		if (target.startsWith("\'") || target.startsWith("\"")) {
+//			target = target.substring(1, target.length() - 1);
+//		}
+//
+//		// value
+//		html_env.valueArray = new ArrayList<>();
+//		for (int i = 2; i < this.Args.size(); i++) {
+//			html_env.valueArray.add(this.Args.get(i).getStr());
+//		}
+//
+//		html_env.linkUrl = target;
+//		html_env.plinkFlag = true;
+//
+//		// added by masato 20151124 for plink
+//		if (html_env.plinkFlag) {
+//			String tmp = "";
+//			for (int i = 0; i < html_env.valueArray.size(); i++) {
+//				tmp += " value" + (i + 1) + "='" + html_env.valueArray.get(i)
+//						+ "'";
+//			}
+//			Incremental.outXMLData(html_env.xmlDepth, "<plink target='"
+//					+ html_env.linkUrl + "'" + tmp + ">\n");
+//		}
+//		
+//		if (this.Args.get(0) instanceof FuncArg) {
+//			Log.out("ARGS are function");
+//			FuncArg fa = this.Args.get(0);
+//			fa.workAtt();
+//		} else
+//			this.workAtt("default");
+//		
+//		// added by masato 20151124 for plink
+//		if (html_env.plinkFlag) {
+//			Incremental.outXMLData(html_env.xmlDepth, "</plink>\n");
+//		}
+//		
+//
+//		html_env.plinkFlag = false;
+//		return;
+//	}
+	// added by masato 20151124 for plink
+	// plink(属性名, '***.php', 受け渡す値1(*.id), 受け渡す値2(*.id)...)
+	private static int plink_num = 0;
+	private void Func_plink(ExtList data_info) {
+		Log.info("Func_plink start: "+plink_num);
+		// リンク先phpファイル
+		String target = this.Args.get(1).toString();
+		if (target.startsWith("\'") || target.startsWith("\"")) {
+			target = target.substring(1, target.length() - 1);
+		}
+
+		// value
+		html_env.valueArray = new ArrayList<>();
+		for (int i = 2; i < this.Args.size(); i++) {
+			html_env.valueArray.add(this.Args.get(i).getStr());
+		}
+
+		html_env.linkUrl = target;
+		html_env.plinkFlag = true;
+
+		// added by masato 20151124 for plink
+		if (html_env.plinkFlag) {
+			String tmp1 = "", tmp2 = "";
+			for (int i = 0; i < html_env.valueArray.size(); i++) {
+				String val = "" + html_env.valueArray.get(i);
+				tmp1 += " value" + (i + 1) + "='" + val + "'";	//xml
+				tmp2 +=  "    <input type=\"hidden\" name=\"ssql_ehtml_att"+(i+1)+"\" value=\""+val+"\">\n";	//html	//TODO
+				//tmp2 +=  "    <input type=\"hidden\" name=\"att"+(i+1)+"\" value=\""+val+"\">\n";	//html
+			}
+			
+			//xml
+			Incremental.outXMLData(html_env.xmlDepth, "<plink target='" + html_env.linkUrl + "'" + tmp1 + ">\n");
+			
+			// html
+			// TODO ssql_plink_form"1"_1
+			String form_method = (glink_flag)? "GET" : "POST"; 
+			String plink_name = "ssql_plink_form" + Ehtml.getNumber() + "_" +(++plink_num);
+			html_env.code.append("<form method=\""+form_method+"\" name=\""+plink_name+"\" action=\"" + html_env.linkUrl + "\">\n" +
+								 tmp2 +
+								 "    <a href=\"javascript:"+plink_name+".submit()\">");
+		}
+		
+		if (this.Args.get(0) instanceof FuncArg) {
+			Log.out("ARGS are function");
+			FuncArg fa = this.Args.get(0);
+			fa.workAtt();
+		} else
+			this.workAtt("default");
+		
+		// added by masato 20151124 for plink
+		if (html_env.plinkFlag) {
+			Incremental.outXMLData(html_env.xmlDepth, "</plink>\n");	//xml
+			html_env.code.append("</a>\n</form>\n");	// html
+		}
+		
+
+		html_env.plinkFlag = false;
+		Log.info("Func_plink end");
+		return;
+	}
+	// Func_glink
+	private static boolean glink_flag = false;
+	private void Func_glink(ExtList data_info) {
+		glink_flag = true;
+		Func_plink(data_info);
+		glink_flag = false;
+		return;
+	}
+
+	
 
 	public static String opt(String s){
 		if(s.contains("\"")){
@@ -5866,6 +6205,65 @@ public class Mobile_HTML5Function extends Function {
 	}
 	public static void setGlvl(int glvl) {
 		Mobile_HTML5Function.glvl = glvl;
+	}
+	
+	
+	// getDeco
+	private String getDeco(DecorateList decos) {
+		String r = "style=\"";
+        if (decos.containsKey("style")){
+        	String style = decos.getStr("style");
+        	r += style;
+        	if(!style.matches(".*;\\s*$"))	r += ";";
+        }
+        
+		if (decos.containsKey("width")) {
+			if (GlobalEnv.getframeworklist() == null && !Ehtml.flag && !GlobalEnv.isNumber(decos.getStr("width")))
+				r += " width:" + decos.getStr("width").replace("\"", "") + ";";
+			else
+				r += " width:" + decos.getStr("width").replace("\"", "") + "px;";
+		}
+		if (decos.containsKey("height")) {
+			if (GlobalEnv.getframeworklist() == null && !Ehtml.flag && !GlobalEnv.isNumber(decos.getStr("height")))
+				r += " height:" + decos.getStr("height").replace("\"", "") + ";";
+			else
+				r += " height:" + decos.getStr("height").replace("\"", "") + "px;";
+		}
+		
+		if (decos.containsKey("align")) {
+			String a = decos.getStr("align").replace("\"", "").trim();
+			if (Sass.isBootstrapFlg() && a.equals("center"))
+				r += " display:block; margin-left:auto; margin-right:auto;";	//bootstrap centering
+			else
+				r += " text-align:" + a + ";";
+		}
+		if (decos.containsKey("valign"))
+			r += " vertical-align:" + decos.getStr("valign").replace("\"", "") + ";";
+		
+		if (decos.containsKey("padding")) {
+			if (GlobalEnv.getframeworklist() == null && !Ehtml.flag)
+				r += " padding:" + decos.getStr("padding").replace("\"", "") + ";";
+			else
+				r += " padding:" + decos.getStr("padding").replace("\"", "") + "px;";
+		}
+
+		if (decos.containsKey("background-color"))
+			r += " background-color:"
+					+ decos.getStr("background-color").replace("\"", "") + ";";
+		if (decos.containsKey("bgcolor"))
+			r += " background-color:" + decos.getStr("bgcolor").replace("\"", "") + ";";
+		if (decos.containsKey("color"))
+			r += " color:" + decos.getStr("color") + ";";
+			
+		if (decos.containsKey("font-size")){
+			if (GlobalEnv.getframeworklist() == null && !Ehtml.flag && !GlobalEnv.isNumber(decos.getStr("font-size")))
+				r += " font-size:" + decos.getStr("font-size").replace("\"", "") + ";";
+			else
+				r += " font-size:" + decos.getStr("font-size").replace("\"", "") + "px;";
+		}
+		
+    	r += "\"";	//end of style="
+		return r;
 	}
 
 }

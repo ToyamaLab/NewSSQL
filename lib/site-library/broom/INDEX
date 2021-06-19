@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 argument_glossary       Allowed argument names in tidiers
 augment                 Augment data with information from a(n)
                         statistical object
@@ -5,16 +6,42 @@ augment.Mclust          Augment data with information from a(n) Mclust
                         object
 augment.betareg         Augment data with information from a(n) betareg
                         object
+=======
+augment.Mclust          Augment data with information from a(n) Mclust
+                        object
+augment.betamfx         Augment data with information from a(n) betamfx
+                        object
+augment.betareg         Augment data with information from a(n) betareg
+                        object
+augment.clm             Augment data with information from a(n) clm
+                        object
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 augment.coxph           Augment data with information from a(n) coxph
                         object
 augment.decomposed.ts   Augment data with information from a(n)
                         decomposed.ts object
+<<<<<<< HEAD
+=======
+augment.drc             Augment data with information from a(n) drc
+                        object
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 augment.factanal        Augment data with information from a(n)
                         factanal object
 augment.felm            Augment data with information from a(n) felm
                         object
+<<<<<<< HEAD
 augment.glm             Augment a(n) glm object
 augment.glmRob          Augment a(n) glmRob object
+=======
+augment.fixest          Augment data with information from a(n) fixest
+                        object
+augment.glm             Augment data with information from a(n) glm
+                        object
+augment.glmRob          Augment data with information from a(n) glmRob
+                        object
+augment.glmrob          Augment data with information from a(n) glmrob
+                        object
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 augment.htest           Augment data with information from a(n) htest
                         object
 augment.ivreg           Augment data with information from a(n) ivreg
@@ -23,24 +50,55 @@ augment.kmeans          Augment data with information from a(n) kmeans
                         object
 augment.lm              Augment data with information from a(n) lm
                         object
+<<<<<<< HEAD
 augment.lmRob           Augment a(n) lmRob object
 augment.loess           Tidy a(n) loess object
+=======
+augment.lmRob           Augment data with information from a(n) lmRob
+                        object
+augment.lmrob           Augment data with information from a(n) lmrob
+                        object
+augment.loess           Tidy a(n) loess object
+augment.mfx             Augment data with information from a(n) mfx
+                        object
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 augment.mjoint          Augment data with information from a(n) mjoint
                         object
 augment.nlrq            Tidy a(n) nlrq object
 augment.nls             Augment data with information from a(n) nls
                         object
+<<<<<<< HEAD
+=======
+augment.pam             Augment data with information from a(n) pam
+                        object
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 augment.plm             Augment data with information from a(n) plm
                         object
 augment.poLCA           Augment data with information from a(n) poLCA
                         object
+<<<<<<< HEAD
 augment.prcomp          Augment data with information from a(n) prcomp
                         object
 augment.rlm             Augment a(n) rlm object
+=======
+augment.polr            Augment data with information from a(n) polr
+                        object
+augment.prcomp          Augment data with information from a(n) prcomp
+                        object
+augment.rlm             Augment data with information from a(n) rlm
+                        object
+augment.rma             Augment data with information from a(n) rma
+                        object
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 augment.rq              Augment data with information from a(n) rq
                         object
 augment.rqs             Augment data with information from a(n) rqs
                         object
+<<<<<<< HEAD
+=======
+augment.sarlm           Augment data with information from a(n)
+                        spatialreg object
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 augment.smooth.spline   Tidy a(n) smooth.spline object
 augment.speedlm         Augment data with information from a(n) speedlm
                         object
@@ -52,6 +110,7 @@ augment_columns         add fitted values, residuals, and other common
                         outputs to an augment call
 bootstrap               Set up bootstrap replicates of a dplyr
                         operation
+<<<<<<< HEAD
 brms_tidiers            Tidying methods for a brms model
 broom                   Convert Statistical Objects into Tidy Tibbles
 column_glossary         Allowed column names in tidied tibbles
@@ -73,18 +132,49 @@ glance.Arima            Glance at a(n) Arima object
 glance.Gam              Glance at a(n) Gam object
 glance.Mclust           Glance at a(n) Mclust object
 glance.aareg            Glance at a(n) aareg object
+=======
+confint_tidy            (Deprecated) Calculate confidence interval as a
+                        tidy data frame
+data.frame_tidiers      Tidiers for data.frame objects
+durbinWatsonTest_tidiers
+                        Tidy/glance a(n) durbinWatsonTest object
+finish_glance           (Deprecated) Add logLik, AIC, BIC, and other
+                        common measurements to a glance of a prediction
+fix_data_frame          Ensure an object is a data frame, with rownames
+                        moved into a column
+glance.Arima            Glance at a(n) Arima object
+glance.Mclust           Glance at a(n) Mclust object
+glance.aareg            Glance at a(n) aareg object
+glance.aov              Glance at a(n) lm object
+glance.betamfx          Glance at a(n) betamfx object
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 glance.betareg          Glance at a(n) betareg object
 glance.biglm            Glance at a(n) biglm object
 glance.binDesign        Glance at a(n) binDesign object
 glance.cch              Glance at a(n) cch object
+<<<<<<< HEAD
 glance.coxph            Glance at a(n) coxph object
 glance.cv.glmnet        Glance at a(n) cv.glmnet object
+=======
+glance.clm              Glance at a(n) clm object
+glance.clmm             Glance at a(n) clmm object
+glance.coxph            Glance at a(n) coxph object
+glance.cv.glmnet        Glance at a(n) cv.glmnet object
+glance.drc              Glance at a(n) drc object
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 glance.ergm             Glance at a(n) ergm object
 glance.factanal         Glance at a(n) factanal object
 glance.felm             Glance at a(n) felm object
 glance.fitdistr         Glance at a(n) fitdistr object
+<<<<<<< HEAD
 glance.gam              Glance at a(n) gam object
 glance.garch            Tidy a(n) garch object
+=======
+glance.fixest           Glance at a(n) fixest object
+glance.gam              Glance at a(n) gam object
+glance.garch            Tidy a(n) garch object
+glance.geeglm           Glance at a(n) geeglm object
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 glance.glm              Glance at a(n) glm object
 glance.glmRob           Glance at a(n) glmRob object
 glance.glmnet           Glance at a(n) glmnet object
@@ -95,12 +185,18 @@ glance.lavaan           Glance at a(n) lavaan object
 glance.lm               Glance at a(n) lm object
 glance.lmRob            Glance at a(n) lmRob object
 glance.lmodel2          Glance at a(n) lmodel2 object
+<<<<<<< HEAD
+=======
+glance.lmrob            Glance at a(n) lmrob object
+glance.mfx              Glance at a(n) mfx object
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 glance.mjoint           Glance at a(n) mjoint object
 glance.muhaz            Glance at a(n) muhaz object
 glance.multinom         Glance at a(n) multinom object
 glance.nlrq             Glance at a(n) nlrq object
 glance.nls              Glance at a(n) nls object
 glance.orcutt           Glance at a(n) orcutt object
+<<<<<<< HEAD
 glance.plm              Glance at a(n) plm object
 glance.poLCA            Augment data with information from a(n) poLCA
                         object
@@ -109,11 +205,26 @@ glance.ridgelm          Glance at a(n) ridgelm object
 glance.rlm              Glance at a(n) rlm object
 glance.rq               Glance at a(n) rq object
 glance.smooth.spline    Tidy a(n) smooth.spine object
+=======
+glance.pam              Glance at a(n) pam object
+glance.plm              Glance at a(n) plm object
+glance.poLCA            Glance at a(n) poLCA object
+glance.polr             Glance at a(n) polr object
+glance.pyears           Glance at a(n) pyears object
+glance.ridgelm          Glance at a(n) ridgelm object
+glance.rlm              Glance at a(n) rlm object
+glance.rma              Glance at a(n) rma object
+glance.rq               Glance at a(n) rq object
+glance.sarlm            Glance at a(n) spatialreg object
+glance.smooth.spline    Tidy a(n) smooth.spine object
+glance.speedglm         Glance at a(n) speedglm object
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 glance.speedlm          Glance at a(n) speedlm object
 glance.survdiff         Glance at a(n) survdiff object
 glance.survexp          Glance at a(n) survexp object
 glance.survfit          Glance at a(n) survfit object
 glance.survreg          Glance at a(n) survreg object
+<<<<<<< HEAD
 glance_optim            Tidy a(n) optim object masquerading as list
 insert_NAs              insert a row of NAs into a data frame wherever
                         another data frame has NAs
@@ -135,6 +246,19 @@ summary_tidiers         Tidy/glance a(n) summaryDefault object
 tidy                    Turn a model object into a tidy tibble
 tidy.Arima              Tidy a(n) Arima object
 tidy.Gam                Tidy a(n) Gam object
+=======
+glance.svyglm           Glance at a(n) svyglm object
+glance.svyolr           Glance at a(n) svyolr object
+glance_optim            Tidy a(n) optim object masquerading as list
+list_tidiers            Tidying methods for lists / returned values
+                        that are not S3 objects
+null_tidiers            Tidiers for NULL inputs
+sp_tidiers              Tidy a(n) SpatialPolygonsDataFrame object
+sparse_tidiers          Tidy a sparseMatrix object from the Matrix
+                        package
+summary_tidiers         (Deprecated) Tidy summaryDefault objects
+tidy.Arima              Tidy a(n) Arima object
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 tidy.Kendall            Tidy a(n) Kendall object
 tidy.Mclust             Tidy a(n) Mclust object
 tidy.TukeyHSD           Tidy a(n) TukeyHSD object
@@ -143,6 +267,10 @@ tidy.acf                Tidy a(n) acf object
 tidy.anova              Tidy a(n) anova object
 tidy.aov                Tidy a(n) aov object
 tidy.aovlist            Tidy a(n) aovlist object
+<<<<<<< HEAD
+=======
+tidy.betamfx            Tidy a(n) betamfx object
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 tidy.betareg            Tidy a(n) betareg object
 tidy.biglm              Tidy a(n) biglm object
 tidy.binDesign          Tidy a(n) binDesign object
@@ -151,18 +279,36 @@ tidy.boot               Tidy a(n) boot object
 tidy.btergm             Tidy a(n) btergm object
 tidy.cch                Tidy a(n) cch object
 tidy.cld                Tidy a(n) cld object
+<<<<<<< HEAD
+=======
+tidy.clm                Tidy a(n) clm object
+tidy.clmm               Tidy a(n) clmm object
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 tidy.coeftest           Tidy a(n) coeftest object
 tidy.confint.glht       Tidy a(n) confint.glht object
 tidy.confusionMatrix    Tidy a(n) confusionMatrix object
 tidy.coxph              Tidy a(n) coxph object
 tidy.cv.glmnet          Tidy a(n) cv.glmnet object
+<<<<<<< HEAD
 tidy.density            Tidy a(n) density object
 tidy.dist               Tidy a(n) dist object
+=======
+tidy.density            (Deprecated) Tidy density objects
+tidy.dist               (Deprecated) Tidy dist objects
+tidy.drc                Tidy a(n) drc object
+tidy.emmGrid            Tidy a(n) emmGrid object
+tidy.epi.2by2           Tidy a(n) epi.2by2 object
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 tidy.ergm               Tidy a(n) ergm object
 tidy.factanal           Tidy a(n) factanal object
 tidy.felm               Tidy a(n) felm object
 tidy.fitdistr           Tidy a(n) fitdistr object
+<<<<<<< HEAD
 tidy.ftable             Tidy a(n) ftable object
+=======
+tidy.fixest             Tidy a(n) fixest object
+tidy.ftable             (Deprecated) Tidy ftable objects
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 tidy.gam                Tidy a(n) gam object
 tidy.gamlss             Tidy a(n) gamlss object
 tidy.garch              Tidy a(n) garch object
@@ -171,6 +317,10 @@ tidy.glht               Tidy a(n) glht object
 tidy.glm                Tidy a(n) glm object
 tidy.glmRob             Tidy a(n) glmRob object
 tidy.glmnet             Tidy a(n) glmnet object
+<<<<<<< HEAD
+=======
+tidy.glmrob             Tidy a(n) glmrob object
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 tidy.gmm                Tidy a(n) gmm object
 tidy.htest              Tidy/glance a(n) htest object
 tidy.ivreg              Tidy a(n) ivreg object
@@ -179,12 +329,27 @@ tidy.kde                Tidy a(n) kde object
 tidy.kmeans             Tidy a(n) kmeans object
 tidy.lavaan             Tidy a(n) lavaan object
 tidy.lm                 Tidy a(n) lm object
+<<<<<<< HEAD
 tidy.lmRob              Tidy a(n) lmRob object
 tidy.lmodel2            Tidy a(n) lmodel2 object
 tidy.manova             Tidy a(n) manova object
 tidy.map                Tidy a(n) map object
 tidy.mjoint             Tidy a(n) mjoint object
 tidy.mle2               Tidy a(n) mle2 object
+=======
+tidy.lm.beta            Tidy a(n) lm.beta object
+tidy.lmRob              Tidy a(n) lmRob object
+tidy.lmodel2            Tidy a(n) lmodel2 object
+tidy.lmrob              Tidy a(n) lmrob object
+tidy.lsmobj             Tidy a(n) lsmobj object
+tidy.manova             Tidy a(n) manova object
+tidy.map                Tidy a(n) map object
+tidy.mediate            Tidy a(n) mediate object
+tidy.mfx                Tidy a(n) mfx object
+tidy.mjoint             Tidy a(n) mjoint object
+tidy.mle2               Tidy a(n) mle2 object
+tidy.mlm                Tidy a(n) mlm object
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 tidy.muhaz              Tidy a(n) muhaz object
 tidy.multinom           Tidying methods for multinomial logistic
                         regression models
@@ -193,14 +358,22 @@ tidy.nls                Tidy a(n) nls object
 tidy.numeric            Tidy atomic vectors
 tidy.orcutt             Tidy a(n) orcutt object
 tidy.pairwise.htest     Tidy a(n) pairwise.htest object
+<<<<<<< HEAD
 tidy.plm                Tidy a(n) plm object
 tidy.poLCA              Tidy a(n) poLCA object
 tidy.polr               Tidying methods for ordinal logistic regression
                         models
+=======
+tidy.pam                Tidy a(n) pam object
+tidy.plm                Tidy a(n) plm object
+tidy.poLCA              Tidy a(n) poLCA object
+tidy.polr               Tidy a(n) polr object
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 tidy.power.htest        Tidy a(n) power.htest object
 tidy.prcomp             Tidy a(n) prcomp object
 tidy.pyears             Tidy a(n) pyears object
 tidy.rcorr              Tidy a(n) rcorr object
+<<<<<<< HEAD
 tidy.ridgelm            Tidy a(n) ridgelm object
 tidy.rlm                Tidy a(n) rlm object
 tidy.roc                Tidy a(n) roc object
@@ -209,10 +382,33 @@ tidy.rqs                Tidy a(n) rqs object
 tidy.spec               Tidy a(n) spec object
 tidy.speedlm            Tidy a(n) speedlm object
 tidy.summary.glht       Tidy a(n) summary.glht object
+=======
+tidy.ref.grid           Tidy a(n) ref.grid object
+tidy.regsubsets         Tidy a(n) regsubsets object
+tidy.ridgelm            Tidy a(n) ridgelm object
+tidy.rlm                Tidy a(n) rlm object
+tidy.rma                Tidy a(n) rma object
+tidy.roc                Tidy a(n) roc object
+tidy.rq                 Tidy a(n) rq object
+tidy.rqs                Tidy a(n) rqs object
+tidy.sarlm              Tidying methods for spatially autoregressive
+                        models
+tidy.spec               Tidy a(n) spec object
+tidy.speedglm           Tidy a(n) speedglm object
+tidy.speedlm            Tidy a(n) speedlm object
+tidy.summary.glht       Tidy a(n) summary.glht object
+tidy.summary_emm        Tidy a(n) summary_emm object
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 tidy.survdiff           Tidy a(n) survdiff object
 tidy.survexp            Tidy a(n) survexp object
 tidy.survfit            Tidy a(n) survfit object
 tidy.survreg            Tidy a(n) survreg object
+<<<<<<< HEAD
+=======
+tidy.svyglm             Tidy a(n) svyglm object
+tidy.svyolr             Tidy a(n) svyolr object
+tidy.systemfit          Tidy a(n) systemfit object
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 tidy.table              Tidy a(n) table object
 tidy.ts                 Tidy a(n) ts object
 tidy.zoo                Tidy a(n) zoo object

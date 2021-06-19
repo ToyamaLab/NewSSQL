@@ -478,4 +478,9 @@ BOOST_IOSTREAMS_RESTRICT(T& t, stream_offset off, stream_offset len = -1)
 
 } } // End namespaces iostreams, boost.
 
+<<<<<<< HEAD
+=======
+# include <boost/iostreams/detail/config/enable_warnings.hpp>
+
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 #endif // #if !defined(BOOST_IOSTREAMS_RESTRICT_IMPL_HPP_INCLUDED) ...

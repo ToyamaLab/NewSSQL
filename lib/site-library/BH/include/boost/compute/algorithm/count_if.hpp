@@ -11,6 +11,11 @@
 #ifndef BOOST_COMPUTE_ALGORITHM_COUNT_IF_HPP
 #define BOOST_COMPUTE_ALGORITHM_COUNT_IF_HPP
 
+<<<<<<< HEAD
+=======
+#include <boost/static_assert.hpp>
+
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 #include <boost/compute/device.hpp>
 #include <boost/compute/system.hpp>
 #include <boost/compute/command_queue.hpp>
@@ -19,6 +24,10 @@
 #include <boost/compute/algorithm/detail/count_if_with_threads.hpp>
 #include <boost/compute/algorithm/detail/serial_count_if.hpp>
 #include <boost/compute/detail/iterator_range_size.hpp>
+<<<<<<< HEAD
+=======
+#include <boost/compute/type_traits/is_device_iterator.hpp>
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 namespace boost {
 namespace compute {
@@ -34,6 +43,10 @@ inline size_t count_if(InputIterator first,
                        Predicate predicate,
                        command_queue &queue = system::default_queue())
 {
+<<<<<<< HEAD
+=======
+    BOOST_STATIC_ASSERT(is_device_iterator<InputIterator>::value);
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     const device &device = queue.get_device();
 
     size_t input_size = detail::iterator_range_size(first, last);

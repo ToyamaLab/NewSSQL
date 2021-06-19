@@ -903,6 +903,7 @@ namespace boost { namespace numeric { namespace ublas {
             vector_assign<scalar_assign> (*this, ae);
         }
 
+<<<<<<< HEAD
         /// \brief Construct a fixed_vector from a list of values
         /// This constructor enables initialization by using any of:
         /// fixed_vector<double, 3> v = { 1, 2, 3 } or fixed_vector<double,3> v( {1, 2, 3} ) or fixed_vector<double,3> v( 1, 2, 3 )
@@ -918,6 +919,16 @@ namespace boost { namespace numeric { namespace ublas {
             vector_container<self_type> (),
             data_{ { v0, vrest... } } {}
 #endif
+=======
+    /// \brief Construct a fixed_vector from a list of values
+    /// This constructor enables initialization by using any of:
+    /// fixed_vector<double, 3> v = { 1, 2, 3 } or fixed_vector<double,3> v( {1, 2, 3} ) or fixed_vector<double,3> v( 1, 2, 3 )
+        template <typename... Types>
+        BOOST_UBLAS_INLINE
+        fixed_vector(value_type v0, Types... vrest) :
+            vector_container<self_type> (),
+            data_( array_type{ v0, vrest... } ) {}
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
     // -----------------------
     // Random Access Container

@@ -9,16 +9,24 @@ Ryaml_find_implicit_tag(str, len)
    *
    * Copyright (C) 2003 why the lucky stiff */
 
+<<<<<<< HEAD
   const char *cursor, *limit, *marker;
   cursor = str;
   limit = str + len;
+=======
+  const char *cursor, *marker;
+  cursor = str;
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 /*!re2c
 
 re2c:define:YYCTYPE  = "char";
 re2c:define:YYCURSOR = cursor;
 re2c:define:YYMARKER = marker;
+<<<<<<< HEAD
 re2c:define:YYLIMIT  = limit;
+=======
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 re2c:yyfill:enable   = 0;
 
 NULL = [\000] ;

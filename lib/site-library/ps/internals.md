@@ -27,6 +27,10 @@ ps_cpu_times     .  >  Z
 ps_memory_info   .  >  Z
 ps_num_fds       .  >  Z
 ps_open_files    .  >  Z
+<<<<<<< HEAD
+=======
+ps_connections   .  >  Z
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 ps_children      .  >  +
 ps_send_signal   .  <  +
 ps_suspend       .  <  +

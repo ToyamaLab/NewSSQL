@@ -2,8 +2,13 @@
 //
 // Environment.h: Rcpp R/C++ interface class library -- access R environments
 //
+<<<<<<< HEAD
 // Copyright (C) 2009 - 2013    Dirk Eddelbuettel and Romain Francois
 // Copyright (C) 2014           Dirk Eddelbuettel, Romain Francois and Kevin Ushey
+=======
+// Copyright (C) 2009 - 2013  Dirk Eddelbuettel and Romain Francois
+// Copyright (C) 2014 - 2020  Dirk Eddelbuettel, Romain Francois and Kevin Ushey
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 //
 // This file is part of Rcpp.
 //
@@ -33,8 +38,13 @@ namespace Rcpp{
             if( Rf_isEnvironment(x) ) return x ;
             SEXP asEnvironmentSym = Rf_install("as.environment");
             try {
+<<<<<<< HEAD
                 Shield<SEXP> res(Rcpp_fast_eval(Rf_lang2(asEnvironmentSym, x), R_GlobalEnv));
                 return res ;
+=======
+                Shield<SEXP> call(Rf_lang2(asEnvironmentSym, x));
+                return Rcpp_fast_eval(call, R_GlobalEnv);
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
             } catch( const eval_error& ex) {
                 const char* fmt = "Cannot convert object to an environment: "
                                   "[type=%s; target=ENVSXP].";
@@ -246,9 +256,14 @@ namespace Rcpp{
                        we have to go back to R to do this operation */
                     SEXP internalSym = Rf_install( ".Internal" );
                     SEXP removeSym = Rf_install( "remove" );
+<<<<<<< HEAD
                     Shield<SEXP> call( Rf_lang2(internalSym,
                             Rf_lang4(removeSym, Rf_mkString(name.c_str()), Storage::get__(), Rf_ScalarLogical( FALSE ))
                         ) );
+=======
+                    Shield<SEXP> str(Rf_mkString(name.c_str()));
+                    Shield<SEXP> call(Rf_lang2(internalSym, Rf_lang4(removeSym, str, Storage::get__(), Rf_ScalarLogical(FALSE))));
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
                     Rcpp_fast_eval( call, R_GlobalEnv ) ;
                 }
             } else{
@@ -374,7 +389,12 @@ namespace Rcpp{
             try{
                 SEXP getNamespaceSym = Rf_install("getNamespace");
                 Shield<SEXP> package_str( Rf_mkString(package.c_str()) );
+<<<<<<< HEAD
                 env = Rcpp_fast_eval(Rf_lang2(getNamespaceSym, package_str), R_GlobalEnv);
+=======
+                Shield<SEXP> call( Rf_lang2(getNamespaceSym, package_str) );
+                env = Rcpp_fast_eval(call, R_GlobalEnv);
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
             } catch( ... ){
                 throw no_such_namespace( package  ) ;
             }
@@ -393,10 +413,17 @@ namespace Rcpp{
          */
         Environment_Impl new_child(bool hashed) const {
             SEXP newEnvSym = Rf_install("new.env");
+<<<<<<< HEAD
             return Environment_Impl(Rcpp_fast_eval(Rf_lang3(newEnvSym, Rf_ScalarLogical(hashed), Storage::get__()), R_GlobalEnv));
         }
 
 
+=======
+            Shield<SEXP> call(Rf_lang3(newEnvSym, Rf_ScalarLogical(hashed), Storage::get__()));
+            return Environment_Impl(Rcpp_fast_eval(call, R_GlobalEnv));
+        }
+
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
         void update(SEXP){}
     };
 

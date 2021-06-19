@@ -12,7 +12,11 @@
 #endif
 
 #if defined(__CUDACC_VER_MAJOR__) && defined(__CUDACC_VER_MINOR__) && defined(__CUDACC_VER_BUILD__)
+<<<<<<< HEAD
 #  define BOOST_CUDA_VERSION __CUDACC_VER_MAJOR__ * 1000000 + __CUDACC_VER_MINOR__ * 10000 + __CUDACC_VER_BUILD__
+=======
+#  define BOOST_CUDA_VERSION (__CUDACC_VER_MAJOR__ * 1000000 + __CUDACC_VER_MINOR__ * 10000 + __CUDACC_VER_BUILD__)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 #else
 // We don't really know what the CUDA version is, but it's definitely before 7.5:
 #  define BOOST_CUDA_VERSION 7000000
@@ -33,8 +37,13 @@
 #if (BOOST_CUDA_VERSION > 8000000) && (BOOST_CUDA_VERSION < 8010000)
 #   define BOOST_NO_CXX11_VARIADIC_TEMPLATES
 #endif
+<<<<<<< HEAD
 // Most recent CUDA (8.0) has no constexpr support in msvc mode:
 #if defined(_MSC_VER)
+=======
+// CUDA (8.0) has no constexpr support in msvc mode:
+#if defined(_MSC_VER) && (BOOST_CUDA_VERSION < 9000000)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 #  define BOOST_NO_CXX11_CONSTEXPR
 #endif
 

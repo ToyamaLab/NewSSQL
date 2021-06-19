@@ -4,6 +4,14 @@
 // Copyright (c) 2008-2012 Barend Gehrels, Amsterdam, the Netherlands.
 // Copyright (c) 2009-2012 Mateusz Loskot, London, UK.
 
+<<<<<<< HEAD
+=======
+// This file was modified by Oracle on 2018.
+// Modifications copyright (c) 2018, Oracle and/or its affiliates.
+
+// Contributed and/or modified by Adam Wulkiewicz, on behalf of Oracle
+
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 // Parts of Boost.Geometry are redesigned from Geodan's Geographic Library
 // (geolib/GGL), copyright (c) 1995-2010 Geodan, Amsterdam, the Netherlands.
 
@@ -19,6 +27,10 @@
 
 #include <boost/tuple/tuple.hpp>
 
+<<<<<<< HEAD
+=======
+#include <boost/geometry/core/access.hpp>
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 #include <boost/geometry/core/coordinate_dimension.hpp>
 #include <boost/geometry/core/coordinate_type.hpp>
 #include <boost/geometry/core/point_type.hpp>

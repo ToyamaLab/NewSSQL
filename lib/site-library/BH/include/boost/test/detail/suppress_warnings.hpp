@@ -26,13 +26,25 @@
 # pragma warning(disable: 4511) // 'class' : copy constructor could not be generated
 #endif
 
+<<<<<<< HEAD
 #if BOOST_CLANG
 # pragma clang diagnostic push
 // # pragma clang diagnostic ignored "-Wvariadic-macros"
+=======
+#if defined(BOOST_CLANG) && (BOOST_CLANG == 1)
+# pragma clang diagnostic push
+//# pragma clang diagnostic ignored "-Wvariadic-macros"
+//# pragma clang diagnostic ignored "-Wmissing-declarations"
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 #endif
 
 #if defined(BOOST_GCC) && (BOOST_GCC >= 4 * 10000 + 6 * 100)
 # pragma GCC diagnostic push
+<<<<<<< HEAD
 // # pragma GCC diagnostic ignored "-Wvariadic-macros"
+=======
+//# pragma GCC diagnostic ignored "-Wvariadic-macros"
+//# pragma GCC diagnostic ignored "-Wmissing-declarations"
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 #endif
 

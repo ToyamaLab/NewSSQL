@@ -5,7 +5,11 @@
 # define BOOST_CONCEPT_ASSERT_DWA2006430_HPP
 
 # include <boost/config.hpp>
+<<<<<<< HEAD
 # include <boost/detail/workaround.hpp>
+=======
+# include <boost/config/workaround.hpp>
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 // The old protocol used a constraints() member function in concept
 // checking classes.  If the compiler supports SFINAE, we can detect

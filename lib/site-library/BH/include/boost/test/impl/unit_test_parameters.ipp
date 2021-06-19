@@ -43,7 +43,10 @@
 #include <boost/config.hpp>
 #include <boost/test/detail/suppress_warnings.hpp>
 #include <boost/test/detail/enable_warnings.hpp>
+<<<<<<< HEAD
 #include <boost/optional.hpp>
+=======
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 #include <boost/cstdlib.hpp>
 
 // STL
@@ -112,7 +115,11 @@ register_parameters( rt::parameters_store& store )
         rt::description = "Automatically attaches debugger in case of system level failure (signal).",
         rt::env_var = "BOOST_TEST_AUTO_START_DBG",
 
+<<<<<<< HEAD
         rt::help = "Option " + btrt_auto_start_dbg + " specifies whether Boost.Test should attempt "
+=======
+        rt::help = "Specifies whether Boost.Test should attempt "
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
                    "to attach a debugger when fatal system error occurs. At the moment this feature "
                    "is only available on a few selected platforms: Win32 and *nix. There is a "
                    "default debugger configured for these platforms. You can manually configure "
@@ -145,7 +152,11 @@ register_parameters( rt::parameters_store& store )
     rt::option build_info( btrt_build_info, (
         rt::description = "Displays library build information.",
         rt::env_var = "BOOST_TEST_BUILD_INFO",
+<<<<<<< HEAD
         rt::help = "Option " + btrt_build_info + " displays library build information, including: platform, "
+=======
+        rt::help = "Displays library build information, including: platform, "
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
                    "compiler, STL version and Boost version."
     ));
 
@@ -164,7 +175,11 @@ register_parameters( rt::parameters_store& store )
 #else
             true,
 #endif
+<<<<<<< HEAD
         rt::help = "If option " + btrt_catch_sys_errors + " has value no the frameworks does not attempt to catch "
+=======
+        rt::help = "If option " + btrt_catch_sys_errors + " has value 'no' the frameworks does not attempt to catch "
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
                    "asynchronous system failure events (signals on *NIX platforms or structured exceptions on Windows). "
                    " Default value is "
 #ifdef BOOST_TEST_DEFAULTS_TO_CORE_DUMP
@@ -183,9 +198,15 @@ register_parameters( rt::parameters_store& store )
     rt::option color_output( btrt_color_output, (
         rt::description = "Enables color output of the framework log and report messages.",
         rt::env_var = "BOOST_TEST_COLOR_OUTPUT",
+<<<<<<< HEAD
         rt::help = "The framework is able to produce color output on systems which supports it. "
                    "To enable this behavior set this option to yes. By default the framework "
                    "does not produces color output."
+=======
+        rt::default_value = true,
+        rt::help = "Produces color output for logs, reports and help. "
+                   "Defaults to true. "
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     ));
 
     color_output.add_cla_id( "--", btrt_color_output, "=", true );
@@ -197,7 +218,11 @@ register_parameters( rt::parameters_store& store )
     rt::option detect_fp_except( btrt_detect_fp_except, (
         rt::description = "Enables/disables floating point exceptions traps.",
         rt::env_var = "BOOST_TEST_DETECT_FP_EXCEPTIONS",
+<<<<<<< HEAD
         rt::help = "Option " + btrt_detect_fp_except + " enables/disables hardware traps for the floating "
+=======
+        rt::help = "Enables/disables hardware traps for the floating "
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
                    "point exceptions (if supported on your platfrom)."
     ));
 
@@ -212,7 +237,11 @@ register_parameters( rt::parameters_store& store )
         rt::default_value = 1L,
         rt::optional_value = 1L,
         rt::value_hint = "<alloc order number>",
+<<<<<<< HEAD
         rt::help = "Parameter " + btrt_detect_mem_leaks + " enables/disables memory leaks detection. "
+=======
+        rt::help = "Enables/disables memory leaks detection. "
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
                    "This parameter has optional long integer value. The default value is 1, which "
                    "enables the memory leak detection. The value 0 disables memory leak detection. "
                    "Any value N greater than 1 is treated as leak allocation number and tells the "
@@ -242,9 +271,15 @@ register_parameters( rt::parameters_store& store )
             ( "DOT", OF_DOT )
         ,
 #endif
+<<<<<<< HEAD
         rt::help = "Parameter " + btrt_list_content + " instructs the framework to list the content "
                    "of the test module instead of executing the test cases. Parameter accepts "
                    "optional string value indicating the format of the output. Currently the "
+=======
+        rt::help = "Lists the test suites and cases "
+                   "of the test module instead of executing the test cases. The format of the "
+                   "desired output can be passed to the command. Currently the "
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
                    "framework supports two formats: human readable format (HRF) and dot graph "
                    "format (DOT). If value is omitted HRF value is assumed."
     ));
@@ -285,7 +320,11 @@ register_parameters( rt::parameters_store& store )
             ( "JUNIT", OF_JUNIT )
         ,
 #endif
+<<<<<<< HEAD
         rt::help = "Parameter " + btrt_log_format + " allows to set the frameowrk's log format to one "
+=======
+        rt::help = "Set the frameowrk's log format to one "
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
                    "of the formats supplied by the framework. The only acceptable values for this "
                    "parameter are the names of the output formats supplied by the framework. By "
                    "default the framework uses human readable format (HRF) for testing log. This "
@@ -300,7 +339,11 @@ register_parameters( rt::parameters_store& store )
     ///////////////////////////////////////////////
 
     rt::enum_parameter<unit_test::log_level> log_level( btrt_log_level, (
+<<<<<<< HEAD
         rt::description = "Specifies log level.",
+=======
+        rt::description = "Specifies the logging level of the test execution.",
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
         rt::env_var = "BOOST_TEST_LOG_LEVEL",
         rt::default_value = log_all_errors,
         rt::enum_values<unit_test::log_level>::value =
@@ -333,8 +376,13 @@ register_parameters( rt::parameters_store& store )
             ( "nothing"       , log_nothing )
         ,
 #endif
+<<<<<<< HEAD
         rt::help = "Parameter " + btrt_log_level + " allows to set the framework's log level. "
                    "Log level defines the verbosity of testing log produced by a testing "
+=======
+        rt::help = "Set the framework's log level. "
+                   "The log level defines the verbosity of the testing logs produced by a test "
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
                    "module. The verbosity ranges from a complete log, when all assertions "
                    "(both successful and failing) are reported, all notifications about "
                    "test units start and finish are included, to an empty log when nothing "
@@ -348,11 +396,19 @@ register_parameters( rt::parameters_store& store )
     ///////////////////////////////////////////////
 
     rt::parameter<std::string> log_sink( btrt_log_sink, (
+<<<<<<< HEAD
         rt::description = "Specifies log sink: stdout(default), stderr or file name.",
         rt::env_var = "BOOST_TEST_LOG_SINK",
         rt::value_hint = "<stderr|stdout|file name>",
         rt::help = "Parameter " + btrt_log_sink + " allows to set the log sink - location "
                    "where we report the log to, thus it allows to easily redirect the "
+=======
+        rt::description = "Specifies log sink: stdout (default), stderr or file name.",
+        rt::env_var = "BOOST_TEST_LOG_SINK",
+        rt::value_hint = "<stderr|stdout|file name>",
+        rt::help = "Sets the log sink - the location "
+                   "where Boost.Test writes the logs of the test execution. It allows to easily redirect the "
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
                    "test logs to file or standard streams. By default testing log is "
                    "directed to standard output."
     ));
@@ -380,9 +436,14 @@ register_parameters( rt::parameters_store& store )
             ( "XML", OF_XML )
         ,
 #endif
+<<<<<<< HEAD
         rt::help = "Parameter " + btrt_output_format + " combines an effect of " + btrt_report_format +
                    " and " + btrt_log_format + " parameters. This parameter has higher priority "
                    "than either one of them. In other words if this parameter is specified "
+=======
+        rt::help = "Combines an effect of " + btrt_report_format +
+                   " and " + btrt_log_format + " parameters. If this parameter is specified, "
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
                    "it overrides the value of other two parameters. This parameter does not "
                    "have a default value. The only acceptable values are string names of "
                    "output formats: HRF - human readable format and XML - XML formats for "
@@ -398,9 +459,18 @@ register_parameters( rt::parameters_store& store )
     rt::parameter<std::string,rt::REPEATABLE_PARAM> combined_logger( btrt_combined_logger, (
         rt::description = "Specifies log level and sink for one or several log format",
         rt::env_var = "BOOST_TEST_LOGGER",
+<<<<<<< HEAD
         rt::value_hint = "log_format:log_level:log_sink",
         rt::help = "Parameter " + btrt_combined_logger + " allows to specify the logger type, level and sink\n"
                    "in one command."
+=======
+        rt::value_hint = "log_format,log_level,log_sink[:log_format,log_level,log_sink]",
+        rt::help = "Specify one or more logging definition, which include the logger type, level and sink. "
+                   "The log format, level and sink follow the same format as for the argument '--" + btrt_log_format +
+                   "', '--" + btrt_log_level + "' and '--" + btrt_log_sink + "' respetively. "
+                   "This command can take several logging definition separated by a ':', or be repeated "
+                   "on the command line."
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     ));
 
     combined_logger.add_cla_id( "--", btrt_combined_logger, "=" );
@@ -415,6 +485,7 @@ register_parameters( rt::parameters_store& store )
         rt::default_value = 0U,
         rt::optional_value = 1U,
         rt::value_hint = "<seed>",
+<<<<<<< HEAD
         rt::help = "Parameter " + btrt_random_seed + " instructs the framework to execute the "
                    "test cases in random order. This parameter accepts optional unsigned "
                    "integer argument. By default test cases are executed in some specific "
@@ -423,6 +494,16 @@ register_parameters( rt::parameters_store& store )
                    "order is randomized based on current time. Alternatively you can specify "
                    "any positive value greater than 1 and it will be used as random seed for "
                    "the run."
+=======
+        rt::help = "Instructs the framework to execute the "
+                   "test cases in random order. This parameter accepts an optional unsigned "
+                   "integer argument. If parameter is specified without the argument value testing "
+                   "order is randomized based on current time. Alternatively you can specify "
+                   "any positive value greater than 1 and it will be used as random seed for "
+                   "the run. "
+                   "By default, the test cases are executed in an "
+                   "order defined by their declaration and the optional dependencies among the test units."
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     ));
 
     random_seed.add_cla_id( "--", btrt_random_seed, "=" );
@@ -431,7 +512,11 @@ register_parameters( rt::parameters_store& store )
     ///////////////////////////////////////////////
 
     rt::enum_parameter<unit_test::output_format> report_format( btrt_report_format, (
+<<<<<<< HEAD
         rt::description = "Specifies report format.",
+=======
+        rt::description = "Specifies the test report format.",
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
         rt::env_var = "BOOST_TEST_REPORT_FORMAT",
         rt::default_value = OF_CLF,
         rt::enum_values<unit_test::output_format>::value =
@@ -448,7 +533,11 @@ register_parameters( rt::parameters_store& store )
             ( "XML", OF_XML )
         ,
 #endif
+<<<<<<< HEAD
         rt::help = "Parameter " + btrt_report_format + " allows to set the framework's report format "
+=======
+        rt::help = "Set the framework's report format "
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
                    "to one of the formats supplied by the framework. The only acceptable values "
                    "for this parameter are the names of the output formats. By default the framework "
                    "uses human readable format (HRF) for results reporting. Alternatively you can "
@@ -463,7 +552,11 @@ register_parameters( rt::parameters_store& store )
     ///////////////////////////////////////////////
 
     rt::enum_parameter<unit_test::report_level> report_level( btrt_report_level, (
+<<<<<<< HEAD
         rt::description = "Specifies report level.",
+=======
+        rt::description = "Specifies test report level.",
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
         rt::env_var = "BOOST_TEST_REPORT_LEVEL",
         rt::default_value = CONFIRMATION_REPORT,
         rt::enum_values<unit_test::report_level>::value =
@@ -482,9 +575,15 @@ register_parameters( rt::parameters_store& store )
             ( "no",       NO_REPORT )
         ,
 #endif
+<<<<<<< HEAD
         rt::help = "Parameter " + btrt_report_level + " allows to set the verbosity level of the "
                    "testing result report generated by the framework. Use value 'no' to "
                    "eliminate the results report completely."
+=======
+        rt::help = "Set the verbosity level of the "
+                   "result report generated by the testing framework. Use value 'no' to "
+                   "disable the results report completely."
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     ));
 
     report_level.add_cla_id( "--", btrt_report_level, "=" );
@@ -512,10 +611,17 @@ register_parameters( rt::parameters_store& store )
         rt::description = "Specifies report sink: stderr(default), stdout or file name.",
         rt::env_var = "BOOST_TEST_REPORT_SINK",
         rt::value_hint = "<stderr|stdout|file name>",
+<<<<<<< HEAD
         rt::help = "Parameter " + btrt_report_sink + " allows to set the result report sink - "
                    "the location where the framework writes the result report to, thus it "
                    "allows to easily redirect the result report to a file or a standard "
                    "stream. By default the testing result report is directed to the "
+=======
+        rt::help = "Sets the result report sink - "
+                   "the location where the framework writes the result report to. "
+                   "The sink may be a a file or a standard "
+                   "stream. The default is 'stderr': the "
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
                    "standard error stream."
     ));
 
@@ -541,6 +647,7 @@ register_parameters( rt::parameters_store& store )
     ///////////////////////////////////////////////
 
     rt::parameter<std::string,rt::REPEATABLE_PARAM> tests_to_run( btrt_run_filters, (
+<<<<<<< HEAD
         rt::description = "Filters, which test units to include or exclude from test module execution.",
         rt::env_var = "BOOST_TEST_RUN_FILTERS",
         rt::value_hint = "<test unit filter>",
@@ -548,6 +655,15 @@ register_parameters( rt::parameters_store& store )
                    "testing. The framework supports both 'selection filters', which allow to select "
                    "which test units to enable from the set of available test units, and 'disabler "
                    "filters', which allow to disable some test units. The __UTF__ also supports "
+=======
+        rt::description = "Filters which tests to execute.",
+        rt::env_var = "BOOST_TEST_RUN_FILTERS",
+        rt::value_hint = "<test unit filter>",
+        rt::help = "Filters which test units to execute. "
+                   "The framework supports both 'selection filters', which allow to select "
+                   "which test units to enable from the set of available test units, and 'disabler "
+                   "filters', which allow to disable some test units. Boost.test also supports "
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
                    "enabling/disabling test units at compile time. These settings identify the default "
                    "set of test units to run. Parameter " + btrt_run_filters + " is used to change this default. "
                    "This parameter is repeatable, so you can specify more than one filter if necessary."
@@ -576,8 +692,13 @@ register_parameters( rt::parameters_store& store )
     rt::option show_progress( btrt_show_progress, (
         rt::description = "Turns on progress display.",
         rt::env_var = "BOOST_TEST_SHOW_PROGRESS",
+<<<<<<< HEAD
         rt::help = "Parameter " + btrt_show_progress + " instructs the framework to display test progress "
                    "information. By default the test progress is not shown."
+=======
+        rt::help = "Instructs the framework to display the progress of the tests. "
+                   "This feature is turned off by default."
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     ));
 
     show_progress.add_cla_id( "--", btrt_show_progress, "=" );
@@ -590,9 +711,15 @@ register_parameters( rt::parameters_store& store )
         rt::description = "Turns on/off usage of an alternative stack for signal handling.",
         rt::env_var = "BOOST_TEST_USE_ALT_STACK",
         rt::default_value = true,
+<<<<<<< HEAD
         rt::help = "Parameter " + btrt_use_alt_stack + " instructs the framework to use alternative "
                    "stack for signals processing, on platforms where they are supported. The feature "
                    "is enabled by default, but can be disabled using this parameter."
+=======
+        rt::help = "Instructs the framework to use an alternative "
+                   "stack for operating system's signals handling (on platforms where this is supported). "
+                   "The feature is enabled by default, but can be disabled using this command line switch."
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     ));
 
     use_alt_stack.add_cla_id( "--", btrt_use_alt_stack, "=", true );
@@ -603,9 +730,15 @@ register_parameters( rt::parameters_store& store )
     rt::option wait_for_debugger( btrt_wait_for_debugger, (
         rt::description = "Forces test module to wait for button to be pressed before starting test run.",
         rt::env_var = "BOOST_TEST_WAIT_FOR_DEBUGGER",
+<<<<<<< HEAD
         rt::help = "Parameter " + btrt_wait_for_debugger + " instructs the framework to pause before starting "
                    "test units execution, so that you can attach a debugger to running test module. By "
                    "default this parameters turned off."
+=======
+        rt::help = "Instructs the framework to pause before starting "
+                   "test units execution, so that you can attach a debugger to the test module process. "
+                   "This feature is turned off by default."
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     ));
 
     wait_for_debugger.add_cla_id( "--", btrt_wait_for_debugger, "=" );
@@ -618,10 +751,17 @@ register_parameters( rt::parameters_store& store )
         rt::description = "Help for framework parameters.",
         rt::optional_value = std::string(),
         rt::value_hint = "<parameter name>",
+<<<<<<< HEAD
         rt::help = "Parameter " + btrt_help + " displays help on the framework's parameters. "
                    "The parameter accepts an optional argument value. If present, an argument value is "
                    "interpreted as a parameter name (name guessing works as well, so for example "
                    "--help=rand displays help on the parameter random). If the parameter name is unknown "
+=======
+        rt::help = "Displays help on the framework's parameters. "
+                   "The parameter accepts an optional argument value. If present, an argument value is "
+                   "interpreted as a parameter name (name guessing works as well, so for example "
+                   "'--help=rand' displays help on the parameter 'random'). If the parameter name is unknown "
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
                    "or ambiguous error is reported. If argument value is absent, a summary of all "
                    "framework's parameter is displayed."
     ));
@@ -675,17 +815,37 @@ init( int& argc, char** argv )
         // Set arguments to default values if defined and perform all the validations
         rt::finalize_arguments( s_parameters_store, s_arguments_store );
 
+<<<<<<< HEAD
+=======
+        // check if colorized output is enabled
+        bool use_color = true;
+        if( s_arguments_store.has(btrt_color_output ) ) {
+            use_color = runtime_config::get<bool>(runtime_config::btrt_color_output);
+        }
+
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
         // Report help if requested
         if( runtime_config::get<bool>( btrt_version ) ) {
             parser->version( std::cerr );
             BOOST_TEST_I_THROW( framework::nothing_to_test( boost::exit_success ) );
         }
         else if( runtime_config::get<bool>( btrt_usage ) ) {
+<<<<<<< HEAD
             parser->usage( std::cerr );
             BOOST_TEST_I_THROW( framework::nothing_to_test( boost::exit_success ) );
         }
         else if( s_arguments_store.has( btrt_help ) ) {
             parser->help( std::cerr, s_parameters_store, runtime_config::get<std::string>( btrt_help ) );
+=======
+            parser->usage( std::cerr, runtime::cstring(), use_color );
+            BOOST_TEST_I_THROW( framework::nothing_to_test( boost::exit_success ) );
+        }
+        else if( s_arguments_store.has( btrt_help ) ) {
+            parser->help(std::cerr, 
+                         s_parameters_store, 
+                         runtime_config::get<std::string>( btrt_help ),
+                         use_color );
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
             BOOST_TEST_I_THROW( framework::nothing_to_test( boost::exit_success ) );
         }
 

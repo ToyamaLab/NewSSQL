@@ -1,0 +1,4 @@
+GENERATE HTML {
+   [e.manager, [e.syear, sum[e.salary], avg[e.salary]]!, count[e.id]]!
+}
+from employee e

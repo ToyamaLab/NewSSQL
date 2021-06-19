@@ -26,14 +26,21 @@ struct cluster_info
 {
     std::set<signed_size_type> turn_indices;
 
+<<<<<<< HEAD
     bool switch_source; // For clusters with a touch, conform turn_info uu
 
+=======
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     //! Number of open spaces (e.g. 2 for touch)
     std::size_t open_count;
 
     inline cluster_info()
+<<<<<<< HEAD
         : switch_source(false)
         , open_count(0)
+=======
+        : open_count(0)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     {}
 };
 

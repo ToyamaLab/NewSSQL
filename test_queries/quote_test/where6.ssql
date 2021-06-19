@@ -1,0 +1,4 @@
+Generate HTML
+[name]!
+from employee e, "store" st
+where "name" like '%田%';

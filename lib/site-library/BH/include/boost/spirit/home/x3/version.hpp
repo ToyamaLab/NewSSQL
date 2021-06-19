@@ -14,6 +14,10 @@
 //  This is the version of the current Spirit X3 distribution
 //
 ///////////////////////////////////////////////////////////////////////////////
+<<<<<<< HEAD
 #define SPIRIT_X3_VERSION 0x3000
+=======
+#define SPIRIT_X3_VERSION 0x3004
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 #endif

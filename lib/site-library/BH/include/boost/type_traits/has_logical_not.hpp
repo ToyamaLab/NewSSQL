@@ -11,7 +11,11 @@
 
 #if defined(__GNUC__) && (__GNUC__*10000 + __GNUC_MINOR__*100 + __GNUC_PATCHLEVEL__ > 40800)
 #pragma GCC diagnostic push
+<<<<<<< HEAD
 // #pragma GCC diagnostic ignored "-Wunused-value"
+=======
+//#pragma GCC diagnostic ignored "-Wunused-value"
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 #endif
 
 #define BOOST_TT_TRAIT_NAME has_logical_not

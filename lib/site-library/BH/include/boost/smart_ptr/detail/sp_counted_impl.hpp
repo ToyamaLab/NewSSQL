@@ -26,6 +26,10 @@
 
 #include <boost/checked_delete.hpp>
 #include <boost/smart_ptr/detail/sp_counted_base.hpp>
+<<<<<<< HEAD
+=======
+#include <boost/smart_ptr/detail/sp_noexcept.hpp>
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 #include <boost/core/addressof.hpp>
 
 #if defined(BOOST_SP_USE_QUICK_ALLOCATOR)
@@ -55,16 +59,28 @@ namespace detail
 
 template<class D> class local_sp_deleter;
 
+<<<<<<< HEAD
 template<class D> D * get_local_deleter( D * /*p*/ )
+=======
+template<class D> D * get_local_deleter( D * /*p*/ ) BOOST_SP_NOEXCEPT
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 {
     return 0;
 }
 
+<<<<<<< HEAD
 template<class D> D * get_local_deleter( local_sp_deleter<D> * p );
 
 //
 
 template<class X> class sp_counted_impl_p: public sp_counted_base
+=======
+template<class D> D * get_local_deleter( local_sp_deleter<D> * p ) BOOST_SP_NOEXCEPT;
+
+//
+
+template<class X> class BOOST_SYMBOL_VISIBLE sp_counted_impl_p: public sp_counted_base
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 {
 private:
 
@@ -84,7 +100,11 @@ public:
 #endif
     }
 
+<<<<<<< HEAD
     virtual void dispose() // nothrow
+=======
+    virtual void dispose() BOOST_SP_NOEXCEPT
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     {
 #if defined(BOOST_SP_ENABLE_DEBUG_HOOKS)
         boost::sp_scalar_destructor_hook( px_, sizeof(X), this );
@@ -92,17 +112,29 @@ public:
         boost::checked_delete( px_ );
     }
 
+<<<<<<< HEAD
     virtual void * get_deleter( sp_typeinfo const & )
+=======
+    virtual void * get_deleter( sp_typeinfo_ const & ) BOOST_SP_NOEXCEPT
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     {
         return 0;
     }
 
+<<<<<<< HEAD
     virtual void * get_local_deleter( sp_typeinfo const & )
+=======
+    virtual void * get_local_deleter( sp_typeinfo_ const & ) BOOST_SP_NOEXCEPT
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     {
         return 0;
     }
 
+<<<<<<< HEAD
     virtual void * get_untyped_deleter()
+=======
+    virtual void * get_untyped_deleter() BOOST_SP_NOEXCEPT
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     {
         return 0;
     }
@@ -143,7 +175,11 @@ public:
 # pragma option push -Vx-
 #endif
 
+<<<<<<< HEAD
 template<class P, class D> class sp_counted_impl_pd: public sp_counted_base
+=======
+template<class P, class D> class BOOST_SYMBOL_VISIBLE sp_counted_impl_pd: public sp_counted_base
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 {
 private:
 
@@ -167,11 +203,16 @@ public:
     {
     }
 
+<<<<<<< HEAD
     virtual void dispose() // nothrow
+=======
+    virtual void dispose() BOOST_SP_NOEXCEPT
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     {
         del( ptr );
     }
 
+<<<<<<< HEAD
     virtual void * get_deleter( sp_typeinfo const & ti )
     {
         return ti == BOOST_SP_TYPEID(D)? &reinterpret_cast<char&>( del ): 0;
@@ -183,6 +224,19 @@ public:
     }
 
     virtual void * get_untyped_deleter()
+=======
+    virtual void * get_deleter( sp_typeinfo_ const & ti ) BOOST_SP_NOEXCEPT
+    {
+        return ti == BOOST_SP_TYPEID_(D)? &reinterpret_cast<char&>( del ): 0;
+    }
+
+    virtual void * get_local_deleter( sp_typeinfo_ const & ti ) BOOST_SP_NOEXCEPT
+    {
+        return ti == BOOST_SP_TYPEID_(D)? boost::detail::get_local_deleter( boost::addressof( del ) ): 0;
+    }
+
+    virtual void * get_untyped_deleter() BOOST_SP_NOEXCEPT
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     {
         return &reinterpret_cast<char&>( del );
     }
@@ -216,7 +270,11 @@ public:
 #endif
 };
 
+<<<<<<< HEAD
 template<class P, class D, class A> class sp_counted_impl_pda: public sp_counted_base
+=======
+template<class P, class D, class A> class BOOST_SYMBOL_VISIBLE sp_counted_impl_pda: public sp_counted_base
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 {
 private:
 
@@ -241,12 +299,20 @@ public:
     {
     }
 
+<<<<<<< HEAD
     virtual void dispose() // nothrow
+=======
+    virtual void dispose() BOOST_SP_NOEXCEPT
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     {
         d_( p_ );
     }
 
+<<<<<<< HEAD
     virtual void destroy() // nothrow
+=======
+    virtual void destroy() BOOST_SP_NOEXCEPT
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     {
 #if !defined( BOOST_NO_CXX11_ALLOCATOR )
 
@@ -265,6 +331,7 @@ public:
         a2.deallocate( this, 1 );
     }
 
+<<<<<<< HEAD
     virtual void * get_deleter( sp_typeinfo const & ti )
     {
         return ti == BOOST_SP_TYPEID( D )? &reinterpret_cast<char&>( d_ ): 0;
@@ -276,6 +343,19 @@ public:
     }
 
     virtual void * get_untyped_deleter()
+=======
+    virtual void * get_deleter( sp_typeinfo_ const & ti ) BOOST_SP_NOEXCEPT
+    {
+        return ti == BOOST_SP_TYPEID_( D )? &reinterpret_cast<char&>( d_ ): 0;
+    }
+
+    virtual void * get_local_deleter( sp_typeinfo_ const & ti ) BOOST_SP_NOEXCEPT
+    {
+        return ti == BOOST_SP_TYPEID_( D )? boost::detail::get_local_deleter( boost::addressof( d_ ) ): 0;
+    }
+
+    virtual void * get_untyped_deleter() BOOST_SP_NOEXCEPT
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     {
         return &reinterpret_cast<char&>( d_ );
     }

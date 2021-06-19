@@ -23,6 +23,7 @@ namespace Rcpp {
     template <class T>
     class Shelter {
     public:
+<<<<<<< HEAD
         Shelter() : nprotected(0){}
 
         inline SEXP operator()(SEXP x){
@@ -37,11 +38,31 @@ namespace Rcpp {
 
     private:
         int nprotected ;
+=======
+        Shelter() : nprotected(0) {}
+
+        inline SEXP operator()(SEXP x) {
+            if (x != R_NilValue) nprotected++;
+            return Rcpp_protect(x);
+        }
+
+        ~Shelter(){
+            Rcpp_unprotect(nprotected);
+            nprotected = 0;
+        }
+
+    private:
+        int nprotected;
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
         // not defined on purpose
         Shelter(const Shelter&) ;
         Shelter& operator=(const Shelter&) ;
+<<<<<<< HEAD
     } ;
+=======
+    };
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 }
 
 #endif

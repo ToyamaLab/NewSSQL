@@ -11,6 +11,10 @@ add_heatmap	add_trace
 add_histogram	add_trace
 add_histogram2d	add_trace
 add_histogram2dcontour	add_trace
+<<<<<<< HEAD
+=======
+add_image	add_trace
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 add_lines	add_trace
 add_markers	add_trace
 add_mesh	add_trace
@@ -53,6 +57,11 @@ do_	reexports
 do_.plotly	plotly_data
 embed_notebook	embed_notebook
 event_data	event_data
+<<<<<<< HEAD
+=======
+event_register	event_register
+event_unregister	event_unregister
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 export	export
 filter	reexports
 filter_	reexports
@@ -84,6 +93,10 @@ mutate_	reexports
 mutate_.plotly	plotly_data
 offline	offline
 orca	orca
+<<<<<<< HEAD
+=======
+orca_serve	orca
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 partial_bundle	partial_bundle
 plotly	plotly
 plotly-shiny	plotly-shiny

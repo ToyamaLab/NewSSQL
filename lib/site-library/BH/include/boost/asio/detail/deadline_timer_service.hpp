@@ -2,7 +2,11 @@
 // detail/deadline_timer_service.hpp
 // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 //
+<<<<<<< HEAD
 // Copyright (c) 2003-2017 Christopher M. Kohlhoff (chris at kohlhoff dot com)
+=======
+// Copyright (c) 2003-2019 Christopher M. Kohlhoff (chris at kohlhoff dot com)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 //
 // Distributed under the Boost Software License, Version 1.0. (See accompanying
 // file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
@@ -18,7 +22,11 @@
 #include <boost/asio/detail/config.hpp>
 #include <cstddef>
 #include <boost/asio/error.hpp>
+<<<<<<< HEAD
 #include <boost/asio/io_context.hpp>
+=======
+#include <boost/asio/execution_context.hpp>
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 #include <boost/asio/detail/bind_handler.hpp>
 #include <boost/asio/detail/fenced_block.hpp>
 #include <boost/asio/detail/memory.hpp>
@@ -44,7 +52,11 @@ namespace detail {
 
 template <typename Time_Traits>
 class deadline_timer_service
+<<<<<<< HEAD
   : public service_base<deadline_timer_service<Time_Traits> >
+=======
+  : public execution_context_service_base<deadline_timer_service<Time_Traits> >
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 {
 public:
   // The time type.
@@ -64,9 +76,16 @@ public:
   };
 
   // Constructor.
+<<<<<<< HEAD
   deadline_timer_service(boost::asio::io_context& io_context)
     : service_base<deadline_timer_service<Time_Traits> >(io_context),
       scheduler_(boost::asio::use_service<timer_scheduler>(io_context))
+=======
+  deadline_timer_service(execution_context& context)
+    : execution_context_service_base<
+        deadline_timer_service<Time_Traits> >(context),
+      scheduler_(boost::asio::use_service<timer_scheduler>(context))
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
   {
     scheduler_.init_task();
     scheduler_.add_timer_queue(timer_queue_);
@@ -226,6 +245,7 @@ public:
   }
 
   // Start an asynchronous wait on the timer.
+<<<<<<< HEAD
   template <typename Handler>
   void async_wait(implementation_type& impl, Handler& handler)
   {
@@ -234,6 +254,17 @@ public:
     typename op::ptr p = { boost::asio::detail::addressof(handler),
       op::ptr::allocate(handler), 0 };
     p.p = new (p.v) op(handler);
+=======
+  template <typename Handler, typename IoExecutor>
+  void async_wait(implementation_type& impl,
+      Handler& handler, const IoExecutor& io_ex)
+  {
+    // Allocate and construct an operation to wrap the handler.
+    typedef wait_handler<Handler, IoExecutor> op;
+    typename op::ptr p = { boost::asio::detail::addressof(handler),
+      op::ptr::allocate(handler), 0 };
+    p.p = new (p.v) op(handler, io_ex);
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
     impl.might_have_pending_waits = true;
 

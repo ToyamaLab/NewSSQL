@@ -1,7 +1,12 @@
 Package: Rcpp
 Title: Seamless R and C++ Integration
+<<<<<<< HEAD
 Version: 0.12.18
 Date: 2018-07-21
+=======
+Version: 1.0.5
+Date: 2020-07-01
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 Author: Dirk Eddelbuettel, Romain Francois, JJ Allaire, Kevin Ushey, Qiang Kou,
  Nathan Russell, Douglas Bates and John Chambers
 Maintainer: Dirk Eddelbuettel <edd@debian.org>
@@ -14,6 +19,7 @@ Description: The 'Rcpp' package provides R functions as well as C++ classes whic
  Francois (2011, <doi:10.18637/jss.v040.i08>), the book by Eddelbuettel (2013,
  <doi:10.1007/978-1-4614-6868-4>) and the paper by Eddelbuettel and Balamuta (2018,
  <doi:10.1080/00031305.2017.1375990>); see 'citation("Rcpp")' for details.
+<<<<<<< HEAD
 Depends: R (>= 3.0.0)
 Imports: methods, utils
 Suggests: RUnit, inline, rbenchmark, knitr, rmarkdown, pinp, pkgKitten
@@ -31,3 +37,18 @@ Packaged: 2018-07-21 21:40:37.784076 UTC; edd
 Repository: CRAN
 Date/Publication: 2018-07-23 07:50:03 UTC
 Built: R 3.5.1; x86_64-apple-darwin17.6.0; 2018-08-18 07:12:08 UTC; unix
+=======
+Imports: methods, utils
+Suggests: tinytest, inline, rbenchmark, pkgKitten (>= 0.1.2)
+URL: http://www.rcpp.org, https://dirk.eddelbuettel.com/code/rcpp.html,
+        https://github.com/RcppCore/Rcpp
+License: GPL (>= 2)
+BugReports: https://github.com/RcppCore/Rcpp/issues
+MailingList: rcpp-devel@lists.r-forge.r-project.org
+RoxygenNote: 6.1.1
+NeedsCompilation: yes
+Packaged: 2020-07-01 16:50:09.72105 UTC; edd
+Repository: CRAN
+Date/Publication: 2020-07-06 13:40:08 UTC
+Built: R 4.0.2; x86_64-apple-darwin17.7.0; 2020-08-27 07:29:45 UTC; unix
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce

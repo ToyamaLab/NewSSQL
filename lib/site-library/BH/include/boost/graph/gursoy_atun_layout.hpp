@@ -14,7 +14,11 @@
 // "Neighbourhood Preserving Load Balancing: A Self-Organizing Approach"
 // in 6th International Euro-Par Conference Munich, Germany, August 29 – September 1, 2000 Proceedings,
 // pp 234-241
+<<<<<<< HEAD
 // http://dx.doi.org/10.1007/3-540-44520-X_32
+=======
+// https://doi.org/10.1007/3-540-44520-X_32
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 #include <boost/config/no_tr1/cmath.hpp>
 #include <boost/throw_exception.hpp>
@@ -183,7 +187,11 @@ gursoy_atun_step
     typedef detail::gursoy_shortest<EdgeWeightMap> shortest;
     shortest::run(graph, min_distance_loc, node_distance, update_position,
                   weight);    
+<<<<<<< HEAD
   } catch (detail::over_distance_limit) { 
+=======
+  } catch (const detail::over_distance_limit&) { 
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     /* Thrown to break out of BFS or Dijkstra early */ 
   }
 }

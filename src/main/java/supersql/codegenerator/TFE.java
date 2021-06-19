@@ -2,6 +2,7 @@ package supersql.codegenerator;
 
 import java.io.Serializable;
 
+import supersql.common.Log;
 import supersql.extendclass.ExtList;
 
 public class TFE implements ITFE,Serializable {
@@ -17,7 +18,7 @@ public class TFE implements ITFE,Serializable {
 	protected String ggplot;
 	protected boolean ctabFlag;
 	protected String ctab;
-
+	
 	public TFE() {
 		orderFlag = false;
 		aggregateFlag = false;
@@ -53,7 +54,7 @@ public class TFE implements ITFE,Serializable {
 		// TODO Auto-generated method stub
 		return 0;
 	}
-
+	
 	@Override
 	public void setId(int id) {
 //		TFEmatcher.addTFEid_and_TokenPlace(id);	//halken TFEmatcher
@@ -63,6 +64,8 @@ public class TFE implements ITFE,Serializable {
 	@Override
 	public int getId() {
 		return id;
+		
+		
 	}
 
 	@Override

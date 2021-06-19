@@ -4,10 +4,18 @@
 // Copyright (c) 2008-2014 Bruno Lalande, Paris, France.
 // Copyright (c) 2009-2014 Mateusz Loskot, London, UK.
 
+<<<<<<< HEAD
 // This file was modified by Oracle on 2014.
 // Modifications copyright (c) 2014, Oracle and/or its affiliates.
 
 // Contributed and/or modified by Menelaos Karavelas, on behalf of Oracle
+=======
+// This file was modified by Oracle on 2014, 2018.
+// Modifications copyright (c) 2014, 2018, Oracle and/or its affiliates.
+
+// Contributed and/or modified by Menelaos Karavelas, on behalf of Oracle
+// Contributed and/or modified by Adam Wulkiewicz, on behalf of Oracle
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 // Parts of Boost.Geometry are redesigned from Geodan's Geographic Library
 // (geolib/GGL), copyright (c) 1995-2010 Geodan, Amsterdam, the Netherlands.
@@ -33,6 +41,10 @@
 #include <boost/geometry/geometries/segment.hpp>
 #include <boost/geometry/geometries/point.hpp>
 
+<<<<<<< HEAD
+=======
+#include <boost/geometry/strategies/distance.hpp>
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 #include <boost/geometry/strategies/tags.hpp>
 
 

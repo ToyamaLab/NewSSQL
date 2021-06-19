@@ -70,7 +70,11 @@ namespace date_time {
 
   //! Structure which holds the time offsets associated with daylight savings time
   /*!
+<<<<<<< HEAD
    *@param time_duration_type A type used to represent the offset
+=======
+   *@tparam time_duration_type A type used to represent the offset
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
    */
   template<class time_duration_type>
   class dst_adjustment_offsets

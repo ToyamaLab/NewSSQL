@@ -2,8 +2,13 @@
 
 // Copyright (c) 2015 Barend Gehrels, Amsterdam, the Netherlands.
 
+<<<<<<< HEAD
 // This file was modified by Oracle on 2015, 2017.
 // Modifications copyright (c) 2015-2017, Oracle and/or its affiliates.
+=======
+// This file was modified by Oracle on 2015, 2017, 2018.
+// Modifications copyright (c) 2015-2018, Oracle and/or its affiliates.
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 // Contributed and/or modified by Adam Wulkiewicz, on behalf of Oracle
 
@@ -22,6 +27,11 @@
 // For spherical/geographic longitudes covered_by point/box
 #include <boost/geometry/strategies/cartesian/point_in_box.hpp>
 
+<<<<<<< HEAD
+=======
+#include <boost/geometry/util/select_coordinate_type.hpp>
+
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 namespace boost { namespace geometry
 {
@@ -30,6 +40,11 @@ namespace boost { namespace geometry
 namespace detail { namespace section
 {
 
+<<<<<<< HEAD
+=======
+// TODO: This code is CS-specific, should be moved to strategies
+
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 template
 <
     std::size_t Dimension,
@@ -68,7 +83,11 @@ struct preceding_check<0, Geometry, spherical_tag>
         calc_t const other_min = get<min_corner, 0>(other_box);
         calc_t const other_max = get<max_corner, 0>(other_box);
         
+<<<<<<< HEAD
         bool const pt_covered = strategy::within::covered_by_range
+=======
+        bool const pt_covered = strategy::within::detail::covered_by_range
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
                                     <
                                         Point, 0, spherical_tag
                                     >::apply(value,

@@ -2,7 +2,11 @@
 // detail/reactive_serial_port_service.hpp
 // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 //
+<<<<<<< HEAD
 // Copyright (c) 2003-2017 Christopher M. Kohlhoff (chris at kohlhoff dot com)
+=======
+// Copyright (c) 2003-2019 Christopher M. Kohlhoff (chris at kohlhoff dot com)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 // Copyright (c) 2008 Rep Invariant Systems, Inc. (info@repinvariant.com)
 //
 // Distributed under the Boost Software License, Version 1.0. (See accompanying
@@ -23,7 +27,11 @@
 
 #include <string>
 #include <boost/asio/error.hpp>
+<<<<<<< HEAD
 #include <boost/asio/io_context.hpp>
+=======
+#include <boost/asio/execution_context.hpp>
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 #include <boost/asio/serial_port_base.hpp>
 #include <boost/asio/detail/descriptor_ops.hpp>
 #include <boost/asio/detail/reactive_descriptor_service.hpp>
@@ -36,7 +44,11 @@ namespace detail {
 
 // Extend reactive_descriptor_service to provide serial port support.
 class reactive_serial_port_service :
+<<<<<<< HEAD
   public service_base<reactive_serial_port_service>
+=======
+  public execution_context_service_base<reactive_serial_port_service>
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 {
 public:
   // The native type of a serial port.
@@ -45,8 +57,12 @@ public:
   // The implementation type of the serial port.
   typedef reactive_descriptor_service::implementation_type implementation_type;
 
+<<<<<<< HEAD
   BOOST_ASIO_DECL reactive_serial_port_service(
       boost::asio::io_context& io_context);
+=======
+  BOOST_ASIO_DECL reactive_serial_port_service(execution_context& context);
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
   // Destroy all user-defined handler objects owned by the service.
   BOOST_ASIO_DECL void shutdown();
@@ -157,11 +173,20 @@ public:
 
   // Start an asynchronous write. The data being written must be valid for the
   // lifetime of the asynchronous operation.
+<<<<<<< HEAD
   template <typename ConstBufferSequence, typename Handler>
   void async_write_some(implementation_type& impl,
       const ConstBufferSequence& buffers, Handler& handler)
   {
     descriptor_service_.async_write_some(impl, buffers, handler);
+=======
+  template <typename ConstBufferSequence, typename Handler, typename IoExecutor>
+  void async_write_some(implementation_type& impl,
+      const ConstBufferSequence& buffers,
+      Handler& handler, const IoExecutor& io_ex)
+  {
+    descriptor_service_.async_write_some(impl, buffers, handler, io_ex);
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
   }
 
   // Read some data. Returns the number of bytes received.
@@ -174,11 +199,21 @@ public:
 
   // Start an asynchronous read. The buffer for the data being received must be
   // valid for the lifetime of the asynchronous operation.
+<<<<<<< HEAD
   template <typename MutableBufferSequence, typename Handler>
   void async_read_some(implementation_type& impl,
       const MutableBufferSequence& buffers, Handler& handler)
   {
     descriptor_service_.async_read_some(impl, buffers, handler);
+=======
+  template <typename MutableBufferSequence,
+      typename Handler, typename IoExecutor>
+  void async_read_some(implementation_type& impl,
+      const MutableBufferSequence& buffers,
+      Handler& handler, const IoExecutor& io_ex)
+  {
+    descriptor_service_.async_read_some(impl, buffers, handler, io_ex);
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
   }
 
 private:

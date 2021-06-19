@@ -2,7 +2,11 @@
 // detail/reactive_descriptor_service.hpp
 // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 //
+<<<<<<< HEAD
 // Copyright (c) 2003-2017 Christopher M. Kohlhoff (chris at kohlhoff dot com)
+=======
+// Copyright (c) 2003-2019 Christopher M. Kohlhoff (chris at kohlhoff dot com)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 //
 // Distributed under the Boost Software License, Version 1.0. (See accompanying
 // file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
@@ -22,7 +26,11 @@
   && !defined(__CYGWIN__)
 
 #include <boost/asio/buffer.hpp>
+<<<<<<< HEAD
 #include <boost/asio/io_context.hpp>
+=======
+#include <boost/asio/execution_context.hpp>
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 #include <boost/asio/detail/bind_handler.hpp>
 #include <boost/asio/detail/buffer_sequence_adapter.hpp>
 #include <boost/asio/detail/descriptor_ops.hpp>
@@ -43,7 +51,11 @@ namespace asio {
 namespace detail {
 
 class reactive_descriptor_service :
+<<<<<<< HEAD
   public service_base<reactive_descriptor_service>
+=======
+  public execution_context_service_base<reactive_descriptor_service>
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 {
 public:
   // The native type of a descriptor.
@@ -76,8 +88,12 @@ public:
   };
 
   // Constructor.
+<<<<<<< HEAD
   BOOST_ASIO_DECL reactive_descriptor_service(
       boost::asio::io_context& io_context);
+=======
+  BOOST_ASIO_DECL reactive_descriptor_service(execution_context& context);
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
   // Destroy all user-defined handler objects owned by the service.
   BOOST_ASIO_DECL void shutdown();
@@ -191,18 +207,32 @@ public:
 
   // Asynchronously wait for the descriptor to become ready to read, ready to
   // write, or to have pending error conditions.
+<<<<<<< HEAD
   template <typename Handler>
   void async_wait(implementation_type& impl,
       posix::descriptor_base::wait_type w, Handler& handler)
+=======
+  template <typename Handler, typename IoExecutor>
+  void async_wait(implementation_type& impl,
+      posix::descriptor_base::wait_type w,
+      Handler& handler, const IoExecutor& io_ex)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
   {
     bool is_continuation =
       boost_asio_handler_cont_helpers::is_continuation(handler);
 
     // Allocate and construct an operation to wrap the handler.
+<<<<<<< HEAD
     typedef reactive_wait_op<Handler> op;
     typename op::ptr p = { boost::asio::detail::addressof(handler),
       op::ptr::allocate(handler), 0 };
     p.p = new (p.v) op(handler);
+=======
+    typedef reactive_wait_op<Handler, IoExecutor> op;
+    typename op::ptr p = { boost::asio::detail::addressof(handler),
+      op::ptr::allocate(handler), 0 };
+    p.p = new (p.v) op(handler, io_ex);
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
     BOOST_ASIO_HANDLER_CREATION((reactor_.context(), *p.p, "descriptor",
           &impl, impl.descriptor_, "async_wait"));
@@ -254,18 +284,32 @@ public:
 
   // Start an asynchronous write. The data being sent must be valid for the
   // lifetime of the asynchronous operation.
+<<<<<<< HEAD
   template <typename ConstBufferSequence, typename Handler>
   void async_write_some(implementation_type& impl,
       const ConstBufferSequence& buffers, Handler& handler)
+=======
+  template <typename ConstBufferSequence, typename Handler, typename IoExecutor>
+  void async_write_some(implementation_type& impl,
+      const ConstBufferSequence& buffers, Handler& handler,
+      const IoExecutor& io_ex)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
   {
     bool is_continuation =
       boost_asio_handler_cont_helpers::is_continuation(handler);
 
     // Allocate and construct an operation to wrap the handler.
+<<<<<<< HEAD
     typedef descriptor_write_op<ConstBufferSequence, Handler> op;
     typename op::ptr p = { boost::asio::detail::addressof(handler),
       op::ptr::allocate(handler), 0 };
     p.p = new (p.v) op(impl.descriptor_, buffers, handler);
+=======
+    typedef descriptor_write_op<ConstBufferSequence, Handler, IoExecutor> op;
+    typename op::ptr p = { boost::asio::detail::addressof(handler),
+      op::ptr::allocate(handler), 0 };
+    p.p = new (p.v) op(impl.descriptor_, buffers, handler, io_ex);
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
     BOOST_ASIO_HANDLER_CREATION((reactor_.context(), *p.p, "descriptor",
           &impl, impl.descriptor_, "async_write_some"));
@@ -277,18 +321,31 @@ public:
   }
 
   // Start an asynchronous wait until data can be written without blocking.
+<<<<<<< HEAD
   template <typename Handler>
   void async_write_some(implementation_type& impl,
       const null_buffers&, Handler& handler)
+=======
+  template <typename Handler, typename IoExecutor>
+  void async_write_some(implementation_type& impl,
+      const null_buffers&, Handler& handler, const IoExecutor& io_ex)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
   {
     bool is_continuation =
       boost_asio_handler_cont_helpers::is_continuation(handler);
 
     // Allocate and construct an operation to wrap the handler.
+<<<<<<< HEAD
     typedef reactive_null_buffers_op<Handler> op;
     typename op::ptr p = { boost::asio::detail::addressof(handler),
       op::ptr::allocate(handler), 0 };
     p.p = new (p.v) op(handler);
+=======
+    typedef reactive_null_buffers_op<Handler, IoExecutor> op;
+    typename op::ptr p = { boost::asio::detail::addressof(handler),
+      op::ptr::allocate(handler), 0 };
+    p.p = new (p.v) op(handler, io_ex);
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
     BOOST_ASIO_HANDLER_CREATION((reactor_.context(), *p.p, "descriptor",
           &impl, impl.descriptor_, "async_write_some(null_buffers)"));
@@ -321,18 +378,33 @@ public:
 
   // Start an asynchronous read. The buffer for the data being read must be
   // valid for the lifetime of the asynchronous operation.
+<<<<<<< HEAD
   template <typename MutableBufferSequence, typename Handler>
   void async_read_some(implementation_type& impl,
       const MutableBufferSequence& buffers, Handler& handler)
+=======
+  template <typename MutableBufferSequence,
+      typename Handler, typename IoExecutor>
+  void async_read_some(implementation_type& impl,
+      const MutableBufferSequence& buffers,
+      Handler& handler, const IoExecutor& io_ex)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
   {
     bool is_continuation =
       boost_asio_handler_cont_helpers::is_continuation(handler);
 
     // Allocate and construct an operation to wrap the handler.
+<<<<<<< HEAD
     typedef descriptor_read_op<MutableBufferSequence, Handler> op;
     typename op::ptr p = { boost::asio::detail::addressof(handler),
       op::ptr::allocate(handler), 0 };
     p.p = new (p.v) op(impl.descriptor_, buffers, handler);
+=======
+    typedef descriptor_read_op<MutableBufferSequence, Handler, IoExecutor> op;
+    typename op::ptr p = { boost::asio::detail::addressof(handler),
+      op::ptr::allocate(handler), 0 };
+    p.p = new (p.v) op(impl.descriptor_, buffers, handler, io_ex);
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
     BOOST_ASIO_HANDLER_CREATION((reactor_.context(), *p.p, "descriptor",
           &impl, impl.descriptor_, "async_read_some"));
@@ -344,18 +416,31 @@ public:
   }
 
   // Wait until data can be read without blocking.
+<<<<<<< HEAD
   template <typename Handler>
   void async_read_some(implementation_type& impl,
       const null_buffers&, Handler& handler)
+=======
+  template <typename Handler, typename IoExecutor>
+  void async_read_some(implementation_type& impl,
+      const null_buffers&, Handler& handler, const IoExecutor& io_ex)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
   {
     bool is_continuation =
       boost_asio_handler_cont_helpers::is_continuation(handler);
 
     // Allocate and construct an operation to wrap the handler.
+<<<<<<< HEAD
     typedef reactive_null_buffers_op<Handler> op;
     typename op::ptr p = { boost::asio::detail::addressof(handler),
       op::ptr::allocate(handler), 0 };
     p.p = new (p.v) op(handler);
+=======
+    typedef reactive_null_buffers_op<Handler, IoExecutor> op;
+    typename op::ptr p = { boost::asio::detail::addressof(handler),
+      op::ptr::allocate(handler), 0 };
+    p.p = new (p.v) op(handler, io_ex);
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
     BOOST_ASIO_HANDLER_CREATION((reactor_.context(), *p.p, "descriptor",
           &impl, impl.descriptor_, "async_read_some(null_buffers)"));

@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 .knitr .inline {
+=======
+.inline {
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
   background-color: #f7f7f7;
   border:solid 1px #B0B0B0;
 }
@@ -19,6 +23,7 @@
 .source {
   background-color: #F7F7F7;
 }
+<<<<<<< HEAD
 .rimage .left {
   text-align: left;
 }
@@ -26,5 +31,14 @@
   text-align: right;
 }
 .rimage .center {
+=======
+.left {
+  text-align: left;
+}
+.right {
+  text-align: right;
+}
+.center {
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
   text-align: center;
 }

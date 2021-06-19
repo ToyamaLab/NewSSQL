@@ -176,4 +176,8 @@ inline bool windows_named_mutex::remove(const char *name)
 
 #include <boost/interprocess/detail/config_end.hpp>
 
+<<<<<<< HEAD
 #endif   //BOOST_INTERPROCESS_WINDOWS_NAMED_MUTEX_HPP
+=======
+#endif   //BOOST_INTERPROCESS_WINDOWS_NAMED_MUTEX_HPP
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce

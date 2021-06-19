@@ -4,7 +4,11 @@
 //  basic_recursive_mutex.hpp
 //
 //  (C) Copyright 2006-8 Anthony Williams
+<<<<<<< HEAD
 //  (C) Copyright 2011-2012 Vicente J. Botet Escriba
+=======
+//  (C) Copyright 2011-2012,2017-2018 Vicente J. Botet Escriba
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 //
 //  Distributed under the Boost Software License, Version 1.0. (See
 //  accompanying file LICENSE_1_0.txt or copy at
@@ -44,13 +48,21 @@ namespace boost
 
             bool try_lock() BOOST_NOEXCEPT
             {
+<<<<<<< HEAD
                 long const current_thread_id=boost::detail::winapi::GetCurrentThreadId();
+=======
+                long const current_thread_id=boost::winapi::GetCurrentThreadId();
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
                 return try_recursive_lock(current_thread_id) || try_basic_lock(current_thread_id);
             }
 
             void lock()
             {
+<<<<<<< HEAD
                 long const current_thread_id=boost::detail::winapi::GetCurrentThreadId();
+=======
+                long const current_thread_id=boost::winapi::GetCurrentThreadId();
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
                 if(!try_recursive_lock(current_thread_id))
                 {
                     mutex.lock();
@@ -61,6 +73,7 @@ namespace boost
 #if defined BOOST_THREAD_USES_DATETIME
             bool timed_lock(::boost::system_time const& target)
             {
+<<<<<<< HEAD
                 long const current_thread_id=boost::detail::winapi::GetCurrentThreadId();
                 return try_recursive_lock(current_thread_id) || try_timed_lock(current_thread_id,target);
             }
@@ -68,10 +81,21 @@ namespace boost
             bool timed_lock(Duration const& timeout)
             {
                 return timed_lock(get_system_time()+timeout);
+=======
+                long const current_thread_id=boost::winapi::GetCurrentThreadId();
+                return try_recursive_lock(current_thread_id) || try_timed_lock(current_thread_id,target);
+            }
+            template<typename Duration>
+            bool timed_lock(Duration const& target)
+            {
+                long const current_thread_id=boost::winapi::GetCurrentThreadId();
+                return try_recursive_lock(current_thread_id) || try_timed_lock(current_thread_id,target);
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
             }
 #endif
 
 #ifdef BOOST_THREAD_USES_CHRONO
+<<<<<<< HEAD
         template <class Rep, class Period>
         bool try_lock_for(const chrono::duration<Rep, Period>& rel_time)
         {
@@ -84,6 +108,20 @@ namespace boost
                 long const current_thread_id=boost::detail::winapi::GetCurrentThreadId();
                 return try_recursive_lock(current_thread_id) || try_timed_lock_until(current_thread_id,t);
         }
+=======
+            template <class Rep, class Period>
+            bool try_lock_for(const chrono::duration<Rep, Period>& rel_time)
+            {
+                long const current_thread_id=boost::winapi::GetCurrentThreadId();
+                return try_recursive_lock(current_thread_id) || try_timed_lock_for(current_thread_id,rel_time);
+            }
+            template <class Clock, class Duration>
+            bool try_lock_until(const chrono::time_point<Clock, Duration>& t)
+            {
+                long const current_thread_id=boost::winapi::GetCurrentThreadId();
+                return try_recursive_lock(current_thread_id) || try_timed_lock_until(current_thread_id,t);
+            }
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 #endif
             void unlock()
             {
@@ -127,6 +165,20 @@ namespace boost
                 }
                 return false;
             }
+<<<<<<< HEAD
+=======
+            template<typename Duration>
+            bool try_timed_lock(long current_thread_id,Duration const& target)
+            {
+                if(mutex.timed_lock(target))
+                {
+                    BOOST_INTERLOCKED_EXCHANGE(&locking_thread_id,current_thread_id);
+                    recursion_count=1;
+                    return true;
+                }
+                return false;
+            }
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 #endif
             template <typename TP>
             bool try_timed_lock_until(long current_thread_id,TP const& target)

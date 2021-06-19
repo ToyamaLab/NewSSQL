@@ -4,7 +4,11 @@
 //-----------------------------------------------------------------------------
 //
 // Copyright (c) 2002-2003 Eric Friedman
+<<<<<<< HEAD
 // Copyright (c) 2014-2017 Antony Polukhin
+=======
+// Copyright (c) 2014-2019 Antony Polukhin
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 //
 // Distributed under the Boost Software License, Version 1.0. (See
 // accompanying file LICENSE_1_0.txt or copy at
@@ -14,6 +18,7 @@
 #define BOOST_VARIANT_DETAIL_APPLY_VISITOR_BINARY_HPP
 
 #include <boost/config.hpp>
+<<<<<<< HEAD
 #include <boost/detail/workaround.hpp>
 #include <boost/variant/detail/generic_result_type.hpp>
 
@@ -26,11 +31,20 @@
 #include <boost/type_traits/is_const.hpp>
 #endif
 
+=======
+
+#include <boost/variant/detail/apply_visitor_unary.hpp>
+
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 #if !defined(BOOST_NO_CXX14_DECLTYPE_AUTO) && !defined(BOOST_NO_CXX11_DECLTYPE_N3276)
 #   include <boost/variant/detail/has_result_type.hpp>
 #endif
 
 #ifndef BOOST_NO_CXX11_RVALUE_REFERENCES
+<<<<<<< HEAD
+=======
+#   include <boost/core/enable_if.hpp>
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 #   include <boost/type_traits/is_lvalue_reference.hpp>
 #   include <boost/type_traits/is_same.hpp>
 #   include <boost/move/move.hpp>
@@ -75,14 +89,22 @@ public: // visitor interfaces
 #ifndef BOOST_NO_CXX11_RVALUE_REFERENCES
 
     template <typename Value2>
+<<<<<<< HEAD
         typename enable_if_c<MoveSemantics && is_same<Value2, Value2>::value, BOOST_VARIANT_AUX_GENERIC_RESULT_TYPE(result_type)>::type
+=======
+        typename enable_if_c<MoveSemantics && is_same<Value2, Value2>::value, result_type>::type
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     operator()(Value2&& value2)
     {
         return visitor_(::boost::move(value1_), ::boost::forward<Value2>(value2));
     }
 
     template <typename Value2>
+<<<<<<< HEAD
         typename disable_if_c<MoveSemantics && is_same<Value2, Value2>::value, BOOST_VARIANT_AUX_GENERIC_RESULT_TYPE(result_type)>::type
+=======
+        typename disable_if_c<MoveSemantics && is_same<Value2, Value2>::value, result_type>::type
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     operator()(Value2&& value2)
     {
         return visitor_(value1_, ::boost::forward<Value2>(value2));
@@ -91,7 +113,11 @@ public: // visitor interfaces
 #else
 
     template <typename Value2>
+<<<<<<< HEAD
         BOOST_VARIANT_AUX_GENERIC_RESULT_TYPE(result_type)
+=======
+        result_type
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     operator()(Value2& value2)
     {
         return visitor_(value1_, value2);
@@ -129,7 +155,11 @@ public: // visitor interfaces
 #ifndef BOOST_NO_CXX11_RVALUE_REFERENCES
 
     template <typename Value1>
+<<<<<<< HEAD
         typename enable_if_c<MoveSemantics && is_same<Value1, Value1>::value, BOOST_VARIANT_AUX_GENERIC_RESULT_TYPE(result_type)>::type
+=======
+        typename enable_if_c<MoveSemantics && is_same<Value1, Value1>::value, result_type>::type
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     operator()(Value1&& value1)
     {
         apply_visitor_binary_invoke<
@@ -142,7 +172,11 @@ public: // visitor interfaces
     }
 
     template <typename Value1>
+<<<<<<< HEAD
         typename disable_if_c<MoveSemantics && is_same<Value1, Value1>::value, BOOST_VARIANT_AUX_GENERIC_RESULT_TYPE(result_type)>::type
+=======
+        typename disable_if_c<MoveSemantics && is_same<Value1, Value1>::value, result_type>::type
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     operator()(Value1&& value1)
     {
         apply_visitor_binary_invoke<
@@ -157,7 +191,11 @@ public: // visitor interfaces
 #else
 
     template <typename Value1>
+<<<<<<< HEAD
         BOOST_VARIANT_AUX_GENERIC_RESULT_TYPE(result_type)
+=======
+        result_type
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     operator()(Value1& value1)
     {
         apply_visitor_binary_invoke<
@@ -182,6 +220,7 @@ private:
 // nonconst-visitor version:
 //
 
+<<<<<<< HEAD
 #if !BOOST_WORKAROUND(__EDG__, BOOST_TESTED_AT(302))
 
 #   define BOOST_VARIANT_AUX_APPLY_VISITOR_NON_CONST_RESULT_TYPE(V) \
@@ -204,6 +243,12 @@ private:
 template <typename Visitor, typename Visitable1, typename Visitable2>
 inline
     BOOST_VARIANT_AUX_APPLY_VISITOR_NON_CONST_RESULT_TYPE(Visitor)
+=======
+#ifndef BOOST_NO_CXX11_RVALUE_REFERENCES
+
+template <typename Visitor, typename Visitable1, typename Visitable2>
+inline typename Visitor::result_type
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 apply_visitor( Visitor& visitor, Visitable1&& visitable1, Visitable2&& visitable2)
 {
     ::boost::detail::variant::apply_visitor_binary_unwrap<
@@ -216,8 +261,12 @@ apply_visitor( Visitor& visitor, Visitable1&& visitable1, Visitable2&& visitable
 #else
 
 template <typename Visitor, typename Visitable1, typename Visitable2>
+<<<<<<< HEAD
 inline
     BOOST_VARIANT_AUX_APPLY_VISITOR_NON_CONST_RESULT_TYPE(Visitor)
+=======
+inline typename Visitor::result_type
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 apply_visitor( Visitor& visitor, Visitable1& visitable1, Visitable2& visitable2)
 {
     ::boost::detail::variant::apply_visitor_binary_unwrap<
@@ -229,8 +278,11 @@ apply_visitor( Visitor& visitor, Visitable1& visitable1, Visitable2& visitable2)
 
 #endif
 
+<<<<<<< HEAD
 #undef BOOST_VARIANT_AUX_APPLY_VISITOR_NON_CONST_RESULT_TYPE
 
+=======
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 //
 // const-visitor version:
 //
@@ -238,10 +290,14 @@ apply_visitor( Visitor& visitor, Visitable1& visitable1, Visitable2& visitable2)
 #ifndef BOOST_NO_CXX11_RVALUE_REFERENCES
 
 template <typename Visitor, typename Visitable1, typename Visitable2>
+<<<<<<< HEAD
 inline
     BOOST_VARIANT_AUX_GENERIC_RESULT_TYPE(
           typename Visitor::result_type
         )
+=======
+inline typename Visitor::result_type
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 apply_visitor( const Visitor& visitor , Visitable1&& visitable1 , Visitable2&& visitable2)
 {
     ::boost::detail::variant::apply_visitor_binary_unwrap<
@@ -254,10 +310,14 @@ apply_visitor( const Visitor& visitor , Visitable1&& visitable1 , Visitable2&& v
 #else
 
 template <typename Visitor, typename Visitable1, typename Visitable2>
+<<<<<<< HEAD
 inline
     BOOST_VARIANT_AUX_GENERIC_RESULT_TYPE(
           typename Visitor::result_type
         )
+=======
+inline typename Visitor::result_type
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 apply_visitor( const Visitor& visitor , Visitable1& visitable1 , Visitable2& visitable2)
 {
     ::boost::detail::variant::apply_visitor_binary_unwrap<

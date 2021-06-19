@@ -1,7 +1,11 @@
 ///////////////////////////////////////////////////////////////
 //  Copyright 2012 John Maddock. Distributed under the Boost
 //  Software License, Version 1.0. (See accompanying file
+<<<<<<< HEAD
 //  LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_
+=======
+//  LICENSE_1_0.txt or copy at https://www.boost.org/LICENSE_1_0.txt
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 #ifndef BOOST_MATH_DEBUG_ADAPTER_HPP
 #define BOOST_MATH_DEBUG_ADAPTER_HPP
@@ -9,6 +13,7 @@
 #include <boost/multiprecision/traits/extract_exponent_type.hpp>
 #include <boost/multiprecision/detail/integer_ops.hpp>
 
+<<<<<<< HEAD
 namespace boost{
 namespace multiprecision{
 namespace backends{
@@ -31,6 +36,31 @@ private:
    std::string debug_value;
    Backend m_value;
 public:
+=======
+namespace boost {
+namespace multiprecision {
+namespace backends {
+
+#ifdef BOOST_MSVC
+#pragma warning(push)
+#pragma warning(disable : 4127) // conditional expression is constant
+#endif
+
+template <class Backend>
+struct debug_adaptor
+{
+   typedef typename Backend::signed_types   signed_types;
+   typedef typename Backend::unsigned_types unsigned_types;
+   typedef typename Backend::float_types    float_types;
+   typedef typename extract_exponent_type<
+       Backend, number_category<Backend>::value>::type exponent_type;
+
+ private:
+   std::string debug_value;
+   Backend     m_value;
+
+ public:
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
    void update_view()
    {
 #ifndef BOOST_NO_EXCEPTIONS
@@ -40,7 +70,11 @@ public:
          debug_value = m_value.str(0, static_cast<std::ios_base::fmtflags>(0));
 #ifndef BOOST_NO_EXCEPTIONS
       }
+<<<<<<< HEAD
       catch(const std::exception& e)
+=======
+      catch (const std::exception& e)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
       {
          debug_value = "String conversion failed with message: \"";
          debug_value += e.what();
@@ -55,32 +89,55 @@ public:
    debug_adaptor(const debug_adaptor& o) : debug_value(o.debug_value), m_value(o.m_value)
    {
    }
+<<<<<<< HEAD
    debug_adaptor& operator = (const debug_adaptor& o)
    {
       debug_value = o.debug_value;
       m_value = o.m_value;
+=======
+   debug_adaptor& operator=(const debug_adaptor& o)
+   {
+      debug_value = o.debug_value;
+      m_value     = o.m_value;
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
       return *this;
    }
    template <class T>
    debug_adaptor(const T& i, const typename enable_if_c<is_convertible<T, Backend>::value>::type* = 0)
+<<<<<<< HEAD
       : m_value(i)
+=======
+       : m_value(i)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
    {
       update_view();
    }
    template <class T>
    debug_adaptor(const T& i, const T& j)
+<<<<<<< HEAD
       : m_value(i, j)
+=======
+       : m_value(i, j)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
    {
       update_view();
    }
    template <class T>
+<<<<<<< HEAD
    typename enable_if_c<is_arithmetic<T>::value || is_convertible<T, Backend>::value, debug_adaptor&>::type operator = (const T& i)
+=======
+   typename enable_if_c<is_arithmetic<T>::value || is_convertible<T, Backend>::value, debug_adaptor&>::type operator=(const T& i)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
    {
       m_value = i;
       update_view();
       return *this;
    }
+<<<<<<< HEAD
    debug_adaptor& operator = (const char* s)
+=======
+   debug_adaptor& operator=(const char* s)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
    {
       m_value = s;
       update_view();
@@ -91,7 +148,11 @@ public:
       std::swap(m_value, o.value());
       std::swap(debug_value, o.debug_value);
    }
+<<<<<<< HEAD
    std::string str(std::streamsize digits, std::ios_base::fmtflags f)const
+=======
+   std::string str(std::streamsize digits, std::ios_base::fmtflags f) const
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
    {
       return m_value.str(digits, f);
    }
@@ -100,12 +161,20 @@ public:
       m_value.negate();
       update_view();
    }
+<<<<<<< HEAD
    int compare(const debug_adaptor& o)const
+=======
+   int compare(const debug_adaptor& o) const
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
    {
       return m_value.compare(o.value());
    }
    template <class T>
+<<<<<<< HEAD
    int compare(const T& i)const
+=======
+   int compare(const T& i) const
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
    {
       return m_value.compare(i);
    }
@@ -113,16 +182,26 @@ public:
    {
       return m_value;
    }
+<<<<<<< HEAD
    const Backend& value()const
+=======
+   const Backend& value() const
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
    {
       return m_value;
    }
    template <class Archive>
    void serialize(Archive& ar, const unsigned int /*version*/)
    {
+<<<<<<< HEAD
       ar & m_value;
       typedef typename Archive::is_loading tag;
       if(tag::value)
+=======
+      ar & boost::make_nvp("value", m_value);
+      typedef typename Archive::is_loading tag;
+      if (tag::value)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
          update_view();
    }
    static unsigned default_precision() BOOST_NOEXCEPT
@@ -133,7 +212,11 @@ public:
    {
       Backend::default_precision(v);
    }
+<<<<<<< HEAD
    unsigned precision()const BOOST_NOEXCEPT
+=======
+   unsigned precision() const BOOST_NOEXCEPT
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
    {
       return value().precision();
    }
@@ -154,6 +237,7 @@ inline const T& unwrap_debug_type(const T& val)
    return val;
 }
 
+<<<<<<< HEAD
 #define NON_MEMBER_OP1(name, str) \
    template <class Backend>\
    inline void BOOST_JOIN(eval_, name)(debug_adaptor<Backend>& result)\
@@ -257,6 +341,124 @@ NON_MEMBER_OP2(add, "+=");
 NON_MEMBER_OP2(subtract, "-=");
 NON_MEMBER_OP2(multiply, "*=");
 NON_MEMBER_OP2(divide, "/=");
+=======
+#define NON_MEMBER_OP1(name, str)                                       \
+   template <class Backend>                                             \
+   inline void BOOST_JOIN(eval_, name)(debug_adaptor<Backend> & result) \
+   {                                                                    \
+      using default_ops::BOOST_JOIN(eval_, name);                       \
+      BOOST_JOIN(eval_, name)                                           \
+      (result.value());                                                 \
+      result.update_view();                                             \
+   }
+
+#define NON_MEMBER_OP2(name, str)                                                                        \
+   template <class Backend, class T>                                                                     \
+   inline void BOOST_JOIN(eval_, name)(debug_adaptor<Backend> & result, const T& a)                      \
+   {                                                                                                     \
+      using default_ops::BOOST_JOIN(eval_, name);                                                        \
+      BOOST_JOIN(eval_, name)                                                                            \
+      (result.value(), unwrap_debug_type(a));                                                            \
+      result.update_view();                                                                              \
+   }                                                                                                     \
+   template <class Backend>                                                                              \
+   inline void BOOST_JOIN(eval_, name)(debug_adaptor<Backend> & result, const debug_adaptor<Backend>& a) \
+   {                                                                                                     \
+      using default_ops::BOOST_JOIN(eval_, name);                                                        \
+      BOOST_JOIN(eval_, name)                                                                            \
+      (result.value(), unwrap_debug_type(a));                                                            \
+      result.update_view();                                                                              \
+   }
+
+#define NON_MEMBER_OP3(name, str)                                                                                                         \
+   template <class Backend, class T, class U>                                                                                             \
+   inline void BOOST_JOIN(eval_, name)(debug_adaptor<Backend> & result, const T& a, const U& b)                                           \
+   {                                                                                                                                      \
+      using default_ops::BOOST_JOIN(eval_, name);                                                                                         \
+      BOOST_JOIN(eval_, name)                                                                                                             \
+      (result.value(), unwrap_debug_type(a), unwrap_debug_type(b));                                                                       \
+      result.update_view();                                                                                                               \
+   }                                                                                                                                      \
+   template <class Backend, class T>                                                                                                      \
+   inline void BOOST_JOIN(eval_, name)(debug_adaptor<Backend> & result, const debug_adaptor<Backend>& a, const T& b)                      \
+   {                                                                                                                                      \
+      using default_ops::BOOST_JOIN(eval_, name);                                                                                         \
+      BOOST_JOIN(eval_, name)                                                                                                             \
+      (result.value(), unwrap_debug_type(a), unwrap_debug_type(b));                                                                       \
+      result.update_view();                                                                                                               \
+   }                                                                                                                                      \
+   template <class Backend, class T>                                                                                                      \
+   inline void BOOST_JOIN(eval_, name)(debug_adaptor<Backend> & result, const T& a, const debug_adaptor<Backend>& b)                      \
+   {                                                                                                                                      \
+      using default_ops::BOOST_JOIN(eval_, name);                                                                                         \
+      BOOST_JOIN(eval_, name)                                                                                                             \
+      (result.value(), unwrap_debug_type(a), unwrap_debug_type(b));                                                                       \
+      result.update_view();                                                                                                               \
+   }                                                                                                                                      \
+   template <class Backend>                                                                                                               \
+   inline void BOOST_JOIN(eval_, name)(debug_adaptor<Backend> & result, const debug_adaptor<Backend>& a, const debug_adaptor<Backend>& b) \
+   {                                                                                                                                      \
+      using default_ops::BOOST_JOIN(eval_, name);                                                                                         \
+      BOOST_JOIN(eval_, name)                                                                                                             \
+      (result.value(), unwrap_debug_type(a), unwrap_debug_type(b));                                                                       \
+      result.update_view();                                                                                                               \
+   }
+
+#define NON_MEMBER_OP4(name, str)                                                                                                                                          \
+   template <class Backend, class T, class U, class V>                                                                                                                     \
+   inline void BOOST_JOIN(eval_, name)(debug_adaptor<Backend> & result, const T& a, const U& b, const V& c)                                                                \
+   {                                                                                                                                                                       \
+      using default_ops::BOOST_JOIN(eval_, name);                                                                                                                          \
+      BOOST_JOIN(eval_, name)                                                                                                                                              \
+      (result.value(), unwrap_debug_type(a), unwrap_debug_type(b), unwrap_debug_type(c));                                                                                  \
+      result.update_view();                                                                                                                                                \
+   }                                                                                                                                                                       \
+   template <class Backend, class T>                                                                                                                                       \
+   inline void BOOST_JOIN(eval_, name)(debug_adaptor<Backend> & result, const debug_adaptor<Backend>& a, const debug_adaptor<Backend>& b, const T& c)                      \
+   {                                                                                                                                                                       \
+      using default_ops::BOOST_JOIN(eval_, name);                                                                                                                          \
+      BOOST_JOIN(eval_, name)                                                                                                                                              \
+      (result.value(), unwrap_debug_type(a), unwrap_debug_type(b), unwrap_debug_type(c));                                                                                  \
+      result.update_view();                                                                                                                                                \
+   }                                                                                                                                                                       \
+   template <class Backend, class T>                                                                                                                                       \
+   inline void BOOST_JOIN(eval_, name)(debug_adaptor<Backend> & result, const debug_adaptor<Backend>& a, const T& b, const debug_adaptor<Backend>& c)                      \
+   {                                                                                                                                                                       \
+      using default_ops::BOOST_JOIN(eval_, name);                                                                                                                          \
+      BOOST_JOIN(eval_, name)                                                                                                                                              \
+      (result.value(), unwrap_debug_type(a), unwrap_debug_type(b), unwrap_debug_type(c));                                                                                  \
+      result.update_view();                                                                                                                                                \
+   }                                                                                                                                                                       \
+   template <class Backend, class T>                                                                                                                                       \
+   inline void BOOST_JOIN(eval_, name)(debug_adaptor<Backend> & result, const T& a, const debug_adaptor<Backend>& b, const debug_adaptor<Backend>& c)                      \
+   {                                                                                                                                                                       \
+      using default_ops::BOOST_JOIN(eval_, name);                                                                                                                          \
+      BOOST_JOIN(eval_, name)                                                                                                                                              \
+      (result.value(), unwrap_debug_type(a), unwrap_debug_type(b), unwrap_debug_type(c));                                                                                  \
+      result.update_view();                                                                                                                                                \
+   }                                                                                                                                                                       \
+   template <class Backend>                                                                                                                                                \
+   inline void BOOST_JOIN(eval_, name)(debug_adaptor<Backend> & result, const debug_adaptor<Backend>& a, const debug_adaptor<Backend>& b, const debug_adaptor<Backend>& c) \
+   {                                                                                                                                                                       \
+      using default_ops::BOOST_JOIN(eval_, name);                                                                                                                          \
+      BOOST_JOIN(eval_, name)                                                                                                                                              \
+      (result.value(), unwrap_debug_type(a), unwrap_debug_type(b), unwrap_debug_type(c));                                                                                  \
+      result.update_view();                                                                                                                                                \
+   }                                                                                                                                                                       \
+   template <class Backend, class T, class U>                                                                                                                              \
+   inline void BOOST_JOIN(eval_, name)(debug_adaptor<Backend> & result, const debug_adaptor<Backend>& a, const T& b, const U& c)                                           \
+   {                                                                                                                                                                       \
+      using default_ops::BOOST_JOIN(eval_, name);                                                                                                                          \
+      BOOST_JOIN(eval_, name)                                                                                                                                              \
+      (result.value(), unwrap_debug_type(a), unwrap_debug_type(b), unwrap_debug_type(c));                                                                                  \
+      result.update_view();                                                                                                                                                \
+   }
+
+NON_MEMBER_OP2(add, "+=")
+NON_MEMBER_OP2(subtract, "-=")
+NON_MEMBER_OP2(multiply, "*=")
+NON_MEMBER_OP2(divide, "/=")
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 template <class Backend, class R>
 inline void eval_convert_to(R* result, const debug_adaptor<Backend>& val)
@@ -294,10 +496,17 @@ inline typename Backend::exponent_type eval_ilogb(const debug_adaptor<Backend>& 
    return eval_ilogb(arg.value());
 }
 
+<<<<<<< HEAD
 NON_MEMBER_OP2(floor, "floor");
 NON_MEMBER_OP2(ceil, "ceil");
 NON_MEMBER_OP2(sqrt, "sqrt");
 NON_MEMBER_OP2(logb, "logb");
+=======
+NON_MEMBER_OP2(floor, "floor")
+NON_MEMBER_OP2(ceil, "ceil")
+NON_MEMBER_OP2(sqrt, "sqrt")
+NON_MEMBER_OP2(logb, "logb")
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 template <class Backend>
 inline int eval_fpclassify(const debug_adaptor<Backend>& arg)
@@ -312,6 +521,7 @@ inline int eval_fpclassify(const debug_adaptor<Backend>& arg)
 *
 *********************************************************************/
 
+<<<<<<< HEAD
 NON_MEMBER_OP3(add, "+");
 NON_MEMBER_OP3(subtract, "-");
 NON_MEMBER_OP3(multiply, "*");
@@ -323,6 +533,19 @@ NON_MEMBER_OP4(multiply_subtract, "fused-multiply-subtract");
 
 NON_MEMBER_OP1(increment, "increment");
 NON_MEMBER_OP1(decrement, "decrement");
+=======
+NON_MEMBER_OP3(add, "+")
+NON_MEMBER_OP3(subtract, "-")
+NON_MEMBER_OP3(multiply, "*")
+NON_MEMBER_OP3(divide, "/")
+NON_MEMBER_OP3(multiply_add, "fused-multiply-add")
+NON_MEMBER_OP3(multiply_subtract, "fused-multiply-subtract")
+NON_MEMBER_OP4(multiply_add, "fused-multiply-add")
+NON_MEMBER_OP4(multiply_subtract, "fused-multiply-subtract")
+
+NON_MEMBER_OP1(increment, "increment")
+NON_MEMBER_OP1(decrement, "decrement")
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 /*********************************************************************
 *
@@ -330,6 +553,7 @@ NON_MEMBER_OP1(decrement, "decrement");
 *
 *********************************************************************/
 
+<<<<<<< HEAD
 NON_MEMBER_OP2(modulus, "%=");
 NON_MEMBER_OP3(modulus, "%");
 NON_MEMBER_OP2(bitwise_or, "|=");
@@ -368,6 +592,46 @@ inline void eval_right_shift(debug_adaptor<Backend>& arg, const debug_adaptor<Ba
    using default_ops::eval_right_shift;
    eval_right_shift(arg.value(), a.value(), b);
    arg.update_view();\
+=======
+NON_MEMBER_OP2(modulus, "%=")
+NON_MEMBER_OP3(modulus, "%")
+NON_MEMBER_OP2(bitwise_or, "|=")
+NON_MEMBER_OP3(bitwise_or, "|")
+NON_MEMBER_OP2(bitwise_and, "&=")
+NON_MEMBER_OP3(bitwise_and, "&")
+NON_MEMBER_OP2(bitwise_xor, "^=")
+NON_MEMBER_OP3(bitwise_xor, "^")
+NON_MEMBER_OP4(qr, "quotient-and-remainder")
+NON_MEMBER_OP2(complement, "~")
+
+template <class Backend>
+inline void eval_left_shift(debug_adaptor<Backend>& arg, std::size_t a)
+{
+   using default_ops::eval_left_shift;
+   eval_left_shift(arg.value(), a);
+   arg.update_view();
+}
+template <class Backend>
+inline void eval_left_shift(debug_adaptor<Backend>& arg, const debug_adaptor<Backend>& a, std::size_t b)
+{
+   using default_ops::eval_left_shift;
+   eval_left_shift(arg.value(), a.value(), b);
+   arg.update_view();
+}
+template <class Backend>
+inline void eval_right_shift(debug_adaptor<Backend>& arg, std::size_t a)
+{
+   using default_ops::eval_right_shift;
+   eval_right_shift(arg.value(), a);
+   arg.update_view();
+}
+template <class Backend>
+inline void eval_right_shift(debug_adaptor<Backend>& arg, const debug_adaptor<Backend>& a, std::size_t b)
+{
+   using default_ops::eval_right_shift;
+   eval_right_shift(arg.value(), a.value(), b);
+   arg.update_view();
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 }
 
 template <class Backend, class T>
@@ -403,26 +667,43 @@ inline void eval_bit_set(const debug_adaptor<Backend>& arg, unsigned a)
 {
    using default_ops::eval_bit_set;
    eval_bit_set(arg.value(), a);
+<<<<<<< HEAD
    arg.update_view();\
+=======
+   arg.update_view();
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 }
 template <class Backend>
 inline void eval_bit_unset(const debug_adaptor<Backend>& arg, unsigned a)
 {
    using default_ops::eval_bit_unset;
    eval_bit_unset(arg.value(), a);
+<<<<<<< HEAD
    arg.update_view();\
+=======
+   arg.update_view();
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 }
 template <class Backend>
 inline void eval_bit_flip(const debug_adaptor<Backend>& arg, unsigned a)
 {
    using default_ops::eval_bit_flip;
    eval_bit_flip(arg.value(), a);
+<<<<<<< HEAD
    arg.update_view();\
 }
 
 NON_MEMBER_OP3(gcd, "gcd");
 NON_MEMBER_OP3(lcm, "lcm");
 NON_MEMBER_OP4(powm, "powm");
+=======
+   arg.update_view();
+}
+
+NON_MEMBER_OP3(gcd, "gcd")
+NON_MEMBER_OP3(lcm, "lcm")
+NON_MEMBER_OP4(powm, "powm")
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 /*********************************************************************
 *
@@ -430,8 +711,13 @@ NON_MEMBER_OP4(powm, "powm");
 *
 *********************************************************************/
 
+<<<<<<< HEAD
 NON_MEMBER_OP2(abs, "abs");
 NON_MEMBER_OP2(fabs, "fabs");
+=======
+NON_MEMBER_OP2(abs, "abs")
+NON_MEMBER_OP2(fabs, "fabs")
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 /*********************************************************************
 *
@@ -439,6 +725,7 @@ NON_MEMBER_OP2(fabs, "fabs");
 *
 *********************************************************************/
 
+<<<<<<< HEAD
 NON_MEMBER_OP2(trunc, "trunc");
 NON_MEMBER_OP2(round, "round");
 NON_MEMBER_OP2(exp, "exp");
@@ -456,6 +743,25 @@ NON_MEMBER_OP2(tanh, "tanh");
 NON_MEMBER_OP3(fmod, "fmod");
 NON_MEMBER_OP3(pow, "pow");
 NON_MEMBER_OP3(atan2, "atan2");
+=======
+NON_MEMBER_OP2(trunc, "trunc")
+NON_MEMBER_OP2(round, "round")
+NON_MEMBER_OP2(exp, "exp")
+NON_MEMBER_OP2(log, "log")
+NON_MEMBER_OP2(log10, "log10")
+NON_MEMBER_OP2(sin, "sin")
+NON_MEMBER_OP2(cos, "cos")
+NON_MEMBER_OP2(tan, "tan")
+NON_MEMBER_OP2(asin, "asin")
+NON_MEMBER_OP2(acos, "acos")
+NON_MEMBER_OP2(atan, "atan")
+NON_MEMBER_OP2(sinh, "sinh")
+NON_MEMBER_OP2(cosh, "cosh")
+NON_MEMBER_OP2(tanh, "tanh")
+NON_MEMBER_OP3(fmod, "fmod")
+NON_MEMBER_OP3(pow, "pow")
+NON_MEMBER_OP3(atan2, "atan2")
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 template <class Backend>
 int eval_signbit(const debug_adaptor<Backend>& val)
@@ -473,12 +779,19 @@ std::size_t hash_value(const debug_adaptor<Backend>& val)
 
 using backends::debug_adaptor;
 
+<<<<<<< HEAD
 template<class Backend>
 struct number_category<backends::debug_adaptor<Backend> > : public number_category<Backend> {};
+=======
+template <class Backend>
+struct number_category<backends::debug_adaptor<Backend> > : public number_category<Backend>
+{};
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 #ifdef BOOST_MSVC
 #pragma warning(pop)
 #endif
+<<<<<<< HEAD
 }} // namespaces
 
 namespace std{
@@ -492,6 +805,22 @@ class numeric_limits<boost::multiprecision::number<boost::multiprecision::backen
 public:
    static number_type (min)() BOOST_NOEXCEPT { return (base_type::min)(); }
    static number_type (max)() BOOST_NOEXCEPT { return (base_type::max)(); }
+=======
+}} // namespace boost::multiprecision
+
+namespace std {
+
+template <class Backend, boost::multiprecision::expression_template_option ExpressionTemplates>
+class numeric_limits<boost::multiprecision::number<boost::multiprecision::backends::debug_adaptor<Backend>, ExpressionTemplates> >
+    : public std::numeric_limits<boost::multiprecision::number<Backend, ExpressionTemplates> >
+{
+   typedef std::numeric_limits<boost::multiprecision::number<Backend, ExpressionTemplates> >                           base_type;
+   typedef boost::multiprecision::number<boost::multiprecision::backends::debug_adaptor<Backend>, ExpressionTemplates> number_type;
+
+ public:
+   static number_type(min)() BOOST_NOEXCEPT { return (base_type::min)(); }
+   static number_type(max)() BOOST_NOEXCEPT { return (base_type::max)(); }
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
    static number_type lowest() BOOST_NOEXCEPT { return -(max)(); }
    static number_type epsilon() BOOST_NOEXCEPT { return base_type::epsilon(); }
    static number_type round_error() BOOST_NOEXCEPT { return epsilon() / 2; }
@@ -503,6 +832,7 @@ public:
 
 } // namespace std
 
+<<<<<<< HEAD
 namespace boost{ namespace math{
 
 namespace policies{
@@ -510,6 +840,16 @@ namespace policies{
 template <class Backend, boost::multiprecision::expression_template_option ExpressionTemplates, class Policy>
 struct precision< boost::multiprecision::number<boost::multiprecision::debug_adaptor<Backend>, ExpressionTemplates>, Policy>
    : public precision<boost::multiprecision::number<Backend, ExpressionTemplates>, Policy>
+=======
+namespace boost {
+namespace math {
+
+namespace policies {
+
+template <class Backend, boost::multiprecision::expression_template_option ExpressionTemplates, class Policy>
+struct precision<boost::multiprecision::number<boost::multiprecision::debug_adaptor<Backend>, ExpressionTemplates>, Policy>
+    : public precision<boost::multiprecision::number<Backend, ExpressionTemplates>, Policy>
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 {};
 
 #undef NON_MEMBER_OP1
@@ -517,9 +857,15 @@ struct precision< boost::multiprecision::number<boost::multiprecision::debug_ada
 #undef NON_MEMBER_OP3
 #undef NON_MEMBER_OP4
 
+<<<<<<< HEAD
 } // namespace policies
 
 }} // namespaces boost::math
 
+=======
+}
+
+}} // namespace boost::math::policies
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 #endif

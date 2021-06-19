@@ -4,6 +4,13 @@
 //
 // Copyright (c) 2011-2014 Adam Wulkiewicz, Lodz, Poland.
 //
+<<<<<<< HEAD
+=======
+// This file was modified by Oracle on 2019.
+// Modifications copyright (c) 2019 Oracle and/or its affiliates.
+// Contributed and/or modified by Adam Wulkiewicz, on behalf of Oracle
+//
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 // Use, modification and distribution is subject to the Boost Software License,
 // Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
 // http://www.boost.org/LICENSE_1_0.txt)
@@ -104,6 +111,10 @@ class distance_query
 {
 public:
     typedef typename Options::parameters_type parameters_type;
+<<<<<<< HEAD
+=======
+    typedef typename index::detail::strategy_type<parameters_type>::type strategy_type;
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
     typedef typename rtree::node<Value, parameters_type, Box, Allocators, typename Options::node_tag>::type node;
     typedef typename rtree::internal_node<Value, parameters_type, Box, Allocators, typename Options::node_tag>::type internal_node;
@@ -113,8 +124,13 @@ public:
     typedef typename nearest_predicate_access::type nearest_predicate_type;
     typedef typename indexable_type<Translator>::type indexable_type;
 
+<<<<<<< HEAD
     typedef index::detail::calculate_distance<nearest_predicate_type, indexable_type, value_tag> calculate_value_distance;
     typedef index::detail::calculate_distance<nearest_predicate_type, Box, bounds_tag> calculate_node_distance;
+=======
+    typedef index::detail::calculate_distance<nearest_predicate_type, indexable_type, strategy_type, value_tag> calculate_value_distance;
+    typedef index::detail::calculate_distance<nearest_predicate_type, Box, strategy_type, bounds_tag> calculate_node_distance;
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     typedef typename calculate_value_distance::result_type value_distance_type;
     typedef typename calculate_node_distance::result_type node_distance_type;
 
@@ -124,6 +140,10 @@ public:
         : m_parameters(parameters), m_translator(translator)
         , m_pred(pred)
         , m_result(nearest_predicate_access::get(m_pred).count, out_it)
+<<<<<<< HEAD
+=======
+        , m_strategy(index::detail::get_strategy(parameters))
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     {}
 
     inline void operator()(internal_node const& n)
@@ -147,12 +167,24 @@ public:
         {
             // if current node meets predicates
             // 0 - dummy value
+<<<<<<< HEAD
             if ( index::detail::predicates_check<index::detail::bounds_tag, 0, predicates_len>(m_pred, 0, it->first) )
+=======
+            if ( index::detail::predicates_check
+                    <
+                        index::detail::bounds_tag, 0, predicates_len
+                    >(m_pred, 0, it->first, m_strategy) )
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
             {
                 // calculate node's distance(s) for distance predicate
                 node_distance_type node_distance;
                 // if distance isn't ok - move to the next node
+<<<<<<< HEAD
                 if ( !calculate_node_distance::apply(predicate(), it->first, node_distance) )
+=======
+                if ( !calculate_node_distance::apply(predicate(), it->first,
+                                                     m_strategy, node_distance) )
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
                 {
                     continue;
                 }
@@ -226,12 +258,24 @@ public:
             it != elements.end(); ++it)
         {
             // if value meets predicates
+<<<<<<< HEAD
             if ( index::detail::predicates_check<index::detail::value_tag, 0, predicates_len>(m_pred, *it, m_translator(*it)) )
+=======
+            if ( index::detail::predicates_check
+                    <
+                        index::detail::value_tag, 0, predicates_len
+                    >(m_pred, *it, m_translator(*it), m_strategy) )
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
             {
                 // calculate values distance for distance predicate
                 value_distance_type value_distance;
                 // if distance is ok
+<<<<<<< HEAD
                 if ( calculate_value_distance::apply(predicate(), m_translator(*it), value_distance) )
+=======
+                if ( calculate_value_distance::apply(predicate(), m_translator(*it),
+                                                     m_strategy, value_distance) )
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
                 {
                     // store value
                     m_result.store(*it, value_distance);
@@ -276,6 +320,11 @@ private:
 
     Predicates m_pred;
     distance_query_result<Value, Translator, value_distance_type, OutIter> m_result;
+<<<<<<< HEAD
+=======
+
+    strategy_type m_strategy;
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 };
 
 template <
@@ -292,6 +341,10 @@ class distance_query_incremental
 {
 public:
     typedef typename Options::parameters_type parameters_type;
+<<<<<<< HEAD
+=======
+    typedef typename index::detail::strategy_type<parameters_type>::type strategy_type;
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
     typedef typename rtree::node<Value, parameters_type, Box, Allocators, typename Options::node_tag>::type node;
     typedef typename rtree::internal_node<Value, parameters_type, Box, Allocators, typename Options::node_tag>::type internal_node;
@@ -301,8 +354,13 @@ public:
     typedef typename nearest_predicate_access::type nearest_predicate_type;
     typedef typename indexable_type<Translator>::type indexable_type;
     
+<<<<<<< HEAD
     typedef index::detail::calculate_distance<nearest_predicate_type, indexable_type, value_tag> calculate_value_distance;
     typedef index::detail::calculate_distance<nearest_predicate_type, Box, bounds_tag> calculate_node_distance;
+=======
+    typedef index::detail::calculate_distance<nearest_predicate_type, indexable_type, strategy_type, value_tag> calculate_value_distance;
+    typedef index::detail::calculate_distance<nearest_predicate_type, Box, strategy_type, bounds_tag> calculate_node_distance;
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     typedef typename calculate_value_distance::result_type value_distance_type;
     typedef typename calculate_node_distance::result_type node_distance_type;
 
@@ -342,6 +400,7 @@ public:
 //        , m_pred()
         , current_neighbor((std::numeric_limits<size_type>::max)())
 //        , next_closest_node_distance((std::numeric_limits<node_distance_type>::max)())
+<<<<<<< HEAD
     {}
 
     inline distance_query_incremental(Translator const& translator, Predicates const& pred)
@@ -350,6 +409,17 @@ public:
         , current_neighbor((std::numeric_limits<size_type>::max)())
 
         , next_closest_node_distance((std::numeric_limits<node_distance_type>::max)())
+=======
+//        , m_strategy_type()
+    {}
+
+    inline distance_query_incremental(parameters_type const& params, Translator const& translator, Predicates const& pred)
+        : m_translator(::boost::addressof(translator))
+        , m_pred(pred)
+        , current_neighbor((std::numeric_limits<size_type>::max)())
+        , next_closest_node_distance((std::numeric_limits<node_distance_type>::max)())
+        , m_strategy(index::detail::get_strategy(params))
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     {
         BOOST_GEOMETRY_INDEX_ASSERT(0 < max_count(), "k must be greather than 0");
     }
@@ -457,12 +527,24 @@ public:
         {
             // if current node meets predicates
             // 0 - dummy value
+<<<<<<< HEAD
             if ( index::detail::predicates_check<index::detail::bounds_tag, 0, predicates_len>(m_pred, 0, it->first) )
+=======
+            if ( index::detail::predicates_check
+                    <
+                        index::detail::bounds_tag, 0, predicates_len
+                    >(m_pred, 0, it->first, m_strategy) )
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
             {
                 // calculate node's distance(s) for distance predicate
                 node_distance_type node_distance;
                 // if distance isn't ok - move to the next node
+<<<<<<< HEAD
                 if ( !calculate_node_distance::apply(predicate(), it->first, node_distance) )
+=======
+                if ( !calculate_node_distance::apply(predicate(), it->first,
+                                                     m_strategy, node_distance) )
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
                 {
                     continue;
                 }
@@ -502,12 +584,24 @@ public:
         for ( typename elements_type::const_iterator it = elements.begin() ; it != elements.end() ; ++it)
         {
             // if value meets predicates
+<<<<<<< HEAD
             if ( index::detail::predicates_check<index::detail::value_tag, 0, predicates_len>(m_pred, *it, (*m_translator)(*it)) )
+=======
+            if ( index::detail::predicates_check
+                    <
+                        index::detail::value_tag, 0, predicates_len
+                    >(m_pred, *it, (*m_translator)(*it), m_strategy) )
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
             {
                 // calculate values distance for distance predicate
                 value_distance_type value_distance;
                 // if distance is ok
+<<<<<<< HEAD
                 if ( calculate_value_distance::apply(predicate(), (*m_translator)(*it), value_distance) )
+=======
+                if ( calculate_value_distance::apply(predicate(), (*m_translator)(*it),
+                                                     m_strategy, value_distance) )
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
                 {
                     // if there is not enough values or current value is closer than furthest neighbour
                     if ( not_enough_neighbors || value_distance < greatest_distance )
@@ -574,11 +668,20 @@ private:
     const Translator * m_translator;
 
     Predicates m_pred;
+<<<<<<< HEAD
 
+=======
+    
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     internal_stack_type internal_stack;
     std::vector< std::pair<value_distance_type, const Value *> > neighbors;
     size_type current_neighbor;
     node_distance_type next_closest_node_distance;
+<<<<<<< HEAD
+=======
+
+    strategy_type m_strategy;
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 };
 
 }}} // namespace detail::rtree::visitors

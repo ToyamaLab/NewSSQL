@@ -2,8 +2,13 @@
 
 // Copyright (c) 2011-2012 Barend Gehrels, Amsterdam, the Netherlands.
 
+<<<<<<< HEAD
 // This file was modified by Oracle on 2016.
 // Modifications copyright (c) 2016, Oracle and/or its affiliates.
+=======
+// This file was modified by Oracle on 2016, 2018, 2019.
+// Modifications copyright (c) 2016-2019, Oracle and/or its affiliates.
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 // Contributed and/or modified by Adam Wulkiewicz, on behalf of Oracle
 
 // Use, modification and distribution is subject to the Boost Software License,
@@ -24,8 +29,14 @@
 
 #include <boost/geometry/strategies/side.hpp>
 #include <boost/geometry/strategies/spherical/disjoint_segment_box.hpp>
+<<<<<<< HEAD
 #include <boost/geometry/strategies/spherical/envelope_segment.hpp>
 //#include <boost/geometry/strategies/concepts/side_concept.hpp>
+=======
+#include <boost/geometry/strategies/spherical/envelope.hpp>
+//#include <boost/geometry/strategies/concepts/side_concept.hpp>
+#include <boost/geometry/strategies/spherical/point_in_point.hpp>
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 
 namespace boost { namespace geometry
@@ -84,7 +95,13 @@ class spherical_side_formula
 {
 
 public :
+<<<<<<< HEAD
     typedef strategy::envelope::spherical_segment<CalculationType> envelope_strategy_type;
+=======
+    typedef spherical_tag cs_tag;
+
+    typedef strategy::envelope::spherical<CalculationType> envelope_strategy_type;
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
     static inline envelope_strategy_type get_envelope_strategy()
     {
@@ -98,6 +115,15 @@ public :
         return disjoint_strategy_type();
     }
 
+<<<<<<< HEAD
+=======
+    typedef strategy::within::spherical_point_point equals_point_point_strategy_type;
+    static inline equals_point_point_strategy_type get_equals_point_point_strategy()
+    {
+        return equals_point_point_strategy_type();
+    }
+
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     template <typename P1, typename P2, typename P>
     static inline int apply(P1 const& p1, P2 const& p2, P const& p)
     {

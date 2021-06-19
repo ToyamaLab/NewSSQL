@@ -11,7 +11,11 @@
 #if defined(BOOST_GCC)&&(BOOST_GCC>=4*10000+6*100)
 #if !defined(BOOST_MULTI_INDEX_DETAIL_RESTORE_WSTRICT_ALIASING)
 #pragma GCC diagnostic push
+<<<<<<< HEAD
 // #pragma GCC diagnostic ignored "-Wstrict-aliasing"
+=======
+//#pragma GCC diagnostic ignored "-Wstrict-aliasing"
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 #else
 #pragma GCC diagnostic pop
 #endif

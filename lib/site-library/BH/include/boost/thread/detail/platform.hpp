@@ -31,7 +31,13 @@
 #elif defined(__CYGWIN__)
 #  define BOOST_THREAD_CYGWIN
 #elif (defined(_WIN32) || defined(__WIN32__) || defined(WIN32)) && !defined(BOOST_DISABLE_WIN32)
+<<<<<<< HEAD
 #  define BOOST_THREAD_WIN32
+=======
+#if ! defined BOOST_THREAD_WIN32
+#  define BOOST_THREAD_WIN32
+#endif
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 #elif defined(__BEOS__)
 #  define BOOST_THREAD_BEOS
 #elif defined(macintosh) || defined(__APPLE__) || defined(__APPLE_CC__)

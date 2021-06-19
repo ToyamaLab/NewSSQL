@@ -11,11 +11,20 @@
 #ifndef BOOST_COMPUTE_ALGORITHM_IS_SORTED_HPP
 #define BOOST_COMPUTE_ALGORITHM_IS_SORTED_HPP
 
+<<<<<<< HEAD
+=======
+#include <boost/static_assert.hpp>
+
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 #include <boost/compute/command_queue.hpp>
 #include <boost/compute/system.hpp>
 #include <boost/compute/functional/bind.hpp>
 #include <boost/compute/functional/operator.hpp>
 #include <boost/compute/algorithm/adjacent_find.hpp>
+<<<<<<< HEAD
+=======
+#include <boost/compute/type_traits/is_device_iterator.hpp>
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 namespace boost {
 namespace compute {
@@ -39,6 +48,10 @@ inline bool is_sorted(InputIterator first,
                       Compare compare,
                       command_queue &queue = system::default_queue())
 {
+<<<<<<< HEAD
+=======
+    BOOST_STATIC_ASSERT(is_device_iterator<InputIterator>::value);
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     using ::boost::compute::placeholders::_1;
     using ::boost::compute::placeholders::_2;
 
@@ -53,6 +66,10 @@ inline bool is_sorted(InputIterator first,
                       InputIterator last,
                       command_queue &queue = system::default_queue())
 {
+<<<<<<< HEAD
+=======
+    BOOST_STATIC_ASSERT(is_device_iterator<InputIterator>::value);
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     typedef typename std::iterator_traits<InputIterator>::value_type value_type;
 
     return ::boost::compute::is_sorted(

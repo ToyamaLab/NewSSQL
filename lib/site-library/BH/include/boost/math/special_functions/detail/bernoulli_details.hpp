@@ -69,7 +69,11 @@ T t2n_asymptotic(int n)
 //
 struct max_bernoulli_root_functor
 {
+<<<<<<< HEAD
    max_bernoulli_root_functor(long long t) : target(static_cast<double>(t)) {}
+=======
+   max_bernoulli_root_functor(ulong_long_type t) : target(static_cast<double>(t)) {}
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
    double operator()(double n)
    {
       BOOST_MATH_STD_USING
@@ -93,11 +97,26 @@ private:
 template <class T, class Policy>
 inline std::size_t find_bernoulli_overflow_limit(const mpl::false_&)
 {
+<<<<<<< HEAD
    long long t = lltrunc(boost::math::tools::log_max_value<T>());
    max_bernoulli_root_functor fun(t);
    boost::math::tools::equal_floor tol;
    boost::uintmax_t max_iter = boost::math::policies::get_max_root_iterations<Policy>();
    return static_cast<std::size_t>(boost::math::tools::toms748_solve(fun, sqrt(double(t)), double(t), tol, max_iter).first) / 2;
+=======
+   // Set a limit on how large the result can ever be:
+   static const double max_result = static_cast<double>((std::numeric_limits<std::size_t>::max)() - 1000u);
+
+   ulong_long_type t = lltrunc(boost::math::tools::log_max_value<T>());
+   max_bernoulli_root_functor fun(t);
+   boost::math::tools::equal_floor tol;
+   boost::uintmax_t max_iter = boost::math::policies::get_max_root_iterations<Policy>();
+   double result = boost::math::tools::toms748_solve(fun, sqrt(double(t)), double(t), tol, max_iter).first / 2;
+   if (result > max_result)
+      result = max_result;
+   
+   return static_cast<std::size_t>(result);
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 }
 
 template <class T, class Policy>
@@ -192,9 +211,24 @@ struct fixed_vector : private std::allocator<T>
    }
    ~fixed_vector()
    {
+<<<<<<< HEAD
       for(unsigned i = 0; i < m_used; ++i)
          this->destroy(&m_data[i]);
       this->deallocate(m_data, m_capacity);
+=======
+#ifdef BOOST_NO_CXX11_ALLOCATOR
+      for(unsigned i = 0; i < m_used; ++i)
+         this->destroy(&m_data[i]);
+      this->deallocate(m_data, m_capacity);
+#else
+      typedef std::allocator<T> allocator_type;
+      typedef std::allocator_traits<allocator_type> allocator_traits; 
+      allocator_type& alloc = *this; 
+      for(unsigned i = 0; i < m_used; ++i)
+         allocator_traits::destroy(alloc, &m_data[i]);
+      allocator_traits::deallocate(alloc, m_data, m_capacity);
+#endif
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
    }
    T& operator[](unsigned n) { BOOST_ASSERT(n < m_used); return m_data[n]; }
    const T& operator[](unsigned n)const { BOOST_ASSERT(n < m_used); return m_data[n]; }

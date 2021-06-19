@@ -29,7 +29,12 @@
 #include <boost/smart_ptr/detail/sp_counted_base.hpp>
 #include <boost/smart_ptr/detail/sp_counted_impl.hpp>
 #include <boost/smart_ptr/detail/sp_disable_deprecated.hpp>
+<<<<<<< HEAD
 #include <boost/detail/workaround.hpp>
+=======
+#include <boost/smart_ptr/detail/sp_noexcept.hpp>
+#include <boost/config/workaround.hpp>
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 // In order to avoid circular dependencies with Boost.TR1
 // we make sure that our include of <memory> doesn't try to
 // pull in the TR1 headers: that's why we use this header 
@@ -45,7 +50,11 @@
 
 #if defined( BOOST_SP_DISABLE_DEPRECATED )
 #pragma GCC diagnostic push
+<<<<<<< HEAD
 //  #pragma GCC diagnostic ignored "-Wdeprecated-declarations"
+=======
+//#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 #endif
 
 namespace boost
@@ -118,14 +127,22 @@ private:
 
 public:
 
+<<<<<<< HEAD
     BOOST_CONSTEXPR shared_count(): pi_(0) // nothrow
+=======
+    BOOST_CONSTEXPR shared_count() BOOST_SP_NOEXCEPT: pi_(0)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 #if defined(BOOST_SP_ENABLE_DEBUG_HOOKS)
         , id_(shared_count_id)
 #endif
     {
     }
 
+<<<<<<< HEAD
     BOOST_CONSTEXPR explicit shared_count( sp_counted_base * pi ): pi_( pi ) // nothrow
+=======
+    BOOST_CONSTEXPR explicit shared_count( sp_counted_base * pi ) BOOST_SP_NOEXCEPT: pi_( pi )
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 #if defined(BOOST_SP_ENABLE_DEBUG_HOOKS)
         , id_(shared_count_id)
 #endif
@@ -421,7 +438,11 @@ public:
         r.release();
     }
 
+<<<<<<< HEAD
     ~shared_count() // nothrow
+=======
+    ~shared_count() /*BOOST_SP_NOEXCEPT*/
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     {
         if( pi_ != 0 ) pi_->release();
 #if defined(BOOST_SP_ENABLE_DEBUG_HOOKS)
@@ -429,7 +450,11 @@ public:
 #endif
     }
 
+<<<<<<< HEAD
     shared_count(shared_count const & r): pi_(r.pi_) // nothrow
+=======
+    shared_count(shared_count const & r) BOOST_SP_NOEXCEPT: pi_(r.pi_)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 #if defined(BOOST_SP_ENABLE_DEBUG_HOOKS)
         , id_(shared_count_id)
 #endif
@@ -439,7 +464,11 @@ public:
 
 #if !defined( BOOST_NO_CXX11_RVALUE_REFERENCES )
 
+<<<<<<< HEAD
     shared_count(shared_count && r): pi_(r.pi_) // nothrow
+=======
+    shared_count(shared_count && r) BOOST_SP_NOEXCEPT: pi_(r.pi_)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 #if defined(BOOST_SP_ENABLE_DEBUG_HOOKS)
         , id_(shared_count_id)
 #endif
@@ -450,9 +479,15 @@ public:
 #endif
 
     explicit shared_count(weak_count const & r); // throws bad_weak_ptr when r.use_count() == 0
+<<<<<<< HEAD
     shared_count( weak_count const & r, sp_nothrow_tag ); // constructs an empty *this when r.use_count() == 0
 
     shared_count & operator= (shared_count const & r) // nothrow
+=======
+    shared_count( weak_count const & r, sp_nothrow_tag ) BOOST_SP_NOEXCEPT; // constructs an empty *this when r.use_count() == 0
+
+    shared_count & operator= (shared_count const & r) BOOST_SP_NOEXCEPT
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     {
         sp_counted_base * tmp = r.pi_;
 
@@ -466,49 +501,85 @@ public:
         return *this;
     }
 
+<<<<<<< HEAD
     void swap(shared_count & r) // nothrow
+=======
+    void swap(shared_count & r) BOOST_SP_NOEXCEPT
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     {
         sp_counted_base * tmp = r.pi_;
         r.pi_ = pi_;
         pi_ = tmp;
     }
 
+<<<<<<< HEAD
     long use_count() const // nothrow
+=======
+    long use_count() const BOOST_SP_NOEXCEPT
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     {
         return pi_ != 0? pi_->use_count(): 0;
     }
 
+<<<<<<< HEAD
     bool unique() const // nothrow
+=======
+    bool unique() const BOOST_SP_NOEXCEPT
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     {
         return use_count() == 1;
     }
 
+<<<<<<< HEAD
     bool empty() const // nothrow
+=======
+    bool empty() const BOOST_SP_NOEXCEPT
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     {
         return pi_ == 0;
     }
 
+<<<<<<< HEAD
     friend inline bool operator==(shared_count const & a, shared_count const & b)
+=======
+    friend inline bool operator==(shared_count const & a, shared_count const & b) BOOST_SP_NOEXCEPT
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     {
         return a.pi_ == b.pi_;
     }
 
+<<<<<<< HEAD
     friend inline bool operator<(shared_count const & a, shared_count const & b)
+=======
+    friend inline bool operator<(shared_count const & a, shared_count const & b) BOOST_SP_NOEXCEPT
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     {
         return std::less<sp_counted_base *>()( a.pi_, b.pi_ );
     }
 
+<<<<<<< HEAD
     void * get_deleter( sp_typeinfo const & ti ) const
+=======
+    void * get_deleter( sp_typeinfo_ const & ti ) const BOOST_SP_NOEXCEPT
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     {
         return pi_? pi_->get_deleter( ti ): 0;
     }
 
+<<<<<<< HEAD
     void * get_local_deleter( sp_typeinfo const & ti ) const
+=======
+    void * get_local_deleter( sp_typeinfo_ const & ti ) const BOOST_SP_NOEXCEPT
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     {
         return pi_? pi_->get_local_deleter( ti ): 0;
     }
 
+<<<<<<< HEAD
     void * get_untyped_deleter() const
+=======
+    void * get_untyped_deleter() const BOOST_SP_NOEXCEPT
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     {
         return pi_? pi_->get_untyped_deleter(): 0;
     }
@@ -529,14 +600,22 @@ private:
 
 public:
 
+<<<<<<< HEAD
     BOOST_CONSTEXPR weak_count(): pi_(0) // nothrow
+=======
+    BOOST_CONSTEXPR weak_count() BOOST_SP_NOEXCEPT: pi_(0)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 #if defined(BOOST_SP_ENABLE_DEBUG_HOOKS)
         , id_(weak_count_id)
 #endif
     {
     }
 
+<<<<<<< HEAD
     weak_count(shared_count const & r): pi_(r.pi_) // nothrow
+=======
+    weak_count(shared_count const & r) BOOST_SP_NOEXCEPT: pi_(r.pi_)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 #if defined(BOOST_SP_ENABLE_DEBUG_HOOKS)
         , id_(weak_count_id)
 #endif
@@ -544,7 +623,11 @@ public:
         if(pi_ != 0) pi_->weak_add_ref();
     }
 
+<<<<<<< HEAD
     weak_count(weak_count const & r): pi_(r.pi_) // nothrow
+=======
+    weak_count(weak_count const & r) BOOST_SP_NOEXCEPT: pi_(r.pi_)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 #if defined(BOOST_SP_ENABLE_DEBUG_HOOKS)
         , id_(weak_count_id)
 #endif
@@ -556,7 +639,11 @@ public:
 
 #if !defined( BOOST_NO_CXX11_RVALUE_REFERENCES )
 
+<<<<<<< HEAD
     weak_count(weak_count && r): pi_(r.pi_) // nothrow
+=======
+    weak_count(weak_count && r) BOOST_SP_NOEXCEPT: pi_(r.pi_)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 #if defined(BOOST_SP_ENABLE_DEBUG_HOOKS)
         , id_(weak_count_id)
 #endif
@@ -566,7 +653,11 @@ public:
 
 #endif
 
+<<<<<<< HEAD
     ~weak_count() // nothrow
+=======
+    ~weak_count() /*BOOST_SP_NOEXCEPT*/
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     {
         if(pi_ != 0) pi_->weak_release();
 #if defined(BOOST_SP_ENABLE_DEBUG_HOOKS)
@@ -574,7 +665,11 @@ public:
 #endif
     }
 
+<<<<<<< HEAD
     weak_count & operator= (shared_count const & r) // nothrow
+=======
+    weak_count & operator= (shared_count const & r) BOOST_SP_NOEXCEPT
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     {
         sp_counted_base * tmp = r.pi_;
 
@@ -588,7 +683,11 @@ public:
         return *this;
     }
 
+<<<<<<< HEAD
     weak_count & operator= (weak_count const & r) // nothrow
+=======
+    weak_count & operator= (weak_count const & r) BOOST_SP_NOEXCEPT
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     {
         sp_counted_base * tmp = r.pi_;
 
@@ -602,29 +701,49 @@ public:
         return *this;
     }
 
+<<<<<<< HEAD
     void swap(weak_count & r) // nothrow
+=======
+    void swap(weak_count & r) BOOST_SP_NOEXCEPT
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     {
         sp_counted_base * tmp = r.pi_;
         r.pi_ = pi_;
         pi_ = tmp;
     }
 
+<<<<<<< HEAD
     long use_count() const // nothrow
+=======
+    long use_count() const BOOST_SP_NOEXCEPT
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     {
         return pi_ != 0? pi_->use_count(): 0;
     }
 
+<<<<<<< HEAD
     bool empty() const // nothrow
+=======
+    bool empty() const BOOST_SP_NOEXCEPT
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     {
         return pi_ == 0;
     }
 
+<<<<<<< HEAD
     friend inline bool operator==(weak_count const & a, weak_count const & b)
+=======
+    friend inline bool operator==(weak_count const & a, weak_count const & b) BOOST_SP_NOEXCEPT
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     {
         return a.pi_ == b.pi_;
     }
 
+<<<<<<< HEAD
     friend inline bool operator<(weak_count const & a, weak_count const & b)
+=======
+    friend inline bool operator<(weak_count const & a, weak_count const & b) BOOST_SP_NOEXCEPT
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     {
         return std::less<sp_counted_base *>()(a.pi_, b.pi_);
     }
@@ -641,7 +760,11 @@ inline shared_count::shared_count( weak_count const & r ): pi_( r.pi_ )
     }
 }
 
+<<<<<<< HEAD
 inline shared_count::shared_count( weak_count const & r, sp_nothrow_tag ): pi_( r.pi_ )
+=======
+inline shared_count::shared_count( weak_count const & r, sp_nothrow_tag ) BOOST_SP_NOEXCEPT: pi_( r.pi_ )
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 #if defined(BOOST_SP_ENABLE_DEBUG_HOOKS)
         , id_(shared_count_id)
 #endif

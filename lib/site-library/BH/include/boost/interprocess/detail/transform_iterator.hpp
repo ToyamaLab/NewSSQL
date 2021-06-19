@@ -27,14 +27,20 @@
 
 // interprocess
 #include <boost/interprocess/interprocess_fwd.hpp>
+<<<<<<< HEAD
 // interprocess/detail
 #include <boost/interprocess/detail/type_traits.hpp>
 // move/detail
 #include <boost/container/detail/iterator.hpp>
+=======
+// container/detail
+#include <boost/container/detail/transform_iterator.hpp>
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 namespace boost {
 namespace interprocess {
 
+<<<<<<< HEAD
 template <class PseudoReference>
 struct operator_arrow_proxy
 {
@@ -191,6 +197,10 @@ make_transform_iterator(Iterator it, UnaryFunc fun)
 {
    return transform_iterator<Iterator, UnaryFunc>(it, fun);
 }
+=======
+using boost::container::make_transform_iterator;
+using boost::container::transform_iterator;
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 }  //namespace interprocess {
 }  //namespace boost {

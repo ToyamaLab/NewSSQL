@@ -28,7 +28,11 @@
 
 namespace boost {
 namespace container {
+<<<<<<< HEAD
 namespace container_detail {
+=======
+namespace dtl {
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 template <class Container>
 struct is_contiguous_container
@@ -40,7 +44,11 @@ struct is_contiguous_container
          has_member_function_callable_with_data<const Container>::value;
 };
 
+<<<<<<< HEAD
 }  //namespace container_detail {
+=======
+}  //namespace dtl {
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 }  //namespace container {
 }  //namespace boost {
 

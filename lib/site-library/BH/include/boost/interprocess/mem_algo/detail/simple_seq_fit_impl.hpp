@@ -72,11 +72,19 @@ class simple_seq_fit_impl
    typedef MutexFamily        mutex_family;
    //!Pointer type to be used with the rest of the Interprocess framework
    typedef VoidPointer        void_pointer;
+<<<<<<< HEAD
    typedef boost::container::container_detail::
       basic_multiallocation_chain<VoidPointer>     multiallocation_chain;
 
    typedef typename boost::intrusive::pointer_traits<char_ptr>::difference_type difference_type;
    typedef typename boost::container::container_detail::make_unsigned<difference_type>::type size_type;
+=======
+   typedef boost::container::dtl::
+      basic_multiallocation_chain<VoidPointer>     multiallocation_chain;
+
+   typedef typename boost::intrusive::pointer_traits<char_ptr>::difference_type difference_type;
+   typedef typename boost::container::dtl::make_unsigned<difference_type>::type size_type;
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 
    private:
@@ -270,8 +278,13 @@ class simple_seq_fit_impl
    void priv_mark_new_allocated_block(block_ctrl *block);
 
    public:
+<<<<<<< HEAD
    static const size_type Alignment      = ::boost::container::container_detail::alignment_of
       < ::boost::container::container_detail::max_align_t>::value;
+=======
+   static const size_type Alignment      = ::boost::container::dtl::alignment_of
+      < ::boost::container::dtl::max_align_t>::value;
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
    private:
    static const size_type BlockCtrlBytes = ipcdetail::ct_rounded_size<sizeof(block_ctrl), Alignment>::value;
    static const size_type BlockCtrlUnits = BlockCtrlBytes/Alignment;
@@ -590,7 +603,11 @@ inline T* simple_seq_fit_impl<MutexFamily, VoidPointer>::
    void *raw_reuse = reuse_ptr;
    void * const ret = priv_allocation_command
       (command, limit_size, prefer_in_recvd_out_size, raw_reuse, sizeof(T));
+<<<<<<< HEAD
    BOOST_ASSERT(0 == ((std::size_t)ret % ::boost::container::container_detail::alignment_of<T>::value));
+=======
+   BOOST_ASSERT(0 == ((std::size_t)ret % ::boost::container::dtl::alignment_of<T>::value));
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
    reuse_ptr = static_cast<T*>(raw_reuse);
    return static_cast<T*>(ret);
 }

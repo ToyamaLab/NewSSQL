@@ -3,7 +3,11 @@
 //  Distributed under the Boost Software License, Version 1.0. (See accompanying
 //  file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 //
+<<<<<<< HEAD
 // 2013/09 Vicente J. Botet Escriba
+=======
+// 2013,2018 Vicente J. Botet Escriba
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 //    Adapt to boost from CCIA C++11 implementation
 //    Make use of Boost.Move
 
@@ -15,6 +19,10 @@
 #include <boost/thread/detail/move.hpp>
 #include <boost/thread/csbl/memory/shared_ptr.hpp>
 #include <boost/type_traits/decay.hpp>
+<<<<<<< HEAD
+=======
+#include <boost/type_traits/is_same.hpp>
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 namespace boost
 {
@@ -72,12 +80,24 @@ namespace boost
 
 #ifdef BOOST_NO_CXX11_RVALUE_REFERENCES
       template<typename F>
+<<<<<<< HEAD
       explicit nullary_function(F& f):
+=======
+      explicit nullary_function(F& f
+                                , typename disable_if<is_same<typename decay<F>::type, nullary_function>, int* >::type=0
+                                ):
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
       impl(new impl_type<F>(f))
       {}
 #endif
       template<typename F>
+<<<<<<< HEAD
       nullary_function(BOOST_THREAD_RV_REF(F) f):
+=======
+      nullary_function(BOOST_THREAD_RV_REF(F) f
+                       , typename disable_if<is_same<typename decay<F>::type, nullary_function>, int* >::type=0
+                       ):
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
       impl(new impl_type<typename decay<F>::type>(thread_detail::decay_copy(boost::forward<F>(f))))
       {}
 

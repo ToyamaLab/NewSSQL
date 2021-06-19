@@ -167,6 +167,7 @@ template <class BidirectionalIterator,
           class charT = BOOST_DEDUCED_TYPENAME BOOST_REGEX_DETAIL_NS::regex_iterator_traits<BidirectionalIterator>::value_type,
           class traits = regex_traits<charT> >
 class regex_token_iterator 
+<<<<<<< HEAD
 #ifndef BOOST_NO_STD_ITERATOR
    : public std::iterator<
          std::forward_iterator_tag, 
@@ -175,6 +176,8 @@ class regex_token_iterator
          const sub_match<BidirectionalIterator>*,
          const sub_match<BidirectionalIterator>& >         
 #endif
+=======
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 {
 private:
    typedef regex_token_iterator_implementation<BidirectionalIterator, charT, traits> impl;

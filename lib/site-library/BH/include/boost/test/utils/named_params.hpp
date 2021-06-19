@@ -72,7 +72,11 @@ struct is_named_param_pack<named_parameter_combine<NP,Rest> > : public mpl::true
 // **************                  param_type                  ************** //
 // ************************************************************************** //
 
+<<<<<<< HEAD
 /// param_type<Params,Keyword,Default>::type is is the type of the parameter
+=======
+/// param_type<Params,Keyword,Default>::type is the type of the parameter
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 /// corresponding to the Keyword (if parameter is present) or Default
 
 template<typename NP, typename Keyword, typename DefaultType=void>
@@ -91,7 +95,11 @@ struct param_type<named_parameter_combine<NP,Rest>,Keyword,DefaultType>
 // **************                  has_param                   ************** //
 // ************************************************************************** //
 
+<<<<<<< HEAD
 /// has_param<Params,Keyword>::value is true id Params has parameter corresponding
+=======
+/// has_param<Params,Keyword>::value is true if Params has parameter corresponding
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 /// to the Keyword
 
 template<typename NP, typename Keyword>

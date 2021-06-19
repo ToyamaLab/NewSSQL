@@ -20,6 +20,10 @@
 ///////////////////////////////////////////////////////////////////////////////
 #include <boost/spirit/home/classic/phoenix/operators.hpp>
 #include <iosfwd>
+<<<<<<< HEAD
+=======
+#include <complex>
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 ///////////////////////////////////////////////////////////////////////////////
 #if defined(_STLPORT_VERSION) && defined(__STL_USE_OWN_NAMESPACE)

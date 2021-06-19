@@ -10,6 +10,10 @@
 #include <boost/thread/thread_time.hpp>
 #include <boost/thread/win32/thread_primitives.hpp>
 #include <boost/thread/win32/thread_heap_alloc.hpp>
+<<<<<<< HEAD
+=======
+#include <boost/thread/detail/platform_time.hpp>
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 #include <boost/predef/platform.h>
 
@@ -79,12 +83,24 @@ namespace boost
         struct thread_exit_callback_node;
         struct tss_data_node
         {
+<<<<<<< HEAD
             boost::shared_ptr<boost::detail::tss_cleanup_function> func;
             void* value;
 
             tss_data_node(boost::shared_ptr<boost::detail::tss_cleanup_function> func_,
                           void* value_):
                 func(func_),value(value_)
+=======
+            typedef void(*cleanup_func_t)(void*);
+            typedef void(*cleanup_caller_t)(cleanup_func_t, void*);
+
+            cleanup_caller_t caller;
+            cleanup_func_t func;
+            void* value;
+
+            tss_data_node(cleanup_caller_t caller_,cleanup_func_t func_,void* value_):
+                caller(caller_),func(func_),value(value_)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
             {}
         };
 
@@ -112,8 +128,15 @@ namespace boost
             > notify_list_t;
             notify_list_t notify;
 
+<<<<<<< HEAD
             typedef std::vector<shared_ptr<shared_state_base> > async_states_t;
             async_states_t async_states_;
+=======
+//#ifndef BOOST_NO_EXCEPTIONS
+            typedef std::vector<shared_ptr<shared_state_base> > async_states_t;
+            async_states_t async_states_;
+//#endif
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 //#if defined BOOST_THREAD_PROVIDES_INTERRUPTIONS
             // These data must be at the end so that the access to the other fields doesn't change
             // when BOOST_THREAD_PROVIDES_INTERRUPTIONS is defined
@@ -128,8 +151,15 @@ namespace boost
                 thread_exit_callbacks(0),
                 id(0),
                 tss_data(),
+<<<<<<< HEAD
                 notify(),
                 async_states_()
+=======
+                notify()
+//#ifndef BOOST_NO_EXCEPTIONS
+                , async_states_()
+//#endif
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 //#if defined BOOST_THREAD_PROVIDES_INTERRUPTIONS
                 , interruption_handle(create_anonymous_event(detail::win32::manual_reset_event,detail::win32::event_initially_reset))
                 , interruption_enabled(true)
@@ -153,7 +183,11 @@ namespace boost
 #if defined BOOST_THREAD_PROVIDES_INTERRUPTIONS
             void interrupt()
             {
+<<<<<<< HEAD
                 BOOST_VERIFY(detail::winapi::SetEvent(interruption_handle)!=0);
+=======
+                BOOST_VERIFY(winapi::SetEvent(interruption_handle)!=0);
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
             }
 #endif
             typedef detail::win32::handle native_handle_type;
@@ -165,15 +199,24 @@ namespace boost
               notify.push_back(std::pair<condition_variable*, mutex*>(cv, m));
             }
 
+<<<<<<< HEAD
+=======
+//#ifndef BOOST_NO_EXCEPTIONS
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
             void make_ready_at_thread_exit(shared_ptr<shared_state_base> as)
             {
               async_states_.push_back(as);
             }
+<<<<<<< HEAD
 
+=======
+//#endif
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
         };
         BOOST_THREAD_DECL thread_data_base* get_current_thread_data();
 
         typedef boost::intrusive_ptr<detail::thread_data_base> thread_data_ptr;
+<<<<<<< HEAD
 
         struct BOOST_SYMBOL_VISIBLE timeout
         {
@@ -256,12 +299,15 @@ namespace boost
         {
             return (value<0)?0u:(uintmax_t)value;
         }
+=======
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     }
 
     namespace this_thread
     {
         void BOOST_THREAD_DECL yield() BOOST_NOEXCEPT;
 
+<<<<<<< HEAD
         bool BOOST_THREAD_DECL interruptible_wait(detail::win32::handle handle_to_wait_for,detail::timeout target_time);
         inline void interruptible_wait(uintmax_t milliseconds)
         {
@@ -314,6 +360,107 @@ namespace boost
 //            non_interruptible_wait(chrono::duration_cast<chrono::milliseconds>(ns).count());
 //          }
 //#endif
+=======
+        bool BOOST_THREAD_DECL interruptible_wait(detail::win32::handle handle_to_wait_for, detail::internal_platform_timepoint const &timeout);
+
+#if defined BOOST_THREAD_USES_DATETIME
+        template<typename TimeDuration>
+        BOOST_SYMBOL_VISIBLE void sleep(TimeDuration const& rel_time)
+        {
+          interruptible_wait(detail::win32::invalid_handle_value, detail::internal_platform_clock::now() + detail::platform_duration(rel_time));
+        }
+
+        inline BOOST_SYMBOL_VISIBLE void sleep(system_time const& abs_time)
+        {
+          const detail::real_platform_timepoint ts(abs_time);
+          detail::platform_duration d(ts - detail::real_platform_clock::now());
+          while (d > detail::platform_duration::zero())
+          {
+            d = (std::min)(d, detail::platform_milliseconds(BOOST_THREAD_POLL_INTERVAL_MILLISECONDS));
+            interruptible_wait(detail::win32::invalid_handle_value, detail::internal_platform_clock::now() + d);
+            d = ts - detail::real_platform_clock::now();
+          }
+        }
+#endif
+
+#ifdef BOOST_THREAD_USES_CHRONO
+        template <class Rep, class Period>
+        void sleep_for(const chrono::duration<Rep, Period>& d)
+        {
+          interruptible_wait(detail::win32::invalid_handle_value, detail::internal_platform_clock::now() + detail::platform_duration(d));
+        }
+
+        template <class Duration>
+        void sleep_until(const chrono::time_point<chrono::steady_clock, Duration>& t)
+        {
+          sleep_for(t - chrono::steady_clock::now());
+        }
+
+        template <class Clock, class Duration>
+        void sleep_until(const chrono::time_point<Clock, Duration>& t)
+        {
+          typedef typename common_type<Duration, typename Clock::duration>::type common_duration;
+          common_duration d(t - Clock::now());
+          while (d > common_duration::zero())
+          {
+            d = (std::min)(d, common_duration(chrono::milliseconds(BOOST_THREAD_POLL_INTERVAL_MILLISECONDS)));
+            sleep_for(d);
+            d = t - Clock::now();
+          }
+        }
+#endif
+
+        namespace no_interruption_point
+        {
+          bool BOOST_THREAD_DECL non_interruptible_wait(detail::win32::handle handle_to_wait_for, detail::internal_platform_timepoint const &timeout);
+
+#if defined BOOST_THREAD_USES_DATETIME
+          template<typename TimeDuration>
+          BOOST_SYMBOL_VISIBLE void sleep(TimeDuration const& rel_time)
+          {
+            non_interruptible_wait(detail::win32::invalid_handle_value, detail::internal_platform_clock::now() + detail::platform_duration(rel_time));
+          }
+
+          inline BOOST_SYMBOL_VISIBLE void sleep(system_time const& abs_time)
+          {
+            const detail::real_platform_timepoint ts(abs_time);
+            detail::platform_duration d(ts - detail::real_platform_clock::now());
+            while (d > detail::platform_duration::zero())
+            {
+              d = (std::min)(d, detail::platform_milliseconds(BOOST_THREAD_POLL_INTERVAL_MILLISECONDS));
+              non_interruptible_wait(detail::win32::invalid_handle_value, detail::internal_platform_clock::now() + d);
+              d = ts - detail::real_platform_clock::now();
+            }
+          }
+#endif
+
+#ifdef BOOST_THREAD_USES_CHRONO
+          template <class Rep, class Period>
+          void sleep_for(const chrono::duration<Rep, Period>& d)
+          {
+            non_interruptible_wait(detail::win32::invalid_handle_value, detail::internal_platform_clock::now() + detail::platform_duration(d));
+          }
+
+          template <class Duration>
+          void sleep_until(const chrono::time_point<chrono::steady_clock, Duration>& t)
+          {
+            sleep_for(t - chrono::steady_clock::now());
+          }
+
+          template <class Clock, class Duration>
+          void sleep_until(const chrono::time_point<Clock, Duration>& t)
+          {
+            typedef typename common_type<Duration, typename Clock::duration>::type common_duration;
+            common_duration d(t - Clock::now());
+            while (d > common_duration::zero())
+            {
+              d = (std::min)(d, common_duration(chrono::milliseconds(BOOST_THREAD_POLL_INTERVAL_MILLISECONDS)));
+              sleep_for(d);
+              d = t - Clock::now();
+            }
+          }
+#endif
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
         }
     }
 

@@ -1,3 +1,7 @@
+<<<<<<< HEAD
+=======
+align                   Alignment helper
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 colonnade               Format multiple vectors in a tabular display
 dim_desc                Format dimensions
 expect_known_display    Test helpers

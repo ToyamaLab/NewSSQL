@@ -14,5 +14,9 @@
 
 #if defined(__GNUC__) && ((__GNUC__*100 + __GNUC_MINOR__) >= 406)
 #  pragma GCC diagnostic push
+<<<<<<< HEAD
 // #  pragma GCC diagnostic ignored "-Wshadow"
+=======
+//#  pragma GCC diagnostic ignored "-Wshadow"
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 #endif

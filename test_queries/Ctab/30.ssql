@@ -1,0 +1,9 @@
+GENERATE HTML
+    p.city@{align='center'}!
+    cross_tab(
+        [null(p.id) ,p.name],,
+        [p.height]!,
+        count[p.id]
+    )@{null_value='該当なし'}
+from person p
+where p.city = '3';

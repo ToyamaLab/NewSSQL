@@ -496,17 +496,11 @@ public class Start_Parse {
 		//from句に並んでるテーブルの属性名を取得
 		GetFromDB gfd = new GetFromDB();
 		GlobalEnv.tableAtts = new HashMap<>();
-		for (int i = 0; i < from_c.toString().split(",").length; i++) {
-			String tbl = from_c.toString().split(",")[i].trim();
-			String tblName = new String();
-			if(tbl.split(" ").length == 2){
-				tblName = tbl.split(" ")[0];
-			}else{
-				tblName = tbl;
-			}
+		for(FromTable fromTable: From.getFromItems()) {
+			String tableName = fromTable.getTableName();
 			ExtList result = new ExtList();
-			gfd.getTableAtt(tblName, result);
-			GlobalEnv.tableAtts.put(tblName, result.unnest());
+			gfd.getTableAtt(tableName, result);
+			GlobalEnv.tableAtts.put(tableName, result.unnest());
 		}
 		gfd.close();
 		Log.out("[Parser:From] from = " + fromInfo);
@@ -516,19 +510,26 @@ public class Start_Parse {
 		}
 
 		if(parameters != null){
-			String where_tmp = "";
+			String where_tmp = "", p = "";
 			for(int i = 0; i < parameters.length; i++){
 				if(i != 0){
-					where_tmp += "AND"; 
+					where_tmp += " AND "; 
 				}
-				where_tmp += parameter_atts.get(i) + " = " + parameters[i];
+				 where_tmp += parameter_atts.get(i) + " = " + parameters[i];
+				p = parameters[i];
+				where_tmp += parameter_atts.get(i) + " = ";
+				if(GlobalEnv.isNumber(p)) {
+					where_tmp +=  p;
+				} else {
+					where_tmp +=  "'" + p + "'";
+				}
 			}
 
 			// where句の中身をチェック
 			if(where_c.toString().equals("")){
 				where_c.append(where_tmp);
 			} else {
-				where_tmp += "AND ";
+				where_tmp += " AND ";
 				where_c.insert(0, where_tmp);
 			}
 		}

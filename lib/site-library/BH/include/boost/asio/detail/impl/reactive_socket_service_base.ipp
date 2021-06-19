@@ -2,7 +2,11 @@
 // detail/reactive_socket_service_base.ipp
 // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 //
+<<<<<<< HEAD
 // Copyright (c) 2003-2017 Christopher M. Kohlhoff (chris at kohlhoff dot com)
+=======
+// Copyright (c) 2003-2019 Christopher M. Kohlhoff (chris at kohlhoff dot com)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 //
 // Distributed under the Boost Software License, Version 1.0. (See accompanying
 // file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
@@ -29,9 +33,14 @@ namespace asio {
 namespace detail {
 
 reactive_socket_service_base::reactive_socket_service_base(
+<<<<<<< HEAD
     boost::asio::io_context& io_context)
   : io_context_(io_context),
     reactor_(use_service<reactor>(io_context))
+=======
+    execution_context& context)
+  : reactor_(use_service<reactor>(context))
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 {
   reactor_.init_task();
 }
@@ -50,6 +59,10 @@ void reactive_socket_service_base::construct(
 void reactive_socket_service_base::base_move_construct(
     reactive_socket_service_base::base_implementation_type& impl,
     reactive_socket_service_base::base_implementation_type& other_impl)
+<<<<<<< HEAD
+=======
+  BOOST_ASIO_NOEXCEPT
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 {
   impl.socket_ = other_impl.socket_;
   other_impl.socket_ = invalid_socket;

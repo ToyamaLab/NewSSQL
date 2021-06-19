@@ -3,3 +3,7 @@ excel_format            Determine file format
 excel_sheets            List all sheets in an excel spreadsheet
 read_excel              Read xls and xlsx files
 readxl_example          Get path to readxl example
+<<<<<<< HEAD
+=======
+readxl_progress         Determine whether to show progress spinner
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce

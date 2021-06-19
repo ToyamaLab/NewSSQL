@@ -105,11 +105,17 @@
 // Set the name of our library, this will get undef'ed by auto_link.hpp
 // once it's done with it:
 //
+<<<<<<< HEAD
 #if PY_MAJOR_VERSION == 2
 #  define BOOST_LIB_NAME boost_python
 #elif PY_MAJOR_VERSION == 3
 #  define BOOST_LIB_NAME boost_python3
 #endif
+=======
+#define _BOOST_PYTHON_CONCAT(N, M, m) N ## M ## m
+#define BOOST_PYTHON_CONCAT(N, M, m) _BOOST_PYTHON_CONCAT(N, M, m)
+#define BOOST_LIB_NAME BOOST_PYTHON_CONCAT(boost_python, PY_MAJOR_VERSION, PY_MINOR_VERSION)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 //
 // If we're importing code from a dll, then tell auto_link.hpp about it:
 //
@@ -122,6 +128,12 @@
 #include <boost/config/auto_link.hpp>
 #endif  // auto-linking disabled
 
+<<<<<<< HEAD
+=======
+#undef BOOST_PYTHON_CONCAT
+#undef _BOOST_PYTHON_CONCAT
+
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 #ifndef BOOST_PYTHON_NO_PY_SIGNATURES
 #define BOOST_PYTHON_SUPPORTS_PY_SIGNATURES // enables smooth transition
 #endif

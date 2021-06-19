@@ -26,7 +26,11 @@
 #if defined(BOOST_CLANG)
 # pragma clang diagnostic push
 # if  __has_warning("-Wheader-hygiene")
+<<<<<<< HEAD
 // #  pragma clang diagnostic ignored "-Wheader-hygiene"
+=======
+//#  pragma clang diagnostic ignored "-Wheader-hygiene"
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 # endif
 #endif
 

@@ -39,7 +39,11 @@
 #if defined(__SIZEOF_POINTER__)
 #define BOOST_ATOMIC_DETAIL_SIZEOF_POINTER __SIZEOF_POINTER__
 #elif defined(_MSC_VER)
+<<<<<<< HEAD
 #if defined(_M_AMD64) || defined(_M_IA64)
+=======
+#if defined(_M_AMD64) || defined(_M_ARM64) || defined(_M_IA64)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 #define BOOST_ATOMIC_DETAIL_SIZEOF_POINTER 8
 #else
 #define BOOST_ATOMIC_DETAIL_SIZEOF_POINTER 4
@@ -117,7 +121,11 @@
 #include <wchar.h>
 #include <boost/cstdint.hpp>
 
+<<<<<<< HEAD
  #if defined(_MSC_VER) && ( _MSC_VER <= 1310 || defined(UNDER_CE) && _MSC_VER <= 1500 )
+=======
+#if defined(_MSC_VER) && (_MSC_VER <= 1310 || defined(UNDER_CE) && _MSC_VER <= 1500)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 // MSVC 7.1 and MSVC 8 (arm) define WCHAR_MAX to a value not suitable for constant expressions
 #define BOOST_ATOMIC_DETAIL_SIZEOF_WCHAR_T 2
 #elif (WCHAR_MAX + 0) == 0xff || (WCHAR_MAX + 0) == 0x7f
@@ -134,7 +142,11 @@
 #if !defined(BOOST_ATOMIC_DETAIL_SIZEOF_SHORT) || !defined(BOOST_ATOMIC_DETAIL_SIZEOF_INT) ||\
     !defined(BOOST_ATOMIC_DETAIL_SIZEOF_LONG) || !defined(BOOST_ATOMIC_DETAIL_SIZEOF_LLONG) ||\
     !defined(BOOST_ATOMIC_DETAIL_SIZEOF_WCHAR_T)
+<<<<<<< HEAD
 #error Boost.Atomic: Failed to determine builtin integer sizes, the target platform is not supported. Please, report to the developers.
+=======
+#error Boost.Atomic: Failed to determine builtin integer sizes, the target platform is not supported. Please, report to the developers (patches are welcome).
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 #endif
 
 #endif // BOOST_ATOMIC_DETAIL_INT_SIZES_HPP_INCLUDED_

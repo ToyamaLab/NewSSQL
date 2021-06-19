@@ -1,5 +1,6 @@
 Package: hms
 Title: Pretty Time of Day
+<<<<<<< HEAD
 Date: 2018-03-10
 Version: 0.4.2
 Authors@R: c(
@@ -9,10 +10,23 @@ Authors@R: c(
 Description: Implements an S3 class for storing and formatting time-of-day
     values, based on the 'difftime' class.
 Imports: methods, pkgconfig, rlang
+=======
+Date: 2020-01-07
+Version: 0.5.3
+Authors@R: c(
+    person("Kirill", "Müller", role = c("aut", "cre"), email = "krlmlr+r@mailbox.org"),
+    person("The R Consortium", role = "fnd"),
+    person("RStudio", role = "fnd")
+    )
+Description: Implements an S3 class for storing and formatting time-of-day
+    values, based on the 'difftime' class.
+Imports: methods, pkgconfig, rlang, vctrs (>= 0.2.1)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 Suggests: crayon, lubridate, pillar (>= 1.1.0), testthat
 License: GPL-3
 Encoding: UTF-8
 LazyData: true
+<<<<<<< HEAD
 URL: https://github.com/tidyverse/hms
 BugReports: https://github.com/tidyverse/hms/issues
 RoxygenNote: 6.0.1.9000
@@ -24,3 +38,17 @@ Maintainer: Kirill Müller <krlmlr+r@mailbox.org>
 Repository: CRAN
 Date/Publication: 2018-03-10 21:33:37 UTC
 Built: R 3.5.1; ; 2018-08-21 07:41:22 UTC; unix
+=======
+URL: https://hms.tidyverse.org/, https://github.com/tidyverse/hms
+BugReports: https://github.com/tidyverse/hms/issues
+RoxygenNote: 7.0.2
+NeedsCompilation: no
+Packaged: 2020-01-07 16:20:04 UTC; kirill
+Author: Kirill Müller [aut, cre],
+  The R Consortium [fnd],
+  RStudio [fnd]
+Maintainer: Kirill Müller <krlmlr+r@mailbox.org>
+Repository: CRAN
+Date/Publication: 2020-01-08 23:01:22 UTC
+Built: R 4.0.2; ; 2020-08-27 07:47:40 UTC; unix
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce

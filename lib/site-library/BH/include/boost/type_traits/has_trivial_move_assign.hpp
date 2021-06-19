@@ -24,7 +24,11 @@
 #endif
 #endif
 
+<<<<<<< HEAD
 #if defined(__GNUC__) || defined(__clang)
+=======
+#if defined(__GNUC__) || defined(__clang__)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 #include <boost/type_traits/is_assignable.hpp>
 #include <boost/type_traits/is_volatile.hpp>
 #endif

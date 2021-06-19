@@ -68,8 +68,11 @@ public: // static visitor interfaces
         boost::throw_exception(bad_visit());
     }
 
+<<<<<<< HEAD
 #if !defined(BOOST_NO_VOID_RETURNS)
 
+=======
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 public: // static visitor interfaces, cont.
 
     result_type operator()(argument_fwd_type operand) const
@@ -77,6 +80,7 @@ public: // static visitor interfaces, cont.
         return visitor_(operand);
     }
 
+<<<<<<< HEAD
 #else // defined(BOOST_NO_VOID_RETURNS)
 
 private: // helpers, for static visitor interfaces (below)
@@ -104,6 +108,8 @@ public: // static visitor interfaces, cont.
 
 #endif // BOOST_NO_VOID_RETURNS workaround
 
+=======
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 };
 
 template <typename R, typename T>

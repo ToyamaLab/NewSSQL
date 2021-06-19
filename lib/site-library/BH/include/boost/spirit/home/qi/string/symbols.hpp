@@ -24,9 +24,14 @@
 #include <boost/spirit/home/support/unused.hpp>
 #include <boost/spirit/home/support/string_traits.hpp>
 
+<<<<<<< HEAD
 #include <boost/fusion/include/at.hpp>
 #include <boost/range.hpp>
 #include <boost/type_traits/add_reference.hpp>
+=======
+#include <boost/range/begin.hpp>
+#include <boost/range/end.hpp>
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 #include <boost/shared_ptr.hpp>
 
 #if defined(BOOST_MSVC)
@@ -323,9 +328,14 @@ public:
 
             symbols& sym;
 
+<<<<<<< HEAD
         private:
             // silence MSVC warning C4512: assignment operator could not be generated
             adder& operator= (adder const&);
+=======
+            // silence MSVC warning C4512: assignment operator could not be generated
+            BOOST_DELETED_FUNCTION(adder& operator= (adder const&))
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
         };
 
         struct remover
@@ -366,9 +376,14 @@ public:
 
             symbols& sym;
 
+<<<<<<< HEAD
         private:
             // silence MSVC warning C4512: assignment operator could not be generated
             remover& operator= (remover const&);
+=======
+            // silence MSVC warning C4512: assignment operator could not be generated
+            BOOST_DELETED_FUNCTION(remover& operator= (remover const&))
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
         };
 
         adder add;

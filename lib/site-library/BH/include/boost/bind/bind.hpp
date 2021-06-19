@@ -2126,7 +2126,11 @@ template<class F, class A1, class A2, class A3, class A4, class A5, class A6, cl
 
 #include <boost/bind/bind_cc.hpp>
 
+<<<<<<< HEAD
 # ifdef __cpp_noexcept_function_type
+=======
+# if defined( __cpp_noexcept_function_type ) || defined( _NOEXCEPT_TYPES_SUPPORTED )
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 #   undef BOOST_BIND_NOEXCEPT
 #   define BOOST_BIND_NOEXCEPT noexcept
 #   include <boost/bind/bind_cc.hpp>
@@ -2136,7 +2140,11 @@ template<class F, class A1, class A2, class A3, class A4, class A5, class A6, cl
 #undef BOOST_BIND_ST
 #undef BOOST_BIND_NOEXCEPT
 
+<<<<<<< HEAD
 #ifdef BOOST_BIND_ENABLE_STDCALL
+=======
+#if defined(BOOST_BIND_ENABLE_STDCALL) && !defined(_M_X64)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 #define BOOST_BIND_CC __stdcall
 #define BOOST_BIND_ST
@@ -2150,7 +2158,11 @@ template<class F, class A1, class A2, class A3, class A4, class A5, class A6, cl
 
 #endif
 
+<<<<<<< HEAD
 #ifdef BOOST_BIND_ENABLE_FASTCALL
+=======
+#if defined(BOOST_BIND_ENABLE_FASTCALL) && !defined(_M_X64)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 #define BOOST_BIND_CC __fastcall
 #define BOOST_BIND_ST
@@ -2187,7 +2199,11 @@ template<class F, class A1, class A2, class A3, class A4, class A5, class A6, cl
 #include <boost/bind/bind_mf_cc.hpp>
 #include <boost/bind/bind_mf2_cc.hpp>
 
+<<<<<<< HEAD
 # ifdef __cpp_noexcept_function_type
+=======
+# if defined( __cpp_noexcept_function_type ) || defined( _NOEXCEPT_TYPES_SUPPORTED )
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 #   undef BOOST_BIND_MF_NOEXCEPT
 #   define BOOST_BIND_MF_NOEXCEPT noexcept
 #   include <boost/bind/bind_mf_cc.hpp>
@@ -2197,7 +2213,11 @@ template<class F, class A1, class A2, class A3, class A4, class A5, class A6, cl
 #undef BOOST_BIND_MF_CC
 #undef BOOST_BIND_MF_NOEXCEPT
 
+<<<<<<< HEAD
 #ifdef BOOST_MEM_FN_ENABLE_CDECL
+=======
+#if defined(BOOST_MEM_FN_ENABLE_CDECL) && !defined(_M_X64)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 #define BOOST_BIND_MF_NAME(X) X##_cdecl
 #define BOOST_BIND_MF_CC __cdecl
@@ -2212,7 +2232,11 @@ template<class F, class A1, class A2, class A3, class A4, class A5, class A6, cl
 
 #endif
 
+<<<<<<< HEAD
 #ifdef BOOST_MEM_FN_ENABLE_STDCALL
+=======
+#if defined(BOOST_MEM_FN_ENABLE_STDCALL) && !defined(_M_X64)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 #define BOOST_BIND_MF_NAME(X) X##_stdcall
 #define BOOST_BIND_MF_CC __stdcall
@@ -2227,7 +2251,11 @@ template<class F, class A1, class A2, class A3, class A4, class A5, class A6, cl
 
 #endif
 
+<<<<<<< HEAD
 #ifdef BOOST_MEM_FN_ENABLE_FASTCALL
+=======
+#if defined(BOOST_MEM_FN_ENABLE_FASTCALL) && !defined(_M_X64)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 #define BOOST_BIND_MF_NAME(X) X##_fastcall
 #define BOOST_BIND_MF_CC __fastcall
@@ -2292,7 +2320,11 @@ template< class R, class T > struct add_cref< R (T::*) () const, 1 >
     typedef void type;
 };
 
+<<<<<<< HEAD
 #ifdef __cpp_noexcept_function_type
+=======
+#if defined( __cpp_noexcept_function_type ) || defined( _NOEXCEPT_TYPES_SUPPORTED )
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 template< class R, class T > struct add_cref< R (T::*) () const noexcept, 1 >
 {

@@ -13,6 +13,11 @@
 
 #include <iterator>
 
+<<<<<<< HEAD
+=======
+#include <boost/static_assert.hpp>
+
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 #include <boost/compute/system.hpp>
 #include <boost/compute/command_queue.hpp>
 #include <boost/compute/algorithm/detail/merge_sort_on_cpu.hpp>
@@ -22,6 +27,10 @@
 #include <boost/compute/algorithm/reverse.hpp>
 #include <boost/compute/functional/operator.hpp>
 #include <boost/compute/detail/iterator_range_size.hpp>
+<<<<<<< HEAD
+=======
+#include <boost/compute/type_traits/is_device_iterator.hpp>
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 namespace boost {
 namespace compute {
@@ -81,6 +90,11 @@ inline void stable_sort(Iterator first,
                         Compare compare,
                         command_queue &queue = system::default_queue())
 {
+<<<<<<< HEAD
+=======
+    BOOST_STATIC_ASSERT(is_device_iterator<Iterator>::value);
+
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     if(queue.get_device().type() & device::gpu) {
         ::boost::compute::detail::dispatch_gpu_stable_sort(
             first, last, compare, queue
@@ -96,6 +110,10 @@ inline void stable_sort(Iterator first,
                         Iterator last,
                         command_queue &queue = system::default_queue())
 {
+<<<<<<< HEAD
+=======
+    BOOST_STATIC_ASSERT(is_device_iterator<Iterator>::value);
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     typedef typename std::iterator_traits<Iterator>::value_type value_type;
 
     ::boost::compute::less<value_type> less;

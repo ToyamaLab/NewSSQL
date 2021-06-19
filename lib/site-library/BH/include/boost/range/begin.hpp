@@ -22,6 +22,11 @@
 #else
 
 #include <boost/range/iterator.hpp>
+<<<<<<< HEAD
+=======
+#include <boost/config.hpp>
+#include <boost/config/workaround.hpp>
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 namespace boost
 {
@@ -36,7 +41,11 @@ namespace range_detail
     //////////////////////////////////////////////////////////////////////
 
     template< typename C >
+<<<<<<< HEAD
     inline BOOST_DEDUCED_TYPENAME range_iterator<C>::type
+=======
+    BOOST_CONSTEXPR inline BOOST_DEDUCED_TYPENAME range_iterator<C>::type
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     range_begin( C& c )
     {
         //
@@ -52,13 +61,21 @@ namespace range_detail
     //////////////////////////////////////////////////////////////////////
 
     template< typename Iterator >
+<<<<<<< HEAD
     inline Iterator range_begin( const std::pair<Iterator,Iterator>& p )
+=======
+    BOOST_CONSTEXPR inline Iterator range_begin( const std::pair<Iterator,Iterator>& p )
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     {
         return p.first;
     }
 
     template< typename Iterator >
+<<<<<<< HEAD
     inline Iterator range_begin( std::pair<Iterator,Iterator>& p )
+=======
+    BOOST_CONSTEXPR inline Iterator range_begin( std::pair<Iterator,Iterator>& p )
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     {
         return p.first;
     }
@@ -71,13 +88,21 @@ namespace range_detail
     // May this be discarded? Or is it needed for bad compilers?
     //
     template< typename T, std::size_t sz >
+<<<<<<< HEAD
     inline const T* range_begin( const T (&a)[sz] )
+=======
+    BOOST_CONSTEXPR inline const T* range_begin( const T (&a)[sz] ) BOOST_NOEXCEPT
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     {
         return a;
     }
 
     template< typename T, std::size_t sz >
+<<<<<<< HEAD
     inline T* range_begin( T (&a)[sz] )
+=======
+    BOOST_CONSTEXPR inline T* range_begin( T (&a)[sz] ) BOOST_NOEXCEPT
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     {
         return a;
     }
@@ -94,6 +119,12 @@ namespace range_adl_barrier
 {
 
 template< class T >
+<<<<<<< HEAD
+=======
+#if !BOOST_WORKAROUND(BOOST_GCC, < 40700)
+BOOST_CONSTEXPR
+#endif
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 inline BOOST_DEDUCED_TYPENAME range_iterator<T>::type begin( T& r )
 {
 #if !BOOST_WORKAROUND(__BORLANDC__, BOOST_TESTED_AT(0x564))
@@ -103,6 +134,12 @@ inline BOOST_DEDUCED_TYPENAME range_iterator<T>::type begin( T& r )
 }
 
 template< class T >
+<<<<<<< HEAD
+=======
+#if !BOOST_WORKAROUND(BOOST_GCC, < 40700)
+BOOST_CONSTEXPR
+#endif
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 inline BOOST_DEDUCED_TYPENAME range_iterator<const T>::type begin( const T& r )
 {
 #if !BOOST_WORKAROUND(__BORLANDC__, BOOST_TESTED_AT(0x564))

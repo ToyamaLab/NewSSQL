@@ -158,6 +158,21 @@ public:
 
         BOOST_ASSERT(n0*w0 + (n - n0)*(w0 + 1) == w);
 
+<<<<<<< HEAD
+=======
+        BOOST_ASSERT((n == 1) == (w0 == w));
+
+        // special case to avoid undefined behavior from shifting
+        if(n == 1) {
+            BOOST_ASSERT(n0 == 1);
+            base_unsigned u;
+            do {
+                u = detail::subtract<base_result_type>()(_base(), (_base.min)());
+            } while(u > base_unsigned(y0 - 1));
+            return u & y0_mask;
+        }
+
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
         result_type S = 0;
         for(std::size_t k = 0; k < n0; ++k) {
             base_unsigned u;

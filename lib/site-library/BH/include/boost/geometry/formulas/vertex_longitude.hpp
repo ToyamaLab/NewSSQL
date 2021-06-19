@@ -1,6 +1,10 @@
 // Boost.Geometry
 
+<<<<<<< HEAD
 // Copyright (c) 2016-2017 Oracle and/or its affiliates.
+=======
+// Copyright (c) 2016-2018 Oracle and/or its affiliates.
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 // Contributed and/or modified by Vissarion Fysikopoulos, on behalf of Oracle
 // Contributed and/or modified by Adam Wulkiewicz, on behalf of Oracle
@@ -14,7 +18,11 @@
 
 #include <boost/geometry/formulas/spherical.hpp>
 #include <boost/geometry/formulas/flattening.hpp>
+<<<<<<< HEAD
 #include <boost/geometry/core/srs.hpp>
+=======
+
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 #include <boost/mpl/assert.hpp>
 
 #include <boost/math/special_functions/hypot.hpp>
@@ -209,12 +217,19 @@ public:
                             + C31 * (sin2_sig3 - sin2_sig1)
                             + C32 * (sin4_sig3 - sin4_sig1));
 
+<<<<<<< HEAD
         int sign = c1;
         if (bet3 < c0)
         {
             sign = cminus1;
         }
 
+=======
+        CT const sign = bet3 >= c0
+                      ? c1
+                      : cminus1;
+        
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
         CT const dlon_max = omg13 - sign * f * sin_alp0 * I3;
 
         return dlon_max;
@@ -334,6 +349,26 @@ public :
     }
 };
 
+<<<<<<< HEAD
+=======
+template <typename CT>
+class vertex_longitude<CT, cartesian_tag>
+{
+public :
+    template <typename Strategy>
+    static inline CT apply(CT& /*lon1*/,
+                           CT& /*lat1*/,
+                           CT& lon2,
+                           CT& /*lat2*/,
+                           CT const& /*vertex_lat*/,
+                           CT& /*alp1*/,
+                           Strategy const& /*azimuth_strategy*/)
+    {
+        return lon2;
+    }
+};
+
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 }}} // namespace boost::geometry::formula
 #endif // BOOST_GEOMETRY_FORMULAS_MAXIMUM_LONGITUDE_HPP
 

@@ -554,7 +554,11 @@ BOOST_COMPUTE_DETAIL_DEFINE_GET_INFO_SPECIALIZATIONS(device,
     ((std::string, CL_DEVICE_EXTENSIONS))
     ((cl_ulong, CL_DEVICE_GLOBAL_MEM_CACHE_SIZE))
     ((cl_device_mem_cache_type, CL_DEVICE_GLOBAL_MEM_CACHE_TYPE))
+<<<<<<< HEAD
     ((cl_ulong, CL_DEVICE_GLOBAL_MEM_CACHELINE_SIZE))
+=======
+    ((cl_uint, CL_DEVICE_GLOBAL_MEM_CACHELINE_SIZE))
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     ((cl_ulong, CL_DEVICE_GLOBAL_MEM_SIZE))
     ((bool, CL_DEVICE_IMAGE_SUPPORT))
     ((size_t, CL_DEVICE_IMAGE2D_MAX_HEIGHT))

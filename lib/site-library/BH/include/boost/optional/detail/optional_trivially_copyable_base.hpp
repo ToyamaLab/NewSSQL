@@ -30,7 +30,11 @@ class tc_optional_base : public optional_tag
       :
       m_initialized(false) {}
 
+<<<<<<< HEAD
     tc_optional_base ( argument_type val )
+=======
+    tc_optional_base ( init_value_tag, argument_type val )
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
       :
       m_initialized(true), m_storage(val) {}
 
@@ -71,7 +75,11 @@ class tc_optional_base : public optional_tag
     // Assigns from another optional<T> (deep-copies the rhs value)
     void assign ( tc_optional_base const& rhs ) 
     {
+<<<<<<< HEAD
       this->operator=(rhs);
+=======
+      *this = rhs;
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     }
 
     // Assigns from another _convertible_ optional<U> (deep-copies the rhs value)
@@ -127,7 +135,11 @@ class tc_optional_base : public optional_tag
 
   public :
 
+<<<<<<< HEAD
     // **DEPPRECATED** Destroys the current value, if any, leaving this UNINITIALIZED
+=======
+    // Destroys the current value, if any, leaving this UNINITIALIZED
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     // No-throw (assuming T::~T() doesn't)
     void reset() BOOST_NOEXCEPT { destroy(); }
 

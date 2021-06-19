@@ -1,8 +1,15 @@
 // Boost.Geometry (aka GGL, Generic Geometry Library)
 
+<<<<<<< HEAD
 // Copyright (c) 2014, Oracle and/or its affiliates.
 
 // Contributed and/or modified by Menelaos Karavelas, on behalf of Oracle
+=======
+// Copyright (c) 2014, 2018, 2019, Oracle and/or its affiliates.
+
+// Contributed and/or modified by Menelaos Karavelas, on behalf of Oracle
+// Contributed and/or modified by Adam Wulkiewicz, on behalf of Oracle
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 // Licensed under the Boost Software License version 1.0.
 // http://www.boost.org/users/license.html
@@ -19,6 +26,10 @@
 
 #include <boost/core/addressof.hpp>
 
+<<<<<<< HEAD
+=======
+#include <boost/geometry/algorithms/detail/signed_size_type.hpp>
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 #include <boost/geometry/core/assert.hpp>
 #include <boost/geometry/policies/compare.hpp>
 
@@ -30,7 +41,11 @@ namespace detail { namespace is_valid
 {
 
 
+<<<<<<< HEAD
 template <typename TurnPoint>
+=======
+template <typename TurnPoint, typename CSTag>
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 class complement_graph_vertex
 {
 public:
@@ -53,7 +68,11 @@ public:
         {
             return geometry::less
                 <
+<<<<<<< HEAD
                     TurnPoint
+=======
+                    TurnPoint, -1, CSTag
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
                 >()(*m_turn_point, *other.m_turn_point);
         }
         if ( m_turn_point == NULL && other.m_turn_point == NULL )
@@ -75,11 +94,19 @@ private:
 
 
 
+<<<<<<< HEAD
 template <typename TurnPoint>
 class complement_graph
 {
 private:
     typedef complement_graph_vertex<TurnPoint> vertex;
+=======
+template <typename TurnPoint, typename CSTag>
+class complement_graph
+{
+private:
+    typedef complement_graph_vertex<TurnPoint, CSTag> vertex;
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     typedef std::set<vertex> vertex_container;
 
 public:
@@ -221,9 +248,17 @@ public:
         return false;
     }
 
+<<<<<<< HEAD
     template <typename OStream, typename TP>
     friend inline
     void debug_print_complement_graph(OStream&, complement_graph<TP> const&);
+=======
+#ifdef BOOST_GEOMETRY_TEST_DEBUG
+    template <typename OStream, typename TP>
+    friend inline
+    void debug_print_complement_graph(OStream&, complement_graph<TP> const&);
+#endif // BOOST_GEOMETRY_TEST_DEBUG
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 private:
     std::size_t m_num_rings, m_num_turns;

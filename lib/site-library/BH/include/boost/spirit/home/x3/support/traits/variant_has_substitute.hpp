@@ -9,6 +9,10 @@
 #define BOOST_SPIRIT_X3_VARIANT_HAS_SUBSTITUTE_APR_18_2014_925AM
 
 #include <boost/spirit/home/x3/support/traits/is_substitute.hpp>
+<<<<<<< HEAD
+=======
+#include <boost/mpl/find.hpp>
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 namespace boost { namespace spirit { namespace x3 { namespace traits
 {
@@ -22,9 +26,13 @@ namespace boost { namespace spirit { namespace x3 { namespace traits
         typedef typename variant_type::types types;
         typedef typename mpl::end<types>::type end;
 
+<<<<<<< HEAD
         typedef typename
             mpl::find_if<types, is_same<mpl::_1, Attribute>>::type
         iter_1;
+=======
+        typedef typename mpl::find<types, Attribute>::type iter_1;
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
         typedef typename
             mpl::eval_if<

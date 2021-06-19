@@ -6,11 +6,17 @@
     Distributed under the Boost Software License, Version 1.0. (See accompanying
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 =============================================================================*/
+<<<<<<< HEAD
 #if !defined(SPIRIT_SIGN_MAR_11_2009_0734PM)
 #define SPIRIT_SIGN_MAR_11_2009_0734PM
 
 #include <boost/config/no_tr1/cmath.hpp>
 #include <boost/math/special_functions/fpclassify.hpp>
+=======
+#if !defined(BOOST_SPIRIT_X3_SIGN_MAR_11_2009_0734PM)
+#define BOOST_SPIRIT_X3_SIGN_MAR_11_2009_0734PM
+
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 #include <boost/math/special_functions/sign.hpp>
 
 namespace boost { namespace spirit { namespace x3
@@ -21,6 +27,7 @@ namespace boost { namespace spirit { namespace x3
         return (boost::math::signbit)(x) ? true : false;
     }
 
+<<<<<<< HEAD
     // This routine has been taken and adapted from Johan Rade's fp_traits
     // library
     template<typename T>
@@ -37,6 +44,12 @@ namespace boost { namespace spirit { namespace x3
         traits_type::set_bits(x, a);
         return x;
 #endif
+=======
+    template<typename T>
+    inline T (changesign)(T x)
+    {
+        return (boost::math::changesign)(x);
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     }
 
 }}}

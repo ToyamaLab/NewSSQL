@@ -52,6 +52,12 @@
 #     include <sys/param.h>
 #     include <sys/sysctl.h>
 #  endif
+<<<<<<< HEAD
+=======
+#if defined(__VXWORKS__) 
+#include <vxCpuLib.h>
+#endif 
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 //According to the article "C/C++ tip: How to measure elapsed real time for benchmarking"
 //Check MacOs first as macOS 10.12 SDK defines both CLOCK_MONOTONIC and
 //CLOCK_MONOTONIC_RAW and no clock_gettime.
@@ -480,6 +486,21 @@ inline unsigned int get_num_cores()
       else{
          return static_cast<unsigned int>(num_cores);
       }
+<<<<<<< HEAD
+=======
+   #elif defined(__VXWORKS__)
+      cpuset_t set =  ::vxCpuEnabledGet();
+    #ifdef __DCC__
+      int i;
+      for( i = 0; set; ++i)
+          {
+               set &= set -1;
+          }
+      return(i);
+    #else  
+      return (__builtin_popcount(set) );
+    #endif  
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
    #endif
 }
 

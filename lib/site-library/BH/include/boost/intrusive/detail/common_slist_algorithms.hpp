@@ -52,7 +52,11 @@ class common_slist_algorithms
       return p;
    }
 
+<<<<<<< HEAD
    BOOST_INTRUSIVE_FORCEINLINE static void init(const node_ptr & this_node)
+=======
+   BOOST_INTRUSIVE_FORCEINLINE static void init(node_ptr this_node)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
    {  NodeTraits::set_next(this_node, node_ptr());  }
 
    BOOST_INTRUSIVE_FORCEINLINE static bool unique(const const_node_ptr & this_node)
@@ -64,29 +68,48 @@ class common_slist_algorithms
    BOOST_INTRUSIVE_FORCEINLINE static bool inited(const const_node_ptr & this_node)
    {  return !NodeTraits::get_next(this_node); }
 
+<<<<<<< HEAD
    BOOST_INTRUSIVE_FORCEINLINE static void unlink_after(const node_ptr & prev_node)
+=======
+   BOOST_INTRUSIVE_FORCEINLINE static void unlink_after(node_ptr prev_node)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
    {
       const_node_ptr this_node(NodeTraits::get_next(prev_node));
       NodeTraits::set_next(prev_node, NodeTraits::get_next(this_node));
    }
 
+<<<<<<< HEAD
    BOOST_INTRUSIVE_FORCEINLINE static void unlink_after(const node_ptr & prev_node, const node_ptr & last_node)
    {  NodeTraits::set_next(prev_node, last_node);  }
 
    BOOST_INTRUSIVE_FORCEINLINE static void link_after(const node_ptr & prev_node, const node_ptr & this_node)
+=======
+   BOOST_INTRUSIVE_FORCEINLINE static void unlink_after(node_ptr prev_node, node_ptr last_node)
+   {  NodeTraits::set_next(prev_node, last_node);  }
+
+   BOOST_INTRUSIVE_FORCEINLINE static void link_after(node_ptr prev_node, node_ptr this_node)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
    {
       NodeTraits::set_next(this_node, NodeTraits::get_next(prev_node));
       NodeTraits::set_next(prev_node, this_node);
    }
 
+<<<<<<< HEAD
    BOOST_INTRUSIVE_FORCEINLINE static void incorporate_after(const node_ptr & bp, const node_ptr & b, const node_ptr & be)
+=======
+   BOOST_INTRUSIVE_FORCEINLINE static void incorporate_after(node_ptr bp, node_ptr b, node_ptr be)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
    {
       node_ptr p(NodeTraits::get_next(bp));
       NodeTraits::set_next(bp, b);
       NodeTraits::set_next(be, p);
    }
 
+<<<<<<< HEAD
    static void transfer_after(const node_ptr & bp, const node_ptr & bb, const node_ptr & be)
+=======
+   static void transfer_after(node_ptr bp, node_ptr bb, node_ptr be)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
    {
       if (bp != bb && bp != be && bb != be) {
          node_ptr next_b = NodeTraits::get_next(bb);
@@ -107,7 +130,11 @@ class common_slist_algorithms
    };
 
    template<class Pred>
+<<<<<<< HEAD
    static void stable_partition(node_ptr before_beg, const node_ptr &end, Pred pred, stable_partition_info &info)
+=======
+   static void stable_partition(node_ptr before_beg, node_ptr end, Pred pred, stable_partition_info &info)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
    {
       node_ptr bcur = before_beg;
       node_ptr cur  = node_traits::get_next(bcur);

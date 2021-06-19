@@ -138,12 +138,20 @@ public:
 
    size_type BOOST_REGEX_CALL size()
    {
+<<<<<<< HEAD
       return end - start;
+=======
+      return size_type(end - start);
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
    }
 
    size_type BOOST_REGEX_CALL capacity()
    {
+<<<<<<< HEAD
       return last - start;
+=======
+      return size_type(last - start);
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
    }
 
    void* BOOST_REGEX_CALL data()const
@@ -153,7 +161,11 @@ public:
 
    size_type BOOST_REGEX_CALL index(void* ptr)
    {
+<<<<<<< HEAD
       return static_cast<pointer>(ptr) - static_cast<pointer>(data());
+=======
+      return size_type(static_cast<pointer>(ptr) - static_cast<pointer>(data()));
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
    }
 
    void BOOST_REGEX_CALL clear()

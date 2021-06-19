@@ -1,0 +1,3 @@
+GENERATE HTML
+[sa.date@{width=100}, [cross_tab([st.state@{width=104}],, [i.name@{width=200}]!, sum[sa.quantity]@{width=100})@{side_width=202}]!]!
+FROM item i left outer join sale sa on (i.id = sale.item) left outer join store st on (st.id = sa.store)

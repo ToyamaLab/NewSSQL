@@ -25,6 +25,7 @@
 #if !BOOST_WORKAROUND(__BORLANDC__, BOOST_TESTED_AT(0x551))
 template<typename F BOOST_PP_ENUM_TRAILING_PARAMS(BOOST_PP_ITERATION(),typename T)>
 struct tr1_result_of<F(BOOST_RESULT_OF_ARGS)>
+<<<<<<< HEAD
     : mpl::if_<
           mpl::or_< is_pointer<F>, is_member_function_pointer<F> >
         , boost::detail::tr1_result_of_impl<
@@ -35,6 +36,18 @@ struct tr1_result_of<F(BOOST_RESULT_OF_ARGS)>
             F,
             F(BOOST_RESULT_OF_ARGS),
             (boost::detail::has_result_type<F>::value)> >::type { };
+=======
+    : conditional<
+        is_pointer<F>::value || is_member_function_pointer<F>::value
+        , boost::detail::tr1_result_of_impl<
+            typename remove_cv<F>::type,
+            typename remove_cv<F>::type(BOOST_RESULT_OF_ARGS),
+            (boost::detail::result_of_has_result_type<F>::value)>
+        , boost::detail::tr1_result_of_impl<
+            F,
+            F(BOOST_RESULT_OF_ARGS),
+            (boost::detail::result_of_has_result_type<F>::value)> >::type { };
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 #endif
 
 #ifdef BOOST_RESULT_OF_USE_DECLTYPE
@@ -46,7 +59,11 @@ struct result_of<F(BOOST_RESULT_OF_ARGS)>
 #ifdef BOOST_RESULT_OF_USE_TR1_WITH_DECLTYPE_FALLBACK
 template<typename F BOOST_PP_ENUM_TRAILING_PARAMS(BOOST_PP_ITERATION(),typename T)>
 struct result_of<F(BOOST_RESULT_OF_ARGS)>
+<<<<<<< HEAD
     : mpl::if_<mpl::or_<detail::has_result_type<F>, detail::has_result<F> >,
+=======
+    : conditional<detail::result_of_has_result_type<F>::value || detail::result_of_has_result<F>::value,
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
                tr1_result_of<F(BOOST_RESULT_OF_ARGS)>,
                detail::cpp0x_result_of<F(BOOST_RESULT_OF_ARGS)> >::type { };
 #endif // BOOST_RESULT_OF_USE_TR1_WITH_DECLTYPE_FALLBACK
@@ -57,8 +74,13 @@ namespace detail {
 
 template<typename F BOOST_PP_ENUM_TRAILING_PARAMS(BOOST_PP_ITERATION(),typename T)>
 struct cpp0x_result_of<F(BOOST_PP_ENUM_PARAMS(BOOST_PP_ITERATION(),T))>
+<<<<<<< HEAD
     : mpl::if_<
           is_member_function_pointer<F>
+=======
+    : conditional<
+          is_member_function_pointer<F>::value
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
         , detail::tr1_result_of_impl<
             typename remove_cv<F>::type,
             typename remove_cv<F>::type(BOOST_PP_ENUM_PARAMS(BOOST_PP_ITERATION(),T)), false
@@ -93,11 +115,19 @@ struct BOOST_PP_CAT(result_of_callable_fun_, BOOST_PP_ITERATION())<F *>
 
 template<typename F>
 struct BOOST_PP_CAT(result_of_select_call_wrapper_type_, BOOST_PP_ITERATION())
+<<<<<<< HEAD
   : mpl::eval_if<
         is_class<typename remove_reference<F>::type>,
         result_of_wrap_callable_class<F>,
         mpl::identity<BOOST_PP_CAT(result_of_callable_fun_, BOOST_PP_ITERATION())<typename remove_cv<typename remove_reference<F>::type>::type> >
     >
+=======
+  : conditional<
+        is_class<typename remove_reference<F>::type>::value,
+        result_of_wrap_callable_class<F>,
+        type_identity<BOOST_PP_CAT(result_of_callable_fun_, BOOST_PP_ITERATION())<typename remove_cv<typename remove_reference<F>::type>::type> >
+    >::type
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 {};
 
 template<typename F BOOST_PP_ENUM_TRAILING_PARAMS(BOOST_PP_ITERATION(), typename T)>
@@ -108,7 +138,11 @@ struct BOOST_PP_CAT(result_of_is_callable_, BOOST_PP_ITERATION()) {
             (boost::declval<wrapper_t>()(BOOST_PP_ENUM_BINARY_PARAMS(BOOST_PP_ITERATION(), boost::declval<T, >() BOOST_PP_INTERCEPT)), result_of_weird_type())
         ))
     );
+<<<<<<< HEAD
     typedef mpl::bool_<value> type;
+=======
+    typedef integral_constant<bool, value> type;
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 };
 
 template<typename F BOOST_PP_ENUM_TRAILING_PARAMS(BOOST_PP_ITERATION(),typename T)>

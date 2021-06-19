@@ -10,7 +10,11 @@
 
 # ifdef BOOST_OLD_CONCEPT_SUPPORT
 #  include <boost/concept/detail/has_constraints.hpp>
+<<<<<<< HEAD
 #  include <boost/mpl/if.hpp>
+=======
+#  include <boost/type_traits/conditional.hpp>
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 # endif
 
 # ifdef BOOST_MSVC
@@ -54,7 +58,11 @@ namespace detail
 
 template <class Model>
 struct require
+<<<<<<< HEAD
   : mpl::if_c<
+=======
+  : boost::conditional<
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
         not_satisfied<Model>::value
       , detail::constraint
 # ifndef BOOST_NO_PARTIAL_SPECIALIZATION

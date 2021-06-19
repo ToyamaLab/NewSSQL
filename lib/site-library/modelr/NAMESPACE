@@ -23,6 +23,10 @@ export(add_predictors)
 export(add_residuals)
 export(bootstrap)
 export(crossv_kfold)
+<<<<<<< HEAD
+=======
+export(crossv_loo)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 export(crossv_mc)
 export(data_grid)
 export(fit_with)

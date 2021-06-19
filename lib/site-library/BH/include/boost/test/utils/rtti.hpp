@@ -17,6 +17,10 @@
 
 // C Runtime
 #include <cstddef>
+<<<<<<< HEAD
+=======
+#include <boost/test/detail/config.hpp>
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 namespace boost {
 namespace rtti {
@@ -30,7 +34,11 @@ typedef std::ptrdiff_t id_t;
 namespace rtti_detail {
 
 template<typename T>
+<<<<<<< HEAD
 struct rttid_holder {
+=======
+struct BOOST_TEST_DECL rttid_holder {
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     static id_t id() { return reinterpret_cast<id_t>( &inst() ); }
 
 private:
@@ -44,7 +52,11 @@ private:
 //____________________________________________________________________________//
 
 template<typename T>
+<<<<<<< HEAD
 inline id_t
+=======
+BOOST_TEST_DECL inline id_t
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 type_id()
 {
     return rtti_detail::rttid_holder<T>::id();

@@ -29,10 +29,17 @@
 
 #if RCPP_STRING_DEBUG_LEVEL > 0
     #define RCPP_STRING_DEBUG_FORMAT "%40s:%4d "
+<<<<<<< HEAD
     #define RCPP_STRING_DEBUG(MSG) Rprintf(RCPP_STRING_DEBUG_FORMAT "%s\n" , short_file_name(__FILE__), __LINE__, MSG);
     #define RCPP_STRING_DEBUG_1(fmt, MSG) Rprintf(RCPP_STRING_DEBUG_FORMAT fmt "\n" , short_file_name(__FILE__), __LINE__, MSG);
     #define RCPP_STRING_DEBUG_2(fmt, M1, M2) Rprintf(RCPP_STRING_DEBUG_FORMAT fmt "\n" , short_file_name(__FILE__), __LINE__, M1, M2);
     #define RCPP_STRING_DEBUG_3(fmt, M1, M2, M3) Rprintf(RCPP_STRING_DEBUG_FORMAT fmt "\n" , short_file_name(__FILE__), __LINE__, M1, M2, M3);
+=======
+    #define RCPP_STRING_DEBUG(MSG) Rprintf(RCPP_STRING_DEBUG_FORMAT "%s\n" , ::Rcpp::internal::debug::short_file_name(__FILE__).c_str(), __LINE__, MSG);
+    #define RCPP_STRING_DEBUG_1(fmt, MSG) Rprintf(RCPP_STRING_DEBUG_FORMAT fmt "\n" , ::Rcpp::internal::debug::short_file_name(__FILE__).c_str(), __LINE__, MSG);
+    #define RCPP_STRING_DEBUG_2(fmt, M1, M2) Rprintf(RCPP_STRING_DEBUG_FORMAT fmt "\n" , ::Rcpp::internal::debug::short_file_name(__FILE__).c_str(), __LINE__, M1, M2);
+    #define RCPP_STRING_DEBUG_3(fmt, M1, M2, M3) Rprintf(RCPP_STRING_DEBUG_FORMAT fmt "\n" , ::Rcpp::internal::debug::short_file_name(__FILE__).c_str(), __LINE__, M1, M2, M3);
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 #else
     #define RCPP_STRING_DEBUG(MSG)
     #define RCPP_STRING_DEBUG_1(fmt, MSG)
@@ -364,9 +371,28 @@ namespace Rcpp {
         }
 
 
+<<<<<<< HEAD
         inline SEXP get_sexp() const {
             RCPP_STRING_DEBUG_1("String::get_sexp const (valid = %d) ", valid);
             return valid ? data : Rf_mkCharCE(buffer.c_str(), enc);
+=======
+        inline SEXP get_sexp_impl() const {
+
+            // workaround for h5 package (currently deprecated so updates
+            // to CRAN may not be timely)
+#ifdef __H5Cpp_H
+            return Rf_mkCharCE(buffer.c_str(), enc);
+#else
+            if (buffer.find('\0') != std::string::npos)
+                throw embedded_nul_in_string();
+            return Rf_mkCharLenCE(buffer.c_str(), buffer.size(), enc);
+#endif
+        }
+
+        inline SEXP get_sexp() const {
+            RCPP_STRING_DEBUG_1("String::get_sexp const (valid = %d) ", valid);
+            return valid ? data : get_sexp_impl();
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
         }
 
         inline SEXP get_sexp() {
@@ -395,9 +421,17 @@ namespace Rcpp {
             enc = encoding;
 
             if (valid) {
+<<<<<<< HEAD
                 data = Rcpp_ReplaceObject(data, Rf_mkCharCE(Rf_translateCharUTF8(data), encoding));
             } else {
                 data = Rf_mkCharCE(buffer.c_str(), encoding);
+=======
+                // TODO: may longjmp on failure to translate?
+                const char* translated = Rf_translateCharUTF8(data);
+                data = Rcpp_ReplaceObject(data, Rf_mkCharCE(translated, encoding));
+            } else {
+                data = get_sexp_impl();
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
                 Rcpp_PreserveObject(data);
                 valid = true;
             }
@@ -469,7 +503,11 @@ namespace Rcpp {
         inline void setData() {
             RCPP_STRING_DEBUG("setData");
             if (!valid) {
+<<<<<<< HEAD
                 data = Rf_mkCharCE(buffer.c_str(), enc);
+=======
+                data = get_sexp_impl();
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
                 Rcpp_PreserveObject(data);
                 valid = true;
             }
@@ -517,7 +555,10 @@ namespace Rcpp {
         RCPP_STRING_DEBUG("wrap<String>()");
         Shield<SEXP> res(Rf_allocVector(STRSXP, 1));
         SEXP data = object.get_sexp();
+<<<<<<< HEAD
         Rcpp_PreserveObject(data);
+=======
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
         SET_STRING_ELT(res, 0, data);
         return res;
     }

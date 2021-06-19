@@ -2,11 +2,20 @@
 
 // Copyright (c) 2007-2014 Barend Gehrels, Amsterdam, the Netherlands.
 
+<<<<<<< HEAD
 // This file was modified by Oracle on 2014-2017.
 // Modifications copyright (c) 2014-2017, Oracle and/or its affiliates.
 
 // Contributed and/or modified by Vissarion Fysikopoulos, on behalf of Oracle
 // Contributed and/or modified by Menelaos Karavelas, on behalf of Oracle
+=======
+// This file was modified by Oracle on 2014-2019.
+// Modifications copyright (c) 2014-2019, Oracle and/or its affiliates.
+
+// Contributed and/or modified by Vissarion Fysikopoulos, on behalf of Oracle
+// Contributed and/or modified by Menelaos Karavelas, on behalf of Oracle
+// Contributed and/or modified by Adam Wulkiewicz, on behalf of Oracle
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 // Use, modification and distribution is subject to the Boost Software License,
 // Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
@@ -27,9 +36,19 @@
 #include <boost/geometry/core/radian_access.hpp>
 #include <boost/geometry/core/tags.hpp>
 
+<<<<<<< HEAD
 #include <boost/geometry/strategies/distance.hpp>
 #include <boost/geometry/strategies/concepts/distance_concept.hpp>
 #include <boost/geometry/strategies/spherical/distance_haversine.hpp>
+=======
+#include <boost/geometry/formulas/spherical.hpp>
+
+#include <boost/geometry/strategies/distance.hpp>
+#include <boost/geometry/strategies/concepts/distance_concept.hpp>
+#include <boost/geometry/strategies/spherical/distance_haversine.hpp>
+#include <boost/geometry/strategies/spherical/point_in_point.hpp>
+#include <boost/geometry/strategies/spherical/intersection.hpp>
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 #include <boost/geometry/util/math.hpp>
 #include <boost/geometry/util/promote_floating_point.hpp>
@@ -326,6 +345,31 @@ template
 class cross_track
 {
 public :
+<<<<<<< HEAD
+=======
+    typedef within::spherical_point_point equals_point_point_strategy_type;
+
+    typedef intersection::spherical_segments
+        <
+            CalculationType
+        > relate_segment_segment_strategy_type;
+
+    static inline relate_segment_segment_strategy_type get_relate_segment_segment_strategy()
+    {
+        return relate_segment_segment_strategy_type();
+    }
+
+    typedef within::spherical_winding
+        <
+            void, void, CalculationType
+        > point_in_geometry_strategy_type;
+
+    static inline point_in_geometry_strategy_type get_point_in_geometry_strategy()
+    {
+        return point_in_geometry_strategy_type();
+    }
+
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     template <typename Point, typename PointOfSegment>
     struct return_type
         : promote_floating_point
@@ -352,7 +396,10 @@ public :
         : m_strategy(s)
     {}
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     // It might be useful in the future
     // to overload constructor with strategy info.
     // crosstrack(...) {}
@@ -468,6 +515,15 @@ public :
         }
     }
 
+<<<<<<< HEAD
+=======
+    template <typename T1, typename T2>
+    inline radius_type vertical_or_meridian(T1 lat1, T2 lat2) const
+    {
+        return m_strategy.radius() * (lat1 - lat2);
+    }
+
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     inline typename Strategy::radius_type radius() const
     { return m_strategy.radius(); }
 
@@ -500,6 +556,31 @@ template
 class cross_track
 {
 public :
+<<<<<<< HEAD
+=======
+    typedef within::spherical_point_point equals_point_point_strategy_type;
+
+    typedef intersection::spherical_segments
+        <
+            CalculationType
+        > relate_segment_segment_strategy_type;
+
+    static inline relate_segment_segment_strategy_type get_relate_segment_segment_strategy()
+    {
+        return relate_segment_segment_strategy_type();
+    }
+
+    typedef within::spherical_winding
+        <
+            void, void, CalculationType
+        > point_in_geometry_strategy_type;
+
+    static inline point_in_geometry_strategy_type get_point_in_geometry_strategy()
+    {
+        return point_in_geometry_strategy_type();
+    }
+
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     template <typename Point, typename PointOfSegment>
     struct return_type
         : promote_floating_point
@@ -526,7 +607,10 @@ public :
         : m_strategy(s)
     {}
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     // It might be useful in the future
     // to overload constructor with strategy info.
     // crosstrack(...) {}
@@ -559,6 +643,15 @@ public :
         return c * radius();
     }
 
+<<<<<<< HEAD
+=======
+    template <typename T1, typename T2>
+    inline radius_type vertical_or_meridian(T1 lat1, T2 lat2) const
+    {
+        return m_strategy.radius() * (lat1 - lat2);
+    }
+
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     inline typename Strategy::radius_type radius() const
     { return m_strategy.radius(); }
 

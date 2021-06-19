@@ -36,8 +36,11 @@
 # include <boost/fusion/container/map/detail/cpp03/map_fwd.hpp>
 #else
 
+<<<<<<< HEAD
 #include <boost/fusion/container/map/detail/map_impl.hpp>
 
+=======
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 ///////////////////////////////////////////////////////////////////////////////
 // C++11 interface
 ///////////////////////////////////////////////////////////////////////////////

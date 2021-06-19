@@ -6,13 +6,21 @@
 #if !defined(BOOST_SPIRIT_REPOSITORY_QI_ADVANCE_JAN_23_2011_1203PM)
 #define BOOST_SPIRIT_REPOSITORY_QI_ADVANCE_JAN_23_2011_1203PM
 
+<<<<<<< HEAD
+=======
+#include <boost/spirit/home/support/terminal.hpp>
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 #include <boost/spirit/include/qi_parse.hpp>
 
 ///////////////////////////////////////////////////////////////////////////////
 // definition the place holder
 namespace boost { namespace spirit { namespace repository { namespace qi
 {
+<<<<<<< HEAD
     BOOST_SPIRIT_TERMINAL_EX(advance);
+=======
+    BOOST_SPIRIT_TERMINAL_EX(advance)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 }}}}
 
 ///////////////////////////////////////////////////////////////////////////////

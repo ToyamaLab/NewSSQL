@@ -25,9 +25,14 @@
 #endif
 
 namespace boost {
+<<<<<<< HEAD
    namespace detail{
 
 #ifndef __BORLANDC__
+=======
+#ifndef __BORLANDC__
+   namespace detail{
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
       union max_align
       {
@@ -76,7 +81,11 @@ template <std::size_t Target> struct short_alignment<Target, false>{ typedef typ
 template <std::size_t Target, bool check> struct char_alignment{ typedef char type; };
 template <std::size_t Target> struct char_alignment<Target, false>{ typedef typename short_alignment<Target, boost::alignment_of<short>::value >= Target>::type type; };
 
+<<<<<<< HEAD
 }
+=======
+} // namespace detail
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 template <std::size_t Align>
 struct type_with_alignment 

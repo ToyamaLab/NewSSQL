@@ -754,6 +754,7 @@ namespace boost { namespace spirit { namespace char_class
 namespace boost { namespace spirit { namespace traits
 {
     ///////////////////////////////////////////////////////////////////////////
+<<<<<<< HEAD
     // This meta-function evaluates to mpl::true_ if the function
     // char_encoding::ischar() needs to be called to ensure correct matching.
     // This happens mainly if the character type returned from the underlying
@@ -787,6 +788,16 @@ namespace boost { namespace spirit { namespace traits
         }
     };
 
+=======
+    template <typename CharParam, typename CharEncoding>
+    struct ischar
+    {
+        static bool call(CharParam const& ch)
+        {
+           return CharEncoding::ischar(int(ch));
+        }
+    };
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 }}}
 
 #if defined(BOOST_MSVC)

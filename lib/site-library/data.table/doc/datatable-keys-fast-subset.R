@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 ## ---- echo = FALSE, message = FALSE--------------------------------------
+=======
+## ---- echo = FALSE, message = FALSE---------------------------------------------------------------
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 require(data.table)
 knitr::opts_chunk$set(
   comment = "#",
@@ -125,7 +129,11 @@ flights[.("JFK", "MIA"), mult = "first"]
 flights[.(c("LGA", "JFK", "EWR"), "XNA"), mult = "last"]
 
 ## -------------------------------------------------------------------------------------------------
+<<<<<<< HEAD
 flights[.(c("LGA", "JFK", "EWR"), "XNA"), mult = "last", nomatch = 0L]
+=======
+flights[.(c("LGA", "JFK", "EWR"), "XNA"), mult = "last", nomatch = NULL]
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 ## ----eval = FALSE---------------------------------------------------------------------------------
 #  # key by origin,dest columns

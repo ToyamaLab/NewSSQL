@@ -6,6 +6,11 @@
 #ifndef FILE_boost_type_traits_floating_point_promotion_hpp_INCLUDED
 #define FILE_boost_type_traits_floating_point_promotion_hpp_INCLUDED
 
+<<<<<<< HEAD
+=======
+#include <boost/config.hpp>
+
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 namespace boost {
 
    template<class T> struct floating_point_promotion { typedef T type; };

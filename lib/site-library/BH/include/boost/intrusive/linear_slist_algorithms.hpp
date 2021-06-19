@@ -184,7 +184,11 @@ class linear_slist_algorithms
    //! <b>Complexity</b>: Constant
    //!
    //! <b>Throws</b>: Nothing.
+<<<<<<< HEAD
    static void swap_trailing_nodes(const node_ptr & this_node, const node_ptr & other_node)
+=======
+   static void swap_trailing_nodes(node_ptr this_node, node_ptr other_node)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
    {
       node_ptr this_nxt    = NodeTraits::get_next(this_node);
       node_ptr other_nxt   = NodeTraits::get_next(other_node);
@@ -199,7 +203,11 @@ class linear_slist_algorithms
    //! <b>Throws</b>: Nothing.
    //!
    //! <b>Complexity</b>: This function is linear to the contained elements.
+<<<<<<< HEAD
    static node_ptr reverse(const node_ptr & p)
+=======
+   static node_ptr reverse(node_ptr p)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
    {
       if(!p) return node_ptr();
       node_ptr i = NodeTraits::get_next(p);
@@ -222,7 +230,11 @@ class linear_slist_algorithms
    //! <b>Throws</b>: Nothing.
    //!
    //! <b>Complexity</b>: Linear to the number of elements plus the number moved positions.
+<<<<<<< HEAD
    static std::pair<node_ptr, node_ptr> move_first_n_backwards(const node_ptr & p, std::size_t n)
+=======
+   static std::pair<node_ptr, node_ptr> move_first_n_backwards(node_ptr p, std::size_t n)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
    {
       std::pair<node_ptr, node_ptr> ret;
       //Null shift, or count() == 0 or 1, nothing to do
@@ -277,7 +289,11 @@ class linear_slist_algorithms
    //! <b>Throws</b>: Nothing.
    //!
    //! <b>Complexity</b>: Linear to the number of elements plus the number moved positions.
+<<<<<<< HEAD
    static std::pair<node_ptr, node_ptr> move_first_n_forward(const node_ptr & p, std::size_t n)
+=======
+   static std::pair<node_ptr, node_ptr> move_first_n_forward(node_ptr p, std::size_t n)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
    {
       std::pair<node_ptr, node_ptr> ret;
       //Null shift, or count() == 0 or 1, nothing to do

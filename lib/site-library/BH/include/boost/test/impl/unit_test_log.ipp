@@ -159,6 +159,13 @@ unit_test_log_impl& s_log_impl() { static unit_test_log_impl the_inst; return th
 
 //____________________________________________________________________________//
 
+<<<<<<< HEAD
+=======
+BOOST_TEST_SINGLETON_CONS_IMPL( unit_test_log_t )
+
+//____________________________________________________________________________//
+
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 void
 unit_test_log_t::test_start( counter_t test_cases_amount )
 {
@@ -168,8 +175,14 @@ unit_test_log_t::test_start( counter_t test_cases_amount )
 
       current_logger_data.m_log_formatter->log_start( current_logger_data.stream(), test_cases_amount );
 
+<<<<<<< HEAD
       if( runtime_config::get<bool>( runtime_config::btrt_build_info ) )
           current_logger_data.m_log_formatter->log_build_info( current_logger_data.stream() );
+=======
+      current_logger_data.m_log_formatter->log_build_info(
+          current_logger_data.stream(),
+          runtime_config::get<bool>( runtime_config::btrt_build_info ));
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
       //current_logger_data.stream().flush();
 
@@ -263,6 +276,23 @@ unit_test_log_t::test_unit_aborted( test_unit const& tu )
     }
 }
 
+<<<<<<< HEAD
+=======
+void
+unit_test_log_t::test_unit_timed_out( test_unit const& tu )
+{
+    if( s_log_impl().has_entry_in_progress() )
+        *this << log::end();
+
+    BOOST_TEST_FOREACH( unit_test_log_data_helper_impl&, current_logger_data, s_log_impl().m_log_formatter_data ) {
+        if( !current_logger_data.m_enabled || current_logger_data.get_log_level() > log_test_units )
+            continue;
+
+        current_logger_data.m_log_formatter->test_unit_timed_out(current_logger_data.stream(), tu );
+    }
+}
+
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 //____________________________________________________________________________//
 
 void
@@ -525,6 +555,20 @@ unit_test_log_t::set_stream( output_format log_format, std::ostream& str )
     }
 }
 
+<<<<<<< HEAD
+=======
+std::ostream*
+unit_test_log_t::get_stream( output_format log_format ) const
+{
+    BOOST_TEST_FOREACH( unit_test_log_data_helper_impl&, current_logger_data, s_log_impl().m_log_formatter_data ) {
+        if( current_logger_data.m_format == log_format) {
+            return current_logger_data.m_stream;
+        }
+    }
+    return 0;
+}
+
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 //____________________________________________________________________________//
 
 void

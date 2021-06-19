@@ -14,7 +14,11 @@
 //  This is the version of the current Spirit distribution
 //
 ///////////////////////////////////////////////////////////////////////////////
+<<<<<<< HEAD
 #define SPIRIT_VERSION 0x2054
+=======
+#define SPIRIT_VERSION 0x2058
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 #define SPIRIT_PIZZA_VERSION SUPER_HOT_SPANISH_SARDINES  // :-O
 
 #endif

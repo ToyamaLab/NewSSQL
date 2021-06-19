@@ -9,6 +9,11 @@
 
 #include <boost/static_assert.hpp>
 
+<<<<<<< HEAD
+=======
+#include <boost/core/use_default.hpp>
+
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 #include <boost/iterator/iterator_categories.hpp>
 #include <boost/iterator/iterator_facade.hpp>
 #include <boost/iterator/detail/enable_if.hpp>
@@ -35,12 +40,19 @@ namespace iterators {
   // Used as a default template argument internally, merely to
   // indicate "use the default", this can also be passed by users
   // explicitly in order to specify that the default should be used.
+<<<<<<< HEAD
   struct use_default;
 
 } // namespace iterators
 
 using iterators::use_default;
 
+=======
+  using boost::use_default;
+
+} // namespace iterators
+
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 // the incompleteness of use_default causes massive problems for
 // is_convertible (naturally).  This workaround is fortunately not
 // needed for vc6/vc7.

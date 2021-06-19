@@ -20,6 +20,10 @@
 #include <boost/heap/detail/heap_node.hpp>
 #include <boost/heap/detail/stable_heap.hpp>
 #include <boost/heap/detail/tree_iterator.hpp>
+<<<<<<< HEAD
+=======
+#include <boost/type_traits/integral_constant.hpp>
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 #ifdef BOOST_HAS_PRAGMA_ONCE
 #pragma once
@@ -50,7 +54,11 @@ struct make_fibonacci_heap_base
 {
     static const bool constant_time_size = parameter::binding<Parspec,
                                                               tag::constant_time_size,
+<<<<<<< HEAD
                                                               boost::mpl::true_
+=======
+                                                              boost::true_type
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
                                                              >::type::value;
 
     typedef typename detail::make_heap_base<T, Parspec, constant_time_size>::type base_type;
@@ -58,7 +66,15 @@ struct make_fibonacci_heap_base
     typedef typename detail::make_heap_base<T, Parspec, constant_time_size>::compare_argument compare_argument;
     typedef marked_heap_node<typename base_type::internal_type> node_type;
 
+<<<<<<< HEAD
     typedef typename allocator_argument::template rebind<node_type>::other allocator_type;
+=======
+#ifdef BOOST_NO_CXX11_ALLOCATOR
+    typedef typename allocator_argument::template rebind<node_type>::other allocator_type;
+#else
+    typedef typename std::allocator_traits<allocator_argument>::template rebind_alloc<node_type> allocator_type;
+#endif
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
     struct type:
         base_type,
@@ -154,8 +170,19 @@ private:
         typedef typename base_maker::compare_argument value_compare;
         typedef typename base_maker::allocator_type allocator_type;
 
+<<<<<<< HEAD
         typedef typename allocator_type::pointer node_pointer;
         typedef typename allocator_type::const_pointer const_node_pointer;
+=======
+#ifdef BOOST_NO_CXX11_ALLOCATOR
+        typedef typename allocator_type::pointer node_pointer;
+        typedef typename allocator_type::const_pointer const_node_pointer;
+#else
+        typedef std::allocator_traits<allocator_type> allocator_traits;
+        typedef typename allocator_traits::pointer node_pointer;
+        typedef typename allocator_traits::const_pointer const_node_pointer;
+#endif
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
         typedef detail::heap_node_list node_list_type;
         typedef typename node_list_type::iterator node_list_iterator;
@@ -201,6 +228,12 @@ public:
     typedef typename implementation_defined::difference_type difference_type;
     typedef typename implementation_defined::value_compare value_compare;
     typedef typename implementation_defined::allocator_type allocator_type;
+<<<<<<< HEAD
+=======
+#ifndef BOOST_NO_CXX11_ALLOCATOR
+    typedef typename implementation_defined::allocator_traits allocator_traits;
+#endif
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     typedef typename implementation_defined::reference reference;
     typedef typename implementation_defined::const_reference const_reference;
     typedef typename implementation_defined::pointer pointer;
@@ -299,7 +332,16 @@ public:
     /// \copydoc boost::heap::priority_queue::max_size
     size_type max_size(void) const
     {
+<<<<<<< HEAD
         return allocator_type::max_size();
+=======
+#ifdef BOOST_NO_CXX11_ALLOCATOR
+        return allocator_type::max_size();
+#else
+        const allocator_type& alloc = *this;
+        return allocator_traits::max_size(alloc);
+#endif
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     }
 
     /// \copydoc boost::heap::priority_queue::clear
@@ -347,9 +389,20 @@ public:
     {
         size_holder::increment();
 
+<<<<<<< HEAD
         node_pointer n = allocator_type::allocate(1);
 
         new(n) node(super_t::make_node(v));
+=======
+#ifdef BOOST_NO_CXX11_ALLOCATOR
+        node_pointer n = allocator_type::allocate(1);
+        new(n) node(super_t::make_node(v));
+#else
+        allocator_type& alloc = *this;
+        node_pointer n = allocator_traits::allocate(alloc, 1);
+        allocator_traits::construct(alloc, n, super_t::make_node(v));
+#endif
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
         roots.push_front(*n);
 
         if (!top_element || super_t::operator()(top_element->value, n->value))
@@ -371,9 +424,20 @@ public:
     {
         size_holder::increment();
 
+<<<<<<< HEAD
         node_pointer n = allocator_type::allocate(1);
 
         new(n) node(super_t::make_node(std::forward<Args>(args)...));
+=======
+#ifdef BOOST_NO_CXX11_ALLOCATOR
+        node_pointer n = allocator_type::allocate(1);
+        new(n) node(super_t::make_node(std::forward<Args>(args)...));
+#else
+        allocator_type& alloc = *this;
+        node_pointer n = allocator_traits::allocate(alloc, 1);
+        allocator_traits::construct(alloc, n, super_t::make_node(std::forward<Args>(args)...));
+#endif
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
         roots.push_front(*n);
 
         if (!top_element || super_t::operator()(top_element->value, n->value))
@@ -741,8 +805,19 @@ private:
     {
         add_children_to_root(erased_node);
 
+<<<<<<< HEAD
         erased_node->~node();
         allocator_type::deallocate(erased_node, 1);
+=======
+#ifdef BOOST_NO_CXX11_ALLOCATOR
+        erased_node->~node();
+        allocator_type::deallocate(erased_node, 1);
+#else
+        allocator_type& alloc = *this;
+        allocator_traits::destroy(alloc, erased_node);
+        allocator_traits::deallocate(alloc, erased_node, 1);
+#endif
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
         size_holder::decrement();
         if (!empty())

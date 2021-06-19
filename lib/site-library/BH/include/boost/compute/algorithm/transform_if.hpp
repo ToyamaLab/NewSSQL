@@ -11,6 +11,11 @@
 #ifndef BOOST_COMPUTE_ALGORITHM_TRANSFORM_IF_HPP
 #define BOOST_COMPUTE_ALGORITHM_TRANSFORM_IF_HPP
 
+<<<<<<< HEAD
+=======
+#include <boost/static_assert.hpp>
+
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 #include <boost/compute/cl.hpp>
 #include <boost/compute/system.hpp>
 #include <boost/compute/command_queue.hpp>
@@ -21,6 +26,10 @@
 #include <boost/compute/detail/meta_kernel.hpp>
 #include <boost/compute/detail/iterator_range_size.hpp>
 #include <boost/compute/iterator/discard_iterator.hpp>
+<<<<<<< HEAD
+=======
+#include <boost/compute/type_traits/is_device_iterator.hpp>
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 namespace boost {
 namespace compute {
@@ -107,6 +116,11 @@ inline OutputIterator transform_if(InputIterator first,
                                    Predicate predicate,
                                    command_queue &queue = system::default_queue())
 {
+<<<<<<< HEAD
+=======
+    BOOST_STATIC_ASSERT(is_device_iterator<InputIterator>::value);
+    BOOST_STATIC_ASSERT(is_device_iterator<OutputIterator>::value);
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     return detail::transform_if_impl(
         first, last, result, function, predicate, false, queue
     );

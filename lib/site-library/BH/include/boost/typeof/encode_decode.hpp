@@ -8,9 +8,12 @@
 #ifndef BOOST_TYPEOF_ENCODE_DECODE_HPP_INCLUDED
 #define BOOST_TYPEOF_ENCODE_DECODE_HPP_INCLUDED
 
+<<<<<<< HEAD
 #include <boost/mpl/deref.hpp>
 #include <boost/mpl/next.hpp>
 
+=======
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 #ifndef BOOST_TYPEOF_SUPPRESS_UNNAMED_NAMESPACE
 
 #   define BOOST_TYPEOF_BEGIN_ENCODE_NS namespace { namespace boost_typeof {

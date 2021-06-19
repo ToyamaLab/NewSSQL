@@ -48,7 +48,14 @@ namespace boost { namespace spirit
         any_if_ns(First1 const& first1, First2 const& first2
           , Last1 const& last1, Last2 const& last2, F& f, mpl::false_)
         {
+<<<<<<< HEAD
             return (0 != (f(*first1, spirit::detail::attribute_value<Pred, First1, Last2>(first2)) |
+=======
+            typename result_of::attribute_value<First1, First2, Last2, Pred>::type
+                attribute = spirit::detail::attribute_value<Pred, First1, Last2>(first2);
+
+            return (0 != (f(*first1, attribute) |
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
                 detail::any_if_ns<Pred>(
                     fusion::next(first1)
                   , attribute_next<Pred, First1, Last2>(first2)

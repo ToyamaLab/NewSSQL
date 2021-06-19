@@ -1,10 +1,24 @@
 ## package has a dynamic library
+<<<<<<< HEAD
 useDynLib(digest, digest_impl=digest, AESinit, AESencryptECB, AESdecryptECB)
+=======
+useDynLib(digest, digest_impl=digest, vdigest_impl=vdigest, digest2int_impl=digest2int, AESinit, AESencryptECB, AESdecryptECB, spookydigest_impl, .registration=TRUE)
+
+importFrom(utils, packageVersion)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 ## and exported functions
 export(AES,
        digest,
+<<<<<<< HEAD
        sha1,
+=======
+       digest2int,
+       getVDigest,
+       sha1,
+       sha1_attr_digest,
+       sha1_digest,
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
        hmac,
        makeRaw)
 
@@ -20,6 +34,10 @@ S3method(sha1, Date)
 S3method(sha1, default)
 S3method(sha1, integer)
 S3method(sha1, factor)
+<<<<<<< HEAD
+=======
+S3method(sha1, formula)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 S3method(sha1, "function")
 S3method(sha1, logical)
 S3method(sha1, list)
@@ -31,6 +49,10 @@ S3method(sha1, pairlist)
 S3method(sha1, POSIXct)
 S3method(sha1, POSIXlt)
 S3method(sha1, raw)
+<<<<<<< HEAD
+=======
+S3method(sha1, "(")
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 S3method(makeRaw, default)
 S3method(makeRaw, digest)

@@ -27,13 +27,21 @@ extern "C" {
 struct _SYSTEM_INFO;
 
 #if BOOST_WINAPI_PARTITION_APP_SYSTEM
+<<<<<<< HEAD
 BOOST_SYMBOL_IMPORT boost::winapi::VOID_ WINAPI
+=======
+BOOST_SYMBOL_IMPORT boost::winapi::VOID_ BOOST_WINAPI_WINAPI_CC
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 GetSystemInfo(::_SYSTEM_INFO* lpSystemInfo);
 #endif
 
 #if BOOST_WINAPI_PARTITION_APP || BOOST_WINAPI_PARTITION_SYSTEM
 #if BOOST_USE_WINAPI_VERSION >= BOOST_WINAPI_VERSION_WINXP
+<<<<<<< HEAD
 BOOST_SYMBOL_IMPORT boost::winapi::VOID_ WINAPI
+=======
+BOOST_SYMBOL_IMPORT boost::winapi::VOID_ BOOST_WINAPI_WINAPI_CC
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 GetNativeSystemInfo(::_SYSTEM_INFO* lpSystemInfo);
 #endif
 #endif

@@ -669,17 +669,29 @@ template<class T>
 struct autoprefix_norm_impl<T, true>
 {
     typedef double type;
+<<<<<<< HEAD
     static double call(const T& arg) { return std::abs(arg); }
+=======
+    static BOOST_CONSTEXPR double call(const T& arg) { return std::abs(arg); }
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 };
 
 template<class T>
 struct autoprefix_norm_impl<T, false>
 {
     typedef one type;
+<<<<<<< HEAD
     static one call(const T&) { return one(); }
 };
 
 template<class T>
+=======
+    static BOOST_CONSTEXPR one call(const T&) { return one(); }
+};
+
+template<class T>
+BOOST_CONSTEXPR
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 typename autoprefix_norm_impl<T>::type autoprefix_norm(const T& arg)
 {
     return autoprefix_norm_impl<T>::call(arg);
@@ -690,12 +702,20 @@ typename autoprefix_norm_impl<T>::type autoprefix_norm(const T& arg)
 namespace detail {
 
 template<class End, class Prev, class T, class F>
+<<<<<<< HEAD
+=======
+BOOST_CONSTEXPR
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 bool find_matching_scale_impl(End, End, Prev, T, double, F)
 {
     return false;
 }
 
 template<class Begin, class End, class Prev, class T, class F>
+<<<<<<< HEAD
+=======
+BOOST_CXX14_CONSTEXPR
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 bool find_matching_scale_impl(Begin, End end, Prev prev, T t, double x, F f)
 {
     if(Begin::item::value() > x) {
@@ -714,12 +734,20 @@ bool find_matching_scale_impl(Begin, End end, Prev prev, T t, double x, F f)
 }
 
 template<class End, class T, class F>
+<<<<<<< HEAD
+=======
+BOOST_CONSTEXPR
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 bool find_matching_scale_i(End, End, T, double, F)
 {
     return false;
 }
 
 template<class Begin, class End, class T, class F>
+<<<<<<< HEAD
+=======
+BOOST_CXX14_CONSTEXPR
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 bool find_matching_scale_i(Begin, End end, T t, double x, F f)
 {
     if(Begin::item::value() > x) {
@@ -730,6 +758,10 @@ bool find_matching_scale_i(Begin, End end, T t, double x, F f)
 }
 
 template<class Scales, class T, class F>
+<<<<<<< HEAD
+=======
+BOOST_CXX14_CONSTEXPR
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 bool find_matching_scale(T t, double x, F f)
 {
     return detail::find_matching_scale_i(Scales(), dimensionless_type(), t, x, f);
@@ -976,8 +1008,13 @@ void maybe_print_prefixed(std::basic_ostream<CharT, Traits>& os, const quantity<
     detail::print_default(os, q)();
 }
 
+<<<<<<< HEAD
 inline mpl::true_ test_norm(double) { return mpl::true_(); }
 inline mpl::false_ test_norm(one) { return mpl::false_(); }
+=======
+inline BOOST_CONSTEXPR mpl::true_ test_norm(double) { return mpl::true_(); }
+inline BOOST_CONSTEXPR mpl::false_ test_norm(one) { return mpl::false_(); }
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 } // namespace detail
 

@@ -43,9 +43,14 @@ namespace boost { namespace spirit { namespace karma { namespace detail
         BOOST_SCOPED_ENUM(delimit_flag) const pre;
         Attribute const& attr;
 
+<<<<<<< HEAD
     private:
         // silence MSVC warning C4512: assignment operator could not be generated
         format_manip& operator= (format_manip const&);
+=======
+        // silence MSVC warning C4512: assignment operator could not be generated
+        BOOST_DELETED_FUNCTION(format_manip& operator= (format_manip const&))
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     };
 
     template <typename Expr, typename Delimiter, typename Attribute>
@@ -63,9 +68,14 @@ namespace boost { namespace spirit { namespace karma { namespace detail
         BOOST_SCOPED_ENUM(delimit_flag) const pre;
         Attribute attr;
 
+<<<<<<< HEAD
     private:
         // silence MSVC warning C4512: assignment operator could not be generated
         format_manip& operator= (format_manip const&);
+=======
+        // silence MSVC warning C4512: assignment operator could not be generated
+        BOOST_DELETED_FUNCTION(format_manip& operator= (format_manip const&))
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     };
 
     template <typename Expr, typename Delimiter, typename Attribute>
@@ -83,9 +93,14 @@ namespace boost { namespace spirit { namespace karma { namespace detail
         BOOST_SCOPED_ENUM(delimit_flag) const pre;
         Attribute const& attr;
 
+<<<<<<< HEAD
     private:
         // silence MSVC warning C4512: assignment operator could not be generated
         format_manip& operator= (format_manip const&);
+=======
+        // silence MSVC warning C4512: assignment operator could not be generated
+        BOOST_DELETED_FUNCTION(format_manip& operator= (format_manip const&))
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     };
 
     ///////////////////////////////////////////////////////////////////////////

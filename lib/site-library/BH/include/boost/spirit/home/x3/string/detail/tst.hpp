@@ -8,7 +8,10 @@
 #define BOOST_SPIRIT_X3_TST_MARCH_09_2007_0905AM
 
 #include <boost/call_traits.hpp>
+<<<<<<< HEAD
 #include <boost/detail/iterator.hpp>
+=======
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 #include <boost/assert.hpp>
 
 namespace boost { namespace spirit { namespace x3 { namespace detail
@@ -111,9 +114,13 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
             tst_node** pp = &start;
             for (;;)
             {
+<<<<<<< HEAD
                 typename
                     boost::detail::iterator_traits<Iterator>::value_type
                 c = *first;
+=======
+                auto c = *first;
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
                 if (*pp == 0)
                     *pp = alloc->new_node(c);
@@ -147,9 +154,13 @@ namespace boost { namespace spirit { namespace x3 { namespace detail
             if (p == 0 || first == last)
                 return;
 
+<<<<<<< HEAD
             typename
                 boost::detail::iterator_traits<Iterator>::value_type
             c = *first;
+=======
+            auto c = *first;
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
             if (c == p->id)
             {

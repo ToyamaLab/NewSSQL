@@ -262,7 +262,11 @@ template<class SizeType, class Enabler = void >
 struct sqrt2_pow_max;
 
 template <class SizeType>
+<<<<<<< HEAD
 struct sqrt2_pow_max<SizeType, typename enable_if< numbits_eq<SizeType, 32> >::type>
+=======
+struct sqrt2_pow_max<SizeType, typename voider<typename enable_if< numbits_eq<SizeType, 32> >::type>::type>
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 {
    static const SizeType value = 0xb504f334;
    static const std::size_t pow   = 31;
@@ -271,7 +275,11 @@ struct sqrt2_pow_max<SizeType, typename enable_if< numbits_eq<SizeType, 32> >::t
 #ifndef BOOST_NO_INT64_T
 
 template <class SizeType>
+<<<<<<< HEAD
 struct sqrt2_pow_max<SizeType, typename enable_if< numbits_eq<SizeType, 64> >::type>
+=======
+struct sqrt2_pow_max<SizeType, typename voider<typename enable_if< numbits_eq<SizeType, 64> >::type>::type>
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 {
    static const SizeType value = 0xb504f333f9de6484ull;
    static const std::size_t pow   = 63;

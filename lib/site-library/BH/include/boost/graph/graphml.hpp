@@ -34,7 +34,11 @@ namespace boost
 /////////////////////////////////////////////////////////////////////////////
 // Graph reader exceptions
 /////////////////////////////////////////////////////////////////////////////
+<<<<<<< HEAD
 struct parse_error: public graph_exception
+=======
+struct BOOST_SYMBOL_VISIBLE parse_error: public graph_exception
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 {
     parse_error(const std::string& err) {error = err; statement = "parse error: " + error;}
     virtual ~parse_error() throw() {}
@@ -100,7 +104,11 @@ class mutate_graph_impl : public mutate_graph
             mpl::for_each<value_types>(put_property<MutableGraph *,value_types>
                                        (name, m_dp, &m_g, value, value_type, m_type_names, type_found));
         }
+<<<<<<< HEAD
         catch (bad_lexical_cast)
+=======
+        catch (const bad_lexical_cast&)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
         {
             BOOST_THROW_EXCEPTION(
               parse_error("invalid value \"" + value + "\" for key " +
@@ -125,7 +133,11 @@ class mutate_graph_impl : public mutate_graph
                                        (name, m_dp, any_cast<vertex_descriptor>(vertex),
                                         value, value_type, m_type_names, type_found));
         }
+<<<<<<< HEAD
         catch (bad_lexical_cast)
+=======
+        catch (const bad_lexical_cast&)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
         {
             BOOST_THROW_EXCEPTION(
               parse_error("invalid value \"" + value + "\" for key " +
@@ -150,7 +162,11 @@ class mutate_graph_impl : public mutate_graph
                                        (name, m_dp, any_cast<edge_descriptor>(edge),
                                         value, value_type, m_type_names, type_found));
         }
+<<<<<<< HEAD
         catch (bad_lexical_cast)
+=======
+        catch (const bad_lexical_cast&)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
         {
             BOOST_THROW_EXCEPTION(
               parse_error("invalid value \"" + value + "\" for key " +

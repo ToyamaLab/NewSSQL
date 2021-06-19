@@ -4,4 +4,8 @@ tidyverse_conflicts	tidyverse_conflicts
 tidyverse_deps	tidyverse_deps
 tidyverse_logo	tidyverse_logo
 tidyverse_packages	tidyverse_packages
+<<<<<<< HEAD
+=======
+tidyverse_sitrep	tidyverse_sitrep
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 tidyverse_update	tidyverse_update

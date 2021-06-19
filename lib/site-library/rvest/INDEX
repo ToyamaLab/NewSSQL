@@ -1,6 +1,9 @@
 encoding                Guess and repair faulty character encoding.
 google_form             Make link to google form given id
+<<<<<<< HEAD
 html                    Parse an HTML page.
+=======
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 html_form               Parse forms in a page.
 html_nodes              Select nodes from an HTML document
 html_session            Simulate a session in an html browser.

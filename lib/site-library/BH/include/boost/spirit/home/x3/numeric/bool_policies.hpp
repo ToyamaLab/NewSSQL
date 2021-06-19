@@ -5,8 +5,13 @@
     Distributed under the Boost Software License, Version 1.0. (See accompanying
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 ==============================================================================*/
+<<<<<<< HEAD
 #if !defined(SPIRIT_QI_BOOL_POLICIES_SEP_29_2009_0710AM)
 #define SPIRIT_QI_BOOL_POLICIES_SEP_29_2009_0710AM
+=======
+#if !defined(BOOST_SPIRIT_X3_BOOL_POLICIES_SEP_29_2009_0710AM)
+#define BOOST_SPIRIT_X3_BOOL_POLICIES_SEP_29_2009_0710AM
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 #include <boost/spirit/home/x3/string/detail/string_parse.hpp>
 #include <boost/spirit/home/x3/support/traits/move_to.hpp>

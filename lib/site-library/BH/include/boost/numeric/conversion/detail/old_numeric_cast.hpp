@@ -8,6 +8,11 @@
 //  See http://www.boost.org/libs/conversion for Documentation.
 
 //  Revision History
+<<<<<<< HEAD
+=======
+//  02 Jun 14  Remove VC6 workarounds.
+//  16 Jul 11  Bugfixes for VC6.
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 //  23 JUN 05  Code extracted from /boost/cast.hpp into this new header.
 //             Keeps this legacy version of numeric_cast<> for old compilers
 //             wich can't compile the new version in /boost/numeric/conversion/cast.hpp
@@ -53,6 +58,7 @@
 # include <boost/limits.hpp>
 # include <boost/numeric/conversion/converter_policies.hpp>
 
+<<<<<<< HEAD
 //  It has been demonstrated numerous times that MSVC 6.0 fails silently at link
 //  time if you use a template function which has template parameters that don't
 //  appear in the function's argument list.
@@ -66,6 +72,8 @@
 #  define BOOST_EXPLICIT_DEFAULT_TARGET
 # endif
 
+=======
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 namespace boost
 {
   using numeric::bad_numeric_cast;
@@ -214,6 +222,7 @@ namespace boost
         template <class X, class Y>
         static inline bool check(X x, Y)
             { return x >= 0 && static_cast<X>(static_cast<Y>(x)) != x; }
+<<<<<<< HEAD
 
 # if defined(BOOST_MSVC) && BOOST_MSVC < 1300
         // MSVC6 can't static_cast  unsigned __int64 -> floating types
@@ -232,6 +241,8 @@ namespace boost
         BOOST_UINT64_CAST(float);
 #  undef BOOST_UINT64_CAST
 # endif
+=======
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     };
 
     template<>
@@ -285,7 +296,11 @@ namespace boost
 #endif
 
     template<typename Target, typename Source>
+<<<<<<< HEAD
     inline Target numeric_cast(Source arg BOOST_EXPLICIT_DEFAULT_TARGET)
+=======
+    inline Target numeric_cast(Source arg)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     {
         // typedefs abbreviating respective trait classes
         typedef detail::fixed_numeric_limits<Source> arg_traits;
@@ -332,8 +347,11 @@ namespace boost
         return static_cast<Target>(arg);
     } // numeric_cast
 
+<<<<<<< HEAD
 #  undef BOOST_EXPLICIT_DEFAULT_TARGET
 
+=======
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 } // namespace boost
 
 #endif  // BOOST_OLD_NUMERIC_CAST_HPP

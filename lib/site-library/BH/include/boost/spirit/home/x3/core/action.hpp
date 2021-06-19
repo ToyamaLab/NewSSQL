@@ -4,12 +4,20 @@
     Distributed under the Boost Software License, Version 1.0. (See accompanying
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 =============================================================================*/
+<<<<<<< HEAD
 #if !defined(SPIRIT_ACTION_JANUARY_07_2007_1128AM)
 #define SPIRIT_ACTION_JANUARY_07_2007_1128AM
 
 #include <boost/spirit/home/x3/support/context.hpp>
 #include <boost/spirit/home/x3/support/traits/attribute_of.hpp>
 #include <boost/spirit/home/x3/support/traits/make_attribute.hpp>
+=======
+#if !defined(BOOST_SPIRIT_X3_ACTION_JANUARY_07_2007_1128AM)
+#define BOOST_SPIRIT_X3_ACTION_JANUARY_07_2007_1128AM
+
+#include <boost/spirit/home/x3/support/context.hpp>
+#include <boost/spirit/home/x3/support/traits/attribute_of.hpp>
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 #include <boost/spirit/home/x3/core/call.hpp>
 #include <boost/spirit/home/x3/nonterminal/detail/transform_attribute.hpp>
 #include <boost/range/iterator_range.hpp>
@@ -82,6 +90,7 @@ namespace boost { namespace spirit { namespace x3
             typedef typename
                 traits::attribute_of<action<Subject, Action>, Context>::type
             attribute_type;
+<<<<<<< HEAD
             typedef traits::make_attribute<attribute_type, unused_type> make_attribute;
             typedef traits::transform_attribute<
                 typename make_attribute::type, attribute_type, parser_id>
@@ -90,6 +99,11 @@ namespace boost { namespace spirit { namespace x3
             // synthesize the attribute since one is not supplied
             typename make_attribute::type made_attr = make_attribute::call(unused_type());
             typename transform::type attr = transform::pre(made_attr);
+=======
+
+            // synthesize the attribute since one is not supplied
+            attribute_type attr{};
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
             return parse_main(first, last, context, rcontext, attr);
         }
         

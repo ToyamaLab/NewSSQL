@@ -8,6 +8,10 @@
 
 #ifndef ASSIGNMENT_HPP
 #define ASSIGNMENT_HPP
+<<<<<<< HEAD
+=======
+
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 #include <boost/numeric/ublas/vector_expression.hpp>
 #include <boost/numeric/ublas/matrix_expression.hpp>
 
@@ -174,7 +178,15 @@ template <std::ptrdiff_t I>
 class static_vector_move_manip: public index_manipulator<static_vector_move_manip<I> > {
 public:
     template <typename V>
+<<<<<<< HEAD
     BOOST_UBLAS_INLINE void manip(V &k) const { k+=I; }
+=======
+    BOOST_UBLAS_INLINE void manip(V &k) const {
+        // With the equivalent expression using '+=' operator, mscv reports waring C4245:
+        // '+=' : conversion from 'ptrdiff_t' to 'unsigned int', signed/unsigned mismatch
+        k = k + I;
+    }
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 };
 
 /**
@@ -375,8 +387,15 @@ public:
     template <typename V, typename K>
     BOOST_UBLAS_INLINE
     void manip(V &k, K &l) const {
+<<<<<<< HEAD
         k+=I;
         l+=J;
+=======
+        // With the equivalent expression using '+=' operator, mscv reports waring C4245:
+        // '+=' : conversion from 'ptrdiff_t' to 'unsigned int', signed/unsigned mismatch
+        k = k + I;
+        l = l + J;
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     }
 };
 
@@ -926,29 +945,49 @@ public:
     typedef typename E::expression_type::size_type size_type;
 
     BOOST_UBLAS_INLINE
+<<<<<<< HEAD
     vector_expression_assigner(E &e):ve(e), i(0) {
     }
 
     BOOST_UBLAS_INLINE
     vector_expression_assigner(size_type k, E &e):ve(e), i(k) {
+=======
+    vector_expression_assigner(E &e):ve(&e), i(0) {
+    }
+
+    BOOST_UBLAS_INLINE
+    vector_expression_assigner(size_type k, E &e):ve(&e), i(k) {
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
         // Overloaded like that so it can be differentiated from (E, val).
         // Otherwise there would be an ambiquity when value_type == size_type.
     }
 
     BOOST_UBLAS_INLINE
+<<<<<<< HEAD
     vector_expression_assigner(E &e, value_type val):ve(e), i(0) {
+=======
+    vector_expression_assigner(E &e, value_type val):ve(&e), i(0) {
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
         operator,(val);
     }
 
     template <class AE>
     BOOST_UBLAS_INLINE
+<<<<<<< HEAD
     vector_expression_assigner(E &e, const vector_expression<AE> &nve):ve(e), i(0) {
+=======
+    vector_expression_assigner(E &e, const vector_expression<AE> &nve):ve(&e), i(0) {
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
         operator,(nve);
     }
 
     template <typename T>
     BOOST_UBLAS_INLINE
+<<<<<<< HEAD
     vector_expression_assigner(E &e, const index_manipulator<T> &ta):ve(e), i(0) {
+=======
+    vector_expression_assigner(E &e, const index_manipulator<T> &ta):ve(&e), i(0) {
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
         operator,(ta);
     }
 
@@ -976,18 +1015,30 @@ public:
     template <class T>
     BOOST_UBLAS_INLINE
     vector_expression_assigner<E, T> operator, (fill_policy_wrapper<T>) const {
+<<<<<<< HEAD
         return vector_expression_assigner<E, T>(i, ve);
+=======
+        return vector_expression_assigner<E, T>(i, *ve);
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     }
 
 private:
     BOOST_UBLAS_INLINE
     vector_expression_assigner &apply(const typename E::expression_type::value_type& val) {
+<<<<<<< HEAD
         Fill_Policy::apply(ve, i++, val);
+=======
+        Fill_Policy::apply(*ve, i++, val);
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
         return *this;
     }
 
 private:
+<<<<<<< HEAD
     E &ve;
+=======
+    E *ve;
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     size_type i;
 };
 
@@ -1101,6 +1152,7 @@ public:
     typedef typename E::expression_type::size_type size_type;
 
     BOOST_UBLAS_INLINE
+<<<<<<< HEAD
     matrix_expression_assigner(E &e): me(e), i(0), j(0) {
     }
 
@@ -1110,30 +1162,57 @@ public:
 
     BOOST_UBLAS_INLINE
     matrix_expression_assigner(E &e, typename E::expression_type::value_type val): me(e), i(0), j(0) {
+=======
+    matrix_expression_assigner(E &e): me(&e), i(0), j(0) {
+    }
+
+    BOOST_UBLAS_INLINE
+    matrix_expression_assigner(E &e, size_type k, size_type l): me(&e), i(k), j(l) {
+    }
+
+    BOOST_UBLAS_INLINE
+    matrix_expression_assigner(E &e, typename E::expression_type::value_type val): me(&e), i(0), j(0) {
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
         operator,(val);
     }
 
     template <class AE>
     BOOST_UBLAS_INLINE
+<<<<<<< HEAD
     matrix_expression_assigner(E &e, const vector_expression<AE> &nve):me(e), i(0), j(0) {
+=======
+    matrix_expression_assigner(E &e, const vector_expression<AE> &nve):me(&e), i(0), j(0) {
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
         operator,(nve);
     }
 
     template <class AE>
     BOOST_UBLAS_INLINE
+<<<<<<< HEAD
     matrix_expression_assigner(E &e, const matrix_expression<AE> &nme):me(e), i(0), j(0) {
+=======
+    matrix_expression_assigner(E &e, const matrix_expression<AE> &nme):me(&e), i(0), j(0) {
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
         operator,(nme);
     }
 
     template <typename T>
     BOOST_UBLAS_INLINE
+<<<<<<< HEAD
     matrix_expression_assigner(E &e, const index_manipulator<T> &ta):me(e), i(0), j(0) {
+=======
+    matrix_expression_assigner(E &e, const index_manipulator<T> &ta):me(&e), i(0), j(0) {
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
         operator,(ta);
     }
 
     BOOST_UBLAS_INLINE
     matrix_expression_assigner &operator, (const typename E::expression_type::value_type& val) {
+<<<<<<< HEAD
         Traverse_Policy::apply_wrap(me, i ,j);
+=======
+        Traverse_Policy::apply_wrap(*me, i ,j);
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
         return apply(val);
     }
 
@@ -1162,21 +1241,34 @@ public:
     template <class T>
     BOOST_UBLAS_INLINE
     matrix_expression_assigner<E, T, Traverse_Policy> operator, (fill_policy_wrapper<T>) const {
+<<<<<<< HEAD
         return matrix_expression_assigner<E, T, Traverse_Policy>(me, i, j);
+=======
+        return matrix_expression_assigner<E, T, Traverse_Policy>(*me, i, j);
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     }
 
 
     template <class T>
     BOOST_UBLAS_INLINE
     matrix_expression_assigner<E, Fill_Policy, T> operator, (traverse_policy_wrapper<T>) {
+<<<<<<< HEAD
         Traverse_Policy::apply_wrap(me, i ,j);
         return matrix_expression_assigner<E, Fill_Policy, T>(me, i, j);
+=======
+        Traverse_Policy::apply_wrap(*me, i ,j);
+        return matrix_expression_assigner<E, Fill_Policy, T>(*me, i, j);
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     }
 
 private:
     BOOST_UBLAS_INLINE
     matrix_expression_assigner &apply(const typename E::expression_type::value_type& val) {
+<<<<<<< HEAD
         Fill_Policy::apply(me, i, j, val);
+=======
+        Fill_Policy::apply(*me, i, j, val);
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
         Traverse_Policy::advance(i,j);
         return *this;
     }
@@ -1187,14 +1279,24 @@ private:
         size_type bi = i;
         size_type bj = j;
         typename AE::size_type k=0, l=0;
+<<<<<<< HEAD
         Fill_Policy::apply(me, i, j, nme()(k, l));
         while (Traverse_Policy::next(nme, me, i, j, bi, bj, k, l))
             Fill_Policy::apply(me, i, j, nme()(k, l));
+=======
+        Fill_Policy::apply(*me, i, j, nme()(k, l));
+        while (Traverse_Policy::next(nme, *me, i, j, bi, bj, k, l))
+            Fill_Policy::apply(*me, i, j, nme()(k, l));
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
         return *this;
     }
 
 private:
+<<<<<<< HEAD
     E &me;
+=======
+    E *me;
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     size_type i, j;
 };
 

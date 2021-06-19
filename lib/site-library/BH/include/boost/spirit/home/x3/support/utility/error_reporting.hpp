@@ -58,6 +58,14 @@ namespace boost { namespace spirit { namespace x3
             return pos_cache.position_of(pos);
         }
 
+<<<<<<< HEAD
+=======
+        position_cache<std::vector<Iterator>> const& get_position_cache() const
+        {
+            return pos_cache;
+        }
+
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     private:
 
         void print_file_line(std::size_t line) const;
@@ -178,7 +186,11 @@ namespace boost { namespace spirit { namespace x3
                 if (prev != '\r') ++line;
                 break;
             case '\r':
+<<<<<<< HEAD
                 if (prev != '\n') ++line;
+=======
+                ++line;
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
                 break;
             default:
                 break;

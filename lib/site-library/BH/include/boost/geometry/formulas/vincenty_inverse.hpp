@@ -1,6 +1,10 @@
 // Boost.Geometry
 
 // Copyright (c) 2007-2012 Barend Gehrels, Amsterdam, the Netherlands.
+<<<<<<< HEAD
+=======
+// Copyright (c) 2018 Adam Wulkiewicz, Lodz, Poland.
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 // This file was modified by Oracle on 2014, 2016, 2017.
 // Modifications copyright (c) 2014-2017 Oracle and/or its affiliates.
@@ -18,7 +22,10 @@
 #include <boost/math/constants/constants.hpp>
 
 #include <boost/geometry/core/radius.hpp>
+<<<<<<< HEAD
 #include <boost/geometry/core/srs.hpp>
+=======
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 #include <boost/geometry/util/condition.hpp>
 #include <boost/geometry/util/math.hpp>
@@ -79,6 +86,10 @@ public:
             return result;
         }
 
+<<<<<<< HEAD
+=======
+        CT const c0 = 0;
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
         CT const c1 = 1;
         CT const c2 = 2;
         CT const c3 = 3;
@@ -145,7 +156,11 @@ public:
             CT cos_sigma = sin_U1 * sin_U2 + cos_U1 * cos_U2 * cos_lambda; // (15)
             sin_alpha = cos_U1 * cos_U2 * sin_lambda / sin_sigma; // (17)
             cos2_alpha = c1 - math::sqr(sin_alpha);
+<<<<<<< HEAD
             cos_2sigma_m = math::equals(cos2_alpha, 0) ? 0 : cos_sigma - c2 * sin_U1 * sin_U2 / cos2_alpha; // (18)
+=======
+            cos_2sigma_m = math::equals(cos2_alpha, c0) ? c0 : cos_sigma - c2 * sin_U1 * sin_U2 / cos2_alpha; // (18)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
             cos2_2sigma_m = math::sqr(cos_2sigma_m);
 
             CT C = f/c16 * cos2_alpha * (c4 + f * (c4 - c3 * cos2_alpha)); // (10)
@@ -163,10 +178,13 @@ public:
         {
             // Oops getting hard here
             // (again, problem is that ttmath cannot divide by doubles, which is OK)
+<<<<<<< HEAD
             CT const c1 = 1;
             CT const c2 = 2;
             CT const c3 = 3;
             CT const c4 = 4;
+=======
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
             CT const c6 = 6;
             CT const c47 = 47;
             CT const c74 = 74;

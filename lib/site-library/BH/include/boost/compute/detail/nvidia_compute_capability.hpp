@@ -13,7 +13,12 @@
 
 #include <boost/compute/device.hpp>
 
+<<<<<<< HEAD
 #ifdef BOOST_COMPUTE_HAVE_HDR_CL_EXT
+=======
+#ifdef BOOST_COMPUTE_HAVE_HDR_CL_EXT    
+  #include <boost/compute/detail/cl_versions.hpp>
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
   #include <CL/cl_ext.h>
 #endif
 

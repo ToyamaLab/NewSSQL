@@ -1,3 +1,93 @@
+<<<<<<< HEAD
+=======
+# httr 1.4.2
+
+* Fix failing test.
+
+* `parse_url()` now refers to RFC3986 for the parsing of the URL's 
+  scheme, with a bit more permissive syntax (@ymarcon, #615).
+
+# httr 1.4.1
+
+* Remove the default `cainfo` option on Windows. Providing a CA bundle is not 
+  needed anymore because `curl` now uses the native schannel SSL backend.
+  For recent versions of libcurl, overriding the CA bundle actually breaks 
+  custom trust certificates on corporate networks. (@jeroen, #603)
+
+* `http_status()` now throws the correct error message if http status code is 
+  not in the list of known codes (@Javdat, #567).
+
+* `POST()` gains an example on how to use `encode = "raw"` for specific json
+  string body (@cderv, #563)
+
+* `RETRY()` now throws the correct error message if an error occurs during the 
+  request (@austin3dickey, #581).
+
+* `VERB()` and `RETRY()` now automatically uppercase methods (@patr1ckm, #571).
+
+# httr 1.4.0
+
+## OAuth
+
+OAuth2.0 has been made somewhat more flexible in order to support more websites:
+
+* `init_oauth2.0()` passes `use_basic_auth` onwards, enabling 
+   basic authentication for OAuth 2.0 (@peterhartman, #484).
+
+* `oauth2.0_token()` (and `init_oauth2.0()`) gains a `oob_value` argument 
+  that allows arbitrary values to be sent for the `request_uri` 
+  parameter during OOB flows (@ctrombley, #493).
+
+* `oauth2.0_token()` (and `init_oauth2.0()`) gain a new 
+  `query_authorize_extra` parameter make it possible to add extra query
+  parameters to the authorization URL. This is needed some APIs (e.g. fitbit)
+  (@cosmomeese, #503).
+
+* `oauth_endpoints()` contains updated urls for Yahoo (@ctrombley, #493)
+  and Vimeo (#491).
+
+* OAuth 2.0 token refresh gives a more informative error if it fails (#516).
+
+* Prior to token retrieval from on-disk cache, scopes are de-duplicated, 
+  sorted, and stripped of names before being hashed. This eliminates a 
+  source of hash mismatch that causes new tokens to be requested, even when
+  existing tokens had the necessary scope. (@jennybc, #495)
+
+Updates to demos:
+
+* The Facebook OAuth demo now uses device flow (#510). This allows you to
+  continue using the FB api from R under their new security policy.
+
+* A new Noun Project demo shows how to use one-legged OAuth1 (@cderv, #548).
+
+* The Vimeo demo has been updated from OAuth 1.0 to 2.0 (#491).
+
+## Minor changes and improvements
+
+* `cache_info()` now handles un-named flags, as illustrated by "private" when
+  the server returns "private, max-age = 0".
+
+* `parse_http_date()` gets a better default value for the `failure` argument 
+  so that reponses with unparseable dates can be printed without error
+  (@shrektan, #544).
+
+* `POST()` now uses 22 digits of precision for `body` list elements by default 
+  (@jmwerner, #490)
+
+* `RETRY()` now terminates on any successful request, regardless of the value 
+  of `terminate_on`. To return to the previous behaviour, set
+  `terminate_on_success = FALSE` (#522).
+
+* In `RETRY()` and `VERB()`, `HEAD` requests now succeed (#478, #499).
+
+* Encoding falls back to UTF-8 if not supplied and content-type parsing
+  fails (#500).
+
+* Non-http(s) headers are no longer parsed (@billdenney, #537). This makes it 
+  possible to use httr with protocols other than http, although this is not 
+  advised, and you're own your own.
+
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 # httr 1.3.1
 
 * Re-enable on-disk caching (accidentally disabled in #457) (#475)

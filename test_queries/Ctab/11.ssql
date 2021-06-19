@@ -1,8 +1,8 @@
 GENERATE HTML
 '地域別、商品の売れた個数'@{width=500, align='center'}!
-cross_tab([st.city@{width=104}],, [i.name@{width=200}]!, sum[sa.quantity]@{width=100})@{side_width=202, align='center'}!
+cross_tab([st.state@{width=104}],, [i.name@{width=200}]!, sum[sa.quantity]@{width=100})@{side_width=202, align='center'}!
 '地域別、商品の売れた個数'@{width=500, align='center'}!
-cross_tab([st.city@{width=104}],, [i.name@{width=200}]!, sum[sa.quantity]@{width=100})@{side_width=202, align='center'}!
+cross_tab([st.state@{width=104}],, [i.name@{width=200}]!, sum[sa.quantity]@{width=100})@{side_width=202, align='center'}!
 'マネージャー別、生年毎の従業員名一覧'@{width=1000, align='center'}!
 cross_tab([m.name@{width=106}],, [(asc)e.byear@{width=100}]!, [e.name@{width=100}]!)@{side_width=100}
 FROM store st, item i, sale sa, employee e, employee m

@@ -1,4 +1,7 @@
+<<<<<<< HEAD
 gtable-package	gtable
+=======
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 bind	bind
 cbind.gtable	bind
 gtable	gtable
@@ -23,5 +26,8 @@ gtable_width	gtable_width
 is.gtable	is.gtable
 print.gtable	print.gtable
 rbind.gtable	bind
+<<<<<<< HEAD
 z_arrange_gtables	z_arrange_gtables
 z_normalise	z_normalise
+=======
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce

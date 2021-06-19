@@ -5,6 +5,9 @@ import java.util.Hashtable;
 import java.util.Iterator;
 import java.util.StringTokenizer;
 
+import org.apache.bcel.verifier.exc.StaticCodeConstraintException;
+import org.omg.CORBA.PUBLIC_MEMBER;
+
 import supersql.common.Log;
 import supersql.extendclass.ExtHashSet;
 import supersql.extendclass.ExtList;
@@ -54,15 +57,12 @@ public class Attribute extends Operand {
 			AttNames.add(nm);
 		}
 		ValKey = key;
-		try {
-			Integer.parseInt(attimg);
-			attimg ="\""+attimg+"\"";	//Only a numerical value(数値のみ) -> "a numerical value"（ダブルクォートで囲う）
-
-		} catch (NumberFormatException e) {}
-		//tk/////////////////////////////////////////////////////////////////
-		StringTokenizer st0;
+//		try {
+//			Integer.parseInt(attimg);
+//			attimg ="\""+attimg+"\"";	//Only a numerical value(数値のみ) -> "a numerical value"（ダブルクォートで囲う）
+//		} catch (NumberFormatException e) {}
 		AttributeItem item;
-		if(attimg.contains("||") || CodeGenerator.sqlfunc_flag){
+		if(attimg.contains("||") || CodeGenerator.sqlfunc_flag > 0){
 			//			st0 = new StringTokenizer(attimg, "\"", true);
 //			attimg = attimg.replace("\"", "'");
 			//
@@ -71,56 +71,10 @@ public class Attribute extends Operand {
 			attp.put(new Integer(no), item);
 			no++;
 		}else{
-			st0 = new StringTokenizer(attimg, "\"'", true);
-			//		StringTokenizer st0 = new StringTokenizer(attimg, "\"+", true);		//161202 taji comment outed for arithmetics
-			//StringTokenizer st0 = new StringTokenizer(attimg, "\\\"+", true);
-			//tk//////////////////////////////////////////////////////////////////
-			String ch1, buf;
-			//		AttributeItem item;
-
-			while (st0.hasMoreTokens()) {
-				ch1 = st0.nextToken();
-
-				if (ch1.equals("+")) {
-					continue;
-				}
-				if (ch1.equals("\"")) {
-					// quoted str
-					buf = "";
-					while (st0.hasMoreTokens()) {
-						ch1 = st0.nextToken();
-						if (ch1.equals("\\")) {
-							buf += ch1;
-							buf += st0.nextToken();
-						} else if (ch1.equals("\"")) {
-							Items.add(new AttributeItem(buf));
-							break;
-						}
-						buf += ch1;
-					}
-				}
-				else if (ch1.equals("'")) {
-					// quoted str
-					buf = "";
-					while (st0.hasMoreTokens()) {
-						ch1 = st0.nextToken();
-						if (ch1.equals("\\")) {
-							buf += ch1;
-							buf += st0.nextToken();
-						} else if (ch1.equals("'")) {
-							Items.add(new AttributeItem(buf));
-							break;
-						}
-						buf += ch1;
-					}
-				}
-				else {
-					item = new AttributeItem(ch1, no);
-					Items.add(item);
-					attp.put(new Integer(no), item);
-					no++;
-				}
-			}
+			item = new AttributeItem(attimg, no);
+			Items.add(item);
+			attp.put(no, item);
+			no++;
 		}
 		Log.out("[set Attribute] Attribute Items : " + Items);
 		Log.out("[set Attribute] Sch: " + this.makesch());
@@ -217,9 +171,7 @@ public class Attribute extends Operand {
 	}
 
 	public <T> String getStr(ExtList<T> data_info) {
-
 		String str = "";
-
 		if(conditional){
 			int stringItemsNumber = 0;
 			Iterator<AttributeItem> iterator = Items.iterator();
@@ -328,6 +280,7 @@ public class Attribute extends Operand {
 		return keys;
 
 	}
+	
 	//added by taji 171102 end
 
 }

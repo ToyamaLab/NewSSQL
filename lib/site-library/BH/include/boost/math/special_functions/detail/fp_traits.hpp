@@ -24,7 +24,11 @@ With these techniques, the code could be simplified.
 
 #include <boost/assert.hpp>
 #include <boost/cstdint.hpp>
+<<<<<<< HEAD
 #include <boost/detail/endian.hpp>
+=======
+#include <boost/predef/other/endian.h>
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 #include <boost/static_assert.hpp>
 #include <boost/type_traits/is_floating_point.hpp>
 
@@ -51,9 +55,15 @@ With these techniques, the code could be simplified.
          && (_GLIBCXX_USE_C99_FP_MACROS_DYNAMIC != 0))
 #     ifdef _STLP_VENDOR_CSTD
 #        if _STLPORT_VERSION >= 0x520
+<<<<<<< HEAD
 #           define BOOST_FPCLASSIFY_PREFIX ::__std_alias:: 
 #        else
 #           define BOOST_FPCLASSIFY_PREFIX ::_STLP_VENDOR_CSTD:: 
+=======
+#           define BOOST_FPCLASSIFY_PREFIX ::__std_alias::
+#        else
+#           define BOOST_FPCLASSIFY_PREFIX ::_STLP_VENDOR_CSTD::
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 #        endif
 #     else
 #        define BOOST_FPCLASSIFY_PREFIX ::std::
@@ -84,7 +94,11 @@ namespace detail {
 
 //------------------------------------------------------------------------------
 
+<<<<<<< HEAD
 /* 
+=======
+/*
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 The following classes are used to tag the different methods that are used
 for floating point classification
 */
@@ -216,9 +230,15 @@ template<> struct fp_traits_non_native<double, double_precision>
 
 private:
 
+<<<<<<< HEAD
 #if defined(BOOST_BIG_ENDIAN)
     BOOST_STATIC_CONSTANT(int, offset_ = 0);
 #elif defined(BOOST_LITTLE_ENDIAN)
+=======
+#if BOOST_ENDIAN_BIG_BYTE
+    BOOST_STATIC_CONSTANT(int, offset_ = 0);
+#elif BOOST_ENDIAN_LITTLE_BYTE
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     BOOST_STATIC_CONSTANT(int, offset_ = 4);
 #else
     BOOST_STATIC_ASSERT(false);
@@ -276,9 +296,15 @@ template<> struct fp_traits_non_native<long double, double_precision>
 
 private:
 
+<<<<<<< HEAD
 #if defined(BOOST_BIG_ENDIAN)
     BOOST_STATIC_CONSTANT(int, offset_ = 0);
 #elif defined(BOOST_LITTLE_ENDIAN)
+=======
+#if BOOST_ENDIAN_BIG_BYTE
+    BOOST_STATIC_CONSTANT(int, offset_ = 0);
+#elif BOOST_ENDIAN_LITTLE_BYTE
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     BOOST_STATIC_CONSTANT(int, offset_ = 4);
 #else
     BOOST_STATIC_ASSERT(false);
@@ -390,9 +416,15 @@ struct fp_traits_non_native<long double, extended_double_precision>
 
 private:
 
+<<<<<<< HEAD
 #if defined(BOOST_BIG_ENDIAN)
     BOOST_STATIC_CONSTANT(int, offset_ = 0);
 #elif defined(BOOST_LITTLE_ENDIAN)
+=======
+#if BOOST_ENDIAN_BIG_BYTE
+    BOOST_STATIC_CONSTANT(int, offset_ = 0);
+#elif BOOST_ENDIAN_LITTLE_BYTE
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     BOOST_STATIC_CONSTANT(int, offset_ = 12);
 #else
     BOOST_STATIC_ASSERT(false);
@@ -471,9 +503,15 @@ struct fp_traits_non_native<long double, extended_double_precision>
 
 private:
 
+<<<<<<< HEAD
 #if defined(BOOST_BIG_ENDIAN)
     BOOST_STATIC_CONSTANT(int, offset_ = 0);
 #elif defined(BOOST_LITTLE_ENDIAN)
+=======
+#if BOOST_ENDIAN_BIG_BYTE
+    BOOST_STATIC_CONSTANT(int, offset_ = 0);
+#elif BOOST_ENDIAN_LITTLE_BYTE
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     BOOST_STATIC_CONSTANT(int, offset_ = 12);
 #else
     BOOST_STATIC_ASSERT(false);
@@ -556,7 +594,12 @@ struct select_native<long double>
    && !defined(__FAST_MATH__)\
    && !defined(BOOST_MATH_DISABLE_STD_FPCLASSIFY)\
    && !defined(BOOST_INTEL)\
+<<<<<<< HEAD
    && !defined(sun)
+=======
+   && !defined(sun)\
+   && !defined(__VXWORKS__)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 #  define BOOST_MATH_USE_STD_FPCLASSIFY
 #endif
 

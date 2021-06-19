@@ -52,6 +52,7 @@
 
 # define BOOST_PP_FOR_257_ERROR() BOOST_PP_ERROR(0x0002)
 # define BOOST_PP_FOR_257(s, p, o, m) \
+<<<<<<< HEAD
 	BOOST_PP_IIF \
 		( \
 		BOOST_PP_FOR_257_PR(s,p), \
@@ -59,6 +60,15 @@
 		BOOST_PP_EMPTY \
 		) \
 	() \
+=======
+    BOOST_PP_IIF \
+        ( \
+        BOOST_PP_FOR_257_PR(s,p), \
+        BOOST_PP_FOR_257_ERROR, \
+        BOOST_PP_EMPTY \
+        ) \
+    () \
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 /**/
 // # define BOOST_PP_FOR_257(s, p, o, m) BOOST_PP_ERROR(0x0002)
 #

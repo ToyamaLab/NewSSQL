@@ -28,7 +28,12 @@ template<class HostIterator, class DeviceIterator>
 inline DeviceIterator copy_to_device(HostIterator first,
                                      HostIterator last,
                                      DeviceIterator result,
+<<<<<<< HEAD
                                      command_queue &queue)
+=======
+                                     command_queue &queue,
+                                     const wait_list &events)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 {
     typedef typename
         std::iterator_traits<DeviceIterator>::value_type
@@ -47,7 +52,12 @@ inline DeviceIterator copy_to_device(HostIterator first,
     queue.enqueue_write_buffer(result.get_buffer(),
                                offset * sizeof(value_type),
                                count * sizeof(value_type),
+<<<<<<< HEAD
                                ::boost::addressof(*first));
+=======
+                               ::boost::addressof(*first),
+                               events);
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
     return result + static_cast<difference_type>(count);
 }
@@ -56,7 +66,12 @@ template<class HostIterator, class DeviceIterator>
 inline DeviceIterator copy_to_device_map(HostIterator first,
                                          HostIterator last,
                                          DeviceIterator result,
+<<<<<<< HEAD
                                          command_queue &queue)
+=======
+                                         command_queue &queue,
+                                         const wait_list &events)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 {
     typedef typename
         std::iterator_traits<DeviceIterator>::value_type
@@ -78,7 +93,12 @@ inline DeviceIterator copy_to_device_map(HostIterator first,
             result.get_buffer(),
             CL_MAP_WRITE,
             offset * sizeof(value_type),
+<<<<<<< HEAD
             count * sizeof(value_type)
+=======
+            count * sizeof(value_type),
+            events
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
         )
     );
 
@@ -99,7 +119,12 @@ template<class HostIterator, class DeviceIterator>
 inline future<DeviceIterator> copy_to_device_async(HostIterator first,
                                                    HostIterator last,
                                                    DeviceIterator result,
+<<<<<<< HEAD
                                                    command_queue &queue)
+=======
+                                                   command_queue &queue,
+                                                   const wait_list &events)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 {
     typedef typename
         std::iterator_traits<DeviceIterator>::value_type
@@ -119,7 +144,12 @@ inline future<DeviceIterator> copy_to_device_async(HostIterator first,
         queue.enqueue_write_buffer_async(result.get_buffer(),
                                          offset * sizeof(value_type),
                                          count * sizeof(value_type),
+<<<<<<< HEAD
                                          ::boost::addressof(*first));
+=======
+                                         ::boost::addressof(*first),
+                                         events);
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
     return make_future(result + static_cast<difference_type>(count), event_);
 }
@@ -130,7 +160,12 @@ template<class HostIterator, class T>
 inline svm_ptr<T> copy_to_device(HostIterator first,
                                  HostIterator last,
                                  svm_ptr<T> result,
+<<<<<<< HEAD
                                  command_queue &queue)
+=======
+                                 command_queue &queue,
+                                 const wait_list &events)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 {
     size_t count = iterator_range_size(first, last);
     if(count == 0){
@@ -138,7 +173,11 @@ inline svm_ptr<T> copy_to_device(HostIterator first,
     }
 
     queue.enqueue_svm_memcpy(
+<<<<<<< HEAD
         result.get(), ::boost::addressof(*first), count * sizeof(T)
+=======
+        result.get(), ::boost::addressof(*first), count * sizeof(T), events
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     );
 
     return result + count;
@@ -148,7 +187,12 @@ template<class HostIterator, class T>
 inline future<svm_ptr<T> > copy_to_device_async(HostIterator first,
                                                 HostIterator last,
                                                 svm_ptr<T> result,
+<<<<<<< HEAD
                                                 command_queue &queue)
+=======
+                                                command_queue &queue,
+                                                const wait_list &events)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 {
     size_t count = iterator_range_size(first, last);
     if(count == 0){
@@ -156,7 +200,11 @@ inline future<svm_ptr<T> > copy_to_device_async(HostIterator first,
     }
 
     event event_ = queue.enqueue_svm_memcpy_async(
+<<<<<<< HEAD
         result.get(), ::boost::addressof(*first), count * sizeof(T)
+=======
+        result.get(), ::boost::addressof(*first), count * sizeof(T), events
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     );
 
     return make_future(result + count, event_);
@@ -166,7 +214,12 @@ template<class HostIterator, class T>
 inline svm_ptr<T> copy_to_device_map(HostIterator first,
                                               HostIterator last,
                                               svm_ptr<T> result,
+<<<<<<< HEAD
                                               command_queue &queue)
+=======
+                                              command_queue &queue,
+                                              const wait_list &events)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 {
     size_t count = iterator_range_size(first, last);
     if(count == 0){
@@ -174,7 +227,13 @@ inline svm_ptr<T> copy_to_device_map(HostIterator first,
     }
 
     // map
+<<<<<<< HEAD
     queue.enqueue_svm_map(result.get(), count * sizeof(T), CL_MAP_WRITE);
+=======
+    queue.enqueue_svm_map(
+        result.get(), count * sizeof(T), CL_MAP_WRITE, events
+    );
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
     // copy [first; last) to result buffer
     std::copy(first, last, static_cast<T*>(result.get()));

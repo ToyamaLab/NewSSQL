@@ -16,9 +16,9 @@ public class Ctab {
 		for (int i = 3; i < args_num + 1; i++) {
 			value.add(tfe.getExtList(i * 2));
 		}
-		Log.out("top:::"+top);
-		Log.out("side:::"+side);
-		Log.out("value:::"+value);
+//		Log.out("top:::"+top);
+//		Log.out("side:::"+side);
+//		Log.out("value:::"+value);
 		addTag(top, "ctab_head");
 		addTag(top, "width=100");
 		addTag(top, "height=50");
@@ -30,10 +30,9 @@ public class Ctab {
 		addTag(value, "width=100");
 		addTag(value, "height=50");
 //		addTag(value, "border=0");
-
-		Log.out("top_addtag:::"+top);
-		Log.out("side_addtag:::"+side);
-		Log.out("value_addtag:::"+value);
+//		Log.out("top_addtag:::"+top);
+//		Log.out("side_addtag:::"+side);
+//		Log.out("value_addtag:::"+value);
 		//check the number of each part
 		int top_num = 1, side_num = 1, value_num = 1;
 		//if top structure is forest
@@ -46,9 +45,9 @@ public class Ctab {
 		}
 		value_num = value.size();
 
-		Log.out("top_num:::"+top_num);
-		Log.out("side_num:::"+side_num);
-		Log.out("value_num:::"+value_num);
+//		Log.out("top_num:::"+top_num);
+//		Log.out("side_num:::"+side_num);
+//		Log.out("value_num:::"+value_num);
 
 		if(value_num != 1 && side_num * top_num != value_num){
 			System.err.println("Incorrect number of cross_tab arguments");
@@ -66,8 +65,14 @@ public class Ctab {
 		ExtList top4 = new ExtList();
 		ExtList top5 = new ExtList();
 		ExtList top6 = new ExtList();
-		String deco = "@{width=" + GlobalEnv.sideWidth + "}";
-		top1.add(" ");
+		ExtList top7 = new ExtList();
+		ExtList top8 = new ExtList();
+		ExtList top9 = new ExtList();
+		ExtList top10 = new ExtList();
+		ExtList top11 = new ExtList();
+		ExtList top12 = new ExtList();
+		String deco = "@{width=" + GlobalEnv.sideWidth + ", ctab_leftup}";
+		top1.add("' '");
 		top2.add("sl");
 		top2.add(top1);
 		top3.add(top2);
@@ -79,7 +84,16 @@ public class Ctab {
 		top5.add(topAttribute);
 		top6.add("h_exp");
 		top6.add(top5);
-		ExtList topAttributeSide = (ExtList)top6.clone();
+		top7.add("[");
+		top7.add(top6);
+		top7.add("]");
+		top7.add(",");
+		top9.add("grouper");
+		top9.add(top7);
+		top11.add("operand");
+		top10.add(top9);
+		top11.add(top10);
+		ExtList topAttributeSide = (ExtList)top11.clone();
 
 
 		//make side and value structure
@@ -113,6 +127,22 @@ public class Ctab {
 				ExtList first = new ExtList();
 				//null関数に入れる
 				ExtList nulls = new ExtList();
+
+				// まずは左上の空白
+				ExtList emp1 = new ExtList();
+				ExtList emp2 = new ExtList();
+				ExtList emp3 = new ExtList();
+				ExtList emp4 = new ExtList();
+				emp1.add("' '");
+				emp2.add("sl");
+				emp2.add(emp1);
+				emp3.add(emp2);
+				emp3.add(deco);
+				emp4.add("operand");
+				emp4.add(emp3);
+
+				nulls.add(addNull(emp4));
+
 				for (int k = 0; k < top_child_atts.size(); k++) {
 					if(first.size() == 0 && top_child_atts.get(k) instanceof String){
 						continue;
@@ -149,41 +179,8 @@ public class Ctab {
 					tmp1.add("operand");
 					tmp1.add(tmp2);
 					//make function name
-					ExtList tmp3 = new ExtList();
-					ExtList tmp4 = new ExtList();
-					ExtList tmp5 = new ExtList();
-					ExtList tmp6 = new ExtList();
-					ExtList tmp7 = new ExtList();
-					ExtList tmp8 = new ExtList();
 
-					tmp7.add("null");
-					tmp6.add("keyword");
-					tmp6.add(tmp7);
-					tmp5.add(tmp6);
-					tmp4.add("any_name");
-					tmp4.add(tmp5);
-					tmp3.add(tmp4);
-					tmp8.add("function_name");
-					tmp8.add(tmp3);
-
-					ExtList tmp9 = new ExtList();
-
-					tmp9.add(tmp8);
-					tmp9.add("(");
-					tmp9.add(tmp1);
-					tmp9.add(")");
-
-					ExtList tmp10 = new ExtList();
-					ExtList tmp11 = new ExtList();
-					ExtList tmp12 = new ExtList();
-
-					tmp10.add("function");
-					tmp10.add(tmp9);
-					tmp11.add(tmp10);
-					tmp12.add("operand");
-					tmp12.add(tmp11);
-
-					nulls.add(tmp12);
+					nulls.add(addNull(tmp1));
 					first.clear();
 				}
 				Log.out("nulls:::"+ nulls);
@@ -270,6 +267,44 @@ public class Ctab {
 		finalForm = tmp6;
 		Log.out("Ctab_finished:::"+finalForm);
 		return finalForm;
+	}
+
+	private ExtList addNull(ExtList content) {
+		ExtList tmp3 = new ExtList();
+		ExtList tmp4 = new ExtList();
+		ExtList tmp5 = new ExtList();
+		ExtList tmp6 = new ExtList();
+		ExtList tmp7 = new ExtList();
+		ExtList tmp8 = new ExtList();
+
+		tmp7.add("null");
+		tmp6.add("keyword");
+		tmp6.add(tmp7);
+		tmp5.add(tmp6);
+		tmp4.add("any_name");
+		tmp4.add(tmp5);
+		tmp3.add(tmp4);
+		tmp8.add("function_name");
+		tmp8.add(tmp3);
+
+		ExtList tmp9 = new ExtList();
+
+		tmp9.add(tmp8);
+		tmp9.add("(");
+		tmp9.add(content);
+		tmp9.add(")");
+
+		ExtList tmp10 = new ExtList();
+		ExtList tmp11 = new ExtList();
+		ExtList tmp12 = new ExtList();
+
+		tmp10.add("function");
+		tmp10.add(tmp9);
+		tmp11.add(tmp10);
+		tmp12.add("operand");
+		tmp12.add(tmp11);
+
+		return tmp12;
 	}
 
 	private void addTag(ExtList list, String tag) {

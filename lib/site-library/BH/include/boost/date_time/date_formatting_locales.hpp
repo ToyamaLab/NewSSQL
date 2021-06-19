@@ -17,6 +17,10 @@
 #include "boost/date_time/iso_format.hpp"
 #include "boost/date_time/date_names_put.hpp"
 #include "boost/date_time/parse_format_base.hpp"
+<<<<<<< HEAD
+=======
+#include <boost/io/ios_state.hpp>
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 //#include <string>
 #include <sstream>
 #include <iomanip>
@@ -56,8 +60,13 @@ namespace date_time {
         }
         case month_as_integer:
         {
+<<<<<<< HEAD
           charT fill_char = '0';
           os << std::setw(2) << std::setfill(fill_char) << month.as_number();
+=======
+          boost::io::basic_ios_fill_saver<charT> ifs(os);
+          os << std::setw(2) << std::setfill(os.widen('0')) << month.as_number();
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
           break;
         }
 
@@ -132,8 +141,13 @@ namespace date_time {
                         ostream_type& os,
                         const facet_type& f)
     {
+<<<<<<< HEAD
       std::ostreambuf_iterator<charT> oitr(os);
       charT fill_char = '0';
+=======
+      boost::io::basic_ios_fill_saver<charT> ifs(os);
+      std::ostreambuf_iterator<charT> oitr(os);
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
       switch (f.date_order()) {
         case ymd_order_iso: {
           os << ymd.year;
@@ -144,7 +158,11 @@ namespace date_time {
           if (f.has_date_sep_chars()) {
             f.day_sep_char(oitr);
           }
+<<<<<<< HEAD
           os  << std::setw(2) << std::setfill(fill_char)
+=======
+          os  << std::setw(2) << std::setfill(os.widen('0'))
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
               << ymd.day;
           break;
         }
@@ -153,7 +171,11 @@ namespace date_time {
           if (f.has_date_sep_chars()) {
           f.day_sep_char(oitr);
           }
+<<<<<<< HEAD
           os  << std::setw(2) << std::setfill(fill_char)
+=======
+          os  << std::setw(2) << std::setfill(os.widen('0'))
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
             << ymd.day;
           if (f.has_date_sep_chars()) {
             f.month_sep_char(oitr);
@@ -162,7 +184,11 @@ namespace date_time {
           break;
         }
         case ymd_order_dmy: {
+<<<<<<< HEAD
           os  << std::setw(2) << std::setfill(fill_char)
+=======
+          os  << std::setw(2) << std::setfill(os.widen('0'))
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
               << ymd.day;
           if (f.has_date_sep_chars()) {
             f.day_sep_char(oitr);

@@ -28,10 +28,16 @@
 #include <boost/fusion/include/for_each.hpp>
 #include <boost/fusion/include/is_view.hpp>
 #include <boost/fusion/include/mpl.hpp>
+<<<<<<< HEAD
 #include <boost/foreach.hpp>
 #include <boost/utility/value_init.hpp>
 #include <boost/type_traits/is_same.hpp>
 #include <boost/type_traits/is_convertible.hpp>
+=======
+#include <boost/type_traits/is_same.hpp>
+#include <boost/type_traits/is_convertible.hpp>
+#include <boost/type_traits/is_reference.hpp>
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 #include <boost/mpl/eval_if.hpp>
 #include <boost/mpl/end.hpp>
 #include <boost/mpl/find_if.hpp>
@@ -46,6 +52,10 @@
 #include <boost/variant.hpp>
 #include <boost/range/iterator_range.hpp>
 #include <boost/config.hpp>
+<<<<<<< HEAD
+=======
+#include <iterator> // for std::iterator_traits, std::distance
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 #include <vector>
 #include <utility>
 #include <ios>
@@ -279,11 +289,14 @@ namespace boost { namespace spirit { namespace traits
       : mpl::false_
     {};
 
+<<<<<<< HEAD
     template <typename T, typename Domain>
     struct not_is_variant<boost::optional<T>, Domain>
       : not_is_variant<T, Domain>
     {};
 
+=======
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     // we treat every type as if it where the variant (as this meta function is
     // invoked for variant types only)
     template <typename T>
@@ -296,6 +309,14 @@ namespace boost { namespace spirit { namespace traits
       : variant_type<T>
     {};
 
+<<<<<<< HEAD
+=======
+    template <typename T, typename Domain>
+    struct not_is_variant_or_variant_in_optional
+      : not_is_variant<typename variant_type<T>::type, Domain>
+    {};
+
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     ///////////////////////////////////////////////////////////////////////////
     // The compute_compatible_component_variant
     ///////////////////////////////////////////////////////////////////////////
@@ -339,7 +360,11 @@ namespace boost { namespace spirit { namespace traits
 
     template <typename Variant, typename Expected>
     struct compute_compatible_component_variant<Variant, Expected, mpl::false_
+<<<<<<< HEAD
       , typename enable_if<detail::has_types<Variant> >::type>
+=======
+      , typename enable_if<detail::has_types<typename variant_type<Variant>::type> >::type>
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     {
         typedef typename traits::variant_type<Variant>::type variant_type;
         typedef typename variant_type::types types;
@@ -372,7 +397,11 @@ namespace boost { namespace spirit { namespace traits
     template <typename Expected, typename Attribute, typename Domain>
     struct compute_compatible_component
       : compute_compatible_component_variant<Attribute, Expected
+<<<<<<< HEAD
           , typename spirit::traits::not_is_variant<Attribute, Domain>::type> {};
+=======
+          , typename not_is_variant_or_variant_in_optional<Attribute, Domain>::type> {};
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
     template <typename Expected, typename Domain>
     struct compute_compatible_component<Expected, unused_type, Domain>
@@ -560,12 +589,20 @@ namespace boost { namespace spirit { namespace traits
     template <typename Iterator>
     struct attribute_size<iterator_range<Iterator> >
     {
+<<<<<<< HEAD
         typedef typename boost::detail::iterator_traits<Iterator>::
+=======
+        typedef typename std::iterator_traits<Iterator>::
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
             difference_type type;
 
         static type call(iterator_range<Iterator> const& r)
         {
+<<<<<<< HEAD
             return boost::detail::distance(r.begin(), r.end());
+=======
+            return std::distance(r.begin(), r.end());
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
         }
     };
 
@@ -924,6 +961,26 @@ namespace boost { namespace spirit { namespace traits
         type;
     };
 
+<<<<<<< HEAD
+=======
+    namespace detail {
+        // Domain-agnostic class template partial specializations and
+        // type agnostic domain partial specializations are ambious.
+        // To resolve the ambiguity type agnostic domain partial
+        // specializations are dispatched via intermediate type.
+        template <typename Exposed, typename Transformed, typename Domain>
+        struct transform_attribute_base;
+
+        template <typename Attribute>
+        struct synthesize_attribute
+        {
+            typedef Attribute type;
+            static Attribute pre(unused_type) { return Attribute(); }
+            static void post(unused_type, Attribute const&) {}
+            static void fail(unused_type) {}
+        };
+    }
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     ///////////////////////////////////////////////////////////////////////////
     //  transform_attribute
     //
@@ -931,6 +988,7 @@ namespace boost { namespace spirit { namespace traits
     //  attributes. This template can be used as a customization point, where
     //  the user is able specify specific transformation rules for any attribute
     //  type.
+<<<<<<< HEAD
     ///////////////////////////////////////////////////////////////////////////
     template <typename Exposed, typename Transformed, typename Domain
       , typename Enable/* = void*/>
@@ -1016,6 +1074,34 @@ namespace boost { namespace spirit { namespace traits
         }
     };
 
+=======
+    //
+    //  Note: the transformations involving unused_type are internal details
+    //  and may be subject to change at any time.
+    //
+    ///////////////////////////////////////////////////////////////////////////
+    template <typename Exposed, typename Transformed, typename Domain
+      , typename Enable/* = void*/>
+    struct transform_attribute
+      : detail::transform_attribute_base<Exposed, Transformed, Domain>
+    {
+        BOOST_STATIC_ASSERT_MSG(!is_reference<Exposed>::value,
+            "Exposed cannot be a reference type");
+        BOOST_STATIC_ASSERT_MSG(!is_reference<Transformed>::value,
+            "Transformed cannot be a reference type");
+    };
+
+    template <typename Transformed, typename Domain>
+    struct transform_attribute<unused_type, Transformed, Domain>
+      : detail::synthesize_attribute<Transformed>
+    {};
+
+    template <typename Transformed, typename Domain>
+    struct transform_attribute<unused_type const, Transformed, Domain>
+      : detail::synthesize_attribute<Transformed>
+    {};
+
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     ///////////////////////////////////////////////////////////////////////////
     // swap_impl
     //
@@ -1382,6 +1468,7 @@ namespace boost { namespace spirit { namespace traits
     }
 }}}
 
+<<<<<<< HEAD
 ///////////////////////////////////////////////////////////////////////////////
 namespace boost { namespace spirit { namespace result_of
 {
@@ -1392,4 +1479,6 @@ namespace boost { namespace spirit { namespace result_of
 }}}
 
 
+=======
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 #endif

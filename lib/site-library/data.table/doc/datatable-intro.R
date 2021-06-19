@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 ## ---- echo = FALSE, message = FALSE--------------------------------------
+=======
+## ---- echo = FALSE, message = FALSE-------------------------------------------
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 require(data.table)
 knitr::opts_chunk$set(
   comment = "#",
@@ -12,7 +16,16 @@ knitr::opts_chunk$set(
 options(width = 100L)
 
 ## -------------------------------------------------------------------------------------------------
+<<<<<<< HEAD
 flights <- fread("flights14.csv")
+=======
+input <- if (file.exists("flights14.csv")) {
+   "flights14.csv"
+} else {
+  "https://raw.githubusercontent.com/Rdatatable/data.table/master/vignettes/flights14.csv"
+}
+flights <- fread(input)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 flights
 dim(flights)
 

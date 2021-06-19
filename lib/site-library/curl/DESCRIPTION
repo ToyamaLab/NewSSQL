@@ -1,7 +1,11 @@
 Package: curl
 Type: Package
 Title: A Modern and Flexible Web Client for R
+<<<<<<< HEAD
 Version: 3.2
+=======
+Version: 4.3
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 Authors@R: c(
     person("Jeroen", "Ooms", role = c("aut", "cre"), email = "jeroen@berkeley.edu",
       comment = c(ORCID = "0000-0002-4035-0289")),
@@ -20,6 +24,7 @@ Description: The curl() and curl_download() functions provide highly
 License: MIT + file LICENSE
 SystemRequirements: libcurl: libcurl-devel (rpm) or
         libcurl4-openssl-dev (deb).
+<<<<<<< HEAD
 URL: https://github.com/jeroen/curl#readme (devel)
         https://curl.haxx.se/libcurl/ (upstream)
 BugReports: https://github.com/jeroen/curl/issues
@@ -33,10 +38,31 @@ Encoding: UTF-8
 Language: en-US
 NeedsCompilation: yes
 Packaged: 2018-03-19 16:18:53 UTC; jeroen
+=======
+URL: https://jeroen.cran.dev/curl (docs)
+        https://github.com/jeroen/curl#readme (devel)
+        https://curl.haxx.se/libcurl/ (upstream)
+BugReports: https://github.com/jeroen/curl/issues
+Suggests: spelling, testthat (>= 1.0.0), knitr, jsonlite, rmarkdown,
+        magrittr, httpuv (>= 1.4.4), webutils
+VignetteBuilder: knitr
+Depends: R (>= 3.0.0)
+LazyData: true
+RoxygenNote: 7.0.1
+Encoding: UTF-8
+Language: en-US
+NeedsCompilation: yes
+Packaged: 2019-12-02 12:33:03 UTC; jeroen
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 Author: Jeroen Ooms [aut, cre] (<https://orcid.org/0000-0002-4035-0289>),
   Hadley Wickham [ctb],
   RStudio [cph]
 Maintainer: Jeroen Ooms <jeroen@berkeley.edu>
 Repository: CRAN
+<<<<<<< HEAD
 Date/Publication: 2018-03-28 07:42:52 UTC
 Built: R 3.5.1; x86_64-apple-darwin17.6.0; 2018-08-21 07:39:33 UTC; unix
+=======
+Date/Publication: 2019-12-02 14:00:03 UTC
+Built: R 4.0.2; x86_64-apple-darwin17.7.0; 2020-08-27 07:30:16 UTC; unix
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce

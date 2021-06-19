@@ -1,6 +1,10 @@
 // Boost.Geometry (aka GGL, Generic Geometry Library)
 
+<<<<<<< HEAD
 // Copyright (c) 2014-2017, Oracle and/or its affiliates.
+=======
+// Copyright (c) 2014-2019, Oracle and/or its affiliates.
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 // Contributed and/or modified by Menelaos Karavelas, on behalf of Oracle
 // Contributed and/or modified by Adam Wulkiewicz, on behalf of Oracle
@@ -148,13 +152,21 @@ struct point_point_point
                                        Point2 const& point2,
                                        RobustPolicy const& ,
                                        OutputIterator oit,
+<<<<<<< HEAD
                                        Strategy const&)
+=======
+                                       Strategy const& strategy)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     {
         action_selector_pl_pl
             <
                 PointOut, OverlayType
             >::apply(point1,
+<<<<<<< HEAD
                      detail::equals::equals_point_point(point1, point2),
+=======
+                     detail::equals::equals_point_point(point1, point2, strategy),
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
                      oit);
 
         return oit;
@@ -182,7 +194,11 @@ struct multipoint_point_point
                                        Point const& point,
                                        RobustPolicy const& ,
                                        OutputIterator oit,
+<<<<<<< HEAD
                                        Strategy const&)
+=======
+                                       Strategy const& strategy)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     {
         BOOST_GEOMETRY_ASSERT( OverlayType == overlay_difference );
 
@@ -194,7 +210,11 @@ struct multipoint_point_point
                 <
                     PointOut, OverlayType
                 >::apply(*it,
+<<<<<<< HEAD
                          detail::equals::equals_point_point(*it, point),
+=======
+                         detail::equals::equals_point_point(*it, point, strategy),
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
                          oit);
         }
 
@@ -218,7 +238,11 @@ struct point_multipoint_point
                                        MultiPoint const& multipoint,
                                        RobustPolicy const& ,
                                        OutputIterator oit,
+<<<<<<< HEAD
                                        Strategy const&)
+=======
+                                       Strategy const& strategy)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     {
         typedef action_selector_pl_pl<PointOut, OverlayType> action;
 
@@ -226,7 +250,11 @@ struct point_multipoint_point
                  it = boost::begin(multipoint);
              it != boost::end(multipoint); ++it)
         {
+<<<<<<< HEAD
             if ( detail::equals::equals_point_point(*it, point) )
+=======
+            if ( detail::equals::equals_point_point(*it, point, strategy) )
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
             {
                 action::apply(point, true, oit);
                 return oit;
@@ -257,6 +285,11 @@ struct multipoint_multipoint_point
                                        OutputIterator oit,
                                        Strategy const& strategy)
     {
+<<<<<<< HEAD
+=======
+        typedef geometry::less<void, -1, typename Strategy::cs_tag> less_type;
+
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
         if ( OverlayType != overlay_difference
              && boost::size(multipoint1) > boost::size(multipoint2) )
         {
@@ -271,7 +304,11 @@ struct multipoint_multipoint_point
         std::vector<point2_type> points2(boost::begin(multipoint2),
                                          boost::end(multipoint2));
 
+<<<<<<< HEAD
         geometry::less<> const less = geometry::less<>();
+=======
+        less_type const less = less_type();
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
         std::sort(points2.begin(), points2.end(), less);
 
         for (typename boost::range_iterator<MultiPoint1 const>::type

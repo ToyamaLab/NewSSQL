@@ -34,6 +34,7 @@ namespace boost { namespace date_time {
   {
    public:
     typedef std::basic_string<charT>        string_type;
+<<<<<<< HEAD
     //typedef std::basic_stringstream<charT>  stringstream_type;
     typedef std::istreambuf_iterator<charT> stream_itr_type;
     //typedef typename string_type::const_iterator const_itr;
@@ -42,6 +43,11 @@ namespace boost { namespace date_time {
     typedef typename date_type::duration_type duration_type;
     //typedef typename date_type::day_of_week_type day_of_week_type;
     //typedef typename date_type::day_type day_type;
+=======
+    typedef std::basic_stringstream<charT>  stringstream_type;
+    typedef std::istreambuf_iterator<charT> stream_itr_type;
+    typedef typename date_type::duration_type duration_type;
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     typedef string_parse_tree<charT> parse_tree_type;
     typedef typename parse_tree_type::parse_match_result_type match_results;
     typedef std::vector<std::basic_string<charT> > collection_type;
@@ -101,11 +107,45 @@ namespace boost { namespace date_time {
       m_sv_strings = parse_tree_type(phrases, static_cast<int>(not_a_date_time));
     }
 
+<<<<<<< HEAD
     /* Does not return a special_value because if the parsing fails, 
      * the return value will always be not_a_date_time 
      * (mr.current_match retains its default value of -1 on a failed 
      * parse and that casts to not_a_date_time). */
     //! Sets match_results.current_match to the corresponding special_value or -1
+=======
+    //! The parser is expensive to create, and not thread-safe so it cannot be static
+    //! therefore given a string, determine if it is likely to be a special value.
+    //! A negative response is a definite no, whereas a positive is only likely and
+    //! match() should be called and return value checked.
+    //! \param[in]  str  the string to check
+    //! \returns  false if it is definitely not a special value
+    static bool likely(const string_type& str)
+    {
+        if (!str.empty()) {
+            switch (str[0]) {
+                // See string definitions at the end of this class..
+                case '+':
+                case '-':
+                case 'n':
+                case 'm':
+                    return true;
+
+                default:
+                    break;
+            }
+        }
+
+        return false;
+    }
+
+    //! Given an input iterator, attempt to match it to a known special value
+    //! \param[in]  sitr  the start iterator
+    //! \param[in]  str_end  the end iterator
+    //! \param[out]  mr  the match result:
+    //!                  mr.current_match is set to the corresponding special_value or -1
+    //! \returns  whether something matched
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     bool match(stream_itr_type& sitr, 
                         stream_itr_type& str_end,
                         match_results& mr) const
@@ -114,6 +154,7 @@ namespace boost { namespace date_time {
       m_sv_strings.match(sitr, str_end, mr, level);
       return (mr.current_match != match_results::PARSE_ERROR);
     }
+<<<<<<< HEAD
     /*special_values match(stream_itr_type& sitr, 
                         stream_itr_type& str_end,
                         match_results& mr) const
@@ -126,6 +167,8 @@ namespace boost { namespace date_time {
       return static_cast<special_values>(mr.current_match);
     }*/
                      
+=======
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
    private:
     parse_tree_type m_sv_strings;

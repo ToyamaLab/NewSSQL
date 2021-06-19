@@ -69,8 +69,13 @@ inline Vector<RTYPE> unique( const VectorBase<RTYPE,NA,T>& t ){
 	return hash.keys() ;
 }
 template <int RTYPE, bool NA, typename T>
+<<<<<<< HEAD
 inline Vector<RTYPE> sort_unique( const VectorBase<RTYPE,NA,T>& t ){
 	return unique<RTYPE,NA,T>( t ).sort() ;
+=======
+inline Vector<RTYPE> sort_unique( const VectorBase<RTYPE,NA,T>& t , bool decreasing = false){
+	return unique<RTYPE,NA,T>( t ).sort(decreasing) ;
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 }
 
 template <int RTYPE, bool NA, typename T, bool RHS_NA, typename RHS_T>

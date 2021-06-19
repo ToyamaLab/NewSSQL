@@ -100,7 +100,11 @@ class private_adaptive_pool_base
    typedef typename segment_manager::size_type           difference_type;
    typedef boost::interprocess::version_type
       <private_adaptive_pool_base, Version>              version;
+<<<<<<< HEAD
    typedef boost::container::container_detail::transform_multiallocation_chain
+=======
+   typedef boost::container::dtl::transform_multiallocation_chain
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
       <typename SegmentManager::multiallocation_chain, T>multiallocation_chain;
 
    //!Obtains node_allocator from other node_allocator

@@ -190,7 +190,15 @@ namespace boost { namespace program_options {
         Read from file with the given name. The character type is
         passed to the file stream.
     */
+<<<<<<< HEAD
     template<class charT>
+=======
+#ifdef BOOST_NO_CXX11_FUNCTION_TEMPLATE_DEFAULT_ARGS
+    template<class charT>
+#else
+    template<class charT = char>
+#endif
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 #if ! BOOST_WORKAROUND(__ICL, BOOST_TESTED_AT(700))
     BOOST_PROGRAM_OPTIONS_DECL
 #endif

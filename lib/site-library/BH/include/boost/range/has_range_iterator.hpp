@@ -37,9 +37,15 @@ namespace boost
             T,
             BOOST_DEDUCED_TYPENAME ::boost::enable_if<
                 BOOST_DEDUCED_TYPENAME mpl::eval_if<is_const<T>,
+<<<<<<< HEAD
                     has_type<range_const_iterator<
                                 BOOST_DEDUCED_TYPENAME remove_const<T>::type> >,
                     has_type<range_mutable_iterator<T> >
+=======
+                    has_type<boost::range_const_iterator<
+                                BOOST_DEDUCED_TYPENAME remove_const<T>::type> >,
+                    has_type<boost::range_mutable_iterator<T> >
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
                 >::type
             >::type
         >
@@ -57,7 +63,11 @@ namespace boost
         struct has_range_const_iterator_impl<
             T,
             BOOST_DEDUCED_TYPENAME ::boost::enable_if<
+<<<<<<< HEAD
                 has_type<range_const_iterator<T> >
+=======
+                has_type<boost::range_const_iterator<T> >
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
             >::type
         >
             : boost::mpl::true_

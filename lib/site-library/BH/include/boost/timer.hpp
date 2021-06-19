@@ -17,6 +17,12 @@
 #ifndef BOOST_TIMER_HPP
 #define BOOST_TIMER_HPP
 
+<<<<<<< HEAD
+=======
+#include <boost/config/header_deprecated.hpp>
+BOOST_HEADER_DEPRECATED( "the facilities in <boost/timer/timer.hpp>" )
+
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 #include <boost/config.hpp>
 #include <ctime>
 #include <boost/limits.hpp>

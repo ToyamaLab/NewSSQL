@@ -20,4 +20,8 @@ NeedsCompilation: no
 Packaged: 2018-06-11 23:15:15 UTC; wickhamc
 Repository: CRAN
 Date/Publication: 2018-06-12 04:29:06 UTC
+<<<<<<< HEAD
 Built: R 3.5.1; ; 2018-08-18 07:12:56 UTC; unix
+=======
+Built: R 4.0.2; ; 2020-08-27 07:44:37 UTC; unix
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce

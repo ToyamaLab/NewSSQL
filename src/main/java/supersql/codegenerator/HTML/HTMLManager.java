@@ -189,6 +189,14 @@ public class HTMLManager extends Manager implements Serializable {
 
 		if (data_info.size() == 0
 		// added by goto 20130306 "FROM�ʤ��������к� 3/3"
+//<<<<<<< HEAD
+//				&& !DataConstructor.SQL_string
+//						.equals("SELECT DISTINCT  FROM ;") && !DataConstructor.SQL_string.equals("SELECT  FROM ;")) {
+//			Log.out("no data");
+//			htmlEnv.code.append("<div class=\"nodata\" >");
+//			htmlEnv.code.append("NO DATA FOUND");
+//			htmlEnv.code.append("</div>");
+//=======
 				/*&& !DataConstructor.SQL_string
 						.equals("SELECT DISTINCT  FROM ;") && !DataConstructor.SQL_string.equals("SELECT  FROM ;")*/) {
 //			Log.out("no data");
@@ -197,8 +205,10 @@ public class HTMLManager extends Manager implements Serializable {
 //			htmlEnv.code.append("</div>");
 			tfe_info.work(data_info);
 
+//>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 		} else
 			tfe_info.work(data_info);
+		
 
 		// add by masato 20151118 start for incremental
 		if (Ehtml.flag) {
@@ -207,14 +217,17 @@ public class HTMLManager extends Manager implements Serializable {
 			String id = "ssqlResult" + GlobalEnv.getQueryNum();
 			String phpFileName = htmlEnv.outFile.substring(htmlEnv.outFile.lastIndexOf(GlobalEnv.OS_FS) + 1, htmlEnv.outFile.length());
 			//TODO -scrolled 1 -> ssqlresult1-1.xml, -scrolled == null -> ssqlresult1.xml
-			String path = "";
+
+			String xmlFileName = htmlEnv.outFile.substring(htmlEnv.outFile.lastIndexOf(GlobalEnv.OS_FS) + 1, htmlEnv.outFile.length());
+			String path = htmlEnv.outDir + GlobalEnv.OS_FS + "GeneratedXML" + GlobalEnv.OS_FS + xmlFileName + GlobalEnv.OS_FS + id + ".xml";
+//			String path = "";
 			Incremental.createXML(path, htmlEnv.xmlCode);
 			// 既存のHTMLのヘッダー内に書き込むjsコード
 			Ehtml.appendToHeadFromBody(path);
 			// XMLをparseして生成したテーブルをappendするhtmlコード（divタグ）
 			Ehtml.createBaseHTMLCode();
 			// cssの生成・コピー
-			Jscss.process();
+			Jscss.process();	//TODO
 
 			// TODO 終了どうする？
 //			System.exit(0);
@@ -306,6 +319,7 @@ public class HTMLManager extends Manager implements Serializable {
 					}
 					// add 20141204 masato for ehtml
 				} else {
+					
 					Log.ehtmlInfo("=-=-=-=");
 					Log.ehtmlInfo(htmlEnv.header);
 					Log.ehtmlInfo(htmlEnv.code);

@@ -20,9 +20,21 @@
 #include <boost/ptr_container/detail/reversible_ptr_container.hpp>
 #include <boost/ptr_container/indirect_fun.hpp>
 #include <boost/ptr_container/detail/void_ptr_iterator.hpp>
+<<<<<<< HEAD
 #include <boost/type_traits/remove_pointer.hpp>
 #include <boost/type_traits/is_same.hpp>
 
+=======
+#include <boost/ptr_container/detail/ptr_container_disable_deprecated.hpp>
+#include <boost/type_traits/remove_pointer.hpp>
+#include <boost/type_traits/is_same.hpp>
+#include <boost/next_prior.hpp>
+
+#if defined(BOOST_PTR_CONTAINER_DISABLE_DEPRECATED)
+#pragma GCC diagnostic push
+//#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
+#endif
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 namespace boost
 {   
@@ -219,10 +231,24 @@ namespace ptr_container_detail
           : base_type( r, tag )
         { }
         
+<<<<<<< HEAD
+=======
+#ifndef BOOST_NO_AUTO_PTR
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
         template< class PtrContainer >
         explicit ptr_sequence_adapter( std::auto_ptr<PtrContainer> clone )
           : base_type( clone )
         { }
+<<<<<<< HEAD
+=======
+#endif
+#ifndef BOOST_NO_CXX11_SMART_PTR
+        template< class PtrContainer >
+        explicit ptr_sequence_adapter( std::unique_ptr<PtrContainer> clone )
+          : base_type( std::move( clone ) )
+        { }
+#endif
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
         ptr_sequence_adapter& operator=( const ptr_sequence_adapter r )
         {
@@ -230,12 +256,30 @@ namespace ptr_container_detail
             return *this; 
         }
         
+<<<<<<< HEAD
         template< class PtrContainer >
         ptr_sequence_adapter& operator=( std::auto_ptr<PtrContainer> clone )    
+=======
+#ifndef BOOST_NO_AUTO_PTR
+        template< class PtrContainer >
+        ptr_sequence_adapter& operator=( std::auto_ptr<PtrContainer> clone )
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
         {
             base_type::operator=( clone );
             return *this;
         }
+<<<<<<< HEAD
+=======
+#endif
+#ifndef BOOST_NO_CXX11_SMART_PTR
+        template< class PtrContainer >
+        ptr_sequence_adapter& operator=( std::unique_ptr<PtrContainer> clone )
+        {
+            base_type::operator=( std::move( clone ) );
+            return *this;
+        }
+#endif
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
         /////////////////////////////////////////////////////////////
         // modifiers
@@ -249,11 +293,26 @@ namespace ptr_container_detail
             ptr.release();                // nothrow
         }
 
+<<<<<<< HEAD
+=======
+#ifndef BOOST_NO_AUTO_PTR
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
         template< class U >
         void push_back( std::auto_ptr<U> x )
         {
             push_back( x.release() );
         }
+<<<<<<< HEAD
+=======
+#endif
+#ifndef BOOST_NO_CXX11_SMART_PTR
+        template< class U >
+        void push_back( std::unique_ptr<U> x )
+        {
+            push_back( x.release() );
+        }
+#endif
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
         
         void push_front( value_type x )                
         {
@@ -263,11 +322,26 @@ namespace ptr_container_detail
             ptr.release();                // nothrow
         }
 
+<<<<<<< HEAD
+=======
+#ifndef BOOST_NO_AUTO_PTR
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
         template< class U >
         void push_front( std::auto_ptr<U> x )
         {
             push_front( x.release() );
         }
+<<<<<<< HEAD
+=======
+#endif
+#ifndef BOOST_NO_CXX11_SMART_PTR
+        template< class U >
+        void push_front( std::unique_ptr<U> x )
+        {
+            push_front( x.release() );
+        }
+#endif
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
         auto_type pop_back()
         {
@@ -770,4 +844,11 @@ namespace ptr_container_detail
 
 } // namespace 'boost'  
 
+<<<<<<< HEAD
+=======
+#if defined(BOOST_PTR_CONTAINER_DISABLE_DEPRECATED)
+#pragma GCC diagnostic pop
+#endif
+
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 #endif

@@ -13,7 +13,10 @@
 
 #include <boost/pending/indirect_cmp.hpp>
 #include <boost/graph/relax.hpp>
+<<<<<<< HEAD
 #include <boost/pending/relaxed_heap.hpp>
+=======
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 #include <boost/graph/detail/d_ary_heap.hpp>
 #include <boost/graph/dijkstra_shortest_paths.hpp>
 #include <boost/graph/iteration_macros.hpp>
@@ -41,6 +44,7 @@ namespace boost {
   {
     typedef typename graph_traits<Graph>::vertex_descriptor Vertex;
     typedef typename property_traits<DistanceMap>::value_type Distance;
+<<<<<<< HEAD
     
     typedef indirect_cmp<DistanceMap, DistanceCompare> DistanceIndirectCompare;
     DistanceIndirectCompare
@@ -54,6 +58,14 @@ namespace boost {
                              distance_indirect_compare,
                              index_map);
 #else
+=======
+
+    typedef indirect_cmp<DistanceMap, DistanceCompare> DistanceIndirectCompare;
+    DistanceIndirectCompare
+      distance_indirect_compare(distance_map, distance_compare);
+
+
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     // Default - use d-ary heap (d = 4)
     typedef
       detail::vertex_property_map_generator<Graph, VertexIndexMap, std::size_t>
@@ -62,6 +74,7 @@ namespace boost {
     typedef
       d_ary_heap_indirect<Vertex, 4, IndexInHeapMap, DistanceMap, DistanceCompare>
       VertexQueue;
+<<<<<<< HEAD
   
     boost::scoped_array<std::size_t> index_in_heap_map_holder;
     IndexInHeapMap index_in_heap =
@@ -85,19 +98,52 @@ namespace boost {
       // Check if any other vertices can be reached
       Distance min_vertex_distance = get(distance_map, min_vertex);
       
+=======
+
+    boost::scoped_array<std::size_t> index_in_heap_map_holder;
+    IndexInHeapMap index_in_heap =
+      IndexInHeapMapHelper::build(graph, index_map,
+                                  index_in_heap_map_holder);
+    VertexQueue vertex_queue(distance_map, index_in_heap, distance_compare);
+
+    // Add vertex to the queue
+    vertex_queue.push(start_vertex);
+
+    // Starting vertex will always be the first discovered vertex
+    visitor.discover_vertex(start_vertex, graph);
+
+    while (!vertex_queue.empty()) {
+      Vertex min_vertex = vertex_queue.top();
+      vertex_queue.pop();
+
+      visitor.examine_vertex(min_vertex, graph);
+
+      // Check if any other vertices can be reached
+      Distance min_vertex_distance = get(distance_map, min_vertex);
+
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
       if (!distance_compare(min_vertex_distance, distance_infinity)) {
         // This is the minimum vertex, so all other vertices are unreachable
         return;
       }
+<<<<<<< HEAD
   
       // Examine neighbors of min_vertex
       BGL_FORALL_OUTEDGES_T(min_vertex, current_edge, graph, Graph) {
         visitor.examine_edge(current_edge, graph);
         
+=======
+
+      // Examine neighbors of min_vertex
+      BGL_FORALL_OUTEDGES_T(min_vertex, current_edge, graph, Graph) {
+        visitor.examine_edge(current_edge, graph);
+
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
         // Check if the edge has a negative weight
         if (distance_compare(get(weight_map, current_edge), distance_zero)) {
           boost::throw_exception(negative_edge());
         }
+<<<<<<< HEAD
   
         // Extract the neighboring vertex and get its distance
         Vertex neighbor_vertex = target(current_edge, graph);
@@ -110,6 +156,20 @@ namespace boost {
           predecessor_map, distance_map,
           distance_weight_combine, distance_compare);
   
+=======
+
+        // Extract the neighboring vertex and get its distance
+        Vertex neighbor_vertex = target(current_edge, graph);
+        Distance neighbor_vertex_distance = get(distance_map, neighbor_vertex);
+        bool is_neighbor_undiscovered =
+          !distance_compare(neighbor_vertex_distance, distance_infinity);
+
+        // Attempt to relax the edge
+        bool was_edge_relaxed = relax_target(current_edge, graph, weight_map,
+          predecessor_map, distance_map,
+          distance_weight_combine, distance_compare);
+
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
         if (was_edge_relaxed) {
           visitor.edge_relaxed(current_edge, graph);
           if (is_neighbor_undiscovered) {
@@ -121,9 +181,15 @@ namespace boost {
         } else {
           visitor.edge_not_relaxed(current_edge, graph);
         }
+<<<<<<< HEAD
   
       } // end out edge iteration
   
+=======
+
+      } // end out edge iteration
+
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
       visitor.finish_vertex(min_vertex, graph);
     } // end while queue not empty
   }
@@ -150,6 +216,7 @@ namespace boost {
     // Initialize vertices
     BGL_FORALL_VERTICES_T(current_vertex, graph, Graph) {
       visitor.initialize_vertex(current_vertex, graph);
+<<<<<<< HEAD
       
       // Default all distances to infinity
       put(distance_map, current_vertex, distance_infinity);
@@ -161,6 +228,19 @@ namespace boost {
     // Set distance for start_vertex to zero
     put(distance_map, start_vertex, distance_zero);
   
+=======
+
+      // Default all distances to infinity
+      put(distance_map, current_vertex, distance_infinity);
+
+      // Default all vertex predecessors to the vertex itself
+      put(predecessor_map, current_vertex, current_vertex);
+    }
+
+    // Set distance for start_vertex to zero
+    put(distance_map, start_vertex, distance_zero);
+
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     // Pass everything on to the no_init version
     dijkstra_shortest_paths_no_color_map_no_init(graph,
       start_vertex, predecessor_map, distance_map, weight_map,
@@ -195,7 +275,11 @@ namespace boost {
          choose_param(get_param(params, distance_compare_t()),
                       std::less<DistanceType>()),
          choose_param(get_param(params, distance_combine_t()),
+<<<<<<< HEAD
                       closed_plus<DistanceType>(inf)),
+=======
+                      std::plus<DistanceType>()),
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
          inf,
          choose_param(get_param(params, distance_zero_t()),
                       DistanceType()),
@@ -216,7 +300,11 @@ namespace boost {
       typedef typename property_traits<WeightMap>::value_type DistanceType;
       typename std::vector<DistanceType>::size_type
         vertex_count = is_default_param(distance_map) ? num_vertices(graph) : 1;
+<<<<<<< HEAD
         
+=======
+
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
       std::vector<DistanceType> default_distance_map(vertex_count);
 
       detail::dijkstra_no_color_map_dispatch2

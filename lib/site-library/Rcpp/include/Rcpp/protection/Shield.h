@@ -25,12 +25,25 @@ namespace Rcpp{
         return x ;
     }
 
+<<<<<<< HEAD
+=======
+    inline void Rcpp_unprotect(int i){
+        // Prefer this function over UNPROTECT() in Rcpp so that all
+        // balance checks errors by rchk are contained at one location (#892)
+        UNPROTECT(i);
+    }
+
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     template <typename T>
     class Shield{
     public:
         Shield( SEXP t_) : t(Rcpp_protect(t_)){}
         ~Shield(){
+<<<<<<< HEAD
             if( t != R_NilValue ) UNPROTECT(1) ;
+=======
+            if( t != R_NilValue ) Rcpp_unprotect(1) ;
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
         }
 
         operator SEXP() const { return t; }

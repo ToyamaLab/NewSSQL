@@ -7,7 +7,11 @@ C++Function-class       Class "C++Function"
 C++Object-class         c++ internal objects
 C++OverloadedMethods-class
                         Class "C++OverloadedMethods"
+<<<<<<< HEAD
 LdFlags                 (Deprecated) Rcpp Linker Flags
+=======
+LdFlags                 Deprecated Rcpp Linker Flags
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 Module                  Retrieves an Rcpp module
 Module-class            Rcpp modules
 Rcpp-deprecated         Deprecated Functions in the Rcpp Package
@@ -26,6 +30,10 @@ exportAttribute         Rcpp::export Attribute
 exposeClass             Create an Rcpp Module to Expose a C++ Class in
                         R
 formals<--methods       Set the formal arguments of a C++ function
+<<<<<<< HEAD
+=======
+getRcppVersion          Export the Rcpp (API) Package Version
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 interfacesAttribute     Rcpp::interfaces Attribute
 loadModule              Load an Rcpp Module into a Package
 loadRcppModules         Loads Rcpp modules on package startup

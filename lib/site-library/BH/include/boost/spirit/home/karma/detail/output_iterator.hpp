@@ -191,7 +191,11 @@ namespace boost { namespace spirit { namespace karma { namespace detail
        // wchar_t is only 16-bits on Windows. If BOOST_SPIRIT_UNICODE is
        // defined, the character type is 32-bits wide so we need to make
        // sure the buffer is at least that wide.
+<<<<<<< HEAD
 #if defined(BOOST_MSVC) && defined(BOOST_SPIRIT_UNICODE)
+=======
+#if (defined(_WIN32) || defined(__CYGWIN__)) && defined(BOOST_SPIRIT_UNICODE)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
        typedef spirit::char_encoding::unicode::char_type buffer_char_type;
 #else
        typedef wchar_t buffer_char_type;
@@ -304,7 +308,11 @@ namespace boost { namespace spirit { namespace karma { namespace detail
     struct no_buffering_policy
     {
         no_buffering_policy() {}
+<<<<<<< HEAD
         no_buffering_policy(no_counting_policy const&) {}
+=======
+        no_buffering_policy(no_buffering_policy const&) {}
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
         template <typename T>
         bool output(T const& /*value*/) 

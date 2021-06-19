@@ -28,7 +28,11 @@
 
 namespace boost {
 namespace container {
+<<<<<<< HEAD
 namespace container_detail {
+=======
+namespace dtl {
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 using ::boost::move_detail::enable_if;
 using ::boost::move_detail::enable_if_and;
@@ -61,9 +65,17 @@ using ::boost::move_detail::is_nothrow_swappable;
 using ::boost::move_detail::alignment_of;
 using ::boost::move_detail::aligned_storage;
 using ::boost::move_detail::nat;
+<<<<<<< HEAD
 using ::boost::move_detail::max_align_t;
 
 }  //namespace container_detail {
+=======
+using ::boost::move_detail::nat2;
+using ::boost::move_detail::nat3;
+using ::boost::move_detail::max_align_t;
+
+}  //namespace dtl {
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 }  //namespace container {
 }  //namespace boost {
 

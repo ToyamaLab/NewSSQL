@@ -117,7 +117,11 @@ struct block_header
    {
       return get_rounded_size
                ( size_type(sizeof(Header))
+<<<<<<< HEAD
             , size_type(::boost::container::container_detail::alignment_of<block_header<size_type> >::value))
+=======
+            , size_type(::boost::container::dtl::alignment_of<block_header<size_type> >::value))
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
            + total_size();
    }
 
@@ -169,7 +173,11 @@ struct block_header
 
    template<class T>
    static block_header<size_type> *block_header_from_value(T *value)
+<<<<<<< HEAD
    {  return block_header_from_value(value, sizeof(T), ::boost::container::container_detail::alignment_of<T>::value);  }
+=======
+   {  return block_header_from_value(value, sizeof(T), ::boost::container::dtl::alignment_of<T>::value);  }
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
    static block_header<size_type> *block_header_from_value(const void *value, std::size_t sz, std::size_t algn)
    {
@@ -190,7 +198,11 @@ struct block_header
       block_header<size_type> * hdr =
          reinterpret_cast<block_header<size_type>*>(reinterpret_cast<char*>(header) +
        get_rounded_size( size_type(sizeof(Header))
+<<<<<<< HEAD
                        , size_type(::boost::container::container_detail::alignment_of<block_header<size_type> >::value)));
+=======
+                       , size_type(::boost::container::dtl::alignment_of<block_header<size_type> >::value)));
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
       //Some sanity checks
       return hdr;
    }
@@ -201,7 +213,11 @@ struct block_header
       Header * hdr =
          reinterpret_cast<Header*>(reinterpret_cast<char*>(bheader) -
        get_rounded_size( size_type(sizeof(Header))
+<<<<<<< HEAD
                        , size_type(::boost::container::container_detail::alignment_of<block_header<size_type> >::value)));
+=======
+                       , size_type(::boost::container::dtl::alignment_of<block_header<size_type> >::value)));
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
       //Some sanity checks
       return hdr;
    }
@@ -275,7 +291,11 @@ struct intrusive_value_type_impl
 
    intrusive_value_type_impl(){}
 
+<<<<<<< HEAD
    enum  {  BlockHdrAlignment = ::boost::container::container_detail::alignment_of<block_header<size_type> >::value  };
+=======
+   enum  {  BlockHdrAlignment = ::boost::container::dtl::alignment_of<block_header<size_type> >::value  };
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
    block_header<size_type> *get_block_header() const
    {

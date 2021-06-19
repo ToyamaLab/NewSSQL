@@ -1,5 +1,9 @@
 /*=============================================================================
+<<<<<<< HEAD
     Copyright (c) 2001-2011 Joel de Guzman
+=======
+    Copyright (c) 2001-2019 Joel de Guzman
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     Copyright (c) 2001-2011 Hartmut Kaiser
 
     Distributed under the Boost Software License, Version 1.0. (See accompanying
@@ -14,6 +18,32 @@
 
 #include <boost/spirit/home/qi/numeric/numeric_utils.hpp>
 #include <boost/spirit/home/qi/detail/string_parse.hpp>
+<<<<<<< HEAD
+=======
+#include <boost/type_traits/is_floating_point.hpp>
+
+namespace boost { namespace spirit { namespace traits
+{
+    // So that we won't exceed the capacity of the underlying type T,
+    // we limit the number of digits parsed to its max_digits10.
+    // By default, the value is -1 which tells spirit to parse an
+    // unbounded number of digits.
+
+    template <typename T, typename Enable = void>
+    struct max_digits10
+    {
+        static int const value = -1;  // unbounded
+    };
+
+    template <typename T>
+    struct max_digits10<T
+      , typename enable_if_c<(is_floating_point<T>::value)>::type>
+    {
+        static int const digits = std::numeric_limits<T>::digits;
+        static int const value = 2 + (digits * 30103l) / 100000l;
+    };
+}}}
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 namespace boost { namespace spirit { namespace qi
 {
@@ -23,6 +53,12 @@ namespace boost { namespace spirit { namespace qi
     template <typename T>
     struct ureal_policies
     {
+<<<<<<< HEAD
+=======
+        // Versioning
+        typedef mpl::int_<2> version;
+
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
         // trailing dot policy suggested by Gustavo Guerra
         static bool const allow_leading_dot = true;
         static bool const allow_trailing_dot = true;
@@ -39,7 +75,26 @@ namespace boost { namespace spirit { namespace qi
         static bool
         parse_n(Iterator& first, Iterator const& last, Attribute& attr_)
         {
+<<<<<<< HEAD
             return extract_uint<Attribute, 10, 1, -1>::call(first, last, attr_);
+=======
+            typedef extract_uint<Attribute, 10, 1
+            , traits::max_digits10<T>::value // See notes on max_digits10 above
+            , false, true>
+            extract_uint;
+            return extract_uint::call(first, last, attr_);
+        }
+
+        // ignore_excess_digits (required for version > 1 API)
+        template <typename Iterator>
+        static std::size_t
+        ignore_excess_digits(Iterator& first, Iterator const& last)
+        {
+            Iterator save = first;
+            if (extract_uint<unused_type, 10, 1, -1>::call(first, last, unused))
+                return std::distance(save, first);
+            return 0;
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
         }
 
         template <typename Iterator>
@@ -60,11 +115,24 @@ namespace boost { namespace spirit { namespace qi
             bool r = extract_uint<Attribute, 10, 1, -1, true, true>::call(first, last, attr_);
             if (r)
             {
+<<<<<<< HEAD
+=======
+#if defined(_MSC_VER) && _MSC_VER < 1900
+# pragma warning(push)
+# pragma warning(disable: 4127) // conditional expression is constant
+#endif
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
                 // Optimization note: don't compute frac_digits if T is
                 // an unused_type. This should be optimized away by the compiler.
                 if (!is_same<T, unused_type>::value)
                     frac_digits =
                         static_cast<int>(std::distance(savef, first));
+<<<<<<< HEAD
+=======
+#if defined(_MSC_VER) && _MSC_VER < 1900
+# pragma warning(pop)
+#endif
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
                 // ignore extra (non-significant digits)
                 extract_uint<unused_type, 10, 1, -1>::call(first, last, unused);
             }
@@ -89,6 +157,7 @@ namespace boost { namespace spirit { namespace qi
         }
 
         ///////////////////////////////////////////////////////////////////////
+<<<<<<< HEAD
         //  The parse_nan() and parse_inf() functions get called whenever:
         //
         //    - a number to parse does not start with a digit (after having
@@ -105,6 +174,11 @@ namespace boost { namespace spirit { namespace qi
         //
         //  The second call allows to recognize representation formats starting
         //  with a 1.0 (such as 1.0#NAN or 1.0#INF etc.).
+=======
+        //  The parse_nan() and parse_inf() functions get called whenever
+        //  a number to parse does not start with a digit (after having
+        //  successfully parsed an optional sign).
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
         //
         //  The functions should return true if a Nan or Inf has been found. In
         //  this case the attr should be set to the matched value (NaN or

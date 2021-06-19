@@ -14,6 +14,10 @@
 # define BOOST_PREPROCESSOR_VARIADIC_HPP
 #
 # include <boost/preprocessor/variadic/elem.hpp>
+<<<<<<< HEAD
+=======
+# include <boost/preprocessor/variadic/has_opt.hpp>
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 # include <boost/preprocessor/variadic/size.hpp>
 # include <boost/preprocessor/variadic/to_array.hpp>
 # include <boost/preprocessor/variadic/to_list.hpp>

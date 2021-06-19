@@ -27,7 +27,11 @@
 namespace boost
 {
   namespace graph { namespace detail {
+<<<<<<< HEAD
     enum { V_EVEN, V_ODD, V_UNREACHED };
+=======
+    enum VERTEX_STATE { V_EVEN, V_ODD, V_UNREACHED };
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
   } } // end namespace graph::detail
 
   template <typename Graph, typename MateMap, typename VertexIndexMap>

@@ -34,10 +34,17 @@
 #include <boost/geometry/algorithms/detail/overlay/turn_info.hpp>
 #include <boost/geometry/algorithms/detail/overlay/get_turns.hpp>
 #include <boost/geometry/algorithms/detail/overlay/do_reverse.hpp>
+<<<<<<< HEAD
 
 #include <boost/geometry/policies/disjoint_interrupt_policy.hpp>
 #include <boost/geometry/policies/robustness/no_rescale_policy.hpp>
 #include <boost/geometry/policies/robustness/segment_ratio_type.hpp>
+=======
+#include <boost/geometry/algorithms/detail/overlay/segment_as_subrange.hpp>
+
+#include <boost/geometry/policies/disjoint_interrupt_policy.hpp>
+#include <boost/geometry/policies/robustness/no_rescale_policy.hpp>
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 #include <boost/geometry/algorithms/dispatch/disjoint.hpp>
 
@@ -59,6 +66,7 @@ struct disjoint_segment
     {
         typedef typename point_type<Segment1>::type point_type;
 
+<<<<<<< HEAD
         // We don't need to rescale to detect disjointness
         typedef no_rescale_policy rescale_policy_type;
         rescale_policy_type robust_policy;
@@ -72,15 +80,25 @@ struct disjoint_segment
                         rescale_policy_type
                     >::type
             > intersection_return_type;
+=======
+        typedef segment_intersection_points<point_type> intersection_return_type;
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
         typedef policies::relate::segments_intersection_points
             <
                 intersection_return_type
             > intersection_policy;
 
+<<<<<<< HEAD
         intersection_return_type is = strategy.apply(segment1, segment2,
                                                      intersection_policy(),
                                                      robust_policy);
+=======
+        detail::segment_as_subrange<Segment1> sub_range1(segment1);
+        detail::segment_as_subrange<Segment2> sub_range2(segment2);
+        intersection_return_type is = strategy.apply(sub_range1, sub_range2,
+                                                     intersection_policy());
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
         return is.count == 0;
     }
@@ -93,6 +111,7 @@ struct assign_disjoint_policy
     static bool const include_no_turn = true;
     static bool const include_degenerate = true;
     static bool const include_opposite = true;
+<<<<<<< HEAD
 
     // We don't assign extra info:
     template
@@ -105,6 +124,8 @@ struct assign_disjoint_policy
     static inline void apply(Info& , Point1 const& , Point2 const&,
                 IntersectionInfo const&)
     {}
+=======
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 };
 
 
@@ -117,6 +138,7 @@ struct disjoint_linear
                              Strategy const& strategy)
     {
         typedef typename geometry::point_type<Geometry1>::type point_type;
+<<<<<<< HEAD
         typedef detail::no_rescale_policy rescale_policy_type;
         typedef typename geometry::segment_ratio_type
             <
@@ -129,6 +151,19 @@ struct disjoint_linear
                 typename detail::get_turns::turn_operation_type
                         <
                             Geometry1, Geometry2, segment_ratio_type
+=======
+        typedef geometry::segment_ratio
+            <
+                typename coordinate_type<point_type>::type
+            > ratio_type;
+        typedef overlay::turn_info
+            <
+                point_type,
+                ratio_type,
+                typename detail::get_turns::turn_operation_type
+                        <
+                            Geometry1, Geometry2, ratio_type
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
                         >::type
             > turn_info_type;
 
@@ -151,7 +186,11 @@ struct disjoint_linear
                         Geometry1, Geometry2, assign_disjoint_policy
                     >
             >::apply(0, geometry1, 1, geometry2,
+<<<<<<< HEAD
                      strategy, rescale_policy_type(), turns, interrupt_policy);
+=======
+                     strategy, detail::no_rescale_policy(), turns, interrupt_policy);
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
         return !interrupt_policy.has_intersections;
     }

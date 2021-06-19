@@ -1,6 +1,10 @@
 // Boost.Geometry (aka GGL, Generic Geometry Library)
 
+<<<<<<< HEAD
 // Copyright (c) 2014-2017, Oracle and/or its affiliates.
+=======
+// Copyright (c) 2014-2019, Oracle and/or its affiliates.
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 // Licensed under the Boost Software License version 1.0.
 // http://www.boost.org/users/license.html
@@ -139,6 +143,7 @@ protected:
         static bool const include_no_turn = false;
         static bool const include_degenerate = EnableDegenerateTurns;
         static bool const include_opposite = false;
+<<<<<<< HEAD
 
         template
         <
@@ -151,6 +156,8 @@ protected:
                                  IntersectionInfo const& )
         {
         }
+=======
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     };
 
 
@@ -181,8 +188,12 @@ protected:
                     LinearGeometry1,
                     LinearGeometry2,
                     assign_policy
+<<<<<<< HEAD
                 >,
                 RobustPolicy
+=======
+                >
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
             >::apply(turns, linear1, linear2, interrupt_policy, strategy, robust_policy);
     }
 
@@ -249,6 +260,7 @@ public:
                 Linear1,
                 Linear2,
                 detail::get_turns::get_turn_info_type
+<<<<<<< HEAD
                 <
                     Linear1,
                     Linear2,
@@ -256,6 +268,14 @@ public:
                 >,
                 RobustPolicy
             >::turn_info turn_info;
+=======
+                    <
+                        Linear1,
+                        Linear2,
+                        assign_policy
+                    >
+            >::template turn_info_type<Strategy, RobustPolicy>::type turn_info;
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
         typedef std::vector<turn_info> turns_container;
 

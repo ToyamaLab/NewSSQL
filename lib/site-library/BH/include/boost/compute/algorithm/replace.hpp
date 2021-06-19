@@ -11,10 +11,19 @@
 #ifndef BOOST_COMPUTE_ALGORITHM_REPLACE_HPP
 #define BOOST_COMPUTE_ALGORITHM_REPLACE_HPP
 
+<<<<<<< HEAD
+=======
+#include <boost/static_assert.hpp>
+
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 #include <boost/compute/system.hpp>
 #include <boost/compute/command_queue.hpp>
 #include <boost/compute/detail/meta_kernel.hpp>
 #include <boost/compute/detail/iterator_range_size.hpp>
+<<<<<<< HEAD
+=======
+#include <boost/compute/type_traits/is_device_iterator.hpp>
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 namespace boost {
 namespace compute {
@@ -77,6 +86,10 @@ inline void replace(Iterator first,
                     const T &new_value,
                     command_queue &queue = system::default_queue())
 {
+<<<<<<< HEAD
+=======
+    BOOST_STATIC_ASSERT(is_device_iterator<Iterator>::value);
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     detail::replace_kernel<Iterator, T> kernel;
 
     kernel.set_range(first, last);

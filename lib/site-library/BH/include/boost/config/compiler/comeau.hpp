@@ -50,7 +50,11 @@
 // last known and checked version is 4245:
 #if (__COMO_VERSION__ > 4245)
 #  if defined(BOOST_ASSERT_CONFIG)
+<<<<<<< HEAD
 #     error "Unknown compiler version - please run the configure tests and report the results"
+=======
+#     error "boost: Unknown compiler version - please run the configure tests and report the results"
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 #  endif
 #endif
 

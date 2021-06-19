@@ -26,6 +26,10 @@
 #include <boost/type_traits/is_integral.hpp>
 #include <boost/type_traits/is_enum.hpp>
 #include <boost/lexical_cast.hpp>
+<<<<<<< HEAD
+=======
+#include <iterator> // for std::iterator_traits
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 namespace boost { namespace spirit
 {
@@ -84,7 +88,11 @@ namespace boost { namespace spirit { namespace qi
                 // been initialized with
 
                 typedef typename
+<<<<<<< HEAD
                     boost::detail::iterator_traits<Iterator>::value_type
+=======
+                    std::iterator_traits<Iterator>::value_type
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
                 token_type;
                 typedef typename token_type::id_type id_type;
 

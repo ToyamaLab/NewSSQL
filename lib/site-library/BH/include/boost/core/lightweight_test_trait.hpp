@@ -9,16 +9,31 @@
 
 // boost/core/lightweight_test_trait.hpp
 //
+<<<<<<< HEAD
 // BOOST_TEST_TRAIT_TRUE, BOOST_TEST_TRAIT_FALSE
 //
 // Copyright 2014 Peter Dimov
 //
+=======
+// BOOST_TEST_TRAIT_TRUE, BOOST_TEST_TRAIT_FALSE, BOOST_TEST_TRAIT_SAME
+//
+// Copyright 2014 Peter Dimov
+//
+// Copyright 2019 Glen Joseph Fernandes
+// (glenjofe@gmail.com)
+//
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 // Distributed under the Boost Software License, Version 1.0.
 // See accompanying file LICENSE_1_0.txt or copy at
 // http://www.boost.org/LICENSE_1_0.txt
 
 #include <boost/core/lightweight_test.hpp>
 #include <boost/core/typeinfo.hpp>
+<<<<<<< HEAD
+=======
+#include <boost/core/is_same.hpp>
+#include <boost/config.hpp>
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 namespace boost
 {
@@ -26,12 +41,63 @@ namespace boost
 namespace detail
 {
 
+<<<<<<< HEAD
+=======
+template<class, int = 0> struct test_print { };
+
+template<class T> inline std::ostream& operator<<(std::ostream& o, test_print<T, 2>)
+{
+    return o << boost::core::demangled_name(BOOST_CORE_TYPEID(T));
+}
+
+template<class T> inline std::ostream& operator<<(std::ostream& o, test_print<T, 1>)
+{
+    return o << test_print<T, 2>();
+}
+
+template<class T> inline std::ostream& operator<<(std::ostream& o, test_print<const T, 1>)
+{
+    return o << test_print<T, 2>() << " const";
+}
+
+template<class T> inline std::ostream& operator<<(std::ostream& o, test_print<volatile T, 1>)
+{
+    return o << test_print<T, 2>() << " volatile";
+}
+
+template<class T> inline std::ostream& operator<<(std::ostream& o, test_print<const volatile T, 1>)
+{
+    return o << test_print<T, 2>() << " const volatile";
+}
+
+template<class T> inline std::ostream& operator<<(std::ostream& o, test_print<T>)
+{
+    return o << test_print<T, 1>();
+}
+
+template<class T> inline std::ostream& operator<<(std::ostream& o, test_print<T&>)
+{
+    return o << test_print<T, 1>() << " &";
+}
+
+#if !defined(BOOST_NO_CXX11_RVALUE_REFERENCES)
+template<class T> inline std::ostream& operator<<(std::ostream& o, test_print<T&&>)
+{
+    return o << test_print<T, 1>() << " &&";
+}
+#endif
+
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 template< class T > inline void test_trait_impl( char const * trait, void (*)( T ),
   bool expected, char const * file, int line, char const * function )
 {
     if( T::value == expected )
     {
+<<<<<<< HEAD
         report_errors_remind();
+=======
+        test_results();
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     }
     else
     {
@@ -42,7 +108,36 @@ template< class T > inline void test_trait_impl( char const * trait, void (*)( T
             << "' (should have been " << ( expected? "true": "false" ) << ")"
             << std::endl;
 
+<<<<<<< HEAD
         ++test_errors();
+=======
+        ++test_results().errors();
+    }
+}
+
+template<class T> inline bool test_trait_same_impl_( T )
+{
+    return T::value;
+}
+
+template<class T1, class T2> inline void test_trait_same_impl( char const * types,
+  boost::core::is_same<T1, T2> same, char const * file, int line, char const * function )
+{
+    if( test_trait_same_impl_( same ) )
+    {
+        test_results();
+    }
+    else
+    {
+        BOOST_LIGHTWEIGHT_TEST_OSTREAM
+            << file << "(" << line << "): test 'is_same<" << types << ">'"
+            << " failed in function '" << function
+            << "' ('" << test_print<T1>()
+            << "' != '" << test_print<T2>() << "')"
+            << std::endl;
+
+        ++test_results().errors();
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     }
 }
 
@@ -52,5 +147,9 @@ template< class T > inline void test_trait_impl( char const * trait, void (*)( T
 
 #define BOOST_TEST_TRAIT_TRUE(type) ( ::boost::detail::test_trait_impl(#type, (void(*)type)0, true, __FILE__, __LINE__, BOOST_CURRENT_FUNCTION) )
 #define BOOST_TEST_TRAIT_FALSE(type) ( ::boost::detail::test_trait_impl(#type, (void(*)type)0, false, __FILE__, __LINE__, BOOST_CURRENT_FUNCTION) )
+<<<<<<< HEAD
+=======
+#define BOOST_TEST_TRAIT_SAME(...) ( ::boost::detail::test_trait_same_impl(#__VA_ARGS__, ::boost::core::is_same<__VA_ARGS__>(), __FILE__, __LINE__, BOOST_CURRENT_FUNCTION) )
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 #endif // #ifndef BOOST_CORE_LIGHTWEIGHT_TEST_TRAIT_HPP

@@ -5,8 +5,13 @@
 // Copyright (c) 2009-2015 Mateusz Loskot, London, UK.
 // Copyright (c) 2013-2015 Adam Wulkiewicz, Lodz, Poland
 
+<<<<<<< HEAD
 // This file was modified by Oracle on 2013, 2014, 2015, 2017.
 // Modifications copyright (c) 2013-2017, Oracle and/or its affiliates.
+=======
+// This file was modified by Oracle on 2013, 2014, 2015, 2017, 2018.
+// Modifications copyright (c) 2013-2018, Oracle and/or its affiliates.
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 // Contributed and/or modified by Adam Wulkiewicz, on behalf of Oracle
 // Contributed and/or modified by Menelaos Karavelas, on behalf of Oracle
@@ -23,6 +28,7 @@
 
 #include <cstddef>
 
+<<<<<<< HEAD
 #include <boost/type_traits/is_same.hpp>
 
 #include <boost/geometry/core/access.hpp>
@@ -46,6 +52,17 @@
 
 #include <boost/geometry/algorithms/dispatch/disjoint.hpp>
 
+=======
+#include <boost/geometry/core/tags.hpp>
+
+#include <boost/geometry/algorithms/dispatch/disjoint.hpp>
+
+// For backward compatibility
+#include <boost/geometry/strategies/disjoint.hpp>
+#include <boost/geometry/strategies/cartesian/point_in_point.hpp>
+#include <boost/geometry/strategies/spherical/point_in_point.hpp>
+
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 namespace boost { namespace geometry
 {
@@ -56,6 +73,7 @@ namespace detail { namespace disjoint
 {
 
 
+<<<<<<< HEAD
 template <std::size_t Dimension, std::size_t DimensionCount>
 struct point_point_generic
 {
@@ -207,10 +225,13 @@ struct point_point<Point1, Point2, Dimension, DimensionCount, cartesian_tag>
 {};
 
 
+=======
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 /*!
     \brief Internal utility function to detect of points are disjoint
     \note To avoid circular references
  */
+<<<<<<< HEAD
 template <typename Point1, typename Point2>
 inline bool disjoint_point_point(Point1 const& point1, Point2 const& point2)
 {
@@ -219,6 +240,13 @@ inline bool disjoint_point_point(Point1 const& point1, Point2 const& point2)
             Point1, Point2,
             0, dimension<Point1>::type::value
         >::apply(point1, point2);
+=======
+template <typename Point1, typename Point2, typename Strategy>
+inline bool disjoint_point_point(Point1 const& point1, Point2 const& point2,
+                                 Strategy const& )
+{
+    return ! Strategy::apply(point1, point2);
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 }
 
 
@@ -226,8 +254,11 @@ inline bool disjoint_point_point(Point1 const& point1, Point2 const& point2)
 #endif // DOXYGEN_NO_DETAIL
 
 
+<<<<<<< HEAD
 
 
+=======
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 #ifndef DOXYGEN_NO_DISPATCH
 namespace dispatch
 {
@@ -235,8 +266,19 @@ namespace dispatch
 
 template <typename Point1, typename Point2, std::size_t DimensionCount>
 struct disjoint<Point1, Point2, DimensionCount, point_tag, point_tag, false>
+<<<<<<< HEAD
     : detail::disjoint::point_point<Point1, Point2, 0, DimensionCount>
 {};
+=======
+{
+    template <typename Strategy>
+    static inline bool apply(Point1 const& point1, Point2 const& point2,
+                             Strategy const& )
+    {
+        return ! Strategy::apply(point1, point2);
+    }
+};
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 
 } // namespace dispatch

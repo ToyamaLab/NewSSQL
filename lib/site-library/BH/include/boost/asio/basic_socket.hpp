@@ -2,7 +2,11 @@
 // basic_socket.hpp
 // ~~~~~~~~~~~~~~~~
 //
+<<<<<<< HEAD
 // Copyright (c) 2003-2017 Christopher M. Kohlhoff (chris at kohlhoff dot com)
+=======
+// Copyright (c) 2003-2019 Christopher M. Kohlhoff (chris at kohlhoff dot com)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 //
 // Distributed under the Boost Software License, Version 1.0. (See accompanying
 // file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
@@ -17,6 +21,7 @@
 
 #include <boost/asio/detail/config.hpp>
 #include <boost/asio/async_result.hpp>
+<<<<<<< HEAD
 #include <boost/asio/basic_io_object.hpp>
 #include <boost/asio/detail/handler_type_requirements.hpp>
 #include <boost/asio/detail/throw_error.hpp>
@@ -25,10 +30,32 @@
 #include <boost/asio/post.hpp>
 #include <boost/asio/socket_base.hpp>
 
+=======
+#include <boost/asio/detail/handler_type_requirements.hpp>
+#include <boost/asio/detail/io_object_impl.hpp>
+#include <boost/asio/detail/non_const_lvalue.hpp>
+#include <boost/asio/detail/throw_error.hpp>
+#include <boost/asio/detail/type_traits.hpp>
+#include <boost/asio/error.hpp>
+#include <boost/asio/execution_context.hpp>
+#include <boost/asio/executor.hpp>
+#include <boost/asio/post.hpp>
+#include <boost/asio/socket_base.hpp>
+
+#if defined(BOOST_ASIO_WINDOWS_RUNTIME)
+# include <boost/asio/detail/null_socket_service.hpp>
+#elif defined(BOOST_ASIO_HAS_IOCP)
+# include <boost/asio/detail/win_iocp_socket_service.hpp>
+#else
+# include <boost/asio/detail/reactive_socket_service.hpp>
+#endif
+
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 #if defined(BOOST_ASIO_HAS_MOVE)
 # include <utility>
 #endif // defined(BOOST_ASIO_HAS_MOVE)
 
+<<<<<<< HEAD
 #if !defined(BOOST_ASIO_ENABLE_OLD_SERVICES)
 # if defined(BOOST_ASIO_WINDOWS_RUNTIME)
 #  include <boost/asio/detail/winrt_ssocket_service.hpp>
@@ -42,11 +69,25 @@
 # endif
 #endif // !defined(BOOST_ASIO_ENABLE_OLD_SERVICES)
 
+=======
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 #include <boost/asio/detail/push_options.hpp>
 
 namespace boost {
 namespace asio {
 
+<<<<<<< HEAD
+=======
+#if !defined(BOOST_ASIO_BASIC_SOCKET_FWD_DECL)
+#define BOOST_ASIO_BASIC_SOCKET_FWD_DECL
+
+// Forward declaration with defaulted arguments.
+template <typename Protocol, typename Executor = executor>
+class basic_socket;
+
+#endif // !defined(BOOST_ASIO_BASIC_SOCKET_FWD_DECL)
+
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 /// Provides socket functionality.
 /**
  * The basic_socket class template provides functionality that is common to both
@@ -56,6 +97,7 @@ namespace asio {
  * @e Distinct @e objects: Safe.@n
  * @e Shared @e objects: Unsafe.
  */
+<<<<<<< HEAD
 template <typename Protocol BOOST_ASIO_SVC_TPARAM>
 class basic_socket
   : BOOST_ASIO_SVC_ACCESS basic_io_object<BOOST_ASIO_SVC_T>,
@@ -64,12 +106,41 @@ class basic_socket
 public:
   /// The type of the executor associated with the object.
   typedef io_context::executor_type executor_type;
+=======
+template <typename Protocol, typename Executor>
+class basic_socket
+  : public socket_base
+{
+public:
+  /// The type of the executor associated with the object.
+  typedef Executor executor_type;
+
+  /// Rebinds the socket type to another executor.
+  template <typename Executor1>
+  struct rebind_executor
+  {
+    /// The socket type when rebound to the specified executor.
+    typedef basic_socket<Protocol, Executor1> other;
+  };
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
   /// The native representation of a socket.
 #if defined(GENERATING_DOCUMENTATION)
   typedef implementation_defined native_handle_type;
+<<<<<<< HEAD
 #else
   typedef typename BOOST_ASIO_SVC_T::native_handle_type native_handle_type;
+=======
+#elif defined(BOOST_ASIO_WINDOWS_RUNTIME)
+  typedef typename detail::null_socket_service<
+    Protocol>::native_handle_type native_handle_type;
+#elif defined(BOOST_ASIO_HAS_IOCP)
+  typedef typename detail::win_iocp_socket_service<
+    Protocol>::native_handle_type native_handle_type;
+#else
+  typedef typename detail::reactive_socket_service<
+    Protocol>::native_handle_type native_handle_type;
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 #endif
 
   /// The protocol type.
@@ -80,18 +151,47 @@ public:
 
 #if !defined(BOOST_ASIO_NO_EXTENSIONS)
   /// A basic_socket is always the lowest layer.
+<<<<<<< HEAD
   typedef basic_socket<Protocol BOOST_ASIO_SVC_TARG> lowest_layer_type;
+=======
+  typedef basic_socket<Protocol, Executor> lowest_layer_type;
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 #endif // !defined(BOOST_ASIO_NO_EXTENSIONS)
 
   /// Construct a basic_socket without opening it.
   /**
    * This constructor creates a socket without opening it.
    *
+<<<<<<< HEAD
    * @param io_context The io_context object that the socket will use to
    * dispatch handlers for any asynchronous operations performed on the socket.
    */
   explicit basic_socket(boost::asio::io_context& io_context)
     : basic_io_object<BOOST_ASIO_SVC_T>(io_context)
+=======
+   * @param ex The I/O executor that the socket will use, by default, to
+   * dispatch handlers for any asynchronous operations performed on the socket.
+   */
+  explicit basic_socket(const executor_type& ex)
+    : impl_(ex)
+  {
+  }
+
+  /// Construct a basic_socket without opening it.
+  /**
+   * This constructor creates a socket without opening it.
+   *
+   * @param context An execution context which provides the I/O executor that
+   * the socket will use, by default, to dispatch handlers for any asynchronous
+   * operations performed on the socket.
+   */
+  template <typename ExecutionContext>
+  explicit basic_socket(ExecutionContext& context,
+      typename enable_if<
+        is_convertible<ExecutionContext&, execution_context&>::value
+      >::type* = 0)
+    : impl_(context)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
   {
   }
 
@@ -99,19 +199,55 @@ public:
   /**
    * This constructor creates and opens a socket.
    *
+<<<<<<< HEAD
    * @param io_context The io_context object that the socket will use to
+=======
+   * @param ex The I/O executor that the socket will use, by default, to
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
    * dispatch handlers for any asynchronous operations performed on the socket.
    *
    * @param protocol An object specifying protocol parameters to be used.
    *
    * @throws boost::system::system_error Thrown on failure.
    */
+<<<<<<< HEAD
   basic_socket(boost::asio::io_context& io_context,
       const protocol_type& protocol)
     : basic_io_object<BOOST_ASIO_SVC_T>(io_context)
   {
     boost::system::error_code ec;
     this->get_service().open(this->get_implementation(), protocol, ec);
+=======
+  basic_socket(const executor_type& ex, const protocol_type& protocol)
+    : impl_(ex)
+  {
+    boost::system::error_code ec;
+    impl_.get_service().open(impl_.get_implementation(), protocol, ec);
+    boost::asio::detail::throw_error(ec, "open");
+  }
+
+  /// Construct and open a basic_socket.
+  /**
+   * This constructor creates and opens a socket.
+   *
+   * @param context An execution context which provides the I/O executor that
+   * the socket will use, by default, to dispatch handlers for any asynchronous
+   * operations performed on the socket.
+   *
+   * @param protocol An object specifying protocol parameters to be used.
+   *
+   * @throws boost::system::system_error Thrown on failure.
+   */
+  template <typename ExecutionContext>
+  basic_socket(ExecutionContext& context, const protocol_type& protocol,
+      typename enable_if<
+        is_convertible<ExecutionContext&, execution_context&>::value
+      >::type* = 0)
+    : impl_(context)
+  {
+    boost::system::error_code ec;
+    impl_.get_service().open(impl_.get_implementation(), protocol, ec);
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     boost::asio::detail::throw_error(ec, "open");
   }
 
@@ -122,7 +258,11 @@ public:
    * specified endpoint on the local machine. The protocol used is the protocol
    * associated with the given endpoint.
    *
+<<<<<<< HEAD
    * @param io_context The io_context object that the socket will use to
+=======
+   * @param ex The I/O executor that the socket will use, by default, to
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
    * dispatch handlers for any asynchronous operations performed on the socket.
    *
    * @param endpoint An endpoint on the local machine to which the socket will
@@ -130,6 +270,7 @@ public:
    *
    * @throws boost::system::system_error Thrown on failure.
    */
+<<<<<<< HEAD
   basic_socket(boost::asio::io_context& io_context,
       const endpoint_type& endpoint)
     : basic_io_object<BOOST_ASIO_SVC_T>(io_context)
@@ -139,6 +280,47 @@ public:
     this->get_service().open(this->get_implementation(), protocol, ec);
     boost::asio::detail::throw_error(ec, "open");
     this->get_service().bind(this->get_implementation(), endpoint, ec);
+=======
+  basic_socket(const executor_type& ex, const endpoint_type& endpoint)
+    : impl_(ex)
+  {
+    boost::system::error_code ec;
+    const protocol_type protocol = endpoint.protocol();
+    impl_.get_service().open(impl_.get_implementation(), protocol, ec);
+    boost::asio::detail::throw_error(ec, "open");
+    impl_.get_service().bind(impl_.get_implementation(), endpoint, ec);
+    boost::asio::detail::throw_error(ec, "bind");
+  }
+
+  /// Construct a basic_socket, opening it and binding it to the given local
+  /// endpoint.
+  /**
+   * This constructor creates a socket and automatically opens it bound to the
+   * specified endpoint on the local machine. The protocol used is the protocol
+   * associated with the given endpoint.
+   *
+   * @param context An execution context which provides the I/O executor that
+   * the socket will use, by default, to dispatch handlers for any asynchronous
+   * operations performed on the socket.
+   *
+   * @param endpoint An endpoint on the local machine to which the socket will
+   * be bound.
+   *
+   * @throws boost::system::system_error Thrown on failure.
+   */
+  template <typename ExecutionContext>
+  basic_socket(ExecutionContext& context, const endpoint_type& endpoint,
+      typename enable_if<
+        is_convertible<ExecutionContext&, execution_context&>::value
+      >::type* = 0)
+    : impl_(context)
+  {
+    boost::system::error_code ec;
+    const protocol_type protocol = endpoint.protocol();
+    impl_.get_service().open(impl_.get_implementation(), protocol, ec);
+    boost::asio::detail::throw_error(ec, "open");
+    impl_.get_service().bind(impl_.get_implementation(), endpoint, ec);
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     boost::asio::detail::throw_error(ec, "bind");
   }
 
@@ -146,7 +328,11 @@ public:
   /**
    * This constructor creates a socket object to hold an existing native socket.
    *
+<<<<<<< HEAD
    * @param io_context The io_context object that the socket will use to
+=======
+   * @param ex The I/O executor that the socket will use, by default, to
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
    * dispatch handlers for any asynchronous operations performed on the socket.
    *
    * @param protocol An object specifying protocol parameters to be used.
@@ -155,12 +341,49 @@ public:
    *
    * @throws boost::system::system_error Thrown on failure.
    */
+<<<<<<< HEAD
   basic_socket(boost::asio::io_context& io_context,
       const protocol_type& protocol, const native_handle_type& native_socket)
     : basic_io_object<BOOST_ASIO_SVC_T>(io_context)
   {
     boost::system::error_code ec;
     this->get_service().assign(this->get_implementation(),
+=======
+  basic_socket(const executor_type& ex, const protocol_type& protocol,
+      const native_handle_type& native_socket)
+    : impl_(ex)
+  {
+    boost::system::error_code ec;
+    impl_.get_service().assign(impl_.get_implementation(),
+        protocol, native_socket, ec);
+    boost::asio::detail::throw_error(ec, "assign");
+  }
+
+  /// Construct a basic_socket on an existing native socket.
+  /**
+   * This constructor creates a socket object to hold an existing native socket.
+   *
+   * @param context An execution context which provides the I/O executor that
+   * the socket will use, by default, to dispatch handlers for any asynchronous
+   * operations performed on the socket.
+   *
+   * @param protocol An object specifying protocol parameters to be used.
+   *
+   * @param native_socket A native socket.
+   *
+   * @throws boost::system::system_error Thrown on failure.
+   */
+  template <typename ExecutionContext>
+  basic_socket(ExecutionContext& context, const protocol_type& protocol,
+      const native_handle_type& native_socket,
+      typename enable_if<
+        is_convertible<ExecutionContext&, execution_context&>::value
+      >::type* = 0)
+    : impl_(context)
+  {
+    boost::system::error_code ec;
+    impl_.get_service().assign(impl_.get_implementation(),
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
         protocol, native_socket, ec);
     boost::asio::detail::throw_error(ec, "assign");
   }
@@ -174,10 +397,17 @@ public:
    * occur.
    *
    * @note Following the move, the moved-from object is in the same state as if
+<<<<<<< HEAD
    * constructed using the @c basic_socket(io_context&) constructor.
    */
   basic_socket(basic_socket&& other)
     : basic_io_object<BOOST_ASIO_SVC_T>(std::move(other))
+=======
+   * constructed using the @c basic_socket(const executor_type&) constructor.
+   */
+  basic_socket(basic_socket&& other) BOOST_ASIO_NOEXCEPT
+    : impl_(std::move(other.impl_))
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
   {
   }
 
@@ -189,16 +419,28 @@ public:
    * occur.
    *
    * @note Following the move, the moved-from object is in the same state as if
+<<<<<<< HEAD
    * constructed using the @c basic_socket(io_context&) constructor.
    */
   basic_socket& operator=(basic_socket&& other)
   {
     basic_io_object<BOOST_ASIO_SVC_T>::operator=(std::move(other));
+=======
+   * constructed using the @c basic_socket(const executor_type&) constructor.
+   */
+  basic_socket& operator=(basic_socket&& other)
+  {
+    impl_ = std::move(other.impl_);
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     return *this;
   }
 
   // All sockets have access to each other's implementations.
+<<<<<<< HEAD
   template <typename Protocol1 BOOST_ASIO_SVC_TPARAM1>
+=======
+  template <typename Protocol1, typename Executor1>
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
   friend class basic_socket;
 
   /// Move-construct a basic_socket from a socket of another protocol type.
@@ -209,6 +451,7 @@ public:
    * occur.
    *
    * @note Following the move, the moved-from object is in the same state as if
+<<<<<<< HEAD
    * constructed using the @c basic_socket(io_context&) constructor.
    */
   template <typename Protocol1 BOOST_ASIO_SVC_TPARAM1>
@@ -216,6 +459,17 @@ public:
       typename enable_if<is_convertible<Protocol1, Protocol>::value>::type* = 0)
     : basic_io_object<BOOST_ASIO_SVC_T>(
         other.get_service(), other.get_implementation())
+=======
+   * constructed using the @c basic_socket(const executor_type&) constructor.
+   */
+  template <typename Protocol1, typename Executor1>
+  basic_socket(basic_socket<Protocol1, Executor1>&& other,
+      typename enable_if<
+        is_convertible<Protocol1, Protocol>::value
+          && is_convertible<Executor1, Executor>::value
+      >::type* = 0)
+    : impl_(std::move(other.impl_))
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
   {
   }
 
@@ -227,6 +481,7 @@ public:
    * occur.
    *
    * @note Following the move, the moved-from object is in the same state as if
+<<<<<<< HEAD
    * constructed using the @c basic_socket(io_context&) constructor.
    */
   template <typename Protocol1 BOOST_ASIO_SVC_TPARAM1>
@@ -236,10 +491,24 @@ public:
   {
     basic_socket tmp(std::move(other));
     basic_io_object<BOOST_ASIO_SVC_T>::operator=(std::move(tmp));
+=======
+   * constructed using the @c basic_socket(const executor_type&) constructor.
+   */
+  template <typename Protocol1, typename Executor1>
+  typename enable_if<
+    is_convertible<Protocol1, Protocol>::value
+      && is_convertible<Executor1, Executor>::value,
+    basic_socket&
+  >::type operator=(basic_socket<Protocol1, Executor1> && other)
+  {
+    basic_socket tmp(std::move(other));
+    impl_ = std::move(tmp.impl_);
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     return *this;
   }
 #endif // defined(BOOST_ASIO_HAS_MOVE) || defined(GENERATING_DOCUMENTATION)
 
+<<<<<<< HEAD
 #if defined(BOOST_ASIO_ENABLE_OLD_SERVICES)
   // These functions are provided by basic_io_object<>.
 #else // defined(BOOST_ASIO_ENABLE_OLD_SERVICES)
@@ -279,6 +548,13 @@ public:
     return basic_io_object<BOOST_ASIO_SVC_T>::get_executor();
   }
 #endif // defined(BOOST_ASIO_ENABLE_OLD_SERVICES)
+=======
+  /// Get the executor associated with the object.
+  executor_type get_executor() BOOST_ASIO_NOEXCEPT
+  {
+    return impl_.get_executor();
+  }
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 #if !defined(BOOST_ASIO_NO_EXTENSIONS)
   /// Get a reference to the lowest layer.
@@ -320,14 +596,22 @@ public:
    *
    * @par Example
    * @code
+<<<<<<< HEAD
    * boost::asio::ip::tcp::socket socket(io_context);
+=======
+   * boost::asio::ip::tcp::socket socket(my_context);
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
    * socket.open(boost::asio::ip::tcp::v4());
    * @endcode
    */
   void open(const protocol_type& protocol = protocol_type())
   {
     boost::system::error_code ec;
+<<<<<<< HEAD
     this->get_service().open(this->get_implementation(), protocol, ec);
+=======
+    impl_.get_service().open(impl_.get_implementation(), protocol, ec);
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     boost::asio::detail::throw_error(ec, "open");
   }
 
@@ -341,7 +625,11 @@ public:
    *
    * @par Example
    * @code
+<<<<<<< HEAD
    * boost::asio::ip::tcp::socket socket(io_context);
+=======
+   * boost::asio::ip::tcp::socket socket(my_context);
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
    * boost::system::error_code ec;
    * socket.open(boost::asio::ip::tcp::v4(), ec);
    * if (ec)
@@ -353,7 +641,11 @@ public:
   BOOST_ASIO_SYNC_OP_VOID open(const protocol_type& protocol,
       boost::system::error_code& ec)
   {
+<<<<<<< HEAD
     this->get_service().open(this->get_implementation(), protocol, ec);
+=======
+    impl_.get_service().open(impl_.get_implementation(), protocol, ec);
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     BOOST_ASIO_SYNC_OP_VOID_RETURN(ec);
   }
 
@@ -371,7 +663,11 @@ public:
       const native_handle_type& native_socket)
   {
     boost::system::error_code ec;
+<<<<<<< HEAD
     this->get_service().assign(this->get_implementation(),
+=======
+    impl_.get_service().assign(impl_.get_implementation(),
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
         protocol, native_socket, ec);
     boost::asio::detail::throw_error(ec, "assign");
   }
@@ -389,7 +685,11 @@ public:
   BOOST_ASIO_SYNC_OP_VOID assign(const protocol_type& protocol,
       const native_handle_type& native_socket, boost::system::error_code& ec)
   {
+<<<<<<< HEAD
     this->get_service().assign(this->get_implementation(),
+=======
+    impl_.get_service().assign(impl_.get_implementation(),
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
         protocol, native_socket, ec);
     BOOST_ASIO_SYNC_OP_VOID_RETURN(ec);
   }
@@ -397,7 +697,11 @@ public:
   /// Determine whether the socket is open.
   bool is_open() const
   {
+<<<<<<< HEAD
     return this->get_service().is_open(this->get_implementation());
+=======
+    return impl_.get_service().is_open(impl_.get_implementation());
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
   }
 
   /// Close the socket.
@@ -415,7 +719,11 @@ public:
   void close()
   {
     boost::system::error_code ec;
+<<<<<<< HEAD
     this->get_service().close(this->get_implementation(), ec);
+=======
+    impl_.get_service().close(impl_.get_implementation(), ec);
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     boost::asio::detail::throw_error(ec, "close");
   }
 
@@ -430,7 +738,11 @@ public:
    *
    * @par Example
    * @code
+<<<<<<< HEAD
    * boost::asio::ip::tcp::socket socket(io_context);
+=======
+   * boost::asio::ip::tcp::socket socket(my_context);
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
    * ...
    * boost::system::error_code ec;
    * socket.close(ec);
@@ -445,7 +757,11 @@ public:
    */
   BOOST_ASIO_SYNC_OP_VOID close(boost::system::error_code& ec)
   {
+<<<<<<< HEAD
     this->get_service().close(this->get_implementation(), ec);
+=======
+    impl_.get_service().close(impl_.get_implementation(), ec);
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     BOOST_ASIO_SYNC_OP_VOID_RETURN(ec);
   }
 
@@ -471,8 +787,13 @@ public:
   native_handle_type release()
   {
     boost::system::error_code ec;
+<<<<<<< HEAD
     native_handle_type s = this->get_service().release(
         this->get_implementation(), ec);
+=======
+    native_handle_type s = impl_.get_service().release(
+        impl_.get_implementation(), ec);
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     boost::asio::detail::throw_error(ec, "release");
     return s;
   }
@@ -498,7 +819,11 @@ public:
 #endif
   native_handle_type release(boost::system::error_code& ec)
   {
+<<<<<<< HEAD
     return this->get_service().release(this->get_implementation(), ec);
+=======
+    return impl_.get_service().release(impl_.get_implementation(), ec);
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
   }
 
   /// Get the native socket representation.
@@ -509,7 +834,11 @@ public:
    */
   native_handle_type native_handle()
   {
+<<<<<<< HEAD
     return this->get_service().native_handle(this->get_implementation());
+=======
+    return impl_.get_service().native_handle(impl_.get_implementation());
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
   }
 
   /// Cancel all asynchronous operations associated with the socket.
@@ -556,7 +885,11 @@ public:
   void cancel()
   {
     boost::system::error_code ec;
+<<<<<<< HEAD
     this->get_service().cancel(this->get_implementation(), ec);
+=======
+    impl_.get_service().cancel(impl_.get_implementation(), ec);
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     boost::asio::detail::throw_error(ec, "cancel");
   }
 
@@ -603,7 +936,11 @@ public:
 #endif
   BOOST_ASIO_SYNC_OP_VOID cancel(boost::system::error_code& ec)
   {
+<<<<<<< HEAD
     this->get_service().cancel(this->get_implementation(), ec);
+=======
+    impl_.get_service().cancel(impl_.get_implementation(), ec);
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     BOOST_ASIO_SYNC_OP_VOID_RETURN(ec);
   }
 
@@ -620,7 +957,11 @@ public:
   bool at_mark() const
   {
     boost::system::error_code ec;
+<<<<<<< HEAD
     bool b = this->get_service().at_mark(this->get_implementation(), ec);
+=======
+    bool b = impl_.get_service().at_mark(impl_.get_implementation(), ec);
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     boost::asio::detail::throw_error(ec, "at_mark");
     return b;
   }
@@ -637,7 +978,11 @@ public:
    */
   bool at_mark(boost::system::error_code& ec) const
   {
+<<<<<<< HEAD
     return this->get_service().at_mark(this->get_implementation(), ec);
+=======
+    return impl_.get_service().at_mark(impl_.get_implementation(), ec);
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
   }
 
   /// Determine the number of bytes available for reading.
@@ -653,8 +998,13 @@ public:
   std::size_t available() const
   {
     boost::system::error_code ec;
+<<<<<<< HEAD
     std::size_t s = this->get_service().available(
         this->get_implementation(), ec);
+=======
+    std::size_t s = impl_.get_service().available(
+        impl_.get_implementation(), ec);
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     boost::asio::detail::throw_error(ec, "available");
     return s;
   }
@@ -671,7 +1021,11 @@ public:
    */
   std::size_t available(boost::system::error_code& ec) const
   {
+<<<<<<< HEAD
     return this->get_service().available(this->get_implementation(), ec);
+=======
+    return impl_.get_service().available(impl_.get_implementation(), ec);
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
   }
 
   /// Bind the socket to the given local endpoint.
@@ -686,7 +1040,11 @@ public:
    *
    * @par Example
    * @code
+<<<<<<< HEAD
    * boost::asio::ip::tcp::socket socket(io_context);
+=======
+   * boost::asio::ip::tcp::socket socket(my_context);
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
    * socket.open(boost::asio::ip::tcp::v4());
    * socket.bind(boost::asio::ip::tcp::endpoint(
    *       boost::asio::ip::tcp::v4(), 12345));
@@ -695,7 +1053,11 @@ public:
   void bind(const endpoint_type& endpoint)
   {
     boost::system::error_code ec;
+<<<<<<< HEAD
     this->get_service().bind(this->get_implementation(), endpoint, ec);
+=======
+    impl_.get_service().bind(impl_.get_implementation(), endpoint, ec);
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     boost::asio::detail::throw_error(ec, "bind");
   }
 
@@ -711,7 +1073,11 @@ public:
    *
    * @par Example
    * @code
+<<<<<<< HEAD
    * boost::asio::ip::tcp::socket socket(io_context);
+=======
+   * boost::asio::ip::tcp::socket socket(my_context);
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
    * socket.open(boost::asio::ip::tcp::v4());
    * boost::system::error_code ec;
    * socket.bind(boost::asio::ip::tcp::endpoint(
@@ -725,7 +1091,11 @@ public:
   BOOST_ASIO_SYNC_OP_VOID bind(const endpoint_type& endpoint,
       boost::system::error_code& ec)
   {
+<<<<<<< HEAD
     this->get_service().bind(this->get_implementation(), endpoint, ec);
+=======
+    impl_.get_service().bind(impl_.get_implementation(), endpoint, ec);
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     BOOST_ASIO_SYNC_OP_VOID_RETURN(ec);
   }
 
@@ -746,7 +1116,11 @@ public:
    *
    * @par Example
    * @code
+<<<<<<< HEAD
    * boost::asio::ip::tcp::socket socket(io_context);
+=======
+   * boost::asio::ip::tcp::socket socket(my_context);
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
    * boost::asio::ip::tcp::endpoint endpoint(
    *     boost::asio::ip::address::from_string("1.2.3.4"), 12345);
    * socket.connect(endpoint);
@@ -757,11 +1131,19 @@ public:
     boost::system::error_code ec;
     if (!is_open())
     {
+<<<<<<< HEAD
       this->get_service().open(this->get_implementation(),
           peer_endpoint.protocol(), ec);
       boost::asio::detail::throw_error(ec, "connect");
     }
     this->get_service().connect(this->get_implementation(), peer_endpoint, ec);
+=======
+      impl_.get_service().open(impl_.get_implementation(),
+          peer_endpoint.protocol(), ec);
+      boost::asio::detail::throw_error(ec, "connect");
+    }
+    impl_.get_service().connect(impl_.get_implementation(), peer_endpoint, ec);
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     boost::asio::detail::throw_error(ec, "connect");
   }
 
@@ -782,7 +1164,11 @@ public:
    *
    * @par Example
    * @code
+<<<<<<< HEAD
    * boost::asio::ip::tcp::socket socket(io_context);
+=======
+   * boost::asio::ip::tcp::socket socket(my_context);
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
    * boost::asio::ip::tcp::endpoint endpoint(
    *     boost::asio::ip::address::from_string("1.2.3.4"), 12345);
    * boost::system::error_code ec;
@@ -798,7 +1184,11 @@ public:
   {
     if (!is_open())
     {
+<<<<<<< HEAD
       this->get_service().open(this->get_implementation(),
+=======
+      impl_.get_service().open(impl_.get_implementation(),
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
             peer_endpoint.protocol(), ec);
       if (ec)
       {
@@ -806,7 +1196,11 @@ public:
       }
     }
 
+<<<<<<< HEAD
     this->get_service().connect(this->get_implementation(), peer_endpoint, ec);
+=======
+    impl_.get_service().connect(impl_.get_implementation(), peer_endpoint, ec);
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     BOOST_ASIO_SYNC_OP_VOID_RETURN(ec);
   }
 
@@ -829,9 +1223,15 @@ public:
    *   const boost::system::error_code& error // Result of operation
    * ); @endcode
    * Regardless of whether the asynchronous operation completes immediately or
+<<<<<<< HEAD
    * not, the handler will not be invoked from within this function. Invocation
    * of the handler will be performed in a manner equivalent to using
    * boost::asio::io_context::post().
+=======
+   * not, the handler will not be invoked from within this function. On
+   * immediate completion, invocation of the handler will be performed in a
+   * manner equivalent to using boost::asio::post().
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
    *
    * @par Example
    * @code
@@ -845,12 +1245,17 @@ public:
    *
    * ...
    *
+<<<<<<< HEAD
    * boost::asio::ip::tcp::socket socket(io_context);
+=======
+   * boost::asio::ip::tcp::socket socket(my_context);
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
    * boost::asio::ip::tcp::endpoint endpoint(
    *     boost::asio::ip::address::from_string("1.2.3.4"), 12345);
    * socket.async_connect(endpoint, connect_handler);
    * @endcode
    */
+<<<<<<< HEAD
   template <typename ConnectHandler>
   BOOST_ASIO_INITFN_RESULT_TYPE(ConnectHandler,
       void (boost::system::error_code))
@@ -893,6 +1298,26 @@ public:
 
     return init.result.get();
 #endif // defined(BOOST_ASIO_ENABLE_OLD_SERVICES)
+=======
+  template <
+      BOOST_ASIO_COMPLETION_TOKEN_FOR(void (boost::system::error_code))
+        ConnectHandler BOOST_ASIO_DEFAULT_COMPLETION_TOKEN_TYPE(executor_type)>
+  BOOST_ASIO_INITFN_AUTO_RESULT_TYPE(ConnectHandler,
+      void (boost::system::error_code))
+  async_connect(const endpoint_type& peer_endpoint,
+      BOOST_ASIO_MOVE_ARG(ConnectHandler) handler
+        BOOST_ASIO_DEFAULT_COMPLETION_TOKEN(executor_type))
+  {
+    boost::system::error_code open_ec;
+    if (!is_open())
+    {
+      const protocol_type protocol = peer_endpoint.protocol();
+      impl_.get_service().open(impl_.get_implementation(), protocol, open_ec);
+    }
+
+    return async_initiate<ConnectHandler, void (boost::system::error_code)>(
+        initiate_async_connect(this), handler, peer_endpoint, open_ec);
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
   }
 
   /// Set an option on the socket.
@@ -923,7 +1348,11 @@ public:
    * @par Example
    * Setting the IPPROTO_TCP/TCP_NODELAY option:
    * @code
+<<<<<<< HEAD
    * boost::asio::ip::tcp::socket socket(io_context);
+=======
+   * boost::asio::ip::tcp::socket socket(my_context);
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
    * ...
    * boost::asio::ip::tcp::no_delay option(true);
    * socket.set_option(option);
@@ -933,7 +1362,11 @@ public:
   void set_option(const SettableSocketOption& option)
   {
     boost::system::error_code ec;
+<<<<<<< HEAD
     this->get_service().set_option(this->get_implementation(), option, ec);
+=======
+    impl_.get_service().set_option(impl_.get_implementation(), option, ec);
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     boost::asio::detail::throw_error(ec, "set_option");
   }
 
@@ -965,7 +1398,11 @@ public:
    * @par Example
    * Setting the IPPROTO_TCP/TCP_NODELAY option:
    * @code
+<<<<<<< HEAD
    * boost::asio::ip::tcp::socket socket(io_context);
+=======
+   * boost::asio::ip::tcp::socket socket(my_context);
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
    * ...
    * boost::asio::ip::tcp::no_delay option(true);
    * boost::system::error_code ec;
@@ -980,7 +1417,11 @@ public:
   BOOST_ASIO_SYNC_OP_VOID set_option(const SettableSocketOption& option,
       boost::system::error_code& ec)
   {
+<<<<<<< HEAD
     this->get_service().set_option(this->get_implementation(), option, ec);
+=======
+    impl_.get_service().set_option(impl_.get_implementation(), option, ec);
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     BOOST_ASIO_SYNC_OP_VOID_RETURN(ec);
   }
 
@@ -1012,7 +1453,11 @@ public:
    * @par Example
    * Getting the value of the SOL_SOCKET/SO_KEEPALIVE option:
    * @code
+<<<<<<< HEAD
    * boost::asio::ip::tcp::socket socket(io_context);
+=======
+   * boost::asio::ip::tcp::socket socket(my_context);
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
    * ...
    * boost::asio::ip::tcp::socket::keep_alive option;
    * socket.get_option(option);
@@ -1023,7 +1468,11 @@ public:
   void get_option(GettableSocketOption& option) const
   {
     boost::system::error_code ec;
+<<<<<<< HEAD
     this->get_service().get_option(this->get_implementation(), option, ec);
+=======
+    impl_.get_service().get_option(impl_.get_implementation(), option, ec);
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     boost::asio::detail::throw_error(ec, "get_option");
   }
 
@@ -1055,7 +1504,11 @@ public:
    * @par Example
    * Getting the value of the SOL_SOCKET/SO_KEEPALIVE option:
    * @code
+<<<<<<< HEAD
    * boost::asio::ip::tcp::socket socket(io_context);
+=======
+   * boost::asio::ip::tcp::socket socket(my_context);
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
    * ...
    * boost::asio::ip::tcp::socket::keep_alive option;
    * boost::system::error_code ec;
@@ -1071,7 +1524,11 @@ public:
   BOOST_ASIO_SYNC_OP_VOID get_option(GettableSocketOption& option,
       boost::system::error_code& ec) const
   {
+<<<<<<< HEAD
     this->get_service().get_option(this->get_implementation(), option, ec);
+=======
+    impl_.get_service().get_option(impl_.get_implementation(), option, ec);
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     BOOST_ASIO_SYNC_OP_VOID_RETURN(ec);
   }
 
@@ -1090,7 +1547,11 @@ public:
    * @par Example
    * Getting the number of bytes ready to read:
    * @code
+<<<<<<< HEAD
    * boost::asio::ip::tcp::socket socket(io_context);
+=======
+   * boost::asio::ip::tcp::socket socket(my_context);
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
    * ...
    * boost::asio::ip::tcp::socket::bytes_readable command;
    * socket.io_control(command);
@@ -1101,7 +1562,11 @@ public:
   void io_control(IoControlCommand& command)
   {
     boost::system::error_code ec;
+<<<<<<< HEAD
     this->get_service().io_control(this->get_implementation(), command, ec);
+=======
+    impl_.get_service().io_control(impl_.get_implementation(), command, ec);
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     boost::asio::detail::throw_error(ec, "io_control");
   }
 
@@ -1120,7 +1585,11 @@ public:
    * @par Example
    * Getting the number of bytes ready to read:
    * @code
+<<<<<<< HEAD
    * boost::asio::ip::tcp::socket socket(io_context);
+=======
+   * boost::asio::ip::tcp::socket socket(my_context);
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
    * ...
    * boost::asio::ip::tcp::socket::bytes_readable command;
    * boost::system::error_code ec;
@@ -1136,7 +1605,11 @@ public:
   BOOST_ASIO_SYNC_OP_VOID io_control(IoControlCommand& command,
       boost::system::error_code& ec)
   {
+<<<<<<< HEAD
     this->get_service().io_control(this->get_implementation(), command, ec);
+=======
+    impl_.get_service().io_control(impl_.get_implementation(), command, ec);
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     BOOST_ASIO_SYNC_OP_VOID_RETURN(ec);
   }
 
@@ -1153,7 +1626,11 @@ public:
    */
   bool non_blocking() const
   {
+<<<<<<< HEAD
     return this->get_service().non_blocking(this->get_implementation());
+=======
+    return impl_.get_service().non_blocking(impl_.get_implementation());
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
   }
 
   /// Sets the non-blocking mode of the socket.
@@ -1172,7 +1649,11 @@ public:
   void non_blocking(bool mode)
   {
     boost::system::error_code ec;
+<<<<<<< HEAD
     this->get_service().non_blocking(this->get_implementation(), mode, ec);
+=======
+    impl_.get_service().non_blocking(impl_.get_implementation(), mode, ec);
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     boost::asio::detail::throw_error(ec, "non_blocking");
   }
 
@@ -1192,7 +1673,11 @@ public:
   BOOST_ASIO_SYNC_OP_VOID non_blocking(
       bool mode, boost::system::error_code& ec)
   {
+<<<<<<< HEAD
     this->get_service().non_blocking(this->get_implementation(), mode, ec);
+=======
+    impl_.get_service().non_blocking(impl_.get_implementation(), mode, ec);
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     BOOST_ASIO_SYNC_OP_VOID_RETURN(ec);
   }
 
@@ -1282,7 +1767,11 @@ public:
    */
   bool native_non_blocking() const
   {
+<<<<<<< HEAD
     return this->get_service().native_non_blocking(this->get_implementation());
+=======
+    return impl_.get_service().native_non_blocking(impl_.get_implementation());
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
   }
 
   /// Sets the non-blocking mode of the native socket implementation.
@@ -1373,8 +1862,13 @@ public:
   void native_non_blocking(bool mode)
   {
     boost::system::error_code ec;
+<<<<<<< HEAD
     this->get_service().native_non_blocking(
         this->get_implementation(), mode, ec);
+=======
+    impl_.get_service().native_non_blocking(
+        impl_.get_implementation(), mode, ec);
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     boost::asio::detail::throw_error(ec, "native_non_blocking");
   }
 
@@ -1466,8 +1960,13 @@ public:
   BOOST_ASIO_SYNC_OP_VOID native_non_blocking(
       bool mode, boost::system::error_code& ec)
   {
+<<<<<<< HEAD
     this->get_service().native_non_blocking(
         this->get_implementation(), mode, ec);
+=======
+    impl_.get_service().native_non_blocking(
+        impl_.get_implementation(), mode, ec);
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     BOOST_ASIO_SYNC_OP_VOID_RETURN(ec);
   }
 
@@ -1481,7 +1980,11 @@ public:
    *
    * @par Example
    * @code
+<<<<<<< HEAD
    * boost::asio::ip::tcp::socket socket(io_context);
+=======
+   * boost::asio::ip::tcp::socket socket(my_context);
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
    * ...
    * boost::asio::ip::tcp::endpoint endpoint = socket.local_endpoint();
    * @endcode
@@ -1489,8 +1992,13 @@ public:
   endpoint_type local_endpoint() const
   {
     boost::system::error_code ec;
+<<<<<<< HEAD
     endpoint_type ep = this->get_service().local_endpoint(
         this->get_implementation(), ec);
+=======
+    endpoint_type ep = impl_.get_service().local_endpoint(
+        impl_.get_implementation(), ec);
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     boost::asio::detail::throw_error(ec, "local_endpoint");
     return ep;
   }
@@ -1506,7 +2014,11 @@ public:
    *
    * @par Example
    * @code
+<<<<<<< HEAD
    * boost::asio::ip::tcp::socket socket(io_context);
+=======
+   * boost::asio::ip::tcp::socket socket(my_context);
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
    * ...
    * boost::system::error_code ec;
    * boost::asio::ip::tcp::endpoint endpoint = socket.local_endpoint(ec);
@@ -1518,7 +2030,11 @@ public:
    */
   endpoint_type local_endpoint(boost::system::error_code& ec) const
   {
+<<<<<<< HEAD
     return this->get_service().local_endpoint(this->get_implementation(), ec);
+=======
+    return impl_.get_service().local_endpoint(impl_.get_implementation(), ec);
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
   }
 
   /// Get the remote endpoint of the socket.
@@ -1531,7 +2047,11 @@ public:
    *
    * @par Example
    * @code
+<<<<<<< HEAD
    * boost::asio::ip::tcp::socket socket(io_context);
+=======
+   * boost::asio::ip::tcp::socket socket(my_context);
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
    * ...
    * boost::asio::ip::tcp::endpoint endpoint = socket.remote_endpoint();
    * @endcode
@@ -1539,8 +2059,13 @@ public:
   endpoint_type remote_endpoint() const
   {
     boost::system::error_code ec;
+<<<<<<< HEAD
     endpoint_type ep = this->get_service().remote_endpoint(
         this->get_implementation(), ec);
+=======
+    endpoint_type ep = impl_.get_service().remote_endpoint(
+        impl_.get_implementation(), ec);
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     boost::asio::detail::throw_error(ec, "remote_endpoint");
     return ep;
   }
@@ -1556,7 +2081,11 @@ public:
    *
    * @par Example
    * @code
+<<<<<<< HEAD
    * boost::asio::ip::tcp::socket socket(io_context);
+=======
+   * boost::asio::ip::tcp::socket socket(my_context);
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
    * ...
    * boost::system::error_code ec;
    * boost::asio::ip::tcp::endpoint endpoint = socket.remote_endpoint(ec);
@@ -1568,7 +2097,11 @@ public:
    */
   endpoint_type remote_endpoint(boost::system::error_code& ec) const
   {
+<<<<<<< HEAD
     return this->get_service().remote_endpoint(this->get_implementation(), ec);
+=======
+    return impl_.get_service().remote_endpoint(impl_.get_implementation(), ec);
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
   }
 
   /// Disable sends or receives on the socket.
@@ -1583,7 +2116,11 @@ public:
    * @par Example
    * Shutting down the send side of the socket:
    * @code
+<<<<<<< HEAD
    * boost::asio::ip::tcp::socket socket(io_context);
+=======
+   * boost::asio::ip::tcp::socket socket(my_context);
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
    * ...
    * socket.shutdown(boost::asio::ip::tcp::socket::shutdown_send);
    * @endcode
@@ -1591,7 +2128,11 @@ public:
   void shutdown(shutdown_type what)
   {
     boost::system::error_code ec;
+<<<<<<< HEAD
     this->get_service().shutdown(this->get_implementation(), what, ec);
+=======
+    impl_.get_service().shutdown(impl_.get_implementation(), what, ec);
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     boost::asio::detail::throw_error(ec, "shutdown");
   }
 
@@ -1607,7 +2148,11 @@ public:
    * @par Example
    * Shutting down the send side of the socket:
    * @code
+<<<<<<< HEAD
    * boost::asio::ip::tcp::socket socket(io_context);
+=======
+   * boost::asio::ip::tcp::socket socket(my_context);
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
    * ...
    * boost::system::error_code ec;
    * socket.shutdown(boost::asio::ip::tcp::socket::shutdown_send, ec);
@@ -1620,7 +2165,11 @@ public:
   BOOST_ASIO_SYNC_OP_VOID shutdown(shutdown_type what,
       boost::system::error_code& ec)
   {
+<<<<<<< HEAD
     this->get_service().shutdown(this->get_implementation(), what, ec);
+=======
+    impl_.get_service().shutdown(impl_.get_implementation(), what, ec);
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     BOOST_ASIO_SYNC_OP_VOID_RETURN(ec);
   }
 
@@ -1635,7 +2184,11 @@ public:
    * @par Example
    * Waiting for a socket to become readable.
    * @code
+<<<<<<< HEAD
    * boost::asio::ip::tcp::socket socket(io_context);
+=======
+   * boost::asio::ip::tcp::socket socket(my_context);
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
    * ...
    * socket.wait(boost::asio::ip::tcp::socket::wait_read);
    * @endcode
@@ -1643,7 +2196,11 @@ public:
   void wait(wait_type w)
   {
     boost::system::error_code ec;
+<<<<<<< HEAD
     this->get_service().wait(this->get_implementation(), w, ec);
+=======
+    impl_.get_service().wait(impl_.get_implementation(), w, ec);
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     boost::asio::detail::throw_error(ec, "wait");
   }
 
@@ -1660,7 +2217,11 @@ public:
    * @par Example
    * Waiting for a socket to become readable.
    * @code
+<<<<<<< HEAD
    * boost::asio::ip::tcp::socket socket(io_context);
+=======
+   * boost::asio::ip::tcp::socket socket(my_context);
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
    * ...
    * boost::system::error_code ec;
    * socket.wait(boost::asio::ip::tcp::socket::wait_read, ec);
@@ -1668,7 +2229,11 @@ public:
    */
   BOOST_ASIO_SYNC_OP_VOID wait(wait_type w, boost::system::error_code& ec)
   {
+<<<<<<< HEAD
     this->get_service().wait(this->get_implementation(), w, ec);
+=======
+    impl_.get_service().wait(impl_.get_implementation(), w, ec);
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     BOOST_ASIO_SYNC_OP_VOID_RETURN(ec);
   }
 
@@ -1687,9 +2252,15 @@ public:
    *   const boost::system::error_code& error // Result of operation
    * ); @endcode
    * Regardless of whether the asynchronous operation completes immediately or
+<<<<<<< HEAD
    * not, the handler will not be invoked from within this function. Invocation
    * of the handler will be performed in a manner equivalent to using
    * boost::asio::io_context::post().
+=======
+   * not, the handler will not be invoked from within this function. On
+   * immediate completion, invocation of the handler will be performed in a
+   * manner equivalent to using boost::asio::post().
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
    *
    * @par Example
    * @code
@@ -1703,11 +2274,16 @@ public:
    *
    * ...
    *
+<<<<<<< HEAD
    * boost::asio::ip::tcp::socket socket(io_context);
+=======
+   * boost::asio::ip::tcp::socket socket(my_context);
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
    * ...
    * socket.async_wait(boost::asio::ip::tcp::socket::wait_read, wait_handler);
    * @endcode
    */
+<<<<<<< HEAD
   template <typename WaitHandler>
   BOOST_ASIO_INITFN_RESULT_TYPE(WaitHandler,
       void (boost::system::error_code))
@@ -1729,6 +2305,19 @@ public:
 
     return init.result.get();
 #endif // defined(BOOST_ASIO_ENABLE_OLD_SERVICES)
+=======
+  template <
+      BOOST_ASIO_COMPLETION_TOKEN_FOR(void (boost::system::error_code))
+        WaitHandler BOOST_ASIO_DEFAULT_COMPLETION_TOKEN_TYPE(executor_type)>
+  BOOST_ASIO_INITFN_AUTO_RESULT_TYPE(WaitHandler,
+      void (boost::system::error_code))
+  async_wait(wait_type w,
+      BOOST_ASIO_MOVE_ARG(WaitHandler) handler
+        BOOST_ASIO_DEFAULT_COMPLETION_TOKEN(executor_type))
+  {
+    return async_initiate<WaitHandler, void (boost::system::error_code)>(
+        initiate_async_wait(this), handler, w);
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
   }
 
 protected:
@@ -1741,10 +2330,102 @@ protected:
   {
   }
 
+<<<<<<< HEAD
+=======
+#if defined(BOOST_ASIO_WINDOWS_RUNTIME)
+  detail::io_object_impl<
+    detail::null_socket_service<Protocol>, Executor> impl_;
+#elif defined(BOOST_ASIO_HAS_IOCP)
+  detail::io_object_impl<
+    detail::win_iocp_socket_service<Protocol>, Executor> impl_;
+#else
+  detail::io_object_impl<
+    detail::reactive_socket_service<Protocol>, Executor> impl_;
+#endif
+
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 private:
   // Disallow copying and assignment.
   basic_socket(const basic_socket&) BOOST_ASIO_DELETED;
   basic_socket& operator=(const basic_socket&) BOOST_ASIO_DELETED;
+<<<<<<< HEAD
+=======
+
+  class initiate_async_connect
+  {
+  public:
+    typedef Executor executor_type;
+
+    explicit initiate_async_connect(basic_socket* self)
+      : self_(self)
+    {
+    }
+
+    executor_type get_executor() const BOOST_ASIO_NOEXCEPT
+    {
+      return self_->get_executor();
+    }
+
+    template <typename ConnectHandler>
+    void operator()(BOOST_ASIO_MOVE_ARG(ConnectHandler) handler,
+        const endpoint_type& peer_endpoint,
+        const boost::system::error_code& open_ec) const
+    {
+      // If you get an error on the following line it means that your handler
+      // does not meet the documented type requirements for a ConnectHandler.
+      BOOST_ASIO_CONNECT_HANDLER_CHECK(ConnectHandler, handler) type_check;
+
+      if (open_ec)
+      {
+          boost::asio::post(self_->impl_.get_executor(),
+              boost::asio::detail::bind_handler(
+                BOOST_ASIO_MOVE_CAST(ConnectHandler)(handler), open_ec));
+      }
+      else
+      {
+        detail::non_const_lvalue<ConnectHandler> handler2(handler);
+        self_->impl_.get_service().async_connect(
+            self_->impl_.get_implementation(), peer_endpoint,
+            handler2.value, self_->impl_.get_implementation_executor());
+      }
+    }
+
+  private:
+    basic_socket* self_;
+  };
+
+  class initiate_async_wait
+  {
+  public:
+    typedef Executor executor_type;
+
+    explicit initiate_async_wait(basic_socket* self)
+      : self_(self)
+    {
+    }
+
+    executor_type get_executor() const BOOST_ASIO_NOEXCEPT
+    {
+      return self_->get_executor();
+    }
+
+    template <typename WaitHandler>
+    void operator()(BOOST_ASIO_MOVE_ARG(WaitHandler) handler, wait_type w) const
+    {
+      // If you get an error on the following line it means that your handler
+      // does not meet the documented type requirements for a WaitHandler.
+      BOOST_ASIO_WAIT_HANDLER_CHECK(WaitHandler, handler) type_check;
+
+      detail::non_const_lvalue<WaitHandler> handler2(handler);
+      self_->impl_.get_service().async_wait(
+          self_->impl_.get_implementation(), w, handler2.value,
+          self_->impl_.get_implementation_executor());
+    }
+
+  private:
+    basic_socket* self_;
+  };
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 };
 
 } // namespace asio
@@ -1752,8 +2433,11 @@ private:
 
 #include <boost/asio/detail/pop_options.hpp>
 
+<<<<<<< HEAD
 #if !defined(BOOST_ASIO_ENABLE_OLD_SERVICES)
 # undef BOOST_ASIO_SVC_T
 #endif // !defined(BOOST_ASIO_ENABLE_OLD_SERVICES)
 
+=======
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 #endif // BOOST_ASIO_BASIC_SOCKET_HPP

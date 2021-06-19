@@ -101,6 +101,7 @@ namespace Rcpp {
     }
 
     inline SEXP Rcpp_ReplaceObject(SEXP x, SEXP y) {
+<<<<<<< HEAD
         if (Rf_isNull(x)) {
             Rcpp_PreserveObject(y);
         } else if (Rf_isNull(y)) {
@@ -117,6 +118,15 @@ namespace Rcpp {
 
             }
         }
+=======
+
+        // if we are setting to the same SEXP as we already have, do nothing
+        if (x != y) {
+            Rcpp_ReleaseObject(x);
+            Rcpp_PreserveObject(y);
+        }
+
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
         return y;
     }
 

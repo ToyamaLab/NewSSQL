@@ -106,7 +106,11 @@ rownames(DT)
 
 Instead, in *data.tables* we set and use `keys`. Think of a `key` as **supercharged rownames**.
 
+<<<<<<< HEAD
 #### Keys and their properties {.bs-callout .bs-callout-info #key-properties}
+=======
+#### Keys and their properties {#key-properties}
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 1. We can set keys on *multiple columns* and the column can be of *different types* -- *integer*, *numeric*, *character*, *factor*, *integer64* etc. *list* and *complex* types are not supported yet.
 
@@ -120,8 +124,11 @@ Instead, in *data.tables* we set and use `keys`. Think of a `key` as **superchar
 
     Since the rows are reordered, a *data.table* can have at most one key because it can not be sorted in more than one way.
 
+<<<<<<< HEAD
 #
 
+=======
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 For the rest of the vignette, we will work with `flights` data set.
 
 ### b) Set, get and use keys on a *data.table*
@@ -136,8 +143,11 @@ head(flights)
 # setkeyv(flights, "origin") # useful to program with
 ```
 
+<<<<<<< HEAD
 #### {.bs-callout .bs-callout-info}
 
+=======
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 * You can use the function `setkey()` and provide the column names (without quoting them). This is helpful during interactive use.
 
 * Alternatively you can pass a character vector of column names to the function `setkeyv()`. This is particularly useful while designing functions to pass columns to set key on as function arguments.
@@ -148,12 +158,19 @@ head(flights)
 
 * You can also set keys directly when creating *data.tables* using the `data.table()` function using `key` argument. It takes a character vector of column names.
 
+<<<<<<< HEAD
 #### set* and `:=`: {.bs-callout .bs-callout-info}
 
 In *data.table*, the `:=` operator and all the `set*` (e.g., `setkey`, `setorder`, `setnames` etc..) functions are the only ones which modify the input object *by reference*.
 
 #
 
+=======
+#### set* and `:=`:
+
+In *data.table*, the `:=` operator and all the `set*` (e.g., `setkey`, `setorder`, `setnames` etc..) functions are the only ones which modify the input object *by reference*.
+
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 Once you *key* a *data.table* by certain columns, you can subset by querying those key columns using the `.()` notation in `i`. Recall that `.()` is an *alias to* `list()`.
 
 #### -- Use the key column `origin` to subset all rows where the origin airport matches *"JFK"*
@@ -166,8 +183,11 @@ flights[.("JFK")]
 # flights[list("JFK")]
 ```
 
+<<<<<<< HEAD
 #### {.bs-callout .bs-callout-info}
 
+=======
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 * The *key* column has already been set to `origin`. So it is sufficient to provide the value, here *"JFK"*, directly. The `.()` syntax helps identify that the task requires looking up the value *"JFK"* in the key column of *data.table* (here column `origin` of `flights` *data.table*).
 
 * The *row indices* corresponding to the value *"JFK"* in `origin` is obtained first. And since there is no expression in `j`, all columns corresponding to those row indices are returned.
@@ -194,8 +214,11 @@ Using the function `key()`.
 key(flights)
 ```
 
+<<<<<<< HEAD
 #### {.bs-callout .bs-callout-info}
 
+=======
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 * It returns a character vector of all the key columns.
 
 * If no key is set, it returns `NULL`.
@@ -216,8 +239,11 @@ head(flights)
 key(flights)
 ```
 
+<<<<<<< HEAD
 #### {.bs-callout .bs-callout-info}
 
+=======
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 * It sorts the *data.table* first by the column `origin` and then by `dest` *by reference*.
 
 #### -- Subset all rows using key columns where first key column `origin` matches *"JFK"* and second key column `dest` matches *"MIA"*
@@ -226,14 +252,21 @@ key(flights)
 flights[.("JFK", "MIA")]
 ```
 
+<<<<<<< HEAD
 #### How does the subset work here? {.bs-callout .bs-callout-info #multiple-key-point}
+=======
+#### How does the subset work here? {#multiple-key-point}
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 * It is important to understand how this works internally. *"JFK"* is first matched against the first key column `origin`. And *within those matching rows*, *"MIA"* is matched against the second key column `dest` to obtain *row indices* where both `origin` and `dest` match the given values.
 
 * Since no `j` is provided, we simply return *all columns* corresponding to those row indices.
 
+<<<<<<< HEAD
 #
 
+=======
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 #### -- Subset all rows where just the first key column `origin` matches *"JFK"*
 
 ```{r}
@@ -242,8 +275,11 @@ key(flights)
 flights[.("JFK")] ## or in this case simply flights["JFK"], for convenience
 ```
 
+<<<<<<< HEAD
 #### {.bs-callout .bs-callout-info}
 
+=======
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 * Since we did not provide any values for the second key column `dest`, it just matches *"JFK"* against the first key column `origin` and returns all the matched rows.
 
 #### -- Subset all rows where just the second key column `dest` matches *"MIA"*
@@ -252,7 +288,11 @@ flights[.("JFK")] ## or in this case simply flights["JFK"], for convenience
 flights[.(unique(origin), "MIA")]
 ```
 
+<<<<<<< HEAD
 #### What's happening here? {.bs-callout .bs-callout-info}
+=======
+#### What's happening here?
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 * Read [this](#multiple-key-point) again. The value provided for the second key column *"MIA"* has to find the matching values in `dest` key column *on the matching rows provided by the first key column `origin`*. We can not skip the values of key columns *before*. Therefore we provide *all* unique values from key column `origin`.
 
@@ -271,8 +311,11 @@ key(flights)
 flights[.("LGA", "TPA"), .(arr_delay)]
 ```
 
+<<<<<<< HEAD
 #### {.bs-callout .bs-callout-info}
 
+=======
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 * The *row indices* corresponding to `origin == "LGA"` and `dest == "TPA"` are obtained using *key based subset*.
 
 * Once we have the row indices, we look at `j` which requires only the `arr_delay` column. So we simply select the column `arr_delay` for those *row indices* in the exact same way as we have seen in *Introduction to data.table* vignette.
@@ -299,8 +342,11 @@ flights[.("LGA", "TPA"), .(arr_delay)][order(-arr_delay)]
 flights[.("LGA", "TPA"), max(arr_delay)]
 ```
 
+<<<<<<< HEAD
 #### {.bs-callout .bs-callout-info}
 
+=======
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 * We can verify that the result is identical to first value (486) from the previous example.
 
 ### d) *sub-assign* by reference using `:=` in `j`
@@ -321,8 +367,11 @@ flights[.(24), hour := 0L]
 key(flights)
 ```
 
+<<<<<<< HEAD
 #### {.bs-callout .bs-callout-info}
 
+=======
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 * We first set `key` to `hour`. This reorders `flights` by the column `hour` and marks that column as the `key` column.
 
 * Now we can subset on `hour` by using the `.()` notation. We subset for the value *24* and obtain the corresponding *row indices*.
@@ -331,7 +380,10 @@ key(flights)
 
 * Since we have replaced values on the *key* column, the *data.table* `flights` isn't sorted by `hour` any more. Therefore, the key has been automatically removed by setting to NULL.
 
+<<<<<<< HEAD
 #
+=======
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 Now, there shouldn't be any *24* in the `hour` column.
 
 ```{r}
@@ -355,8 +407,11 @@ head(ans)
 key(ans)
 ```
 
+<<<<<<< HEAD
 #### {.bs-callout .bs-callout-info}
 
+=======
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 * We subset on the `key` column *origin* to obtain the *row indices* corresponding to *"JFK"*.
 
 * Once we obtain the row indices, we only need two columns - `month` to group by and `dep_delay` to obtain `max()` for each group. *data.table's* query optimisation therefore subsets just those two columns corresponding to the *row indices* obtained in `i`, for speed and memory efficiency.
@@ -383,8 +438,11 @@ flights[.("JFK", "MIA"), mult = "first"]
 flights[.(c("LGA", "JFK", "EWR"), "XNA"), mult = "last"]
 ```
 
+<<<<<<< HEAD
 #### {.bs-callout .bs-callout-info}
 
+=======
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 * The query *"JFK", "XNA"* doesn't match any rows in `flights` and therefore returns `NA`.
 
 * Once again, the query for second key column `dest`,  *"XNA"*, is recycled to fit the length of the query for first key column `origin`, which is of length 3.
@@ -396,12 +454,19 @@ We can choose if queries that do not match should return `NA` or be skipped alto
 #### -- From the previous example, Subset all rows only if there's a match
 
 ```{r}
+<<<<<<< HEAD
 flights[.(c("LGA", "JFK", "EWR"), "XNA"), mult = "last", nomatch = 0L]
 ```
 
 #### {.bs-callout .bs-callout-info}
 
 * Default value for `nomatch` is `NA`. Setting `nomatch = 0L` skips queries with no matches.
+=======
+flights[.(c("LGA", "JFK", "EWR"), "XNA"), mult = "last", nomatch = NULL]
+```
+
+* Default value for `nomatch` is `NA`. Setting `nomatch = NULL` skips queries with no matches.
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 * The query “JFK”, “XNA” doesn’t match any rows in flights and therefore is skipped.
 
@@ -472,11 +537,19 @@ identical(ans1$val, ans2$val)
 
 * The speed-up is **~`r round(t1[3]/max(t2[3], .001))`x**!
 
+<<<<<<< HEAD
 ### b) Why does keying a *data.table* result in blazing fast susbets?
 
 To understand that, let's first look at what *vector scan approach* (method 1) does.
 
 #### Vector scan approach: {.bs-callout .bs-callout-info}
+=======
+### b) Why does keying a *data.table* result in blazing fast subsets?
+
+To understand that, let's first look at what *vector scan approach* (method 1) does.
+
+#### Vector scan approach
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 * The column `x` is searched for the value *"g"* row by row, on all 20 million of them. This results in a *logical vector* of size 20 million, with values `TRUE, FALSE or NA` corresponding to `x`'s value.
 
@@ -486,11 +559,17 @@ To understand that, let's first look at what *vector scan approach* (method 1) d
 
 This is what we call a *vector scan approach*. And this is quite inefficient, especially on larger tables and when one needs repeated subsetting, because it has to scan through all the rows each time.
 
+<<<<<<< HEAD
 #
 
 Now let us look at binary search approach (method 2). Recall from [Properties of key](#key-properties) - *setting keys reorders the data.table by key columns*. Since the data is sorted, we don't have to *scan through the entire length of the column*! We can instead use *binary search* to search a value in `O(log n)` as opposed to `O(n)` in case of *vector scan approach*, where `n` is the number of rows in the *data.table*.
 
 #### Binary search approach: {.bs-callout .bs-callout-info}
+=======
+Now let us look at binary search approach (method 2). Recall from [Properties of key](#key-properties) - *setting keys reorders the data.table by key columns*. Since the data is sorted, we don't have to *scan through the entire length of the column*! We can instead use *binary search* to search a value in `O(log n)` as opposed to `O(n)` in case of *vector scan approach*, where `n` is the number of rows in the *data.table*.
+
+#### Binary search approach
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 Here's a very simple illustration. Let's consider the (sorted) numbers shown below:
 
@@ -510,8 +589,11 @@ Suppose we'd like to find the matching position of the value *1*, using binary s
 
 A vector scan approach on the other hand would have to scan through all the values (here, 7).
 
+<<<<<<< HEAD
 #
 
+=======
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 It can be seen that with every search we reduce the number of searches by half. This is why *binary search* based subsets are **incredibly fast**. Since rows of each column of *data.tables* have contiguous locations in memory, the operations are performed in a very cache efficient manner (also contributes to *speed*).
 
 In addition, since we obtain the matching row indices directly without having to create those huge logical vectors (equal to the number of rows in a *data.table*), it is quite **memory efficient** as well.
@@ -520,17 +602,24 @@ In addition, since we obtain the matching row indices directly without having to
 
 In this vignette, we have learnt another method to subset rows in `i` by keying a *data.table*. Setting keys allows us to perform blazing fast subsets by using *binary search*. In particular, we have seen how to
 
+<<<<<<< HEAD
 #### {.bs-callout .bs-callout-info}
 
+=======
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 * set key and subset using the key on a *data.table*.
 
 * subset using keys which fetches *row indices* in `i`, but much faster.
 
 * combine key based subsets with `j` and `by`. Note that the `j` and `by` operations are exactly the same as before.
 
+<<<<<<< HEAD
 #
 
 Key based subsets are **incredibly fast** and are particularly useful when the task involves *repeated subsetting*. But it may not be always desirable to set key and physically reorder the *data.table*. In the next vignette, we will address this using a *new* feature -- *secondary indexes*.
 
 ***
 
+=======
+Key based subsets are **incredibly fast** and are particularly useful when the task involves *repeated subsetting*. But it may not be always desirable to set key and physically reorder the *data.table*. In the next vignette, we will address this using a *new* feature -- *secondary indexes*.
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce

@@ -2,6 +2,7 @@ package supersql.codegenerator.HTML;
 
 import supersql.codegenerator.Connector;
 import supersql.codegenerator.Manager;
+import supersql.common.Log;
 import supersql.extendclass.ExtList;
 
 //import common.Log;
@@ -26,7 +27,7 @@ public class HTMLC0 extends Connector {
 	public String work(ExtList data_info) {
 
 		// Log.out("data_info =" +data_info);
-
+		Log.out("******* HTMLC0 *******");
 		this.setDataList(data_info);
 
 		if (decos.containsKey("form")) {
@@ -38,8 +39,10 @@ public class HTMLC0 extends Connector {
 				HTMLEnv.setSearch(true);
 		}
 
+		String ret = "";
 		while (this.hasMoreItems()) {
-			this.worknextItem();
+			ret += this.worknextItem();
+//			this.worknextItem();
 		}
 
 		//tbt add 180807
@@ -57,7 +60,12 @@ public class HTMLC0 extends Connector {
 			if (decos.getStr("form").toLowerCase().equals("search"))
 				HTMLEnv.setSearch(false);
 		}
-		return null;
+		return (!HTMLFunction.HTMLFunctionFlag)? null : ret;
+//		return null;
+	}
+
+	public String getConcatStr(ExtList data) {
+		return data.stream().reduce("", (l, r) -> l.toString() + r.toString()).toString();
 	}
 
 }

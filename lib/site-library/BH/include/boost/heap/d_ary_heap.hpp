@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 // // boost heap: d-ary heap as containter adaptor
+=======
+// // boost heap: d-ary heap as container adaptor
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 //
 // Copyright (C) 2010 Tim Blechmann
 //
@@ -66,7 +70,15 @@ class d_ary_heap:
     typedef typename heap_base_maker::type super_t;
     typedef typename super_t::internal_type internal_type;
 
+<<<<<<< HEAD
     typedef typename heap_base_maker::allocator_argument::template rebind<internal_type>::other internal_type_allocator;
+=======
+#ifdef BOOST_NO_CXX11_ALLOCATOR
+    typedef typename heap_base_maker::allocator_argument::template rebind<internal_type>::other internal_type_allocator;
+#else
+    typedef typename std::allocator_traits<typename heap_base_maker::allocator_argument>::template rebind_alloc<internal_type> internal_type_allocator;
+#endif
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     typedef std::vector<internal_type, internal_type_allocator> container_type;
     typedef typename container_type::const_iterator container_iterator;
 
@@ -421,7 +433,11 @@ struct select_dary_heap
 {
     static const bool is_mutable = extract_mutable<BoundArgs>::value;
 
+<<<<<<< HEAD
     typedef typename mpl::if_c< is_mutable,
+=======
+    typedef typename boost::conditional< is_mutable,
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
                                 priority_queue_mutable_wrapper<d_ary_heap<T, BoundArgs, nop_index_updater > >,
                                 d_ary_heap<T, BoundArgs, nop_index_updater >
                               >::type type;
@@ -585,7 +601,11 @@ public:
     }
 
     /// \copydoc boost::heap::priority_queue::push
+<<<<<<< HEAD
     typename mpl::if_c<is_mutable, handle_type, void>::type push(value_type const & v)
+=======
+    typename boost::conditional<is_mutable, handle_type, void>::type push(value_type const & v)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     {
         return super_t::push(v);
     }
@@ -593,7 +613,11 @@ public:
 #if !defined(BOOST_NO_CXX11_RVALUE_REFERENCES) && !defined(BOOST_NO_CXX11_VARIADIC_TEMPLATES)
     /// \copydoc boost::heap::priority_queue::emplace
     template <class... Args>
+<<<<<<< HEAD
     typename mpl::if_c<is_mutable, handle_type, void>::type emplace(Args&&... args)
+=======
+    typename boost::conditional<is_mutable, handle_type, void>::type emplace(Args&&... args)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     {
         return super_t::emplace(std::forward<Args>(args)...);
     }

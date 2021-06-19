@@ -61,6 +61,8 @@ public class SQLQuery extends ArrayList {
 		//if(atts!="")	atts = atts.substring(2).trim();
 		atts = atts.substring(2).trim();
 		tbls = tbls.substring(2).trim();
+		System.out.println("atts=:"+atts);
+		System.out.println("tbls=:"+tbls);
 		//by goto
 		
 		if ( where.trim().length() != 0 )

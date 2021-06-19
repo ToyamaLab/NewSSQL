@@ -266,11 +266,25 @@ namespace boost { namespace accumulators
 
         template<typename Sequence, typename Args>
         typename meta::make_acc_list<Sequence>::type
+<<<<<<< HEAD
         make_acc_list(Sequence const &seq, Args const &args)
+=======
+        make_acc_list(Sequence &seq, Args const &args)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
         {
             return meta::make_acc_list<Sequence>::call(args, fusion::begin(seq), fusion::end(seq));
         }
 
+<<<<<<< HEAD
+=======
+        template<typename Sequence, typename Args>
+        typename meta::make_acc_list<Sequence>::type
+        make_acc_list(Sequence const &seq, Args const &args)
+        {
+            return meta::make_acc_list<Sequence const>::call(args, fusion::begin(seq), fusion::end(seq));
+        }
+
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
         ///////////////////////////////////////////////////////////////////////////
         // checked_as_weighted_feature
         template<typename Feature>

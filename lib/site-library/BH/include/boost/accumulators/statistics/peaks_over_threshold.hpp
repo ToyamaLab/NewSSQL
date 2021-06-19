@@ -181,6 +181,24 @@ namespace impl
             return this->fit_parameters_;
         }
 
+<<<<<<< HEAD
+=======
+        // make this accumulator serializeable
+        // TODO: do we need to split to load/save and verify that threshold did not change?
+        template<class Archive>
+        void serialize(Archive & ar, const unsigned int file_version)
+        { 
+            ar & Nu_;
+            ar & mu_;
+            ar & sigma2_;
+            ar & threshold_;
+            ar & get<0>(fit_parameters_);
+            ar & get<1>(fit_parameters_);
+            ar & get<2>(fit_parameters_);
+            ar & is_dirty_;
+        }
+
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     private:
         std::size_t Nu_;                     // number of samples larger than threshold
         mutable float_type mu_;              // mean of Nu_ largest samples
@@ -291,6 +309,23 @@ namespace impl
             return this->fit_parameters_;
         }
 
+<<<<<<< HEAD
+=======
+        // make this accumulator serializeable
+        // TODO: do we need to split to load/save and verify that threshold did not change?
+        template<class Archive>
+        void serialize(Archive & ar, const unsigned int file_version)
+        { 
+            ar & mu_;
+            ar & sigma2_;
+            ar & threshold_probability_;
+            ar & get<0>(fit_parameters_);
+            ar & get<1>(fit_parameters_);
+            ar & get<2>(fit_parameters_);
+            ar & is_dirty_;
+        }
+
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     private:
         mutable float_type mu_;                     // mean of samples above threshold u
         mutable float_type sigma2_;                 // variance of samples above threshold u

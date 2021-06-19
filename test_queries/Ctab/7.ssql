@@ -1,4 +1,4 @@
 GENERATE HTML
-cross_tab([m.name@{width=100}],, [(asc)e.byear@{width=100}]!, link(e.name@{width=96}, "7_link.ssql", e.id))@{side_width=100}
+cross_tab([m.name@{width=100}],, [(asc)e.byear@{width=100}]!, link(e.name@{width=96}, '7_link.ssql', e.id))@{side_width=100}
 FROM employee e, employee m
 WHERE e.manager = m.id AND m.id < 130

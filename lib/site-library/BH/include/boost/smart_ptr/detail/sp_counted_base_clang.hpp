@@ -15,7 +15,13 @@
 //  See accompanying file LICENSE_1_0.txt or copy at
 //  http://www.boost.org/LICENSE_1_0.txt
 
+<<<<<<< HEAD
 #include <boost/detail/sp_typeinfo.hpp>
+=======
+#include <boost/smart_ptr/detail/sp_typeinfo_.hpp>
+#include <boost/smart_ptr/detail/sp_noexcept.hpp>
+#include <boost/config.hpp>
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 #include <boost/cstdint.hpp>
 
 namespace boost
@@ -26,17 +32,29 @@ namespace detail
 
 typedef _Atomic( boost::int_least32_t ) atomic_int_least32_t;
 
+<<<<<<< HEAD
 inline void atomic_increment( atomic_int_least32_t * pw )
+=======
+inline void atomic_increment( atomic_int_least32_t * pw ) BOOST_SP_NOEXCEPT
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 {
     __c11_atomic_fetch_add( pw, 1, __ATOMIC_RELAXED );
 }
 
+<<<<<<< HEAD
 inline boost::int_least32_t atomic_decrement( atomic_int_least32_t * pw )
+=======
+inline boost::int_least32_t atomic_decrement( atomic_int_least32_t * pw ) BOOST_SP_NOEXCEPT
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 {
     return __c11_atomic_fetch_sub( pw, 1, __ATOMIC_ACQ_REL );
 }
 
+<<<<<<< HEAD
 inline boost::int_least32_t atomic_conditional_increment( atomic_int_least32_t * pw )
+=======
+inline boost::int_least32_t atomic_conditional_increment( atomic_int_least32_t * pw ) BOOST_SP_NOEXCEPT
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 {
     // long r = *pw;
     // if( r != 0 ) ++*pw;
@@ -60,58 +78,102 @@ inline boost::int_least32_t atomic_conditional_increment( atomic_int_least32_t *
 
 #if defined(__clang__)
 # pragma clang diagnostic push
+<<<<<<< HEAD
   // # pragma clang diagnostic ignored "-Wweak-vtables"
 #endif
 
 class sp_counted_base
+=======
+  //# pragma clang diagnostic ignored "-Wweak-vtables"
+#endif
+
+class BOOST_SYMBOL_VISIBLE sp_counted_base
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 {
 private:
 
     sp_counted_base( sp_counted_base const & );
     sp_counted_base & operator= ( sp_counted_base const & );
 
+<<<<<<< HEAD
     atomic_int_least32_t use_count_;	// #shared
     atomic_int_least32_t weak_count_;	// #weak + (#shared != 0)
 
 public:
 
     sp_counted_base()
+=======
+    atomic_int_least32_t use_count_;    // #shared
+    atomic_int_least32_t weak_count_;   // #weak + (#shared != 0)
+
+public:
+
+    sp_counted_base() BOOST_SP_NOEXCEPT
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     {
         __c11_atomic_init( &use_count_, 1 );
         __c11_atomic_init( &weak_count_, 1 );
     }
 
+<<<<<<< HEAD
     virtual ~sp_counted_base() // nothrow
+=======
+    virtual ~sp_counted_base() /*BOOST_SP_NOEXCEPT*/
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     {
     }
 
     // dispose() is called when use_count_ drops to zero, to release
     // the resources managed by *this.
 
+<<<<<<< HEAD
     virtual void dispose() = 0; // nothrow
 
     // destroy() is called when weak_count_ drops to zero.
 
     virtual void destroy() // nothrow
+=======
+    virtual void dispose() BOOST_SP_NOEXCEPT = 0; // nothrow
+
+    // destroy() is called when weak_count_ drops to zero.
+
+    virtual void destroy() BOOST_SP_NOEXCEPT // nothrow
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     {
         delete this;
     }
 
+<<<<<<< HEAD
     virtual void * get_deleter( sp_typeinfo const & ti ) = 0;
     virtual void * get_local_deleter( sp_typeinfo const & ti ) = 0;
     virtual void * get_untyped_deleter() = 0;
 
     void add_ref_copy()
+=======
+    virtual void * get_deleter( sp_typeinfo_ const & ti ) BOOST_SP_NOEXCEPT = 0;
+    virtual void * get_local_deleter( sp_typeinfo_ const & ti ) BOOST_SP_NOEXCEPT = 0;
+    virtual void * get_untyped_deleter() BOOST_SP_NOEXCEPT = 0;
+
+    void add_ref_copy() BOOST_SP_NOEXCEPT
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     {
         atomic_increment( &use_count_ );
     }
 
+<<<<<<< HEAD
     bool add_ref_lock() // true on success
+=======
+    bool add_ref_lock() BOOST_SP_NOEXCEPT // true on success
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     {
         return atomic_conditional_increment( &use_count_ ) != 0;
     }
 
+<<<<<<< HEAD
     void release() // nothrow
+=======
+    void release() BOOST_SP_NOEXCEPT
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     {
         if( atomic_decrement( &use_count_ ) == 1 )
         {
@@ -120,12 +182,20 @@ public:
         }
     }
 
+<<<<<<< HEAD
     void weak_add_ref() // nothrow
+=======
+    void weak_add_ref() BOOST_SP_NOEXCEPT
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     {
         atomic_increment( &weak_count_ );
     }
 
+<<<<<<< HEAD
     void weak_release() // nothrow
+=======
+    void weak_release() BOOST_SP_NOEXCEPT
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     {
         if( atomic_decrement( &weak_count_ ) == 1 )
         {
@@ -133,7 +203,11 @@ public:
         }
     }
 
+<<<<<<< HEAD
     long use_count() const // nothrow
+=======
+    long use_count() const BOOST_SP_NOEXCEPT
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     {
         return __c11_atomic_load( const_cast< atomic_int_least32_t* >( &use_count_ ), __ATOMIC_ACQUIRE );
     }

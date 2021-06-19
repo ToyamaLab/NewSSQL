@@ -21,5 +21,12 @@ template <class T> struct is_rvalue_reference<T&&> : public true_type {};
 
 } // namespace boost
 
+<<<<<<< HEAD
+=======
+#if !defined(BOOST_NO_CXX11_RVALUE_REFERENCES) && defined(BOOST_MSVC) && BOOST_WORKAROUND(BOOST_MSVC, <= 1700)
+#include <boost/type_traits/detail/is_rvalue_reference_msvc10_fix.hpp>
+#endif
+
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 #endif // BOOST_TT_IS_REFERENCE_HPP_INCLUDED
 

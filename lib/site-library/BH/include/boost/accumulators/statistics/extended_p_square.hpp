@@ -26,6 +26,10 @@
 #include <boost/accumulators/statistics_fwd.hpp>
 #include <boost/accumulators/statistics/count.hpp>
 #include <boost/accumulators/statistics/times2_iterator.hpp>
+<<<<<<< HEAD
+=======
+#include <boost/serialization/vector.hpp>
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 namespace boost { namespace accumulators
 {
@@ -236,6 +240,22 @@ namespace impl
             );
         }
 
+<<<<<<< HEAD
+=======
+    public:
+        // make this accumulator serializeable
+        // TODO: do we need to split to load/save and verify that the parameters did not change?
+        template<class Archive>
+        void serialize(Archive & ar, const unsigned int file_version)
+        { 
+            ar & probabilities;
+            ar & heights;
+            ar & actual_positions;
+            ar & desired_positions;
+            ar & positions_increments;
+        }
+
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     private:
         array_type probabilities;         // the quantile probabilities
         array_type heights;               // q_i

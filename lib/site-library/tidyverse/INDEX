@@ -4,4 +4,8 @@ tidyverse_deps          List all tidyverse dependencies
 tidyverse_logo          The tidyverse logo, using ASCII or Unicode
                         characters
 tidyverse_packages      List all packages in the tidyverse
+<<<<<<< HEAD
+=======
+tidyverse_sitrep        Get a situation report on the tidyverse
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 tidyverse_update        Update tidyverse packages

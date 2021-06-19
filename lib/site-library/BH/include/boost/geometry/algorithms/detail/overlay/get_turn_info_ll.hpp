@@ -3,8 +3,13 @@
 // Copyright (c) 2007-2012 Barend Gehrels, Amsterdam, the Netherlands.
 // Copyright (c) 2017 Adam Wulkiewicz, Lodz, Poland.
 
+<<<<<<< HEAD
 // This file was modified by Oracle on 2013, 2014, 2015, 2017.
 // Modifications copyright (c) 2013-2017 Oracle and/or its affiliates.
+=======
+// This file was modified by Oracle on 2013, 2014, 2015, 2017, 2018.
+// Modifications copyright (c) 2013-2018 Oracle and/or its affiliates.
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 // Contributed and/or modified by Adam Wulkiewicz, on behalf of Oracle
 
@@ -36,25 +41,40 @@ struct get_turn_info_linear_linear
 
     template
     <
+<<<<<<< HEAD
         typename Point1,
         typename Point2,
         typename TurnInfo,
         typename IntersectionStrategy,
+=======
+        typename UniqueSubRange1,
+        typename UniqueSubRange2,
+        typename TurnInfo,
+        typename UmbrellaStrategy,
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
         typename RobustPolicy,
         typename OutputIterator
     >
     static inline OutputIterator apply(
+<<<<<<< HEAD
                 Point1 const& pi, Point1 const& pj, Point1 const& pk,
                 Point2 const& qi, Point2 const& qj, Point2 const& qk,
                 bool is_p_first, bool is_p_last,
                 bool is_q_first, bool is_q_last,
                 TurnInfo const& tp_model,
                 IntersectionStrategy const& strategy,
+=======
+                UniqueSubRange1 const& range_p,
+                UniqueSubRange2 const& range_q,
+                TurnInfo const& tp_model,
+                UmbrellaStrategy const& umbrella_strategy,
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
                 RobustPolicy const& robust_policy,
                 OutputIterator out)
     {
         typedef intersection_info
             <
+<<<<<<< HEAD
                 Point1, Point2,
                 typename TurnInfo::point_type,
                 IntersectionStrategy,
@@ -62,6 +82,15 @@ struct get_turn_info_linear_linear
             > inters_info;
 
         inters_info inters(pi, pj, pk, qi, qj, qk, strategy, robust_policy);
+=======
+                UniqueSubRange1, UniqueSubRange2,
+                typename TurnInfo::point_type,
+                UmbrellaStrategy,
+                RobustPolicy
+            > inters_info;
+
+        inters_info inters(range_p, range_q, umbrella_strategy, robust_policy);
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
         char const method = inters.d_info().how;
 
@@ -74,10 +103,17 @@ struct get_turn_info_linear_linear
             case 'a' : // collinear, "at"
             case 'f' : // collinear, "from"
             case 's' : // starts from the middle
+<<<<<<< HEAD
                 get_turn_info_for_endpoint<AssignPolicy, true, true>
                     ::apply(pi, pj, pk, qi, qj, qk,
                             is_p_first, is_p_last, is_q_first, is_q_last,
                             tp_model, inters, method_none, out);
+=======
+                get_turn_info_for_endpoint<true, true>
+                    ::apply(range_p, range_q,
+                            tp_model, inters, method_none, out,
+                            umbrella_strategy.get_point_in_point_strategy());
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
                 break;
 
             case 'd' : // disjoint: never do anything
@@ -85,10 +121,17 @@ struct get_turn_info_linear_linear
 
             case 'm' :
             {
+<<<<<<< HEAD
                 if ( get_turn_info_for_endpoint<AssignPolicy, false, true>
                         ::apply(pi, pj, pk, qi, qj, qk,
                                 is_p_first, is_p_last, is_q_first, is_q_last,
                                 tp_model, inters, method_touch_interior, out) )
+=======
+                if ( get_turn_info_for_endpoint<false, true>
+                        ::apply(range_p, range_q,
+                                tp_model, inters, method_touch_interior, out,
+                                umbrella_strategy.get_point_in_point_strategy()) )
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
                 {
                     // do nothing
                 }
@@ -102,13 +145,21 @@ struct get_turn_info_linear_linear
                     // If Q (1) arrives (1)
                     if ( inters.d_info().arrival[1] == 1)
                     {
+<<<<<<< HEAD
                         policy::template apply<0>(pi, pj, pk, qi, qj, qk,
                                                   tp, inters.i_info(), inters.d_info(),
                                                   inters.sides());
+=======
+                        policy::template apply<0>(range_p, range_q, tp,
+                                                  inters.i_info(), inters.d_info(),
+                                                  inters.sides(),
+                                                  umbrella_strategy);
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
                     }
                     else
                     {
                         // Swap p/q
+<<<<<<< HEAD
                         side_calculator
                             <
                                 typename inters_info::cs_tag,
@@ -122,6 +173,12 @@ struct get_turn_info_linear_linear
                         policy::template apply<1>(qi, qj, qk, pi, pj, pk,
                                                   tp, inters.i_info(), inters.d_info(),
                                                   swapped_side_calc);
+=======
+                        policy::template apply<1>(range_q, range_p, tp,
+                                                  inters.i_info(), inters.d_info(),
+                                                  inters.get_swapped_sides(),
+                                                  umbrella_strategy);
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
                     }
                     
                     if ( tp.operations[0].operation == operation_blocked )
@@ -137,36 +194,60 @@ struct get_turn_info_linear_linear
                                                      tp.operations[0].operation,
                                                      tp.operations[1].operation);
                     
+<<<<<<< HEAD
                     AssignPolicy::apply(tp, pi, qi, inters);
+=======
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
                     *out++ = tp;
                 }
             }
             break;
             case 'i' :
             {
+<<<<<<< HEAD
                 crosses<TurnInfo>::apply(pi, pj, pk, qi, qj, qk,
                                          tp, inters.i_info(), inters.d_info());
 
                 replace_operations_i(tp.operations[0].operation, tp.operations[1].operation);
 
                 AssignPolicy::apply(tp, pi, qi, inters);
+=======
+                crosses<TurnInfo>::apply(tp, inters.i_info(), inters.d_info());
+
+                replace_operations_i(tp.operations[0].operation, tp.operations[1].operation);
+
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
                 *out++ = tp;
             }
             break;
             case 't' :
             {
                 // Both touch (both arrive there)
+<<<<<<< HEAD
                 if ( get_turn_info_for_endpoint<AssignPolicy, false, true>
                         ::apply(pi, pj, pk, qi, qj, qk,
                                 is_p_first, is_p_last, is_q_first, is_q_last,
                                 tp_model, inters, method_touch, out) )
+=======
+                if ( get_turn_info_for_endpoint<false, true>
+                        ::apply(range_p, range_q,
+                                tp_model, inters, method_touch, out,
+                                umbrella_strategy.get_point_in_point_strategy()) )
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
                 {
                     // do nothing
                 }
                 else 
                 {
+<<<<<<< HEAD
                     touch<TurnInfo>::apply(pi, pj, pk, qi, qj, qk,
                                            tp, inters.i_info(), inters.d_info(), inters.sides());
+=======
+                    touch<TurnInfo>::apply(range_p, range_q, tp,
+                                           inters.i_info(), inters.d_info(),
+                                           inters.sides(),
+                                           umbrella_strategy);
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
                     // workarounds for touch<> not taking spikes into account starts here
                     // those was discovered empirically
@@ -276,6 +357,7 @@ struct get_turn_info_linear_linear
                                                      tp.operations[0].operation,
                                                      tp.operations[1].operation);
 
+<<<<<<< HEAD
 // TODO: move this into the append_xxx and call for each turn?
                     AssignPolicy::apply(tp, pi, qi, inters);
 
@@ -283,6 +365,10 @@ struct get_turn_info_linear_linear
                       || ! append_opposite_spikes<append_touches>(tp, inters,
                                                                   is_p_last, is_q_last,
                                                                   out) )
+=======
+                    if ( ! BOOST_GEOMETRY_CONDITION(handle_spikes)
+                      || ! append_opposite_spikes<append_touches>(tp, inters, out) )
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
                     {
                         *out++ = tp;
                     }
@@ -291,10 +377,17 @@ struct get_turn_info_linear_linear
             break;
             case 'e':
             {
+<<<<<<< HEAD
                 if ( get_turn_info_for_endpoint<AssignPolicy, true, true>
                         ::apply(pi, pj, pk, qi, qj, qk,
                                 is_p_first, is_p_last, is_q_first, is_q_last,
                                 tp_model, inters, method_equal, out) )
+=======
+                if ( get_turn_info_for_endpoint<true, true>
+                        ::apply(range_p, range_q,
+                                tp_model, inters, method_equal, out,
+                                umbrella_strategy.get_point_in_point_strategy()) )
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
                 {
                     // do nothing
                 }
@@ -307,8 +400,14 @@ struct get_turn_info_linear_linear
                     {
                         // Both equal
                         // or collinear-and-ending at intersection point
+<<<<<<< HEAD
                         equal<TurnInfo>::apply(pi, pj, pk, qi, qj, qk,
                             tp, inters.i_info(), inters.d_info(), inters.sides());
+=======
+                        equal<TurnInfo>::apply(range_p, range_q, tp,
+                            inters.i_info(), inters.d_info(), inters.sides(),
+                            umbrella_strategy);
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
                         operation_type spike_op
                             = ( tp.operations[0].operation != operation_continue
@@ -320,6 +419,7 @@ struct get_turn_info_linear_linear
                         turn_transformer_ec transformer(method_touch);
                         transformer(tp);
 
+<<<<<<< HEAD
 // TODO: move this into the append_xxx and call for each turn?
                         AssignPolicy::apply(tp, pi, qi, inters);
 
@@ -327,6 +427,11 @@ struct get_turn_info_linear_linear
                         if ( ! BOOST_GEOMETRY_CONDITION(handle_spikes)
                           || ! append_collinear_spikes(tp, inters,
                                                        is_p_last, is_q_last,
+=======
+                        // conditionally handle spikes
+                        if ( ! BOOST_GEOMETRY_CONDITION(handle_spikes)
+                          || ! append_collinear_spikes(tp, inters,
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
                                                        method_touch, spike_op,
                                                        out) )
                         {
@@ -341,7 +446,11 @@ struct get_turn_info_linear_linear
                             <
                                 TurnInfo,
                                 AssignPolicy
+<<<<<<< HEAD
                             >::apply(pi, qi, tp, out, inters);
+=======
+                            >::apply(range_p, range_q, tp, out, inters);
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
                     }
                 }
             }
@@ -349,10 +458,17 @@ struct get_turn_info_linear_linear
             case 'c' :
             {
                 // Collinear
+<<<<<<< HEAD
                 if ( get_turn_info_for_endpoint<AssignPolicy, true, true>
                         ::apply(pi, pj, pk, qi, qj, qk,
                                 is_p_first, is_p_last, is_q_first, is_q_last,
                                 tp_model, inters, method_collinear, out) )
+=======
+                if ( get_turn_info_for_endpoint<true, true>
+                        ::apply(range_p, range_q,
+                                tp_model, inters,  method_collinear, out,
+                                umbrella_strategy.get_point_in_point_strategy()) )
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
                 {
                     // do nothing
                 }
@@ -370,8 +486,14 @@ struct get_turn_info_linear_linear
                         if ( inters.d_info().arrival[0] == 0 )
                         {
                             // Collinear, but similar thus handled as equal
+<<<<<<< HEAD
                             equal<TurnInfo>::apply(pi, pj, pk, qi, qj, qk,
                                     tp, inters.i_info(), inters.d_info(), inters.sides());
+=======
+                            equal<TurnInfo>::apply(range_p, range_q, tp,
+                                inters.i_info(), inters.d_info(), inters.sides(),
+                                umbrella_strategy);
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
                             method_replace = method_touch;
                             if ( tp.operations[0].operation != operation_continue
@@ -382,7 +504,11 @@ struct get_turn_info_linear_linear
                         }
                         else
                         {
+<<<<<<< HEAD
                             collinear<TurnInfo>::apply(pi, pj, pk, qi, qj, qk,
+=======
+                            collinear<TurnInfo>::apply(range_p, range_q,
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
                                     tp, inters.i_info(), inters.d_info(), inters.sides());
 
                             //method_replace = method_touch_interior;
@@ -393,6 +519,7 @@ struct get_turn_info_linear_linear
                         turn_transformer_ec transformer(method_replace);
                         transformer(tp);
                         
+<<<<<<< HEAD
 // TODO: move this into the append_xxx and call for each turn?
                         AssignPolicy::apply(tp, pi, qi, inters);
 
@@ -400,6 +527,11 @@ struct get_turn_info_linear_linear
                         if ( ! BOOST_GEOMETRY_CONDITION(handle_spikes)
                           || ! append_collinear_spikes(tp, inters,
                                                        is_p_last, is_q_last,
+=======
+                        // conditionally handle spikes
+                        if ( ! BOOST_GEOMETRY_CONDITION(handle_spikes)
+                          || ! append_collinear_spikes(tp, inters,
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
                                                        method_replace, spike_op,
                                                        out) )
                         {
@@ -415,9 +547,13 @@ struct get_turn_info_linear_linear
                         // conditionally handle spikes
                         if ( BOOST_GEOMETRY_CONDITION(handle_spikes) )
                         {
+<<<<<<< HEAD
                             append_opposite_spikes<append_collinear_opposite>(tp, inters,
                                                                               is_p_last, is_q_last,
                                                                               out);
+=======
+                            append_opposite_spikes<append_collinear_opposite>(tp, inters, out);
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
                         }
 
                         // TODO: ignore for spikes?
@@ -428,9 +564,15 @@ struct get_turn_info_linear_linear
                             <
                                 TurnInfo,
                                 AssignPolicy
+<<<<<<< HEAD
                             >::apply(pi, pj, pk, qi, qj, qk,
                                 tp, out, inters, inters.sides(),
                                 transformer, !is_p_last, !is_q_last);
+=======
+                            >::apply(range_p, range_q,
+                                tp, out, inters, inters.sides(),
+                                transformer);
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
                     }
                 }
             }
@@ -440,6 +582,7 @@ struct get_turn_info_linear_linear
                 // degenerate points
                 if ( BOOST_GEOMETRY_CONDITION(AssignPolicy::include_degenerate) )
                 {
+<<<<<<< HEAD
                     only_convert::apply(tp, inters.i_info());
 
                     // if any, only one of those should be true
@@ -460,11 +603,39 @@ struct get_turn_info_linear_linear
                     }
                     else if ( is_q_last
                            && equals::equals_point_point(qj, tp.point) )
+=======
+                    typedef typename UmbrellaStrategy::point_in_point_strategy_type
+                        equals_strategy_type;
+
+                    only_convert::apply(tp, inters.i_info());
+
+                    // if any, only one of those should be true
+                    if ( range_p.is_first_segment()
+                      && equals::equals_point_point(range_p.at(0), tp.point, equals_strategy_type()) )
+                    {
+                        tp.operations[0].position = position_front;
+                    }
+                    else if ( range_p.is_last_segment()
+                           && equals::equals_point_point(range_p.at(1), tp.point, equals_strategy_type()) )
+                    {
+                        tp.operations[0].position = position_back;
+                    }
+                    else if ( range_q.is_first_segment()
+                           && equals::equals_point_point(range_q.at(0), tp.point, equals_strategy_type()) )
+                    {
+                        tp.operations[1].position = position_front;
+                    }
+                    else if ( range_q.is_last_segment()
+                           && equals::equals_point_point(range_q.at(1), tp.point, equals_strategy_type()) )
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
                     {
                         tp.operations[1].position = position_back;
                     }
 
+<<<<<<< HEAD
                     AssignPolicy::apply(tp, pi, qi, inters);
+=======
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
                     *out++ = tp;
                 }
             }
@@ -489,7 +660,10 @@ struct get_turn_info_linear_linear
               typename OutIt>
     static inline bool append_collinear_spikes(TurnInfo & tp,
                                                IntersectionInfo const& inters_info,
+<<<<<<< HEAD
                                                bool is_p_last, bool is_q_last,
+=======
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
                                                method_type method, operation_type spike_op,
                                                OutIt out)
     {
@@ -497,10 +671,15 @@ struct get_turn_info_linear_linear
         // both position == middle
 
         bool is_p_spike = tp.operations[0].operation == spike_op
+<<<<<<< HEAD
                        && ! is_p_last
                        && inters_info.is_spike_p();
         bool is_q_spike = tp.operations[1].operation == spike_op
                        && ! is_q_last
+=======
+                       && inters_info.is_spike_p();
+        bool is_q_spike = tp.operations[1].operation == spike_op
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
                        && inters_info.is_spike_q();
 
         if ( is_p_spike && is_q_spike )
@@ -559,7 +738,10 @@ struct get_turn_info_linear_linear
               typename OutIt>
     static inline bool append_opposite_spikes(TurnInfo & tp,
                                               IntersectionInfo const& inters,
+<<<<<<< HEAD
                                               bool is_p_last, bool is_q_last,
+=======
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
                                               OutIt out)
     {
         static const bool is_version_touches = (Version == append_touches);
@@ -568,13 +750,19 @@ struct get_turn_info_linear_linear
                             ( tp.operations[0].operation == operation_continue
                            || tp.operations[0].operation == operation_intersection ) :
                             true )
+<<<<<<< HEAD
                        && ! is_p_last
+=======
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
                        && inters.is_spike_p();
         bool is_q_spike = ( is_version_touches ?
                             ( tp.operations[1].operation == operation_continue
                            || tp.operations[1].operation == operation_intersection ) :
                             true )
+<<<<<<< HEAD
                        && ! is_q_last
+=======
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
                        && inters.is_spike_q();
 
         bool res = false;
@@ -598,8 +786,11 @@ struct get_turn_info_linear_linear
                 
                 base_turn_handler::assign_point(tp, method_touch_interior,
                                                 inters.i_info(), 1);
+<<<<<<< HEAD
 
                 AssignPolicy::apply(tp, inters.pi(), inters.qi(), inters);
+=======
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
             }
 
             tp.operations[0].operation = operation_blocked;
@@ -630,8 +821,11 @@ struct get_turn_info_linear_linear
                 BOOST_GEOMETRY_ASSERT(inters.i_info().count > 0);
 
                 base_turn_handler::assign_point(tp, method_touch_interior, inters.i_info(), 0);
+<<<<<<< HEAD
 
                 AssignPolicy::apply(tp, inters.pi(), inters.qi(), inters);
+=======
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
             }
 
             tp.operations[0].operation = operation_intersection;

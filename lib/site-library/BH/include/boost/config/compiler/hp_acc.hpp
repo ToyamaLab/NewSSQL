@@ -142,6 +142,10 @@
 // last known and checked version for PA-RISC is 38000
 #if ((__HP_aCC > 61300) || ((__HP_aCC > 38000) && defined(__hpxstd98)))
 #  if defined(BOOST_ASSERT_CONFIG)
+<<<<<<< HEAD
 #     error "Unknown compiler version - please run the configure tests and report the results"
+=======
+#     error "boost: Unknown compiler version - please run the configure tests and report the results"
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 #  endif
 #endif

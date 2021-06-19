@@ -26,13 +26,21 @@ namespace serialization {
 
 #ifdef BOOST_NO_EXCEPTIONS
 
+<<<<<<< HEAD
 inline void throw_exception(std::exception const & e) {
+=======
+BOOST_NORETURN inline void throw_exception(std::exception const & e) {
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     ::boost::throw_exception(e);
 }
 
 #else
 
+<<<<<<< HEAD
 template<class E> inline void throw_exception(E const & e){
+=======
+template<class E> BOOST_NORETURN inline void throw_exception(E const & e){
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     throw e;
 }
 

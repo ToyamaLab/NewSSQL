@@ -4,7 +4,11 @@
 //-----------------------------------------------------------------------------
 //
 // Copyright (c) 2002 Eric Friedman, Itay Maman
+<<<<<<< HEAD
 // Copyright (c) 2016-2017 Antony Polukhin
+=======
+// Copyright (c) 2016-2019 Antony Polukhin
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 //
 // Portions Copyright (C) 2002 David Abrahams
 //

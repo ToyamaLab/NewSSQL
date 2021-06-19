@@ -14,6 +14,10 @@
 #include <boost/config/no_tr1/cmath.hpp>
 #include <boost/limits.hpp>
 
+<<<<<<< HEAD
+=======
+#include <boost/math/special_functions/fpclassify.hpp>
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 #include <boost/type_traits/is_integral.hpp>
 #include <boost/spirit/home/support/char_class.hpp>
 #include <boost/spirit/home/support/unused.hpp>
@@ -68,7 +72,15 @@ namespace boost { namespace spirit { namespace traits
             typedef unsignedtype type;                                        \
             static type call(signedtype n)                                    \
             {                                                                 \
+<<<<<<< HEAD
                 return static_cast<unsignedtype>((n >= 0) ? n : -n);          \
+=======
+                /* implementation is well-defined for one's complement, */    \
+                /* two's complement, and signed magnitude architectures */    \
+                /* by the C++ Standard. [conv.integral] [expr.unary.op] */    \
+                return (n >= 0) ?  static_cast<type>(n)                       \
+                                : -static_cast<type>(n);                      \
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
             }                                                                 \
         }                                                                     \
     /**/
@@ -84,6 +96,14 @@ namespace boost { namespace spirit { namespace traits
         }                                                                     \
     /**/
 
+<<<<<<< HEAD
+=======
+#if defined(BOOST_MSVC)
+# pragma warning(push)
+// unary minus operator applied to unsigned type, result still unsigned
+# pragma warning(disable: 4146)
+#endif
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     BOOST_SPIRIT_ABSOLUTE_VALUE(signed char, unsigned char);
     BOOST_SPIRIT_ABSOLUTE_VALUE(char, unsigned char);
     BOOST_SPIRIT_ABSOLUTE_VALUE(short, unsigned short);
@@ -97,6 +117,12 @@ namespace boost { namespace spirit { namespace traits
     BOOST_SPIRIT_ABSOLUTE_VALUE(boost::long_long_type, boost::ulong_long_type);
     BOOST_SPIRIT_ABSOLUTE_VALUE_UNSIGNED(boost::ulong_long_type);
 #endif
+<<<<<<< HEAD
+=======
+#if defined(BOOST_MSVC)
+# pragma warning(pop)
+#endif
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 #undef BOOST_SPIRIT_ABSOLUTE_VALUE
 #undef BOOST_SPIRIT_ABSOLUTE_VALUE_UNSIGNED
@@ -285,9 +311,14 @@ namespace boost { namespace spirit { namespace traits
     {
         static bool call(T n)
         {
+<<<<<<< HEAD
             if (!std::numeric_limits<T>::has_infinity)
                 return false;
             return (n == std::numeric_limits<T>::infinity()) ? true : false;
+=======
+            return std::numeric_limits<T>::has_infinity
+                && n == std::numeric_limits<T>::infinity();
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
         }
     };
 

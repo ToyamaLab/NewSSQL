@@ -53,8 +53,15 @@ struct less<Type, false>
     {
         BOOST_GEOMETRY_ASSERT(lhs.denominator() != 0);
         BOOST_GEOMETRY_ASSERT(rhs.denominator() != 0);
+<<<<<<< HEAD
         return lhs.numerator() * rhs.denominator()
              < rhs.numerator() * lhs.denominator();
+=======
+        Type const a = lhs.numerator() / lhs.denominator();
+        Type const b = rhs.numerator() / rhs.denominator();
+        return ! geometry::math::equals(a, b)
+            && a < b;
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     }
 };
 
@@ -84,11 +91,17 @@ struct equal<Type, false>
     {
         BOOST_GEOMETRY_ASSERT(lhs.denominator() != 0);
         BOOST_GEOMETRY_ASSERT(rhs.denominator() != 0);
+<<<<<<< HEAD
         return geometry::math::equals
             (
                 lhs.numerator() * rhs.denominator(),
                 rhs.numerator() * lhs.denominator()
             );
+=======
+        Type const a = lhs.numerator() / lhs.denominator();
+        Type const b = rhs.numerator() / rhs.denominator();
+        return geometry::math::equals(a, b);
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     }
 };
 

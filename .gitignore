@@ -7,6 +7,7 @@ bin/
 .settings/org.eclipse.jdt.core.prefs
 .settings/*
 target/
+Datavisualize/
 .idea
 .idea*
 newssql.iml
@@ -14,3 +15,9 @@ reset
 out/
 META-INF/
 /.metadata/
+test_queries/tatsu/
+Datavisualize/
+Datavisualize的副本/
+testSpeech/
+test_queries/smtb/
+test_queries/li.sql

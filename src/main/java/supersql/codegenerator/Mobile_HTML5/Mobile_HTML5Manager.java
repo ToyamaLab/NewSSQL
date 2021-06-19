@@ -10,6 +10,7 @@ import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 import java.util.Vector;
 
+
 import supersql.codegenerator.Ehtml;
 import supersql.codegenerator.FileFormatter;
 import supersql.codegenerator.ITFE;
@@ -70,8 +71,10 @@ public class Mobile_HTML5Manager extends Manager{
 	public void generateCode(ITFE tfe_info, ExtList data_info) {
 
 		Mobile_HTML5Env.initAllFormFlg();
-
+		
+		// added by masato 20150914
 		Mobile_HTML5Env.initXML();
+		
 		html_env.countfile = 0;
 		html_env.code = new StringBuffer();
 		html_env.css = new StringBuffer();
@@ -87,9 +90,11 @@ public class Mobile_HTML5Manager extends Manager{
 		html_env2.footer = new StringBuffer();
 		html_env2.foreach_flag = GlobalEnv.getForeachFlag();
 		html_env2.written_classid = new Vector<String>();
-		Mobile_HTML5Env localenv = new Mobile_HTML5Env();
+		// Mobile_HTML5Env localenv = new Mobile_HTML5Env();
 
 		/*** start oka ***/
+		
+//		Log.info("2-2-3-1-2-1");
 
 
 		// ���Ϥ�?�ե���?̾����?
@@ -104,69 +109,225 @@ public class Mobile_HTML5Manager extends Manager{
 		}
 
 		// ?�ֳ�¦��G3�Ǥʤ�??]
-		html_env.filename = html_env.outfile + Compiler.getExtension();
+		if(Ehtml.isEhtml2())
+			html_env.filename = html_env.outfile + Ehtml.getFileName() + Compiler.getExtension();
+		else
+			html_env.filename = html_env.outfile + Compiler.getExtension();
 		html_env2.filename = html_env.outfile + ".xml";
 
 		html_env.setOutlineMode();
+		
+//		Log.info("2-2-3-1-2-2");
+		Log.info("DataConstructor.SQL_string = "+DataConstructor.SQL_string);
+		Log.info("data_info.size() = "+data_info.size());
 
-		if(data_info.size() == 0
-				//added by goto 20130306  "FROMなしクエリ対策 3/3"
-				&& !DataConstructor.SQL_string.equals("SELECT DISTINCT  FROM ;") && !DataConstructor.SQL_string.equals("SELECT  FROM ;"))
+//		if(data_info.size() == 0
+//				//added by goto 20130306  "FROMなしクエリ対策 3/3"
+//				&& !DataConstructor.SQL_string.equals("SELECT DISTINCT  FROM ;") 
+//				&& !DataConstructor.SQL_string.equals("SELECT  FROM ;"))
+		if(data_info.size() == 0)
 		{
+			Log.info("data_info.size() == 0");
 			Log.info("no data");
 
-			html_env.code.append("<div class=\"nodata\" >");
-			html_env.code.append("NO DATA FOUND");
-			html_env.code.append("</div>");
+//			html_env.code.append("<div class=\"nodata\" >");
+//			html_env.code.append("NO DATA FOUND");
+//			html_env.code.append("</div>");
+			
+			tfe_info.work(data_info);	//added by goto 201911  FROMなしクエリ(e.g., form()など)用
 		}
-		else
+		else {
+			Log.info("manager2-0");
+			
 			Log.info("manager:"+html_env.code);
-
-		if (Incremental.flag) {
-			//			html_env.getHeader(1);
-			// TODO
-//			String id = "ssqlResult" + GlobalEnv.getQueryNum();
-//			String xmlFileName = html_env.outfile.substring(html_env.outfile.lastIndexOf(GlobalEnv.OS_FS) + 1, html_env.outfile.length());
-//			String path = html_env.outdir + GlobalEnv.OS_FS + "GeneratedXML" + GlobalEnv.OS_FS + xmlFileName + GlobalEnv.OS_FS + id + ".xml";
-//			if(GlobalEnv.scrollednum == 0){
-//				path = html_env.outdir + GlobalEnv.OS_FS + "GeneratedXML" + GlobalEnv.OS_FS + xmlFileName + GlobalEnv.OS_FS + id + ".xml";
-//			}else if(GlobalEnv.scrollednum > 0){
-//				path = html_env.outdir + GlobalEnv.OS_FS + "GeneratedXML" + GlobalEnv.OS_FS + xmlFileName + GlobalEnv.OS_FS + id + "-" +GlobalEnv.scrollednum + ".xml";
-//			}
-//			Incremental.createXML(path, html_env.xmlCode);
-//			// 既存のHTMLのヘッダー内に書き込むjsコード
-//			Ehtml.appendToHeadFromBody(path);
-//			// XMLをparseして生成したテーブルをappendするhtmlコード（divタグ）
-//			Ehtml.createBaseHTMLCode();
-//			// add by masato 20151120 end for incremental
-
-		}else{
+			Log.info("data_info:"+data_info);
+			Log.info("tfe_info:"+tfe_info);
+			// System.out.println(data_info);
 			tfe_info.work(data_info);
+			Log.info("manager2");
+		}
+		
 
-			if (Ehtml.flag) {
-				String id = "ssqlResult" + GlobalEnv.getQueryNum();
-				String phpFileName = html_env.outfile.substring(html_env.outfile.lastIndexOf(GlobalEnv.OS_FS) + 1, html_env.outfile.length());
-				String path = "";
-//				Incremental.createXML(path, html_env.xmlCode);
-				// 既存のHTMLのヘッダー内に書き込むjsコード
-				Ehtml.appendToHeadFromBody(path);
-				// XMLをparseして生成したテーブルをappendするhtmlコード（divタグ）
-				Ehtml.createBaseHTMLCode();
-				// cssの生成・コピー
-				Jscss.process();
+//		Log.info("2-2-3-1-2-3");
+		
+		
+		
 
-				// TODO 終了どうする？
-				//			System.exit(0);
-			}
-			// add by masato 20151118 end for incremental
-			// add by masato 20151120 start
-			else {
-				html_env.getHeader(1);
-				html_env.getFooter(1);
-				//        html_env2.header.append("<?xml version=\"1.0\" encoding=\""+html_env.getEncode()+"\"?><SSQL>");
-				//        html_env2.footer.append("</SSQL>");
+//		if (Ehtml.infinitescroll_flag && Ehtml.flag) {
+		if (Ehtml.isInfinitescroll()) {
+			String id = "ssqlResult" + GlobalEnv.getQueryNum();
+			String phpFileName = html_env.outfile.substring(html_env.outfile.lastIndexOf(GlobalEnv.OS_FS) + 1, html_env.outfile.length());
+			String path = "";
+			// 既存のHTMLのヘッダー内に書き込むjsコード
+			Ehtml.appendToHeadFromBody(path);
+			// XMLをparseして生成したテーブルをappendするhtmlコード（divタグ）
+			Ehtml.createBaseHTMLCode();
+			// cssの生成・コピー
+			Jscss.process();
 
-				if(!Responsive.isReExec()){	//added by goto 20161217  for responsive
+//<<<<<<< HEAD
+			// TODO 終了どうする？
+			//			System.exit(0);
+		}
+
+		// add by masato 20151118 start for incremental
+//		else if (Ehtml.flag) {
+		else if (Ehtml.isEhtml_flag() && Ehtml.outType==0) {
+			System.out.println("Ehtml.flag");
+			// 生成するXMLは埋め込み先のphp or htmlファイルのある場所にその名前.xmlで生成
+			// TODO masato 複数のクエリをどうページ内で実行できるようにdivのid等にする必要あり
+			String id = "ssqlResult" + GlobalEnv.getQueryNum();
+			String phpFileName = html_env.outfile.substring(html_env.outfile.lastIndexOf(GlobalEnv.OS_FS) + 1, html_env.outfile.length());
+			//TODO -scrolled 1 -> ssqlresult1-1.xml, -scrolled == null -> ssqlresult1.xml
+
+			String xmlFileName = html_env.outfile.substring(html_env.outfile.lastIndexOf(GlobalEnv.OS_FS) + 1, html_env.outfile.length());
+			String path = html_env.outdir + GlobalEnv.OS_FS + "GeneratedXML" + GlobalEnv.OS_FS + xmlFileName + GlobalEnv.OS_FS + id + ".xml";
+//			String path = "";
+			Incremental.createXML(path, html_env.xmlCode);
+			// 既存のHTMLのヘッダー内に書き込むjsコード
+			Ehtml.appendToHeadFromBody(path);
+			// XMLをparseして生成したテーブルをappendするhtmlコード（divタグ）
+			Ehtml.createBaseHTMLCode();
+			// cssの生成・コピー
+			Jscss.process();	//TODO
+
+			// TODO 終了どうする？
+//			System.exit(0);
+		}
+		// add by masato 20151118 end for incremental
+		// add by masato 20151120 start
+//		else if (Incremental.flag) {
+		else if (Ehtml.isEhtml_Incremental() && Ehtml.outType==0) {
+			System.out.println("Incremental.flag");
+			// TODO
+			String id = "ssqlResult" + GlobalEnv.getQueryNum();
+			String xmlFileName = html_env.outfile.substring(html_env.outfile.lastIndexOf(GlobalEnv.OS_FS) + 1, html_env.outfile.length());
+			String path = html_env.outdir + GlobalEnv.OS_FS + "GeneratedXML" + GlobalEnv.OS_FS + xmlFileName + GlobalEnv.OS_FS + id + ".xml";
+			Incremental.createXML(path, html_env.xmlCode);
+			// 既存のHTMLのヘッダー内に書き込むjsコード
+			Ehtml.appendToHeadFromBody(path);
+			// XMLをparseして生成したテーブルをappendするhtmlコード（divタグ）
+			Ehtml.createBaseHTMLCode();
+			// add by masato 20151120 end for incremental
+
+		} else {
+			html_env.getHeader(1);
+			html_env.getFooter(1);
+			//        html_env2.header.append("<?xml version=\"1.0\" encoding=\""+html_env.getEncode()+"\"?><SSQL>");
+			//        html_env2.footer.append("</SSQL>");
+
+			if(!Responsive.isReExec()){	//added by goto 20161217  for responsive
+				
+				// Ehtml
+				//if (Ehtml.isEhtml() && Ehtml.outType==1) {
+				if (Ehtml.isEhtml2() && Ehtml.outType==1) {
+					String html = "";
+					if (GlobalEnv.cssout() == null)
+						html += html_env.header;
+					html += html_env.code;
+					html += html_env.footer;
+					
+					// Embedded_SuperSQL_container
+					html = "<div id=\"Embedded_SuperSQL_container"+Ehtml.getNumber()+"\">\n" +
+					        html + 
+					        "</div>\n";
+					
+					if(!Start_Parse.sessionFlag)
+						html = FileFormatter.process(html);
+					
+					
+					// form()でソースを見ると<html>等が付与されていたため対策
+					html = html
+					   .replace("<html>", "")
+					   .replace("<head>", "")
+					   .replace("</head>", "")
+					   .replace("<body>", "")
+					   .replace("</body>", "")
+					   .replace("</html>", "");
+					
+					
+//					html = html.replace("<!DOCTYPE html>", "")
+//							   .replace("<html>", "")
+////							   .replace("<html>", "<div class=\"container1\">")
+////							   .replace("<html>", "<div class=\"container1\">")
+//							   .replace("<head>", "")
+//							   .replace("</head>", "")
+////							   .replace("<body>", "")
+//							   .replace("<body>", 
+////									   "<div class=\"container\">\n" +
+//									   "<div class=\"bootstrap-scope\">\n" +
+////									   "<style> #ssql_body_contents {" +
+////										" @include 'jscss/ssql/ssqlResult1.css'; " +
+////										"} </style>\n" +
+////									   "<style scoped>\n" +
+//									   "<style>\n" +
+//									   Jscss.getCssContents() + 
+//									   "\n</style>\n"
+//									   )
+////							   .replace("</body>", "</div>")
+//							   .replace("</body>", "")
+//							   .replace("</html>", "");			//TODO
+					
+					
+//					html = "<div>\n" + html + "\n</div>\n";		//OK?
+//					html = html
+					
+//					// for test
+//					html = 
+//							//"<script src=\"http://code.jquery.com/jquery-1.9.1.js\"></script>"
+//							//+ 
+//							"<script src=\"jscss/jquery.scoped.js\"></script>"
+//							+ "<script type=\"text/javascript\"> window.onload = function(){ $.scoped(); } </script>"
+//							+ "    <p>This will be black.</p>"
+//							+ "    <section>"
+//							+ "     <style scoped>"
+//							+ "       p {color:red;}"
+//							+ "     </style> "
+//							+ "     <p>This will be red.</p>"
+//							+ "    </section>";
+////							+ html;
+					
+					
+					Log.ehtmlInfo(html);
+
+					Mobile_HTML5Env.initAllFormFlg();
+					Jscss.process();	//goto 20141209
+//=======
+//		if (Incremental.flag) {
+//			//			html_env.getHeader(1);
+//			// TODO
+////			String id = "ssqlResult" + GlobalEnv.getQueryNum();
+////			String xmlFileName = html_env.outfile.substring(html_env.outfile.lastIndexOf(GlobalEnv.OS_FS) + 1, html_env.outfile.length());
+////			String path = html_env.outdir + GlobalEnv.OS_FS + "GeneratedXML" + GlobalEnv.OS_FS + xmlFileName + GlobalEnv.OS_FS + id + ".xml";
+////			if(GlobalEnv.scrollednum == 0){
+////				path = html_env.outdir + GlobalEnv.OS_FS + "GeneratedXML" + GlobalEnv.OS_FS + xmlFileName + GlobalEnv.OS_FS + id + ".xml";
+////			}else if(GlobalEnv.scrollednum > 0){
+////				path = html_env.outdir + GlobalEnv.OS_FS + "GeneratedXML" + GlobalEnv.OS_FS + xmlFileName + GlobalEnv.OS_FS + id + "-" +GlobalEnv.scrollednum + ".xml";
+////			}
+////			Incremental.createXML(path, html_env.xmlCode);
+////			// 既存のHTMLのヘッダー内に書き込むjsコード
+////			Ehtml.appendToHeadFromBody(path);
+////			// XMLをparseして生成したテーブルをappendするhtmlコード（divタグ）
+////			Ehtml.createBaseHTMLCode();
+////			// add by masato 20151120 end for incremental
+//
+//		}else{
+//			tfe_info.work(data_info);
+//
+//			if (Ehtml.flag) {
+//				String id = "ssqlResult" + GlobalEnv.getQueryNum();
+//				String phpFileName = html_env.outfile.substring(html_env.outfile.lastIndexOf(GlobalEnv.OS_FS) + 1, html_env.outfile.length());
+//				String path = "";
+////				Incremental.createXML(path, html_env.xmlCode);
+//				// 既存のHTMLのヘッダー内に書き込むjsコード
+//				Ehtml.appendToHeadFromBody(path);
+//				// XMLをparseして生成したテーブルをappendするhtmlコード（divタグ）
+//				Ehtml.createBaseHTMLCode();
+//				// cssの生成・コピー
+//				Jscss.process();
+//>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
+
+				}else{
 					try {
 						if(!GlobalEnv.isOpt()){
 							//changed by goto 20120715 start
@@ -179,7 +340,7 @@ public class Mobile_HTML5Manager extends Manager{
 								pw = new PrintWriter(new BufferedWriter(new FileWriter(
 										html_env.filename)));
 							//changed by goto 20120715 end
-
+	
 							//changed by goto 20161019 for HTML Formatter
 							String html = "";
 							if (GlobalEnv.cssout() == null)
@@ -189,7 +350,7 @@ public class Mobile_HTML5Manager extends Manager{
 							if(!Start_Parse.sessionFlag)
 								html = FileFormatter.process(html);
 							pw.println(html);
-
+	
 							pw.close();
 						}
 						//            //xml
@@ -222,14 +383,14 @@ public class Mobile_HTML5Manager extends Manager{
 						//				pw.println(html_env.footer);
 						//				pw.close();
 						//            }
-
+	
 						if(GlobalEnv.cssout()!=null){
 							PrintWriter pw3 = new PrintWriter(new BufferedWriter(new FileWriter(
 									GlobalEnv.cssout())));
 							pw3.println(html_env.header);
 							pw3.close();
 						}
-
+	
 						//create '.htaccess'
 						String fn = html_env.getFileParent()+GlobalEnv.OS_FS+".htaccess";
 						//					String fn = ".htaccess";
@@ -243,7 +404,7 @@ public class Mobile_HTML5Manager extends Manager{
 							pw.println("AddType application/x-httpd-php .html");
 							pw.close();
 						}
-
+	
 						Mobile_HTML5Env.initAllFormFlg();
 						Jscss.process();	//goto 20141209
 					} catch (FileNotFoundException fe) {
@@ -261,12 +422,13 @@ public class Mobile_HTML5Manager extends Manager{
 						//comment out by chie
 						//System.exit(-1);
 					}
-				}else{
-					Jscss.process();
 				}
+				
+			}else{
+				Jscss.process();
 			}
 		}
-
+		//Log.info("End");
 	}
 
 	private int lastIndexOf(String string) {
@@ -430,7 +592,10 @@ public class Mobile_HTML5Manager extends Manager{
 
 
 		// ?�ֳ�¦��G3�Ǥʤ�??
-		html_env.filename = html_env.outfile + Compiler.getExtension();
+		if(Ehtml.isEhtml2())
+			html_env.filename = html_env.outfile + Ehtml.getFileName() + Compiler.getExtension();
+		else
+			html_env.filename = html_env.outfile + Compiler.getExtension();
 		html_env2.filename = html_env.outfile + ".xml";
 
 		html_env.setOutlineMode();
@@ -481,6 +646,7 @@ public class Mobile_HTML5Manager extends Manager{
 		 * ��?�ʳ��ΤȤ��ϥ���?�ե���?��̾��(filename)�ˤ�?
 		 */
 		if (GlobalEnv.getQuery()!=null) {
+			// modified by masato 20151118 for ehtml and incremental
 			if(Ehtml.flag || Incremental.flag){
 				// TODO masato 複数のクエリをどうページ内で実行できるようにdivのid等にする必要あり
 				html_env.outfile = outfile.substring(0, outfile.toLowerCase().indexOf("."));

@@ -21,7 +21,10 @@
 #include <boost/spirit/home/support/info.hpp>
 #include <boost/fusion/include/size.hpp>
 #include <boost/optional.hpp>
+<<<<<<< HEAD
 #include <boost/foreach.hpp>
+=======
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 #include <boost/array.hpp>
 
 namespace boost { namespace spirit
@@ -76,10 +79,14 @@ namespace boost { namespace spirit { namespace qi
                 f(first, last, context, skipper);
 
             boost::array<bool, fusion::result_of::size<Elements>::value> flags;
+<<<<<<< HEAD
             BOOST_FOREACH(bool& taken, flags)
             {
                 taken = false;
             }
+=======
+            flags.fill(false);
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
             // wrap the attribute in a tuple if it is not a tuple
             typename traits::wrap_if_not_tuple<Attribute>::type attr_local(attr_);

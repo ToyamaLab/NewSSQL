@@ -17,7 +17,11 @@
 #include <boost/mpl/if.hpp>
 #include <boost/type_traits/is_same.hpp>
 #include <boost/spirit/home/classic/core/nil.hpp>  // for nil_t
+<<<<<<< HEAD
 #include <boost/detail/iterator.hpp> // for boost::detail::iterator_traits
+=======
+#include <iterator> // for std::iterator_traits
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 namespace boost { namespace spirit {
 
@@ -91,6 +95,19 @@ private:
 
 /* namespace boost::spirit { */ namespace iterator_ { namespace impl {
 
+<<<<<<< HEAD
+=======
+template <typename T>
+struct make_const : boost::add_const<T>
+{};
+
+template <typename T>
+struct make_const<T&>
+{
+    typedef typename boost::add_const<T>::type& type;
+};
+
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 ///////////////////////////////////////////////////////////////////////////////
 //
 //  position_iterator_base_generator
@@ -104,9 +121,16 @@ template <typename MainIterT, typename ForwardIterT, typename PositionT>
 struct position_iterator_base_generator
 {
 private:
+<<<<<<< HEAD
     typedef boost::detail::iterator_traits<ForwardIterT> traits;
     typedef typename traits::value_type value_type;
     typedef typename traits::iterator_category iter_category_t;
+=======
+    typedef std::iterator_traits<ForwardIterT> traits;
+    typedef typename traits::value_type value_type;
+    typedef typename traits::iterator_category iter_category_t;
+    typedef typename traits::reference reference;
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
     // Position iterator is always a non-mutable iterator
     typedef typename boost::add_const<value_type>::type const_value_type;
@@ -125,7 +149,12 @@ public:
         main_iter_t,
         ForwardIterT,
         const_value_type,
+<<<<<<< HEAD
         boost::forward_traversal_tag
+=======
+        boost::forward_traversal_tag,
+        typename make_const<reference>::type
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     > type;
 };
 

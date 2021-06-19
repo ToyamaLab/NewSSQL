@@ -1,10 +1,21 @@
+<<<<<<< HEAD
 CleanupReporter	CleanupReporter
+=======
+as.character.ps_handle	ps_handle
+CleanupReporter	CleanupReporter
+errno	errno
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 format.ps_handle	ps_handle
 print.ps_handle	ps_handle
 ps	ps
 ps_boot_time	ps_boot_time
 ps_children	ps_children
 ps_cmdline	ps_cmdline
+<<<<<<< HEAD
+=======
+ps_connections	ps_connections
+ps_cpu_count	ps_cpu_count
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 ps_cpu_times	ps_cpu_times
 ps_create_time	ps_create_time
 ps_cwd	ps_cwd

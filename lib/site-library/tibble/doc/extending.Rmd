@@ -1,7 +1,10 @@
 ---
 title: "Extending tibble"
 author: "Kirill Müller, Hadley Wickham"
+<<<<<<< HEAD
 date: "`r Sys.Date()`"
+=======
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{Extending tibble}
@@ -9,6 +12,7 @@ vignette: >
   %\VignetteEncoding{UTF-8}
 ---
 
+<<<<<<< HEAD
 To extend the tibble package for new types of columnar data, you need to understand how printing works. The presentation of a column in a tibble is powered by four S3 generics:
 
 * `type_sum()` determines what goes into the column header.
@@ -451,3 +455,6 @@ Learn more about the tidyeval framework in the [dplyr vignette](http://dplyr.tid
 unlink("latlon.txt")
 unlink("latlon-bw.txt")
 ```
+=======
+This material has moved to <https://vctrs.r-lib.org/articles/pillar.html>.
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce

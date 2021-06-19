@@ -23,6 +23,9 @@ import java.util.List;
 
 import org.apache.commons.codec.digest.DigestUtils;
 
+import com.gargoylesoftware.htmlunit.WebConsole.Logger;
+
+import net.sourceforge.htmlunit.corejs.javascript.tools.shell.Global;
 import supersql.FrontEnd;
 import supersql.codegenerator.Ehtml;
 import supersql.codegenerator.Incremental;
@@ -87,6 +90,8 @@ public class SQLManager {
 	}
 
     @SuppressWarnings({ "rawtypes", "unchecked" })
+	boolean firstSQLStatement = false;
+    int SQLstatementCount = 0;
 	public void ExecSQL(String query, String create, String update) {
     	if(isMulti)
     	{
@@ -145,12 +150,16 @@ public class SQLManager {
     		query = query.trim();
     		if(!query.endsWith(";"))	query += ";";
     	}
-    	if(query.contains(" #"))	query = query.substring(0,query.indexOf(" #"));	//TODO
+    	if(!Ehtml.flag && query.contains(" #"))	query = query.substring(0,query.indexOf(" #"));	//TODO
     	query = Mobile_HTML5.checkQuery(query);
         Log.out("[SQLManager ExecQuery]");
         if(!query.endsWith("FROM ;")){
-	        Log.info("\n********** SQL is **********");
-	        Log.info(query);
+        	if (!firstSQLStatement) {
+    	        //Log.info("\n********** SQL is **********");
+    	        Log.info("\n********** SQL **********");
+        		firstSQLStatement = true;
+			}
+	        Log.info((++SQLstatementCount)+". "+query);
         }
         GlobalEnv.query = query;
 
@@ -171,14 +180,12 @@ public class SQLManager {
             	}
             	stat.executeBatch();
             }
-
             ResultSet rs = stat.executeQuery(query);
             ResultSetMetaData rsmd = rs.getMetaData();
             int columnCount = rsmd.getColumnCount();
             for (int i = 1; i <= columnCount; i++) {
                 header_name.add(rsmd.getColumnName(i));
-                header_type.add(Integer.toString(rsmd
-                        .getColumnType(i)));
+                header_type.add(Integer.toString(rsmd.getColumnType(i)));
             }
 
             ExtList<String> tmplist;
@@ -194,6 +201,7 @@ public class SQLManager {
                 		val = "";
 					}
                     if (val != null) {
+                    	
                         tmplist.add(val.trim());
                     } else {
                         tmplist.add("");
@@ -202,8 +210,10 @@ public class SQLManager {
                 }
                 tuples.add(tmplist);
             }
+            
+            
 			// added by masato 20151221
-            if (Ehtml.flag) { // SQLの結果を保存
+            if (Ehtml.flag || Ehtml.flag2) { // SQLの結果を保存
             	String outDir = GlobalEnv.getoutdirectory();
             	String outFile = GlobalEnv.getoutfilename();
             	String a = outFile.substring(0, outFile.toLowerCase().indexOf("."));
@@ -225,9 +235,9 @@ public class SQLManager {
     				e.printStackTrace();
     			}
 				String hexString = DigestUtils.md5Hex(tmp.toString());
-//    			pw.println(hexString);
+    			pw.println(hexString);
     			pw.close();
-            } else if (Incremental.flag) { // 前回のsqlの結果を確認
+            } else if (Incremental.flag || Incremental.flag2) { // 前回のsqlの結果を確認
             	String outDir = GlobalEnv.getoutdirectory();
             	String outFile = GlobalEnv.getoutfilename();
             	String a = outFile.substring(0, outFile.toLowerCase().indexOf("."));
@@ -249,7 +259,7 @@ public class SQLManager {
                     ex.printStackTrace();
                 }
 				String hexString = DigestUtils.md5Hex(tmp.toString());
-                if(hexString.equals(sqlResultBuffer.toString())){
+                if(hexString.equals(sqlResultBuffer.toString())){	// TODO if outType==1
                 	// 同じだった場合
                 	Log.ehtmlInfo("test");
 
@@ -262,6 +272,8 @@ public class SQLManager {
                 	System.exit(0);
                 } else {
                 	// 違った場合は更新
+                	Ehtml.setEhtml();	//必要? -> おそらく必要
+                	
                 	if ( !sqlResultFileDir.exists() ) {
         				sqlResultFileDir.mkdirs();
         			}
@@ -274,7 +286,7 @@ public class SQLManager {
         			} catch (FileNotFoundException e) {
         				e.printStackTrace();
         			}
-//        			pw.println(hexString);
+        			pw.println(hexString);
         			pw.close();
                 }
             }
@@ -301,15 +313,13 @@ public class SQLManager {
 
         } catch (SQLException e) {
         	if(!query.endsWith("FROM ;")){
-	              Log.err("Error[SQLManager.ExecSQL]: Can't Exec Query : query = "
-			                      + query);
+	              Log.err("Error[SQLManager.ExecSQL]: Can't Exec Query : query = " + query);
 //	              GlobalEnv.errorText += "Error[SQLManager.ExecSQL]: Can't Exec Query : query = "
 //	                      + query;
 			      Log.err(e);
 			      LogError.logErr();
 //			      GlobalEnv.errorText += e;
-			      GlobalEnv.addErr("Error[SQLManager.ExecSQL]: Can't Exec Query : query = "
-			              + query);
+			      GlobalEnv.addErr("Error[SQLManager.ExecSQL]: Can't Exec Query : query = " + query);
 
 
 			      //added by goto 20131016 start
@@ -322,6 +332,7 @@ public class SQLManager {
 		    		  //(driver.contains("mysql") ) ||	//TODO
 		    		  //(driver.contains("db2") ) ||	//TODO
 		    		  (driver.contains("sqlite") && errorContents[0].contains("column")))
+		    		  //||(driver.contains("sqlserver") )	//TODO
 		    		){
 			    	  if(errorContents[0].contains("ambiguous")){
 			    		  list = Suggest.getgetAmbiguousTableAndColumnNameList(conn, tableNameAndAlias.get(0), errorContents[1]);
@@ -359,9 +370,7 @@ public class SQLManager {
 			      return ;
         	}
         } catch (IllegalStateException e) {
-            System.err
-                    .println("Error[SQLManager.ExecSQL]: No Data Found : query = "
-                            + query);
+            System.err.println("Error[SQLManager.ExecSQL]: No Data Found : query = " + query);
         }
     }
 
@@ -526,23 +535,21 @@ public class SQLManager {
 
         try {
             Statement stat = conn.createStatement();
-
+            
             stat.executeUpdate(query);
         } catch (SQLException e) {
-
+        	
         } catch (IllegalStateException e) {
             System.err
                     .println("Error[SQLManager.ExecSQL]: No Data Found : query = "
                             + query);
         }
-
 	}
 
 	public void create_log(String query_name, ArrayList pTables, HashMap<String, ArrayList> trigger_tables) {
 		try {
             Statement stat = conn.createStatement();
             String log_table = "";
-
             DatabaseMetaData dbmd = conn.getMetaData();
             int pTablesize = pTables.size();
             for(int i = 0; i < pTablesize; i++){
@@ -574,9 +581,9 @@ public class SQLManager {
  	        Log.info(log_table);
         	stat.executeUpdate(log_table);
         } catch (SQLException e) {
-
+        	
         }
-
+		
 	}
 	//added by taji 171103 end
 	public void ExecMetaQuery(String tblName) {
@@ -625,7 +632,7 @@ public class SQLManager {
 			}
 			this.tuples.add(tmp);
 		}catch(SQLException e){
-    		e.printStackTrace();
+    		//e.printStackTrace();
 		}
 	}
 }

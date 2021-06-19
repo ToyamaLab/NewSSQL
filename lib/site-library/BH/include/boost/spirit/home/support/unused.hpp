@@ -15,11 +15,14 @@
 #include <boost/config.hpp>
 #include <boost/mpl/bool.hpp>
 
+<<<<<<< HEAD
 #if defined(BOOST_MSVC)
 # pragma warning(push)
 # pragma warning(disable: 4522) // multiple assignment operators specified warning
 #endif
 
+=======
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 ///////////////////////////////////////////////////////////////////////////////
 namespace boost { namespace spirit
 {
@@ -31,9 +34,13 @@ namespace boost { namespace spirit
     ///////////////////////////////////////////////////////////////////////////
     struct unused_type
     {
+<<<<<<< HEAD
         unused_type()
         {
         }
+=======
+        BOOST_DEFAULTED_FUNCTION(unused_type(), {})
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
         template <typename T>
         unused_type(T const&)
@@ -53,6 +60,7 @@ namespace boost { namespace spirit
         {
             return *this;
         }
+<<<<<<< HEAD
 
         unused_type const&
         operator=(unused_type const&) const
@@ -65,6 +73,8 @@ namespace boost { namespace spirit
         {
             return *this;
         }
+=======
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     };
 
     unused_type const unused = unused_type();
@@ -98,8 +108,11 @@ namespace boost { namespace spirit
     }
 }}
 
+<<<<<<< HEAD
 #if defined(BOOST_MSVC)
 # pragma warning(pop)
 #endif
 
+=======
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 #endif

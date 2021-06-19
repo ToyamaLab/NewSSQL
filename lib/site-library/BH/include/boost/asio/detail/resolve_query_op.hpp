@@ -2,7 +2,11 @@
 // detail/resolve_query_op.hpp
 // ~~~~~~~~~~~~~~~~~~~~~~~~~~~
 //
+<<<<<<< HEAD
 // Copyright (c) 2003-2017 Christopher M. Kohlhoff (chris at kohlhoff dot com)
+=======
+// Copyright (c) 2003-2019 Christopher M. Kohlhoff (chris at kohlhoff dot com)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 //
 // Distributed under the Boost Software License, Version 1.0. (See accompanying
 // file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
@@ -17,7 +21,10 @@
 
 #include <boost/asio/detail/config.hpp>
 #include <boost/asio/error.hpp>
+<<<<<<< HEAD
 #include <boost/asio/io_context.hpp>
+=======
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 #include <boost/asio/ip/basic_resolver_query.hpp>
 #include <boost/asio/ip/basic_resolver_results.hpp>
 #include <boost/asio/detail/bind_handler.hpp>
@@ -28,13 +35,26 @@
 #include <boost/asio/detail/resolve_op.hpp>
 #include <boost/asio/detail/socket_ops.hpp>
 
+<<<<<<< HEAD
+=======
+#if defined(BOOST_ASIO_HAS_IOCP)
+# include <boost/asio/detail/win_iocp_io_context.hpp>
+#else // defined(BOOST_ASIO_HAS_IOCP)
+# include <boost/asio/detail/scheduler.hpp>
+#endif // defined(BOOST_ASIO_HAS_IOCP)
+
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 #include <boost/asio/detail/push_options.hpp>
 
 namespace boost {
 namespace asio {
 namespace detail {
 
+<<<<<<< HEAD
 template <typename Protocol, typename Handler>
+=======
+template <typename Protocol, typename Handler, typename IoExecutor>
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 class resolve_query_op : public resolve_op
 {
 public:
@@ -43,6 +63,7 @@ public:
   typedef boost::asio::ip::basic_resolver_query<Protocol> query_type;
   typedef boost::asio::ip::basic_resolver_results<Protocol> results_type;
 
+<<<<<<< HEAD
   resolve_query_op(socket_ops::weak_cancel_token_type cancel_token,
       const query_type& query, io_context_impl& ioc, Handler& handler)
     : resolve_op(&resolve_query_op::do_complete),
@@ -53,6 +74,26 @@ public:
       addrinfo_(0)
   {
     handler_work<Handler>::start(handler_);
+=======
+#if defined(BOOST_ASIO_HAS_IOCP)
+  typedef class win_iocp_io_context scheduler_impl;
+#else
+  typedef class scheduler scheduler_impl;
+#endif
+
+  resolve_query_op(socket_ops::weak_cancel_token_type cancel_token,
+      const query_type& query, scheduler_impl& sched,
+      Handler& handler, const IoExecutor& io_ex)
+    : resolve_op(&resolve_query_op::do_complete),
+      cancel_token_(cancel_token),
+      query_(query),
+      scheduler_(sched),
+      handler_(BOOST_ASIO_MOVE_CAST(Handler)(handler)),
+      io_executor_(io_ex),
+      addrinfo_(0)
+  {
+    handler_work<Handler, IoExecutor>::start(handler_, io_executor_);
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
   }
 
   ~resolve_query_op()
@@ -69,7 +110,11 @@ public:
     resolve_query_op* o(static_cast<resolve_query_op*>(base));
     ptr p = { boost::asio::detail::addressof(o->handler_), o, o };
 
+<<<<<<< HEAD
     if (owner && owner != &o->io_context_impl_)
+=======
+    if (owner && owner != &o->scheduler_)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     {
       // The operation is being run on the worker io_context. Time to perform
       // the resolver operation.
@@ -80,7 +125,11 @@ public:
           o->query_.hints(), &o->addrinfo_, o->ec_);
 
       // Pass operation back to main io_context for completion.
+<<<<<<< HEAD
       o->io_context_impl_.post_deferred_completion(o);
+=======
+      o->scheduler_.post_deferred_completion(o);
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
       p.v = p.p = 0;
     }
     else
@@ -89,7 +138,11 @@ public:
       // handler is ready to be delivered.
 
       // Take ownership of the operation's outstanding work.
+<<<<<<< HEAD
       handler_work<Handler> w(o->handler_);
+=======
+      handler_work<Handler, IoExecutor> w(o->handler_, o->io_executor_);
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
       BOOST_ASIO_HANDLER_COMPLETION((*o));
 
@@ -122,8 +175,14 @@ public:
 private:
   socket_ops::weak_cancel_token_type cancel_token_;
   query_type query_;
+<<<<<<< HEAD
   io_context_impl& io_context_impl_;
   Handler handler_;
+=======
+  scheduler_impl& scheduler_;
+  Handler handler_;
+  IoExecutor io_executor_;
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
   boost::asio::detail::addrinfo_type* addrinfo_;
 };
 

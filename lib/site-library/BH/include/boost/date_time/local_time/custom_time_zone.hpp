@@ -154,7 +154,10 @@ namespace local_time {
     }
   private:
     time_zone_names zone_names_;
+<<<<<<< HEAD
     bool has_dst_;
+=======
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     time_duration_type base_utc_offset_;
     dst_adjustment_offsets dst_offsets_;
     boost::shared_ptr<dst_calc_rule> dst_calc_rules_;

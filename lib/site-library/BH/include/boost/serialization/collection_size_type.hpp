@@ -22,7 +22,11 @@ private:
     typedef std::size_t base_type;
     base_type t;
 public:
+<<<<<<< HEAD
     collection_size_type(): t(0) {};
+=======
+    collection_size_type(): t(0) {}
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     explicit collection_size_type(const std::size_t & t_) : 
         t(t_)
     {}

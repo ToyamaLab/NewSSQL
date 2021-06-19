@@ -16,12 +16,22 @@ namespace boost{namespace icl
 
 /** \brief Performes an addition using a container's memberfunction add, when operator= is called. */
 template<class ContainerT> class add_iterator
+<<<<<<< HEAD
     : public std::iterator<std::output_iterator_tag, void, void, void, void>
+=======
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 {
 public:
     /// The container's type.
     typedef ContainerT container_type;
     typedef std::output_iterator_tag iterator_category; 
+<<<<<<< HEAD
+=======
+    typedef void value_type;
+    typedef void difference_type;
+    typedef void pointer;
+    typedef void reference;
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
     /** An add_iterator is constructed with a container and a position 
         that has to be maintained. */
@@ -57,12 +67,22 @@ inline add_iterator<ContainerT> adder(ContainerT& cont, IteratorT iter_)
 
 /** \brief Performes an insertion using a container's memberfunction add, when operator= is called. */
 template<class ContainerT> class insert_iterator
+<<<<<<< HEAD
     : public std::iterator<std::output_iterator_tag, void, void, void, void>
+=======
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 {
 public:
     /// The container's type.
     typedef ContainerT container_type;
     typedef std::output_iterator_tag iterator_category; 
+<<<<<<< HEAD
+=======
+    typedef void value_type;
+    typedef void difference_type;
+    typedef void pointer;
+    typedef void reference;
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
     /** An insert_iterator is constructed with a container and a position 
         that has to be maintained. */

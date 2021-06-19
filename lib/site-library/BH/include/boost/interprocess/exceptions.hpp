@@ -60,9 +60,15 @@ class BOOST_SYMBOL_VISIBLE interprocess_exception : public std::exception
       catch(...){}
    }
 
+<<<<<<< HEAD
    virtual ~interprocess_exception() throw(){}
 
    virtual const char * what() const throw()
+=======
+   virtual ~interprocess_exception() BOOST_NOEXCEPT_OR_NOTHROW {}
+
+   virtual const char * what() const BOOST_NOEXCEPT_OR_NOTHROW
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
    {  return m_str.c_str();  }
 
    native_error_t get_native_error()const { return m_err.get_native_error(); }
@@ -86,7 +92,11 @@ class BOOST_SYMBOL_VISIBLE lock_exception : public interprocess_exception
       :  interprocess_exception(lock_error)
    {}
 
+<<<<<<< HEAD
    virtual const char* what() const throw()
+=======
+   virtual const char* what() const BOOST_NOEXCEPT_OR_NOTHROW
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
    {  return "boost::interprocess::lock_exception";  }
 };
 
@@ -97,7 +107,11 @@ class BOOST_SYMBOL_VISIBLE bad_alloc : public interprocess_exception
 {
  public:
    bad_alloc() : interprocess_exception("::boost::interprocess::bad_alloc"){}
+<<<<<<< HEAD
    virtual const char* what() const throw()
+=======
+   virtual const char* what() const BOOST_NOEXCEPT_OR_NOTHROW
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
       {  return "boost::interprocess::bad_alloc";  }
 };
 

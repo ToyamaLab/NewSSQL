@@ -10,10 +10,13 @@ body {
   line-height: 1.35;
 }
 
+<<<<<<< HEAD
 #header {
   text-align: center;
 }
 
+=======
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 #TOC {
   clear: both;
   margin: 0 0 10px 10px;
@@ -201,6 +204,10 @@ code > span.st { color: #d14; } /* String */
 code > span.co { color: #888888; font-style: italic; } /* Comment */
 code > span.ot { color: #007020; } /* OtherToken */
 code > span.al { color: #ff0000; font-weight: bold; } /* AlertToken */
+<<<<<<< HEAD
 code > span.fu { color: #900; font-weight: bold; } /* Function calls */ 
+=======
+code > span.fu { color: #900; font-weight: bold; } /* Function calls */
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 code > span.er { color: #a61717; background-color: #e3d2d2; } /* ErrorTok */
 

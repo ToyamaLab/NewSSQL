@@ -5,8 +5,13 @@
 // Copyright (c) 2009-2014 Mateusz Loskot, London, UK.
 // Copyright (c) 2013-2014 Adam Wulkiewicz, Lodz, Poland.
 
+<<<<<<< HEAD
 // This file was modified by Oracle on 2013-2017.
 // Modifications copyright (c) 2013-2017, Oracle and/or its affiliates.
+=======
+// This file was modified by Oracle on 2013-2018.
+// Modifications copyright (c) 2013-2018, Oracle and/or its affiliates.
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 // Contributed and/or modified by Adam Wulkiewicz, on behalf of Oracle
 // Contributed and/or modified by Menelaos Karavelas, on behalf of Oracle
@@ -23,6 +28,10 @@
 
 #include <cstddef>
 
+<<<<<<< HEAD
+=======
+#include <boost/geometry/core/coordinate_dimension.hpp>
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 #include <boost/geometry/core/tag.hpp>
 #include <boost/geometry/core/tag_cast.hpp>
 #include <boost/geometry/core/tags.hpp>

@@ -40,7 +40,11 @@
 //  See http://www.boost.org/libs/multi_array for documentation.
 
 
+<<<<<<< HEAD
 #include "boost/iterator.hpp"
+=======
+#include <iterator>
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 namespace boost {
 namespace detail {

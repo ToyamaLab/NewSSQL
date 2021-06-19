@@ -132,7 +132,11 @@ x
 ```
 
 ## Removing nodes ##
+<<<<<<< HEAD
 The `xml_remove()` can be used to remove a node (and it's children) from a
+=======
+The `xml_remove()` can be used to remove a node (and its children) from a
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 tree. The default behavior is to unlink the node from the tree, but does _not_
 free the memory for the node, so R objects pointing to the node are still
 valid.
@@ -153,7 +157,11 @@ x2
 If you are not planning on referencing these nodes again this memory is wasted.
 Calling `xml_remove(free = TRUE)` will remove the nodes _and_ free the memory
 used to store them.  **Note** In this case _any_ node which previously pointed
+<<<<<<< HEAD
 to the node or it's children will instead be pointing to free memory and may
+=======
+to the node or its children will instead be pointing to free memory and may
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 cause R to crash. xml2 can't figure this out for you, so it's your
 responsibility to remove any objects which are no longer valid.
 

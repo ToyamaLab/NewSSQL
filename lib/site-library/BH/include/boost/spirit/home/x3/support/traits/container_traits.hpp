@@ -11,10 +11,15 @@
 
 #include <boost/fusion/support/category_of.hpp>
 #include <boost/spirit/home/x3/support/unused.hpp>
+<<<<<<< HEAD
 #include <boost/detail/iterator.hpp>
 #include <boost/fusion/include/deque.hpp>
 #include <boost/tti/has_type.hpp>
 #include <boost/tti/has_member_function.hpp>
+=======
+#include <boost/fusion/include/deque.hpp>
+#include <boost/tti/has_type.hpp>
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 #include <boost/mpl/identity.hpp>
 
 #include <vector>
@@ -35,7 +40,10 @@ namespace boost { namespace spirit { namespace x3 { namespace traits
         BOOST_TTI_HAS_TYPE(size_type)
         BOOST_TTI_HAS_TYPE(reference)
         BOOST_TTI_HAS_TYPE(key_type)
+<<<<<<< HEAD
         BOOST_TTI_HAS_MEMBER_FUNCTION(reserve)
+=======
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     }
 
     template <typename T>
@@ -49,9 +57,18 @@ namespace boost { namespace spirit { namespace x3 { namespace traits
     using is_associative = mpl::bool_<
         detail::has_type_key_type<T>::value>;
 
+<<<<<<< HEAD
     template <typename T>
     using is_reservable = mpl::bool_<
         detail::has_member_function_reserve<T, void, mpl::vector<size_t>>::value>;
+=======
+    template<typename T, typename Enable = void>
+    struct is_reservable : mpl::false_ {};
+
+    template<typename T>
+    struct is_reservable<T, decltype(std::declval<T&>().reserve(0))>
+      : mpl::true_ {};
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
     ///////////////////////////////////////////////////////////////////////////
     namespace detail
@@ -122,7 +139,11 @@ namespace boost { namespace spirit { namespace x3 { namespace traits
         template <typename T>
         static bool call(Container& c, T&& val)
         {
+<<<<<<< HEAD
             c.insert(c.end(), std::move(val));
+=======
+            c.insert(c.end(), static_cast<T&&>(val));
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
             return true;
         }
     };
@@ -130,7 +151,11 @@ namespace boost { namespace spirit { namespace x3 { namespace traits
     template <typename Container, typename T>
     inline bool push_back(Container& c, T&& val)
     {
+<<<<<<< HEAD
         return push_back_container<Container>::call(c, std::move(val));
+=======
+        return push_back_container<Container>::call(c, static_cast<T&&>(val));
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     }
 
     template <typename Container>
@@ -276,7 +301,11 @@ namespace boost { namespace spirit { namespace x3 { namespace traits
     template <typename Iterator, typename Enable = void>
     struct deref_iterator
     {
+<<<<<<< HEAD
         typedef typename boost::detail::iterator_traits<Iterator>::reference type;
+=======
+        typedef typename std::iterator_traits<Iterator>::reference type;
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
         static type call(Iterator& it)
         {
             return *it;

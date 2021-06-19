@@ -10,6 +10,10 @@
 
 #include <boost/spirit/home/x3/support/traits/transform_attribute.hpp>
 #include <boost/spirit/home/x3/support/traits/move_to.hpp>
+<<<<<<< HEAD
+=======
+#include <type_traits>
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 #include <utility>
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -44,6 +48,7 @@ namespace boost { namespace spirit { namespace x3
     struct transform_attribute
       : default_transform_attribute<Exposed, Transformed> {};
 
+<<<<<<< HEAD
     // reference types need special handling
     template <typename Attribute>
     struct transform_attribute<Attribute&, Attribute>
@@ -53,6 +58,8 @@ namespace boost { namespace spirit { namespace x3
         static void post(Attribute&, Attribute const&) {}
     };
 
+=======
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     // unused_type needs some special handling as well
     template <>
     struct transform_attribute<unused_type, unused_type>
@@ -88,6 +95,7 @@ namespace boost { namespace spirit { namespace x3 { namespace traits
 {
     template <typename Exposed, typename Transformed>
     struct transform_attribute<Exposed, Transformed, x3::parser_id>
+<<<<<<< HEAD
       : x3::transform_attribute<Exposed, Transformed> {};
 
     template <typename Exposed, typename Transformed>
@@ -105,6 +113,15 @@ namespace boost { namespace spirit { namespace x3 { namespace traits
         return transform_attribute<Exposed, Transformed, x3::parser_id>
             ::post(dest, std::forward<Transformed>(attr));
     }
+=======
+      : x3::transform_attribute<Exposed, Transformed>
+    {
+        static_assert(!std::is_reference<Exposed>::value,
+            "Exposed cannot be a reference type");
+        static_assert(!std::is_reference<Transformed>::value,
+            "Transformed cannot be a reference type");
+    };
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 }}}}
 
 #endif

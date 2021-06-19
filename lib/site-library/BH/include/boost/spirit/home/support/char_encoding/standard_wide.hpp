@@ -15,6 +15,10 @@
 #include <cwctype>
 #include <string>
 
+<<<<<<< HEAD
+=======
+#include <boost/assert.hpp>
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 #include <boost/cstdint.hpp>
 #include <boost/spirit/home/support/assert_msg.hpp>
 
@@ -42,6 +46,10 @@ namespace boost { namespace spirit { namespace char_encoding
     struct standard_wide
     {
         typedef wchar_t char_type;
+<<<<<<< HEAD
+=======
+        typedef wchar_t classify_type;
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
         template <typename Char>
         static typename std::char_traits<Char>::int_type
@@ -60,6 +68,7 @@ namespace boost { namespace spirit { namespace char_encoding
         static bool
         ischar(int ch)
         {
+<<<<<<< HEAD
             // we have to watch out for sign extensions (casting is there to 
             // silence certain compilers complaining about signed/unsigned
             // mismatch)
@@ -69,88 +78,170 @@ namespace boost { namespace spirit { namespace char_encoding
                 std::size_t(~0) == 
                     std::size_t(ch | traits::wchar_t_size<sizeof(wchar_t)>::mask)
             ) ? true : false;     // any wchar_t, but no other bits set
+=======
+            // we have to watch out for sign extensions (casting is there to
+            // silence certain compilers complaining about signed/unsigned
+            // mismatch)
+            return (
+                std::size_t(0) ==
+                    std::size_t(ch & ~traits::wchar_t_size<sizeof(wchar_t)>::mask) ||
+                std::size_t(~0) ==
+                    std::size_t(ch | traits::wchar_t_size<sizeof(wchar_t)>::mask)
+            ) != 0;     // any wchar_t, but no other bits set
+        }
+
+        // *** Note on assertions: The precondition is that the calls to
+        // these functions do not violate the required range of ch (type int)
+        // which is that strict_ischar(ch) should be true. It is the
+        // responsibility of the caller to make sure this precondition is not
+        // violated.
+
+        static bool
+        strict_ischar(int ch)
+        {
+            // ch should be representable as a wchar_t
+            return ch >= WCHAR_MIN && ch <= WCHAR_MAX;
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
         }
 
         static bool
         isalnum(wchar_t ch)
         {
             using namespace std;
+<<<<<<< HEAD
             return iswalnum(to_int_type(ch)) ? true : false;
+=======
+            BOOST_ASSERT(strict_ischar(ch));
+            return iswalnum(to_int_type(ch)) != 0;
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
         }
 
         static bool
         isalpha(wchar_t ch)
         {
             using namespace std;
+<<<<<<< HEAD
             return iswalpha(to_int_type(ch)) ? true : false;
+=======
+            BOOST_ASSERT(strict_ischar(ch));
+            return iswalpha(to_int_type(ch)) != 0;
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
         }
 
         static bool
         iscntrl(wchar_t ch)
         {
             using namespace std;
+<<<<<<< HEAD
             return iswcntrl(to_int_type(ch)) ? true : false;
+=======
+            BOOST_ASSERT(strict_ischar(ch));
+            return iswcntrl(to_int_type(ch)) != 0;
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
         }
 
         static bool
         isdigit(wchar_t ch)
         {
             using namespace std;
+<<<<<<< HEAD
             return iswdigit(to_int_type(ch)) ? true : false;
+=======
+            BOOST_ASSERT(strict_ischar(ch));
+            return iswdigit(to_int_type(ch)) != 0;
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
         }
 
         static bool
         isgraph(wchar_t ch)
         {
             using namespace std;
+<<<<<<< HEAD
             return iswgraph(to_int_type(ch)) ? true : false;
+=======
+            BOOST_ASSERT(strict_ischar(ch));
+            return iswgraph(to_int_type(ch)) != 0;
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
         }
 
         static bool
         islower(wchar_t ch)
         {
             using namespace std;
+<<<<<<< HEAD
             return iswlower(to_int_type(ch)) ? true : false;
+=======
+            BOOST_ASSERT(strict_ischar(ch));
+            return iswlower(to_int_type(ch)) != 0;
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
         }
 
         static bool
         isprint(wchar_t ch)
         {
             using namespace std;
+<<<<<<< HEAD
             return iswprint(to_int_type(ch)) ? true : false;
+=======
+            return iswprint(to_int_type(ch)) != 0;
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
         }
 
         static bool
         ispunct(wchar_t ch)
         {
             using namespace std;
+<<<<<<< HEAD
             return iswpunct(to_int_type(ch)) ? true : false;
+=======
+            BOOST_ASSERT(strict_ischar(ch));
+            return iswpunct(to_int_type(ch)) != 0;
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
         }
 
         static bool
         isspace(wchar_t ch)
         {
             using namespace std;
+<<<<<<< HEAD
             return iswspace(to_int_type(ch)) ? true : false;
+=======
+            BOOST_ASSERT(strict_ischar(ch));
+            return iswspace(to_int_type(ch)) != 0;
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
         }
 
         static bool
         isupper(wchar_t ch)
         {
             using namespace std;
+<<<<<<< HEAD
             return iswupper(to_int_type(ch)) ? true : false;
+=======
+            BOOST_ASSERT(strict_ischar(ch));
+            return iswupper(to_int_type(ch)) != 0;
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
         }
 
         static bool
         isxdigit(wchar_t ch)
         {
             using namespace std;
+<<<<<<< HEAD
             return iswxdigit(to_int_type(ch)) ? true : false;
+=======
+            BOOST_ASSERT(strict_ischar(ch));
+            return iswxdigit(to_int_type(ch)) != 0;
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
         }
 
         static bool
         isblank BOOST_PREVENT_MACRO_SUBSTITUTION (wchar_t ch)
         {
+<<<<<<< HEAD
+=======
+            BOOST_ASSERT(strict_ischar(ch));
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
             return (ch == L' ' || ch == L'\t');
         }
 
@@ -162,6 +253,10 @@ namespace boost { namespace spirit { namespace char_encoding
         tolower(wchar_t ch)
         {
             using namespace std;
+<<<<<<< HEAD
+=======
+            BOOST_ASSERT(strict_ischar(ch));
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
             return isupper(ch) ?
                 to_char_type<wchar_t>(towlower(to_int_type(ch))) : ch;
         }
@@ -170,6 +265,10 @@ namespace boost { namespace spirit { namespace char_encoding
         toupper(wchar_t ch)
         {
             using namespace std;
+<<<<<<< HEAD
+=======
+            BOOST_ASSERT(strict_ischar(ch));
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
             return islower(ch) ?
                 to_char_type<wchar_t>(towupper(to_int_type(ch))) : ch;
         }
@@ -177,10 +276,17 @@ namespace boost { namespace spirit { namespace char_encoding
         static ::boost::uint32_t
         toucs4(int ch)
         {
+<<<<<<< HEAD
+=======
+            BOOST_ASSERT(strict_ischar(ch));
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
             return ch;
         }
     };
 }}}
 
 #endif
+<<<<<<< HEAD
 
+=======
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce

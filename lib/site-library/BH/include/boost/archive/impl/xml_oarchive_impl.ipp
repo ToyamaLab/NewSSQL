@@ -10,7 +10,10 @@
 #include <iomanip>
 #include <algorithm> // std::copy
 #include <string>
+<<<<<<< HEAD
 #include <exception>
+=======
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 #include <cstring> // strlen
 #include <boost/config.hpp> // msvc 6.0 needs this to suppress warnings
@@ -20,6 +23,10 @@ namespace std{
 } // namespace std
 #endif
 
+<<<<<<< HEAD
+=======
+#include <boost/core/uncaught_exceptions.hpp>
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 #include <boost/archive/iterators/xml_escape.hpp>
 #include <boost/archive/iterators/ostream_iterator.hpp>
 
@@ -132,7 +139,11 @@ xml_oarchive_impl<Archive>::save_binary(const void *address, std::size_t count){
 template<class Archive>
 BOOST_ARCHIVE_DECL
 xml_oarchive_impl<Archive>::~xml_oarchive_impl(){
+<<<<<<< HEAD
     if(std::uncaught_exception())
+=======
+    if(boost::core::uncaught_exceptions() > 0)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
         return;
     if(0 == (this->get_flags() & no_header))
         this->windup();

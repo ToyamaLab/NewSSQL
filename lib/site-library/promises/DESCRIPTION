@@ -1,7 +1,11 @@
 Package: promises
 Type: Package
 Title: Abstractions for Promise-Based Asynchronous Programming
+<<<<<<< HEAD
 Version: 1.0.1
+=======
+Version: 1.1.1
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 Authors@R: c(
       person("Joe", "Cheng", email = "joe@rstudio.com", role = c("aut", "cre")),
       person("RStudio", role = c("cph", "fnd"))
@@ -15,7 +19,11 @@ License: MIT + file LICENSE
 Imports: R6, Rcpp, later, rlang, stats, magrittr
 Suggests: testthat, future, knitr, rmarkdown
 LinkingTo: later, Rcpp
+<<<<<<< HEAD
 RoxygenNote: 6.0.1
+=======
+RoxygenNote: 7.1.0
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 Encoding: UTF-8
 LazyData: true
 VignetteBuilder: knitr
@@ -23,10 +31,19 @@ URL: https://rstudio.github.io/promises,
         https://github.com/rstudio/promises
 BugReports: https://github.com/rstudio/promises/issues
 NeedsCompilation: yes
+<<<<<<< HEAD
 Packaged: 2018-04-12 22:42:12 UTC; jcheng
+=======
+Packaged: 2020-06-09 21:23:18 UTC; winston
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 Author: Joe Cheng [aut, cre],
   RStudio [cph, fnd]
 Maintainer: Joe Cheng <joe@rstudio.com>
 Repository: CRAN
+<<<<<<< HEAD
 Date/Publication: 2018-04-13 08:59:30 UTC
 Built: R 3.5.1; x86_64-apple-darwin17.6.0; 2018-10-01 07:29:36 UTC; unix
+=======
+Date/Publication: 2020-06-09 21:50:02 UTC
+Built: R 4.0.2; x86_64-apple-darwin17.7.0; 2020-08-27 07:55:40 UTC; unix
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce

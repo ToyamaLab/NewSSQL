@@ -5,7 +5,11 @@
 # define BOOST_CONCEPT_USAGE_DWA2006919_HPP
 
 # include <boost/concept/assert.hpp>
+<<<<<<< HEAD
 # include <boost/detail/workaround.hpp>
+=======
+# include <boost/config/workaround.hpp>
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 # include <boost/concept/detail/backward_compatibility.hpp>
 
 namespace boost { namespace concepts { 

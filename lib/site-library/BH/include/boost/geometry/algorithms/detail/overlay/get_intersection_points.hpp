@@ -22,11 +22,18 @@
 
 #include <boost/geometry/algorithms/convert.hpp>
 #include <boost/geometry/algorithms/detail/overlay/get_turns.hpp>
+<<<<<<< HEAD
 
 #include <boost/geometry/geometries/segment.hpp>
 
 #include <boost/geometry/policies/robustness/robust_point_type.hpp>
 
+=======
+#include <boost/geometry/policies/robustness/rescale_policy_tags.hpp>
+
+#include <boost/geometry/geometries/segment.hpp>
+
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 namespace boost { namespace geometry
 {
 
@@ -44,6 +51,7 @@ template
 >
 struct get_turn_without_info
 {
+<<<<<<< HEAD
     template <typename Strategy, typename RobustPolicy, typename OutputIterator>
     static inline OutputIterator apply(
                 Point1 const& pi, Point1 const& pj, Point1 const& /*pk*/,
@@ -55,10 +63,35 @@ struct get_turn_without_info
                 RobustPolicy const& robust_policy,
                 OutputIterator out)
     {
+=======
+    template
+    <
+        typename UniqueSubRange1,
+        typename UniqueSubRange2,
+        typename Strategy,
+        typename RobustPolicy,
+        typename OutputIterator
+    >
+    static inline OutputIterator apply(UniqueSubRange1 const& range_p,
+                UniqueSubRange2 const& range_q,
+                TurnInfo const& ,
+                Strategy const& strategy,
+                RobustPolicy const& ,
+                OutputIterator out)
+    {
+        // Make sure this is only called with no rescaling
+        BOOST_STATIC_ASSERT((boost::is_same
+           <
+               no_rescale_policy_tag,
+               typename rescale_policy_type<RobustPolicy>::type
+           >::value));
+
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
         typedef typename TurnInfo::point_type turn_point_type;
 
         typedef policies::relate::segments_intersection_points
             <
+<<<<<<< HEAD
                 segment_intersection_points
                     <
                         turn_point_type,
@@ -87,6 +120,13 @@ struct get_turn_without_info
         typename policy_type::return_type result
             = strategy.apply(p1, q1, policy_type(), robust_policy,
                              pi_rob, pj_rob, qi_rob, qj_rob);
+=======
+                segment_intersection_points<turn_point_type>
+            > policy_type;
+
+        typename policy_type::return_type const result
+            = strategy.apply(range_p, range_q, policy_type());
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
         for (std::size_t i = 0; i < result.count; i++)
         {

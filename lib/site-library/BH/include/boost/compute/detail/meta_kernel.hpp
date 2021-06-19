@@ -665,7 +665,12 @@ public:
 
     event exec_1d(command_queue &queue,
                   size_t global_work_offset,
+<<<<<<< HEAD
                   size_t global_work_size)
+=======
+                  size_t global_work_size,
+                  const wait_list &events = wait_list())
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     {
         const context &context = queue.get_context();
 
@@ -675,14 +680,24 @@ public:
                    kernel,
                    global_work_offset,
                    global_work_size,
+<<<<<<< HEAD
                    0
+=======
+                   0,
+                   events
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
                );
     }
 
     event exec_1d(command_queue &queue,
                  size_t global_work_offset,
                  size_t global_work_size,
+<<<<<<< HEAD
                  size_t local_work_size)
+=======
+                 size_t local_work_size,
+                 const wait_list &events = wait_list())
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     {
         const context &context = queue.get_context();
 
@@ -692,7 +707,12 @@ public:
                    kernel,
                    global_work_offset,
                    global_work_size,
+<<<<<<< HEAD
                    local_work_size
+=======
+                   local_work_size,
+                   events
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
                );
     }
 

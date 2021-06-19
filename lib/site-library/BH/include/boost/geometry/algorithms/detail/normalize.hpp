@@ -1,6 +1,10 @@
 // Boost.Geometry (aka GGL, Generic Geometry Library)
 
+<<<<<<< HEAD
 // Copyright (c) 2015-2017, Oracle and/or its affiliates.
+=======
+// Copyright (c) 2015-2018, Oracle and/or its affiliates.
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 // Contributed and/or modified by Menelaos Karavelas, on behalf of Oracle
 // Contributed and/or modified by Adam Wulkiewicz, on behalf of Oracle
@@ -11,6 +15,7 @@
 #ifndef BOOST_GEOMETRY_ALGORITHMS_DETAIL_NORMALIZE_HPP
 #define BOOST_GEOMETRY_ALGORITHMS_DETAIL_NORMALIZE_HPP
 
+<<<<<<< HEAD
 #include <cstddef>
 
 #include <boost/numeric/conversion/cast.hpp>
@@ -26,11 +31,17 @@
 #include <boost/geometry/util/normalize_spheroidal_box_coordinates.hpp>
 
 #include <boost/geometry/views/detail/indexed_point_view.hpp>
+=======
+
+// For backward compatibility
+#include <boost/geometry/strategies/normalize.hpp>
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 
 namespace boost { namespace geometry
 {
 
+<<<<<<< HEAD
 #ifndef DOXYGEN_NO_DETAIL
 namespace detail { namespace normalization
 {
@@ -283,12 +294,15 @@ struct normalize
 } // namespace dispatch
 #endif // DOXYGEN_NO_DISPATCH
 
+=======
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 #ifndef DOXYGEN_NO_DETAIL
 namespace detail
 {
 
 
+<<<<<<< HEAD
 template <typename GeometryIn, typename GeometryOut>
 inline void normalize(GeometryIn const& geometry_in, GeometryOut& geometry_out)
 {
@@ -303,6 +317,19 @@ inline GeometryOut return_normalized(GeometryIn const& geometry_in)
 {
     GeometryOut geometry_out;
     detail::normalize(geometry_in, geometry_out);
+=======
+template <typename GeometryIn, typename GeometryOut, typename Strategy>
+inline void normalize(GeometryIn const& geometry_in, GeometryOut& geometry_out, Strategy const& )
+{
+    Strategy::apply(geometry_in, geometry_out);
+}
+
+template <typename GeometryOut, typename GeometryIn, typename Strategy>
+inline GeometryOut return_normalized(GeometryIn const& geometry_in, Strategy const& strategy)
+{
+    GeometryOut geometry_out;
+    detail::normalize(geometry_in, geometry_out, strategy);
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     return geometry_out;
 }
 

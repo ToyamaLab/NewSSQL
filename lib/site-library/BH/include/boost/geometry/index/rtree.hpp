@@ -3,7 +3,15 @@
 // R-tree implementation
 //
 // Copyright (c) 2008 Federico J. Fernandez.
+<<<<<<< HEAD
 // Copyright (c) 2011-2017 Adam Wulkiewicz, Lodz, Poland.
+=======
+// Copyright (c) 2011-2019 Adam Wulkiewicz, Lodz, Poland.
+//
+// This file was modified by Oracle on 2019.
+// Modifications copyright (c) 2019 Oracle and/or its affiliates.
+// Contributed and/or modified by Adam Wulkiewicz, on behalf of Oracle
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 //
 // Use, modification and distribution is subject to the Boost Software License,
 // Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
@@ -16,8 +24,14 @@
 #include <algorithm>
 
 // Boost
+<<<<<<< HEAD
 #include <boost/tuple/tuple.hpp>
 #include <boost/move/move.hpp>
+=======
+#include <boost/container/new_allocator.hpp>
+#include <boost/move/move.hpp>
+#include <boost/tuple/tuple.hpp>
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 // Boost.Geometry
 #include <boost/geometry/algorithms/detail/comparable_distance/interface.hpp>
@@ -149,7 +163,11 @@ template
     typename Parameters,
     typename IndexableGetter = index::indexable<Value>,
     typename EqualTo = index::equal_to<Value>,
+<<<<<<< HEAD
     typename Allocator = std::allocator<Value>
+=======
+    typename Allocator = boost::container::new_allocator<Value>
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 >
 class rtree
 {
@@ -190,6 +208,7 @@ private:
     typedef bounds_type box_type;
     typedef typename detail::rtree::options_type<Parameters>::type options_type;
     typedef typename options_type::node_tag node_tag;
+<<<<<<< HEAD
     typedef detail::rtree::allocators<allocator_type, value_type, typename options_type::parameters_type, box_type, node_tag> allocators_type;
 
     typedef typename detail::rtree::node<value_type, typename options_type::parameters_type, box_type, allocators_type, node_tag>::type node;
@@ -199,6 +218,48 @@ private:
     typedef typename allocators_type::node_pointer node_pointer;
     typedef ::boost::container::allocator_traits<Allocator> allocator_traits_type;
     typedef detail::rtree::subtree_destroyer<value_type, options_type, translator_type, box_type, allocators_type> subtree_destroyer;
+=======
+    typedef detail::rtree::allocators
+        <
+            allocator_type,
+            value_type,
+            typename options_type::parameters_type,
+            box_type,
+            node_tag
+        > allocators_type;
+
+    typedef typename detail::rtree::node
+        <
+            value_type,
+            typename options_type::parameters_type,
+            box_type,
+            allocators_type,
+            node_tag
+        >::type node;
+    typedef typename detail::rtree::internal_node
+        <
+            value_type,
+            typename options_type::parameters_type,
+            box_type,
+            allocators_type,
+            node_tag
+        >::type internal_node;
+    typedef typename detail::rtree::leaf
+        <
+            value_type,
+            typename options_type::parameters_type,
+            box_type,
+            allocators_type,
+            node_tag
+        >::type leaf;
+
+    typedef typename allocators_type::node_pointer node_pointer;
+    typedef ::boost::container::allocator_traits<Allocator> allocator_traits_type;
+    typedef detail::rtree::subtree_destroyer
+        <
+            value_type, options_type, translator_type, box_type, allocators_type
+        > subtree_destroyer;
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
     friend class detail::rtree::utilities::view<rtree>;
 #ifdef BOOST_GEOMETRY_INDEX_DETAIL_EXPERIMENTAL
@@ -1008,9 +1069,15 @@ private:
         >::type iterator_type;
 
         if ( !m_members.root )
+<<<<<<< HEAD
             return iterator_type(m_members.translator(), predicates);
 
         return iterator_type(m_members.root, m_members.translator(), predicates);
+=======
+            return iterator_type(m_members.parameters(), m_members.translator(), predicates);
+
+        return iterator_type(m_members.root, m_members.parameters(), m_members.translator(), predicates);
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     }
 
     /*!
@@ -1068,7 +1135,11 @@ private:
             >
         >::type iterator_type;
 
+<<<<<<< HEAD
         return iterator_type(m_members.translator(), predicates);
+=======
+        return iterator_type(m_members.parameters(), m_members.translator(), predicates);
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     }
 
     /*!
@@ -1267,8 +1338,15 @@ public:
 
         if ( m_members.root )
         {
+<<<<<<< HEAD
             detail::rtree::visitors::children_box<value_type, options_type, translator_type, box_type, allocators_type>
                 box_v(result, m_members.translator());
+=======
+            detail::rtree::visitors::children_box
+                <
+                    value_type, options_type, translator_type, box_type, allocators_type
+                > box_v(result, m_members.parameters(), m_members.translator());
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
             detail::rtree::apply_visitor(box_v, *m_members.root);
         }
 
@@ -1295,6 +1373,7 @@ public:
             return 0;
 
         // the input should be convertible to Value or Indexable type
+<<<<<<< HEAD
 
         enum { as_val = 0, as_ind, dont_know };
         typedef boost::mpl::int_
@@ -1317,10 +1396,23 @@ public:
         typedef typename boost::mpl::if_c
             <
                 variant::value == as_val,
+=======
+        typedef typename index::detail::convertible_type
+            <
+                ValueOrIndexable,
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
                 value_type,
                 indexable_type
             >::type value_or_indexable;
 
+<<<<<<< HEAD
+=======
+        static const bool is_void = boost::is_same<value_or_indexable, void>::value;
+        BOOST_MPL_ASSERT_MSG((! is_void),
+                             PASSED_OBJECT_NOT_CONVERTIBLE_TO_VALUE_NOR_INDEXABLE_TYPE,
+                             (ValueOrIndexable));
+
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
         // NOTE: If an object of convertible but not the same type is passed
         // into the function, here a temporary will be created.
         return this->template raw_count<value_or_indexable>(vori);
@@ -1656,8 +1748,15 @@ private:
     template <typename Predicates, typename OutIter>
     size_type query_dispatch(Predicates const& predicates, OutIter out_it, boost::mpl::bool_<false> const& /*is_distance_predicate*/) const
     {
+<<<<<<< HEAD
         detail::rtree::visitors::spatial_query<value_type, options_type, translator_type, box_type, allocators_type, Predicates, OutIter>
             find_v(m_members.translator(), predicates, out_it);
+=======
+        detail::rtree::visitors::spatial_query
+            <
+                value_type, options_type, translator_type, box_type, allocators_type, Predicates, OutIter
+            >find_v(m_members.parameters(), m_members.translator(), predicates, out_it);
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
         detail::rtree::apply_visitor(find_v, *m_members.root);
 
@@ -1711,7 +1810,11 @@ private:
                 translator_type,
                 box_type,
                 allocators_type
+<<<<<<< HEAD
             > count_v(vori, m_members.translator());
+=======
+            > count_v(vori, m_members.parameters(), m_members.translator());
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
         detail::rtree::apply_visitor(count_v, *m_members.root);
 

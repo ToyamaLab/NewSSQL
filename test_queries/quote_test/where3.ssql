@@ -1,0 +1,4 @@
+Generate HTML
+[e.manager , e.id]!
+from employee e
+where "id" = 1;

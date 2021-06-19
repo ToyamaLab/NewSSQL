@@ -1,4 +1,5 @@
 Package: tidyr
+<<<<<<< HEAD
 Title: Easily Tidy Data with 'spread()' and 'gather()' Functions
 Version: 0.8.1
 Authors@R: c(
@@ -22,10 +23,54 @@ LazyData: true
 RoxygenNote: 6.0.1
 NeedsCompilation: yes
 Packaged: 2018-05-09 14:59:50 UTC; hadley
+=======
+Title: Tidy Messy Data
+Version: 1.1.1
+Authors@R: 
+    c(person(given = "Hadley",
+             family = "Wickham",
+             role = c("aut", "cre"),
+             email = "hadley@rstudio.com"),
+      person(given = "Lionel",
+             family = "Henry",
+             role = "aut",
+             email = "lionel@rstudio.com"),
+      person(given = "RStudio",
+             role = "cph"))
+Description: Tools to help to create tidy data, where each column is a 
+    variable, each row is an observation, and each cell contains a single value.  
+    'tidyr' contains tools for changing the shape (pivoting) and hierarchy
+    (nesting and 'unnesting') of a dataset, turning deeply nested lists
+    into rectangular data frames ('rectangling'), and extracting values out 
+    of string columns. It also includes tools for working with missing values 
+    (both implicit and explicit).
+License: MIT + file LICENSE
+URL: https://tidyr.tidyverse.org, https://github.com/tidyverse/tidyr
+BugReports: https://github.com/tidyverse/tidyr/issues
+Depends: R (>= 3.1)
+Imports: dplyr (>= 0.8.2), ellipsis (>= 0.1.0), glue, magrittr, purrr,
+        rlang, tibble (>= 2.1.1), tidyselect (>= 1.1.0), utils, vctrs
+        (>= 0.3.0), lifecycle
+Suggests: covr, jsonlite, knitr, repurrrsive (>= 1.0.0), rmarkdown,
+        readr, testthat (>= 2.1.0)
+LinkingTo: cpp11
+VignetteBuilder: knitr
+SystemRequirements: C++11
+Encoding: UTF-8
+LazyData: true
+RoxygenNote: 7.1.1
+NeedsCompilation: yes
+Packaged: 2020-07-27 13:44:47 UTC; hadley
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 Author: Hadley Wickham [aut, cre],
   Lionel Henry [aut],
   RStudio [cph]
 Maintainer: Hadley Wickham <hadley@rstudio.com>
 Repository: CRAN
+<<<<<<< HEAD
 Date/Publication: 2018-05-18 11:17:55 UTC
 Built: R 3.5.1; x86_64-apple-darwin17.6.0; 2018-08-21 07:46:37 UTC; unix
+=======
+Date/Publication: 2020-07-31 07:00:02 UTC
+Built: R 4.0.2; x86_64-apple-darwin17.7.0; 2020-08-27 07:52:05 UTC; unix
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce

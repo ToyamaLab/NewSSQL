@@ -82,7 +82,11 @@ public:
     typedef bool result_type;
     typedef basic_cstring<CharT> first_argument_type;
     typedef basic_cstring<CharT> second_argument_type;
+<<<<<<< HEAD
 	
+=======
+
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     bool operator()( basic_cstring<CharT> x, basic_cstring<CharT> y ) const
     {
         return x.size() != y.size()

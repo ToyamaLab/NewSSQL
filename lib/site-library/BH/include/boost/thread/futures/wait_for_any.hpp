@@ -14,6 +14,10 @@
 #include <boost/thread/futures/is_future_type.hpp>
 #include <boost/thread/lock_algorithms.hpp>
 #include <boost/thread/mutex.hpp>
+<<<<<<< HEAD
+=======
+#include <boost/thread/condition_variable.hpp>
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 #include <boost/core/enable_if.hpp>
 #include <boost/next_prior.hpp>

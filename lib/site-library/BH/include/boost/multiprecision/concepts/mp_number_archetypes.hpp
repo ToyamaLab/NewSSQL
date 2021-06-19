@@ -1,7 +1,11 @@
 ///////////////////////////////////////////////////////////////
 //  Copyright 2012 John Maddock. Distributed under the Boost
 //  Software License, Version 1.0. (See accompanying file
+<<<<<<< HEAD
 //  LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_
+=======
+//  LICENSE_1_0.txt or copy at https://www.boost.org/LICENSE_1_0.txt
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 #ifndef BOOST_MATH_CONCEPTS_ER_HPP
 #define BOOST_MATH_CONCEPTS_ER_HPP
@@ -14,6 +18,7 @@
 #include <boost/multiprecision/number.hpp>
 #include <boost/math/special_functions/fpclassify.hpp>
 #include <boost/mpl/list.hpp>
+<<<<<<< HEAD
 
 namespace boost{
 namespace multiprecision{
@@ -22,14 +27,32 @@ namespace concepts{
 #ifdef BOOST_MSVC
 #pragma warning(push)
 #pragma warning(disable:4244)
+=======
+#include <boost/container_hash/hash.hpp>
+
+namespace boost {
+namespace multiprecision {
+namespace concepts {
+
+#ifdef BOOST_MSVC
+#pragma warning(push)
+#pragma warning(disable : 4244)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 #endif
 
 struct number_backend_float_architype
 {
+<<<<<<< HEAD
    typedef mpl::list<boost::long_long_type>                 signed_types;
    typedef mpl::list<boost::ulong_long_type>        unsigned_types;
    typedef mpl::list<long double>               float_types;
    typedef int                                  exponent_type;
+=======
+   typedef mpl::list<boost::long_long_type>  signed_types;
+   typedef mpl::list<boost::ulong_long_type> unsigned_types;
+   typedef mpl::list<long double>            float_types;
+   typedef int                               exponent_type;
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
    number_backend_float_architype()
    {
@@ -41,31 +64,51 @@ struct number_backend_float_architype
       std::cout << "Copy construct" << std::endl;
       m_value = o.m_value;
    }
+<<<<<<< HEAD
    number_backend_float_architype& operator = (const number_backend_float_architype& o)
+=======
+   number_backend_float_architype& operator=(const number_backend_float_architype& o)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
    {
       m_value = o.m_value;
       std::cout << "Assignment (" << m_value << ")" << std::endl;
       return *this;
    }
+<<<<<<< HEAD
    number_backend_float_architype& operator = (boost::ulong_long_type i)
+=======
+   number_backend_float_architype& operator=(boost::ulong_long_type i)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
    {
       m_value = i;
       std::cout << "UInt Assignment (" << i << ")" << std::endl;
       return *this;
    }
+<<<<<<< HEAD
    number_backend_float_architype& operator = (boost::long_long_type i)
+=======
+   number_backend_float_architype& operator=(boost::long_long_type i)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
    {
       m_value = i;
       std::cout << "Int Assignment (" << i << ")" << std::endl;
       return *this;
    }
+<<<<<<< HEAD
    number_backend_float_architype& operator = (long double d)
+=======
+   number_backend_float_architype& operator=(long double d)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
    {
       m_value = d;
       std::cout << "long double Assignment (" << d << ")" << std::endl;
       return *this;
    }
+<<<<<<< HEAD
    number_backend_float_architype& operator = (const char* s)
+=======
+   number_backend_float_architype& operator=(const char* s)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
    {
 #ifndef BOOST_NO_EXCEPTIONS
       try
@@ -74,7 +117,11 @@ struct number_backend_float_architype
          m_value = boost::lexical_cast<long double>(s);
 #ifndef BOOST_NO_EXCEPTIONS
       }
+<<<<<<< HEAD
       catch(const std::exception&)
+=======
+      catch (const std::exception&)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
       {
          BOOST_THROW_EXCEPTION(std::runtime_error(std::string("Unable to parse input string: \"") + s + std::string("\" as a valid floating point number.")));
       }
@@ -87,6 +134,7 @@ struct number_backend_float_architype
       std::cout << "Swapping (" << m_value << " with " << o.m_value << ")" << std::endl;
       std::swap(m_value, o.m_value);
    }
+<<<<<<< HEAD
    std::string str(std::streamsize digits, std::ios_base::fmtflags f)const
    {
       std::stringstream ss;
@@ -100,6 +148,21 @@ struct number_backend_float_architype
       if(!(f & std::ios_base::scientific) && m_value == i)
          ss << i;
       else if(!(f & std::ios_base::scientific) && m_value == u)
+=======
+   std::string str(std::streamsize digits, std::ios_base::fmtflags f) const
+   {
+      std::stringstream ss;
+      ss.flags(f);
+      if (digits)
+         ss.precision(digits);
+      else
+         ss.precision(std::numeric_limits<long double>::digits10 + 3);
+      boost::intmax_t  i = m_value;
+      boost::uintmax_t u = m_value;
+      if (!(f & std::ios_base::scientific) && m_value == i)
+         ss << i;
+      else if (!(f & std::ios_base::scientific) && m_value == u)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
          ss << u;
       else
          ss << m_value;
@@ -112,22 +175,38 @@ struct number_backend_float_architype
       std::cout << "Negating (" << m_value << ")" << std::endl;
       m_value = -m_value;
    }
+<<<<<<< HEAD
    int compare(const number_backend_float_architype& o)const
+=======
+   int compare(const number_backend_float_architype& o) const
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
    {
       std::cout << "Comparison" << std::endl;
       return m_value > o.m_value ? 1 : (m_value < o.m_value ? -1 : 0);
    }
+<<<<<<< HEAD
    int compare(boost::long_long_type i)const
+=======
+   int compare(boost::long_long_type i) const
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
    {
       std::cout << "Comparison with int" << std::endl;
       return m_value > i ? 1 : (m_value < i ? -1 : 0);
    }
+<<<<<<< HEAD
    int compare(boost::ulong_long_type i)const
+=======
+   int compare(boost::ulong_long_type i) const
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
    {
       std::cout << "Comparison with unsigned" << std::endl;
       return m_value > i ? 1 : (m_value < i ? -1 : 0);
    }
+<<<<<<< HEAD
    int compare(long double d)const
+=======
+   int compare(long double d) const
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
    {
       std::cout << "Comparison with long double" << std::endl;
       return m_value > d ? 1 : (m_value < d ? -1 : 0);
@@ -199,6 +278,7 @@ inline int eval_fpclassify(const number_backend_float_architype& arg)
    return (boost::math::fpclassify)(arg.m_value);
 }
 
+<<<<<<< HEAD
 typedef boost::multiprecision::number<number_backend_float_architype> mp_number_float_architype;
 
 } // namespace
@@ -209,15 +289,43 @@ struct number_category<concepts::number_backend_float_architype> : public mpl::i
 }} // namespaces
 
 namespace std{
+=======
+inline std::size_t hash_value(const number_backend_float_architype& v)
+{
+   boost::hash<long double> hasher;
+   return hasher(v.m_value);
+}
+
+typedef boost::multiprecision::number<number_backend_float_architype> mp_number_float_architype;
+
+} // namespace concepts
+
+template <>
+struct number_category<concepts::number_backend_float_architype> : public mpl::int_<number_kind_floating_point>
+{};
+
+}} // namespace boost::multiprecision
+
+namespace std {
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 template <boost::multiprecision::expression_template_option ExpressionTemplates>
 class numeric_limits<boost::multiprecision::number<boost::multiprecision::concepts::number_backend_float_architype, ExpressionTemplates> > : public std::numeric_limits<long double>
 {
+<<<<<<< HEAD
    typedef std::numeric_limits<long double> base_type;
    typedef boost::multiprecision::number<boost::multiprecision::concepts::number_backend_float_architype, ExpressionTemplates> number_type;
 public:
    static number_type (min)() BOOST_NOEXCEPT { return (base_type::min)(); }
    static number_type (max)() BOOST_NOEXCEPT { return (base_type::max)(); }
+=======
+   typedef std::numeric_limits<long double>                                                                                    base_type;
+   typedef boost::multiprecision::number<boost::multiprecision::concepts::number_backend_float_architype, ExpressionTemplates> number_type;
+
+ public:
+   static number_type(min)() BOOST_NOEXCEPT { return (base_type::min)(); }
+   static number_type(max)() BOOST_NOEXCEPT { return (base_type::max)(); }
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
    static number_type lowest() BOOST_NOEXCEPT { return -(max)(); }
    static number_type epsilon() BOOST_NOEXCEPT { return base_type::epsilon(); }
    static number_type round_error() BOOST_NOEXCEPT { return base_type::round_error(); }
@@ -227,7 +335,11 @@ public:
    static number_type denorm_min() BOOST_NOEXCEPT { return base_type::denorm_min(); }
 };
 
+<<<<<<< HEAD
 }
+=======
+} // namespace std
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 #ifdef BOOST_MSVC
 #pragma warning(pop)

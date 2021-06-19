@@ -18,6 +18,10 @@
 #include <boost/container/detail/config_begin.hpp>
 #include <boost/container/detail/workaround.hpp>
 #include <boost/container/detail/auto_link.hpp>
+<<<<<<< HEAD
+=======
+#include <boost/container/container_fwd.hpp>
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 #include <boost/container/pmr/memory_resource.hpp>
 #include <boost/container/detail/block_slist.hpp>
 
@@ -51,9 +55,17 @@ class BOOST_CONTAINER_DECL monotonic_buffer_resource
    : public memory_resource
 {
    block_slist       m_memory_blocks;
+<<<<<<< HEAD
    void*             m_current_buffer;
    std::size_t       m_current_buffer_size;
    std::size_t       m_next_buffer_size;
+=======
+   void *            m_current_buffer;
+   std::size_t       m_current_buffer_size;
+   std::size_t       m_next_buffer_size;
+   void * const      m_initial_buffer;
+   std::size_t const m_initial_buffer_size;
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
    /// @cond
    void increase_next_buffer();
@@ -131,7 +143,11 @@ class BOOST_CONTAINER_DECL monotonic_buffer_resource
    std::size_t remaining_storage(std::size_t alignment = 1u) const BOOST_NOEXCEPT;
 
    //! <b>Returns</b>:
+<<<<<<< HEAD
    //!   The number of bytes of storage available for the specified alignment.
+=======
+   //!   The address pointing to the start of the current free storage.
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
    //!
    //! <b>Note</b>: Non-standard extension.
    const void *current_buffer() const BOOST_NOEXCEPT;

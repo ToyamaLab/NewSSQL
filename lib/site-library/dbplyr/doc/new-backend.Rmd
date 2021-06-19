@@ -22,7 +22,11 @@ This document describes how to add a new SQL backend to dbplyr. To begin:
   [familiar with the basics](http://adv-r.had.co.nz/OO-essentials.html#s3) 
   before you start.
  
+<<<<<<< HEAD
 This document is still a work in progress, but it will hopefully get you started. I'd also strongly recommend reading the bundled source code for [SQLite](https://github.com/tidyverse/dbplyr/blob/master/R/db-sqlite.r), [MySQL](https://github.com/tidyverse/dbplyr/blob/master/R/db-mysql.r), and [PostgreSQL](https://github.com/tidyverse/dbplyr/blob/master/R/db-postgres.r).
+=======
+This document is still a work in progress, but it will hopefully get you started. I'd also strongly recommend reading the bundled source code for [SQLite](https://github.com/tidyverse/dbplyr/blob/master/R/backend-sqlite.R), [MySQL](https://github.com/tidyverse/dbplyr/blob/master/R/backend-mysql.R), and [PostgreSQL](https://github.com/tidyverse/dbplyr/blob/master/R/backend-postgres.R).
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 ## First steps
 
@@ -72,7 +76,11 @@ Next, check that `copy_to()`, `collapse()`, `compute()`, and `collect()` work.
 
 ## SQL translation
 
+<<<<<<< HEAD
 Make sure you've read `vignette("sql-translation")` so you have the lay of the land. 
+=======
+Make sure you've read `vignette("translation-verb")` so you have the lay of the land. 
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 ### Verbs
 
@@ -85,5 +93,9 @@ Check that SQL translation for the key verbs work:
 
 ### Vectors
 
+<<<<<<< HEAD
 Finally, you may have to provide custom R -> SQL translation at the vector level by providing a method for `src_translate_env()`. This function should return an object created by `sql_variant()`. See existing methods for examples.
+=======
+Finally, you may have to provide custom R -> SQL translation at the vector level by providing a method for `sql_translate_env()`. This function should return an object created by `sql_variant()`. See existing methods for examples.
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 

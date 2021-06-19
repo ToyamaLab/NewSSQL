@@ -38,10 +38,17 @@ struct no_actions_action_policy:
     template<typename ActorT, typename AttrT, typename IteratorT>
     void
     do_action(
+<<<<<<< HEAD
         ActorT const&       actor,
         AttrT&              val,
         IteratorT const&    first,
         IteratorT const&    last) const
+=======
+        ActorT const&       /*actor*/,
+        AttrT&              /*val*/,
+        IteratorT const&    /*first*/,
+        IteratorT const&    /*last*/) const
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     {}
 };
 

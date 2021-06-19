@@ -2,7 +2,11 @@
 // local/connect_pair.hpp
 // ~~~~~~~~~~~~~~~~~~~~~~
 //
+<<<<<<< HEAD
 // Copyright (c) 2003-2017 Christopher M. Kohlhoff (chris at kohlhoff dot com)
+=======
+// Copyright (c) 2003-2019 Christopher M. Kohlhoff (chris at kohlhoff dot com)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 //
 // Distributed under the Boost Software License, Version 1.0. (See accompanying
 // file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
@@ -33,6 +37,7 @@ namespace asio {
 namespace local {
 
 /// Create a pair of connected sockets.
+<<<<<<< HEAD
 template <typename Protocol BOOST_ASIO_SVC_TPARAM BOOST_ASIO_SVC_TPARAM1>
 void connect_pair(
     basic_socket<Protocol BOOST_ASIO_SVC_TARG>& socket1,
@@ -49,17 +54,38 @@ template <typename Protocol BOOST_ASIO_SVC_TPARAM BOOST_ASIO_SVC_TPARAM1>
 inline void connect_pair(
     basic_socket<Protocol BOOST_ASIO_SVC_TARG>& socket1,
     basic_socket<Protocol BOOST_ASIO_SVC_TARG1>& socket2)
+=======
+template <typename Protocol, typename Executor1, typename Executor2>
+void connect_pair(basic_socket<Protocol, Executor1>& socket1,
+    basic_socket<Protocol, Executor2>& socket2);
+
+/// Create a pair of connected sockets.
+template <typename Protocol, typename Executor1, typename Executor2>
+BOOST_ASIO_SYNC_OP_VOID connect_pair(basic_socket<Protocol, Executor1>& socket1,
+    basic_socket<Protocol, Executor2>& socket2, boost::system::error_code& ec);
+
+template <typename Protocol, typename Executor1, typename Executor2>
+inline void connect_pair(basic_socket<Protocol, Executor1>& socket1,
+    basic_socket<Protocol, Executor2>& socket2)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 {
   boost::system::error_code ec;
   connect_pair(socket1, socket2, ec);
   boost::asio::detail::throw_error(ec, "connect_pair");
 }
 
+<<<<<<< HEAD
 template <typename Protocol BOOST_ASIO_SVC_TPARAM BOOST_ASIO_SVC_TPARAM1>
 inline BOOST_ASIO_SYNC_OP_VOID connect_pair(
     basic_socket<Protocol BOOST_ASIO_SVC_TARG>& socket1,
     basic_socket<Protocol BOOST_ASIO_SVC_TARG1>& socket2,
     boost::system::error_code& ec)
+=======
+template <typename Protocol, typename Executor1, typename Executor2>
+inline BOOST_ASIO_SYNC_OP_VOID connect_pair(
+    basic_socket<Protocol, Executor1>& socket1,
+    basic_socket<Protocol, Executor2>& socket2, boost::system::error_code& ec)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 {
   // Check that this function is only being used with a UNIX domain socket.
   boost::asio::local::basic_endpoint<Protocol>* tmp

@@ -248,8 +248,16 @@ namespace impl
         ///////////////////////////////////////////////////////////////////////////////
         //
         struct indirect_cmp
+<<<<<<< HEAD
           : std::binary_function<std::size_t, std::size_t, bool>
         {
+=======
+        {
+            typedef std::size_t first_argument_type;
+            typedef std::size_t second_argument_type;
+            typedef bool result_type;
+
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
             indirect_cmp(std::vector<Sample> const &s)
               : samples(s)
             {
@@ -265,6 +273,20 @@ namespace impl
             std::vector<Sample> const &samples;
         };
 
+<<<<<<< HEAD
+=======
+    public:
+        // make this accumulator serializeable
+        template<class Archive>
+        void serialize(Archive & ar, const unsigned int file_version)
+        { 
+            ar & is_sorted;
+            ar & indices;
+            ar & samples;
+        }
+
+    private:
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
         mutable bool is_sorted;
         mutable std::vector<std::size_t> indices;
         std::vector<Sample> samples;

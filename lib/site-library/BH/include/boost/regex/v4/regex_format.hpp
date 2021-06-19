@@ -800,9 +800,12 @@ void basic_regex_formatter<OutputIterator, Results, traits, ForwardIter>::put(co
 
 template <class S>
 class string_out_iterator
+<<<<<<< HEAD
 #ifndef BOOST_NO_STD_ITERATOR
    : public std::iterator<std::output_iterator_tag, typename S::value_type>
 #endif
+=======
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 {
    S* out;
 public:
@@ -816,13 +819,19 @@ public:
       return *this; 
    }
 
+<<<<<<< HEAD
 #ifdef BOOST_NO_STD_ITERATOR
+=======
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
    typedef std::ptrdiff_t difference_type;
    typedef typename S::value_type value_type;
    typedef value_type* pointer;
    typedef value_type& reference;
    typedef std::output_iterator_tag iterator_category;
+<<<<<<< HEAD
 #endif
+=======
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 };
 
 template <class OutputIterator, class Iterator, class Alloc, class ForwardIter, class traits>

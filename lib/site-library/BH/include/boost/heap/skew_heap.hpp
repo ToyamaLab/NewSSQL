@@ -20,6 +20,10 @@
 #include <boost/heap/detail/heap_node.hpp>
 #include <boost/heap/detail/stable_heap.hpp>
 #include <boost/heap/detail/tree_iterator.hpp>
+<<<<<<< HEAD
+=======
+#include <boost/type_traits/integral_constant.hpp>
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 #ifdef BOOST_HAS_PRAGMA_ONCE
 #pragma once
@@ -178,7 +182,11 @@ struct make_skew_heap_base
 {
     static const bool constant_time_size = parameter::binding<BoundArgs,
                                                               tag::constant_time_size,
+<<<<<<< HEAD
                                                               boost::mpl::true_
+=======
+                                                              boost::true_type
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
                                                              >::type::value;
 
     typedef typename make_heap_base<T, BoundArgs, constant_time_size>::type base_type;
@@ -188,11 +196,23 @@ struct make_skew_heap_base
     static const bool is_mutable = extract_mutable<BoundArgs>::value;
     static const bool store_parent_pointer = parameter::binding<BoundArgs,
                                                               tag::store_parent_pointer,
+<<<<<<< HEAD
                                                               boost::mpl::false_>::type::value || is_mutable;
 
     typedef skew_heap_node<typename base_type::internal_type, store_parent_pointer> node_type;
 
     typedef typename allocator_argument::template rebind<node_type>::other allocator_type;
+=======
+                                                              boost::false_type>::type::value || is_mutable;
+
+    typedef skew_heap_node<typename base_type::internal_type, store_parent_pointer> node_type;
+
+#ifdef BOOST_NO_CXX11_ALLOCATOR
+    typedef typename allocator_argument::template rebind<node_type>::other allocator_type;
+#else
+    typedef typename std::allocator_traits<allocator_argument>::template rebind_alloc<node_type> allocator_type;
+#endif
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
     struct type:
         base_type,
@@ -290,15 +310,30 @@ class skew_heap:
         typedef typename base_maker::allocator_type allocator_type;
 
         typedef typename base_maker::node_type node;
+<<<<<<< HEAD
         typedef typename allocator_type::pointer node_pointer;
         typedef typename allocator_type::const_pointer const_node_pointer;
+=======
+#ifdef BOOST_NO_CXX11_ALLOCATOR
+        typedef typename allocator_type::pointer node_pointer;
+        typedef typename allocator_type::const_pointer const_node_pointer;
+#else
+        typedef std::allocator_traits<allocator_type> allocator_traits;
+        typedef typename allocator_traits::pointer node_pointer;
+        typedef typename allocator_traits::const_pointer const_node_pointer;
+#endif
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
         typedef detail::value_extractor<value_type, internal_type, super_t> value_extractor;
 
         typedef boost::array<node_pointer, 2> child_list_type;
         typedef typename child_list_type::iterator child_list_iterator;
 
+<<<<<<< HEAD
         typedef typename boost::mpl::if_c<false,
+=======
+        typedef typename boost::conditional<false,
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
                                         detail::recursive_tree_iterator<node,
                                                                         child_list_iterator,
                                                                         const value_type,
@@ -345,6 +380,12 @@ public:
     typedef typename implementation_defined::difference_type difference_type;
     typedef typename implementation_defined::value_compare value_compare;
     typedef typename implementation_defined::allocator_type allocator_type;
+<<<<<<< HEAD
+=======
+#ifndef BOOST_NO_CXX11_ALLOCATOR
+    typedef typename implementation_defined::allocator_traits allocator_traits;
+#endif
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     typedef typename implementation_defined::reference reference;
     typedef typename implementation_defined::const_reference const_reference;
     typedef typename implementation_defined::pointer pointer;
@@ -362,7 +403,11 @@ public:
     static const bool has_reserve = false;
     static const bool is_mutable = detail::extract_mutable<bound_args>::value;
 
+<<<<<<< HEAD
     typedef typename mpl::if_c<is_mutable, typename implementation_defined::handle_type, void*>::type handle_type;
+=======
+    typedef typename boost::conditional<is_mutable, typename implementation_defined::handle_type, void*>::type handle_type;
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
     /// \copydoc boost::heap::priority_queue::priority_queue(value_compare const &)
     explicit skew_heap(value_compare const & cmp = value_compare()):
@@ -420,9 +465,15 @@ public:
      * \b Complexity: Logarithmic (amortized).
      *
      * */
+<<<<<<< HEAD
     typename mpl::if_c<is_mutable, handle_type, void>::type push(value_type const & v)
     {
         typedef typename mpl::if_c<is_mutable, push_handle, push_void>::type push_helper;
+=======
+    typename boost::conditional<is_mutable, handle_type, void>::type push(value_type const & v)
+    {
+        typedef typename boost::conditional<is_mutable, push_handle, push_void>::type push_helper;
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
         return push_helper::push(this, v);
     }
 
@@ -434,9 +485,15 @@ public:
      *
      * */
     template <typename... Args>
+<<<<<<< HEAD
     typename mpl::if_c<is_mutable, handle_type, void>::type emplace(Args&&... args)
     {
         typedef typename mpl::if_c<is_mutable, push_handle, push_void>::type push_helper;
+=======
+    typename boost::conditional<is_mutable, handle_type, void>::type emplace(Args&&... args)
+    {
+        typedef typename boost::conditional<is_mutable, push_handle, push_void>::type push_helper;
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
         return push_helper::emplace(this, std::forward<Args>(args)...);
     }
 #endif
@@ -462,7 +519,16 @@ public:
     /// \copydoc boost::heap::priority_queue::max_size
     size_type max_size(void) const
     {
+<<<<<<< HEAD
         return allocator_type::max_size();
+=======
+#ifdef BOOST_NO_CXX11_ALLOCATOR
+        return allocator_type::max_size();
+#else
+        const allocator_type& alloc = *this;
+        return allocator_traits::max_size(alloc);
+#endif
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     }
 
     /// \copydoc boost::heap::priority_queue::clear
@@ -472,9 +538,20 @@ public:
             return;
 
         root->template clear_subtree<allocator_type>(*this);
+<<<<<<< HEAD
         root->~node();
         allocator_type::deallocate(root, 1);
 
+=======
+#ifdef BOOST_NO_CXX11_ALLOCATOR
+        root->~node();
+        allocator_type::deallocate(root, 1);
+#else
+        allocator_type& alloc = *this;
+        allocator_traits::destroy(alloc, root);
+        allocator_traits::deallocate(alloc, root, 1);
+#endif
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
         root = NULL;
         size_holder::set_size(0);
     }
@@ -521,7 +598,18 @@ public:
             BOOST_HEAP_ASSERT(size_holder::get_size() == 0);
 
         top->~node();
+<<<<<<< HEAD
         allocator_type::deallocate(top, 1);
+=======
+#ifdef BOOST_NO_CXX11_ALLOCATOR
+        top->~node();
+        allocator_type::deallocate(top, 1);
+#else
+        allocator_type& alloc = *this;
+        allocator_traits::destroy(alloc, top);
+        allocator_traits::deallocate(alloc, top, 1);
+#endif
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
         sanity_check();
     }
 
@@ -642,8 +730,19 @@ public:
         size_holder::decrement();
 
         sanity_check();
+<<<<<<< HEAD
         this_node->~node();
         allocator_type::deallocate(this_node, 1);
+=======
+#ifdef BOOST_NO_CXX11_ALLOCATOR
+        this_node->~node();
+        allocator_type::deallocate(this_node, 1);
+#else
+        allocator_type& alloc = *this;
+        allocator_traits::destroy(alloc, this_node);
+        allocator_traits::deallocate(alloc, this_node, 1);
+#endif
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     }
 
     /**
@@ -794,9 +893,20 @@ private:
     {
         size_holder::increment();
 
+<<<<<<< HEAD
         node_pointer n = super_t::allocate(1);
         new(n) node(super_t::make_node(v));
 
+=======
+#ifdef BOOST_NO_CXX11_ALLOCATOR
+        node_pointer n = allocator_type::allocate(1);
+        new(n) node(super_t::make_node(v));
+#else
+        allocator_type& alloc = *this;
+        node_pointer n = allocator_traits::allocate(alloc, 1);
+        allocator_traits::construct(alloc, n, super_t::make_node(v));
+#endif
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
         merge_node(n);
         return n;
     }
@@ -807,9 +917,20 @@ private:
     {
         size_holder::increment();
 
+<<<<<<< HEAD
         node_pointer n = super_t::allocate(1);
         new(n) node(super_t::make_node(std::forward<Args>(args)...));
 
+=======
+#ifdef BOOST_NO_CXX11_ALLOCATOR
+        node_pointer n = allocator_type::allocate(1);
+        new(n) node(super_t::make_node(std::forward<Args>(args)...));
+#else
+        allocator_type& alloc = *this;
+        node_pointer n = allocator_traits::allocate(alloc, 1);
+        allocator_traits::construct(alloc, n, super_t::make_node(std::forward<Args>(args)...));
+#endif
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
         merge_node(n);
         return n;
     }
@@ -836,9 +957,20 @@ private:
         if (rhs.empty())
             return;
 
+<<<<<<< HEAD
         root = allocator_type::allocate(1);
 
         new(root) node(*rhs.root, static_cast<allocator_type&>(*this), NULL);
+=======
+        allocator_type& alloc = *this;
+#ifdef BOOST_NO_CXX11_ALLOCATOR
+        root = allocator_type::allocate(1);
+        new(root) node(*rhs.root, alloc, NULL);
+#else
+        root = allocator_traits::allocate(alloc, 1);
+        allocator_traits::construct(alloc, root, *rhs.root, alloc, nullptr);
+#endif
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     }
 
     void merge_node(node_pointer other)

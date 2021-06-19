@@ -1,11 +1,19 @@
+<<<<<<< HEAD
 ## ----setup, include = FALSE----------------------------------------------
+=======
+## ----setup, include = FALSE---------------------------------------------------
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 knitr::opts_chunk$set(
   collapse = TRUE, comment = "#>",
   eval = as.logical(Sys.getenv("EVAL_VIGNETTES", "FALSE")),
   cache = FALSE)
 library(glue)
 
+<<<<<<< HEAD
 ## ----setup2, include = FALSE---------------------------------------------
+=======
+## ----setup2, include = FALSE--------------------------------------------------
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 #  plot_comparison <- function(x, ...) {
 #    library(ggplot2)
 #    library(microbenchmark)
@@ -16,7 +24,11 @@ library(glue)
 #        aes(fill = expr) + scale_fill_manual(values = colors, guide = FALSE)
 #  }
 
+<<<<<<< HEAD
 ## ---- message = FALSE----------------------------------------------------
+=======
+## ---- message = FALSE---------------------------------------------------------
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 #  bar <- "baz"
 #  
 #  simple <-
@@ -33,7 +45,11 @@ library(glue)
 #  
 #  plot_comparison(simple)
 
+<<<<<<< HEAD
 ## ---- message = FALSE----------------------------------------------------
+=======
+## ---- message = FALSE---------------------------------------------------------
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 #  bar <- rep("bar", 1e5)
 #  
 #  vectorized <-

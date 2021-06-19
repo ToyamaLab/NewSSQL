@@ -37,6 +37,10 @@
 #include <stdexcept>
 #include <iostream>
 #include <iomanip>
+<<<<<<< HEAD
+=======
+#include <iterator>
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 #include <set>
 
 #include <boost/test/detail/suppress_warnings.hpp>
@@ -174,18 +178,44 @@ private:
     std::set<std::string>   m_labels;
 };
 
+<<<<<<< HEAD
+=======
+struct framework_shutdown_helper {
+    ~framework_shutdown_helper() {
+        try {
+            framework::shutdown();
+        }
+        catch(...) {
+            std::cerr << "Boost.Test shutdown exception caught" << std::endl;
+        }
+    }
+};
+
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 } // namespace ut_detail
 
 // ************************************************************************** //
 // **************                  unit_test_main              ************** //
 // ************************************************************************** //
 
+<<<<<<< HEAD
+=======
+
+
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 int BOOST_TEST_DECL
 unit_test_main( init_unit_test_func init_func, int argc, char* argv[] )
 {
     int result_code = 0;
 
+<<<<<<< HEAD
     BOOST_TEST_I_TRY {
+=======
+    ut_detail::framework_shutdown_helper shutdown_helper;
+
+    BOOST_TEST_I_TRY {
+        
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
         framework::init( init_func, argc, argv );
 
         if( runtime_config::get<bool>( runtime_config::btrt_wait_for_debugger ) ) {
@@ -230,8 +260,11 @@ unit_test_main( init_unit_test_func init_func, int argc, char* argv[] )
 
         framework::run();
 
+<<<<<<< HEAD
         results_reporter::make_report();
 
+=======
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
         result_code = !runtime_config::get<bool>( runtime_config::btrt_result_code )
                         ? boost::exit_success
                         : results_collector.results( framework::master_test_suite().p_id ).result_code();
@@ -249,14 +282,25 @@ unit_test_main( init_unit_test_func init_func, int argc, char* argv[] )
 
         result_code = boost::exit_exception_failure;
     }
+<<<<<<< HEAD
+=======
+    BOOST_TEST_I_CATCH( std::logic_error, ex ) {
+        results_reporter::get_stream() << "Test setup error: " << ex.what() << std::endl;
+
+        result_code = boost::exit_exception_failure;
+    }
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     BOOST_TEST_I_CATCHALL() {
         results_reporter::get_stream() << "Boost.Test framework internal error: unknown reason" << std::endl;
 
         result_code = boost::exit_exception_failure;
     }
 
+<<<<<<< HEAD
     framework::shutdown();
 
+=======
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     return result_code;
 }
 

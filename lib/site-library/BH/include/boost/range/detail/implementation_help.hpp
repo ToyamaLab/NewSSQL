@@ -60,13 +60,21 @@ namespace boost
         }
 
         template< class T, std::size_t sz >
+<<<<<<< HEAD
         inline T* array_end( T BOOST_RANGE_ARRAY_REF()[sz] )
+=======
+        BOOST_CONSTEXPR inline T* array_end( T BOOST_RANGE_ARRAY_REF()[sz] ) BOOST_NOEXCEPT
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
         {
             return boost_range_array + sz;
         }
 
         template< class T, std::size_t sz >
+<<<<<<< HEAD
         inline const T* array_end( const T BOOST_RANGE_ARRAY_REF()[sz] )
+=======
+        BOOST_CONSTEXPR inline const T* array_end( const T BOOST_RANGE_ARRAY_REF()[sz] ) BOOST_NOEXCEPT
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
         {
             return boost_range_array + sz;
         }

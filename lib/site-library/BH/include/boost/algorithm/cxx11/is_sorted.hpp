@@ -16,6 +16,10 @@
 #include <functional>
 #include <iterator>
 
+<<<<<<< HEAD
+=======
+#include <boost/config.hpp>
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 #include <boost/range/begin.hpp>
 #include <boost/range/end.hpp>
 
@@ -34,7 +38,11 @@ namespace boost { namespace algorithm {
 /// \param p     A binary predicate that returns true if two elements are ordered.
 ///
     template <typename ForwardIterator, typename Pred>
+<<<<<<< HEAD
     ForwardIterator is_sorted_until ( ForwardIterator first, ForwardIterator last, Pred p )
+=======
+    BOOST_CXX14_CONSTEXPR ForwardIterator is_sorted_until ( ForwardIterator first, ForwardIterator last, Pred p )
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     {
         if ( first == last ) return last;  // the empty sequence is ordered
         ForwardIterator next = first;
@@ -54,7 +62,11 @@ namespace boost { namespace algorithm {
 /// \param last  One past the end of the sequence
 ///
     template <typename ForwardIterator>
+<<<<<<< HEAD
     ForwardIterator is_sorted_until ( ForwardIterator first, ForwardIterator last )
+=======
+    BOOST_CXX14_CONSTEXPR ForwardIterator is_sorted_until ( ForwardIterator first, ForwardIterator last )
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     {
         typedef typename std::iterator_traits<ForwardIterator>::value_type value_type;
         return boost::algorithm::is_sorted_until ( first, last, std::less<value_type>());
@@ -69,7 +81,11 @@ namespace boost { namespace algorithm {
 /// \param p     A binary predicate that returns true if two elements are ordered.
 ///
     template <typename ForwardIterator, typename Pred>
+<<<<<<< HEAD
     bool is_sorted ( ForwardIterator first, ForwardIterator last, Pred p )
+=======
+    BOOST_CXX14_CONSTEXPR bool is_sorted ( ForwardIterator first, ForwardIterator last, Pred p )
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     {
         return boost::algorithm::is_sorted_until (first, last, p) == last;
     }
@@ -81,7 +97,11 @@ namespace boost { namespace algorithm {
 /// \param last  One past the end of the sequence
 ///
     template <typename ForwardIterator>
+<<<<<<< HEAD
     bool is_sorted ( ForwardIterator first, ForwardIterator last )
+=======
+    BOOST_CXX14_CONSTEXPR bool is_sorted ( ForwardIterator first, ForwardIterator last )
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     {
         return boost::algorithm::is_sorted_until (first, last) == last;
     }
@@ -98,7 +118,11 @@ namespace boost { namespace algorithm {
 /// \param p     A binary predicate that returns true if two elements are ordered.
 ///
     template <typename R, typename Pred>
+<<<<<<< HEAD
     typename boost::lazy_disable_if_c<
+=======
+    BOOST_CXX14_CONSTEXPR typename boost::lazy_disable_if_c<
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
         boost::is_same<R, Pred>::value, 
         typename boost::range_iterator<const R> 
     >::type is_sorted_until ( const R &range, Pred p )
@@ -113,7 +137,11 @@ namespace boost { namespace algorithm {
 /// \param range The range to be tested.
 ///
     template <typename R>
+<<<<<<< HEAD
     typename boost::range_iterator<const R>::type is_sorted_until ( const R &range )
+=======
+    BOOST_CXX14_CONSTEXPR typename boost::range_iterator<const R>::type is_sorted_until ( const R &range )
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     {
         return boost::algorithm::is_sorted_until ( boost::begin ( range ), boost::end ( range ));
     }
@@ -126,7 +154,11 @@ namespace boost { namespace algorithm {
 /// \param p     A binary predicate that returns true if two elements are ordered.
 ///
     template <typename R, typename Pred>
+<<<<<<< HEAD
     typename boost::lazy_disable_if_c< boost::is_same<R, Pred>::value, boost::mpl::identity<bool> >::type
+=======
+    BOOST_CXX14_CONSTEXPR typename boost::lazy_disable_if_c< boost::is_same<R, Pred>::value, boost::mpl::identity<bool> >::type
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     is_sorted ( const R &range, Pred p )
     {
         return boost::algorithm::is_sorted ( boost::begin ( range ), boost::end ( range ), p );
@@ -139,7 +171,11 @@ namespace boost { namespace algorithm {
 /// \param range The range to be tested.
 ///
     template <typename R>
+<<<<<<< HEAD
     bool is_sorted ( const R &range )
+=======
+    BOOST_CXX14_CONSTEXPR bool is_sorted ( const R &range )
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     {
         return boost::algorithm::is_sorted ( boost::begin ( range ), boost::end ( range ));
     }
@@ -159,7 +195,11 @@ namespace boost { namespace algorithm {
 /// \note This function will return true for sequences that contain items that compare
 ///     equal. If that is not what you intended, you should use is_strictly_increasing instead.
     template <typename ForwardIterator>
+<<<<<<< HEAD
     bool is_increasing ( ForwardIterator first, ForwardIterator last )
+=======
+    BOOST_CXX14_CONSTEXPR bool is_increasing ( ForwardIterator first, ForwardIterator last )
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     {
         typedef typename std::iterator_traits<ForwardIterator>::value_type value_type;
         return boost::algorithm::is_sorted (first, last, std::less<value_type>());
@@ -175,7 +215,11 @@ namespace boost { namespace algorithm {
 /// \note This function will return true for sequences that contain items that compare
 ///     equal. If that is not what you intended, you should use is_strictly_increasing instead.
     template <typename R>
+<<<<<<< HEAD
     bool is_increasing ( const R &range )
+=======
+    BOOST_CXX14_CONSTEXPR bool is_increasing ( const R &range )
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     {
         return is_increasing ( boost::begin ( range ), boost::end ( range ));
     }
@@ -192,7 +236,11 @@ namespace boost { namespace algorithm {
 /// \note This function will return true for sequences that contain items that compare
 ///     equal. If that is not what you intended, you should use is_strictly_decreasing instead.
     template <typename ForwardIterator>
+<<<<<<< HEAD
     bool is_decreasing ( ForwardIterator first, ForwardIterator last )
+=======
+    BOOST_CXX14_CONSTEXPR bool is_decreasing ( ForwardIterator first, ForwardIterator last )
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     {
         typedef typename std::iterator_traits<ForwardIterator>::value_type value_type;
         return boost::algorithm::is_sorted (first, last, std::greater<value_type>());
@@ -207,7 +255,11 @@ namespace boost { namespace algorithm {
 /// \note This function will return true for sequences that contain items that compare
 ///     equal. If that is not what you intended, you should use is_strictly_decreasing instead.
     template <typename R>
+<<<<<<< HEAD
     bool is_decreasing ( const R &range )
+=======
+    BOOST_CXX14_CONSTEXPR bool is_decreasing ( const R &range )
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     {
         return is_decreasing ( boost::begin ( range ), boost::end ( range ));
     }
@@ -224,7 +276,11 @@ namespace boost { namespace algorithm {
 /// \note This function will return false for sequences that contain items that compare
 ///     equal. If that is not what you intended, you should use is_increasing instead.
     template <typename ForwardIterator>
+<<<<<<< HEAD
     bool is_strictly_increasing ( ForwardIterator first, ForwardIterator last )
+=======
+    BOOST_CXX14_CONSTEXPR bool is_strictly_increasing ( ForwardIterator first, ForwardIterator last )
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     {
         typedef typename std::iterator_traits<ForwardIterator>::value_type value_type;
         return boost::algorithm::is_sorted (first, last, std::less_equal<value_type>());
@@ -239,7 +295,11 @@ namespace boost { namespace algorithm {
 /// \note This function will return false for sequences that contain items that compare
 ///     equal. If that is not what you intended, you should use is_increasing instead.
     template <typename R>
+<<<<<<< HEAD
     bool is_strictly_increasing ( const R &range )
+=======
+    BOOST_CXX14_CONSTEXPR bool is_strictly_increasing ( const R &range )
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     {
         return is_strictly_increasing ( boost::begin ( range ), boost::end ( range ));
     }
@@ -255,7 +315,11 @@ namespace boost { namespace algorithm {
 /// \note This function will return false for sequences that contain items that compare
 ///     equal. If that is not what you intended, you should use is_decreasing instead.
     template <typename ForwardIterator>
+<<<<<<< HEAD
     bool is_strictly_decreasing ( ForwardIterator first, ForwardIterator last )
+=======
+    BOOST_CXX14_CONSTEXPR bool is_strictly_decreasing ( ForwardIterator first, ForwardIterator last )
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     {
         typedef typename std::iterator_traits<ForwardIterator>::value_type value_type;
         return boost::algorithm::is_sorted (first, last, std::greater_equal<value_type>());
@@ -270,7 +334,11 @@ namespace boost { namespace algorithm {
 /// \note This function will return false for sequences that contain items that compare
 ///     equal. If that is not what you intended, you should use is_decreasing instead.
     template <typename R>
+<<<<<<< HEAD
     bool is_strictly_decreasing ( const R &range )
+=======
+    BOOST_CXX14_CONSTEXPR bool is_strictly_decreasing ( const R &range )
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     {
         return is_strictly_decreasing ( boost::begin ( range ), boost::end ( range ));
     }

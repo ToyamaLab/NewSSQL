@@ -11,13 +11,6 @@
 		<java.version>1.8</java.version>
 		<junit.jupiter.version>5.0.2</junit.jupiter.version>
 	</properties>
-	<repositories>
-		<repository>
-			<id>cloudera</id>
-			<name>cloudera</name>
-			<url>https://repository.cloudera.com/content/repositories/releases/</url>
-		</repository>
-	</repositories>
 	<dependencies>
 		<dependency>
 			<groupId>org.jsoup</groupId>
@@ -44,7 +37,7 @@
 			<artifactId>db2jcc</artifactId>
 			<version>1.0</version> <!-- Adjust this properly -->
 			<scope>system</scope>
-			<systemPath>${basedir}/lib/db2jcc.jar</systemPath>
+			<systemPath>${project.basedir}/lib/db2jcc.jar</systemPath>
 		</dependency>
 		<dependency>
 			<groupId>org.antlr</groupId>
@@ -56,7 +49,7 @@
 			<artifactId>pdflib</artifactId>
 			<version>1.0</version> <!-- Adjust this properly -->
 			<scope>system</scope>
-			<systemPath>${basedir}/lib/pdflib.jar</systemPath>
+			<systemPath>${project.basedir}/lib/pdflib.jar</systemPath>
 		</dependency>
 		<dependency>
 			<groupId>org.jgrapht</groupId>
@@ -119,22 +112,24 @@
 		</dependency>
 		<!-- https://mvnrepository.com/artifact/org.apache.hive/hive-jdbc -->
 		<dependency>
-			<groupId>org.apache.hive</groupId>
-			<artifactId>hive-jdbc</artifactId>
-			<version>1.1.0-cdh5.15.0</version>
-		</dependency>
-		<!-- https://mvnrepository.com/artifact/org.apache.hadoop/hadoop-common -->
-		<dependency>
-			<groupId>org.apache.hadoop</groupId>
-			<artifactId>hadoop-common</artifactId>
-			<version>2.6.0-cdh5.15.0</version>
-		</dependency>
-		<dependency>
 			<groupId>org.rosuda.JRI</groupId>
 			<artifactId>JRI</artifactId>
 			<version>1.0</version>
 			<scope>system</scope>
-			<systemPath>${basedir}/lib/JRI.jar</systemPath>
+			<systemPath>${project.basedir}/lib/JRI.jar</systemPath>
+		</dependency>
+		<dependency>
+			<!-- SQL server JDBC for Java8 -->
+			<groupId>com.microsoft.sqlserver</groupId>
+			<artifactId>mssql-jdbc</artifactId>
+			<version>8.2.2.jre8</version>
+			<scope>system</scope>
+			<systemPath>${project.basedir}/lib/mssql-jdbc-8.2.2.jre8.jar</systemPath>
+		</dependency>
+		<dependency>
+			<groupId>org.jboss.openjdk-orb</groupId>
+			<artifactId>openjdk-orb</artifactId>
+			<version>8.1.1.Final</version>
 		</dependency>
 	</dependencies>
 	<build>

@@ -11,8 +11,16 @@
 #ifndef BOOST_COMPUTE_ALGORITHM_COPY_IF_HPP
 #define BOOST_COMPUTE_ALGORITHM_COPY_IF_HPP
 
+<<<<<<< HEAD
 #include <boost/compute/algorithm/transform_if.hpp>
 #include <boost/compute/functional/identity.hpp>
+=======
+#include <boost/static_assert.hpp>
+
+#include <boost/compute/algorithm/transform_if.hpp>
+#include <boost/compute/functional/identity.hpp>
+#include <boost/compute/type_traits/is_device_iterator.hpp>
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 namespace boost {
 namespace compute {
@@ -27,6 +35,11 @@ inline OutputIterator copy_index_if(InputIterator first,
                                     Predicate predicate,
                                     command_queue &queue = system::default_queue())
 {
+<<<<<<< HEAD
+=======
+    BOOST_STATIC_ASSERT(is_device_iterator<InputIterator>::value);
+    BOOST_STATIC_ASSERT(is_device_iterator<OutputIterator>::value);
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     typedef typename std::iterator_traits<InputIterator>::value_type T;
 
     return detail::transform_if_impl(
@@ -47,6 +60,11 @@ inline OutputIterator copy_if(InputIterator first,
                               Predicate predicate,
                               command_queue &queue = system::default_queue())
 {
+<<<<<<< HEAD
+=======
+    BOOST_STATIC_ASSERT(is_device_iterator<InputIterator>::value);
+    BOOST_STATIC_ASSERT(is_device_iterator<OutputIterator>::value);
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     typedef typename std::iterator_traits<InputIterator>::value_type T;
 
     return ::boost::compute::transform_if(

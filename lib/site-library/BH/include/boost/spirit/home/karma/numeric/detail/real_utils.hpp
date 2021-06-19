@@ -105,7 +105,17 @@ namespace boost { namespace spirit { namespace karma
                     if (exp != -dim)
                         ++exp;
                     dim = static_cast<U>(-exp);
+<<<<<<< HEAD
                     n *= spirit::traits::pow10<U>(exp);
+=======
+                    // detect and handle denormalized numbers to prevent overflow in pow10
+                    if (exp > std::numeric_limits<U>::max_exponent10)
+                    {
+                        n *= spirit::traits::pow10<U>(std::numeric_limits<U>::max_exponent10);
+                        n *= spirit::traits::pow10<U>(exp - std::numeric_limits<U>::max_exponent10);
+                    } else
+                        n *= spirit::traits::pow10<U>(exp);
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
                 }
             }
 

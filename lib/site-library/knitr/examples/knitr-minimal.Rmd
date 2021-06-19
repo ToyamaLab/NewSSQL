@@ -56,4 +56,8 @@ knit('knitr-minimal.Rmd')
 
 ## Conclusion
 
+<<<<<<< HEAD
 Markdown is super easy to write. Go to **knitr** [homepage](https://yihui.name/knitr/) for details.
+=======
+Markdown is super easy to write. Go to **knitr** [homepage](https://yihui.org/knitr/) for details.
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce

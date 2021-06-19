@@ -14,6 +14,7 @@
 namespace boost { namespace mpi {
 
 template<typename T>
+<<<<<<< HEAD
 inline void
 broadcast(const communicator& comm, skeleton_proxy<T>& proxy, int root)
 {
@@ -22,6 +23,8 @@ broadcast(const communicator& comm, skeleton_proxy<T>& proxy, int root)
 }
 
 template<typename T>
+=======
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 void
 broadcast(const communicator& comm, const skeleton_proxy<T>& proxy, int root)
 {
@@ -36,6 +39,18 @@ broadcast(const communicator& comm, const skeleton_proxy<T>& proxy, int root)
   }
 }
 
+<<<<<<< HEAD
+=======
+template<typename T>
+inline void
+broadcast(const communicator& comm, skeleton_proxy<T>& proxy, int root)
+{
+  const skeleton_proxy<T>& const_proxy(proxy);
+  broadcast(comm, const_proxy, root);
+}
+
+
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 } } // end namespace boost::mpi
 
 #endif // BOOST_MPI_BROADCAST_SC_HPP

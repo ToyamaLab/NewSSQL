@@ -14,6 +14,10 @@
 
 #include <boost/mpi/config.hpp>
 #include <boost/optional.hpp>
+<<<<<<< HEAD
+=======
+#include <boost/mpl/bool.hpp>
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 namespace boost { namespace mpi {
 

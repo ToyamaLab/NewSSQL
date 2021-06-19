@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 /* Copyright 2003-2015 Joaquin M Lopez Munoz.
+=======
+/* Copyright 2003-2019 Joaquin M Lopez Munoz.
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
  * Distributed under the Boost Software License, Version 1.0.
  * (See accompanying file LICENSE_1_0.txt or copy at
  * http://www.boost.org/LICENSE_1_0.txt)
@@ -15,7 +19,11 @@
 
 #include <boost/config.hpp> /* keep it first to prevent nasty warns in MSVC */
 #include <algorithm>
+<<<<<<< HEAD
 #include <boost/detail/allocator_utilities.hpp>
+=======
+#include <boost/multi_index/detail/allocator_traits.hpp>
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 #include <boost/multi_index/detail/raw_ptr.hpp>
 
 namespace boost{
@@ -29,6 +37,7 @@ namespace detail{
 template<typename Allocator>
 struct sequenced_index_node_impl
 {
+<<<<<<< HEAD
   typedef typename
   boost::detail::allocator::rebind_to<
     Allocator,sequenced_index_node_impl
@@ -37,6 +46,15 @@ struct sequenced_index_node_impl
   boost::detail::allocator::rebind_to<
     Allocator,sequenced_index_node_impl
   >::type::const_pointer                const_pointer;
+=======
+  typedef typename rebind_alloc_for<
+    Allocator,sequenced_index_node_impl
+  >::type                                        node_allocator;
+  typedef allocator_traits<node_allocator>       alloc_traits;
+  typedef typename alloc_traits::pointer         pointer;
+  typedef typename alloc_traits::const_pointer   const_pointer;
+  typedef typename alloc_traits::difference_type difference_type;
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
   pointer& prior(){return prior_;}
   pointer  prior()const{return prior_;}
@@ -55,7 +73,11 @@ struct sequenced_index_node_impl
     x->prior()=header->prior();
     x->next()=header;
     x->prior()->next()=x->next()->prior()=x;
+<<<<<<< HEAD
   };
+=======
+  }
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
   static void unlink(pointer x)
   {
@@ -133,14 +155,22 @@ private:
 template<typename Super>
 struct sequenced_index_node_trampoline:
   sequenced_index_node_impl<
+<<<<<<< HEAD
     typename boost::detail::allocator::rebind_to<
+=======
+    typename rebind_alloc_for<
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
       typename Super::allocator_type,
       char
     >::type
   >
 {
   typedef sequenced_index_node_impl<
+<<<<<<< HEAD
     typename boost::detail::allocator::rebind_to<
+=======
+    typename rebind_alloc_for<
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
       typename Super::allocator_type,
       char
     >::type
@@ -154,9 +184,16 @@ private:
   typedef sequenced_index_node_trampoline<Super> trampoline;
 
 public:
+<<<<<<< HEAD
   typedef typename trampoline::impl_type         impl_type;
   typedef typename trampoline::pointer           impl_pointer;
   typedef typename trampoline::const_pointer     const_impl_pointer;
+=======
+  typedef typename trampoline::impl_type       impl_type;
+  typedef typename trampoline::pointer         impl_pointer;
+  typedef typename trampoline::const_pointer   const_impl_pointer;
+  typedef typename trampoline::difference_type difference_type;
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
   impl_pointer& prior(){return trampoline::prior();}
   impl_pointer  prior()const{return trampoline::prior();}

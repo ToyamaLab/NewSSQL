@@ -117,9 +117,14 @@ namespace boost { namespace spirit
         utf8_string const& tag;
         int depth;
 
+<<<<<<< HEAD
     private:
         // silence MSVC warning C4512: assignment operator could not be generated
         basic_info_walker& operator= (basic_info_walker const&);
+=======
+        // silence MSVC warning C4512: assignment operator could not be generated
+        BOOST_DELETED_FUNCTION(basic_info_walker& operator= (basic_info_walker const&))
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     };
 
     // bare-bones print support
@@ -141,9 +146,14 @@ namespace boost { namespace spirit
 
         Out& out;
 
+<<<<<<< HEAD
     private:
         // silence MSVC warning C4512: assignment operator could not be generated
         simple_printer& operator= (simple_printer const&);
+=======
+        // silence MSVC warning C4512: assignment operator could not be generated
+        BOOST_DELETED_FUNCTION(simple_printer& operator= (simple_printer const&))
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     };
 
     template <typename Out>

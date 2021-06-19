@@ -9,7 +9,11 @@
 #ifndef BOOST_UBLAS_MATRIX_VECTOR_HPP
 #define BOOST_UBLAS_MATRIX_VECTOR_HPP
 
+<<<<<<< HEAD
 #include <boost/numeric/ublas/matrix_proxy.hpp>//for matrix_row, matrix_column and matrix_expression
+=======
+#include <boost/numeric/ublas/matrix_proxy.hpp> //for matrix_row, matrix_column and matrix_expression
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 #include <boost/numeric/ublas/vector.hpp>
 #include <boost/iterator/iterator_facade.hpp>
 #include <boost/range/iterator_range.hpp>
@@ -43,10 +47,18 @@ public:
     matrix_vector_iterator(){}
 
     ///\brief constructs a matrix_vector_iterator as pointing to the i-th proxy
+<<<<<<< HEAD
+=======
+    BOOST_UBLAS_INLINE
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     matrix_vector_iterator(Matrix& matrix, std::size_t position)
     : matrix_(&matrix),position_(position) {}
 
     template<class M, class R>
+<<<<<<< HEAD
+=======
+    BOOST_UBLAS_INLINE
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     matrix_vector_iterator(matrix_vector_iterator<M,R> const& other)
     : matrix_(other.matrix_),position_(other.position_) {}
 
@@ -54,28 +66,54 @@ private:
     friend class boost::iterator_core_access;
     template <class M,class R> friend class matrix_vector_iterator;
 
+<<<<<<< HEAD
     void increment() {
         ++position_;
     }
+=======
+    BOOST_UBLAS_INLINE
+    void increment() {
+        ++position_;
+    }
+
+    BOOST_UBLAS_INLINE
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     void decrement() {
         --position_;
     }
 
+<<<<<<< HEAD
+=======
+    BOOST_UBLAS_INLINE
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     void advance(std::ptrdiff_t n){
         position_ += n;
     }
 
     template<class M,class R>
+<<<<<<< HEAD
+=======
+    BOOST_UBLAS_INLINE
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     std::ptrdiff_t distance_to(matrix_vector_iterator<M,R> const& other) const{
         BOOST_UBLAS_CHECK (matrix_ == other.matrix_, external_logic ());
         return (std::ptrdiff_t)other.position_ - (std::ptrdiff_t)position_;
     }
 
     template<class M,class R>
+<<<<<<< HEAD
+=======
+    BOOST_UBLAS_INLINE
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     bool equal(matrix_vector_iterator<M,R> const& other) const{
         BOOST_UBLAS_CHECK (matrix_ == other.matrix_, external_logic ());
         return (position_ == other.position_);
     }
+<<<<<<< HEAD
+=======
+
+    BOOST_UBLAS_INLINE
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     Reference dereference() const {
         return Reference(*matrix_,position_);
     }
@@ -109,6 +147,7 @@ public:
     typedef typename boost::iterator_difference<iterator>::type difference_type;
     typedef typename Matrix::size_type size_type;
 
+<<<<<<< HEAD
     matrix_row_vector(Matrix& matrix) :
         matrix_(matrix) {
     }
@@ -122,10 +161,29 @@ public:
         return const_iterator(matrix_, 0);
     }
 
+=======
+    BOOST_UBLAS_INLINE
+    explicit matrix_row_vector(Matrix& matrix) :
+        matrix_(&matrix) {
+    }
+
+    BOOST_UBLAS_INLINE
+    iterator begin(){
+        return iterator(*matrix_, 0);
+    }
+
+    BOOST_UBLAS_INLINE
+    const_iterator begin() const {
+        return const_iterator(*matrix_, 0);
+    }
+
+    BOOST_UBLAS_INLINE
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     const_iterator cbegin() const {
         return begin();
     }
 
+<<<<<<< HEAD
     iterator end() {
         return iterator(matrix_, matrix_.size1());
     }
@@ -134,34 +192,72 @@ public:
         return const_iterator(matrix_, matrix_.size1());
     }
 
+=======
+    BOOST_UBLAS_INLINE
+    iterator end() {
+        return iterator(*matrix_, matrix_->size1());
+    }
+
+    BOOST_UBLAS_INLINE
+    const_iterator end() const {
+        return const_iterator(*matrix_, matrix_->size1());
+    }
+
+    BOOST_UBLAS_INLINE
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     const_iterator cend() const {
         return end();
     }
 
+<<<<<<< HEAD
+=======
+    BOOST_UBLAS_INLINE
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     reverse_iterator rbegin() {
         return reverse_iterator(end());
     }
 
+<<<<<<< HEAD
+=======
+    BOOST_UBLAS_INLINE
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     const_reverse_iterator rbegin() const {
         return const_reverse_iterator(end());
     }
 
+<<<<<<< HEAD
+=======
+    BOOST_UBLAS_INLINE
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     const_reverse_iterator crbegin() const {
         return rbegin();
     }  
 
+<<<<<<< HEAD
+=======
+    BOOST_UBLAS_INLINE
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     reverse_iterator rend() {
         return reverse_iterator(begin());
     }
 
+<<<<<<< HEAD
+=======
+    BOOST_UBLAS_INLINE
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     const_reverse_iterator rend() const {
         return const_reverse_iterator(begin());
     }
 
+<<<<<<< HEAD
+=======
+    BOOST_UBLAS_INLINE
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     const_reverse_iterator crend() const {
         return end();
     }
 
+<<<<<<< HEAD
     value_type operator()(difference_type index) const {
         return value_type(matrix_, index);
     }
@@ -184,6 +280,40 @@ public:
 
 private:
     Matrix& matrix_;
+=======
+    BOOST_UBLAS_INLINE
+    value_type operator()(size_type index) {
+        return value_type(*matrix_, index);
+    }
+
+    BOOST_UBLAS_INLINE
+    value_type operator()(size_type index) const {
+        return value_type(*matrix_, index);
+    }
+
+    BOOST_UBLAS_INLINE
+    reference operator[](size_type index){
+        return (*this) (index);
+    }
+
+    BOOST_UBLAS_INLINE
+    const_reference operator[](size_type index) const {
+        return (*this) (index);
+    }
+
+    BOOST_UBLAS_INLINE
+    size_type size() const {
+        return matrix_->size1();
+    }
+
+    BOOST_UBLAS_INLINE
+    void resize(size_type size, bool preserve = true) {
+        matrix_->resize(size, matrix_->size2(), preserve);
+    }
+
+private:
+    Matrix* matrix_;
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 };
 
 
@@ -196,6 +326,10 @@ private:
  * \tparam Matrix the type of matrix that \c matrix_row_vector is referring.
  */
 template<class Matrix>
+<<<<<<< HEAD
+=======
+BOOST_UBLAS_INLINE
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 matrix_row_vector<Matrix> make_row_vector(matrix_expression<Matrix>& matrix){
     return matrix_row_vector<Matrix>(matrix());
 }
@@ -210,6 +344,10 @@ matrix_row_vector<Matrix> make_row_vector(matrix_expression<Matrix>& matrix){
  * \tparam Matrix the type of matrix that \c matrix_row_vector is referring.
  */
 template<class Matrix>
+<<<<<<< HEAD
+=======
+BOOST_UBLAS_INLINE
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 matrix_row_vector<Matrix const> make_row_vector(matrix_expression<Matrix> const& matrix){
     return matrix_row_vector<Matrix const>(matrix());
 }
@@ -224,8 +362,12 @@ matrix_row_vector<Matrix const> make_row_vector(matrix_expression<Matrix> const&
  * the underlaying matrix.
  */
 template<class Matrix>
+<<<<<<< HEAD
 class matrix_column_vector
 {
+=======
+class matrix_column_vector {
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 public:
     typedef ublas::matrix_column<Matrix> value_type;
     typedef ublas::matrix_column<Matrix> reference;
@@ -239,6 +381,7 @@ public:
     typedef typename boost::iterator_difference<iterator>::type difference_type;
     typedef typename Matrix::size_type size_type;
 
+<<<<<<< HEAD
     matrix_column_vector(Matrix& matrix) :
         matrix_(matrix){
     }
@@ -251,10 +394,29 @@ public:
         return const_iterator(matrix_, 0);
     }
 
+=======
+    BOOST_UBLAS_INLINE
+    explicit matrix_column_vector(Matrix& matrix) :
+        matrix_(&matrix){
+    }
+
+    BOOST_UBLAS_INLINE
+    iterator begin() {
+        return iterator(*matrix_, 0);
+    }
+
+    BOOST_UBLAS_INLINE
+    const_iterator begin() const {
+        return const_iterator(*matrix_, 0);
+    }
+
+    BOOST_UBLAS_INLINE
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     const_iterator cbegin() const {
         return begin();
     }
 
+<<<<<<< HEAD
     iterator end() {
         return iterator(matrix_, matrix_.size2());
     }
@@ -263,34 +425,73 @@ public:
         return const_iterator(matrix_, matrix_.size2());
     }
 
+=======
+    BOOST_UBLAS_INLINE
+    iterator end() {
+        return iterator(*matrix_, matrix_->size2());
+    }
+
+    BOOST_UBLAS_INLINE
+    const_iterator end() const {
+        return const_iterator(*matrix_, matrix_->size2());
+    }
+
+    BOOST_UBLAS_INLINE
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     const_iterator cend() const {
         return end();
     }
 
+<<<<<<< HEAD
+=======
+    BOOST_UBLAS_INLINE
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     reverse_iterator rbegin() {
         return reverse_iterator(end());
     }
 
+<<<<<<< HEAD
+=======
+    BOOST_UBLAS_INLINE
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     const_reverse_iterator rbegin() const {
         return const_reverse_iterator(end());
     }
 
+<<<<<<< HEAD
     const_reverse_iterator crbegin() const {
         return rbegin();
     } 
 
+=======
+    BOOST_UBLAS_INLINE
+    const_reverse_iterator crbegin() const {
+        return rbegin();
+    }
+
+    BOOST_UBLAS_INLINE
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     reverse_iterator rend() {
         return reverse_iterator(begin());
     }
 
+<<<<<<< HEAD
+=======
+    BOOST_UBLAS_INLINE
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     const_reverse_iterator rend() const {
         return const_reverse_iterator(begin());
     }
 
+<<<<<<< HEAD
+=======
+    BOOST_UBLAS_INLINE
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     const_reverse_iterator crend() const {
         return rend();
     }
 
+<<<<<<< HEAD
     value_type operator()(difference_type index) const {
         return value_type(matrix_, index);
     }
@@ -313,6 +514,40 @@ public:
 
 private:
     Matrix& matrix_;
+=======
+    BOOST_UBLAS_INLINE
+    value_type operator()(size_type index) {
+        return value_type(*matrix_, index);
+    }
+
+    BOOST_UBLAS_INLINE
+    value_type operator()(size_type index) const {
+        return value_type(*matrix_, index);
+    }
+
+    BOOST_UBLAS_INLINE
+    reference operator[](size_type index) {
+        return (*this) (index);
+    }
+
+    BOOST_UBLAS_INLINE
+    const_reference operator[](size_type index) const {
+        return (*this) (index);
+    }
+
+    BOOST_UBLAS_INLINE
+    size_type size() const {
+        return matrix_->size2();
+    }
+
+    BOOST_UBLAS_INLINE
+    void resize(size_type size, bool preserve = true) {
+        matrix_->resize(matrix_->size1(), size, preserve);
+    }
+
+private:
+    Matrix* matrix_;
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 };
 
 
@@ -325,6 +560,10 @@ private:
  * \tparam Matrix the type of matrix that \c matrix_column_vector is referring.
  */
 template<class Matrix>
+<<<<<<< HEAD
+=======
+BOOST_UBLAS_INLINE
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 matrix_column_vector<Matrix> make_column_vector(matrix_expression<Matrix>& matrix){
     return matrix_column_vector<Matrix>(matrix());
 }
@@ -339,6 +578,10 @@ matrix_column_vector<Matrix> make_column_vector(matrix_expression<Matrix>& matri
  * \tparam Matrix the type of matrix that \c matrix_column_vector is referring.
  */
 template<class Matrix>
+<<<<<<< HEAD
+=======
+BOOST_UBLAS_INLINE
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 matrix_column_vector<Matrix const> make_column_vector(matrix_expression<Matrix> const& matrix){
     return matrix_column_vector<Matrix const>(matrix());
 }

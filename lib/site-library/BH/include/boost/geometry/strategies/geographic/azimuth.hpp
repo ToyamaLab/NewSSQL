@@ -12,7 +12,11 @@
 #define BOOST_GEOMETRY_STRATEGIES_GEOGRAPHIC_AZIMUTH_HPP
 
 
+<<<<<<< HEAD
 #include <boost/geometry/core/srs.hpp>
+=======
+#include <boost/geometry/srs/spheroid.hpp>
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 #include <boost/geometry/strategies/azimuth.hpp>
 #include <boost/geometry/strategies/geographic/parameters.hpp>
@@ -57,6 +61,7 @@ public :
                       T const& lon2_rad, T const& lat2_rad,
                       T& a1, T& a2) const
     {
+<<<<<<< HEAD
         typedef typename boost::mpl::if_
             <
                 boost::is_void<CalculationType>, T, CalculationType
@@ -71,25 +76,86 @@ public :
         a2 = i_res.reverse_azimuth;
     }
 
+=======
+        compute<true, true>(lon1_rad, lat1_rad,
+                            lon2_rad, lat2_rad,
+                            a1, a2);
+    }
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     template <typename T>
     inline void apply(T const& lon1_rad, T const& lat1_rad,
                       T const& lon2_rad, T const& lat2_rad,
                       T& a1) const
     {
+<<<<<<< HEAD
         typedef typename boost::mpl::if_
                 <
                     boost::is_void<CalculationType>, T, CalculationType
                 >::type calc_t;
 
         typedef typename FormulaPolicy::template inverse<calc_t, false, true, false, false, false> inverse_type;
+=======
+        compute<true, false>(lon1_rad, lat1_rad,
+                             lon2_rad, lat2_rad,
+                             a1, a1);
+    }
+    template <typename T>
+    inline void apply_reverse(T const& lon1_rad, T const& lat1_rad,
+                              T const& lon2_rad, T const& lat2_rad,
+                              T& a2) const
+    {
+        compute<false, true>(lon1_rad, lat1_rad,
+                             lon2_rad, lat2_rad,
+                             a2, a2);
+    }
+
+private :
+
+    template <
+        bool EnableAzimuth,
+        bool EnableReverseAzimuth,
+        typename T
+    >
+    inline void compute(T const& lon1_rad, T const& lat1_rad,
+                        T const& lon2_rad, T const& lat2_rad,
+                        T& a1, T& a2) const
+    {
+        typedef typename boost::mpl::if_
+            <
+                boost::is_void<CalculationType>, T, CalculationType
+            >::type calc_t;
+
+        typedef typename FormulaPolicy::template inverse
+        <
+            calc_t,
+            false,
+            EnableAzimuth,
+            EnableReverseAzimuth,
+            false,
+            false
+        > inverse_type;
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
         typedef typename inverse_type::result_type inverse_result;
         inverse_result i_res = inverse_type::apply(calc_t(lon1_rad), calc_t(lat1_rad),
                                                    calc_t(lon2_rad), calc_t(lat2_rad),
                                                    m_spheroid);
+<<<<<<< HEAD
         a1 = i_res.azimuth;
     }
 
 private :
+=======
+        if (EnableAzimuth)
+        {
+            a1 = i_res.azimuth;
+        }
+        if (EnableReverseAzimuth)
+        {
+            a2 = i_res.reverse_azimuth;
+        }
+    }
+
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     Spheroid m_spheroid;
 };
 

@@ -22,6 +22,10 @@
 #include <set>
 #include <map>
 #include <stdexcept>
+<<<<<<< HEAD
+=======
+#include <utility>
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 #include <iosfwd>
 
@@ -106,14 +110,25 @@ namespace program_options {
         /** Returns the canonical name for the option description to enable the user to
             recognised a matching option.
             1) For short options ('-', '/'), returns the short name prefixed.
+<<<<<<< HEAD
             2) For long options ('--' / '-') returns the long name prefixed
             3) All other cases, returns the long name (if present) or the short name,
                 unprefixed.
+=======
+            2) For long options ('--' / '-') returns the first long name prefixed
+            3) All other cases, returns the first long name (if present) or the short
+               name, unprefixed.
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
         */
         std::string canonical_display_name(int canonical_option_style = 0) const;
 
         const std::string& long_name() const;
 
+<<<<<<< HEAD
+=======
+        const std::pair<const std::string*, std::size_t> long_names() const;
+
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
         /// Explanation of this option
         const std::string& description() const;
 
@@ -129,9 +144,30 @@ namespace program_options {
 
     private:
     
+<<<<<<< HEAD
         option_description& set_name(const char* name);
 
         std::string m_short_name, m_long_name, m_description;
+=======
+        option_description& set_names(const char* name);
+
+        /**
+         * a one-character "switch" name - with its prefix,
+         * so that this is either empty or has length 2 (e.g. "-c"
+         */
+        std::string m_short_name;
+
+        /**
+         *  one or more names by which this option may be specified
+         *  on a command-line or in a config file, which are not
+         *  a single-letter switch. The names here are _without_
+         * any prefix.
+         */
+        std::vector<std::string> m_long_names;
+
+        std::string m_description;
+
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
         // shared_ptr is needed to simplify memory management in
         // copy ctor and destructor.
         shared_ptr<const value_semantic> m_value_semantic;

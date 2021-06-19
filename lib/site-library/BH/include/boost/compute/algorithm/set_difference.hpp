@@ -13,6 +13,11 @@
 
 #include <iterator>
 
+<<<<<<< HEAD
+=======
+#include <boost/static_assert.hpp>
+
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 #include <boost/compute/algorithm/detail/compact.hpp>
 #include <boost/compute/algorithm/detail/balanced_path.hpp>
 #include <boost/compute/algorithm/exclusive_scan.hpp>
@@ -21,6 +26,10 @@
 #include <boost/compute/detail/iterator_range_size.hpp>
 #include <boost/compute/detail/meta_kernel.hpp>
 #include <boost/compute/system.hpp>
+<<<<<<< HEAD
+=======
+#include <boost/compute/type_traits/is_device_iterator.hpp>
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 namespace boost {
 namespace compute {
@@ -132,6 +141,13 @@ inline OutputIterator set_difference(InputIterator1 first1,
                                      OutputIterator result,
                                      command_queue &queue = system::default_queue())
 {
+<<<<<<< HEAD
+=======
+    BOOST_STATIC_ASSERT(is_device_iterator<InputIterator1>::value);
+    BOOST_STATIC_ASSERT(is_device_iterator<InputIterator2>::value);
+    BOOST_STATIC_ASSERT(is_device_iterator<OutputIterator>::value);
+
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     typedef typename std::iterator_traits<InputIterator1>::value_type value_type;
 
     int tile_size = 1024;

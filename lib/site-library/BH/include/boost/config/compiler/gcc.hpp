@@ -99,10 +99,17 @@
 // Dynamic shared object (DSO) and dynamic-link library (DLL) support
 //
 #if __GNUC__ >= 4
+<<<<<<< HEAD
 #  if (defined(_WIN32) || defined(__WIN32__) || defined(WIN32)) && !defined(__CYGWIN__)
      // All Win32 development environments, including 64-bit Windows and MinGW, define
      // _WIN32 or one of its variant spellings. Note that Cygwin is a POSIX environment,
      // so does not define _WIN32 or its variants.
+=======
+#  if defined(_WIN32) || defined(__WIN32__) || defined(WIN32) || defined(__CYGWIN__)
+     // All Win32 development environments, including 64-bit Windows and MinGW, define
+     // _WIN32 or one of its variant spellings. Note that Cygwin is a POSIX environment,
+     // so does not define _WIN32 or its variants, but still supports dllexport/dllimport.
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 #    define BOOST_HAS_DECLSPEC
 #    define BOOST_SYMBOL_EXPORT __attribute__((__dllexport__))
 #    define BOOST_SYMBOL_IMPORT __attribute__((__dllimport__))
@@ -232,7 +239,11 @@
 // C++0x features in 4.6.n and later
 //
 #if (BOOST_GCC_VERSION < 40600) || !defined(BOOST_GCC_CXX11)
+<<<<<<< HEAD
 #define BOOST_NO_CXX11_CONSTEXPR
+=======
+#define BOOST_NO_CXX11_DEFAULTED_MOVES
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 #define BOOST_NO_CXX11_NOEXCEPT
 #define BOOST_NO_CXX11_NULLPTR
 #define BOOST_NO_CXX11_RANGE_BASED_FOR
@@ -242,6 +253,12 @@
 // C++0x features in 4.7.n and later
 //
 #if (BOOST_GCC_VERSION < 40700) || !defined(BOOST_GCC_CXX11)
+<<<<<<< HEAD
+=======
+// Note that while constexpr is partly supported in gcc-4.6 it's a 
+// pre-std version with several bugs:
+#  define BOOST_NO_CXX11_CONSTEXPR
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 #  define BOOST_NO_CXX11_FINAL
 #  define BOOST_NO_CXX11_TEMPLATE_ALIASES
 #  define BOOST_NO_CXX11_USER_DEFINED_LITERALS
@@ -284,7 +301,11 @@
 #if !defined(__cpp_constexpr) || (__cpp_constexpr < 201304)
 #  define BOOST_NO_CXX14_CONSTEXPR
 #endif
+<<<<<<< HEAD
 #if !defined(__cpp_variable_templates) || (__cpp_variable_templates < 201304)
+=======
+#if (BOOST_GCC_VERSION < 50200) || !defined(__cpp_variable_templates) || (__cpp_variable_templates < 201304)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 #  define BOOST_NO_CXX14_VARIABLE_TEMPLATES
 #endif
 
@@ -298,13 +319,24 @@
 #if !defined(__cpp_fold_expressions) || (__cpp_fold_expressions < 201603)
 #  define BOOST_NO_CXX17_FOLD_EXPRESSIONS
 #endif
+<<<<<<< HEAD
+=======
+#if !defined(__cpp_if_constexpr) || (__cpp_if_constexpr < 201606)
+#  define BOOST_NO_CXX17_IF_CONSTEXPR
+#endif
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 #if __GNUC__ >= 7
 #  define BOOST_FALLTHROUGH __attribute__((fallthrough))
 #endif
 
+<<<<<<< HEAD
 #ifdef __MINGW32__
 // Currently (June 2017) thread_local is broken on mingw for all current compiler releases, see
+=======
+#if defined(__MINGW32__) && !defined(__MINGW64__)
+// Currently (March 2019) thread_local is broken on mingw for all current 32bit compiler releases, see
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 // https://sourceforge.net/p/mingw-w64/bugs/527/
 // Not setting this causes program termination on thread exit.
 #define BOOST_NO_CXX11_THREAD_LOCAL
@@ -321,7 +353,11 @@
 
 //
 // __builtin_unreachable:
+<<<<<<< HEAD
 #if BOOST_GCC_VERSION >= 40800
+=======
+#if BOOST_GCC_VERSION >= 40500
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 #define BOOST_UNREACHABLE_RETURN(x) __builtin_unreachable();
 #endif
 
@@ -342,14 +378,23 @@
 #  error "Compiler not configured - please reconfigure"
 #endif
 //
+<<<<<<< HEAD
 // last known and checked version is 7.1:
 #if (BOOST_GCC_VERSION > 70100)
+=======
+// last known and checked version is 8.1:
+#if (BOOST_GCC_VERSION > 80100)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 #  if defined(BOOST_ASSERT_CONFIG)
 #     error "Boost.Config is older than your compiler - please check for an updated Boost release."
 #  else
 // we don't emit warnings here anymore since there are no defect macros defined for
 // gcc post 3.4, so any failures are gcc regressions...
+<<<<<<< HEAD
 //#     warning "Unknown compiler version - please run the configure tests and report the results"
+=======
+//#     warning "boost: Unknown compiler version - please run the configure tests and report the results"
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 #  endif
 #endif
 

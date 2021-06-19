@@ -19,7 +19,11 @@
 
 namespace boost {
 
+<<<<<<< HEAD
   struct loop_erased_random_walk_stuck : public std::exception {
+=======
+  struct BOOST_SYMBOL_VISIBLE loop_erased_random_walk_stuck : public std::exception {
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     virtual ~loop_erased_random_walk_stuck() throw() {}
     inline virtual const char* what() const throw() {
       return "Loop-erased random walk found a vertex with no out-edges";

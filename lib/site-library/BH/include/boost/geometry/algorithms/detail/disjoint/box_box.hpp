@@ -5,8 +5,13 @@
 // Copyright (c) 2009-2015 Mateusz Loskot, London, UK.
 // Copyright (c) 2013-2015 Adam Wulkiewicz, Lodz, Poland.
 
+<<<<<<< HEAD
 // This file was modified by Oracle on 2013-2017.
 // Modifications copyright (c) 2013-2017, Oracle and/or its affiliates.
+=======
+// This file was modified by Oracle on 2013-2018.
+// Modifications copyright (c) 2013-2018, Oracle and/or its affiliates.
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 // Contributed and/or modified by Adam Wulkiewicz, on behalf of Oracle
 // Contributed and/or modified by Menelaos Karavelas, on behalf of Oracle
@@ -23,6 +28,7 @@
 
 #include <cstddef>
 
+<<<<<<< HEAD
 #include <boost/geometry/core/access.hpp>
 #include <boost/geometry/core/tags.hpp>
 
@@ -31,14 +37,26 @@
 #include <boost/geometry/util/normalize_spheroidal_coordinates.hpp>
 #include <boost/geometry/util/select_most_precise.hpp>
 
+=======
+#include <boost/geometry/algorithms/dispatch/disjoint.hpp>
+
+// For backward compatibility
+#include <boost/geometry/strategies/cartesian/disjoint_box_box.hpp>
+#include <boost/geometry/strategies/spherical/disjoint_box_box.hpp>
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 namespace boost { namespace geometry
 {
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 #ifndef DOXYGEN_NO_DETAIL
 namespace detail { namespace disjoint
 {
 
+<<<<<<< HEAD
 template
 <
     typename Box1, typename Box2,
@@ -146,16 +164,25 @@ struct box_box<Box1, Box2, 0, DimensionCount, spherical_tag>
     }
 };
 
+=======
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 /*!
     \brief Internal utility function to detect if boxes are disjoint
     \note Is used from other algorithms, declared separately
         to avoid circular references
  */
+<<<<<<< HEAD
 template <typename Box1, typename Box2>
 inline bool disjoint_box_box(Box1 const& box1, Box2 const& box2)
 {
     return box_box<Box1, Box2>::apply(box1, box2);
+=======
+template <typename Box1, typename Box2, typename Strategy>
+inline bool disjoint_box_box(Box1 const& box1, Box2 const& box2, Strategy const&)
+{
+    return Strategy::apply(box1, box2);
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 }
 
 
@@ -170,8 +197,18 @@ namespace dispatch
 
 template <typename Box1, typename Box2, std::size_t DimensionCount>
 struct disjoint<Box1, Box2, DimensionCount, box_tag, box_tag, false>
+<<<<<<< HEAD
     : detail::disjoint::box_box<Box1, Box2, 0, DimensionCount>
 {};
+=======
+{
+    template <typename Strategy>
+    static inline bool apply(Box1 const& box1, Box2 const& box2, Strategy const&)
+    {
+        return Strategy::apply(box1, box2);
+    }
+};
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 
 } // namespace dispatch

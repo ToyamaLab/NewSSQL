@@ -67,6 +67,11 @@ typedef bool_<false>       false_;
 //              nat
 //////////////////////////////////////
 struct nat{};
+<<<<<<< HEAD
+=======
+struct nat2{};
+struct nat3{};
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 //////////////////////////////////////
 //          yes_type/no_type

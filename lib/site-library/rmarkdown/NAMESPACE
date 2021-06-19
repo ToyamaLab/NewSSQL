@@ -10,10 +10,18 @@ S3method(prepare_evaluate_output,list)
 export(all_output_formats)
 export(beamer_presentation)
 export(clean_site)
+<<<<<<< HEAD
+=======
+export(context_document)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 export(default_output_format)
 export(default_site_generator)
 export(draft)
 export(find_external_resources)
+<<<<<<< HEAD
+=======
+export(find_pandoc)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 export(from_rmarkdown)
 export(github_document)
 export(html_dependency_bootstrap)
@@ -42,6 +50,10 @@ export(knitr_options)
 export(knitr_options_html)
 export(knitr_options_pdf)
 export(latex_dependency)
+<<<<<<< HEAD
+=======
+export(latex_dependency_tikz)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 export(latex_document)
 export(latex_fragment)
 export(md_document)
@@ -55,9 +67,17 @@ export(paged_table)
 export(pandoc_available)
 export(pandoc_citeproc_convert)
 export(pandoc_convert)
+<<<<<<< HEAD
 export(pandoc_highlight_args)
 export(pandoc_include_args)
 export(pandoc_latex_engine_args)
+=======
+export(pandoc_exec)
+export(pandoc_highlight_args)
+export(pandoc_include_args)
+export(pandoc_latex_engine_args)
+export(pandoc_metadata_arg)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 export(pandoc_options)
 export(pandoc_path_arg)
 export(pandoc_self_contained_html)
@@ -68,6 +88,10 @@ export(pandoc_version)
 export(parse_html_notebook)
 export(pdf_document)
 export(powerpoint_presentation)
+<<<<<<< HEAD
+=======
+export(publish_site)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 export(relative_to)
 export(render)
 export(render_delayed)
@@ -87,6 +111,7 @@ export(slidy_presentation)
 export(tufte_handout)
 export(word_document)
 export(yaml_front_matter)
+<<<<<<< HEAD
 import(htmltools)
 import(methods)
 import(rprojroot)
@@ -95,3 +120,19 @@ importFrom(evaluate,evaluate)
 importFrom(knitr,knit_print)
 importFrom(utils,head)
 importFrom(utils,packageVersion)
+=======
+import(methods)
+import(stats)
+import(utils)
+importFrom(evaluate,evaluate)
+importFrom(htmltools,HTML)
+importFrom(htmltools,copyDependencyToDir)
+importFrom(htmltools,extractPreserveChunks)
+importFrom(htmltools,htmlDependency)
+importFrom(htmltools,makeDependencyRelative)
+importFrom(htmltools,renderDependencies)
+importFrom(htmltools,restorePreserveChunks)
+importFrom(htmltools,tagList)
+importFrom(htmltools,tags)
+importFrom(knitr,knit_print)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce

@@ -11,6 +11,11 @@
 #pragma once
 #endif
 
+<<<<<<< HEAD
+=======
+#include <boost/predef.h>
+
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 #if defined(BOOST_UNORDERED_HAVE_PIECEWISE_CONSTRUCT)
 // Already defined.
 #elif defined(BOOST_LIBSTDCXX11)
@@ -18,6 +23,7 @@
 #if BOOST_LIBSTDCXX_VERSION > 40600
 #define BOOST_UNORDERED_HAVE_PIECEWISE_CONSTRUCT 1
 #endif
+<<<<<<< HEAD
 #elif defined(_LIBCPP_VERSION)
 // https://github.com/llvm-mirror/libcxx/blob/release_30/include/utility#L206
 #if _LIBCPP_VERSION >= 3000
@@ -28,6 +34,21 @@
 // https://msdn.microsoft.com/en-us/library/hh567368.aspx#stl
 // 2012 = VC+11 = BOOST_MSVC 1700 Hopefully!
 #if BOOST_MSVC >= 1700
+=======
+#elif BOOST_LIB_STD_CXX
+// https://github.com/llvm-mirror/libcxx/blob/release_30/include/utility#L206
+#if BOOST_LIB_STD_CXX >= BOOST_VERSION_NUMBER(3, 0, 0)
+#define BOOST_UNORDERED_HAVE_PIECEWISE_CONSTRUCT 1
+#endif
+#elif defined(BOOST_LIB_STD_DINKUMWARE)
+// Apparently C++11 standard supported in Visual Studio 2012
+// https://msdn.microsoft.com/en-us/library/hh567368.aspx#stl
+// 2012 = VC+11 = BOOST_MSVC 1700 Hopefully!
+// I have no idea when Dinkumware added it, probably a lot
+// earlier than this check.
+#if BOOST_LIB_STD_DINKUMWARE >= BOOST_VERSION_NUMBER(6, 50, 0) ||              \
+  BOOST_COMP_MSVC >= BOOST_VERSION_NUMBER(17, 0, 0)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 #define BOOST_UNORDERED_HAVE_PIECEWISE_CONSTRUCT 1
 #endif
 #endif

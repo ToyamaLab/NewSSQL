@@ -1,3 +1,7 @@
+<<<<<<< HEAD
+=======
+clipboard               Returns values from the clipboard
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 col_skip                Skip a column
 cols                    Create column specification
 cols_condense           Examine the column specifications for a data
@@ -8,6 +12,15 @@ date_names              Create or retrieve date names
 format_delim            Convert a data frame to a delimited string
 guess_encoding          Guess encoding of file
 locale                  Create locales
+<<<<<<< HEAD
+=======
+melt_delim              Return melted data for each token in a
+                        delimited file (including csv & tsv)
+melt_fwf                Return melted data for each token in a fixed
+                        width file
+melt_table              Return melted data for each token in a
+                        whitespace-separated file
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 parse_datetime          Parse date/times
 parse_factor            Parse factors
 parse_guess             Parse using the "best" type
@@ -21,6 +34,11 @@ read_fwf                Read a fixed width file into a tibble
 read_lines              Read/write lines to/from a file
 read_log                Read common/combined log file into a tibble
 read_table              Read whitespace-separated columns into a tibble
+<<<<<<< HEAD
+=======
+readr_example           Get path to readr example
+show_progress           Determine progress bars should be shown
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 spec_delim              Generate a column specification
 type_convert            Re-convert character columns in existing data
                         frame

@@ -91,9 +91,14 @@ namespace boost { namespace spirit { namespace karma
 
         T const exact;
 
+<<<<<<< HEAD
     private:
         // silence MSVC warning C4512: assignment operator could not be generated
         exact_iterator& operator= (exact_iterator const&);
+=======
+        // silence MSVC warning C4512: assignment operator could not be generated
+        BOOST_DELETED_FUNCTION(exact_iterator& operator= (exact_iterator const&))
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     };
 
     // handles repeat(min, max)[p]
@@ -112,9 +117,14 @@ namespace boost { namespace spirit { namespace karma
         T const min;
         T const max;
 
+<<<<<<< HEAD
     private:
         // silence MSVC warning C4512: assignment operator could not be generated
         finite_iterator& operator= (finite_iterator const&);
+=======
+        // silence MSVC warning C4512: assignment operator could not be generated
+        BOOST_DELETED_FUNCTION(finite_iterator& operator= (finite_iterator const&))
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     };
 
     // handles repeat(min, inf)[p]
@@ -131,9 +141,14 @@ namespace boost { namespace spirit { namespace karma
 
         T const min;
 
+<<<<<<< HEAD
     private:
         // silence MSVC warning C4512: assignment operator could not be generated
         infinite_iterator& operator= (infinite_iterator const&);
+=======
+        // silence MSVC warning C4512: assignment operator could not be generated
+        BOOST_DELETED_FUNCTION(infinite_iterator& operator= (infinite_iterator const&))
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     };
 
     ///////////////////////////////////////////////////////////////////////////

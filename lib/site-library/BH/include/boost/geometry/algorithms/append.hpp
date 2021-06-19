@@ -91,12 +91,18 @@ template <typename Polygon, typename Point>
 struct point_to_polygon
 {
     typedef typename ring_type<Polygon>::type ring_type;
+<<<<<<< HEAD
+=======
+    typedef typename ring_return_type<Polygon>::type exterior_ring_type;
+    typedef typename interior_return_type<Polygon>::type interior_ring_range_type;
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
     static inline void apply(Polygon& polygon, Point const& point,
                 int ring_index, int = 0)
     {
         if (ring_index == -1)
         {
+<<<<<<< HEAD
             append_point<ring_type, Point>::apply(
                         exterior_ring(polygon), point);
         }
@@ -104,6 +110,17 @@ struct point_to_polygon
         {
             append_point<ring_type, Point>::apply(
                         range::at(interior_rings(polygon), ring_index), point);
+=======
+            exterior_ring_type ext_ring = exterior_ring(polygon);
+            append_point<ring_type, Point>::apply(
+                        ext_ring, point);
+        }
+        else if (ring_index < int(num_interior_rings(polygon)))
+        {
+            interior_ring_range_type int_rings = interior_rings(polygon);
+            append_point<ring_type, Point>::apply(
+                        range::at(int_rings, ring_index), point);
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
         }
     }
 };
@@ -113,12 +130,18 @@ template <typename Polygon, typename Range>
 struct range_to_polygon
 {
     typedef typename ring_type<Polygon>::type ring_type;
+<<<<<<< HEAD
+=======
+    typedef typename ring_return_type<Polygon>::type exterior_ring_type;
+    typedef typename interior_return_type<Polygon>::type interior_ring_range_type;
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
     static inline void apply(Polygon& polygon, Range const& range,
                 int ring_index, int = 0)
     {
         if (ring_index == -1)
         {
+<<<<<<< HEAD
             append_range<ring_type, Range>::apply(
                         exterior_ring(polygon), range);
         }
@@ -126,6 +149,17 @@ struct range_to_polygon
         {
             append_range<ring_type, Range>::apply(
                         range::at(interior_rings(polygon), ring_index), range);
+=======
+            exterior_ring_type ext_ring = exterior_ring(polygon);
+            append_range<ring_type, Range>::apply(
+                        ext_ring, range);
+        }
+        else if (ring_index < int(num_interior_rings(polygon)))
+        {
+            interior_ring_range_type int_rings = interior_rings(polygon);
+            append_range<ring_type, Range>::apply(
+                        range::at(int_rings, ring_index), range);
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
         }
     }
 };

@@ -137,6 +137,26 @@ public:
         boost::detail::sp_assert_convertible< Y, T >();
     }
 
+<<<<<<< HEAD
+=======
+    // aliasing
+    template<class Y> weak_ptr(shared_ptr<Y> const & r, element_type * p) BOOST_SP_NOEXCEPT: px( p ), pn( r.pn )
+    {
+    }
+
+    template<class Y> weak_ptr(weak_ptr<Y> const & r, element_type * p) BOOST_SP_NOEXCEPT: px( p ), pn( r.pn )
+    {
+    }
+
+#if !defined( BOOST_NO_CXX11_RVALUE_REFERENCES )
+
+    template<class Y> weak_ptr(weak_ptr<Y> && r, element_type * p) BOOST_SP_NOEXCEPT: px( p ), pn( std::move( r.pn ) )
+    {
+    }
+
+#endif
+
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 #if !defined(BOOST_MSVC) || (BOOST_MSVC >= 1300)
 
     template<class Y>
@@ -194,6 +214,14 @@ public:
         return pn.empty();
     }
 
+<<<<<<< HEAD
+=======
+    bool empty() const BOOST_SP_NOEXCEPT // extension, not in std::weak_ptr
+    {
+        return pn.empty();
+    }
+
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     void reset() BOOST_SP_NOEXCEPT
     {
         this_type().swap(*this);
@@ -205,6 +233,7 @@ public:
         pn.swap(other.pn);
     }
 
+<<<<<<< HEAD
     template<typename Y>
     void _internal_aliasing_assign(weak_ptr<Y> const & r, element_type * px2) BOOST_SP_NOEXCEPT
     {
@@ -212,6 +241,8 @@ public:
         pn = r.pn;
     }
 
+=======
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     template<class Y> bool owner_before( weak_ptr<Y> const & rhs ) const BOOST_SP_NOEXCEPT
     {
         return pn < rhs.pn;

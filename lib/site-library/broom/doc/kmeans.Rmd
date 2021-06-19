@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 ---
 title: "kmeans with dplyr and broom"
 date: "`r Sys.Date()`"
@@ -141,3 +142,17 @@ ggplot(clusterings, aes(k, tot.withinss)) +
 ```
 
 This represents the variance within the clusters. It decreases as `k` increases, but one can notice a bend (or "elbow") right at k=3. This bend indicates that additional clusters beyond the third have little value. (See [here](http://web.stanford.edu/~hastie/Papers/gap.pdf) for a more mathematically rigorous interpretation and implementation of this method). Thus, all three methods of tidying data provided by broom are useful for summarizing clustering output.
+=======
+---
+title: "kmeans with dplyr and broom"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{kmeans with dplyr and broom}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+# Tidying k-means clustering
+
+This vignette is now an [article](https://www.tidymodels.org/learn/statistics/k-means/) on the {tidymodels} website.
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce

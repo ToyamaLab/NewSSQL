@@ -1,6 +1,12 @@
+<<<<<<< HEAD
 // Boost.Geometry (aka GGL, Generic Geometry Library)
 
 // Copyright (c) 2014-2017, Oracle and/or its affiliates.
+=======
+// Boost.Geometry
+
+// Copyright (c) 2014-2018, Oracle and/or its affiliates.
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 // Contributed and/or modified by Menelaos Karavelas, on behalf of Oracle
 // Contributed and/or modified by Adam Wulkiewicz, on behalf of Oracle
@@ -18,9 +24,15 @@
 #include <boost/variant/static_visitor.hpp>
 #include <boost/variant/variant_fwd.hpp>
 
+<<<<<<< HEAD
 #include <boost/geometry/geometries/concepts/check.hpp>
 
 #include <boost/geometry/algorithms/dispatch/is_valid.hpp>
+=======
+#include <boost/geometry/algorithms/dispatch/is_valid.hpp>
+#include <boost/geometry/core/cs.hpp>
+#include <boost/geometry/geometries/concepts/check.hpp>
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 #include <boost/geometry/policies/is_valid/default_policy.hpp>
 #include <boost/geometry/policies/is_valid/failing_reason_policy.hpp>
 #include <boost/geometry/policies/is_valid/failure_type_policy.hpp>

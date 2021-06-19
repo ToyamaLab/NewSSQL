@@ -1,9 +1,16 @@
+<<<<<<< HEAD
 // boost/uuid/sha1.hpp header file  ----------------------------------------------//
 
 // Copyright 2007 Andy Tompkins.
 // Distributed under the Boost Software License, Version 1.0. (See
 // accompanying file LICENSE_1_0.txt or copy at
 // http://www.boost.org/LICENSE_1_0.txt)
+=======
+// Copyright 2007 Andy Tompkins.
+// Distributed under the Boost Software License, Version 1.0. (See
+// accompanying file LICENSE_1_0.txt or copy at
+// https://www.boost.org/LICENSE_1_0.txt)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 // Revision History
 //  29 May 2007 - Initial Revision
@@ -188,7 +195,11 @@ inline void sha1::process_block()
 inline unsigned char sha1::get_version() const
 {
     // RFC 4122 Section 4.1.3
+<<<<<<< HEAD
         return uuid::version_name_based_sha1;
+=======
+    return uuid::version_name_based_sha1;
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 }
 
 inline void sha1::get_digest(digest_type& digest)

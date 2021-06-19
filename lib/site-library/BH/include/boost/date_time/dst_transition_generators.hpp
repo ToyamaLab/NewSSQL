@@ -29,7 +29,11 @@ namespace date_time {
     //! Canonical form for a class that provides day rule calculation
     /*! This class is used to generate specific sets of dst rules
      *  
+<<<<<<< HEAD
      *@param spec Provides a specifiction of the function object types used
+=======
+     *@tparam spec Provides a specifiction of the function object types used
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
      *            to generate start and end days of daylight savings as well
      *            as the date type.
      */

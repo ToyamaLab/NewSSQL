@@ -22,7 +22,6 @@ public class OrderBy {
 		ExtList buffer;
 		String x;
 		String y;
-
 		a = info.toString().indexOf(" ");
 		target = info.toString().substring(0, a);
 		way = info.toString().substring(a+1);
@@ -277,8 +276,7 @@ public class OrderBy {
 	}
 
 	private boolean isNumeric(String target) {
-
-		Pattern p = Pattern.compile("^\\d+(\\.\\d+)?$");
+		Pattern p = Pattern.compile("^-?\\d+(\\.\\d+)?$");
         Matcher m = p.matcher(target);
         if(!m.find()) {
         		return false;

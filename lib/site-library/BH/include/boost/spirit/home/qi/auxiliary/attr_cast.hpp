@@ -101,7 +101,11 @@ namespace boost { namespace spirit { namespace qi
 
             // do up-stream transformation, this mainly integrates the results
             // back into the original attribute value, if appropriate
+<<<<<<< HEAD
             traits::post_transform(attr_param, attr_);
+=======
+            transform::post(attr_param, attr_);
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
             return true;
         }
 
@@ -114,9 +118,14 @@ namespace boost { namespace spirit { namespace qi
 
         Subject subject;
 
+<<<<<<< HEAD
     private:
         // silence MSVC warning C4512: assignment operator could not be generated
         attr_cast_parser& operator= (attr_cast_parser const&);
+=======
+        // silence MSVC warning C4512: assignment operator could not be generated
+        BOOST_DELETED_FUNCTION(attr_cast_parser& operator= (attr_cast_parser const&))
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     };
 
     ///////////////////////////////////////////////////////////////////////////

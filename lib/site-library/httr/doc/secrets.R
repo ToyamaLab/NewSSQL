@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 ## ---- echo = FALSE-------------------------------------------------------
 library(httr)
 knitr::opts_chunk$set(comment = "#>", collapse = TRUE)
@@ -6,6 +7,16 @@ knitr::opts_chunk$set(comment = "#>", collapse = TRUE)
 #  Sys.chmod("secret.file", mode = "0400")
 
 ## ------------------------------------------------------------------------
+=======
+## ---- echo = FALSE------------------------------------------------------------
+library(httr)
+knitr::opts_chunk$set(comment = "#>", collapse = TRUE)
+
+## ---- eval = FALSE------------------------------------------------------------
+#  Sys.chmod("secret.file", mode = "0400")
+
+## -----------------------------------------------------------------------------
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 my_secrets <- function() {
   path <- "~/secrets/secret.json"
   if (!file.exists(path)) {
@@ -15,6 +26,7 @@ my_secrets <- function() {
   jsonlite::read_json(path)
 }
 
+<<<<<<< HEAD
 ## ---- eval = FALSE-------------------------------------------------------
 #  password <- rstudioapi::askForPassword()
 
@@ -39,6 +51,32 @@ Sys.getenv("VAR1")
 #  keyring::keyring_lock("httr")
 
 ## ---- eval = FALSE-------------------------------------------------------
+=======
+## ---- eval = FALSE------------------------------------------------------------
+#  password <- rstudioapi::askForPassword()
+
+## ---- eval = FALSE------------------------------------------------------------
+#  file.edit("~/.Renviron")
+
+## ---- include = FALSE---------------------------------------------------------
+Sys.setenv("VAR1" = "value1")
+
+## -----------------------------------------------------------------------------
+Sys.getenv("VAR1")
+
+## ---- eval = FALSE------------------------------------------------------------
+#  keyring::key_set("MY_SECRET")
+#  keyring::key_get("MY_SECRET")
+
+## ---- eval = FALSE------------------------------------------------------------
+#  keyring::keyring_create("httr")
+#  keyring::key_set("MY_SECRET", keyring = "httr")
+
+## ---- eval = FALSE------------------------------------------------------------
+#  keyring::keyring_lock("httr")
+
+## ---- eval = FALSE------------------------------------------------------------
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 #  library(openssl)
 #  library(jsonlite)
 #  library(curl)
@@ -58,7 +96,11 @@ Sys.getenv("VAR1")
 #  cipher <- encrypt("<username>\n<password>", "hadley")
 #  cat(cipher)
 
+<<<<<<< HEAD
 ## ---- eval = FALSE-------------------------------------------------------
+=======
+## ---- eval = FALSE------------------------------------------------------------
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 #  decrypt <- function(cipher, key = openssl::my_key()) {
 #    cipherraw <- jsonlite::base64_dec(cipher)
 #    rawToChar(openssl::rsa_decrypt(cipherraw, key = key))
@@ -68,7 +110,11 @@ Sys.getenv("VAR1")
 #  #> username
 #  #> password
 
+<<<<<<< HEAD
 ## ------------------------------------------------------------------------
+=======
+## -----------------------------------------------------------------------------
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 my_secret <- function() {
   val <- Sys.getenv("SECRET")
   if (identical(val, "")) {
@@ -77,6 +123,7 @@ my_secret <- function() {
   val
 }
 
+<<<<<<< HEAD
 ## ------------------------------------------------------------------------
 NOT_CRAN <- identical(tolower(Sys.getenv("NOT_CRAN")), "true")
 knitr::opts_chunk$set(purl = NOT_CRAN)
@@ -88,3 +135,9 @@ skip_if_no_auth <- function() {
   }
 }
 
+=======
+## -----------------------------------------------------------------------------
+NOT_CRAN <- identical(tolower(Sys.getenv("NOT_CRAN")), "true")
+knitr::opts_chunk$set(purl = NOT_CRAN)
+
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce

@@ -228,7 +228,11 @@ inline RealType mean(const extreme_value_distribution<RealType, Policy>& dist)
    RealType result = 0;
    if(0 == detail::verify_scale_b("boost::math::mean(const extreme_value_distribution<%1%>&)", b, &result, Policy()))
       return result;
+<<<<<<< HEAD
    if(0 == detail::check_scale("boost::math::mean(const extreme_value_distribution<%1%>&)", a, &result, Policy()))
+=======
+   if (0 == detail::check_finite("boost::math::mean(const extreme_value_distribution<%1%>&)", a, &result, Policy()))
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
       return result;
    return a + constants::euler<RealType>() * b;
 }
@@ -242,7 +246,11 @@ inline RealType standard_deviation(const extreme_value_distribution<RealType, Po
    RealType result = 0;
    if(0 == detail::verify_scale_b("boost::math::standard_deviation(const extreme_value_distribution<%1%>&)", b, &result, Policy()))
       return result;
+<<<<<<< HEAD
    if(0 == detail::check_scale("boost::math::standard_deviation(const extreme_value_distribution<%1%>&)", dist.location(), &result, Policy()))
+=======
+   if(0 == detail::check_finite("boost::math::standard_deviation(const extreme_value_distribution<%1%>&)", dist.location(), &result, Policy()))
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
       return result;
    return constants::pi<RealType>() * b / sqrt(static_cast<RealType>(6));
 }

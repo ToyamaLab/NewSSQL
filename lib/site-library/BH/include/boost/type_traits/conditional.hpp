@@ -9,6 +9,11 @@
 #ifndef BOOST_TT_CONDITIONAL_HPP_INCLUDED
 #define BOOST_TT_CONDITIONAL_HPP_INCLUDED
 
+<<<<<<< HEAD
+=======
+#include <boost/config.hpp>
+
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 namespace boost {
 
 template <bool b, class T, class U> struct conditional { typedef T type; };

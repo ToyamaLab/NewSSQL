@@ -270,6 +270,10 @@ namespace boost {
       typedef Marker<diff_t, vertex_t, VertexIndexMap> MarkerP;
 
       // Data Members
+<<<<<<< HEAD
+=======
+      bool has_no_edges;
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
       // input parameters
       Graph& G;
@@ -295,7 +299,11 @@ namespace boost {
                PermutationMap perm,
                SuperNodeMap supernode_size, 
                VertexIndexMap id) 
+<<<<<<< HEAD
         : G(g), delta(delta), degree(degree), 
+=======
+        : has_no_edges(true), G(g), delta(delta), degree(degree), 
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
         inverse_perm(inverse_perm), 
         perm(perm), 
         supernode_size(supernode_size), 
@@ -317,7 +325,13 @@ namespace boost {
         // Initialize degreelists.  Degreelists organizes the nodes
         // according to their degree.
         for (boost::tie(v, vend) = vertices(G); v != vend; ++v) {
+<<<<<<< HEAD
           put(degree, *v, out_degree(*v, G));
+=======
+          typename Traits::degree_size_type d = out_degree(*v, G);
+          put(degree, *v, d);
+          if (0 < d) has_no_edges = false;
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
           degreelists.push(*v);
         }
       }
@@ -336,6 +350,15 @@ namespace boost {
           numbering.increment();
           list_isolated.pop();
         }
+<<<<<<< HEAD
+=======
+
+        if (has_no_edges)
+        {
+          return;
+        }
+
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
         size_type min_degree = 1;
         typename DegreeLists::stack list_min_degree = degreelists[min_degree];
 

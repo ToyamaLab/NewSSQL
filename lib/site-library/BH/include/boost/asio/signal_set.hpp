@@ -2,7 +2,11 @@
 // signal_set.hpp
 // ~~~~~~~~~~~~~~
 //
+<<<<<<< HEAD
 // Copyright (c) 2003-2017 Christopher M. Kohlhoff (chris at kohlhoff dot com)
+=======
+// Copyright (c) 2003-2019 Christopher M. Kohlhoff (chris at kohlhoff dot com)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 //
 // Distributed under the Boost Software License, Version 1.0. (See accompanying
 // file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
@@ -16,6 +20,7 @@
 #endif // defined(_MSC_VER) && (_MSC_VER >= 1200)
 
 #include <boost/asio/detail/config.hpp>
+<<<<<<< HEAD
 
 #include <boost/asio/async_result.hpp>
 #include <boost/asio/basic_io_object.hpp>
@@ -29,10 +34,14 @@
 #else // defined(BOOST_ASIO_ENABLE_OLD_SERVICES)
 # include <boost/asio/detail/signal_set_service.hpp>
 #endif // defined(BOOST_ASIO_ENABLE_OLD_SERVICES)
+=======
+#include <boost/asio/basic_signal_set.hpp>
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 namespace boost {
 namespace asio {
 
+<<<<<<< HEAD
 #if defined(BOOST_ASIO_ENABLE_OLD_SERVICES)
 // Typedef for the typical usage of a signal set.
 typedef basic_signal_set<> signal_set;
@@ -442,6 +451,10 @@ public:
   }
 };
 #endif // defined(BOOST_ASIO_ENABLE_OLD_SERVICES)
+=======
+/// Typedef for the typical usage of a signal set.
+typedef basic_signal_set<> signal_set;
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 } // namespace asio
 } // namespace boost

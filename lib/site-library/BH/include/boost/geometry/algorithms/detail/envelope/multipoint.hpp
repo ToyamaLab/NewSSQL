@@ -1,6 +1,10 @@
 // Boost.Geometry (aka GGL, Generic Geometry Library)
 
+<<<<<<< HEAD
 // Copyright (c) 2015-2017, Oracle and/or its affiliates.
+=======
+// Copyright (c) 2015-2018, Oracle and/or its affiliates.
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 // Contributed and/or modified by Vissarion Fysikopoulos, on behalf of Oracle
 // Contributed and/or modified by Menelaos Karavelas, on behalf of Oracle
@@ -13,6 +17,7 @@
 #ifndef BOOST_GEOMETRY_ALGORITHMS_DETAIL_ENVELOPE_MULTIPOINT_HPP
 #define BOOST_GEOMETRY_ALGORITHMS_DETAIL_ENVELOPE_MULTIPOINT_HPP
 
+<<<<<<< HEAD
 #include <cstddef>
 #include <algorithm>
 #include <utility>
@@ -41,10 +46,20 @@
 
 #include <boost/geometry/algorithms/dispatch/envelope.hpp>
 
+=======
+#include <boost/geometry/core/tags.hpp>
+
+#include <boost/geometry/algorithms/dispatch/envelope.hpp>
+
+// For backward compatibility
+#include <boost/geometry/strategies/cartesian/envelope_multipoint.hpp>
+#include <boost/geometry/strategies/spherical/envelope_multipoint.hpp>
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 namespace boost { namespace geometry
 {
 
+<<<<<<< HEAD
 #ifndef DOXYGEN_NO_DETAIL
 namespace detail { namespace envelope
 {
@@ -348,12 +363,15 @@ public:
 #endif // DOXYGEN_NO_DETAIL
 
 
+=======
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 #ifndef DOXYGEN_NO_DISPATCH
 namespace dispatch
 {
 
 
+<<<<<<< HEAD
 template <typename MultiPoint, typename CSTag>
 struct envelope<MultiPoint, multi_point_tag, CSTag>
     : detail::envelope::envelope_range
@@ -368,6 +386,17 @@ template <typename MultiPoint>
 struct envelope<MultiPoint, multi_point_tag, geographic_tag>
     : detail::envelope::envelope_multipoint_on_spheroid
 {};
+=======
+template <typename MultiPoint>
+struct envelope<MultiPoint, multi_point_tag>
+{
+    template <typename Box, typename Strategy>
+    static inline void apply(MultiPoint const& multipoint, Box& mbr, Strategy const& )
+    {
+        Strategy::apply(multipoint, mbr);
+    }
+};
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 
 } // namespace dispatch

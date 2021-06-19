@@ -149,6 +149,13 @@
 #  define BOOST_NO_CXX17_FOLD_EXPRESSIONS
 #endif
 
+<<<<<<< HEAD
+=======
+#if !defined(__cpp_if_constexpr) || (__cpp_if_constexpr < 201606)
+#  define BOOST_NO_CXX17_IF_CONSTEXPR
+#endif
+
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 #ifdef c_plusplus
 // EDG has "long long" in non-strict mode
 // However, some libraries have insufficient "long long" support

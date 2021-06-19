@@ -1171,6 +1171,7 @@ class gauss : public detail::gauss_detail<Real, N, detail::gauss_constant_catego
 {
    typedef detail::gauss_detail<Real, N, detail::gauss_constant_category<Real>::value> base;
 public:
+<<<<<<< HEAD
    typedef Real value_type;
 
    template <class F>
@@ -1190,18 +1191,51 @@ public:
          value_type fm = f(-base::abscissa()[i]);
          result += (fp + fm) * base::weights()[i];
          L1 += (fabs(fp) + fabs(fm)) *  base::weights()[i];
+=======
+
+   template <class F>
+   static auto integrate(F f, Real* pL1 = nullptr)->decltype(std::declval<F>()(std::declval<Real>()))
+   {
+     // In many math texts, K represents the field of real or complex numbers.
+     // Too bad we can't put blackboard bold into C++ source!
+      typedef decltype(f(Real(0))) K;
+      using std::abs;
+      unsigned non_zero_start = 1;
+      K result = Real(0);
+      if (N & 1) {
+         result = f(Real(0)) * base::weights()[0];
+      }
+      else {
+         result = 0;
+         non_zero_start = 0;
+      }
+      Real L1 = abs(result);
+      for (unsigned i = non_zero_start; i < base::abscissa().size(); ++i)
+      {
+         K fp = f(base::abscissa()[i]);
+         K fm = f(-base::abscissa()[i]);
+         result += (fp + fm) * base::weights()[i];
+         L1 += (abs(fp) + abs(fm)) *  base::weights()[i];
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
       }
       if (pL1)
          *pL1 = L1;
       return result;
    }
    template <class F>
+<<<<<<< HEAD
    static value_type integrate(F f, Real a, Real b, Real* pL1 = nullptr)
    {
+=======
+   static auto integrate(F f, Real a, Real b, Real* pL1 = nullptr)->decltype(std::declval<F>()(std::declval<Real>()))
+   {
+      typedef decltype(f(a)) K;
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
       static const char* function = "boost::math::quadrature::gauss<%1%>::integrate(f, %1%, %1%)";
       if (!(boost::math::isnan)(a) && !(boost::math::isnan)(b))
       {
          // Infinite limits:
+<<<<<<< HEAD
          if ((a <= -tools::max_value<Real>()) && (b >= tools::max_value<Real>()))
          {
             auto u = [&](const Real& t)->Real
@@ -1209,6 +1243,17 @@ public:
                Real t_sq = t*t;
                Real inv = 1 / (1 - t_sq);
                return f(t*inv)*(1 + t_sq)*inv*inv;
+=======
+         Real min_inf = -tools::max_value<Real>();
+         if ((a <= min_inf) && (b >= tools::max_value<Real>()))
+         {
+            auto u = [&](const Real& t)->K
+            {
+               Real t_sq = t*t;
+               Real inv = 1 / (1 - t_sq);
+               K res = f(t*inv)*(1 + t_sq)*inv*inv;
+               return res;
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
             };
             return integrate(u, pL1);
          }
@@ -1216,6 +1261,7 @@ public:
          // Right limit is infinite:
          if ((boost::math::isfinite)(a) && (b >= tools::max_value<Real>()))
          {
+<<<<<<< HEAD
             auto u = [&](const Real& t)->Real
             {
                Real z = 1 / (t + 1);
@@ -1223,6 +1269,16 @@ public:
                return f(arg)*z*z;
             };
             Real Q = 2 * integrate(u, pL1);
+=======
+            auto u = [&](const Real& t)->K
+            {
+               Real z = 1 / (t + 1);
+               Real arg = 2 * z + a - 1;
+               K res = f(arg)*z*z;
+               return res;
+            };
+            K Q = Real(2) * integrate(u, pL1);
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
             if (pL1)
             {
                *pL1 *= 2;
@@ -1232,6 +1288,7 @@ public:
 
          if ((boost::math::isfinite)(b) && (a <= -tools::max_value<Real>()))
          {
+<<<<<<< HEAD
             auto v = [&](const Real& t)->Real
             {
                Real z = 1 / (t + 1);
@@ -1239,6 +1296,16 @@ public:
                return f(b - arg) * z * z;
             };
             Real Q = 2 * integrate(v, pL1);
+=======
+            auto v = [&](const Real& t)->K
+            {
+               Real z = 1 / (t + 1);
+               Real arg = 2 * z - 1;
+               K res = f(b - arg) * z * z;
+               return res;
+            };
+            K Q = Real(2) * integrate(v, pL1);
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
             if (pL1)
             {
                *pL1 *= 2;
@@ -1255,11 +1322,19 @@ public:
             Real avg = (a + b)*constants::half<Real>();
             Real scale = (b - a)*constants::half<Real>();
 
+<<<<<<< HEAD
             auto u = [&](Real z)->Real
             {
                return f(avg + scale*z);
             };
             Real Q = scale*integrate(u, pL1);
+=======
+            auto u = [&](Real z)->K
+            {
+               return f(avg + scale*z);
+            };
+            K Q = scale*integrate(u, pL1);
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
             if (pL1)
             {
@@ -1268,7 +1343,11 @@ public:
             return Q;
          }
       }
+<<<<<<< HEAD
       return policies::raise_domain_error(function, "The domain of integration is not sensible; please check the bounds.", a, Policy());
+=======
+      return static_cast<K>(policies::raise_domain_error(function, "The domain of integration is not sensible; please check the bounds.", a, Policy()));
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
    }
 };
 
@@ -1281,4 +1360,7 @@ public:
 #endif
 
 #endif // BOOST_MATH_QUADRATURE_GAUSS_HPP
+<<<<<<< HEAD
 
+=======
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce

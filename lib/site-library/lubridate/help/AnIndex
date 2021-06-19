@@ -32,6 +32,15 @@ $<-,Period-method	hidden_aliases
 %%,Period,Period-method	hidden_aliases
 %--%	interval
 %/%,difftime,Timespan-method	Timespan-class
+<<<<<<< HEAD
+=======
+%/%,Duration,Interval-method	Timespan-class
+%/%,Interval,Duration-method	Timespan-class
+%/%,Interval,Interval-method	Timespan-class
+%/%,Interval,Period-method	Timespan-class
+%/%,Period,Interval-method	Timespan-class
+%/%,Period,Period-method	Timespan-class
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 %/%,Timespan,Timespan-method	Timespan-class
 %m+%	mplus
 %m+%,ANY,ANY-method	mplus
@@ -269,13 +278,24 @@ Compare,Duration,ANY-method	hidden_aliases
 Compare,Duration,character-method	hidden_aliases
 Compare,Duration,difftime-method	hidden_aliases
 Compare,Duration,Duration-method	hidden_aliases
+<<<<<<< HEAD
 Compare,Duration,Period-method	hidden_aliases
+=======
+Compare,Duration,numeric-method	hidden_aliases
+Compare,Duration,Period-method	hidden_aliases
+Compare,numeric,Duration-method	hidden_aliases
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 Compare,numeric,Period-method	hidden_aliases
 Compare,Period,character-method	hidden_aliases
 Compare,Period,difftime-method	hidden_aliases
 Compare,Period,Duration-method	hidden_aliases
 Compare,Period,numeric-method	hidden_aliases
 Compare,Period,Period-method	hidden_aliases
+<<<<<<< HEAD
+=======
+cyclic_encoding	cyclic_encoding
+Date	date_utils
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 date	date
 date,Period-method	hidden_aliases
 date<-	date
@@ -296,6 +316,10 @@ dhours	duration
 dmicroseconds	duration
 dmilliseconds	duration
 dminutes	duration
+<<<<<<< HEAD
+=======
+dmonths	duration
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 dmy	ymd
 dmy_h	ymd_hms
 dmy_hm	ymd_hms
@@ -310,6 +334,7 @@ durations	Duration-class
 dweeks	duration
 dyears	duration
 dym	ymd
+<<<<<<< HEAD
 edays	Deprecated
 ehours	Deprecated
 emicroseconds	Deprecated
@@ -322,13 +347,28 @@ epiyear	year
 eseconds	Deprecated
 eweeks	Deprecated
 eyears	Deprecated
+=======
+epiweek	week
+epiyear	year
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 fast_strptime	parse_date_time
 fit_to_timeline	fit_to_timeline
 floor_date	round_date
 force_tz	force_tz
 force_tzs	force_tz
+<<<<<<< HEAD
 guess_formats	guess_formats
 here	Deprecated
+=======
+format_ISO8601	format_ISO8601
+format_ISO8601,Date-method	format_ISO8601
+format_ISO8601,Duration-method	format_ISO8601
+format_ISO8601,Interval-method	format_ISO8601
+format_ISO8601,Period-method	format_ISO8601
+format_ISO8601,POSIXt-method	format_ISO8601
+format_ISO8601_precision_check	format_ISO8601_precision_check
+guess_formats	guess_formats
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 hidden_aliases	hidden_aliases
 hm	hms
 hms	hms
@@ -339,6 +379,10 @@ hour<-,Period-method	hidden_aliases
 hours	period
 instant	is.instant
 instants	is.instant
+<<<<<<< HEAD
+=======
+intersect	reexports
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 intersect,Interval,Interval-method	hidden_aliases
 interval	interval
 Interval-class	Interval-class
@@ -354,15 +398,25 @@ int_shift	interval
 int_standardize	interval
 int_start	interval
 int_start<-	interval
+<<<<<<< HEAD
 is.Date	is.Date
+=======
+is.Date	date_utils
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 is.difftime	is.difftime
 is.duration	duration
 is.instant	is.instant
 is.interval	interval
 is.period	period
+<<<<<<< HEAD
 is.POSIXct	is.POSIXt
 is.POSIXlt	is.POSIXt
 is.POSIXt	is.POSIXt
+=======
+is.POSIXct	posix_utils
+is.POSIXlt	posix_utils
+is.POSIXt	posix_utils
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 is.timepoint	is.instant
 is.timespan	is.timespan
 isoweek	week
@@ -397,12 +451,18 @@ months.numeric	period
 ms	hms
 myd	ymd
 nanoseconds	period
+<<<<<<< HEAD
 new_difftime	Deprecated
 new_duration	Deprecated
 new_interval	Deprecated
 new_period	Deprecated
 now	now
 olson_time_zones	Deprecated
+=======
+NA_Date_	date_utils
+NA_POSIXct_	posix_utils
+now	now
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 origin	origin
 parse_date_time	parse_date_time
 parse_date_time2	parse_date_time
@@ -412,6 +472,10 @@ periods	period
 period_to_seconds	period_to_seconds
 picoseconds	period
 pm	am
+<<<<<<< HEAD
+=======
+POSIXct	posix_utils
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 pretty_dates	pretty_dates
 qday	day
 qday<-	day
@@ -422,6 +486,10 @@ reclass_timespan,ANY,difftime-method	reclass_timespan
 reclass_timespan,ANY,Duration-method	reclass_timespan
 reclass_timespan,ANY,Interval-method	reclass_timespan
 reclass_timespan,ANY,Period-method	reclass_timespan
+<<<<<<< HEAD
+=======
+reexports	reexports
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 rep,Duration-method	hidden_aliases
 rep,Interval-method	hidden_aliases
 rep,Period-method	hidden_aliases
@@ -434,6 +502,10 @@ second<-,Period-method	hidden_aliases
 seconds	period
 seconds_to_period	period_to_seconds
 semester	quarter
+<<<<<<< HEAD
+=======
+setdiff	reexports
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 setdiff,Interval,Interval-method	hidden_aliases
 show,Duration-method	hidden_aliases
 show,Interval-method	hidden_aliases
@@ -446,9 +518,16 @@ Timespan-class	Timespan-class
 timespans	timespan
 time_length	time_length
 time_length,Interval-method	time_length
+<<<<<<< HEAD
 today	today
 tz	tz
 tz<-	tz
+=======
+today	now
+tz	tz
+tz<-	tz
+union	reexports
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 union,Interval,Interval-method	hidden_aliases
 update.POSIXt	DateTimeUpdate
 wday	day

@@ -27,7 +27,13 @@
 
 #ifdef BOOST_MSVC
 #  pragma warning(push)
+<<<<<<< HEAD
 #  pragma warning(disable: 4800)
+=======
+#if BOOST_MSVC < 1910
+#pragma warning(disable:4800)
+#endif
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 #endif
 
 namespace boost{
@@ -353,7 +359,14 @@ struct recursion_info
 
 #ifdef BOOST_MSVC
 #pragma warning(push)
+<<<<<<< HEAD
 #pragma warning(disable : 4251 4231)
+=======
+#pragma warning(disable : 4251)
+#if BOOST_MSVC < 1700
+#     pragma warning(disable : 4231)
+#endif
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 #  if BOOST_MSVC < 1600
 #     pragma warning(disable : 4660)
 #  endif

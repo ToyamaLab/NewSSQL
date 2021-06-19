@@ -2,7 +2,11 @@
 // detail/impl/socket_ops.ipp
 // ~~~~~~~~~~~~~~~~~~~~~~~~~~
 //
+<<<<<<< HEAD
 // Copyright (c) 2003-2017 Christopher M. Kohlhoff (chris at kohlhoff dot com)
+=======
+// Copyright (c) 2003-2019 Christopher M. Kohlhoff (chris at kohlhoff dot com)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 //
 // Distributed under the Boost Software License, Version 1.0. (See accompanying
 // file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
@@ -772,7 +776,11 @@ signed_size_type recv(socket_type s, buf* bufs, size_t count,
   else if (ec.value() == ERROR_PORT_UNREACHABLE)
     ec = boost::asio::error::connection_refused;
   else if (ec.value() == WSAEMSGSIZE || ec.value() == ERROR_MORE_DATA)
+<<<<<<< HEAD
     ec.assign(0, ec.category());
+=======
+    result = 0;
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
   if (result != 0)
     return socket_error_retval;
   ec = boost::system::error_code();
@@ -926,7 +934,11 @@ signed_size_type recvfrom(socket_type s, buf* bufs, size_t count,
   else if (ec.value() == ERROR_PORT_UNREACHABLE)
     ec = boost::asio::error::connection_refused;
   else if (ec.value() == WSAEMSGSIZE || ec.value() == ERROR_MORE_DATA)
+<<<<<<< HEAD
     ec.assign(0, ec.category());
+=======
+    result = 0;
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
   if (result != 0)
     return socket_error_retval;
   ec = boost::system::error_code();
@@ -1503,7 +1515,12 @@ int setsockopt(socket_type s, state_type& state, int level, int optname,
     ec = boost::system::error_code();
 
 #if defined(__MACH__) && defined(__APPLE__) \
+<<<<<<< HEAD
   || defined(__NetBSD__) || defined(__FreeBSD__) || defined(__OpenBSD__)
+=======
+  || defined(__NetBSD__) || defined(__FreeBSD__) \
+  || defined(__OpenBSD__) || defined(__QNX__)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     // To implement portable behaviour for SO_REUSEADDR with UDP sockets we
     // need to also set SO_REUSEPORT on BSD-based platforms.
     if ((state & datagram_oriented)
@@ -2115,7 +2132,11 @@ const char* inet_ntop(int af, const void* src, char* dest, size_t length,
   if (result != 0 && af == BOOST_ASIO_OS_DEF(AF_INET6) && scope_id != 0)
   {
     using namespace std; // For strcat and sprintf.
+<<<<<<< HEAD
     char if_name[IF_NAMESIZE + 1] = "%";
+=======
+    char if_name[(IF_NAMESIZE > 21 ? IF_NAMESIZE : 21) + 1] = "%";
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     const in6_addr_type* ipv6_address = static_cast<const in6_addr_type*>(src);
     bool is_link_local = ((ipv6_address->s6_addr[0] == 0xfe)
         && ((ipv6_address->s6_addr[1] & 0xc0) == 0x80));

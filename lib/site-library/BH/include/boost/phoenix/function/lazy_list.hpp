@@ -388,8 +388,12 @@ void intrusive_ptr_release( const strict_cons<T>* p ) {
 }
 
 template <class T>
+<<<<<<< HEAD
 class strict_list_iterator
 : public std::iterator<std::input_iterator_tag,T,ptrdiff_t> {
+=======
+class strict_list_iterator {
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
    typedef boost::intrusive_ptr<strict_cons<T> > rep_type;
    rep_type l;
    bool is_nil;
@@ -406,6 +410,15 @@ class strict_list_iterator
       const T* operator->() const { return &x; }
    };
 public:
+<<<<<<< HEAD
+=======
+   typedef std::input_iterator_tag iterator_category;
+   typedef T value_type;
+   typedef ptrdiff_t difference_type;
+   typedef T* pointer;
+   typedef T& reference;
+
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
    strict_list_iterator() : l(), is_nil(true) {}
    explicit strict_list_iterator( const rep_type& ll ) : l(ll), is_nil(!ll) {}
    
@@ -991,8 +1004,12 @@ template <class T, class F> struct ListHelp<T,F,odd_list<T> > {
 };
 
 template <class T>
+<<<<<<< HEAD
 class list_iterator
 : public std::iterator<std::input_iterator_tag,T,ptrdiff_t> {
+=======
+class list_iterator {
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
    list<T> l;
    bool is_nil;
    void advance() {
@@ -1008,6 +1025,15 @@ class list_iterator
       const T* operator->() const { return &x; }
    };
 public:
+<<<<<<< HEAD
+=======
+   typedef std::input_iterator_tag iterator_category;
+   typedef T value_type;
+   typedef ptrdiff_t difference_type;
+   typedef T* pointer;
+   typedef T& reference;
+
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
    list_iterator() : l(), is_nil(true) {}
    explicit list_iterator( const list<T>& ll ) : l(ll), is_nil(!ll) {}
    

@@ -1,20 +1,36 @@
 Package: later
 Type: Package
+<<<<<<< HEAD
 Title: Utilities for Delaying Function Execution
 Version: 0.7.5
 Authors@R: c(
     person("Joe", "Cheng", role = c("aut", "cre"), email = "joe@rstudio.com"),
     person(family = "RStudio", role = "cph"),
+=======
+Title: Utilities for Scheduling Functions to Execute Later with Event
+        Loops
+Version: 1.1.0.1
+Authors@R: c(
+    person("Joe", "Cheng", role = c("aut", "cre"), email = "joe@rstudio.com"),
+    person(family = "RStudio", role = "cph"),
+    person("Winston", "Chang", role = c("aut"), email = "winston@rstudio.com"),
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     person("Marcus", "Geelnard", role = c("ctb", "cph"), comment = "TinyCThread library, https://tinycthread.github.io/"),
     person("Evan", "Nemerson", role = c("ctb", "cph"), comment = "TinyCThread library, https://tinycthread.github.io/")
     )
 Description: Executes arbitrary R or C functions some time after the current
+<<<<<<< HEAD
     time, after the R execution stack has emptied.
+=======
+    time, after the R execution stack has emptied. The functions are scheduled
+    in an event loop.
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 URL: https://github.com/r-lib/later
 BugReports: https://github.com/r-lib/later/issues
 License: GPL (>= 2)
 Imports: Rcpp (>= 0.12.9), rlang
 LinkingTo: Rcpp, BH
+<<<<<<< HEAD
 RoxygenNote: 6.1.0
 Suggests: knitr, rmarkdown, testthat
 VignetteBuilder: knitr
@@ -22,11 +38,26 @@ NeedsCompilation: yes
 Packaged: 2018-09-14 22:59:16 UTC; jcheng
 Author: Joe Cheng [aut, cre],
   RStudio [cph],
+=======
+RoxygenNote: 7.1.0
+Suggests: knitr, rmarkdown, testthat
+VignetteBuilder: knitr
+NeedsCompilation: yes
+Packaged: 2020-06-02 13:23:01 UTC; winston
+Author: Joe Cheng [aut, cre],
+  RStudio [cph],
+  Winston Chang [aut],
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
   Marcus Geelnard [ctb, cph] (TinyCThread library,
     https://tinycthread.github.io/),
   Evan Nemerson [ctb, cph] (TinyCThread library,
     https://tinycthread.github.io/)
 Maintainer: Joe Cheng <joe@rstudio.com>
 Repository: CRAN
+<<<<<<< HEAD
 Date/Publication: 2018-09-18 22:20:03 UTC
 Built: R 3.5.1; x86_64-apple-darwin17.6.0; 2018-10-01 07:29:00 UTC; unix
+=======
+Date/Publication: 2020-06-05 10:10:13 UTC
+Built: R 4.0.2; x86_64-apple-darwin17.7.0; 2020-08-27 07:54:36 UTC; unix
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce

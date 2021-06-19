@@ -525,21 +525,34 @@ class avl_set
    //Assert if passed value traits are compatible with the type
    BOOST_STATIC_ASSERT((detail::is_same<typename value_traits::value_type, T>::value));
 
+<<<<<<< HEAD
    avl_set()
       :  Base()
    {}
 
    explicit avl_set( const key_compare &cmp, const value_traits &v_traits = value_traits())
+=======
+   BOOST_INTRUSIVE_FORCEINLINE avl_set()
+      :  Base()
+   {}
+
+   BOOST_INTRUSIVE_FORCEINLINE explicit avl_set( const key_compare &cmp, const value_traits &v_traits = value_traits())
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
       :  Base(cmp, v_traits)
    {}
 
    template<class Iterator>
+<<<<<<< HEAD
    avl_set( Iterator b, Iterator e
+=======
+   BOOST_INTRUSIVE_FORCEINLINE avl_set( Iterator b, Iterator e
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
       , const key_compare &cmp = key_compare()
       , const value_traits &v_traits = value_traits())
       :  Base(b, e, cmp, v_traits)
    {}
 
+<<<<<<< HEAD
    avl_set(BOOST_RV_REF(avl_set) x)
       :  Base(BOOST_MOVE_BASE(Base, x))
    {}
@@ -565,6 +578,33 @@ class avl_set
    {  return static_cast<avl_set &>(Base::container_from_iterator(it));   }
 
    static const avl_set &container_from_iterator(const_iterator it)
+=======
+   BOOST_INTRUSIVE_FORCEINLINE avl_set(BOOST_RV_REF(avl_set) x)
+      :  Base(BOOST_MOVE_BASE(Base, x))
+   {}
+
+   BOOST_INTRUSIVE_FORCEINLINE avl_set& operator=(BOOST_RV_REF(avl_set) x)
+   {  return static_cast<avl_set &>(this->Base::operator=(BOOST_MOVE_BASE(Base, x)));  }
+
+   template <class Cloner, class Disposer>
+   BOOST_INTRUSIVE_FORCEINLINE void clone_from(const avl_set &src, Cloner cloner, Disposer disposer)
+   {  Base::clone_from(src, cloner, disposer);  }
+
+   template <class Cloner, class Disposer>
+   BOOST_INTRUSIVE_FORCEINLINE void clone_from(BOOST_RV_REF(avl_set) src, Cloner cloner, Disposer disposer)
+   {  Base::clone_from(BOOST_MOVE_BASE(Base, src), cloner, disposer);  }
+
+   BOOST_INTRUSIVE_FORCEINLINE static avl_set &container_from_end_iterator(iterator end_iterator)
+   {  return static_cast<avl_set &>(Base::container_from_end_iterator(end_iterator));   }
+
+   BOOST_INTRUSIVE_FORCEINLINE static const avl_set &container_from_end_iterator(const_iterator end_iterator)
+   {  return static_cast<const avl_set &>(Base::container_from_end_iterator(end_iterator));   }
+
+   BOOST_INTRUSIVE_FORCEINLINE static avl_set &container_from_iterator(iterator it)
+   {  return static_cast<avl_set &>(Base::container_from_iterator(it));   }
+
+   BOOST_INTRUSIVE_FORCEINLINE static const avl_set &container_from_iterator(const_iterator it)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
    {  return static_cast<const avl_set &>(Base::container_from_iterator(it));   }
 };
 
@@ -1020,21 +1060,34 @@ class avl_multiset
    //Assert if passed value traits are compatible with the type
    BOOST_STATIC_ASSERT((detail::is_same<typename value_traits::value_type, T>::value));
 
+<<<<<<< HEAD
    avl_multiset()
       :  Base()
    {}
 
    explicit avl_multiset( const key_compare &cmp, const value_traits &v_traits = value_traits())
+=======
+   BOOST_INTRUSIVE_FORCEINLINE avl_multiset()
+      :  Base()
+   {}
+
+   BOOST_INTRUSIVE_FORCEINLINE explicit avl_multiset( const key_compare &cmp, const value_traits &v_traits = value_traits())
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
       :  Base(cmp, v_traits)
    {}
 
    template<class Iterator>
+<<<<<<< HEAD
    avl_multiset( Iterator b, Iterator e
+=======
+   BOOST_INTRUSIVE_FORCEINLINE avl_multiset( Iterator b, Iterator e
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
            , const key_compare &cmp = key_compare()
            , const value_traits &v_traits = value_traits())
       :  Base(b, e, cmp, v_traits)
    {}
 
+<<<<<<< HEAD
    avl_multiset(BOOST_RV_REF(avl_multiset) x)
       :  Base(BOOST_MOVE_BASE(Base, x))
    {}
@@ -1060,6 +1113,33 @@ class avl_multiset
    {  return static_cast<avl_multiset &>(Base::container_from_iterator(it));   }
 
    static const avl_multiset &container_from_iterator(const_iterator it)
+=======
+   BOOST_INTRUSIVE_FORCEINLINE avl_multiset(BOOST_RV_REF(avl_multiset) x)
+      :  Base(BOOST_MOVE_BASE(Base, x))
+   {}
+
+   BOOST_INTRUSIVE_FORCEINLINE avl_multiset& operator=(BOOST_RV_REF(avl_multiset) x)
+   {  return static_cast<avl_multiset &>(this->Base::operator=(BOOST_MOVE_BASE(Base, x)));  }
+
+   template <class Cloner, class Disposer>
+   BOOST_INTRUSIVE_FORCEINLINE void clone_from(const avl_multiset &src, Cloner cloner, Disposer disposer)
+   {  Base::clone_from(src, cloner, disposer);  }
+
+   template <class Cloner, class Disposer>
+   BOOST_INTRUSIVE_FORCEINLINE void clone_from(BOOST_RV_REF(avl_multiset) src, Cloner cloner, Disposer disposer)
+   {  Base::clone_from(BOOST_MOVE_BASE(Base, src), cloner, disposer);  }
+
+   BOOST_INTRUSIVE_FORCEINLINE static avl_multiset &container_from_end_iterator(iterator end_iterator)
+   {  return static_cast<avl_multiset &>(Base::container_from_end_iterator(end_iterator));   }
+
+   BOOST_INTRUSIVE_FORCEINLINE static const avl_multiset &container_from_end_iterator(const_iterator end_iterator)
+   {  return static_cast<const avl_multiset &>(Base::container_from_end_iterator(end_iterator));   }
+
+   BOOST_INTRUSIVE_FORCEINLINE static avl_multiset &container_from_iterator(iterator it)
+   {  return static_cast<avl_multiset &>(Base::container_from_iterator(it));   }
+
+   BOOST_INTRUSIVE_FORCEINLINE static const avl_multiset &container_from_iterator(const_iterator it)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
    {  return static_cast<const avl_multiset &>(Base::container_from_iterator(it));   }
 };
 

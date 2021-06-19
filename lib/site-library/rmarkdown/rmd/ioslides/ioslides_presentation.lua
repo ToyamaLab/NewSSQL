@@ -173,17 +173,30 @@ function Link(s, src, tit)
          escape(tit,true) .. "'>" .. s .. "</a>"
 end
 
+<<<<<<< HEAD
 function Image(s, src, tit)
   return "<img src='" .. escape(src,true) .. "' title='" ..
          escape(tit,true) .. "'/>"
 end
 
 function CaptionedImage(src, tit, s)
+=======
+function Image(s, src, tit, attr)
+  return "<img" .. attributes(attr) .. " src='" .. escape(src,true) .. "' title='" ..
+         escape(tit,true) .. "'/>"
+end
+
+function CaptionedImage(src, tit, s, attr)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
   local caption = ""
   if fig_caption and (string.len(s) > 0) then
     caption = "<p class='caption'>" .. s .. "</p>"
   end
+<<<<<<< HEAD
   return Image(s, src, tit) .. caption
+=======
+  return Image(s, src, tit, attr) .. caption
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 end
 
 function Code(s, attr)
@@ -265,7 +278,11 @@ function Header(lev, s, attr)
     end, slide)
     slide_class = table.concat(uniq(slide), " ")
     if attr["data-background"]:match("^#") then
+<<<<<<< HEAD
       slide_style = 'background-color: ' .. attr["data-background"] .. ';'
+=======
+      slide_style = 'background: ' .. attr["data-background"] .. ';'
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     else
       -- assume url
       slide_style = 'background-image: url(' .. attr["data-background"] .. ');'

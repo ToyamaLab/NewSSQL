@@ -30,7 +30,11 @@ namespace boost{ namespace math{
    namespace concepts {
 
       class real_concept;
+<<<<<<< HEAD
       struct std_real_concept;
+=======
+      class std_real_concept;
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
    }
 
@@ -73,7 +77,11 @@ inline T normalize_value(const T& val, const mpl::true_&)
    BOOST_STATIC_ASSERT(std::numeric_limits<T>::is_specialized);
    BOOST_STATIC_ASSERT(std::numeric_limits<T>::radix != 2);
 
+<<<<<<< HEAD
    boost::intmax_t shift = std::numeric_limits<T>::digits - ilogb(val) - 1;
+=======
+   boost::intmax_t shift = (boost::intmax_t)std::numeric_limits<T>::digits - (boost::intmax_t)ilogb(val) - 1;
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
    T result = scalbn(val, shift);
    result = round(result);
    return scalbn(result, -shift); 
@@ -489,7 +497,11 @@ T float_distance_imp(const T& a, const T& b, const mpl::true_&, const Policy& po
    // because we actually have fewer than tools::digits<T>()
    // significant bits in the representation:
    //
+<<<<<<< HEAD
    frexp(((boost::math::fpclassify)(a) == (int)FP_SUBNORMAL) ? tools::min_value<T>() : a, &expon);
+=======
+   (void)frexp(((boost::math::fpclassify)(a) == (int)FP_SUBNORMAL) ? tools::min_value<T>() : a, &expon);
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
    T upper = ldexp(T(1), expon);
    T result = T(0);
    //
@@ -499,7 +511,11 @@ T float_distance_imp(const T& a, const T& b, const mpl::true_&, const Policy& po
    if(b > upper)
    {
       int expon2;
+<<<<<<< HEAD
       frexp(b, &expon2);
+=======
+      (void)frexp(b, &expon2);
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
       T upper2 = ldexp(T(0.5), expon2);
       result = float_distance(upper2, b);
       result += (expon2 - expon - 1) * ldexp(T(1), tools::digits<T>() - 1);
@@ -714,7 +730,11 @@ T float_advance_imp(T val, int distance, const mpl::true_&, const Policy& pol)
    }
 
    int expon;
+<<<<<<< HEAD
    frexp(val, &expon);
+=======
+   (void)frexp(val, &expon);
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
    T limit = ldexp((distance < 0 ? T(0.5f) : T(1)), expon);
    if(val <= tools::min_value<T>())
    {

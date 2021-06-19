@@ -22,9 +22,15 @@
 // last known and checked version is 0x621
 #if (__CODEGEARC__ > 0x621)
 #  if defined(BOOST_ASSERT_CONFIG)
+<<<<<<< HEAD
 #     error "Unknown compiler version - please run the configure tests and report the results"
 #  else
 #     pragma message( "Unknown compiler version - please run the configure tests and report the results")
+=======
+#     error "boost: Unknown compiler version - please run the configure tests and report the results"
+#  else
+#     pragma message( "boost: Unknown compiler version - please run the configure tests and report the results")
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 #  endif
 #endif
 
@@ -167,6 +173,13 @@
 #  define BOOST_NO_CXX17_FOLD_EXPRESSIONS
 #endif
 
+<<<<<<< HEAD
+=======
+#if !defined(__cpp_if_constexpr) || (__cpp_if_constexpr < 201606)
+#  define BOOST_NO_CXX17_IF_CONSTEXPR
+#endif
+
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 //
 // TR1 macros:
 //

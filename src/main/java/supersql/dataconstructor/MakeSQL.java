@@ -1,12 +1,12 @@
 package supersql.dataconstructor;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.Hashtable;
-import java.util.Iterator;
-import java.util.Map;
+import java.util.*;
+import java.awt.List;
 
+import net.sf.jsqlparser.statement.select.FromItem;
 import supersql.codegenerator.AttributeItem;
+import supersql.codegenerator.Debug;
+import supersql.codegenerator.VR.VRFunction;
 import supersql.common.GlobalEnv;
 import supersql.common.Log;
 import supersql.extendclass.ExtList;
@@ -65,31 +65,21 @@ public class MakeSQL {
 		//hanki end
 
 		int tmp_flag = 0; //ryuryu
-//		Log.info("atts::"+atts);
+		VRFunction.att_name = new List();
 		HashSet tg1 = new HashSet();
 		//SELECT句に属性追加
-		Hashtable<Integer, String> atts_list = new Hashtable<>();
+		HashMap<Integer, AttributeItem> atts_list = new HashMap<>();
 		for (idx = 0; idx < schf.size(); idx++) {
 			itemno = (Integer) (schf.get(idx));
 			AttributeItem att1 = (AttributeItem) (atts.get(itemno));
-			atts_list.put(itemno, att1.getSQLimage());
-
-			//ryuryu
-			/*if (idx != 0) {
+			atts_list.put(itemno, att1);
+			if (idx != 0) {
+				VRFunction.att_name.add(att1.getSQLimage());
 				buf.append(", " + att1.getSQLimage());
 			} else {
 				buf.append(att1.getSQLimage());
-			}*/
-
-			//ryuryu(start)//////////////////////////////////////////////////////////////////////////////////////////
-			if (idx != 0) {
-				buf.append(", " + att1.getSQLimage());
+				VRFunction.att_name.add(att1.getSQLimage());
 			}
-			else{
-				buf.append(att1.getSQLimage());
-			}
-
-
 			////			else if(SSQLparser.xpathExist == 1){
 			////
 			////				if (idx != 0) {
@@ -164,8 +154,6 @@ public class MakeSQL {
 		// From
 		flag = false;
 
-		buf.append(" FROM ");
-
 		//Iterator it = tg1.iterator();		//changed by goto 20120523
 
 		Log.out("FROM_INFO:" + getFrom());
@@ -177,7 +165,6 @@ public class MakeSQL {
 			//�u�e�[�u����.�v��t����(qualify����)�K�v��������
 			//���L�̕ύX�ɂ��A���̖������P����
 			//�i����ɂ��A�ʏ��SQL���l�A���j�[�N�ȗ񖼂̑O�ɂ�qualification�͕s�v�ƂȂ�j
-
 			buf.append(((FromParse) getFrom().getFromTable().get("")).getLine());
 			/*while (it.hasNext()) {
 				String tbl = (String) it.next();
@@ -202,31 +189,31 @@ public class MakeSQL {
 			//add tbt 180711
 			//not to use unused table in from clause
 			String fClauseBefore = getFrom().getLine();
-			String fClauseAfter = new String();
-			if(!From.hasJoinItems()) {
-				for (String tb : fClauseBefore.split(",")) {
-					tb = tb.trim();
-					String tAlias = new String();
-					if(tb.split(" ").length == 2) {
-						tAlias = tb.split(" ")[1];
-					}else{
-						tAlias = tb;
+			StringBuilder fClauseAfter = new StringBuilder();
+			if(tg1.size() != 0) {
+				// tg1が0だったら関連テーブルがない = Selectが定数のみなのでFromはいらない
+				buf.append(" FROM ");
+				if(!From.hasJoinItems()) {
+					for (FromTable fromTable: From.getFromItems()) {
+						if (tg1.contains(fromTable.getAlias())) {
+							fClauseAfter.append(fromTable.getLine());
+							fClauseAfter.append(" ,");
+						}
 					}
-					if (tg1.contains(tAlias)) {
-						fClauseAfter += tb;
-						fClauseAfter += ",";
+					if (fClauseAfter.toString().endsWith(",")) {
+						fClauseAfter.deleteCharAt(fClauseAfter.length() - 1);
 					}
+					buf.append(fClauseAfter.toString().trim());
+				}else{
+					buf.append(fClauseBefore);
 				}
-				if (fClauseAfter.charAt(fClauseAfter.length() - 1) == ',') {
-					fClauseAfter = fClauseAfter.substring(0, fClauseAfter.length() - 1);
-				}
-				buf.append(fClauseAfter);
-			}else{
-				buf.append(fClauseBefore);
 			}
+//			else if (getFrom().getLine().length() > 0) {
+//				buf.append(" FROM "+getFrom().getLine());
+//			}
 			if(GlobalEnv.isOrderFrom() || GlobalEnv.isMultiGB()) {
-				if (fClauseAfter != "") {
-					q.setFromInfo(fClauseAfter);
+				if (!fClauseAfter.toString().equals("")) {
+					q.setFromInfo(fClauseAfter.toString());
 				} else {
 					q.setFromInfo(fClauseBefore);
 				}
@@ -238,6 +225,7 @@ public class MakeSQL {
 				GlobalEnv.qbs.add(qb);
 			}
 		}
+		
 
 		//tk/////////////
 
@@ -263,7 +251,6 @@ public class MakeSQL {
 		if (! GlobalEnv.getdbms().equals("db2")){
 			buf.append(";");
 		}
-
 		return buf.toString();
 
 	}
@@ -276,7 +263,9 @@ public class MakeSQL {
 	//make multiple queries depends on aggregation
 	public ArrayList<QueryBuffer> makeMultipleSQL(ExtList sep_sch){
 		treenum++;
-		ExtList unusedAtts = sep_sch.unnest();
+		ExtList sep_sch_backup_for_unused = new ExtList();
+		DataConstructor.copySepSch(sep_sch, sep_sch_backup_for_unused);
+		ExtList unusedAtts = sep_sch_backup_for_unused.unnest();
 		int unusedBeforeNum = unusedAtts.size();
 
 		long beforeMakeMultipleSQL_Tree = System.currentTimeMillis();
@@ -288,7 +277,11 @@ public class MakeSQL {
 		}
 		Hashtable<ExtList, ExtList> depend_list = new Hashtable<>();
 		//make dependency list of each attributes
-		makeDim((ExtList)sep_sch.get(0), 0);
+		if (!(sep_sch.get(0) instanceof ExtList)) {
+			makeDim((ExtList)sep_sch, 0);
+		} else {
+			makeDim((ExtList)sep_sch.get(0), 0);
+		}
 		ExtList dim_all = new ExtList();
 		ExtList agg_set = new ExtList();
 		//See from the top dimension of dim list
@@ -326,24 +319,17 @@ public class MakeSQL {
 
 		//make query buffer. the numbers of qb is agg_set.size()
 		ArrayList<QueryBuffer> qbs = new ArrayList<>();
-		String from_line = getFrom().getLine();
-		Hashtable table_alias = new Hashtable();
-		//table_alias is hashtable like {table_alias=table_name, ...}
-		for(String f:from_line.split(",")){
-			table_alias.put(f.trim().split(" ")[1], f.trim().split(" ")[0]);
-		}
-		ArrayList<String> usedAtts = new ArrayList<>();
-		boolean noagg = true;
 		for(int i = 0; i < agg_set.size(); i++) {
-			noagg = false;
 			long beforeMakeMultipleSQL_One = System.currentTimeMillis();
 			QueryBuffer qb;
 			ExtList sep_sch_tmp = new ExtList();
-			Object t = agg_set.get(i);
-			int num = ((ExtList) t).size();
+			Object t = agg_set.get(i); // この周回のagg_setの要素
+			int num = ((ExtList) t).size(); // その個数
 
-			int agg = (int) ((ExtList) agg_set.get(i)).get(0);
+			int agg = (int) ((ExtList) agg_set.get(i)).get(0); // この周回のagg_setの要素の0番目
 			int dim_num = 0;
+			// どのdimに含まれる集約か見てる
+			// dimの要素に各集約は一回ずつしか含まれないので、この探し方でもOK
 			for (int j = 0; j < dim.size(); j++) {
 				if (dim.get(j).contains(agg)) {
 					dim_num = j;
@@ -374,7 +360,7 @@ public class MakeSQL {
 			//remove attribute number from unusedAtts.
 
 			for(Object o: sep_sch_tmp){
-				int key = (int)o;
+				int key = Integer.parseInt(o.toString());
 				if(unusedAtts.contains(key)){
 					unusedAtts.remove(unusedAtts.indexOf(key));
 				}
@@ -383,13 +369,13 @@ public class MakeSQL {
 			qb = new QueryBuffer(sep_sch_tmp);
 			qb.treeNum = treenum;
 			qb.sep_sch = tmp_sep;
-			Hashtable att_tmp = new Hashtable();
+			HashMap<Integer, AttributeItem> att_tmp = new HashMap();
 			ExtList att_list = new ExtList();
 			//make att_tmp and att_list.
 			//att_tmp is a set of attribute number and attribute name.
 			//att_list is a list of attribute name.
 			for(Object attnum: sep_sch_tmp){
-				att_tmp.put(attnum, atts.get(attnum));
+				att_tmp.put((int)attnum, (AttributeItem) atts.get(attnum));
 				att_list.add(((AttributeItem)atts.get(attnum)).getSQLimage());
 			}
 			//set att_tmp to qb
@@ -429,20 +415,27 @@ public class MakeSQL {
 		}
 		if(unusedAtts.size() == unusedBeforeNum){
 			QueryBuffer qb = new QueryBuffer(sep_sch.unnest());
-			qb.sep_sch = sep_sch;
+			ExtList tmp_sch_for_setting = new ExtList();
+			if (sep_sch.size() == 1 && !(sep_sch.get(0) instanceof ExtList)) {
+				ExtList buf = new ExtList();
+				DataConstructor.copySepSch(sep_sch, buf);
+				tmp_sch_for_setting.add(buf);
+			} else {
+				DataConstructor.copySepSch(sep_sch, tmp_sch_for_setting);
+			}
+			qb.sep_sch = tmp_sch_for_setting;
 			qb.treeNum = treenum;
-			Hashtable<Integer, String> att_set = new Hashtable<>();
+			HashMap<Integer, AttributeItem> att_set = new HashMap<>();
 			for (int i = 0; i < sep_sch.unnest().size(); i++) {
-				int attnum = (int)sep_sch.unnest().get(i);
-				String attname = atts.get(attnum).toString();
+				int attnum = Integer.parseInt(sep_sch.unnest().getExtListString(i));
+				AttributeItem attname = (AttributeItem) atts.get(attnum);
 				att_set.put(attnum, attname);
 			}
 			qb.setAtts(att_set);
 			HashSet<String> tg = new HashSet<>();
-			for(Map.Entry<Integer, String> entry: att_set.entrySet()) {
-				String name = entry.getValue();
-				if(!tg.contains(name.split("\\.")[0])) {
-					tg.add(name.split("\\.")[0]);
+			for(Map.Entry<Integer, AttributeItem> entry: att_set.entrySet()) {
+				for (Object table: entry.getValue().getUseTables()) {
+					tg.add(table.toString());
 				}
 			}
 			qb.setTg(tg);
@@ -459,7 +452,7 @@ public class MakeSQL {
 //			Log.info("Query is : " + qb.getQuery());
 			//remove attribute numbers from unusedAtts
 			for(Object b: sep_sch.unnest()){
-				int key = (int)b;
+				int key = Integer.parseInt(b.toString());
 				if(unusedAtts.contains(key)){
 					unusedAtts.remove(unusedAtts.indexOf(key));
 				}
@@ -489,18 +482,17 @@ public class MakeSQL {
 			QueryBuffer qb = new QueryBuffer(sep_sch_remain.unnest());
 			qb.sep_sch = sep_sch_remain;
 			qb.treeNum = treenum;
-			Hashtable<Integer, String> att_set = new Hashtable<>();
+			HashMap<Integer, AttributeItem> att_set = new HashMap<>();
 			for (int i = 0; i < sep_sch_remain.unnest().size(); i++) {
 				int attnum = (int)sep_sch_remain.unnest().get(i);
-				String attname = atts.get(attnum).toString();
+				AttributeItem attname = (AttributeItem) atts.get(attnum);
 				att_set.put(attnum, attname);
 			}
 			qb.setAtts(att_set);
 			HashSet<String> tg = new HashSet<>();
-			for(Map.Entry<Integer, String> entry: att_set.entrySet()) {
-				String name = entry.getValue();
-				if(!tg.contains(name.split("\\.")[0])) {
-					tg.add(name.split("\\.")[0]);
+			for(Map.Entry<Integer, AttributeItem> entry: att_set.entrySet()) {
+				for (Object table: entry.getValue().getUseTables()) {
+					tg.add(table.toString());
 				}
 			}
 			qb.setTg(tg);
@@ -540,7 +532,7 @@ public class MakeSQL {
 			}else{
 				try {
 					//if there are already exist list corresponding to idx, add attribute number
-					dim.get(idx).add((Integer) sep_sch_m.get(i));
+					dim.get(idx).add(Integer.parseInt(sep_sch_m.getExtListString(i)));
 				}catch(IndexOutOfBoundsException e){
 					//if there are NOT, to contain attributes make empty lists and add to dim
 					//e.g.
@@ -553,7 +545,7 @@ public class MakeSQL {
 					}
 					//and add
 					//dim become [[0, 1], [], [2]]
-					dim.get(idx).add((Integer) sep_sch_m.get(i));
+					dim.get(idx).add(Integer.parseInt(sep_sch_m.getExtListString(i)));
 				}
 			}
 		}
@@ -570,7 +562,7 @@ public class MakeSQL {
 					result.add(tmp);
 				}
 			}else{
-				result.add(factor);
+				result.add(Integer.parseInt(factor.toString()));
 			}
 		}
 		return result;

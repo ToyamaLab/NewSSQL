@@ -56,7 +56,11 @@ namespace boost
         {
         }
 
+<<<<<<< HEAD
         ~thread_exception() throw()
+=======
+        ~thread_exception() BOOST_NOEXCEPT_OR_NOTHROW
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
         {}
 
 
@@ -113,7 +117,11 @@ namespace boost
         {
         }
 
+<<<<<<< HEAD
         ~lock_error() throw()
+=======
+        ~lock_error() BOOST_NOEXCEPT_OR_NOTHROW
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
         {}
 
     };
@@ -141,7 +149,11 @@ namespace boost
           }
 
 
+<<<<<<< HEAD
         ~thread_resource_error() throw()
+=======
+        ~thread_resource_error() BOOST_NOEXCEPT_OR_NOTHROW
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
         {}
 
     };

@@ -18,6 +18,10 @@
 #include <boost/container/detail/config_begin.hpp>
 #include <boost/container/detail/workaround.hpp>
 #include <boost/container/detail/auto_link.hpp>
+<<<<<<< HEAD
+=======
+#include <boost/container/container_fwd.hpp>
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 #include <cstddef>
 
@@ -25,10 +29,13 @@ namespace boost {
 namespace container {
 namespace pmr {
 
+<<<<<<< HEAD
 /// @cond
 class memory_resource;
 /// @endcond
 
+=======
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 //! <b>Returns</b>: A pointer to a static-duration object of a type derived from
 //!   memory_resource that can serve as a resource for allocating memory using
 //!   global `operator new` and global `operator delete`. The same value is returned every time this function

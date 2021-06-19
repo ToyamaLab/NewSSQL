@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 ## ---- include = FALSE----------------------------------------------------
 library(ggplot2)
 knitr::opts_chunk$set(fig.dpi = 96, collapse = TRUE, comment = "#>")
@@ -6,6 +7,16 @@ knitr::opts_chunk$set(fig.dpi = 96, collapse = TRUE, comment = "#>")
 munsell::mnsl("5PB 5/10")
 
 ## ------------------------------------------------------------------------
+=======
+## ---- include = FALSE---------------------------------------------------------
+library(ggplot2)
+knitr::opts_chunk$set(fig.dpi = 96, collapse = TRUE, comment = "#>")
+
+## -----------------------------------------------------------------------------
+munsell::mnsl("5PB 5/10")
+
+## -----------------------------------------------------------------------------
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 lty <- c("solid", "dashed", "dotted", "dotdash", "longdash", "twodash")
 linetypes <- data.frame(
   y = seq_along(lty),
@@ -18,7 +29,11 @@ ggplot(linetypes, aes(0, y)) +
   scale_x_continuous(NULL, breaks = NULL) + 
   scale_y_reverse(NULL, breaks = NULL)
 
+<<<<<<< HEAD
 ## ------------------------------------------------------------------------
+=======
+## -----------------------------------------------------------------------------
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 lty <- c("11", "18", "1f", "81", "88", "8f", "f1", "f8", "ff")
 linetypes <- data.frame(
   y = seq_along(lty),
@@ -31,7 +46,11 @@ ggplot(linetypes, aes(0, y)) +
   scale_x_continuous(NULL, breaks = NULL) + 
   scale_y_reverse(NULL, breaks = NULL)
 
+<<<<<<< HEAD
 ## ---- out.width = "30%", fig.show = "hold"-------------------------------
+=======
+## ---- out.width = "30%", fig.show = "hold"------------------------------------
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 df <- data.frame(x = 1:3, y = c(4, 1, 9))
 base <- ggplot(df, aes(x, y)) + xlim(0.5, 3.5) + ylim(0, 10)
 base + 
@@ -46,7 +65,11 @@ base +
   geom_path(size = 10, lineend = "square") + 
   geom_path(size = 1, colour = "red")
 
+<<<<<<< HEAD
 ## ---- out.width = "30%", fig.show = "hold"-------------------------------
+=======
+## ---- out.width = "30%", fig.show = "hold"------------------------------------
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 df <- data.frame(x = 1:3, y = c(9, 1, 9))
 base <- ggplot(df, aes(x, y)) + ylim(0, 10)
 base + 
@@ -61,7 +84,11 @@ base +
   geom_path(size = 10, linejoin = "bevel") + 
   geom_path(size = 1, colour = "red")
 
+<<<<<<< HEAD
 ## ------------------------------------------------------------------------
+=======
+## -----------------------------------------------------------------------------
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 shapes <- data.frame(
   shape = c(0:19, 22, 21, 24, 23, 20),
   x = 0:24 %/% 5,
@@ -72,10 +99,16 @@ ggplot(shapes, aes(x, y)) +
   geom_text(aes(label = shape), hjust = 0, nudge_x = 0.15) +
   scale_shape_identity() +
   expand_limits(x = 4.1) +
+<<<<<<< HEAD
   scale_x_continuous(NULL, breaks = NULL) + 
   scale_y_continuous(NULL, breaks = NULL)
 
 ## ----out.width = "90%", fig.asp = 0.4, fig.width = 8---------------------
+=======
+  theme_void()
+
+## ----out.width = "90%", fig.asp = 0.4, fig.width = 8--------------------------
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 shape_names <- c(
   "circle", paste("circle", c("open", "filled", "cross", "plus", "small")), "bullet",
   "square", paste("square", c("open", "filled", "cross", "plus", "triangle")),
@@ -95,27 +128,45 @@ ggplot(shapes, aes(x, y)) +
   geom_point(aes(shape = shape_names), fill = "red", size = 5) +
   geom_text(aes(label = shape_names), nudge_y = -0.3, size = 3.5) +
   scale_shape_identity() +
+<<<<<<< HEAD
   scale_x_continuous(NULL, breaks = NULL) +
   scale_y_continuous(NULL, breaks = NULL)
 
 ## ------------------------------------------------------------------------
+=======
+  theme_void()
+
+## -----------------------------------------------------------------------------
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 sizes <- expand.grid(size = (0:3) * 2, stroke = (0:3) * 2)
 ggplot(sizes, aes(size, stroke, size = size, stroke = stroke)) + 
   geom_abline(slope = -1, intercept = 6, colour = "white", size = 6) + 
   geom_point(shape = 21, fill = "red") +
   scale_size_identity()
 
+<<<<<<< HEAD
 ## ------------------------------------------------------------------------
+=======
+## -----------------------------------------------------------------------------
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 df <- data.frame(x = 1, y = 3:1, family = c("sans", "serif", "mono"))
 ggplot(df, aes(x, y)) + 
   geom_text(aes(label = family, family = family))
 
+<<<<<<< HEAD
 ## ------------------------------------------------------------------------
+=======
+## -----------------------------------------------------------------------------
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 df <- data.frame(x = 1:4, fontface = c("plain", "bold", "italic", "bold.italic"))
 ggplot(df, aes(1, x)) + 
   geom_text(aes(label = fontface, fontface = fontface))
 
+<<<<<<< HEAD
 ## ------------------------------------------------------------------------
+=======
+## -----------------------------------------------------------------------------
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 just <- expand.grid(hjust = c(0, 0.5, 1), vjust = c(0, 0.5, 1))
 just$label <- paste0(just$hjust, ", ", just$vjust)
 

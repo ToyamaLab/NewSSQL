@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 /* Copyright 2003-2015 Joaquin M Lopez Munoz.
+=======
+/* Copyright 2003-2018 Joaquin M Lopez Munoz.
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
  * Distributed under the Boost Software License, Version 1.0.
  * (See accompanying file LICENSE_1_0.txt or copy at
  * http://www.boost.org/LICENSE_1_0.txt)
@@ -15,8 +19,13 @@
 
 #include <boost/config.hpp> /* keep it first to prevent nasty warns in MSVC */
 #include <algorithm>
+<<<<<<< HEAD
 #include <boost/detail/allocator_utilities.hpp>
 #include <boost/integer/common_factor_rt.hpp>
+=======
+#include <boost/integer/common_factor_rt.hpp>
+#include <boost/multi_index/detail/allocator_traits.hpp>
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 #include <boost/multi_index/detail/raw_ptr.hpp>
 #include <cstddef>
 #include <functional>
@@ -30,6 +39,7 @@ namespace detail{
 template<typename Allocator>
 struct random_access_index_node_impl
 {
+<<<<<<< HEAD
   typedef typename
   boost::detail::allocator::rebind_to<
     Allocator,random_access_index_node_impl
@@ -42,6 +52,20 @@ struct random_access_index_node_impl
   boost::detail::allocator::rebind_to<
     Allocator,pointer
   >::type::pointer                          ptr_pointer;
+=======
+  typedef typename rebind_alloc_for<
+    Allocator,random_access_index_node_impl
+  >::type                                             node_allocator;
+  typedef allocator_traits<node_allocator>            node_alloc_traits;
+  typedef typename node_alloc_traits::pointer         pointer;
+  typedef typename node_alloc_traits::const_pointer   const_pointer;
+  typedef typename node_alloc_traits::difference_type difference_type;
+  typedef typename rebind_alloc_for<
+    Allocator,pointer
+  >::type                                             ptr_allocator;
+  typedef allocator_traits<ptr_allocator>             ptr_alloc_traits;
+  typedef typename ptr_alloc_traits::pointer          ptr_pointer;
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
   ptr_pointer& up(){return up_;}
   ptr_pointer  up()const{return up_;}
@@ -58,14 +82,24 @@ struct random_access_index_node_impl
     x=*(x->up()-1);
   }
 
+<<<<<<< HEAD
   static void advance(pointer& x,std::ptrdiff_t n)
+=======
+  static void advance(pointer& x,difference_type n)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
   {
     x=*(x->up()+n);
   }
 
+<<<<<<< HEAD
   static std::ptrdiff_t distance(pointer x,pointer y)
   {
     return y->up()-x->up();
+=======
+  static difference_type distance(pointer x,pointer y)
+  {
+    return static_cast<difference_type>(y->up()-x->up());
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
   }
 
   /* algorithmic stuff */
@@ -176,14 +210,22 @@ private:
 template<typename Super>
 struct random_access_index_node_trampoline:
   random_access_index_node_impl<
+<<<<<<< HEAD
     typename boost::detail::allocator::rebind_to<
+=======
+    typename rebind_alloc_for<
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
       typename Super::allocator_type,
       char
     >::type
   >
 {
   typedef random_access_index_node_impl<
+<<<<<<< HEAD
     typename boost::detail::allocator::rebind_to<
+=======
+    typename rebind_alloc_for<
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
       typename Super::allocator_type,
       char
     >::type
@@ -198,10 +240,18 @@ private:
   typedef random_access_index_node_trampoline<Super> trampoline;
 
 public:
+<<<<<<< HEAD
   typedef typename trampoline::impl_type     impl_type;
   typedef typename trampoline::pointer       impl_pointer;
   typedef typename trampoline::const_pointer const_impl_pointer;
   typedef typename trampoline::ptr_pointer   impl_ptr_pointer;
+=======
+  typedef typename trampoline::impl_type         impl_type;
+  typedef typename trampoline::pointer           impl_pointer;
+  typedef typename trampoline::const_pointer     const_impl_pointer;
+  typedef typename trampoline::difference_type   difference_type;
+  typedef typename trampoline::ptr_pointer       impl_ptr_pointer;
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
   impl_ptr_pointer& up(){return trampoline::up();}
   impl_ptr_pointer  up()const{return trampoline::up();}
@@ -250,14 +300,22 @@ public:
     x=from_impl(xi);
   }
 
+<<<<<<< HEAD
   static void advance(random_access_index_node*& x,std::ptrdiff_t n)
+=======
+  static void advance(random_access_index_node*& x,difference_type n)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
   {
     impl_pointer xi=x->impl();
     trampoline::advance(xi,n);
     x=from_impl(xi);
   }
 
+<<<<<<< HEAD
   static std::ptrdiff_t distance(
+=======
+  static difference_type distance(
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     random_access_index_node* x,random_access_index_node* y)
   {
     return trampoline::distance(x->impl(),y->impl());

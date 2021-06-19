@@ -1,10 +1,17 @@
 <!DOCTYPE html>
+<<<<<<< HEAD
 <html>
+=======
+<html$if(lang)$ lang="$lang$" xml:lang="$lang$"$endif$>
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 <head>
   <title>$if(title-prefix)$$title-prefix$ - $endif$$pagetitle$</title>
 
   <meta charset="utf-8">
+<<<<<<< HEAD
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+=======
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
   <meta http-equiv="X-UA-Compatible" content="chrome=1">
   <meta name="generator" content="pandoc" />
 
@@ -71,6 +78,13 @@ $endfor$
       font-style: italic;
     }
 
+<<<<<<< HEAD
+=======
+    summary {
+      display: list-item;
+    }
+
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     slides > slide {
       -webkit-transition: all $transition$s ease-in-out;
       -moz-transition: all $transition$s ease-in-out;
@@ -86,6 +100,13 @@ $endfor$
       transition: opacity 0.6s ease-in $transition$s;
       opacity: 0;
     }
+<<<<<<< HEAD
+=======
+/* https://github.com/ropensci/plotly/pull/524#issuecomment-468142578 */
+slide:not(.current) .plotly.html-widget{
+  display: block;
+}
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 $if(logo)$
     slides > slide:not(.nobackground):before {
@@ -132,7 +153,11 @@ $else$
     <!-- The content of this hgroup is replaced programmatically through the slide_config.json. -->
     <hgroup class="auto-fadein">
       <h1 data-config-title><!-- populated from slide_config.json --></h1>
+<<<<<<< HEAD
       <h2 data-config-subtitle><!-- populated from slide_config.json --></h2>
+=======
+      $if(subtitle)$<h2 data-config-subtitle><!-- populated from slide_config.json --></h2>$endif$
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
       <p data-config-presenter><!-- populated from slide_config.json --></p>
       $if(date)$
       <p style="margin-top: 6px; margin-left: -2px;">$date$</p>

@@ -5,11 +5,17 @@
 
 //  See http://www.boost.org/libs/test for the library home page.
 //
+<<<<<<< HEAD
 //  File        : $RCSfile$
 //
 //  Version     : $Revision$
 //
 //  Description : implements Unit Test results collecting facility.
+=======
+/// @file
+/// Test results collecting facility.
+///
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 // ***************************************************************************
 
 #ifndef BOOST_TEST_RESULTS_COLLECTOR_IPP_021105GER
@@ -19,6 +25,10 @@
 #include <boost/test/unit_test_log.hpp>
 #include <boost/test/results_collector.hpp>
 #include <boost/test/framework.hpp>
+<<<<<<< HEAD
+=======
+#include <boost/test/execution_monitor.hpp>
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 #include <boost/test/tree/test_unit.hpp>
 #include <boost/test/tree/visitor.hpp>
@@ -52,6 +62,7 @@ test_results::test_results()
 bool
 test_results::passed() const
 {
+<<<<<<< HEAD
     return  !p_skipped                                  &&
             p_test_cases_failed == 0                    &&
             p_assertions_failed <= p_expected_failures  &&
@@ -59,6 +70,21 @@ test_results::passed() const
             !p_aborted;
 }
 
+=======
+    // if it is skipped, it is not passed. However, if any children is not failed/aborted
+    // then their skipped status is not taken into account.
+    return  !p_skipped                                  &&
+            p_test_cases_failed == 0                    &&
+            p_assertions_failed <= p_expected_failures  &&
+            // p_test_cases_skipped == 0                   &&
+            !p_timed_out                                 &&
+            p_test_cases_timed_out == 0                  &&
+            !aborted();
+}
+
+//____________________________________________________________________________//
+
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 bool
 test_results::aborted() const
 {
@@ -67,11 +93,26 @@ test_results::aborted() const
 
 //____________________________________________________________________________//
 
+<<<<<<< HEAD
+=======
+bool
+test_results::skipped() const
+{
+    return  p_skipped;
+}
+
+//____________________________________________________________________________//
+
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 int
 test_results::result_code() const
 {
     return passed() ? exit_success
+<<<<<<< HEAD
            : ( (p_assertions_failed > p_expected_failures || p_skipped )
+=======
+           : ( (p_assertions_failed > p_expected_failures || p_skipped || p_timed_out || p_test_cases_timed_out )
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
                     ? exit_test_failure
                     : exit_exception_failure );
 }
@@ -81,6 +122,10 @@ test_results::result_code() const
 void
 test_results::operator+=( test_results const& tr )
 {
+<<<<<<< HEAD
+=======
+    p_test_suites.value         += tr.p_test_suites;
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     p_assertions_passed.value   += tr.p_assertions_passed;
     p_assertions_failed.value   += tr.p_assertions_failed;
     p_warnings_failed.value     += tr.p_warnings_failed;
@@ -89,6 +134,11 @@ test_results::operator+=( test_results const& tr )
     p_test_cases_failed.value   += tr.p_test_cases_failed;
     p_test_cases_skipped.value  += tr.p_test_cases_skipped;
     p_test_cases_aborted.value  += tr.p_test_cases_aborted;
+<<<<<<< HEAD
+=======
+    p_test_cases_timed_out.value += tr.p_test_cases_timed_out;
+    p_test_suites_timed_out.value += tr.p_test_suites_timed_out;
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     p_duration_microseconds.value += tr.p_duration_microseconds;
 }
 
@@ -97,6 +147,10 @@ test_results::operator+=( test_results const& tr )
 void
 test_results::clear()
 {
+<<<<<<< HEAD
+=======
+    p_test_suites.value         = 0;
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     p_assertions_passed.value   = 0;
     p_assertions_failed.value   = 0;
     p_warnings_failed.value     = 0;
@@ -106,9 +160,18 @@ test_results::clear()
     p_test_cases_failed.value   = 0;
     p_test_cases_skipped.value  = 0;
     p_test_cases_aborted.value  = 0;
+<<<<<<< HEAD
     p_duration_microseconds.value= 0;
     p_aborted.value             = false;
     p_skipped.value             = false;
+=======
+    p_test_cases_timed_out.value = 0;
+    p_test_suites_timed_out.value = 0;
+    p_duration_microseconds.value= 0;
+    p_aborted.value             = false;
+    p_skipped.value             = false;
+    p_timed_out.value           = false;
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 }
 
 //____________________________________________________________________________//
@@ -129,6 +192,13 @@ results_collector_impl& s_rc_impl() { static results_collector_impl the_inst; re
 
 //____________________________________________________________________________//
 
+<<<<<<< HEAD
+=======
+BOOST_TEST_SINGLETON_CONS_IMPL( results_collector_t )
+
+//____________________________________________________________________________//
+
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 void
 results_collector_t::test_start( counter_t )
 {
@@ -165,8 +235,17 @@ public:
             else
                 m_tr.p_test_cases_passed.value++;
         }
+<<<<<<< HEAD
         else if( tr.p_skipped )
             m_tr.p_test_cases_skipped.value++;
+=======
+        else if( tr.p_timed_out ) {
+            m_tr.p_test_cases_timed_out.value++;
+        }
+        else if( tr.p_skipped || !tc.is_enabled() ) {
+            m_tr.p_test_cases_skipped.value++;
+        }
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
         else {
             if( tr.p_aborted )
                 m_tr.p_test_cases_aborted.value++;
@@ -180,6 +259,13 @@ public:
             return true;
 
         m_tr += results_collector.results( ts.p_id );
+<<<<<<< HEAD
+=======
+        m_tr.p_test_suites.value++;
+
+        if( results_collector.results( ts.p_id ).p_timed_out )
+            m_tr.p_test_suites_timed_out.value++;
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
         return false;
     }
 
@@ -194,6 +280,7 @@ private:
 void
 results_collector_t::test_unit_finish( test_unit const& tu, unsigned long elapsed_in_microseconds )
 {
+<<<<<<< HEAD
     if( tu.p_type == TUT_SUITE ) {
         results_collect_helper ch( s_rc_impl().m_results_store[tu.p_id], tu );
 
@@ -203,6 +290,14 @@ results_collector_t::test_unit_finish( test_unit const& tu, unsigned long elapse
         test_results & tr = s_rc_impl().m_results_store[tu.p_id];
         tr.p_duration_microseconds.value = elapsed_in_microseconds;
 
+=======
+    test_results & tr = s_rc_impl().m_results_store[tu.p_id];
+    if( tu.p_type == TUT_SUITE ) {
+        results_collect_helper ch( tr, tu );
+        traverse_test_tree( tu, ch, true ); // true to ignore the status: we need to count the skipped/disabled tests
+    }
+    else {
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
         bool num_failures_match = tr.p_aborted || tr.p_assertions_failed >= tr.p_expected_failures;
         if( !num_failures_match )
             BOOST_TEST_FRAMEWORK_MESSAGE( "Test case " << tu.full_name() << " has fewer failures than expected" );
@@ -211,6 +306,10 @@ results_collector_t::test_unit_finish( test_unit const& tu, unsigned long elapse
         if( !check_any_assertions )
             BOOST_TEST_FRAMEWORK_MESSAGE( "Test case " << tu.full_name() << " did not check any assertions" );
     }
+<<<<<<< HEAD
+=======
+    tr.p_duration_microseconds.value = elapsed_in_microseconds;
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 }
 
 //____________________________________________________________________________//
@@ -219,14 +318,22 @@ void
 results_collector_t::test_unit_skipped( test_unit const& tu, const_string /*reason*/ )
 {
     test_results& tr = s_rc_impl().m_results_store[tu.p_id];
+<<<<<<< HEAD
 
+=======
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     tr.clear();
 
     tr.p_skipped.value = true;
 
     if( tu.p_type == TUT_SUITE ) {
+<<<<<<< HEAD
         test_case_counter tcc;
         traverse_test_tree( tu, tcc );
+=======
+        test_case_counter tcc(true);
+        traverse_test_tree( tu, tcc, true ); // true because need to count the disabled tests/units
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
         tr.p_test_cases_skipped.value = tcc.p_count;
     }
@@ -235,6 +342,18 @@ results_collector_t::test_unit_skipped( test_unit const& tu, const_string /*reas
 //____________________________________________________________________________//
 
 void
+<<<<<<< HEAD
+=======
+results_collector_t::test_unit_timed_out(test_unit const& tu)
+{
+    test_results& tr = s_rc_impl().m_results_store[tu.p_id];
+    tr.p_timed_out.value = true;
+}
+
+//____________________________________________________________________________//
+
+void
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 results_collector_t::assertion_result( unit_test::assertion_result ar )
 {
     test_results& tr = s_rc_impl().m_results_store[framework::current_test_case_id()];
@@ -252,11 +371,21 @@ results_collector_t::assertion_result( unit_test::assertion_result ar )
 //____________________________________________________________________________//
 
 void
+<<<<<<< HEAD
 results_collector_t::exception_caught( execution_exception const& )
+=======
+results_collector_t::exception_caught( execution_exception const& ex)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 {
     test_results& tr = s_rc_impl().m_results_store[framework::current_test_case_id()];
 
     tr.p_assertions_failed.value++;
+<<<<<<< HEAD
+=======
+    if( ex.code() == execution_exception::timeout_error ) {
+        tr.p_timed_out.value = true;
+    }
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 }
 
 //____________________________________________________________________________//

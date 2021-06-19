@@ -34,12 +34,20 @@ BOOST_SPIRIT_CLASSIC_NAMESPACE_BEGIN
     //      to allow a single catch handler to catch all exceptions.
     //
     ///////////////////////////////////////////////////////////////////////////
+<<<<<<< HEAD
     class parser_error_base : public std::exception
+=======
+    class BOOST_SYMBOL_VISIBLE parser_error_base : public std::exception
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     {
     protected:
 
         parser_error_base() {}
+<<<<<<< HEAD
         virtual ~parser_error_base() throw() {}
+=======
+        virtual ~parser_error_base() BOOST_NOEXCEPT_OR_NOTHROW {}
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
     public:
 
@@ -87,10 +95,17 @@ BOOST_SPIRIT_CLASSIC_NAMESPACE_BEGIN
         }
 
         virtual
+<<<<<<< HEAD
         ~parser_error() throw() {}
 
         virtual const char*
         what() const throw()
+=======
+        ~parser_error() BOOST_NOEXCEPT_OR_NOTHROW {}
+
+        virtual const char*
+        what() const BOOST_NOEXCEPT_OR_NOTHROW
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
         {
             return "BOOST_SPIRIT_CLASSIC_NS::parser_error";
         }

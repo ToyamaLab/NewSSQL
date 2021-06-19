@@ -19,7 +19,12 @@
 //  Copyright (C) 2002 David Abrahams
 //
 //  Copyright (C) 2014 Glen Joseph Fernandes
+<<<<<<< HEAD
 //  glenfe at live dot com
+=======
+//  (glenjofe@gmail.com)
+//
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 //  Copyright (C) 2014 Agustin Berge
 //
 // Distributed under the Boost Software License, Version 1.0. (See

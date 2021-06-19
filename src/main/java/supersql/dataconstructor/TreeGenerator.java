@@ -11,7 +11,7 @@ import supersql.parser.Preprocessor;
 public class TreeGenerator {
 
 	private int sep;
-
+	private int tuples_length;
 	public TreeGenerator() {
 	}
 
@@ -24,7 +24,7 @@ public class TreeGenerator {
 		Log.out("= makeTree =");
 		Log.out("sch : " + sch);
 		Log.out("tuples : " + tuples);
-
+		
 		//hanki start
 		if (Preprocessor.isAggregate() && !GlobalEnv.isMultiQuery()) {
 
@@ -35,7 +35,7 @@ public class TreeGenerator {
 			Log.out("= aggregate started =");
 
 			info = (ExtList)Preprocessor.getAggregateList().clone();
-
+			
 			ExtList info_bak = (ExtList)info.clone();
 			if(Integer.parseInt(sch.unnest().get(0).toString()) > 0){
 				int diff = Integer.parseInt(sch.unnest().get(0).toString());
@@ -60,6 +60,7 @@ public class TreeGenerator {
 		//hanki end
 
 		//otawa start
+		//changed by li 20210610
 		if (Preprocessor.isGGplot()) {
 
 				ExtList info = new ExtList();
@@ -69,33 +70,49 @@ public class TreeGenerator {
 				GGplot ggplot = new GGplot();
 
 				Log.out("= ggplot started =");
-
 				info = Preprocessor.getGGplotList();
-				ggdecos = Preprocessor.getGGdecoList();
-				ExtList info_bak = (ExtList)info.clone();
-
-				if(Integer.parseInt(sch.unnest().get(0).toString()) > 0){
-					int diff = Integer.parseInt(sch.unnest().get(0).toString()) - 0;
-					for (int i = 0; i < info_bak.size(); i++) {
-						int target_before = Integer.parseInt(info_bak.get(i).toString().substring(0, 1));
-						String method = info_bak.get(i).toString().substring(2);
-						info_bak.remove(i);
-						String target_after = (target_before - diff) + " " + method;
-						info_bak.add(i, target_after);
+				//Log.out("break info:" + info.get(0).toString().split(" ")[0]);
+				//Log.out("break sch:" + sch.get(0).toString().split(",")[0]);
+				//added by li to check sch level 20210611
+				if(('['+info.get(0).toString().split(" ")[0]).equals(sch.get(0).toString().split(",")[0])) {
+					for (int i = 0; i < sch.size(); i++) {
+						for (int j = 0; j < info.size(); j++) {
+							/* "ggplot functions" found */
+							//Log.out("info.get(" + j + "): " + info.get(j).toString().split(" ")[0]);
+							//	Log.out("sch.get(" + i + "): " + sch.get(i));
+						}
 					}
-				}
-				ExtList sch_bak = new ExtList();
-				DataConstructor.copySepSch(sch, sch_bak);
-				count = 0;
-				initializeSepSch(sch);
-				for (int i = 0; i < ggdecos.size(); i++) {
-					int index = Integer.parseInt(ggdecos.getExtListString(i).split(":")[ggdecos.getExtListString(i).split(":").length - 1]);
-					info.set(index, info.get(index) + ggdecos.getExtListString(i).substring(0, ggdecos.getExtListString(i).lastIndexOf(":")));
-				}
-				tuple = ggplot.ggplot(criteria_set, info, sch, tuples);
-				sch = sch_bak;
+						
+					ggdecos = Preprocessor.getGGdecoList();
+					ExtList info_bak = (ExtList)info.clone();
 
-				tuples = ggplot.getResult();
+					if(Integer.parseInt(sch.unnest().get(0).toString()) > 0){
+						int diff = Integer.parseInt(sch.unnest().get(0).toString()) - 0;
+						for (int i = 0; i < info_bak.size(); i++) {
+							int target_before = Integer.parseInt(info_bak.get(i).toString().substring(0, 1));
+							String method = info_bak.get(i).toString().substring(2);
+							info_bak.remove(i);
+							String target_after = (target_before - diff) + " " + method;
+							info_bak.add(i, target_after);
+						}
+					}
+					ExtList sch_bak = new ExtList();
+					DataConstructor.copySepSch(sch, sch_bak);
+					count = 0;
+					//comment out by li 20210611
+					//initializeSepSch(sch);
+					//changed by li 20210610
+					for (int i = 0; i < ggdecos.size(); i++) {
+						int index = Integer.parseInt(ggdecos.getExtListString(i).split(":")[ggdecos.getExtListString(i).split(":").length - 1]);
+						info.set(index, info.get(index) + ggdecos.getExtListString(i).substring(0, ggdecos.getExtListString(i).lastIndexOf(":")));
+					}
+
+					//Log.out("TreeGenerator.java ggplot info:" + info.get(0) + ", sch: " + sch);
+					tuple = ggplot.ggplot(criteria_set, info, sch, tuples);
+					sch = sch_bak;
+
+					tuples = ggplot.getResult();
+				}	
 		}
 
 		//terui start
@@ -112,11 +129,16 @@ public class TreeGenerator {
 		//terui end
 
 		for (int i = 0; i < tuples.size(); i++) {
-			result = nest_tuple(sch, (ExtList) tuples.get(i));
+			if (tuples.get(i) instanceof ExtList) {
+				result = nest_tuple(sch, (ExtList) tuples.get(i));
+			} else {
+				ExtList tmp = new ExtList();
+				tmp.add(tuples.get(i));
+				result = nest_tuple(sch, tmp);
+			}
 			// Log.out("result = " + result);
 			tuples.set(i, result);
 		}
-
 		Log.out("= nest_tuple end =");
 		Log.out("tuples : " + tuples);
 		//tk start/////
@@ -147,7 +169,7 @@ public class TreeGenerator {
 				ExtList aggregateList = new ExtList(Preprocessor.getAggregateList());
 				ExtList aggList_tmp = new ExtList();
 				for (int j = 0; j < sep_unnest.size(); j++) {
-					int sep = (int)sep_unnest.get(j);
+					int sep = Integer.parseInt(sep_unnest.getExtListString(j));
 					boolean containFlag = false;
 					String order = new String();
 					for (int i = 0; i < otables.size(); i++) {

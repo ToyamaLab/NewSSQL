@@ -20,6 +20,10 @@ http://www.boost.org/LICENSE_1_0.txt)
     [[__predef_symbol__] [__predef_version__]]
 
     [[`TARGET_IPHONE_SIMULATOR`] [__predef_detection__]]
+<<<<<<< HEAD
+=======
+    [[`TARGET_OS_SIMULATOR`] [__predef_detection__]]
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     ]
  */
 
@@ -29,7 +33,14 @@ http://www.boost.org/LICENSE_1_0.txt)
 // https://opensource.apple.com/source/CarbonHeaders/CarbonHeaders-18.1/TargetConditionals.h
 #if BOOST_OS_IOS
 #    include <TargetConditionals.h>
+<<<<<<< HEAD
 #    if TARGET_IPHONE_SIMULATOR == 1
+=======
+#    if defined(TARGET_OS_SIMULATOR) && (TARGET_OS_SIMULATOR == 1)
+#        undef BOOST_PLAT_IOS_SIMULATOR
+#        define BOOST_PLAT_IOS_SIMULATOR BOOST_VERSION_NUMBER_AVAILABLE
+#    elif defined(TARGET_IPHONE_SIMULATOR) && (TARGET_IPHONE_SIMULATOR == 1)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 #        undef BOOST_PLAT_IOS_SIMULATOR
 #        define BOOST_PLAT_IOS_SIMULATOR BOOST_VERSION_NUMBER_AVAILABLE
 #    else

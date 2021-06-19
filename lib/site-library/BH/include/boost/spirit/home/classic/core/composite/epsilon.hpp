@@ -16,6 +16,14 @@
 #include <boost/spirit/home/classic/core/composite/composite.hpp>
 #include <boost/spirit/home/classic/core/composite/no_actions.hpp>
 
+<<<<<<< HEAD
+=======
+#if defined(BOOST_MSVC)
+# pragma warning(push)
+# pragma warning(disable: 4800) // forcing value to bool 'true' or 'false'
+#endif
+
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 ////////////////////////////////////////////////////////////////////////////////
 namespace boost { namespace spirit {
 
@@ -273,4 +281,11 @@ BOOST_SPIRIT_CLASSIC_NAMESPACE_END
 
 }} // namespace BOOST_SPIRIT_CLASSIC_NS
 
+<<<<<<< HEAD
+=======
+#ifdef BOOST_MSVC
+# pragma warning (pop)
+#endif
+
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 #endif

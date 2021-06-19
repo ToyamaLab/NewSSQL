@@ -34,6 +34,7 @@ template<class T = uint_>
 class threefry_engine
 {
 public:
+<<<<<<< HEAD
     static const size_t threads = 1024;
     typedef T result_type;
 
@@ -42,12 +43,31 @@ public:
         : m_context(queue.get_context())
     {
         // setup program
+=======
+    typedef T result_type;
+    static const ulong_ default_seed = 0UL;
+
+    /// Creates a new threefry_engine and seeds it with \p value.
+    explicit threefry_engine(command_queue &queue,
+                             ulong_ value = default_seed)
+        : m_key(value),
+          m_counter(0),
+          m_context(queue.get_context())
+    {
+        // Load program
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
         load_program();
     }
 
     /// Creates a new threefry_engine object as a copy of \p other.
     threefry_engine(const threefry_engine<T> &other)
+<<<<<<< HEAD
         : m_context(other.m_context),
+=======
+        : m_key(other.m_key),
+          m_counter(other.m_counter),
+          m_context(other.m_context),
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
           m_program(other.m_program)
     {
     }
@@ -56,6 +76,11 @@ public:
     threefry_engine<T>& operator=(const threefry_engine<T> &other)
     {
         if(this != &other){
+<<<<<<< HEAD
+=======
+            m_key = other.m_key;
+            m_counter = other.m_counter;
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
             m_context = other.m_context;
             m_program = other.m_program;
         }
@@ -68,14 +93,83 @@ public:
     {
     }
 
+<<<<<<< HEAD
 private:
     /// \internal_
+=======
+    /// Seeds the random number generator with \p value.
+    ///
+    /// \param value seed value for the random-number generator
+    /// \param queue command queue to perform the operation
+    ///
+    /// If no seed value is provided, \c default_seed is used.
+    void seed(ulong_ value, command_queue &queue)
+    {
+        (void) queue;
+        m_key = value;
+        // Reset counter
+        m_counter = 0;
+    }
+
+    /// \overload
+    void seed(command_queue &queue)
+    {
+        seed(default_seed, queue);
+    }
+
+    /// Generates random numbers and stores them to the range [\p first, \p last).
+    template<class OutputIterator>
+    void generate(OutputIterator first, OutputIterator last, command_queue &queue)
+    {
+        const size_t size = detail::iterator_range_size(first, last);
+
+        kernel fill_kernel(m_program, "fill");
+        fill_kernel.set_arg(0, first.get_buffer());
+        fill_kernel.set_arg(1, static_cast<const uint_>(size));
+        fill_kernel.set_arg(2, m_key);
+        fill_kernel.set_arg(3, m_counter);
+
+        queue.enqueue_1d_range_kernel(fill_kernel, 0, (size + 1)/2, 0);
+
+        discard(size, queue);
+    }
+
+    /// \internal_
+    void generate(discard_iterator first, discard_iterator last, command_queue &queue)
+    {
+        (void) queue;
+        ulong_ offset = std::distance(first, last);
+        m_counter += offset;
+    }
+
+    /// Generates random numbers, transforms them with \p op, and then stores
+    /// them to the range [\p first, \p last).
+    template<class OutputIterator, class Function>
+    void generate(OutputIterator first, OutputIterator last, Function op, command_queue &queue)
+    {
+        vector<T> tmp(std::distance(first, last), queue.get_context());
+        generate(tmp.begin(), tmp.end(), queue);
+        ::boost::compute::transform(tmp.begin(), tmp.end(), first, op, queue);
+    }
+
+    /// Generates \p z random numbers and discards them.
+    void discard(size_t z, command_queue &queue)
+    {
+        generate(discard_iterator(0), discard_iterator(z), queue);
+    }
+
+private:
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     void load_program()
     {
         boost::shared_ptr<program_cache> cache =
             program_cache::get_global_cache(m_context);
         std::string cache_key =
+<<<<<<< HEAD
             std::string("threefry_engine_32x2");
+=======
+            std::string("__boost_threefry_engine_32x2");
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
         // Copyright 2010-2012, D. E. Shaw Research.
         // All rights reserved.
@@ -125,7 +219,11 @@ private:
             "{\n"
             "    return (x << (N & 31)) | (x >> ((32-N) & 31));\n"
             "}\n"
+<<<<<<< HEAD
                 
+=======
+
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
             "struct r123array2x32 {\n"
             "    uint v[2];\n"
             "};\n"
@@ -210,6 +308,7 @@ private:
             "    }\n"
             "    return X;\n"
             "}\n"
+<<<<<<< HEAD
 
             "__kernel void generate_rng(__global uint *ctr, __global uint *key, const uint offset) {\n"
             "    threefry2x32_ctr_t in;\n"
@@ -222,11 +321,36 @@ private:
             "    in = threefry2x32_R(20, in, k);\n"
             "    ctr[2 * (offset + i)] = in.v[0];\n"
             "    ctr[2 * (offset + i) + 1] = in.v[1];\n"
+=======
+            "__kernel void fill(__global uint * output,\n"
+            "                   const uint output_size,\n"
+            "                   const uint2 key,\n"
+            "                   const uint2 counter)\n"
+            "{\n"
+            "    uint gid = get_global_id(0);\n"
+            "    threefry2x32_ctr_t c;\n"
+            "    c.v[0] = counter.x + gid;\n"
+            "    c.v[1] = counter.y + (c.v[0] < counter.x ? 1 : 0);\n"
+            "\n"
+            "    threefry2x32_key_t k = { {key.x, key.y} };\n"
+            "\n"
+            "    threefry2x32_ctr_t result;\n"
+            "    result = threefry2x32_R(THREEFRY2x32_DEFAULT_ROUNDS, c, k);\n"
+            "\n"
+            "    if(gid < output_size/2)\n"
+            "    {\n"
+            "       output[2 * gid] = result.v[0];\n"
+            "       output[2 * gid + 1] = result.v[1];\n"
+            "    }\n"
+            "    else if(gid < (output_size+1)/2)\n"
+            "       output[2 * gid] = result.v[0];\n"
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
             "}\n";
 
         m_program = cache->get_or_build(cache_key, std::string(), source, m_context);
     }
 
+<<<<<<< HEAD
 public:
 
 
@@ -301,6 +425,12 @@ public:
         }
     }
 private:
+=======
+    // Engine state
+    ulong_ m_key; // 2 x 32bit
+    ulong_ m_counter;
+    // OpenCL
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     context m_context;
     program m_program;
 };

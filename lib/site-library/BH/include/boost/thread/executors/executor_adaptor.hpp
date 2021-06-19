@@ -10,6 +10,10 @@
 #define BOOST_THREAD_EXECUTORS_EXECUTOR_ADAPTOR_HPP
 
 #include <boost/thread/detail/config.hpp>
+<<<<<<< HEAD
+=======
+#if defined BOOST_THREAD_PROVIDES_FUTURE_CONTINUATION && defined BOOST_THREAD_PROVIDES_EXECUTORS && defined BOOST_THREAD_USES_MOVE
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 #include <boost/thread/executors/executor.hpp>
 
@@ -134,3 +138,7 @@ using executors::executor_adaptor;
 #include <boost/config/abi_suffix.hpp>
 
 #endif
+<<<<<<< HEAD
+=======
+#endif
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce

@@ -255,6 +255,7 @@ private:
         using std::exp;
 
         if(use_inversion()) {
+<<<<<<< HEAD
             _exp_mean = exp(-_mean);
         } else {
             _ptrd.smu = sqrt(_mean);
@@ -262,6 +263,15 @@ private:
             _ptrd.a = -0.059 + 0.02483 * _ptrd.b;
             _ptrd.inv_alpha = 1.1239 + 1.1328 / (_ptrd.b - 3.4);
             _ptrd.v_r = 0.9277 - 3.6224 / (_ptrd.b - 2);
+=======
+            _u._exp_mean = exp(-_mean);
+        } else {
+            _u._ptrd.smu = sqrt(_mean);
+            _u._ptrd.b = 0.931 + 2.53 * _u._ptrd.smu;
+            _u._ptrd.a = -0.059 + 0.02483 * _u._ptrd.b;
+            _u._ptrd.inv_alpha = 1.1239 + 1.1328 / (_u._ptrd.b - 3.4);
+            _u._ptrd.v_r = 0.9277 - 3.6224 / (_u._ptrd.b - 2);
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
         }
     }
     
@@ -275,6 +285,7 @@ private:
         while(true) {
             RealType u;
             RealType v = uniform_01<RealType>()(urng);
+<<<<<<< HEAD
             if(v <= 0.86 * _ptrd.v_r) {
                 u = v / _ptrd.v_r - 0.43;
                 return static_cast<IntType>(floor(
@@ -287,6 +298,20 @@ private:
                 u = v/_ptrd.v_r - 0.93;
                 u = ((u < 0)? -0.5 : 0.5) - u;
                 v = uniform_01<RealType>()(urng) * _ptrd.v_r;
+=======
+            if(v <= 0.86 * _u._ptrd.v_r) {
+                u = v / _u._ptrd.v_r - 0.43;
+                return static_cast<IntType>(floor(
+                    (2*_u._ptrd.a/(0.5-abs(u)) + _u._ptrd.b)*u + _mean + 0.445));
+            }
+
+            if(v >= _u._ptrd.v_r) {
+                u = uniform_01<RealType>()(urng) - 0.5;
+            } else {
+                u = v/_u._ptrd.v_r - 0.93;
+                u = ((u < 0)? -0.5 : 0.5) - u;
+                v = uniform_01<RealType>()(urng) * _u._ptrd.v_r;
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
             }
 
             RealType us = 0.5 - abs(u);
@@ -294,13 +319,22 @@ private:
                 continue;
             }
 
+<<<<<<< HEAD
             RealType k = floor((2*_ptrd.a/us + _ptrd.b)*u+_mean+0.445);
             v = v*_ptrd.inv_alpha/(_ptrd.a/(us*us) + _ptrd.b);
+=======
+            RealType k = floor((2*_u._ptrd.a/us + _u._ptrd.b)*u+_mean+0.445);
+            v = v*_u._ptrd.inv_alpha/(_u._ptrd.a/(us*us) + _u._ptrd.b);
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
             RealType log_sqrt_2pi = 0.91893853320467267;
 
             if(k >= 10) {
+<<<<<<< HEAD
                 if(log(v*_ptrd.smu) <= (k + 0.5)*log(_mean/k)
+=======
+                if(log(v*_u._ptrd.smu) <= (k + 0.5)*log(_mean/k)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
                                - _mean
                                - log_sqrt_2pi
                                + k
@@ -320,7 +354,11 @@ private:
     template<class URNG>
     IntType invert(URNG& urng) const
     {
+<<<<<<< HEAD
         RealType p = _exp_mean;
+=======
+        RealType p = _u._exp_mean;
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
         IntType x = 0;
         RealType u = uniform_01<RealType>()(urng);
         while(u > p) {
@@ -344,7 +382,11 @@ private:
         } _ptrd;
         // for inversion
         RealType _exp_mean;
+<<<<<<< HEAD
     };
+=======
+    } _u;
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
     /// @endcond
 };

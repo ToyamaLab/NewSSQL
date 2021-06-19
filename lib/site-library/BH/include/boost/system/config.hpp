@@ -7,6 +7,7 @@
 
 //  See http://www.boost.org/libs/system for documentation.
 
+<<<<<<< HEAD
 #ifndef BOOST_SYSTEM_CONFIG_HPP                  
 #define BOOST_SYSTEM_CONFIG_HPP
 
@@ -16,6 +17,18 @@
 
 // This header implements separate compilation features as described in
 // http://www.boost.org/more/separate_compilation.html
+=======
+#ifndef BOOST_SYSTEM_CONFIG_HPP
+#define BOOST_SYSTEM_CONFIG_HPP
+
+#include <boost/config.hpp>
+#include <boost/system/api_config.hpp>  // for BOOST_POSIX_API or BOOST_WINDOWS_API
+
+// This header implemented separate compilation features as described in
+// http://www.boost.org/more/separate_compilation.html
+//
+// It's only retained for compatibility now that the library is header-only.
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 //  normalize macros  ------------------------------------------------------------------//
 
@@ -46,6 +59,7 @@
 # define BOOST_SYSTEM_DECL
 #endif
 
+<<<<<<< HEAD
 //  enable automatic library variant selection  ----------------------------------------// 
 
 #if !defined(BOOST_SYSTEM_SOURCE) && !defined(BOOST_ALL_NO_LIB) && !defined(BOOST_SYSTEM_NO_LIB)
@@ -68,3 +82,6 @@
 
 #endif // BOOST_SYSTEM_CONFIG_HPP
 
+=======
+#endif // BOOST_SYSTEM_CONFIG_HPP
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce

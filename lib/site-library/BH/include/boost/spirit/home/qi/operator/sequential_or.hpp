@@ -15,7 +15,11 @@
 #include <boost/spirit/home/qi/detail/pass_function.hpp>
 #include <boost/spirit/home/qi/detail/attributes.hpp>
 #include <boost/spirit/home/support/detail/what_function.hpp>
+<<<<<<< HEAD
 #include <boost/spirit/home/support/algorithm/any_if_ns.hpp>
+=======
+#include <boost/spirit/home/support/algorithm/any_if_ns_so.hpp>
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 #include <boost/spirit/home/support/handles_container.hpp>
 #include <boost/fusion/include/as_vector.hpp>
 #include <boost/fusion/include/for_each.hpp>
@@ -75,9 +79,16 @@ namespace boost { namespace spirit { namespace qi
             typename traits::wrap_if_not_tuple<Attribute>::type attr_local(attr_);
 
             // return true if *any* of the parsers succeed
+<<<<<<< HEAD
             // (we use the non-short-circuiting version: any_if_ns
             // to force all elements to be tested)
             return spirit::any_if_ns(elements, attr_local, f, predicate());
+=======
+            // (we use the non-short-circuiting and strict order version:
+            // any_if_ns_so to force all the elements to be tested and
+            // in the defined order: first is first, last is last)
+            return spirit::any_if_ns_so(elements, attr_local, f, predicate());
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
         }
 
         template <typename Context>

@@ -11,7 +11,13 @@ Distributed under the Boost Software License, Version 1.0.
 #include <boost/align/detail/element_type.hpp>
 #include <boost/align/alignment_of_forward.hpp>
 
+<<<<<<< HEAD
 #if defined(BOOST_MSVC)
+=======
+#if defined(_MSC_VER) && defined(__clang__)
+#include <boost/align/detail/alignment_of_cxx11.hpp>
+#elif defined(BOOST_MSVC)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 #include <boost/align/detail/alignment_of_msvc.hpp>
 #elif defined(__GNUC__) && defined(__unix__) && !defined(__LP64__)
 #include <boost/align/detail/alignment_of.hpp>

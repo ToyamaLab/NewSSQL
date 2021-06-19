@@ -36,6 +36,12 @@ utf8_codecvt_facet::utf8_codecvt_facet(
     std::codecvt<wchar_t, char, std::mbstate_t>(no_locale_manage)
 {}
 
+<<<<<<< HEAD
+=======
+utf8_codecvt_facet::~utf8_codecvt_facet()
+{}
+
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 // Translate incoming UTF-8 into UCS-4
 std::codecvt_base::result utf8_codecvt_facet::do_in(
     std::mbstate_t& /*state*/, 

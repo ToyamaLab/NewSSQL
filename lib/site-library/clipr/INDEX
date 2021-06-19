@@ -2,6 +2,14 @@ clear_clip              Clear clipboard
 clipr                   clipr: Read and Write from the System Clipboard
 clipr_available         Is the system clipboard available?
 read_clip               Read clipboard
+<<<<<<< HEAD
 read_clip_tbl           Transforms output of 'read_clip' into data
                         frame.
 write_clip              Write clipboard
+=======
+read_clip_tbl           Transforms output of 'read_clip()' into data
+                        frame.
+write_clip              Write clipboard
+write_last_clip         Write contents of the last R expression to the
+                        clipboard
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce

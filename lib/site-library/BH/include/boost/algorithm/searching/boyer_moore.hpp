@@ -12,6 +12,10 @@
 
 #include <iterator>     // for std::iterator_traits
 
+<<<<<<< HEAD
+=======
+#include <boost/config.hpp>
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 #include <boost/assert.hpp>
 #include <boost/static_assert.hpp>
 

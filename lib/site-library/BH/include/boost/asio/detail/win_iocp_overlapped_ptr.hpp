@@ -2,7 +2,11 @@
 // detail/win_iocp_overlapped_ptr.hpp
 // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 //
+<<<<<<< HEAD
 // Copyright (c) 2003-2017 Christopher M. Kohlhoff (chris at kohlhoff dot com)
+=======
+// Copyright (c) 2003-2019 Christopher M. Kohlhoff (chris at kohlhoff dot com)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 //
 // Distributed under the Boost Software License, Version 1.0. (See accompanying
 // file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
@@ -21,6 +25,10 @@
 
 #include <boost/asio/io_context.hpp>
 #include <boost/asio/detail/handler_alloc_helpers.hpp>
+<<<<<<< HEAD
+=======
+#include <boost/asio/detail/io_object_executor.hpp>
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 #include <boost/asio/detail/memory.hpp>
 #include <boost/asio/detail/noncopyable.hpp>
 #include <boost/asio/detail/win_iocp_overlapped_op.hpp>
@@ -45,6 +53,7 @@ public:
   }
 
   // Construct an win_iocp_overlapped_ptr to contain the specified handler.
+<<<<<<< HEAD
   template <typename Handler>
   explicit win_iocp_overlapped_ptr(
       boost::asio::io_context& io_context, BOOST_ASIO_MOVE_ARG(Handler) handler)
@@ -52,6 +61,15 @@ public:
       iocp_service_(0)
   {
     this->reset(io_context, BOOST_ASIO_MOVE_CAST(Handler)(handler));
+=======
+  template <typename Executor, typename Handler>
+  explicit win_iocp_overlapped_ptr(const Executor& ex,
+      BOOST_ASIO_MOVE_ARG(Handler) handler)
+    : ptr_(0),
+      iocp_service_(0)
+  {
+    this->reset(ex, BOOST_ASIO_MOVE_CAST(Handler)(handler));
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
   }
 
   // Destructor automatically frees the OVERLAPPED object unless released.
@@ -74,6 +92,7 @@ public:
 
   // Reset to contain the specified handler, freeing any current OVERLAPPED
   // object.
+<<<<<<< HEAD
   template <typename Handler>
   void reset(boost::asio::io_context& io_context, Handler handler)
   {
@@ -90,6 +109,27 @@ public:
     ptr_ = p.p;
     p.v = p.p = 0;
     iocp_service_ = &io_context.impl_;
+=======
+  template <typename Executor, typename Handler>
+  void reset(const Executor& ex, Handler handler)
+  {
+    const bool native = is_same<Executor, io_context::executor_type>::value;
+    win_iocp_io_context* iocp_service = this->get_iocp_service(ex);
+
+    typedef win_iocp_overlapped_op<Handler, io_object_executor<Executor> > op;
+    typename op::ptr p = { boost::asio::detail::addressof(handler),
+      op::ptr::allocate(handler), 0 };
+    p.p = new (p.v) op(handler, io_object_executor<Executor>(ex, native));
+
+    BOOST_ASIO_HANDLER_CREATION((ex.context(), *p.p,
+          "iocp_service", iocp_service, 0, "overlapped"));
+
+    iocp_service->work_started();
+    reset();
+    ptr_ = p.p;
+    p.v = p.p = 0;
+    iocp_service_ = iocp_service;
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
   }
 
   // Get the contained OVERLAPPED object.
@@ -130,6 +170,21 @@ public:
   }
 
 private:
+<<<<<<< HEAD
+=======
+  template <typename Executor>
+  static win_iocp_io_context* get_iocp_service(const Executor& ex)
+  {
+    return &use_service<win_iocp_io_context>(ex.context());
+  }
+
+  static win_iocp_io_context* get_iocp_service(
+      const io_context::executor_type& ex)
+  {
+    return &ex.context().impl_;
+  }
+
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
   win_iocp_operation* ptr_;
   win_iocp_io_context* iocp_service_;
 };

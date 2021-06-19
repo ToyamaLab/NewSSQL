@@ -149,8 +149,17 @@ namespace detail {
 template<typename Alloc>
 struct zlib_allocator_traits {
 #ifndef BOOST_NO_STD_ALLOCATOR
+<<<<<<< HEAD
     typedef typename Alloc::template rebind<char>::other type;
 #else
+=======
+#if defined(BOOST_NO_CXX11_ALLOCATOR)
+    typedef typename Alloc::template rebind<char>::other type;
+#else
+    typedef typename std::allocator_traits<Alloc>::template rebind_alloc<char> type;
+#endif
+#else
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     typedef std::allocator<char> type;
 #endif
 };
@@ -160,7 +169,15 @@ template< typename Alloc,
               BOOST_DEDUCED_TYPENAME zlib_allocator_traits<Alloc>::type >
 struct zlib_allocator : private Base {
 private:
+<<<<<<< HEAD
     typedef typename Base::size_type size_type;
+=======
+#if defined(BOOST_NO_CXX11_ALLOCATOR) || defined(BOOST_NO_STD_ALLOCATOR)
+    typedef typename Base::size_type size_type;
+#else
+    typedef typename std::allocator_traits<Base>::size_type size_type;
+#endif
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 public:
     BOOST_STATIC_CONSTANT(bool, custom = 
         (!is_same<std::allocator<char>, Base>::value));

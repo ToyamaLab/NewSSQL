@@ -1,5 +1,11 @@
+<<<<<<< HEAD
 CleanupReporter         testthat reporter that checks if child proceses
                         are cleaned up in tests
+=======
+CleanupReporter         testthat reporter that checks if child
+                        processes are cleaned up in tests
+errno                   List of 'errno' error codes
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 ps                      Process table
 ps_boot_time            Boot time of the system
 ps_children             List of child processes (process objects) of
@@ -7,6 +13,11 @@ ps_children             List of child processes (process objects) of
                         enumerating all processes on the system, so it
                         is a costly operation.
 ps_cmdline              Command line of the process
+<<<<<<< HEAD
+=======
+ps_connections          List network connections of a process
+ps_cpu_count            Number of logical or physical CPUs
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 ps_cpu_times            CPU times of the process
 ps_create_time          Start time of a process
 ps_cwd                  Process current working directory as an
@@ -20,7 +31,11 @@ ps_kill                 Kill a process
 ps_mark_tree            Mark a process and its (future) child tree
 ps_memory_info          Memory usage information
 ps_name                 Process name
+<<<<<<< HEAD
 ps_num_fds              Number of open file desciptors
+=======
+ps_num_fds              Number of open file descriptors
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 ps_num_threads          Number of threads
 ps_open_files           Open files of a process
 ps_os_type              Query the type of the OS

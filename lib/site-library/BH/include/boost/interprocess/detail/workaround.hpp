@@ -31,7 +31,11 @@
    //////////////////////////////////////////////////////
    //Check for XSI shared memory objects. They are available in nearly all UNIX platforms
    //////////////////////////////////////////////////////
+<<<<<<< HEAD
    #if !defined(__QNXNTO__) && !defined(__ANDROID__) && !defined(__HAIKU__)
+=======
+   #if !defined(__QNXNTO__) && !defined(__ANDROID__) && !defined(__HAIKU__) && !(__VXWORKS__)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
       #define BOOST_INTERPROCESS_XSI_SHARED_MEMORY_OBJECTS
    #endif
 
@@ -49,6 +53,7 @@
       //Cygwin defines _POSIX_THREAD_PROCESS_SHARED but does not implement it.
       #if defined(__CYGWIN__)
          #define BOOST_INTERPROCESS_BUGGY_POSIX_PROCESS_SHARED
+<<<<<<< HEAD
       //Mac Os X < Lion (10.7) might define _POSIX_THREAD_PROCESS_SHARED but there is no real support.
       #elif defined(__APPLE__)
          #include "TargetConditionals.h"
@@ -60,6 +65,14 @@
                #define BOOST_INTERPROCESS_BUGGY_POSIX_PROCESS_SHARED
             #endif
          #endif
+=======
+      #elif defined(__APPLE__)
+         //The pthreads implementation of darwin stores a pointer to a mutex inside the condition
+         //structure so real sharing between processes is broken. See:
+         //https://opensource.apple.com/source/libpthread/libpthread-301.30.1/src/pthread_cond.c.auto.html
+         //in method pthread_cond_wait
+         #define BOOST_INTERPROCESS_BUGGY_POSIX_PROCESS_SHARED
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
       #endif
 
       //If buggy _POSIX_THREAD_PROCESS_SHARED is detected avoid using it

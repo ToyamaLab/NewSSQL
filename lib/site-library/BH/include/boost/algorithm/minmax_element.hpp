@@ -28,6 +28,11 @@
 
 #include <utility> // for std::pair and std::make_pair
 
+<<<<<<< HEAD
+=======
+#include <boost/config.hpp>
+
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 namespace boost {
 
   namespace detail {  // for obtaining a uniform version of minmax_element

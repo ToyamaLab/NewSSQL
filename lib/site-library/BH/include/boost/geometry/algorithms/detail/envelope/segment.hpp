@@ -4,8 +4,13 @@
 // Copyright (c) 2008-2015 Bruno Lalande, Paris, France.
 // Copyright (c) 2009-2015 Mateusz Loskot, London, UK.
 
+<<<<<<< HEAD
 // This file was modified by Oracle on 2015-2017.
 // Modifications copyright (c) 2015-2017, Oracle and/or its affiliates.
+=======
+// This file was modified by Oracle on 2015-2018.
+// Modifications copyright (c) 2015-2018, Oracle and/or its affiliates.
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 // Contributed and/or modified by Vissarion Fysikopoulos, on behalf of Oracle
 // Contributed and/or modified by Menelaos Karavelas, on behalf of Oracle
@@ -19,6 +24,7 @@
 #define BOOST_GEOMETRY_ALGORITHMS_DETAIL_ENVELOPE_SEGMENT_HPP
 
 #include <cstddef>
+<<<<<<< HEAD
 #include <utility>
 
 #include <boost/numeric/conversion/cast.hpp>
@@ -47,6 +53,19 @@
 
 #include <boost/geometry/algorithms/dispatch/envelope.hpp>
 
+=======
+
+#include <boost/geometry/core/tags.hpp>
+
+#include <boost/geometry/algorithms/detail/assign_indexed_point.hpp>
+#include <boost/geometry/algorithms/dispatch/envelope.hpp>
+
+// For backward compatibility
+#include <boost/geometry/strategies/cartesian/envelope_segment.hpp>
+#include <boost/geometry/strategies/spherical/envelope_segment.hpp>
+#include <boost/geometry/strategies/geographic/envelope_segment.hpp>
+
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 namespace boost { namespace geometry
 {
 
@@ -54,6 +73,7 @@ namespace boost { namespace geometry
 namespace detail { namespace envelope
 {
 
+<<<<<<< HEAD
 template <typename CalculationType, typename CS_Tag>
 struct envelope_segment_call_vertex_latitude
 {
@@ -433,6 +453,8 @@ struct envelope_one_segment
 };
 
 
+=======
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 template <std::size_t DimensionCount>
 struct envelope_segment
 {
@@ -442,12 +464,16 @@ struct envelope_segment
                              Box& mbr,
                              Strategy const& strategy)
     {
+<<<<<<< HEAD
         // first compute the envelope range for the first two coordinates
         strategy.apply(p1, p2, mbr);
 
         // now compute the envelope range for coordinates of
         // dimension 2 and higher
         envelope_one_segment<2, DimensionCount>::apply(p1, p2, mbr, strategy);
+=======
+        strategy.apply(p1, p2, mbr);
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     }
 
     template <typename Segment, typename Box, typename Strategy>

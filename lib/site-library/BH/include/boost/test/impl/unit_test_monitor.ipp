@@ -29,16 +29,30 @@
 namespace boost {
 namespace unit_test {
 
+<<<<<<< HEAD
+=======
+// singleton pattern
+BOOST_TEST_SINGLETON_CONS_IMPL(unit_test_monitor_t)
+
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 // ************************************************************************** //
 // **************               unit_test_monitor              ************** //
 // ************************************************************************** //
 
 unit_test_monitor_t::error_level
+<<<<<<< HEAD
 unit_test_monitor_t::execute_and_translate( boost::function<void ()> const& func, unsigned timeout )
 {
     BOOST_TEST_I_TRY {
         p_catch_system_errors.value     = runtime_config::get<bool>( runtime_config::btrt_catch_sys_errors );
         p_timeout.value                 = timeout;
+=======
+unit_test_monitor_t::execute_and_translate( boost::function<void ()> const& func, unsigned long int timeout_microseconds )
+{
+    BOOST_TEST_I_TRY {
+        p_catch_system_errors.value     = runtime_config::get<bool>( runtime_config::btrt_catch_sys_errors );
+        p_timeout.value                 = timeout_microseconds;
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
         p_auto_start_dbg.value          = runtime_config::get<bool>( runtime_config::btrt_auto_start_dbg );
         p_use_alt_stack.value           = runtime_config::get<bool>( runtime_config::btrt_use_alt_stack );
         p_detect_fp_exceptions.value    = runtime_config::get<bool>( runtime_config::btrt_detect_fp_except );

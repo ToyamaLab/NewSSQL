@@ -2,7 +2,11 @@
 // ip/tcp.hpp
 // ~~~~~~~~~~
 //
+<<<<<<< HEAD
 // Copyright (c) 2003-2017 Christopher M. Kohlhoff (chris at kohlhoff dot com)
+=======
+// Copyright (c) 2003-2019 Christopher M. Kohlhoff (chris at kohlhoff dot com)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 //
 // Distributed under the Boost Software License, Version 1.0. (See accompanying
 // file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
@@ -50,31 +54,51 @@ public:
   typedef basic_endpoint<tcp> endpoint;
 
   /// Construct to represent the IPv4 TCP protocol.
+<<<<<<< HEAD
   static tcp v4()
+=======
+  static tcp v4() BOOST_ASIO_NOEXCEPT
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
   {
     return tcp(BOOST_ASIO_OS_DEF(AF_INET));
   }
 
   /// Construct to represent the IPv6 TCP protocol.
+<<<<<<< HEAD
   static tcp v6()
+=======
+  static tcp v6() BOOST_ASIO_NOEXCEPT
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
   {
     return tcp(BOOST_ASIO_OS_DEF(AF_INET6));
   }
 
   /// Obtain an identifier for the type of the protocol.
+<<<<<<< HEAD
   int type() const
+=======
+  int type() const BOOST_ASIO_NOEXCEPT
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
   {
     return BOOST_ASIO_OS_DEF(SOCK_STREAM);
   }
 
   /// Obtain an identifier for the protocol.
+<<<<<<< HEAD
   int protocol() const
+=======
+  int protocol() const BOOST_ASIO_NOEXCEPT
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
   {
     return BOOST_ASIO_OS_DEF(IPPROTO_TCP);
   }
 
   /// Obtain an identifier for the protocol family.
+<<<<<<< HEAD
   int family() const
+=======
+  int family() const BOOST_ASIO_NOEXCEPT
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
   {
     return family_;
   }
@@ -100,7 +124,11 @@ public:
    * @par Examples
    * Setting the option:
    * @code
+<<<<<<< HEAD
    * boost::asio::ip::tcp::socket socket(io_context); 
+=======
+   * boost::asio::ip::tcp::socket socket(my_context);
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
    * ...
    * boost::asio::ip::tcp::no_delay option(true);
    * socket.set_option(option);
@@ -109,7 +137,11 @@ public:
    * @par
    * Getting the current option value:
    * @code
+<<<<<<< HEAD
    * boost::asio::ip::tcp::socket socket(io_context); 
+=======
+   * boost::asio::ip::tcp::socket socket(my_context);
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
    * ...
    * boost::asio::ip::tcp::no_delay option;
    * socket.get_option(option);
@@ -140,7 +172,11 @@ public:
 
 private:
   // Construct with a specific family.
+<<<<<<< HEAD
   explicit tcp(int protocol_family)
+=======
+  explicit tcp(int protocol_family) BOOST_ASIO_NOEXCEPT
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     : family_(protocol_family)
   {
   }

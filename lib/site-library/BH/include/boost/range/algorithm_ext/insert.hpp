@@ -39,6 +39,10 @@ inline Container& insert( Container& on, const Range& from )
     BOOST_RANGE_CONCEPT_ASSERT(( ForwardRangeConcept<Container> ));
     BOOST_RANGE_CONCEPT_ASSERT(( SinglePassRangeConcept<Range> ));
     on.insert(boost::begin(from), boost::end(from));
+<<<<<<< HEAD
+=======
+    return on;
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 }
 
     } // namespace range

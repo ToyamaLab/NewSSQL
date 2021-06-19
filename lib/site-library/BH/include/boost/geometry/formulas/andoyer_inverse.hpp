@@ -1,5 +1,10 @@
 // Boost.Geometry
 
+<<<<<<< HEAD
+=======
+// Copyright (c) 2018 Adam Wulkiewicz, Lodz, Poland.
+
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 // Copyright (c) 2015-2017 Oracle and/or its affiliates.
 
 // Contributed and/or modified by Adam Wulkiewicz, on behalf of Oracle
@@ -15,7 +20,10 @@
 #include <boost/math/constants/constants.hpp>
 
 #include <boost/geometry/core/radius.hpp>
+<<<<<<< HEAD
 #include <boost/geometry/core/srs.hpp>
+=======
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 #include <boost/geometry/util/condition.hpp>
 #include <boost/geometry/util/math.hpp>
@@ -116,7 +124,11 @@ public:
 
             CT const dd = -(f/CT(4))*(H*K+G*L);
 
+<<<<<<< HEAD
             CT const a = get_radius<0>(spheroid);
+=======
+            CT const a = CT(get_radius<0>(spheroid));
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
             result.distance = a * (d + dd);
         }
@@ -219,10 +231,19 @@ public:
 
         if (BOOST_GEOMETRY_CONDITION(CalcQuantities))
         {
+<<<<<<< HEAD
             typedef differential_quantities<CT, EnableReducedLength, EnableGeodesicScale, 1> quantities;
             quantities::apply(dlon, sin_lat1, cos_lat1, sin_lat2, cos_lat2,
                               result.azimuth, result.reverse_azimuth,
                               get_radius<2>(spheroid), f,
+=======
+            CT const b = CT(get_radius<2>(spheroid));
+
+            typedef differential_quantities<CT, EnableReducedLength, EnableGeodesicScale, 1> quantities;
+            quantities::apply(dlon, sin_lat1, cos_lat1, sin_lat2, cos_lat2,
+                              result.azimuth, result.reverse_azimuth,
+                              b, f,
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
                               result.reduced_length, result.geodesic_scale);
         }
 

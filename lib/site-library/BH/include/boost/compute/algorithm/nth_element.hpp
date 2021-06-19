@@ -11,12 +11,21 @@
 #ifndef BOOST_COMPUTE_ALGORITHM_NTH_ELEMENT_HPP
 #define BOOST_COMPUTE_ALGORITHM_NTH_ELEMENT_HPP
 
+<<<<<<< HEAD
+=======
+#include <boost/static_assert.hpp>
+
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 #include <boost/compute/command_queue.hpp>
 #include <boost/compute/algorithm/fill_n.hpp>
 #include <boost/compute/algorithm/find.hpp>
 #include <boost/compute/algorithm/partition.hpp>
 #include <boost/compute/algorithm/sort.hpp>
 #include <boost/compute/functional/bind.hpp>
+<<<<<<< HEAD
+=======
+#include <boost/compute/type_traits/is_device_iterator.hpp>
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 namespace boost {
 namespace compute {
@@ -32,6 +41,10 @@ inline void nth_element(Iterator first,
                         Compare compare,
                         command_queue &queue = system::default_queue())
 {
+<<<<<<< HEAD
+=======
+    BOOST_STATIC_ASSERT(is_device_iterator<Iterator>::value);
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     if(nth == last) return;
 
     typedef typename std::iterator_traits<Iterator>::value_type value_type;
@@ -74,6 +87,10 @@ inline void nth_element(Iterator first,
                         Iterator last,
                         command_queue &queue = system::default_queue())
 {
+<<<<<<< HEAD
+=======
+    BOOST_STATIC_ASSERT(is_device_iterator<Iterator>::value);
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     if(nth == last) return;
 
     typedef typename std::iterator_traits<Iterator>::value_type value_type;

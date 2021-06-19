@@ -2,7 +2,15 @@
 //
 // R-tree R*-tree next node choosing algorithm implementation
 //
+<<<<<<< HEAD
 // Copyright (c) 2011-2017 Adam Wulkiewicz, Lodz, Poland.
+=======
+// Copyright (c) 2011-2019 Adam Wulkiewicz, Lodz, Poland.
+//
+// This file was modified by Oracle on 2019.
+// Modifications copyright (c) 2019 Oracle and/or its affiliates.
+// Contributed and/or modified by Adam Wulkiewicz, on behalf of Oracle
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 //
 // Use, modification and distribution is subject to the Boost Software License,
 // Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
@@ -13,6 +21,11 @@
 
 #include <algorithm>
 
+<<<<<<< HEAD
+=======
+#include <boost/core/ignore_unused.hpp>
+
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 #include <boost/geometry/algorithms/expand.hpp>
 
 #include <boost/geometry/index/detail/algorithms/content.hpp>
@@ -48,13 +61,18 @@ public:
                                parameters_type const& parameters,
                                size_t node_relative_level)
     {
+<<<<<<< HEAD
         ::boost::ignore_unused_variable_warning(parameters);
+=======
+        ::boost::ignore_unused(parameters);
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
         children_type & children = rtree::elements(n);
         
         // children are leafs
         if ( node_relative_level <= 1 )
         {
+<<<<<<< HEAD
             return choose_by_minimum_overlap_cost(children, indexable, parameters.get_overlap_cost_threshold());
         }
         // children are internal nodes
@@ -67,6 +85,40 @@ private:
     static inline size_t choose_by_minimum_overlap_cost(children_type const& children,
                                                         Indexable const& indexable,
                                                         size_t overlap_cost_threshold)
+=======
+            return choose_by_minimum_overlap_cost(children, indexable,
+                                                  parameters.get_overlap_cost_threshold(),
+                                                  index::detail::get_strategy(parameters));
+        }
+        // children are internal nodes
+        else
+        {
+            return choose_by_minimum_content_cost(children, indexable,
+                                                  index::detail::get_strategy(parameters));
+        }
+    }
+
+private:
+    struct child_contents
+    {
+        content_type content_diff;
+        content_type content;
+        size_t i;
+
+        void set(size_t i_, content_type const& content_, content_type const& content_diff_)
+        {
+            i = i_;
+            content = content_;
+            content_diff = content_diff_;
+        }
+    };
+
+    template <typename Indexable, typename Strategy>
+    static inline size_t choose_by_minimum_overlap_cost(children_type const& children,
+                                                        Indexable const& indexable,
+                                                        size_t overlap_cost_threshold,
+                                                        Strategy const& strategy)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     {
         const size_t children_count = children.size();
 
@@ -75,10 +127,15 @@ private:
         size_t choosen_index = 0;
 
         // create container of children sorted by content enlargement needed to include the new value
+<<<<<<< HEAD
         typedef boost::tuple<size_t, content_type, content_type> child_contents;
 
         typename rtree::container_from_elements_type<children_type, child_contents>::type children_contents;
         children_contents.resize(children_count);
+=======
+        typename rtree::container_from_elements_type<children_type, child_contents>::type
+            children_contents(children_count);
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
         for ( size_t i = 0 ; i < children_count ; ++i )
         {
@@ -86,13 +143,21 @@ private:
 
             // expanded child node's box
             Box box_exp(ch_i.first);
+<<<<<<< HEAD
             geometry::expand(box_exp, indexable);
+=======
+            index::detail::expand(box_exp, indexable, strategy);
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
             // areas difference
             content_type content = index::detail::content(box_exp);
             content_type content_diff = content - index::detail::content(ch_i.first);
 
+<<<<<<< HEAD
             children_contents[i] = boost::make_tuple(i, content_diff, content);
+=======
+            children_contents[i].set(i, content, content_diff);
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
             if ( content_diff < min_content_diff ||
                  (content_diff == min_content_diff && content < min_content) )
@@ -117,12 +182,21 @@ private:
             }
 
             // calculate minimum or nearly minimum overlap cost
+<<<<<<< HEAD
             choosen_index = choose_by_minimum_overlap_cost_first_n(children, indexable, first_n_children_count, children_count, children_contents);
+=======
+            choosen_index = choose_by_minimum_overlap_cost_first_n(children, indexable,
+                                                                   first_n_children_count,
+                                                                   children_count,
+                                                                   children_contents,
+                                                                   strategy);
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
         }
 
         return choosen_index;
     }
 
+<<<<<<< HEAD
     static inline bool content_diff_less(boost::tuple<size_t, content_type, content_type> const& p1, boost::tuple<size_t, content_type, content_type> const& p2)
     {
         return boost::get<1>(p1) < boost::get<1>(p2) ||
@@ -130,11 +204,25 @@ private:
     }
 
     template <typename Indexable, typename ChildrenContents>
+=======
+    static inline bool content_diff_less(child_contents const& p1, child_contents const& p2)
+    {
+        return p1.content_diff < p2.content_diff
+            || (p1.content_diff == p2.content_diff && (p1.content) < (p2.content));
+    }
+
+    template <typename Indexable, typename ChildrenContents, typename Strategy>
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     static inline size_t choose_by_minimum_overlap_cost_first_n(children_type const& children,
                                                                 Indexable const& indexable,
                                                                 size_t const first_n_children_count,
                                                                 size_t const children_count,
+<<<<<<< HEAD
                                                                 ChildrenContents const& children_contents)
+=======
+                                                                ChildrenContents const& children_contents,
+                                                                Strategy const& strategy)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     {
         BOOST_GEOMETRY_INDEX_ASSERT(first_n_children_count <= children_count, "unexpected value");
         BOOST_GEOMETRY_INDEX_ASSERT(children_contents.size() == children_count, "unexpected number of elements");
@@ -146,13 +234,26 @@ private:
         content_type smallest_content = (std::numeric_limits<content_type>::max)();
 
         // for each child node
+<<<<<<< HEAD
         for (size_t i = 0 ; i < first_n_children_count ; ++i )
         {
+=======
+        for (size_t first_i = 0 ; first_i < first_n_children_count ; ++first_i)
+        {
+            size_t i = children_contents[first_i].i;
+            content_type const& content = children_contents[first_i].content;
+            content_type const& content_diff = children_contents[first_i].content_diff;
+
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
             child_type const& ch_i = children[i];
 
             Box box_exp(ch_i.first);
             // calculate expanded box of child node ch_i
+<<<<<<< HEAD
             geometry::expand(box_exp, indexable);
+=======
+            index::detail::expand(box_exp, indexable, strategy);
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
             content_type overlap_diff = 0;
 
@@ -163,17 +264,27 @@ private:
                 {
                     child_type const& ch_j = children[j];
 
+<<<<<<< HEAD
                     content_type overlap_exp = index::detail::intersection_content(box_exp, ch_j.first);
                     if ( overlap_exp < -std::numeric_limits<content_type>::epsilon() || std::numeric_limits<content_type>::epsilon() < overlap_exp )
                     {
                         overlap_diff += overlap_exp - index::detail::intersection_content(ch_i.first, ch_j.first);
+=======
+                    content_type overlap_exp = index::detail::intersection_content(box_exp, ch_j.first, strategy);
+                    if ( overlap_exp < -std::numeric_limits<content_type>::epsilon() || std::numeric_limits<content_type>::epsilon() < overlap_exp )
+                    {
+                        overlap_diff += overlap_exp - index::detail::intersection_content(ch_i.first, ch_j.first, strategy);
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
                     }
                 }
             }
 
+<<<<<<< HEAD
             content_type content = boost::get<2>(children_contents[i]);
             content_type content_diff = boost::get<1>(children_contents[i]);
 
+=======
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
             // update result
             if ( overlap_diff < smallest_overlap_diff ||
                 ( overlap_diff == smallest_overlap_diff && ( content_diff < smallest_content_diff ||
@@ -190,8 +301,15 @@ private:
         return choosen_index;
     }
 
+<<<<<<< HEAD
     template <typename Indexable>
     static inline size_t choose_by_minimum_content_cost(children_type const& children, Indexable const& indexable)
+=======
+    template <typename Indexable, typename Strategy>
+    static inline size_t choose_by_minimum_content_cost(children_type const& children,
+                                                        Indexable const& indexable,
+                                                        Strategy const& strategy)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     {
         size_t children_count = children.size();
 
@@ -207,7 +325,11 @@ private:
 
             // expanded child node's box
             Box box_exp(ch_i.first);
+<<<<<<< HEAD
             geometry::expand(box_exp, indexable);
+=======
+            index::detail::expand(box_exp, indexable, strategy);
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
             // areas difference
             content_type content = index::detail::content(box_exp);

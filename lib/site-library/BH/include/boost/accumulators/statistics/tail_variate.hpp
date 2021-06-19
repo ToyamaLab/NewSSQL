@@ -18,6 +18,10 @@
 #include <boost/accumulators/framework/depends_on.hpp>
 #include <boost/accumulators/statistics_fwd.hpp>
 #include <boost/accumulators/statistics/tail.hpp>
+<<<<<<< HEAD
+=======
+#include <boost/serialization/vector.hpp>
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 namespace boost { namespace accumulators
 {
@@ -69,6 +73,17 @@ namespace impl
             );
         }
 
+<<<<<<< HEAD
+=======
+        // make this accumulator serializeable
+        template<class Archive>
+        void serialize(Archive & ar, const unsigned int file_version)
+        { 
+            ar & variates;
+        }
+
+    private:
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
         std::vector<VariateType> variates;
     };
 

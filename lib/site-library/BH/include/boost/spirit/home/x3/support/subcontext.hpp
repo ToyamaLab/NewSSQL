@@ -9,7 +9,10 @@
 #if !defined(BOOST_SPIRIT_X3_SUBCONTEXT_APR_15_2013_0840AM)
 #define BOOST_SPIRIT_X3_SUBCONTEXT_APR_15_2013_0840AM
 
+<<<<<<< HEAD
 #include <boost/fusion/support/pair.hpp>
+=======
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 #include <boost/spirit/home/x3/support/context.hpp>
 #include <boost/spirit/home/x3/support/unused.hpp>
 

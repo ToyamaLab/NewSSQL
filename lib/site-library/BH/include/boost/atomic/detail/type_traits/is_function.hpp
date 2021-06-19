@@ -15,7 +15,11 @@
 #define BOOST_ATOMIC_DETAIL_TYPE_TRAITS_IS_FUNCTION_HPP_INCLUDED_
 
 #include <boost/atomic/detail/config.hpp>
+<<<<<<< HEAD
 #if !defined(BOOST_ATOMIC_DETAIL_NO_CXX11_HDR_TYPE_TRAITS)
+=======
+#if !defined(BOOST_ATOMIC_DETAIL_NO_CXX11_BASIC_HDR_TYPE_TRAITS)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 #include <type_traits>
 #else
 #include <boost/type_traits/is_function.hpp>
@@ -29,7 +33,11 @@ namespace boost {
 namespace atomics {
 namespace detail {
 
+<<<<<<< HEAD
 #if !defined(BOOST_ATOMIC_DETAIL_NO_CXX11_HDR_TYPE_TRAITS)
+=======
+#if !defined(BOOST_ATOMIC_DETAIL_NO_CXX11_BASIC_HDR_TYPE_TRAITS)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 using std::is_function;
 #else
 using boost::is_function;

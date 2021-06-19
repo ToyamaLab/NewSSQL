@@ -77,7 +77,11 @@ namespace iterators {
 
 } // namespace iterators
 
+<<<<<<< HEAD
 using iterators::advance;
+=======
+using namespace iterators::advance_adl_barrier;
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 } // namespace boost
 

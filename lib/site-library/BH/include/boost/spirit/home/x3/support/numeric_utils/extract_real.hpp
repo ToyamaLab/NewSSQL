@@ -6,8 +6,13 @@
     Distributed under the Boost Software License, Version 1.0. (See accompanying
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 =============================================================================*/
+<<<<<<< HEAD
 #if !defined(SPIRIT_EXTRACT_REAL_APRIL_18_2006_0901AM)
 #define SPIRIT_EXTRACT_REAL_APRIL_18_2006_0901AM
+=======
+#if !defined(BOOST_SPIRIT_X3_EXTRACT_REAL_APRIL_18_2006_0901AM)
+#define BOOST_SPIRIT_X3_EXTRACT_REAL_APRIL_18_2006_0901AM
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 #include <cmath>
 #include <boost/limits.hpp>
@@ -29,6 +34,7 @@ namespace boost { namespace spirit { namespace x3 { namespace extension
     using x3::traits::pow10;
 
     template <typename T>
+<<<<<<< HEAD
     inline void
     scale(int exp, T& n)
     {
@@ -37,20 +43,49 @@ namespace boost { namespace spirit { namespace x3 { namespace extension
             // $$$ Why is this failing for boost.math.concepts ? $$$
             //~ int nn = std::numeric_limits<T>::max_exponent10;
             //~ BOOST_ASSERT(exp <= std::numeric_limits<T>::max_exponent10);
+=======
+    inline bool
+    scale(int exp, T& n)
+    {
+        constexpr auto max_exp = std::numeric_limits<T>::max_exponent10;
+        constexpr auto min_exp = std::numeric_limits<T>::min_exponent10;
+
+        if (exp >= 0)
+        {
+            // return false if exp exceeds the max_exp
+            // do this check only for primitive types!
+            if (is_floating_point<T>() && exp > max_exp)
+                return false;
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
             n *= pow10<T>(exp);
         }
         else
         {
+<<<<<<< HEAD
             if (exp < std::numeric_limits<T>::min_exponent10)
             {
                 n /= pow10<T>(-std::numeric_limits<T>::min_exponent10);
                 n /= pow10<T>(-exp + std::numeric_limits<T>::min_exponent10);
+=======
+            if (exp < min_exp)
+            {
+                n /= pow10<T>(-min_exp);
+
+                // return false if exp still exceeds the min_exp
+                // do this check only for primitive types!
+                exp += -min_exp;
+                if (is_floating_point<T>() && exp < min_exp)
+                    return false;
+
+                n /= pow10<T>(-exp);
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
             }
             else
             {
                 n /= pow10<T>(-exp);
             }
         }
+<<<<<<< HEAD
     }
 
     inline void
@@ -70,6 +105,30 @@ namespace boost { namespace spirit { namespace x3 { namespace extension
     scale(int /*exp*/, int /*frac*/, unused_type /*n*/)
     {
         // no-op for unused_type
+=======
+        return true;
+    }
+
+    inline bool
+    scale(int /*exp*/, unused_type /*n*/)
+    {
+        // no-op for unused_type
+        return true;
+    }
+
+    template <typename T>
+    inline bool
+    scale(int exp, int frac, T& n)
+    {
+        return scale(exp - frac, n);
+    }
+
+    inline bool
+    scale(int /*exp*/, int /*frac*/, unused_type /*n*/)
+    {
+        // no-op for unused_type
+        return true;
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     }
 
     inline float
@@ -103,6 +162,7 @@ namespace boost { namespace spirit { namespace x3 { namespace extension
         // no-op for unused_type
         return n;
     }
+<<<<<<< HEAD
 
     template <typename T>
     inline bool
@@ -117,6 +177,8 @@ namespace boost { namespace spirit { namespace x3 { namespace extension
         // no-op for unused_type
         return false;
     }
+=======
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 }}}}
 
 namespace boost { namespace spirit { namespace x3
@@ -164,6 +226,10 @@ namespace boost { namespace spirit { namespace x3
             }
 
             bool e_hit = false;
+<<<<<<< HEAD
+=======
+            Iterator e_pos;
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
             int frac_digits = 0;
 
             // Try to parse the dot ('.' decimal point)
@@ -180,6 +246,10 @@ namespace boost { namespace spirit { namespace x3
                     if (!is_same<T, unused_type>::value)
                         frac_digits =
                             static_cast<int>(std::distance(savef, first));
+<<<<<<< HEAD
+=======
+                    BOOST_ASSERT(frac_digits >= 0);
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
                 }
                 else if (!got_a_number || !p.allow_trailing_dot)
                 {
@@ -191,6 +261,10 @@ namespace boost { namespace spirit { namespace x3
                 }
 
                 // Now, let's see if we can parse the exponent prefix
+<<<<<<< HEAD
+=======
+                e_pos = first;
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
                 e_hit = p.parse_exp(first, last);
             }
             else
@@ -204,6 +278,10 @@ namespace boost { namespace spirit { namespace x3
 
                 // If we must expect a dot and we didn't see an exponent
                 // prefix, return no-match.
+<<<<<<< HEAD
+=======
+                e_pos = first;
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
                 e_hit = p.parse_exp(first, last);
                 if (p.expect_dot && !e_hit)
                 {
@@ -221,6 +299,7 @@ namespace boost { namespace spirit { namespace x3
                 {
                     // Got the exponent value. Scale the number by
                     // exp-frac_digits.
+<<<<<<< HEAD
                     extension::scale(exp, frac_digits, n);
                 }
                 else
@@ -228,11 +307,26 @@ namespace boost { namespace spirit { namespace x3
                     // Oops, no exponent, return no-match.
                     first = save;
                     return false;
+=======
+                    if (!extension::scale(exp, frac_digits, n))
+                        return false;
+                }
+                else
+                {
+                    // If there is no number, disregard the exponent altogether.
+                    // by resetting 'first' prior to the exponent prefix (e|E)
+                    first = e_pos;
+
+                    // Scale the number by -frac_digits.
+                    if (!extension::scale(-frac_digits, n))
+                        return false;
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
                 }
             }
             else if (frac_digits)
             {
                 // No exponent found. Scale the number by -frac_digits.
+<<<<<<< HEAD
                 extension::scale(-frac_digits, n);
             }
             else if (extension::is_equal_to_one(n))
@@ -248,6 +342,10 @@ namespace boost { namespace spirit { namespace x3
                     traits::move_to(extension::negate(neg, n), attr);
                     return true;    // got a NaN or Inf, return immediately
                 }
+=======
+                if (!extension::scale(-frac_digits, n))
+                    return false;
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
             }
 
             // If we got a negative sign, negate the number

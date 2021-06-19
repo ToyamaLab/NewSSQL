@@ -6,4 +6,8 @@ export(reprex_clean)
 export(reprex_invert)
 export(reprex_rescue)
 export(reprex_selection)
+<<<<<<< HEAD
+=======
+import(fs)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 import(rlang)

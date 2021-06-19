@@ -22,6 +22,28 @@
 #ifndef Rcpp_macros_macros_h
 #define Rcpp_macros_macros_h
 
+<<<<<<< HEAD
+=======
+#include <string>
+
+namespace Rcpp {
+namespace internal {
+namespace debug {
+
+inline std::string short_file_name(const char* file)
+{
+    std::string f(file);
+    size_t index = f.find("/include/");
+    if (index != std::string::npos)
+        f = f.substr(index + 9);
+    return f;
+}
+
+} // namespace debug
+} // namespace internal
+} // namespace Rcpp
+
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 #define RCPP_DECORATE(__FUN__) __FUN__##__rcpp__wrapper__
 #define RCPP_GET_NAMES(x) Rf_getAttrib(x, R_NamesSymbol)
 #define RCPP_GET_CLASS(x) Rf_getAttrib(x, R_ClassSymbol)
@@ -29,9 +51,17 @@
 #ifndef BEGIN_RCPP
 #define BEGIN_RCPP                                                                               \
     int rcpp_output_type = 0 ;                                                                   \
+<<<<<<< HEAD
     (void)rcpp_output_type;                                                                      \
     SEXP rcpp_output_condition = R_NilValue ;                                                    \
     (void)rcpp_output_condition;                                                                 \
+=======
+    int nprot = 0;                                                                               \
+    (void)rcpp_output_type;                                                                      \
+    SEXP rcpp_output_condition = R_NilValue ;                                                    \
+    (void)rcpp_output_condition;                                                                 \
+    static SEXP stop_sym = Rf_install("stop");                                                   \
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     try {
 #endif
 
@@ -48,19 +78,32 @@
     catch(Rcpp::exception& __ex__) {                                                             \
        rcpp_output_type = 2 ;                                                                    \
        rcpp_output_condition = PROTECT(rcpp_exception_to_r_condition(__ex__)) ;                  \
+<<<<<<< HEAD
+=======
+       ++nprot;                                                                                  \
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     }                                                                                            \
     catch( std::exception& __ex__ ){                                                             \
        rcpp_output_type = 2 ;                                                                    \
        rcpp_output_condition = PROTECT(exception_to_r_condition(__ex__)) ;                       \
+<<<<<<< HEAD
+=======
+       ++nprot;                                                                                  \
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     }                                                                                            \
     catch( ... ){                                                                                \
        rcpp_output_type = 2 ;                                                                    \
        rcpp_output_condition = PROTECT(string_to_try_error("c++ exception (unknown reason)")) ;  \
+<<<<<<< HEAD
+=======
+       ++nprot;                                                                                  \
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     }                                                                                            \
     if( rcpp_output_type == 1 ){                                                                 \
        Rf_onintr() ;                                                                             \
     }                                                                                            \
     if( rcpp_output_type == 2 ){                                                                 \
+<<<<<<< HEAD
        SEXP stop_sym  = Rf_install( "stop" ) ;                                                   \
        SEXP expr = PROTECT( Rf_lang2( stop_sym , rcpp_output_condition ) ) ;                     \
        Rf_eval( expr, R_GlobalEnv ) ;                                                            \
@@ -68,6 +111,16 @@
     if (rcpp_output_type == 3) {                                                                 \
         Rcpp::internal::resumeJump(rcpp_output_condition);                                       \
     }
+=======
+       SEXP expr = PROTECT( Rf_lang2( stop_sym , rcpp_output_condition ) ) ;                     \
+       ++nprot;                                                                                  \
+       Rf_eval( expr, R_BaseEnv ) ;                                                              \
+    }                                                                                            \
+    if (rcpp_output_type == 3) {                                                                 \
+        Rcpp::internal::resumeJump(rcpp_output_condition);                                       \
+    }                                                                                            \
+    UNPROTECT(nprot);
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 #endif
 
 #ifndef END_RCPP
@@ -92,7 +145,13 @@
   catch (...) {                                                                \
     return string_to_try_error("c++ exception (unknown reason)");              \
   }                                                                            \
+<<<<<<< HEAD
   return R_NilValue;
+=======
+  UNPROTECT(nprot);                                                            \
+  return R_NilValue;                                                           \
+  (void) stop_sym;   /* never reached but suppresses warning */
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 #endif
 
 #define Rcpp_error(MESSAGE) throw Rcpp::exception(MESSAGE, __FILE__, __LINE__)

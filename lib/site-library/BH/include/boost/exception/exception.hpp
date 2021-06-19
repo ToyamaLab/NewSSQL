@@ -5,21 +5,41 @@
 
 #ifndef UUID_274DA366004E11DCB1DDFE2E56D89593
 #define UUID_274DA366004E11DCB1DDFE2E56D89593
+<<<<<<< HEAD
 #if (__GNUC__*100+__GNUC_MINOR__>301) && !defined(BOOST_EXCEPTION_ENABLE_WARNINGS)
 #pragma GCC system_header
 #endif
 #if defined(_MSC_VER) && !defined(BOOST_EXCEPTION_ENABLE_WARNINGS)
 #pragma warning(push,1)
 #endif
+=======
+
+#include <boost/config.hpp>
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 #ifdef BOOST_EXCEPTION_MINI_BOOST
 #include  <memory>
 namespace boost { namespace exception_detail { using std::shared_ptr; } }
 #else
+<<<<<<< HEAD
 namespace boost { template <class T> class shared_ptr; };
 namespace boost { namespace exception_detail { using boost::shared_ptr; } }
 #endif
 
+=======
+namespace boost { template <class T> class shared_ptr; }
+namespace boost { namespace exception_detail { using boost::shared_ptr; } }
+#endif
+
+#if defined(__GNUC__) && (__GNUC__*100+__GNUC_MINOR__>301) && !defined(BOOST_EXCEPTION_ENABLE_WARNINGS)
+#pragma GCC system_header
+#endif
+#if defined(_MSC_VER) && !defined(BOOST_EXCEPTION_ENABLE_WARNINGS)
+#pragma warning(push,1)
+#pragma warning(disable: 4265)
+#endif
+
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 namespace
 boost
     {
@@ -140,6 +160,7 @@ boost
             }
         };
 
+<<<<<<< HEAD
 #if defined(__GNUC__)
 # if (__GNUC__ == 4 && __GNUC_MINOR__ >= 1) || (__GNUC__ > 4)
 #  pragma GCC visibility push (default)
@@ -151,6 +172,11 @@ boost
 #  pragma GCC visibility pop
 # endif
 #endif
+=======
+    class
+    BOOST_SYMBOL_VISIBLE
+    exception;
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
     namespace
     exception_detail
@@ -170,7 +196,11 @@ boost
 
             protected:
 
+<<<<<<< HEAD
             ~error_info_container() throw()
+=======
+            ~error_info_container() BOOST_NOEXCEPT_OR_NOTHROW
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
                 {
                 }
             };
@@ -216,12 +246,17 @@ boost
         E const & set_info( E const &, throw_line const & );
         }
 
+<<<<<<< HEAD
 #if defined(__GNUC__)
 # if (__GNUC__ == 4 && __GNUC_MINOR__ >= 1) || (__GNUC__ > 4)
 #  pragma GCC visibility push (default)
 # endif
 #endif
     class
+=======
+    class
+    BOOST_SYMBOL_VISIBLE
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     exception
         {
         //<N3757>
@@ -242,7 +277,11 @@ boost
 #ifdef __HP_aCC
         //On HP aCC, this protected copy constructor prevents throwing boost::exception.
         //On all other platforms, the same effect is achieved by the pure virtual destructor.
+<<<<<<< HEAD
         exception( exception const & x ) throw():
+=======
+        exception( exception const & x ) BOOST_NOEXCEPT_OR_NOTHROW:
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
             data_(x.data_),
             throw_function_(x.throw_function_),
             throw_file_(x.throw_file_),
@@ -251,7 +290,11 @@ boost
             }
 #endif
 
+<<<<<<< HEAD
         virtual ~exception() throw()
+=======
+        virtual ~exception() BOOST_NOEXCEPT_OR_NOTHROW
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 #ifndef __HP_aCC
             = 0 //Workaround for HP aCC, =0 incorrectly leads to link errors.
 #endif
@@ -293,6 +336,7 @@ boost
         mutable char const * throw_file_;
         mutable int throw_line_;
         };
+<<<<<<< HEAD
 #if defined(__GNUC__)
 # if (__GNUC__ == 4 && __GNUC_MINOR__ >= 1) || (__GNUC__ > 4)
 #  pragma GCC visibility pop
@@ -302,6 +346,12 @@ boost
     inline
     exception::
     ~exception() throw()
+=======
+
+    inline
+    exception::
+    ~exception() BOOST_NOEXCEPT_OR_NOTHROW
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
         {
         }
 
@@ -338,6 +388,7 @@ boost
     namespace
     exception_detail
         {
+<<<<<<< HEAD
 #if defined(__GNUC__)
 # if (__GNUC__ == 4 && __GNUC_MINOR__ >= 1) || (__GNUC__ > 4)
 #  pragma GCC visibility push (default)
@@ -345,6 +396,11 @@ boost
 #endif
         template <class T>
         struct
+=======
+        template <class T>
+        struct
+        BOOST_SYMBOL_VISIBLE
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
         error_info_injector:
             public T,
             public exception
@@ -355,6 +411,7 @@ boost
                 {
                 }
 
+<<<<<<< HEAD
             ~error_info_injector() throw()
                 {
                 }
@@ -364,6 +421,12 @@ boost
 #  pragma GCC visibility pop
 # endif
 #endif
+=======
+            ~error_info_injector() BOOST_NOEXCEPT_OR_NOTHROW
+                {
+                }
+            };
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
         struct large_size { char c[256]; };
         large_size dispatch_boost_exception( exception const * );
@@ -411,12 +474,17 @@ boost
     namespace
     exception_detail
         {
+<<<<<<< HEAD
 #if defined(__GNUC__)
 # if (__GNUC__ == 4 && __GNUC_MINOR__ >= 1) || (__GNUC__ > 4)
 #  pragma GCC visibility push (default)
 # endif
 #endif
         class
+=======
+        class
+        BOOST_SYMBOL_VISIBLE
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
         clone_base
             {
             public:
@@ -425,6 +493,7 @@ boost
             virtual void rethrow() const = 0;
 
             virtual
+<<<<<<< HEAD
             ~clone_base() throw()
                 {
                 }
@@ -434,6 +503,12 @@ boost
 #  pragma GCC visibility pop
 # endif
 #endif
+=======
+            ~clone_base() BOOST_NOEXCEPT_OR_NOTHROW
+                {
+                }
+            };
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
         inline
         void
@@ -454,6 +529,7 @@ boost
             {
             }
 
+<<<<<<< HEAD
 #if defined(__GNUC__)
 # if (__GNUC__ == 4 && __GNUC_MINOR__ >= 1) || (__GNUC__ > 4)
 #  pragma GCC visibility push (default)
@@ -461,6 +537,11 @@ boost
 #endif
         template <class T>
         class
+=======
+        template <class T>
+        class
+        BOOST_SYMBOL_VISIBLE
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
         clone_impl:
             public T,
             public virtual clone_base
@@ -481,7 +562,11 @@ boost
                 copy_boost_exception(this,&x);
                 }
 
+<<<<<<< HEAD
             ~clone_impl() throw()
+=======
+            ~clone_impl() BOOST_NOEXCEPT_OR_NOTHROW
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
                 {
                 }
 
@@ -500,11 +585,14 @@ boost
                 }
             };
         }
+<<<<<<< HEAD
 #if defined(__GNUC__)
 # if (__GNUC__ == 4 && __GNUC_MINOR__ >= 1) || (__GNUC__ > 4)
 #  pragma GCC visibility pop
 # endif
 #endif
+=======
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
     template <class T>
     inline
@@ -513,6 +601,54 @@ boost
         {
         return exception_detail::clone_impl<T>(x);
         }
+<<<<<<< HEAD
+=======
+
+    template <class T>
+    struct
+    BOOST_SYMBOL_VISIBLE
+    wrapexcept:
+        public exception_detail::clone_impl<typename exception_detail::enable_error_info_return_type<T>::type>
+        {
+        typedef exception_detail::clone_impl<typename exception_detail::enable_error_info_return_type<T>::type> base_type;
+        public:
+        explicit
+        wrapexcept( typename exception_detail::enable_error_info_return_type<T>::type const & x ):
+            base_type( x )
+            {
+            }
+
+        ~wrapexcept() BOOST_NOEXCEPT_OR_NOTHROW
+            {
+            }
+        };
+
+    namespace
+    exception_detail
+        {
+        template <class T>
+        struct
+        remove_error_info_injector
+            {
+            typedef T type;
+            };
+
+        template <class T>
+        struct
+        remove_error_info_injector< error_info_injector<T> >
+            {
+            typedef T type;
+            };
+
+        template <class T>
+        inline
+        wrapexcept<typename remove_error_info_injector<T>::type>
+        enable_both( T const & x )
+            {
+            return wrapexcept<typename remove_error_info_injector<T>::type>( enable_error_info( x ) );
+            }
+        }
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     }
 
 #if defined(_MSC_VER) && !defined(BOOST_EXCEPTION_ENABLE_WARNINGS)

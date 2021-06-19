@@ -10,6 +10,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
+import java.io.Serializable;
 import java.io.UnsupportedEncodingException;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -17,33 +18,46 @@ import java.net.URLConnection;
 import java.net.URLEncoder;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.Hashtable;
 
+import org.antlr.v4.parse.ANTLRParser.wildcard_return;
+
+import supersql.codegenerator.Attribute;
 import supersql.codegenerator.CodeGenerator;
+import supersql.codegenerator.Connector;
 import supersql.codegenerator.DecorateList;
+import supersql.codegenerator.Decorator;
 import supersql.codegenerator.Ehtml;
 import supersql.codegenerator.FuncArg;
 import supersql.codegenerator.Function;
+import supersql.codegenerator.Grouper;
+import supersql.codegenerator.ITFE;
+import supersql.codegenerator.IfCondition;
 import supersql.codegenerator.Incremental;
 import supersql.codegenerator.LinkForeach;
 import supersql.codegenerator.Manager;
 import supersql.codegenerator.Modifier;
+import supersql.codegenerator.TFE;
 import supersql.common.GlobalEnv;
 import supersql.common.Log;
 import supersql.dataconstructor.DataConstructor;
 import supersql.extendclass.ExtList;
 import supersql.parser.Start_Parse;
 
-public class HTMLFunction extends Function {
+public class HTMLFunction extends Function implements Serializable{
 
 	protected static String updateFile;
 	private boolean link1 = false; //added by goto 20161025 for link1/foreach1
+	
+	public static boolean HTMLFunctionFlag = false;
 
 	public static String createForm(DecorateList decos) {
 		new String();
 		String path = new String();
 		String form = new String();
+		
 		// System.out.println(this.getAtt("label"));
 		if (decos.containsKey("path")) {
 			path = decos.getStr("path").replaceAll("\"", "");
@@ -142,12 +156,12 @@ public class HTMLFunction extends Function {
 	private String createForm() {
 		String path = new String();
 		String form = new String();
+		
 		if (this.getAtt("path") != null && !this.getAtt("path").isEmpty()) {
 			path = this.getAtt("path").replaceAll("\"", "");
 		} else {
 			path = ".";
 		}
-
 		form += "<form method=\"POST\" action=\"" + path
 				+ "/servlet/supersql.form.FormServlet\"" + ">";
 
@@ -749,7 +763,7 @@ public class HTMLFunction extends Function {
 		}
 
 		htmlEnv.code.append(form);
-
+		
 		if (this.Args.get(0) instanceof FuncArg) {
 			// HTMLEnv.setSelectFlg(true,(String)this.decos.get("select"));
 			HTMLEnv.setFormValueString(att);
@@ -866,13 +880,11 @@ public class HTMLFunction extends Function {
 		for (int i = 2; i < this.Args.size(); i++) {
 			att += "_" + this.Args.get(i).getStr();
 		}
-
 		// String file = this.getAtt("file");
 		String action = this.getAtt("action");
 		// int attNo = 1;
 		// String att = new String();
 		Log.out("sinvoke file 3: " + file);
-
 		//changed by goto 20161019 for new foreach
 		if(link1){
 			//added by goto 20161025 for link1/foreach1
@@ -911,7 +923,7 @@ public class HTMLFunction extends Function {
 			} else {
 
 				if(!link1){
-					//added by goto 20161019 for new foreach
+					//added by goto 20161019 for new foreach 
 					filename = file;
 					//added by goto 20161109
 					if(!file.endsWith(".php") && !file.endsWith(".rb") && !file.endsWith(".erb") && !file.endsWith(".jsp"))
@@ -926,7 +938,6 @@ public class HTMLFunction extends Function {
 			filename.replace("\\\\", "\\");
 			htmlEnv.linkUrl = filename;
 			htmlEnv.sinvokeFlag = true;
-
 		} else {
 			String filename = new String();
 			if (!this.getAtt("att").equals(""))
@@ -1040,6 +1051,7 @@ public class HTMLFunction extends Function {
 				htmlEnv.scriptNum++;
 			}
 		}
+		
 		if (this.Args.get(0) instanceof FuncArg) {
 			Log.out("ARGS are function");
 			FuncArg fa = this.Args.get(0);
@@ -1070,15 +1082,52 @@ public class HTMLFunction extends Function {
 		htmlEnv.linkUrl = target;
 		htmlEnv.plinkFlag = true;
 
+		// added by masato 20151124 for plink
+		String form_type = (glink_flag)? "glink" : "plink"; 	//TODO
+		if(image_link_flag)	form_type = "image_"+form_type;
+		if (htmlEnv.plinkFlag) {
+			String tmp = "";
+			for (int i = 0; i < htmlEnv.valueArray.size(); i++) {
+				tmp += " value" + (i + 1) + "='" + htmlEnv.valueArray.get(i) + "'";
+			}
+			Incremental.outXMLData(htmlEnv.xmlDepth, "<"+form_type+" target='" + htmlEnv.linkUrl + "'" + tmp + ">\n");
+		}
+		
 		if (this.Args.get(0) instanceof FuncArg) {
 			Log.out("ARGS are function");
 			FuncArg fa = this.Args.get(0);
 			fa.workAtt();
 		} else
 			this.workAtt("default");
-		// tk//////////////////////////////////////////////////
+		
+		// added by masato 20151124 for plink
+		if (htmlEnv.plinkFlag) {
+			Incremental.outXMLData(htmlEnv.xmlDepth, "</"+form_type+">\n");
+		}
+		
 
 		htmlEnv.plinkFlag = false;
+		return;
+	}
+	// Func_glink
+	private static boolean glink_flag = false;
+	private void Func_glink(ExtList data_info) {	 	//TODO 動作確認
+		glink_flag = true;
+		Func_plink(data_info);
+		glink_flag = false;
+		return;
+	}
+	private static boolean image_link_flag = false;
+	private void Func_image_plink(ExtList data_info) {	 	//TODO 動作確認
+		image_link_flag = true;
+		Func_plink(data_info);
+		image_link_flag = false;
+		return;
+	}
+	private void Func_image_glink(ExtList data_info) {	 	//TODO 動作確認
+		image_link_flag = true;
+		Func_glink(data_info);
+		image_link_flag = false;
 		return;
 	}
 
@@ -1103,6 +1152,7 @@ public class HTMLFunction extends Function {
 
 
 	protected void Func_imagefile() {
+		HTMLFunctionFlag = true;
 		/*
 		 * ImageFile function : <td> <img src="${imgpath}/"+att /> </td>
 		 */
@@ -1215,11 +1265,9 @@ public class HTMLFunction extends Function {
 		if (htmlEnv.plinkFlag) {
 			String tmp = "";
 			for (int i = 0; i < htmlEnv.valueArray.size(); i++) {
-				tmp += " value" + (i + 1) + "='" + htmlEnv.valueArray.get(i)
-						+ "'";
+				tmp += " value" + (i + 1) + "='" + htmlEnv.valueArray.get(i) + "'";
 			}
-			Incremental.outXMLData(htmlEnv.xmlDepth, "<PostLink target='"
-					+ htmlEnv.linkUrl + "'" + tmp + ">\n");
+			Incremental.outXMLData(htmlEnv.xmlDepth, "<PostLink target='" + htmlEnv.linkUrl + "'" + tmp + ">\n");
 		}
 		// tk/////////////////////////////////////////////////////////////////////////////////
 
@@ -1241,7 +1289,11 @@ public class HTMLFunction extends Function {
 					HTMLDecoration.ends.get(0).append(Modifier.getClassModifierValue(decos));//kotani_id_modifier
 					HTMLDecoration.ends.get(0).append(Modifier.getIdModifierValue(decos));
 
+//<<<<<<< HEAD
+//					HTMLDecoration.ends.get(0).append(" \" src=\"" + path + "/"
+//=======
 					HTMLDecoration.ends.get(0).append(" \" src=\"" + path
+//>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 							+ this.Args.get(0).getStr()
 							+ "\" onLoad=\"initLightbox()\"/>");
 				}
@@ -1270,9 +1322,15 @@ public class HTMLFunction extends Function {
 		} else {
 			// added by masato 20151124 image function for xml
 			if (Ehtml.flag || Incremental.flag) {
-				Incremental.outXMLData(htmlEnv.xmlDepth, "<Img class=\'"
-						+ HTMLEnv.getClassID(this) + "\' src='" + path
-						+ this.Args.get(0).getStr() + "'></Img>\n");
+//<<<<<<< HEAD
+				Incremental.outXMLData(htmlEnv.xmlDepth, "<img class=\'"
+						+ HTMLEnv.getClassID(this) + "\' src='" + path + "/"
+						+ this.Args.get(0).getStr() + "'></img>\n");
+//=======
+//				Incremental.outXMLData(htmlEnv.xmlDepth, "<Img class=\'"
+//						+ HTMLEnv.getClassID(this) + "\' src='" + path
+//						+ this.Args.get(0).getStr() + "'></Img>\n");
+//>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 			} else {
 				if (htmlEnv.decorationStartFlag.size() > 0) {
@@ -1297,7 +1355,11 @@ public class HTMLFunction extends Function {
 						HTMLDecoration.ends.get(0).append(" " + Modifier.getClassModifierValue(decos));//kotani_idmodifier_ok
 						HTMLDecoration.ends.get(0).append(" " + Modifier.getIdModifierValue(decos));
 
-						HTMLDecoration.ends.get(0).append("\" src=\"" + path + this.Args.get(0).getStr() + "\"/>");
+//<<<<<<< HEAD
+						HTMLDecoration.ends.get(0).append("\" src=\"" + path + "/" + this.Args.get(0).getStr() + "\"/>");
+//=======
+//						HTMLDecoration.ends.get(0).append("\" src=\"" + path + this.Args.get(0).getStr() + "\"/>");
+//>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 					}
 				} else {
 					htmlEnv.code.append("<img class=\"" + HTMLEnv.getClassID(this)
@@ -1338,6 +1400,7 @@ public class HTMLFunction extends Function {
 			Incremental.outXMLData(htmlEnv.xmlDepth, "</PostLink>\n");
 		}
 		// tk///////////////////////////////////////////////////////////////////////////////////
+		HTMLFunctionFlag = false;
 		return;
 	}
 
@@ -1857,7 +1920,8 @@ public class HTMLFunction extends Function {
 	@Override
 	public String work(ExtList data_info) {
 		this.setDataList(data_info);
-		// Log.out("FuncName= " + this.getFuncName());
+		 Log.out("FuncName= " + this.getFuncName());
+
 		// Log.out("filename= " + this.getAtt("filename"));
 		// Log.out("condition= " + this.getAtt("condition"));
 
@@ -1887,7 +1951,11 @@ public class HTMLFunction extends Function {
 		else if (FuncName.equalsIgnoreCase("plink")) {
 			Func_plink(data_info);
 		} else if (FuncName.equalsIgnoreCase("glink")) {
-			// Func_glink(data_info);
+			Func_glink(data_info);					// TODO  動作確認
+		} else if (FuncName.equalsIgnoreCase("image_plink")) {
+			Func_image_plink(data_info);
+		} else if (FuncName.equalsIgnoreCase("image_glink")) {
+			Func_image_glink(data_info);
 		} else if (FuncName.equalsIgnoreCase("null")) {
 			Func_null();
 		}
@@ -1914,6 +1982,8 @@ public class HTMLFunction extends Function {
 			// Func_session(); not use
 		} else if(FuncName.equalsIgnoreCase("line")){
 			Func_line();
+		} else if(FuncName.equalsIgnoreCase("testconcat")){
+			Log.out("testconcat:" + getArg(0).getStr());
 		}
 		// tk start//////////////////////////////////
 		else if (FuncName.equalsIgnoreCase("embed")) {
@@ -1942,7 +2012,5 @@ public class HTMLFunction extends Function {
 		Log.out("TFEId = " + HTMLEnv.getClassID(this));
 		htmlEnv.append_css_def_td(HTMLEnv.getClassID(this), this.decos);
 		return null;
-
 	}
-
 }

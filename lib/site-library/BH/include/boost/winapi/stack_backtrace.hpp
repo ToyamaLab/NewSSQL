@@ -27,6 +27,7 @@
 #if !defined( BOOST_USE_WINDOWS_H ) || (defined(_MSC_VER) && (_MSC_VER+0) < 1500)
 extern "C" {
 
+<<<<<<< HEAD
 BOOST_SYMBOL_IMPORT
 boost::winapi::WORD_
 NTAPI
@@ -36,6 +37,14 @@ RtlCaptureStackBackTrace(
     boost::winapi::PVOID_* BackTrace,
     boost::winapi::PDWORD_ BackTraceHash
     );
+=======
+BOOST_SYMBOL_IMPORT boost::winapi::WORD_
+BOOST_WINAPI_NTAPI_CC RtlCaptureStackBackTrace(
+    boost::winapi::DWORD_ FramesToSkip,
+    boost::winapi::DWORD_ FramesToCapture,
+    boost::winapi::PVOID_* BackTrace,
+    boost::winapi::PDWORD_ BackTraceHash);
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 } // extern "C"
 #endif
@@ -49,6 +58,10 @@ using ::RtlCaptureStackBackTrace;
 }
 
 #endif // BOOST_WINAPI_PARTITION_APP_SYSTEM
+<<<<<<< HEAD
 #endif // (NTDDI_VERSION > 0x05010000)
+=======
+#endif // (BOOST_USE_NTDDI_VERSION > BOOST_WINAPI_NTDDI_WINXP)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 #endif // !defined( BOOST_WINAPI_IS_MINGW )
 #endif // BOOST_WINAPI_STACK_BACKTRACE_HPP_INCLUDED_

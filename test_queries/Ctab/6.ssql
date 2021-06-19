@@ -1,4 +1,4 @@
 GENERATE HTML
-cross_tab([m.name@{width=262}],, [(asc)e.byear@{width=100}]!, [image(e.pict, "./pict")]!)@{side_width=100, null_value='noimage.png'}
+cross_tab([m.name@{width=262}],, [(asc)e.byear@{width=100}]!, [image(e.pict, './pict')]!)@{side_width=100, null_value='noimage.png'}
 FROM employee e, employee m
 WHERE e.manager = m.id AND m.id < 130

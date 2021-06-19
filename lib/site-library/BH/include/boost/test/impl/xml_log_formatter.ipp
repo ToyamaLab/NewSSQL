@@ -63,6 +63,7 @@ xml_log_formatter::log_finish( std::ostream& ostr )
 //____________________________________________________________________________//
 
 void
+<<<<<<< HEAD
 xml_log_formatter::log_build_info( std::ostream& ostr )
 {
     ostr  << "<BuildInfo"
@@ -73,6 +74,20 @@ xml_log_formatter::log_build_info( std::ostream& ostr )
                             << BOOST_VERSION/100 % 1000 << "."
                             << BOOST_VERSION % 100      << '\"'
             << "/>";
+=======
+xml_log_formatter::log_build_info( std::ostream& ostr, bool log_build_info )
+{
+    if( log_build_info ) {
+        ostr  << "<BuildInfo"
+                << " platform"  << utils::attr_value() << BOOST_PLATFORM
+                << " compiler"  << utils::attr_value() << BOOST_COMPILER
+                << " stl"       << utils::attr_value() << BOOST_STDLIB
+                << " boost=\""  << BOOST_VERSION/100000     << "."
+                                << BOOST_VERSION/100 % 1000 << "."
+                                << BOOST_VERSION % 100      << '\"'
+                << "/>";
+    }
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 }
 
 //____________________________________________________________________________//

@@ -6,9 +6,19 @@
 
 //  Authors: Douglas Gregor
 //           Andrew Lumsdaine
+<<<<<<< HEAD
 #ifndef BOOST_RELAXED_HEAP_HEADER
 #define BOOST_RELAXED_HEAP_HEADER
 
+=======
+#warning "Use of relaxed_heap is depreciated; please use the standard heap functions."
+#ifndef BOOST_RELAXED_HEAP_HEADER
+#define BOOST_RELAXED_HEAP_HEADER
+
+#include <boost/config/header_deprecated.hpp>
+BOOST_HEADER_DEPRECATED("the standard heap functions")
+
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 #include <functional>
 #include <boost/property_map/property_map.hpp>
 #include <boost/optional.hpp>
@@ -195,7 +205,10 @@ public:
     return static_cast<bool>(groups[get(id, x)]);
   }
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
   void pop()
   {
     // Fill in smallest_value. This is the group x.

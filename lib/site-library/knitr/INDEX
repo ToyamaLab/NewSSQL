@@ -2,6 +2,10 @@ Sweave2knitr            Convert Sweave to knitr documents
 all_labels              Get all chunk labels in a document
 all_patterns            All built-in patterns
 asis_output             Mark an R object with a special class
+<<<<<<< HEAD
+=======
+cache_engines           Cache engines of other languages
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 clean_cache             Clean cache files that are probably no longer
                         needed
 combine_words           Combine multiple words into a single string
@@ -36,6 +40,10 @@ knit2pdf                Convert Rnw or Rrst files to PDF
 knit2wp                 Knit an R Markdown document and post it to
                         WordPress
 knit_child              Knit a child document
+<<<<<<< HEAD
+=======
+knit_code               The code manager to manage code in all chunks
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 knit_engines            Engines of other languages
 knit_exit               Exit knitting early
 knit_expand             A simple macro preprocessor for templating
@@ -69,6 +77,11 @@ plot_crop               Crop a plot (remove the edges) using PDFCrop or
                         ImageMagick
 rand_seed               An unevaluated expression to return
                         .Random.seed if exists
+<<<<<<< HEAD
+=======
+raw_block               Mark character strings as raw blocks in R
+                        Markdown
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 read_chunk              Read chunks from an external script
 read_rforge             Read source code from R-Forge
 render_html             Set output hooks for different output formats

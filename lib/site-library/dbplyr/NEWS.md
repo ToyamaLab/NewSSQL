@@ -1,3 +1,324 @@
+<<<<<<< HEAD
+=======
+# dbplyr 1.4.4
+
+* Internally `DBI::dbExecute()` now uses `immediate = TRUE`; this improves
+  support for session-scoped temporary tables in MS SQL (@krlmlr, #438).
+
+* Subqueries with `ORDER BY` use `TOP 9223372036854775807` instead of 
+  `TOP 100 PERCENT` on SQL Server for compatibility with Azure Data Warehouse 
+  (#337, @alexkyllo).
+
+* `escape()` now supports `blob` vectors using new `sql_escape_raw()` 
+  generic. It enables using [blob](https://blob.tidyverse.org/) variables in 
+  dplyr verbs, for example to filter nvarchar values by UTF-16 blobs
+  (see https://github.com/r-dbi/DBI/issues/215#issuecomment-356376133). 
+  (@okhoma, #433)
+
+* Added `setOldClass()` calls for `"ident"` and `"ident_q"` classes for 
+  compatibility with dplyr 1.0.0 (#448, @krlmlr).
+
+* Postgres `str_detect()` translation uses same argument names as stringr,
+  and gains a `negate` argument (#444).
+
+* `semi_join()` and `anti_join()` now correctly support the `sql_on` argument 
+  (#443, @krlmlr).
+
+# dbplyr 1.4.3
+
+* dbplyr now uses RPostgres (instead of RPostgreSQL) and RMariaDB (instead of 
+  RMySQL) for its internal tests and data functions (#427).
+
+* The Date and POSIXt methods for `escape()` now use exported 
+  `sql_escape_date()` and `sql_escape_datetime()` generics to allow backend
+  specific formatting of date and datetime literals. These are used to
+  provide methods for Athena and Presto backends (@OssiLehtinen, #384, #391).
+
+* `first()`, `last()`, `nth()`, `lead()` and `lag()` now respect the
+  `window_frame()` (@krlmlr, #366).
+
+* SQL server: new translations for `str_flatten()` (@PauloJhonny, #405).
+
+* SQL server: temporary datasets are now session-local, not global (#401).
+
+* Postgres: correct `str_detect()`, `str_replace()` and `str_replace_all()` 
+  translation (@shosaco, #362).
+
+# dbplyr 1.4.2
+
+* Fix bug when partially evaluating unquoting quosure containing a single 
+  symbol (#317)
+
+* Fixes for rlang and dpylr compatibility.
+
+# dbplyr 1.4.1
+
+Minor improvements to SQL generation
+
+* `x %in% y` strips names of `y` (#269).
+
+* Enhancements for scoped verbs (`mutate_all()`, `summarise_if()`,
+  `filter_at()` etc) (#296, #306).
+
+* MS SQL use `TOP 100 PERCENT` as stop-gap to allow subqueries with 
+  `ORDER BY` (#277).
+
+* Window functions now translated correctly for Hive (#293, @cderv).
+
+# dbplyr 1.4.0
+
+## Breaking changes
+
+* ``Error: `con` must not be NULL``: If you see this error, it probably means 
+  that you have forgotten to pass `con` down to a dbplyr function. 
+  Previously, dbplyr defaulted to using `simulate_dbi()` which introduced
+  subtle escaping bugs. (It's also possible I have forgotten to pass it 
+  somewhere that the dbplyr tests don't pick up, so if you can't figure it 
+  out, please let me know).
+
+* Subsetting (`[[`, `$`, and `[`) functions are no longer evaluated locally. 
+  This makes the translation more consistent and enables useful new idioms 
+  for modern databases (#200).
+
+## New features
+
+* MySQL/MariaDB (https://mariadb.com/kb/en/library/window-functions/) 
+  and SQLite (https://www.sqlite.org/windowfunctions.html) translations gain 
+  support for window functions, available in Maria DB 10.2, MySQL 8.0, and 
+  SQLite 3.25 (#191).
+
+* Overall, dplyr generates many fewer subqueries:
+
+  * Joins and semi-joins no longer add an unneeded subquery (#236). This is
+    facilitated by the new `bare_identifier_ok` argument to `sql_render()`;
+    the previous argument was called `root` and confused me.
+  
+  * Many sequences of `select()`, `rename()`, `mutate()`, and `transmute()` can
+    be collapsed into a single query, instead of always generating a subquery
+    (#213).
+
+* New `vignette("sql")` describes some advantages of dbplyr over SQL (#205) and 
+  gives some advice about writing literal SQL inside of dplyr, when you need 
+  to (#196).
+
+* New `vignette("reprex")` gives some hints on creating reprexes that work 
+  anywhere (#117). This is supported by a new `tbl_memdb()` that matches the 
+  existing `tbl_lazy()`.
+
+* All `..._join()` functions gain an `sql_on` argument that allows specifying
+  arbitrary join predicates in SQL code (#146, @krlmlr).
+
+## SQL translations
+
+* New translations for some lubridate functions: `today()`, `now()`, 
+  `year()`, `month()`, `day()`, `hour()`, `minute()`,
+  `second()`, `quarter()`, `yday()` (@colearendt, @derekmorr). Also added new 
+  translation for `as.POSIXct()`.
+
+* New translations for stringr functions: `str_c()`, `str_sub()`, 
+  `str_length()`, `str_to_upper()`, `str_to_lower()`, and `str_to_title()`
+  (@colearendt). Non-translated stringr functions throw a clear error.
+
+* New translations for bitwise operations: `bitwNot()`, `bitwAnd()`, `bitwOr()`,
+  `bitwXor()`, `bitwShiftL()`, and `bitwShiftR()`. Unlike the base R functions, 
+  the translations do not coerce arguments to integers (@davidchall, #235).
+
+* New translation for `x[y]` to `CASE WHEN y THEN x END`. This enables 
+  `sum(a[b == 0])` to work as you expect from R (#202). `y` needs to be
+  a logical expression; if not you will likely get a type error from your 
+  database.
+
+* New translations for `x$y` and `x[["y"]]` to `x.y`, enabling you to index
+  into nested fields in databases that provide them (#158).
+
+* The `.data` and `.env` pronouns of tidy evaluation are correctly translated 
+  (#132).
+
+* New translation for `median()` and `quantile()`. Works for all ANSI compliant
+  databases (SQL Server, Postgres, MariaDB, Teradata) and has custom 
+  translations for Hive. Thanks to @edavidaja for researching the SQL variants! 
+  (#169)
+  
+* `na_if()` is correct translated to `NULLIF()` (rather than `NULL_IF`) (#211).
+
+* `n_distinct()` translation throws an error when given more than one argument.
+  (#101, #133).
+
+* New default translations for `paste()`, `paste0()`, and the hyperbolic 
+  functions (these previously were only available for ODBC databases).
+
+* Corrected translations of `pmin()` and `pmax()` to `LEAST()` and `GREATEST()` 
+  for ANSI compliant databases (#118), to `MIN()` and `MAX()` for SQLite, and 
+  to an error for SQL server.
+
+* New translation for `switch()` to the simple form of `CASE WHEN` (#192).
+
+### SQL simulation
+
+SQL simulation makes it possible to see what dbplyr will translate SQL to,
+without having an active database connection, and is used for testing and
+generating reprexes.
+
+* SQL simulation has been overhauled. It now works reliably, is better 
+  documented, and always uses ANSI escaping (i.e. `` ` `` for field 
+  names and `'` for strings).
+
+* `tbl_lazy()` now actually puts a `dbplyr::src` in the `$src` field. This
+  shouldn't affect any downstream code unless you were previously working
+  around this weird difference between `tbl_lazy` and `tbl_sql` classes.
+  It also includes the `src` class in its class, and when printed,
+  shows the generated SQL (#111).
+
+## Database specific improvements
+
+* MySQL/MariaDB
+
+  * Translations also applied to connections via the odbc package 
+    (@colearendt, #238)
+  
+  * Basic support for regular expressions via `str_detect()` and  
+    `str_replace_all()` (@colearendt, #168).
+
+  * Improved translation for `as.logical(x)` to `IF(x, TRUE, FALSE)`.
+
+* Oracle
+
+  * New custom translation for `paste()` and `paste0()` (@cderv, #221)
+
+* Postgres
+
+  * Basic support for regular expressions via `str_detect()` and  
+    `str_replace_all()` (@colearendt, #168).
+
+* SQLite
+
+  * `explain()` translation now generates `EXPLAIN QUERY PLAN` which
+    generates a higher-level, more human friendly explanation.
+
+* SQL server
+
+  * Improved translation for `as.logical(x)` to `CAST(x as BIT)` (#250).
+    
+  * Translates `paste()`, `paste0()`, and `str_c()` to `+`.
+
+  * `copy_to()` method applies temporary table name transformation
+    earlier so that you can now overwrite temporary tables (#258).
+
+  * `db_write_table()` method uses correct argument name for 
+    passing along field types (#251).
+
+## Minor improvements and bug fixes
+
+* Aggregation functions only warn once per session about the use of 
+  `na.rm = TRUE` (#216).
+
+* table names generated by `random_table_name()` have the prefix 
+  "dbplyr_", which makes it easier to find them programmatically 
+  (@mattle24, #111)
+
+* Functions that are only available in a windowed (`mutate()`) query now
+  throw an error when called in a aggregate (`summarise()`) query (#129)
+
+* `arrange()` understands the `.by_group` argument, making it possible
+  sort by groups if desired. The default is `FALSE` (#115)
+
+* `distinct()` now handles computed variables like `distinct(df, y = x + y)` 
+  (#154).
+
+* `escape()`, `sql_expr()` and `build_sql()` no longer accept `con = NULL` as 
+  a shortcut for `con = simulate_dbi()`. This made it too easy to forget to 
+  pass `con` along, introducing extremely subtle escaping bugs. `win_over()`
+  gains a `con` argument for the same reason.
+  
+* New `escape_ansi()` always uses ANSI SQL 92 standard escaping (for use 
+  in examples and documentation).
+
+* `mutate(df, x = NULL)` drops `x` from the output, just like when working with
+  local data frames (#194).
+
+* `partial_eval()` processes inlined functions (including rlang lambda 
+  functions). This makes dbplyr work with more forms of scoped verbs like
+  `df %>% summarise_all(~ mean(.))`, `df %>% summarise_all(list(mean))` (#134).
+
+* `sql_aggregate()` now takes an optional argument `f_r` for passing to
+  `check_na_rm()`. This allows the warning to show the R function name rather 
+  than the SQL function name (@sverchkov, #153).
+
+* `sql_infix()` gains a `pad` argument for the rare operator that doesn't
+  need to be surrounded by spaces.
+
+* `sql_prefix()` no longer turns SQL functions into uppercase, allowing for 
+  correct translation of case-sensitive SQL functions (#181, @mtoto).
+
+* `summarise()` gives a clear error message if you refer to a variable 
+  created in that same `summarise()` (#114).
+
+* New `sql_call2()` which is to `rlang::call2()` as `sql_expr()` is to 
+  `rlang::expr()`.
+
+* `show_query()` and `explain()` use `cat()` rather than message.
+
+* `union()`, `union_all()`, `setdiff()` and `intersect()` do a better job
+  of matching columns across backends (#183).
+
+# dbplyr 1.3.0
+
+* Now supports for dplyr 0.8.0 (#190) and R 3.1.0
+
+## API changes
+
+* Calls of the form `dplyr::foo()` are now evaluated in the database, 
+  rather than locally (#197).
+
+* `vars` argument to `tbl_sql()` has been formally deprecated; it hasn't 
+  actually done anything for a while (#3254).
+
+* `src` and `tbl` objects now include a class generated from the class of 
+  the underlying connection object. This makes it possible for dplyr backends 
+  to implement different behaviour at the dplyr level, when needed. (#2293)
+
+## SQL translation
+
+* `x %in% y` is now translated to `FALSE` if `y` is empty (@mgirlich, #160).
+
+* New `as.integer64(x)` translation to `CAST(x AS BIGINT)` (#3305)
+
+* `case_when` now translates with a ELSE clause if a formula of the form 
+  `TRUE~<RHS>` is provided . (@cderv, #112)
+
+* `cummean()` now generates `AVG()` not `MEAN()` (#157)
+
+* `str_detect()` now uses correct parameter order (#3397)
+
+* MS SQL
+    * Cumulative summary functions now work (#157)
+    * `ifelse()` uses `CASE WHEN` instead of `IIF`; this allows more complex 
+       operations, such as `%in%`, to work properly (#93)
+
+* Oracle
+    * Custom `db_drop_table()` now only drops tables if they exist (#3306)
+    * Custom `setdiff()` translation  (#3493)
+    * Custom `db_explain()` translation (#3471)
+
+* SQLite
+  * Correct translation for `as.numeric()`/`as.double()` (@chris-park, #171).
+
+* Redshift 
+  * `substr()` translation improved (#3339)
+
+## Minor improvements and bug fixes
+
+* `copy_to()` will only remove existing table when `overwrite = TRUE` and the
+  table already exists, eliminating a confusing "NOTICE" from PostgreSQL 
+  (#3197).
+
+* `partial_eval()` handles unevaluated formulas (#184).
+
+* `pull.tbl_sql()` now extracts correctly from grouped tables (#3562).
+
+* `sql_render.op()` now correctly forwards the `con` argument (@kevinykuo, #73).
+
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 # dbplyr 1.2.2
 
 * R CMD check fixes
@@ -11,7 +332,11 @@
 ## New top-level translations
 
 * New translations for 
+<<<<<<< HEAD
     
+=======
+  
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     * MS Access (#2946) (@DavisVaughan)
     * Oracle, via odbc or ROracle (#2928, #2732, @edgararuiz)
     * Teradata. 
@@ -113,6 +438,11 @@
 
 *   PostgreSQL: translation for `grepl()` added (@zozlak)
 
+<<<<<<< HEAD
+=======
+*   Oracle: changed VARVHAR to VARCHAR2 datatype (@washcycle, #66)
+
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 # dbplyr 1.1.0
 
 ## New features
@@ -253,7 +583,11 @@
 
 * New `as.sql()` safely coerces an input to SQL.
 
+<<<<<<< HEAD
 * More tranlators for `as.character()`, `as.integer()` and `as.double()` 
+=======
+* More translators for `as.character()`, `as.integer()` and `as.double()` 
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
   (#2775).
 
 * New `ident_q()` makes it possible to specifier identifiers that do not
@@ -347,7 +681,11 @@
 * `common_by()` gets a better error message for unexpected inputs (#2091)
 
 * `copy_to()` no longer checks that the table doesn't exist before creation,
+<<<<<<< HEAD
   intead preferring to fall back on the database for error messages. This
+=======
+  instead preferring to fall back on the database for error messages. This
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
   should reduce both false positives and false negative (#1470)
 
 * `copy_to()` now succeeds for MySQL if a character column contains `NA` 

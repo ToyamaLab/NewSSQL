@@ -67,8 +67,11 @@ namespace Rcpp {
             m_d = tmp/(24*60*60);
         }
 
+<<<<<<< HEAD
         ~Date() {};
 
+=======
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
         double getDate(void) const {
             return m_d;
         }

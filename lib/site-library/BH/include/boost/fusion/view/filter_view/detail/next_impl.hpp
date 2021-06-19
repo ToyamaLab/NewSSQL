@@ -1,5 +1,9 @@
 /*=============================================================================
     Copyright (c) 2001-2011 Joel de Guzman
+<<<<<<< HEAD
+=======
+    Copyright (c) 2018 Kohei Takahashi
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
     Distributed under the Boost Software License, Version 1.0. (See accompanying 
     file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
@@ -8,6 +12,7 @@
 #define FUSION_NEXT_IMPL_06052005_0900
 
 #include <boost/fusion/support/config.hpp>
+<<<<<<< HEAD
 #include <boost/fusion/algorithm/query/detail/find_if.hpp>
 #include <boost/fusion/iterator/value_of.hpp>
 #include <boost/mpl/eval_if.hpp>
@@ -16,6 +21,12 @@
 #include <boost/mpl/quote.hpp>
 #include <boost/mpl/bind.hpp>
 #include <boost/mpl/placeholders.hpp>
+=======
+#include <boost/fusion/iterator/next.hpp>
+#include <boost/fusion/iterator/equal_to.hpp>
+#include <boost/mpl/eval_if.hpp>
+#include <boost/mpl/identity.hpp>
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 namespace boost { namespace fusion
 {
@@ -48,6 +59,7 @@ namespace boost { namespace fusion
                     >::type
                 next_type;
 
+<<<<<<< HEAD
                 typedef typename
                     detail::static_find_if<
                         next_type
@@ -62,12 +74,19 @@ namespace boost { namespace fusion
                 typedef filter_iterator<
                     category, typename filter::type, last_type, pred_type>
                 type;
+=======
+                typedef filter_iterator<category, next_type, last_type, pred_type> type;
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
                 BOOST_CONSTEXPR BOOST_FUSION_GPU_ENABLED
                 static type
                 call(Iterator const& i)
                 {
+<<<<<<< HEAD
                     return type(filter::iter_call(i.first));
+=======
+                    return type(fusion::next(i.first));
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
                 }
             };
         };

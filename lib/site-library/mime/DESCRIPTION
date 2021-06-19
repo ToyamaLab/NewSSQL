@@ -1,11 +1,20 @@
 Package: mime
 Type: Package
 Title: Map Filenames to MIME Types
+<<<<<<< HEAD
 Version: 0.5
 Date: 2016-07-07
 Authors@R: c(person("Jeffrey", "Horner", role = "ctb"),
     person("Yihui", "Xie", role = c("aut", "cre"), email = "xie@yihui.name"))
 Maintainer: Yihui Xie <xie@yihui.name>
+=======
+Version: 0.9
+Authors@R: c(
+    person("Yihui", "Xie", role = c("aut", "cre"), email = "xie@yihui.name", comment = c(ORCID = "0000-0003-0645-5666")),
+    person("Jeffrey", "Horner", role = "ctb"),
+    person("Beilei", "Bian", role = "ctb")
+    )
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 Description: Guesses the MIME type from a filename extension using the data
     derived from /etc/mime.types in UNIX-type systems.
 Imports: tools
@@ -13,6 +22,7 @@ License: GPL
 URL: https://github.com/yihui/mime
 BugReports: https://github.com/yihui/mime/issues
 LazyData: TRUE
+<<<<<<< HEAD
 RoxygenNote: 5.0.1
 NeedsCompilation: yes
 Packaged: 2016-07-07 04:44:41 UTC; yihui
@@ -21,3 +31,16 @@ Author: Jeffrey Horner [ctb],
 Repository: CRAN
 Date/Publication: 2016-07-07 07:38:00
 Built: R 3.5.1; x86_64-apple-darwin17.6.0; 2018-08-21 07:39:31 UTC; unix
+=======
+RoxygenNote: 7.0.2
+Encoding: UTF-8
+NeedsCompilation: yes
+Packaged: 2020-02-04 17:11:45 UTC; yihui
+Author: Yihui Xie [aut, cre] (<https://orcid.org/0000-0003-0645-5666>),
+  Jeffrey Horner [ctb],
+  Beilei Bian [ctb]
+Maintainer: Yihui Xie <xie@yihui.name>
+Repository: CRAN
+Date/Publication: 2020-02-04 18:20:06 UTC
+Built: R 4.0.2; x86_64-apple-darwin17.7.0; 2020-08-27 07:30:22 UTC; unix
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce

@@ -21,6 +21,10 @@
 #include <boost/date_time/time_zone_names.hpp>
 #include <boost/date_time/time_zone_base.hpp>
 #include <boost/date_time/time_parsing.hpp>
+<<<<<<< HEAD
+=======
+#include <boost/algorithm/string.hpp>
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 namespace boost {
   namespace date_time {
@@ -170,8 +174,14 @@ namespace boost {
       /*! May throw bad_field_count exceptions */
       void load_from_stream(std::istream &in)
       {
+<<<<<<< HEAD
         std::string  buff;
         while( std::getline(in, buff)) {
+=======
+        std::string buff;
+        while( std::getline(in, buff)) {
+          boost::trim_right(buff);
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
           parse_string(buff);
         }
       }

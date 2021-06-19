@@ -40,6 +40,10 @@ using boost::move_detail::remove_pointer;
 using boost::move_detail::add_pointer;
 using boost::move_detail::true_type;
 using boost::move_detail::false_type;
+<<<<<<< HEAD
+=======
+using boost::move_detail::voider;
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 using boost::move_detail::enable_if_c;
 using boost::move_detail::enable_if;
 using boost::move_detail::disable_if_c;

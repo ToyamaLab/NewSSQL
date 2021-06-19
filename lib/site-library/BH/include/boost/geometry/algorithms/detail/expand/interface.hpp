@@ -5,11 +5,20 @@
 // Copyright (c) 2009-2015 Mateusz Loskot, London, UK.
 // Copyright (c) 2014-2015 Samuel Debionne, Grenoble, France.
 
+<<<<<<< HEAD
 // This file was modified by Oracle on 2015, 2016.
 // Modifications copyright (c) 2015-2016, Oracle and/or its affiliates.
 
 // Contributed and/or modified by Vissarion Fysikopoulos, on behalf of Oracle
 // Contributed and/or modified by Menelaos Karavelas, on behalf of Oracle
+=======
+// This file was modified by Oracle on 2015, 2016, 2018.
+// Modifications copyright (c) 2015-2018, Oracle and/or its affiliates.
+
+// Contributed and/or modified by Vissarion Fysikopoulos, on behalf of Oracle
+// Contributed and/or modified by Menelaos Karavelas, on behalf of Oracle
+// Contributed and/or modified by Adam Wulkiewicz, on behalf of Oracle
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 // Parts of Boost.Geometry are redesigned from Geodan's Geographic Library
 // (geolib/GGL), copyright (c) 1995-2010 Geodan, Amsterdam, the Netherlands.
@@ -25,16 +34,28 @@
 #include <boost/variant/static_visitor.hpp>
 #include <boost/variant/variant_fwd.hpp>
 
+<<<<<<< HEAD
+=======
+#include <boost/geometry/core/coordinate_system.hpp>
+#include <boost/geometry/core/tag.hpp>
+#include <boost/geometry/core/tags.hpp>
+
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 #include <boost/geometry/geometries/concepts/check.hpp>
 
 #include <boost/geometry/algorithms/dispatch/expand.hpp>
 
 #include <boost/geometry/strategies/default_strategy.hpp>
+<<<<<<< HEAD
 
 #include <boost/geometry/strategies/envelope.hpp>
 #include <boost/geometry/strategies/cartesian/envelope_segment.hpp>
 #include <boost/geometry/strategies/spherical/envelope_segment.hpp>
 #include <boost/geometry/strategies/geographic/envelope_segment.hpp>
+=======
+#include <boost/geometry/strategies/expand.hpp>
+
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 namespace boost { namespace geometry
 {
@@ -58,6 +79,7 @@ struct expand
                              Geometry const& geometry,
                              default_strategy)
     {
+<<<<<<< HEAD
         typedef typename point_type<Geometry>::type point_type;
         typedef typename coordinate_type<point_type>::type coordinate_type;
 
@@ -66,6 +88,13 @@ struct expand
                 typename cs_tag<point_type>::type,
                 coordinate_type
                 >::type strategy_type;
+=======
+        typedef typename strategy::expand::services::default_strategy
+            <
+                typename tag<Geometry>::type,
+                typename cs_tag<Geometry>::type
+            >::type strategy_type;
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
         dispatch::expand<Box, Geometry>::apply(box, geometry, strategy_type());
     }

@@ -4,6 +4,14 @@
 // Copyright (c) 2012 Bruno Lalande, Paris, France.
 // Copyright (c) 2012 Mateusz Loskot, London, UK.
 
+<<<<<<< HEAD
+=======
+// This file was modified by Oracle on 2018.
+// Modifications copyright (c) 2018, Oracle and/or its affiliates.
+
+// Contributed and/or modified by Adam Wulkiewicz, on behalf of Oracle
+
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 // Use, modification and distribution is subject to the Boost Software License,
 // Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
 // http://www.boost.org/LICENSE_1_0.txt)
@@ -13,6 +21,10 @@
 
 #include <boost/config.hpp>
 #include <boost/mpl/if.hpp>
+<<<<<<< HEAD
+=======
+#include <boost/static_assert.hpp>
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 #include <boost/type_traits/is_floating_point.hpp>
 #include <boost/type_traits/is_fundamental.hpp>
 #include <boost/type_traits/is_void.hpp>

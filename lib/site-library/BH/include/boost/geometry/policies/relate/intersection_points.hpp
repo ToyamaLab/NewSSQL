@@ -52,6 +52,7 @@ struct segments_intersection_points
     {
         return_type result;
         result.count = 1;
+<<<<<<< HEAD
 
         bool use_a = true;
 
@@ -88,6 +89,11 @@ struct segments_intersection_points
             sinfo.assign_b(result.intersections[0], s1, s2);
         }
 
+=======
+        sinfo.calculate(result.intersections[0], s1, s2);
+
+        // Temporary - this should go later
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
         result.fractions[0].assign(sinfo);
 
         return result;

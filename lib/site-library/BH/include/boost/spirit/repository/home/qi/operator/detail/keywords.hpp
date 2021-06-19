@@ -57,7 +57,11 @@ namespace boost { namespace spirit { namespace repository { namespace qi { names
                 bool call_subject_unused(
                         Subject const &subject, Iterator &first, Iterator const &last
                         , Context& context, Skipper const& skipper
+<<<<<<< HEAD
                         , Index& idx ) const
+=======
+                        , Index& /*idx*/ ) const
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
                 {
                     Iterator save = first;
                     skipper_keyword_marker<Skipper,NoCasePass>
@@ -67,7 +71,11 @@ namespace boost { namespace spirit { namespace repository { namespace qi { names
                     {
                         return true;
                     }
+<<<<<<< HEAD
                     save = save;
+=======
+                    first = save;
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
                     return false;
                 }
 
@@ -76,7 +84,11 @@ namespace boost { namespace spirit { namespace repository { namespace qi { names
                 bool call_subject(
                         Subject const &subject, Iterator &first, Iterator const &last
                         , Context& context, Skipper const& skipper
+<<<<<<< HEAD
                         , Index& idx ) const
+=======
+                        , Index& /*idx*/ ) const
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
                 {
 
                     Iterator save = first;
@@ -86,10 +98,21 @@ namespace boost { namespace spirit { namespace repository { namespace qi { names
                     {
                         return true;
                     }
+<<<<<<< HEAD
                     save = save;
                     return false;
                 }
 
+=======
+                    first = save;
+                    return false;
+                }
+
+#if defined(_MSC_VER)
+# pragma warning(push)
+# pragma warning(disable: 4127) // conditional expression is constant
+#endif
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
             // Handle unused attributes
             template <typename T> bool call(T &idx, mpl::false_) const{
  
@@ -114,6 +137,12 @@ namespace boost { namespace spirit { namespace repository { namespace qi { names
                   }
                 return false;
             }
+<<<<<<< HEAD
+=======
+#if defined(_MSC_VER)
+# pragma warning(pop)
+#endif
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
             const Elements &elements;
             Iterator &first;
@@ -164,9 +193,17 @@ namespace boost { namespace spirit { namespace repository { namespace qi { names
                             };
 
                         // never called, but needed for decltype-based result_of (C++0x)
+<<<<<<< HEAD
                         template <typename Element>
                             typename result<element_char_type(Element)>::type
                             operator()(Element&) const;
+=======
+#ifndef BOOST_NO_CXX11_RVALUE_REFERENCES
+                        template <typename Element>
+                            typename result<element_char_type(Element)>::type
+                            operator()(Element&&) const;
+#endif
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
                     };
 
                     // Compute the list of character types of the child kwd directives
@@ -264,9 +301,17 @@ namespace boost { namespace spirit { namespace repository { namespace qi { names
                             };
 
                         // never called, but needed for decltype-based result_of (C++0x)
+<<<<<<< HEAD
                         template <typename Element>
                             typename result<element_case_type(Element)>::type
                             operator()(Element&) const;
+=======
+#ifndef BOOST_NO_CXX11_RVALUE_REFERENCES
+                        template <typename Element>
+                            typename result<element_case_type(Element)>::type
+                            operator()(Element&&) const;
+#endif
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
                     };
 
                     // Compute the list of character types of the child kwd directives
@@ -440,7 +485,11 @@ namespace boost { namespace spirit { namespace repository { namespace qi { names
                         Iterator &first,
                         const Iterator &last,
                         const ParseVisitor &parse_visitor,
+<<<<<<< HEAD
                         const Skipper &skipper) const
+=======
+                        const Skipper &/*skipper*/) const
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
                 {
                     if(parser_index_type* val_ptr =
                             lookup->find(first,last,first_pass_filter_type()))
@@ -459,7 +508,11 @@ namespace boost { namespace spirit { namespace repository { namespace qi { names
                         const Iterator &last,
                         const ParseVisitor &parse_visitor,
                         const NoCaseParseVisitor &no_case_parse_visitor,
+<<<<<<< HEAD
                         const Skipper &skipper) const
+=======
+                        const Skipper &/*skipper*/) const
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
                 {
                     Iterator saved_first = first;
                     if(parser_index_type* val_ptr =
@@ -503,27 +556,46 @@ namespace boost { namespace spirit { namespace repository { namespace qi { names
 
         template <typename Iterator,typename ParseVisitor, typename NoCaseParseVisitor,typename Skipper>
         bool parse(
+<<<<<<< HEAD
                         Iterator &first,
                         const Iterator &last,
                         const ParseVisitor &parse_visitor,
                         const NoCaseParseVisitor &no_case_parse_visitor,
                         const Skipper &skipper) const
+=======
+                        Iterator &/*first*/,
+                        const Iterator &/*last*/,
+                        const ParseVisitor &/*parse_visitor*/,
+                        const NoCaseParseVisitor &/*no_case_parse_visitor*/,
+                        const Skipper &/*skipper*/) const
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
                 {
                         return false;
                 }
 
         template <typename Iterator,typename ParseVisitor, typename Skipper>
                 bool parse(
+<<<<<<< HEAD
                         Iterator &first,
                         const Iterator &last,
                         const ParseVisitor &parse_visitor,
                         const Skipper &skipper) const
+=======
+                        Iterator &/*first*/,
+                        const Iterator &/*last*/,
+                        const ParseVisitor &/*parse_visitor*/,
+                        const Skipper &/*skipper*/) const
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
                 {
                     return false;
                 }
 
         template <typename ParseFunction>
+<<<<<<< HEAD
         bool parse( ParseFunction &function ) const
+=======
+        bool parse( ParseFunction &/*function*/ ) const
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
                 {
                    return false;
                 }
@@ -550,7 +622,11 @@ namespace boost { namespace spirit { namespace repository { namespace qi { names
                     }
 
                 template <typename T, typename Position, typename Action>
+<<<<<<< HEAD
                     int call(const spirit::qi::action<T,Action> &parser, const Position position ) const
+=======
+                    int call(const spirit::qi::action<T,Action> &parser, const Position /*position*/ ) const
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
                     {
                         // Get the initial state of the flags array and store it in the flags initializer
                         flags[Position::value]=parser.subject.iter.flag_init();
@@ -558,7 +634,11 @@ namespace boost { namespace spirit { namespace repository { namespace qi { names
                     }
 
                 template <typename T, typename Position>
+<<<<<<< HEAD
                     int call( const T & parser, const Position position) const
+=======
+                    int call( const T & parser, const Position /*position*/) const
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
                     {
                         // Get the initial state of the flags array and store it in the flags initializer
                         flags[Position::value]=parser.iter.flag_init();
@@ -566,7 +646,11 @@ namespace boost { namespace spirit { namespace repository { namespace qi { names
                     }
 
                 template <typename T, typename Position>
+<<<<<<< HEAD
                     int call( const spirit::qi::hold_directive<T> & parser, const Position position) const
+=======
+                    int call( const spirit::qi::hold_directive<T> & parser, const Position /*position*/) const
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
                     {
                         // Get the initial state of the flags array and store it in the flags initializer
                         flags[Position::value]=parser.subject.iter.flag_init();
@@ -685,9 +769,14 @@ namespace boost { namespace spirit { namespace repository { namespace qi { names
             Skipper const& skipper;
             ParseDispatcher const& dispatcher;
 
+<<<<<<< HEAD
             private:
             // silence MSVC warning C4512: assignment operator could not be generated
             complex_kwd_function& operator= (complex_kwd_function const&);
+=======
+            // silence MSVC warning C4512: assignment operator could not be generated
+            BOOST_DELETED_FUNCTION(complex_kwd_function& operator= (complex_kwd_function const&))
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
         };
 
 

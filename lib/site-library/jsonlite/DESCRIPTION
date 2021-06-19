@@ -1,12 +1,26 @@
 Package: jsonlite
+<<<<<<< HEAD
 Version: 1.5
+=======
+Version: 1.7.0
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 Title: A Robust, High Performance JSON Parser and Generator for R
 License: MIT + file LICENSE
 NeedsCompilation: yes
 Depends: methods
+<<<<<<< HEAD
 Author: Jeroen Ooms, Duncan Temple Lang, Lloyd Hilaiel
 URL: https://arxiv.org/abs/1403.2805,
         https://www.opencpu.org/posts/jsonlite-a-smarter-json-encoder
+=======
+Authors@R: c(
+    person("Jeroen", "Ooms", role = c("aut", "cre"), email = "jeroen@berkeley.edu",
+      comment = c(ORCID = "0000-0002-4035-0289")),
+    person("Duncan", "Temple Lang", role = "ctb"),
+    person("Lloyd", "Hilaiel", role = "cph", comment="author of bundled libyajl"))
+URL: https://arxiv.org/abs/1403.2805 (paper)
+        https://jeroen.cran.dev/jsonlite (docs)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 BugReports: http://github.com/jeroen/jsonlite/issues
 Maintainer: Jeroen Ooms <jeroen@berkeley.edu>
 VignetteBuilder: knitr, R.rsp
@@ -20,9 +34,22 @@ Description: A fast JSON parser and generator optimized for statistical data
     stream, validate, and prettify JSON data. The unit tests included with the
     package verify that all edge cases are encoded and decoded consistently for
     use with dynamic data in systems and applications.
+<<<<<<< HEAD
 Suggests: httr, curl, plyr, testthat, knitr, rmarkdown, R.rsp, sp
 RoxygenNote: 6.0.1.9000
 Packaged: 2017-05-31 14:03:43 UTC; jeroen
 Repository: CRAN
 Date/Publication: 2017-06-01 12:03:37 UTC
 Built: R 3.5.1; x86_64-apple-darwin17.6.0; 2018-08-21 07:39:56 UTC; unix
+=======
+Suggests: httr, curl, plyr, testthat, knitr, rmarkdown, R.rsp, sf, sp
+RoxygenNote: 7.1.0
+Encoding: UTF-8
+Packaged: 2020-06-24 22:21:10 UTC; jeroen
+Author: Jeroen Ooms [aut, cre] (<https://orcid.org/0000-0002-4035-0289>),
+  Duncan Temple Lang [ctb],
+  Lloyd Hilaiel [cph] (author of bundled libyajl)
+Repository: CRAN
+Date/Publication: 2020-06-25 11:50:11 UTC
+Built: R 4.0.2; x86_64-apple-darwin17.7.0; 2020-08-27 07:43:59 UTC; unix
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce

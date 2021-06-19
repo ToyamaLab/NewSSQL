@@ -1,3 +1,114 @@
+<<<<<<< HEAD
+=======
+# CHANGES IN xfun VERSION 0.16
+
+- Added a new function `base64_decode()` to decode data from the base64 encoding (thanks, @wush978, #31).
+
+# CHANGES IN xfun VERSION 0.15
+
+## NEW FEATURES
+
+- Added a new function `tree()`, which is based on `str()` in base R, but changes the output of `str()` into a tree diagram to make it easier to understand nested data structures.
+
+- Added a new function `base64_encode()` to encode data into the base64 encoding (thanks, @wush978, #27).
+
+- Added a new function `base64_uri()` to generate the Data URI (or Data URL) for a file.
+
+## BUG FIXES
+
+- Fenced code blocks commented out in `<!-- -->` are not longer recognized as code blocks but prose (thanks, @jarauh, #25).
+
+# CHANGES IN xfun VERSION 0.14
+
+## NEW FEATURES
+
+- The `cache_rds()` function can invalidate the cache automatically when the code passed to its `expr` argument has changed. Two new arguments, `hash` and `clean` were added to this function to make it more useful and powerful. See the help page `?xfun::cache_rds()` for more information.
+
+# CHANGES IN xfun VERSION 0.13
+
+## NEW FEATURES
+
+- Added a new function `cache_rds()` to cache an R expression to a `*.rds` file.
+
+- Added a new function `Rscript_call()` to call a function (with arguments) in a new R session via the command `Rscript`.
+
+- The `recheck` argument of `rev_check()` can take a vector of package names, and only these packages will be checked. See `?xfun::rev_check` for more details.
+
+# CHANGES IN xfun VERSION 0.12
+
+## NEW FEATURES
+
+- Added a new function `split_lines()`.
+
+# CHANGES IN xfun VERSION 0.11
+
+## BUG FIXES
+
+- `read_utf8()` will read the file with `options(encoding = 'native.enc')` and ignore user's setting such as `options(encoding = 'UTF-8')` (#21).
+
+# CHANGES IN xfun VERSION 0.10
+
+## NEW FEATURES
+
+- Added the function `as_strict_list()` to convert an existing object to a strict list without wrapping it in another list if the object already is of type list (in contrast to how `strict_list()` behaves) (thanks, @salim-b, #20).
+
+# CHANGES IN xfun VERSION 0.9
+
+## NEW FEATURES
+
+- Added a function `rename_seq()` to rename files to add an incremental numeric prefix to the filenames, e.g., rename `a.txt`, `b.txt`, `c.txt` to `1-a.txt`, `2-b.txt`, `3-c.txt`.
+
+# CHANGES IN xfun VERSION 0.8
+
+## MINOR CHANGES
+
+- `xfun::write_utf8(NULL)` is equivalent to `xfun::write_utf8(character(0))` now (thanks, @schloerke, yihui/knitr#1714).
+
+# CHANGES IN xfun VERSION 0.7
+
+## MINOR CHANGES
+
+- `loadable()` is quiet with R 3.6.0 (https://stat.ethz.ch/pipermail/r-devel/2019-May/077774.html).
+
+# CHANGES IN xfun VERSION 0.6
+
+## NEW FEATURES
+
+- Added the `...` argument to `same_path()` to pass additional arguments to `normalize_path()`.
+
+## BUG FIXES
+
+- The `warn` argument in `prose_index()` failed to suppress warnings.
+
+# CHANGES IN xfun VERSION 0.5
+
+## NEW FEATURES
+
+- Added functions `upload_ftp()` and `upload_win_builder()` to upload files to FTP servers.
+
+- Added a function `stringsAsStrings()` (see its help page for details).
+
+- Added an argument `warn` to `prose_index()` to suppress the warning when code fences are not balanced.
+
+## BUG FIXES
+
+- Fixed the bug that `prose_index()` recognizes double backticks as code fences (thanks, @shrektan, #14 #15).
+
+# CHANGES IN xfun VERSION 0.4
+
+## NEW FEATURES
+
+- Added functions `embed_file()`, `embed_dir()`, and `embed_files()` to embed files in an HTML output file (e.g., from R Markdown), so that the files can be directly downloaded from the web browser. One use case is to call one of these functions in an R code chunk of an Rmd document to embed the Rmd source document or data files in the HTML output, so readers can download them.
+
+- Added a new argument `message` to `pkg_attach()`, so you can suppress package startup messages via `xfun::pkg_attach(..., message = FALSE)` or set the global option `options(xfun.pkg_attach.message = FALSE)` (thanks, @wch, yihui/knitr#1583).
+
+## MINOR CHANGES
+
+- The argument `rw_error` was moved from `gsub_dir()` to `gsub_file()` (`gsub_dir(rw_error = ...)` will still work).
+
+- `is_ascii()` now returns `NA` for `NA_character_` (thanks, @shrektan, #8 #9).
+
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 # CHANGES IN xfun VERSION 0.3
 
 ## NEW FEATURES

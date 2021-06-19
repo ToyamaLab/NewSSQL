@@ -20,6 +20,10 @@
 #include <boost/range/concepts.hpp>
 #include <boost/range/metafunctions.hpp>
 
+<<<<<<< HEAD
+=======
+#include <boost/geometry/core/mutable_range.hpp>
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 #include <boost/geometry/geometries/concepts/point_concept.hpp>
 

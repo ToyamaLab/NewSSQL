@@ -1,6 +1,10 @@
 Package: processx
 Title: Execute and Control System Processes
+<<<<<<< HEAD
 Version: 3.2.0
+=======
+Version: 3.4.3
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 Authors@R: c(
     person("Gábor", "Csárdi", role = c("aut", "cre", "cph"),
            email = "csardi.gabor@gmail.com",
@@ -17,6 +21,7 @@ Description: Tools to run system processes in the background.
     poll several processes at once.
 License: MIT + file LICENSE
 LazyData: true
+<<<<<<< HEAD
 URL: https://github.com/r-lib/processx#readme
 BugReports: https://github.com/r-lib/processx/issues
 RoxygenNote: 6.0.1.9000
@@ -25,11 +30,28 @@ Suggests: callr, covr, debugme, parallel, testthat, withr
 Encoding: UTF-8
 NeedsCompilation: yes
 Packaged: 2018-08-16 08:47:09 UTC; gaborcsardi
+=======
+URL: https://processx.r-lib.org,
+        https://github.com/r-lib/processx#readme
+BugReports: https://github.com/r-lib/processx/issues
+RoxygenNote: 7.1.1
+Imports: ps (>= 1.2.0), R6, utils
+Suggests: callr (>= 3.2.0), codetools, covr, crayon, curl, debugme,
+        parallel, testthat, withr
+Encoding: UTF-8
+NeedsCompilation: yes
+Packaged: 2020-07-05 12:57:04 UTC; gaborcsardi
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 Author: Gábor Csárdi [aut, cre, cph] (<https://orcid.org/0000-0001-7098-9676>),
   Winston Chang [aut],
   RStudio [cph, fnd],
   Mango Solutions [cph, fnd]
 Maintainer: Gábor Csárdi <csardi.gabor@gmail.com>
 Repository: CRAN
+<<<<<<< HEAD
 Date/Publication: 2018-08-16 09:20:02 UTC
 Built: R 3.5.1; x86_64-apple-darwin17.6.0; 2018-08-21 07:40:56 UTC; unix
+=======
+Date/Publication: 2020-07-05 13:40:08 UTC
+Built: R 4.0.2; x86_64-apple-darwin17.7.0; 2020-08-27 07:44:42 UTC; unix
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce

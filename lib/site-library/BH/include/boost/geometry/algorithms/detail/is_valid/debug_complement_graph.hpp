@@ -1,8 +1,15 @@
 // Boost.Geometry (aka GGL, Generic Geometry Library)
 
+<<<<<<< HEAD
 // Copyright (c) 2014, Oracle and/or its affiliates.
 
 // Contributed and/or modified by Menelaos Karavelas, on behalf of Oracle
+=======
+// Copyright (c) 2014, 2018, 2019, Oracle and/or its affiliates.
+
+// Contributed and/or modified by Menelaos Karavelas, on behalf of Oracle
+// Contributed and/or modified by Adam Wulkiewicz, on behalf of Oracle
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 // Licensed under the Boost Software License version 1.0.
 // http://www.boost.org/users/license.html
@@ -14,6 +21,11 @@
 #include <iostream>
 #endif
 
+<<<<<<< HEAD
+=======
+#include <boost/geometry/algorithms/detail/is_valid/complement_graph.hpp>
+
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 namespace boost { namespace geometry
 {
 
@@ -22,10 +34,17 @@ namespace detail { namespace is_valid
 
 
 #ifdef BOOST_GEOMETRY_TEST_DEBUG
+<<<<<<< HEAD
 template <typename OutputStream, typename TurnPoint>
 inline void
 debug_print_complement_graph(OutputStream& os,
                              complement_graph<TurnPoint> const& graph)
+=======
+template <typename OutputStream, typename TurnPoint, typename CSTag>
+inline void
+debug_print_complement_graph(OutputStream& os,
+                             complement_graph<TurnPoint, CSTag> const& graph)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 {
     typedef typename complement_graph<TurnPoint>::vertex_handle vertex_handle;
 
@@ -55,9 +74,15 @@ debug_print_complement_graph(OutputStream& os,
     }
 }
 #else
+<<<<<<< HEAD
 template <typename OutputStream, typename TurnPoint>
 inline void debug_print_complement_graph(OutputStream&,
                                          complement_graph<TurnPoint> const&)
+=======
+template <typename OutputStream, typename TurnPoint, typename CSTag>
+inline void debug_print_complement_graph(OutputStream&,
+                                         complement_graph<TurnPoint, CSTag> const&)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 {
 }
 #endif

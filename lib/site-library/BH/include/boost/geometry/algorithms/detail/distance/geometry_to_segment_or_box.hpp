@@ -1,8 +1,15 @@
 // Boost.Geometry (aka GGL, Generic Geometry Library)
 
+<<<<<<< HEAD
 // Copyright (c) 2014, Oracle and/or its affiliates.
 
 // Contributed and/or modified by Menelaos Karavelas, on behalf of Oracle
+=======
+// Copyright (c) 2014, 2019, Oracle and/or its affiliates.
+
+// Contributed and/or modified by Menelaos Karavelas, on behalf of Oracle
+// Contributed and/or modified by Adam Wulkiewicz, on behalf of Oracle
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 // Licensed under the Boost Software License version 1.0.
 // http://www.boost.org/users/license.html
@@ -165,6 +172,30 @@ private:
         }
     };
 
+<<<<<<< HEAD
+=======
+    template
+    <
+        typename SegOrBox,
+        typename SegOrBoxTag = typename tag<SegOrBox>::type
+    >
+    struct intersects
+    {
+        static inline bool apply(Geometry const& g1, SegOrBox const& g2, Strategy const&)
+        {
+            return geometry::intersects(g1, g2);
+        }
+    };
+
+    template <typename SegOrBox>
+    struct intersects<SegOrBox, segment_tag>
+    {
+        static inline bool apply(Geometry const& g1, SegOrBox const& g2, Strategy const& s)
+        {
+            return geometry::intersects(g1, g2, s.get_relate_segment_segment_strategy());
+        }
+    };
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 public:
     typedef typename strategy::distance::services::return_type
@@ -194,7 +225,11 @@ public:
 
 
         if (check_intersection
+<<<<<<< HEAD
             && geometry::intersects(geometry, segment_or_box))
+=======
+            && intersects<SegmentOrBox>::apply(geometry, segment_or_box, strategy))
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
         {
             return 0;
         }

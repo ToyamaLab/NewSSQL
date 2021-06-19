@@ -1,6 +1,7 @@
 package supersql.codegenerator.Mobile_HTML5;
 
 import java.io.BufferedWriter;
+import java.io.File;
 import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.OutputStreamWriter;
@@ -11,6 +12,7 @@ import supersql.codegenerator.DecorateList;
 import supersql.codegenerator.ITFE;
 import supersql.codegenerator.TFE;
 import supersql.codegenerator.Responsive.Responsive;
+import supersql.common.Log;
 import supersql.extendclass.ExtList;
 import supersql.parser.Start_Parse;
 
@@ -299,14 +301,34 @@ public class Mobile_HTML5 {
 			try {
 				PrintWriter pw;
 				if (html_env.charset != null)
-				pw = new PrintWriter(new BufferedWriter(new OutputStreamWriter(
-				new FileOutputStream(fileName),html_env.charset)));
+//<<<<<<< HEAD
+					pw = new PrintWriter(new BufferedWriter(new OutputStreamWriter(
+							new FileOutputStream(fileName),html_env.charset)));
 				else
-				pw = new PrintWriter(new BufferedWriter(new FileWriter(fileName)));
+					pw = new PrintWriter(new BufferedWriter(new FileWriter(fileName)));
 				pw.println(code);
 				pw.close();
+				
+				//chmod 777
+				File file = new File(fileName);
+				file.setExecutable(true, false);
+		        file.setReadable(true, false);
+		        file.setWritable(true, false);
 				return true;
-			} catch (Exception e) { }
+			} catch (Exception e) {
+				Log.err("Failed to create: "+fileName);
+				Log.err(e.toString());
+			}
+//=======
+//				pw = new PrintWriter(new BufferedWriter(new OutputStreamWriter(
+//				new FileOutputStream(fileName),html_env.charset)));
+//				else
+//				pw = new PrintWriter(new BufferedWriter(new FileWriter(fileName)));
+//				pw.println(code);
+//				pw.close();
+//				return true;
+//			} catch (Exception e) { }
+//>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 		}
 		return false;
 	}

@@ -16,6 +16,7 @@
 #include <boost/assert.hpp>
 #include <boost/thread/exceptions.hpp>
 #include <boost/detail/interlocked.hpp>
+<<<<<<< HEAD
 #include <boost/detail/winapi/config.hpp>
 
 #include <boost/detail/winapi/semaphore.hpp>
@@ -33,6 +34,24 @@
 #include <boost/detail/winapi/access_rights.hpp>
 
 //#include <boost/detail/winapi/synchronization.hpp>
+=======
+
+#include <boost/winapi/config.hpp>
+#include <boost/winapi/basic_types.hpp>
+#include <boost/winapi/semaphore.hpp>
+#include <boost/winapi/system.hpp>
+#include <boost/winapi/event.hpp>
+#include <boost/winapi/thread.hpp>
+#include <boost/winapi/get_current_thread.hpp>
+#include <boost/winapi/get_current_thread_id.hpp>
+#include <boost/winapi/get_current_process.hpp>
+#include <boost/winapi/get_current_process_id.hpp>
+#include <boost/winapi/wait.hpp>
+#include <boost/winapi/handles.hpp>
+#include <boost/winapi/access_rights.hpp>
+
+//#include <boost/winapi/synchronization.hpp>
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 #include <boost/thread/win32/interlocked_read.hpp>
 #include <algorithm>
 
@@ -46,6 +65,7 @@ namespace boost
     {
         namespace win32
         {
+<<<<<<< HEAD
             typedef ::boost::detail::winapi::HANDLE_ handle;
             typedef ::boost::detail::winapi::SYSTEM_INFO_ system_info;
             typedef unsigned __int64 ticks_type;
@@ -60,6 +80,21 @@ namespace boost
             unsigned const create_event_manual_reset = 0x00000001;
             unsigned const event_all_access = ::boost::detail::winapi::EVENT_ALL_ACCESS_;
             unsigned const semaphore_all_access = boost::detail::winapi::SEMAPHORE_ALL_ACCESS_;
+=======
+            typedef ::boost::winapi::HANDLE_ handle;
+            typedef ::boost::winapi::SYSTEM_INFO_ system_info;
+            typedef ::boost::winapi::ULONGLONG_ ticks_type;
+            unsigned const infinite=::boost::winapi::INFINITE_;
+            unsigned const timeout=::boost::winapi::WAIT_TIMEOUT_;
+            handle const invalid_handle_value=::boost::winapi::INVALID_HANDLE_VALUE_;
+            unsigned const event_modify_state=::boost::winapi::EVENT_MODIFY_STATE_;
+            unsigned const synchronize=::boost::winapi::SYNCHRONIZE_;
+            unsigned const wait_abandoned=::boost::winapi::WAIT_ABANDONED_;
+            unsigned const create_event_initial_set = 0x00000002;
+            unsigned const create_event_manual_reset = 0x00000001;
+            unsigned const event_all_access = ::boost::winapi::EVENT_ALL_ACCESS_;
+            unsigned const semaphore_all_access = boost::winapi::SEMAPHORE_ALL_ACCESS_;
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
         }
     }
 }
@@ -72,6 +107,7 @@ namespace boost
     {
         namespace win32
         {
+<<<<<<< HEAD
             namespace detail { typedef ticks_type (__stdcall *gettickcount64_t)(); }
 #if !BOOST_PLAT_WINDOWS_RUNTIME
             extern "C"
@@ -162,6 +198,10 @@ namespace boost
 #endif
                 return gettickcount64impl;
             }
+=======
+            namespace detail { typedef ticks_type (BOOST_WINAPI_WINAPI_CC *gettickcount64_t)(); }
+            extern BOOST_THREAD_DECL boost::detail::win32::detail::gettickcount64_t gettickcount64;
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
             enum event_type
             {
@@ -185,6 +225,7 @@ namespace boost
                 initial_event_state state)
             {
 #if !defined(BOOST_NO_ANSI_APIS)
+<<<<<<< HEAD
                 handle const res = ::boost::detail::winapi::CreateEventA(0, type, state, mutex_name);
 #elif BOOST_USE_WINAPI_VERSION < BOOST_WINAPI_VERSION_VISTA
                 handle const res = ::boost::detail::winapi::CreateEventW(0, type, state, mutex_name);
@@ -193,6 +234,16 @@ namespace boost
                     0,
                     mutex_name,
                     type ? create_event_manual_reset : 0 | state ? create_event_initial_set : 0,
+=======
+                handle const res = ::boost::winapi::CreateEventA(0, type, state, mutex_name);
+#elif BOOST_USE_WINAPI_VERSION < BOOST_WINAPI_VERSION_VISTA
+                handle const res = ::boost::winapi::CreateEventW(0, type, state, mutex_name);
+#else
+                handle const res = ::boost::winapi::CreateEventExW(
+                    0,
+                    mutex_name,
+                    (type ? create_event_manual_reset : 0) | (state ? create_event_initial_set : 0),
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
                     event_all_access);
 #endif
                 return res;
@@ -211,12 +262,21 @@ namespace boost
             inline handle create_anonymous_semaphore_nothrow(long initial_count,long max_count)
             {
 #if !defined(BOOST_NO_ANSI_APIS)
+<<<<<<< HEAD
                 handle const res=::boost::detail::winapi::CreateSemaphoreA(0,initial_count,max_count,0);
 #else
 #if BOOST_USE_WINAPI_VERSION < BOOST_WINAPI_VERSION_VISTA
                 handle const res=::boost::detail::winapi::CreateSemaphoreEx(0,initial_count,max_count,0,0);
 #else
                 handle const res=::boost::detail::winapi::CreateSemaphoreExW(0,initial_count,max_count,0,0,semaphore_all_access);
+=======
+                handle const res=::boost::winapi::CreateSemaphoreA(0,initial_count,max_count,0);
+#else
+#if BOOST_USE_WINAPI_VERSION < BOOST_WINAPI_VERSION_VISTA
+                handle const res=::boost::winapi::CreateSemaphoreEx(0,initial_count,max_count,0,0);
+#else
+                handle const res=::boost::winapi::CreateSemaphoreExW(0,initial_count,max_count,0,0,semaphore_all_access);
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 #endif
 #endif
                 return res;
@@ -234,10 +294,17 @@ namespace boost
 
             inline handle duplicate_handle(handle source)
             {
+<<<<<<< HEAD
                 handle const current_process=::boost::detail::winapi::GetCurrentProcess();
                 long const same_access_flag=2;
                 handle new_handle=0;
                 bool const success=::boost::detail::winapi::DuplicateHandle(current_process,source,current_process,&new_handle,0,false,same_access_flag)!=0;
+=======
+                handle const current_process=::boost::winapi::GetCurrentProcess();
+                long const same_access_flag=2;
+                handle new_handle=0;
+                bool const success=::boost::winapi::DuplicateHandle(current_process,source,current_process,&new_handle,0,false,same_access_flag)!=0;
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
                 if(!success)
                 {
                     boost::throw_exception(thread_resource_error());
@@ -247,15 +314,25 @@ namespace boost
 
             inline void release_semaphore(handle semaphore,long count)
             {
+<<<<<<< HEAD
                 BOOST_VERIFY(::boost::detail::winapi::ReleaseSemaphore(semaphore,count,0)!=0);
+=======
+                BOOST_VERIFY(::boost::winapi::ReleaseSemaphore(semaphore,count,0)!=0);
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
             }
 
             inline void get_system_info(system_info *info)
             {
 #if BOOST_PLAT_WINDOWS_RUNTIME
+<<<<<<< HEAD
                 ::boost::detail::winapi::GetNativeSystemInfo(info);
 #else
                 ::boost::detail::winapi::GetSystemInfo(info);
+=======
+                ::boost::winapi::GetNativeSystemInfo(info);
+#else
+                ::boost::winapi::GetSystemInfo(info);
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 #endif
             }
 
@@ -266,15 +343,25 @@ namespace boost
 #if BOOST_PLAT_WINDOWS_RUNTIME
                     std::this_thread::yield();
 #else
+<<<<<<< HEAD
                     ::boost::detail::winapi::Sleep(0);
+=======
+                    ::boost::winapi::Sleep(0);
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 #endif
                 }
                 else
                 {
 #if BOOST_PLAT_WINDOWS_RUNTIME
+<<<<<<< HEAD
                     ::boost::detail::winapi::WaitForSingleObjectEx(::boost::detail::winapi::GetCurrentThread(), milliseconds, 0);
 #else
                     ::boost::detail::winapi::Sleep(milliseconds);
+=======
+                    ::boost::winapi::WaitForSingleObjectEx(::boost::winapi::GetCurrentThread(), milliseconds, 0);
+#else
+                    ::boost::winapi::Sleep(milliseconds);
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 #endif
                 }
             }
@@ -290,7 +377,11 @@ namespace boost
                 {
                     if (m_completionHandle != ::boost::detail::win32::invalid_handle_value)
                     {
+<<<<<<< HEAD
                         ::boost::detail::winapi::CloseHandle(m_completionHandle);
+=======
+                        ::boost::winapi::CloseHandle(m_completionHandle);
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
                     }
                 }
 
@@ -318,7 +409,11 @@ namespace boost
                 {
                     if(handle_to_manage && handle_to_manage!=invalid_handle_value)
                     {
+<<<<<<< HEAD
                         BOOST_VERIFY(::boost::detail::winapi::CloseHandle(handle_to_manage));
+=======
+                        BOOST_VERIFY(::boost::winapi::CloseHandle(handle_to_manage));
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
                     }
                 }
 

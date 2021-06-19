@@ -2,7 +2,11 @@
 // basic_socket_streambuf.hpp
 // ~~~~~~~~~~~~~~~~~~~~~~~~~~
 //
+<<<<<<< HEAD
 // Copyright (c) 2003-2017 Christopher M. Kohlhoff (chris at kohlhoff dot com)
+=======
+// Copyright (c) 2003-2019 Christopher M. Kohlhoff (chris at kohlhoff dot com)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 //
 // Distributed under the Boost Software License, Version 1.0. (See accompanying
 // file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
@@ -28,6 +32,7 @@
 #include <boost/asio/detail/throw_error.hpp>
 #include <boost/asio/io_context.hpp>
 
+<<<<<<< HEAD
 #if defined(BOOST_ASIO_ENABLE_OLD_SERVICES)
 # include <boost/asio/stream_socket_service.hpp>
 #endif // defined(BOOST_ASIO_ENABLE_OLD_SERVICES)
@@ -41,6 +46,16 @@
 #else
 # include <boost/asio/steady_timer.hpp>
 #endif
+=======
+#if defined(BOOST_ASIO_HAS_BOOST_DATE_TIME) \
+  && defined(BOOST_ASIO_USE_BOOST_DATE_TIME_FOR_SOCKET_IOSTREAM)
+# include <boost/asio/detail/deadline_timer_service.hpp>
+#else // defined(BOOST_ASIO_HAS_BOOST_DATE_TIME)
+      // && defined(BOOST_ASIO_USE_BOOST_DATE_TIME_FOR_SOCKET_IOSTREAM)
+# include <boost/asio/steady_timer.hpp>
+#endif // defined(BOOST_ASIO_HAS_BOOST_DATE_TIME)
+       // && defined(BOOST_ASIO_USE_BOOST_DATE_TIME_FOR_SOCKET_IOSTREAM)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 #if !defined(BOOST_ASIO_HAS_VARIADIC_TEMPLATES)
 
@@ -52,7 +67,11 @@
 //   {
 //     init_buffers();
 //     typedef typename Protocol::resolver resolver_type;
+<<<<<<< HEAD
 //     resolver_type resolver(socket().get_executor().context());
+=======
+//     resolver_type resolver(socket().get_executor());
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 //     connect_to_endpoints(
 //         resolver.resolve(x1, ..., xn, ec_));
 //     return !ec_ ? this : 0;
@@ -65,7 +84,11 @@
   { \
     init_buffers(); \
     typedef typename Protocol::resolver resolver_type; \
+<<<<<<< HEAD
     resolver_type resolver(socket().get_executor().context()); \
+=======
+    resolver_type resolver(socket().get_executor()); \
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     connect_to_endpoints( \
         resolver.resolve(BOOST_ASIO_VARIADIC_BYVAL_ARGS(n), ec_)); \
     return !ec_ ? this : 0; \
@@ -74,10 +97,13 @@
 
 #endif // !defined(BOOST_ASIO_HAS_VARIADIC_TEMPLATES)
 
+<<<<<<< HEAD
 #if !defined(BOOST_ASIO_ENABLE_OLD_SERVICES)
 # define BOOST_ASIO_SVC_T1 detail::deadline_timer_service<traits_helper>
 #endif // !defined(BOOST_ASIO_ENABLE_OLD_SERVICES)
 
+=======
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 #include <boost/asio/detail/push_options.hpp>
 
 namespace boost {
@@ -122,6 +148,7 @@ protected:
 #define BOOST_ASIO_BASIC_SOCKET_STREAMBUF_FWD_DECL
 
 // Forward declaration with defaulted arguments.
+<<<<<<< HEAD
 template <typename Protocol
     BOOST_ASIO_SVC_TPARAM_DEF1(= stream_socket_service<Protocol>),
 #if defined(BOOST_ASIO_HAS_BOOST_DATE_TIME)
@@ -133,6 +160,19 @@ template <typename Protocol
     typename WaitTraits = wait_traits<Clock>
     BOOST_ASIO_SVC_TPARAM1_DEF1(= steady_timer::service_type)>
 #endif
+=======
+template <typename Protocol,
+#if defined(BOOST_ASIO_HAS_BOOST_DATE_TIME) \
+  && defined(BOOST_ASIO_USE_BOOST_DATE_TIME_FOR_SOCKET_IOSTREAM)
+    typename Clock = boost::posix_time::ptime,
+    typename WaitTraits = time_traits<Clock> >
+#else // defined(BOOST_ASIO_HAS_BOOST_DATE_TIME)
+      // && defined(BOOST_ASIO_USE_BOOST_DATE_TIME_FOR_SOCKET_IOSTREAM)
+    typename Clock = chrono::steady_clock,
+    typename WaitTraits = wait_traits<Clock> >
+#endif // defined(BOOST_ASIO_HAS_BOOST_DATE_TIME)
+       // && defined(BOOST_ASIO_USE_BOOST_DATE_TIME_FOR_SOCKET_IOSTREAM)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 class basic_socket_streambuf;
 
 #endif // !defined(BOOST_ASIO_BASIC_SOCKET_STREAMBUF_FWD_DECL)
@@ -143,27 +183,48 @@ template <typename Protocol,
     typename Clock = chrono::steady_clock,
     typename WaitTraits = wait_traits<Clock> >
 #else // defined(GENERATING_DOCUMENTATION)
+<<<<<<< HEAD
 template <typename Protocol BOOST_ASIO_SVC_TPARAM,
     typename Clock, typename WaitTraits BOOST_ASIO_SVC_TPARAM1>
+=======
+template <typename Protocol, typename Clock, typename WaitTraits>
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 #endif // defined(GENERATING_DOCUMENTATION)
 class basic_socket_streambuf
   : public std::streambuf,
     private detail::socket_streambuf_io_context,
     private detail::socket_streambuf_buffers,
 #if defined(BOOST_ASIO_NO_DEPRECATED) || defined(GENERATING_DOCUMENTATION)
+<<<<<<< HEAD
     private basic_socket<Protocol BOOST_ASIO_SVC_TARG>
 #else // defined(BOOST_ASIO_NO_DEPRECATED) || defined(GENERATING_DOCUMENTATION)
     public basic_socket<Protocol BOOST_ASIO_SVC_TARG>
+=======
+    private basic_socket<Protocol>
+#else // defined(BOOST_ASIO_NO_DEPRECATED) || defined(GENERATING_DOCUMENTATION)
+    public basic_socket<Protocol>
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 #endif // defined(BOOST_ASIO_NO_DEPRECATED) || defined(GENERATING_DOCUMENTATION)
 {
 private:
   // These typedefs are intended keep this class's implementation independent
   // of whether it's using Boost.DateClock, Boost.Chrono or std::chrono.
+<<<<<<< HEAD
 #if defined(BOOST_ASIO_HAS_BOOST_DATE_TIME)
   typedef WaitTraits traits_helper;
 #else
   typedef detail::chrono_time_traits<Clock, WaitTraits> traits_helper;
 #endif
+=======
+#if defined(BOOST_ASIO_HAS_BOOST_DATE_TIME) \
+  && defined(BOOST_ASIO_USE_BOOST_DATE_TIME_FOR_SOCKET_IOSTREAM)
+  typedef WaitTraits traits_helper;
+#else // defined(BOOST_ASIO_HAS_BOOST_DATE_TIME)
+      // && defined(BOOST_ASIO_USE_BOOST_DATE_TIME_FOR_SOCKET_IOSTREAM)
+  typedef detail::chrono_time_traits<Clock, WaitTraits> traits_helper;
+#endif // defined(BOOST_ASIO_HAS_BOOST_DATE_TIME)
+       // && defined(BOOST_ASIO_USE_BOOST_DATE_TIME_FOR_SOCKET_IOSTREAM)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 public:
   /// The protocol type.
@@ -199,7 +260,11 @@ public:
   /// Construct a basic_socket_streambuf without establishing a connection.
   basic_socket_streambuf()
     : detail::socket_streambuf_io_context(new io_context),
+<<<<<<< HEAD
       basic_socket<Protocol BOOST_ASIO_SVC_TARG>(*default_io_context_),
+=======
+      basic_socket<Protocol>(*default_io_context_),
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
       expiry_time_(max_expiry_time())
   {
     init_buffers();
@@ -209,7 +274,11 @@ public:
   /// Construct a basic_socket_streambuf from the supplied socket.
   explicit basic_socket_streambuf(basic_stream_socket<protocol_type> s)
     : detail::socket_streambuf_io_context(0),
+<<<<<<< HEAD
       basic_socket<Protocol BOOST_ASIO_SVC_TARG>(std::move(s)),
+=======
+      basic_socket<Protocol>(std::move(s)),
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
       expiry_time_(max_expiry_time())
   {
     init_buffers();
@@ -218,7 +287,11 @@ public:
   /// Move-construct a basic_socket_streambuf from another.
   basic_socket_streambuf(basic_socket_streambuf&& other)
     : detail::socket_streambuf_io_context(other),
+<<<<<<< HEAD
       basic_socket<Protocol BOOST_ASIO_SVC_TARG>(std::move(other.socket())),
+=======
+      basic_socket<Protocol>(std::move(other.socket())),
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
       ec_(other.ec_),
       expiry_time_(other.expiry_time_)
   {
@@ -291,7 +364,11 @@ public:
   {
     init_buffers();
     typedef typename Protocol::resolver resolver_type;
+<<<<<<< HEAD
     resolver_type resolver(socket().get_executor().context());
+=======
+    resolver_type resolver(socket().get_executor());
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     connect_to_endpoints(resolver.resolve(x..., ec_));
     return !ec_ ? this : 0;
   }
@@ -314,7 +391,11 @@ public:
   }
 
   /// Get a reference to the underlying socket.
+<<<<<<< HEAD
   basic_socket<Protocol BOOST_ASIO_SVC_TARG>& socket()
+=======
+  basic_socket<Protocol>& socket()
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
   {
     return *this;
   }
@@ -667,11 +748,22 @@ private:
   // Helper function to get the maximum expiry time.
   static time_point max_expiry_time()
   {
+<<<<<<< HEAD
 #if defined(BOOST_ASIO_HAS_BOOST_DATE_TIME)
     return boost::posix_time::pos_infin;
 #else // defined(BOOST_ASIO_HAS_BOOST_DATE_TIME)
     return (time_point::max)();
 #endif // defined(BOOST_ASIO_HAS_BOOST_DATE_TIME)
+=======
+#if defined(BOOST_ASIO_HAS_BOOST_DATE_TIME) \
+  && defined(BOOST_ASIO_USE_BOOST_DATE_TIME_FOR_SOCKET_IOSTREAM)
+    return boost::posix_time::pos_infin;
+#else // defined(BOOST_ASIO_HAS_BOOST_DATE_TIME)
+      // && defined(BOOST_ASIO_USE_BOOST_DATE_TIME_FOR_SOCKET_IOSTREAM)
+    return (time_point::max)();
+#endif // defined(BOOST_ASIO_HAS_BOOST_DATE_TIME)
+       // && defined(BOOST_ASIO_USE_BOOST_DATE_TIME_FOR_SOCKET_IOSTREAM)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
   }
 
   enum { putback_max = 8 };
@@ -684,10 +776,13 @@ private:
 
 #include <boost/asio/detail/pop_options.hpp>
 
+<<<<<<< HEAD
 #if !defined(BOOST_ASIO_ENABLE_OLD_SERVICES)
 # undef BOOST_ASIO_SVC_T1
 #endif // !defined(BOOST_ASIO_ENABLE_OLD_SERVICES)
 
+=======
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 #if !defined(BOOST_ASIO_HAS_VARIADIC_TEMPLATES)
 # undef BOOST_ASIO_PRIVATE_CONNECT_DEF
 #endif // !defined(BOOST_ASIO_HAS_VARIADIC_TEMPLATES)

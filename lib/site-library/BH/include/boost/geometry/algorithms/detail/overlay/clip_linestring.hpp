@@ -2,10 +2,18 @@
 
 // Copyright (c) 2007-2015 Barend Gehrels, Amsterdam, the Netherlands.
 
+<<<<<<< HEAD
 // This file was modified by Oracle on 2015.
 // Modifications copyright (c) 2015 Oracle and/or its affiliates.
 
 // Contributed and/or modified by Menelaos Karavelas, on behalf of Oracle
+=======
+// This file was modified by Oracle on 2015, 2018.
+// Modifications copyright (c) 2015-2018 Oracle and/or its affiliates.
+
+// Contributed and/or modified by Menelaos Karavelas, on behalf of Oracle
+// Contributed and/or modified by Adam Wulkiewicz, on behalf of Oracle
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 // Use, modification and distribution is subject to the Boost Software License,
 // Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
@@ -24,6 +32,11 @@
 #include <boost/geometry/util/select_coordinate_type.hpp>
 #include <boost/geometry/geometries/segment.hpp>
 
+<<<<<<< HEAD
+=======
+#include <boost/geometry/strategies/cartesian/point_in_point.hpp>
+
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 namespace boost { namespace geometry
 {
 
@@ -83,6 +96,18 @@ private:
 
 public:
 
+<<<<<<< HEAD
+=======
+// TODO: Temporary, this strategy should be moved, it is cartesian-only
+
+    typedef strategy::within::cartesian_point_point equals_point_point_strategy_type;
+
+    static inline equals_point_point_strategy_type get_equals_point_point_strategy()
+    {
+        return equals_point_point_strategy_type();
+    }
+
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     inline bool clip_segment(Box const& b, segment_type& s, bool& sp1_clipped, bool& sp2_clipped) const
     {
         typedef typename select_coordinate_type<Box, Point>::type coordinate_type;
@@ -224,9 +249,16 @@ OutputIterator clip_range_with_box(Box const& b, Range const& range,
             // b. Add p1 only if it is the first point, then add p2
             if (boost::empty(line_out))
             {
+<<<<<<< HEAD
                 detail::overlay::append_no_duplicates(line_out, p1, true);
             }
             detail::overlay::append_no_duplicates(line_out, p2);
+=======
+                detail::overlay::append_with_duplicates(line_out, p1);
+            }
+            detail::overlay::append_no_duplicates(line_out, p2,
+                                                  strategy.get_equals_point_point_strategy());
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
             // c. If c2 is clipped, finish the line
             if (c2)

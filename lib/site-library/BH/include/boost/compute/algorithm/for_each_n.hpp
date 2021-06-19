@@ -11,7 +11,14 @@
 #ifndef BOOST_COMPUTE_ALGORITHM_FOR_EACH_N_HPP
 #define BOOST_COMPUTE_ALGORITHM_FOR_EACH_N_HPP
 
+<<<<<<< HEAD
 #include <boost/compute/algorithm/for_each.hpp>
+=======
+#include <boost/static_assert.hpp>
+
+#include <boost/compute/algorithm/for_each.hpp>
+#include <boost/compute/type_traits/is_device_iterator.hpp>
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 namespace boost {
 namespace compute {
@@ -28,6 +35,10 @@ inline UnaryFunction for_each_n(InputIterator first,
                                 UnaryFunction function,
                                 command_queue &queue = system::default_queue())
 {
+<<<<<<< HEAD
+=======
+    BOOST_STATIC_ASSERT(is_device_iterator<InputIterator>::value);
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     return ::boost::compute::for_each(first, first + count, function, queue);
 }
 

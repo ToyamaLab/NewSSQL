@@ -4,10 +4,18 @@
 // Copyright (c) 2008-2014 Barend Gehrels, Amsterdam, the Netherlands.
 // Copyright (c) 2009-2014 Mateusz Loskot, London, UK.
 
+<<<<<<< HEAD
 // This file was modified by Oracle on 2014.
 // Modifications copyright (c) 2014, Oracle and/or its affiliates.
 
 // Contributed and/or modified by Menelaos Karavelas, on behalf of Oracle
+=======
+// This file was modified by Oracle on 2014, 2018, 2019.
+// Modifications copyright (c) 2014-2019, Oracle and/or its affiliates.
+
+// Contributed and/or modified by Menelaos Karavelas, on behalf of Oracle
+// Contributed and/or modified by Adam Wulkiewicz, on behalf of Oracle
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 // Parts of Boost.Geometry are redesigned from Geodan's Geographic Library
 // (geolib/GGL), copyright (c) 1995-2010 Geodan, Amsterdam, the Netherlands.
@@ -21,6 +29,10 @@
 
 
 #include <boost/concept_check.hpp>
+<<<<<<< HEAD
+=======
+#include <boost/core/ignore_unused.hpp>
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 #include <boost/mpl/if.hpp>
 #include <boost/type_traits/is_void.hpp>
 
@@ -35,6 +47,11 @@
 #include <boost/geometry/strategies/distance.hpp>
 #include <boost/geometry/strategies/default_distance_result.hpp>
 #include <boost/geometry/strategies/cartesian/distance_pythagoras.hpp>
+<<<<<<< HEAD
+=======
+#include <boost/geometry/strategies/cartesian/point_in_point.hpp>
+#include <boost/geometry/strategies/cartesian/intersection.hpp>
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 #include <boost/geometry/util/select_coordinate_type.hpp>
 
@@ -75,6 +92,31 @@ template
 class projected_point
 {
 public :
+<<<<<<< HEAD
+=======
+    typedef within::cartesian_point_point equals_point_point_strategy_type;
+
+    typedef intersection::cartesian_segments
+        <
+            CalculationType
+        > relate_segment_segment_strategy_type;
+
+    static inline relate_segment_segment_strategy_type get_relate_segment_segment_strategy()
+    {
+        return relate_segment_segment_strategy_type();
+    }
+
+    typedef within::cartesian_winding
+        <
+            void, void, CalculationType
+        > point_in_geometry_strategy_type;
+
+    static inline point_in_geometry_strategy_type get_point_in_geometry_strategy()
+    {
+        return point_in_geometry_strategy_type();
+    }
+
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     // The three typedefs below are necessary to calculate distances
     // from segments defined in integer coordinates.
 
@@ -94,8 +136,11 @@ public :
           >
     {};
 
+<<<<<<< HEAD
 public :
 
+=======
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     template <typename Point, typename PointOfSegment>
     inline typename calculation_type<Point, PointOfSegment>::type
     apply(Point const& p, PointOfSegment const& p1, PointOfSegment const& p2) const
@@ -137,7 +182,11 @@ public :
         subtract_point(w, projected);
 
         Strategy strategy;
+<<<<<<< HEAD
         boost::ignore_unused_variable_warning(strategy);
+=======
+        boost::ignore_unused(strategy);
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
         calculation_type const zero = calculation_type();
         calculation_type const c1 = dot_product(w, v);
@@ -159,6 +208,16 @@ public :
 
         return strategy.apply(p, projected);
     }
+<<<<<<< HEAD
+=======
+
+    template <typename CT>
+    inline CT vertical_or_meridian(CT const& lat1, CT const& lat2) const
+    {
+        return lat1 - lat2;
+    }
+
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 };
 
 #ifndef DOXYGEN_NO_STRATEGY_SPECIALIZATIONS

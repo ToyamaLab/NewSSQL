@@ -81,7 +81,11 @@ namespace detail {
               T* out_values, Op op, int root, mpl::false_ /*is_mpi_op*/,
               mpl::true_/*is_mpi_datatype*/)
   {
+<<<<<<< HEAD
     user_op<Op, T> mpi_op(op);
+=======
+    user_op<Op, T> mpi_op;
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     BOOST_MPI_CHECK_RESULT(MPI_Reduce,
                            (const_cast<T*>(in_values), out_values, n,
                             boost::mpi::get_mpi_datatype<T>(*in_values),
@@ -96,7 +100,11 @@ namespace detail {
   reduce_impl(const communicator& comm, const T* in_values, int n, Op op,
               int root, mpl::false_/*is_mpi_op*/, mpl::true_/*is_mpi_datatype*/)
   {
+<<<<<<< HEAD
     user_op<Op, T> mpi_op(op);
+=======
+    user_op<Op, T> mpi_op;
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     BOOST_MPI_CHECK_RESULT(MPI_Reduce,
                            (const_cast<T*>(in_values), 0, n,
                             boost::mpi::get_mpi_datatype<T>(*in_values),

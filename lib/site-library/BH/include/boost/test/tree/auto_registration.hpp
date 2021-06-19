@@ -37,9 +37,16 @@ namespace ut_detail {
 
 struct BOOST_TEST_DECL auto_test_unit_registrar {
     // Constructors
+<<<<<<< HEAD
                 auto_test_unit_registrar( test_case* tc, decorator::collector& decorators, counter_t exp_fail = 0 );
     explicit    auto_test_unit_registrar( const_string ts_name, const_string ts_file, std::size_t ts_line, decorator::collector& decorators );
     explicit    auto_test_unit_registrar( test_unit_generator const& tc_gen, decorator::collector& decorators );
+=======
+                auto_test_unit_registrar( test_case* tc, decorator::collector_t& decorators, counter_t exp_fail = 0 );
+    explicit    auto_test_unit_registrar( const_string ts_name, const_string ts_file, std::size_t ts_line, decorator::collector_t& decorators );
+    explicit    auto_test_unit_registrar( test_unit_generator const& tc_gen, decorator::collector_t& decorators );
+    explicit    auto_test_unit_registrar( boost::shared_ptr<test_unit_generator>  tc_gen, decorator::collector_t& decorators );
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     explicit    auto_test_unit_registrar( int );
 };
 

@@ -208,6 +208,20 @@ namespace impl {
             return this->heights[2];
         }
 
+<<<<<<< HEAD
+=======
+        // make this accumulator serializeable
+        // TODO split to save/load and check on parameters provided in ctor
+        template<class Archive>
+        void serialize(Archive & ar, const unsigned int file_version)
+        {
+            ar & p;
+            ar & heights;
+            ar & actual_positions;
+            ar & desired_positions;
+        }
+
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     private:
         float_type p;                    // the quantile probability p
         array_type heights;              // q_i

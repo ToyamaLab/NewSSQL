@@ -18,19 +18,30 @@
 #include <boost/preprocessor/repetition/enum_shifted_params.hpp>
 #include <boost/preprocessor/facilities/intercept.hpp>
 #include <boost/detail/workaround.hpp>
+<<<<<<< HEAD
 #include <boost/mpl/has_xxx.hpp>
 #include <boost/mpl/if.hpp>
 #include <boost/mpl/eval_if.hpp>
 #include <boost/mpl/bool.hpp>
 #include <boost/mpl/identity.hpp>
 #include <boost/mpl/or.hpp>
+=======
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 #include <boost/type_traits/is_class.hpp>
 #include <boost/type_traits/is_pointer.hpp>
 #include <boost/type_traits/is_member_function_pointer.hpp>
 #include <boost/type_traits/remove_cv.hpp>
 #include <boost/type_traits/remove_reference.hpp>
+<<<<<<< HEAD
 #include <boost/utility/declval.hpp>
 #include <boost/utility/enable_if.hpp>
+=======
+#include <boost/type_traits/declval.hpp>
+#include <boost/type_traits/conditional.hpp>
+#include <boost/type_traits/type_identity.hpp>
+#include <boost/type_traits/integral_constant.hpp>
+#include <boost/core/enable_if.hpp>
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 #ifndef BOOST_RESULT_OF_NUM_ARGS
 #  define BOOST_RESULT_OF_NUM_ARGS 16
@@ -47,10 +58,13 @@
   BOOST_RESULT_OF_USE_TR1_WITH_DECLTYPE_FALLBACK cannot be defined at the same time.
 #endif
 
+<<<<<<< HEAD
 #if defined(BOOST_RESULT_OF_USE_TR1_WITH_DECLTYPE_FALLBACK) && defined(BOOST_MPL_CFG_NO_HAS_XXX_TEMPLATE)
 #  error Cannot fallback to decltype if BOOST_MPL_CFG_NO_HAS_XXX_TEMPLATE is not defined.
 #endif
 
+=======
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 #ifndef BOOST_RESULT_OF_USE_TR1
 #  ifndef BOOST_RESULT_OF_USE_DECLTYPE
 #    ifndef BOOST_RESULT_OF_USE_TR1_WITH_DECLTYPE_FALLBACK
@@ -71,11 +85,48 @@ template<typename F> struct tr1_result_of; // a TR1-style implementation of resu
 #if !defined(BOOST_NO_SFINAE)
 namespace detail {
 
+<<<<<<< HEAD
 BOOST_MPL_HAS_XXX_TRAIT_DEF(result_type)
 
 // Work around a nvcc bug by only defining has_result when it's needed.
 #ifdef BOOST_RESULT_OF_USE_TR1_WITH_DECLTYPE_FALLBACK
 BOOST_MPL_HAS_XXX_TEMPLATE_DEF(result)
+=======
+typedef char result_of_yes_type;      // sizeof(result_of_yes_type) == 1
+typedef char (&result_of_no_type)[2]; // sizeof(result_of_no_type)  == 2
+
+template<class T> struct result_of_has_type {};
+
+template<class T> struct result_of_has_result_type_impl
+{
+    template<class U> static result_of_yes_type f( result_of_has_type<typename U::result_type>* );
+    template<class U> static result_of_no_type f( ... );
+
+    typedef boost::integral_constant<bool, sizeof(f<T>(0)) == sizeof(result_of_yes_type)> type;
+};
+
+template<class T> struct result_of_has_result_type: result_of_has_result_type_impl<T>::type
+{
+};
+
+// Work around a nvcc bug by only defining has_result when it's needed.
+#ifdef BOOST_RESULT_OF_USE_TR1_WITH_DECLTYPE_FALLBACK
+
+template<template<class> class C> struct result_of_has_template {};
+
+template<class T> struct result_of_has_result_impl
+{
+    template<class U> static result_of_yes_type f( result_of_has_template<U::template result>* );
+    template<class U> static result_of_no_type f( ... );
+
+    typedef boost::integral_constant<bool, sizeof(f<T>(0)) == sizeof(result_of_yes_type)> type;
+};
+
+template<class T> struct result_of_has_result: result_of_has_result_impl<T>::type
+{
+};
+
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 #endif
 
 template<typename F, typename FArgs, bool HasResultType> struct tr1_result_of_impl;
@@ -97,9 +148,12 @@ struct result_of_weird_type {
   friend result_of_private_type operator,(result_of_private_type, result_of_weird_type);
 };
 
+<<<<<<< HEAD
 typedef char result_of_yes_type;      // sizeof(result_of_yes_type) == 1
 typedef char (&result_of_no_type)[2]; // sizeof(result_of_no_type)  == 2
 
+=======
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 template<typename T>
 result_of_no_type result_of_is_private_type(T const &);
 result_of_yes_type result_of_is_private_type(result_of_private_type);
@@ -180,10 +234,17 @@ struct tr1_result_of_impl<F, FArgs, true>
 };
 
 template<typename FArgs>
+<<<<<<< HEAD
 struct is_function_with_no_args : mpl::false_ {};
 
 template<typename F>
 struct is_function_with_no_args<F(void)> : mpl::true_ {};
+=======
+struct is_function_with_no_args : false_type {};
+
+template<typename F>
+struct is_function_with_no_args<F(void)> : true_type {};
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 template<typename F, typename FArgs>
 struct result_of_nested_result : F::template result<FArgs>
@@ -191,7 +252,11 @@ struct result_of_nested_result : F::template result<FArgs>
 
 template<typename F, typename FArgs>
 struct tr1_result_of_impl<F, FArgs, false>
+<<<<<<< HEAD
   : mpl::if_<is_function_with_no_args<FArgs>,
+=======
+  : conditional<is_function_with_no_args<FArgs>::value,
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
              result_of_void_impl<F>,
              result_of_nested_result<F, FArgs> >::type
 {};

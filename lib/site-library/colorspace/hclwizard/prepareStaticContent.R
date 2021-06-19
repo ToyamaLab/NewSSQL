@@ -7,11 +7,18 @@
 # -------------------------------------------------------------------
 # - EDITORIAL:   2016-10-23, RS: Created file on pc24-c707.
 # -------------------------------------------------------------------
+<<<<<<< HEAD
 # - L@ST MODIFIED: 2016-11-03 17:09 on thinkreto
 # -------------------------------------------------------------------
 
    library("colorspace")
    library("dichromat")
+=======
+# - L@ST MODIFIED: 2018-09-22 14:16 on marvin
+# -------------------------------------------------------------------
+
+   library("colorspace")
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 
 # -------------------------------------------------------------------
@@ -34,7 +41,11 @@
    }
 
    # Loading defined color palettes from colorspace package
+<<<<<<< HEAD
    palettes <- colorspace:::GetPaletteConfig()
+=======
+   palettes <- colorspace:::GetPaletteConfig(gui = TRUE)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
    names(palettes) <- tolower(names(palettes))
    names(palettes)[names(palettes)=='typ'] <- "type"
    # Required for do.call
@@ -43,6 +54,7 @@
    N <- 7 # Default number of colors for the palettes
    idx <- which(! names(palettes) %in% c('name'))
    for ( i in 1:nrow(palettes) ) {
+<<<<<<< HEAD
       args <- as.list(palettes[i,idx])
       name <- gsub(" ","_",tolower(palettes$name[i]))
       img  <- sprintf("%s/pal_%s.png",imgdir,name)
@@ -58,6 +70,24 @@
       png(file=img,width=300,height=1)
       par(bty="n",mar=rep(0,4),oma=rep(0,4))
       image(matrix(1:7,ncol=1),col=pal(N))
+=======
+      args     <- as.list(palettes[i, idx])
+      args$reverse <- FALSE
+      name     <- gsub(" ","_", tolower(rownames(palettes)[i]))
+      img      <- sprintf("%s/pal_%s.png", imgdir, name)
+      cat(sprintf(" * Drawing: %s\n", img))
+
+      if ( args$type == "base" ) {
+         pal <- eval(parse(text = tolower(rownames(palettes)[i])))
+      } else {
+         pal <- do.call("GetPalette", args)
+      }
+
+      # Draw color map
+      png(file = img, width = 300, height = 1)
+      par(bty = "n", mar = rep(0, 4), oma = rep(0, 4))
+      image(matrix(1:7, ncol = 1),col = pal(N))
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
       dev.off()
    }
 
@@ -84,8 +114,14 @@
 
    cat(" * Create static help pages using Rd2HTML\n")
    static_help("colorspace","choose_palette")
+<<<<<<< HEAD
    static_help("colorspace","rainbow_hcl")
    static_help("colorspace","specplot")
+=======
+   static_help("colorspace","hcl_palettes")
+   static_help("colorspace","specplot")
+   static_help("colorspace","hclplot")
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 
 # -------------------------------------------------------------------
@@ -96,7 +132,12 @@
    getHTMLcontent <- function(file) {
       # Helper function to extract the different sections
       extract <- function(html,sec) {
+<<<<<<< HEAD
          r <- regmatches(html,regexpr(sprintf("<h3>%s</h3>.*?(?=<h3>)",sec),html,perl=TRUE))
+=======
+         ##r <- regmatches(html,regexpr(sprintf("<h3>%s</h3>.*?(?=<h3>)",sec),html,perl=TRUE))
+         r <- regmatches(html,regexpr(sprintf("<h3>%s</h3>.*?(?=(<h3>|<hr\\s?/>|$))",sec),html,perl=TRUE))
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
          r <- gsub("#LB#","\n",r)
          r
       }
@@ -111,7 +152,10 @@
       # Remove hyperrefs
       html <- gsub("</a>","",html,perl=TRUE)
       html <- gsub("<a href=.*?(?=>)>","",html,perl=TRUE)
+<<<<<<< HEAD
 reto <<- html
+=======
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
       html <- gsub("Author\\Ws\\W","Authors",html)
       # ... and parse content
       res <- list()
@@ -126,12 +170,22 @@ reto <<- html
    # Reading content
    cat(" * Reading html content\n")
    content1 <- getHTMLcontent("tmp_choose_palette.html")
+<<<<<<< HEAD
    content2 <- getHTMLcontent("tmp_rainbow_hcl.html")
    content3 <- getHTMLcontent("tmp_specplot.html")
 
    # Create output file
    outfile <- "html/help.html"
    if ( file.exists("html/help.html") ) file.remove(outfile)
+=======
+   content2 <- getHTMLcontent("tmp_hcl_palettes.html")
+   content3 <- getHTMLcontent("tmp_specplot.html")
+   content4 <- getHTMLcontent("tmp_hclplot.html")
+
+   # Create output file
+   outfile <- "html/info.html"
+   if ( file.exists("html/info.html") ) file.remove(outfile)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
    cat("   Add authors on top\n")
    write(content1[["Authors"]], file=outfile, append=TRUE)
 
@@ -148,13 +202,26 @@ reto <<- html
       cat(sprintf("   Appending %s\n",sec))
       write(content3[[sec]], file=outfile, append=TRUE)
    }
+<<<<<<< HEAD
+=======
+   for ( sec in c("Title","Description","Details","Value") ) {
+      cat(sprintf("   Appending %s\n",sec))
+      write(content4[[sec]], file=outfile, append=TRUE)
+   }
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
    write(content1[["References"]], file=outfile, append=TRUE)
 
    # Remove temporary rendered html pages
    cat(" * Remove temporary files\n")
    file.remove("tmp_choose_palette.html")
+<<<<<<< HEAD
    file.remove("tmp_rainbow_hcl.html")
    file.remove("tmp_specplot.html")
+=======
+   file.remove("tmp_hcl_palettes.html")
+   file.remove("tmp_specplot.html")
+   file.remove("tmp_hclplot.html")
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 
 

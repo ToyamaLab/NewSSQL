@@ -56,6 +56,11 @@
 #include <Rcpp/Formula.h>
 #include <Rcpp/DataFrame.h>
 
+<<<<<<< HEAD
+=======
+#include <Rcpp/exceptions_impl.h>
+
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 #if !defined(RCPP_FORCE_OLD_DATE_DATETIME_VECTORS)
   #define RCPP_NEW_DATE_DATETIME_VECTORS 1
 #endif
@@ -63,8 +68,15 @@
 
 #include <Rcpp/Na_Proxy.h>
 
+<<<<<<< HEAD
 #include <Rcpp/Module.h>
 #include <Rcpp/InternalFunction.h>
+=======
+#ifndef RCPP_NO_MODULES
+#include <Rcpp/Module.h>
+#include <Rcpp/InternalFunction.h>
+#endif
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 #include <Rcpp/Nullable.h>
 

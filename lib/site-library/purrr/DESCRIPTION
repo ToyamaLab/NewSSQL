@@ -1,5 +1,6 @@
 Package: purrr
 Title: Functional Programming Tools
+<<<<<<< HEAD
 Version: 0.2.5
 Authors@R: c(
     person("Lionel", "Henry", , "lionel@rstudio.com", c("aut", "cre")),
@@ -19,10 +20,44 @@ LazyData: true
 RoxygenNote: 6.0.1
 NeedsCompilation: yes
 Packaged: 2018-05-29 14:46:54 UTC; lionel
+=======
+Version: 0.3.4
+Authors@R: 
+    c(person(given = "Lionel",
+             family = "Henry",
+             role = c("aut", "cre"),
+             email = "lionel@rstudio.com"),
+      person(given = "Hadley",
+             family = "Wickham",
+             role = "aut",
+             email = "hadley@rstudio.com"),
+      person(given = "RStudio",
+             role = c("cph", "fnd")))
+Description: A complete and consistent functional programming
+    toolkit for R.
+License: GPL-3 | file LICENSE
+URL: http://purrr.tidyverse.org, https://github.com/tidyverse/purrr
+BugReports: https://github.com/tidyverse/purrr/issues
+Depends: R (>= 3.2)
+Imports: magrittr (>= 1.5), rlang (>= 0.3.1)
+Suggests: covr, crayon, dplyr (>= 0.7.8), knitr, rmarkdown, testthat,
+        tibble, tidyselect
+VignetteBuilder: knitr
+Encoding: UTF-8
+LazyData: true
+RoxygenNote: 7.1.0
+NeedsCompilation: yes
+Packaged: 2020-04-16 21:54:48 UTC; hadley
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 Author: Lionel Henry [aut, cre],
   Hadley Wickham [aut],
   RStudio [cph, fnd]
 Maintainer: Lionel Henry <lionel@rstudio.com>
 Repository: CRAN
+<<<<<<< HEAD
 Date/Publication: 2018-05-29 16:46:33 UTC
 Built: R 3.5.1; x86_64-apple-darwin17.6.0; 2018-08-21 07:40:18 UTC; unix
+=======
+Date/Publication: 2020-04-17 12:10:07 UTC
+Built: R 4.0.2; x86_64-apple-darwin17.7.0; 2020-08-27 07:46:10 UTC; unix
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce

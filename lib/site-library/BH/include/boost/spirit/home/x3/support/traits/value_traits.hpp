@@ -9,8 +9,11 @@
 #if !defined(BOOST_SPIRIT_X3_VALUE_TRAITS_MAY_07_2013_0203PM)
 #define BOOST_SPIRIT_X3_VALUE_TRAITS_MAY_07_2013_0203PM
 
+<<<<<<< HEAD
 #include <boost/utility/value_init.hpp>
 
+=======
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 namespace boost { namespace spirit { namespace x3 { namespace traits
 {
     template <typename T, typename Enable = void>
@@ -18,7 +21,11 @@ namespace boost { namespace spirit { namespace x3 { namespace traits
     {
         static T call()
         {
+<<<<<<< HEAD
             return boost::value_initialized<T>();
+=======
+            return {};
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
         }
     };
 }}}}

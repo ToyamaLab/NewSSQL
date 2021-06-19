@@ -33,7 +33,11 @@ const unsigned long lex_escapes = c_escapes << 1;
 namespace impl {
 
     //////////////////////////////////
+<<<<<<< HEAD
 #if (defined(BOOST_MSVC) && (BOOST_MSVC <= 1310))
+=======
+#if defined(BOOST_MSVC)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 #pragma warning(push)
 #pragma warning(disable:4127)
 #endif
@@ -166,7 +170,11 @@ namespace impl {
             return scan.no_match(); // overflow detected
         }
     };
+<<<<<<< HEAD
 #if (defined(BOOST_MSVC) && (BOOST_MSVC <= 1310))
+=======
+#if defined(BOOST_MSVC)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 #pragma warning(pop)
 #endif
 

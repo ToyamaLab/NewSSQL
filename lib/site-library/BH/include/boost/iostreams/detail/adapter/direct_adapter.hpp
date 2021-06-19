@@ -58,6 +58,10 @@ protected:
     explicit direct_adapter_base(const Direct& d);
     typedef is_convertible<category, two_sequence> is_double;
     struct pointers {
+<<<<<<< HEAD
+=======
+        pointers() : beg(0), ptr(0), end(0) { }
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
         char_type *beg, *ptr, *end;
     };
     void init_input(mpl::true_);

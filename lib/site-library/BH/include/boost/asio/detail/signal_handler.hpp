@@ -2,7 +2,11 @@
 // detail/signal_handler.hpp
 // ~~~~~~~~~~~~~~~~~~~~~~~~~
 //
+<<<<<<< HEAD
 // Copyright (c) 2003-2017 Christopher M. Kohlhoff (chris at kohlhoff dot com)
+=======
+// Copyright (c) 2003-2019 Christopher M. Kohlhoff (chris at kohlhoff dot com)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 //
 // Distributed under the Boost Software License, Version 1.0. (See accompanying
 // file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
@@ -30,17 +34,30 @@ namespace boost {
 namespace asio {
 namespace detail {
 
+<<<<<<< HEAD
 template <typename Handler>
+=======
+template <typename Handler, typename IoExecutor>
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 class signal_handler : public signal_op
 {
 public:
   BOOST_ASIO_DEFINE_HANDLER_PTR(signal_handler);
 
+<<<<<<< HEAD
   signal_handler(Handler& h)
     : signal_op(&signal_handler::do_complete),
       handler_(BOOST_ASIO_MOVE_CAST(Handler)(h))
   {
     handler_work<Handler>::start(handler_);
+=======
+  signal_handler(Handler& h, const IoExecutor& io_ex)
+    : signal_op(&signal_handler::do_complete),
+      handler_(BOOST_ASIO_MOVE_CAST(Handler)(h)),
+      io_executor_(io_ex)
+  {
+    handler_work<Handler, IoExecutor>::start(handler_, io_executor_);
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
   }
 
   static void do_complete(void* owner, operation* base,
@@ -50,7 +67,11 @@ public:
     // Take ownership of the handler object.
     signal_handler* h(static_cast<signal_handler*>(base));
     ptr p = { boost::asio::detail::addressof(h->handler_), h, h };
+<<<<<<< HEAD
     handler_work<Handler> w(h->handler_);
+=======
+    handler_work<Handler, IoExecutor> w(h->handler_, h->io_executor_);
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
     BOOST_ASIO_HANDLER_COMPLETION((*h));
 
@@ -77,6 +98,10 @@ public:
 
 private:
   Handler handler_;
+<<<<<<< HEAD
+=======
+  IoExecutor io_executor_;
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 };
 
 } // namespace detail

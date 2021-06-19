@@ -2,8 +2,13 @@
 
 // Copyright (c) 2007-2012 Barend Gehrels, Amsterdam, the Netherlands.
 
+<<<<<<< HEAD
 // This file was modified by Oracle on 2014, 2016.
 // Modifications copyright (c) 2014-2016 Oracle and/or its affiliates.
+=======
+// This file was modified by Oracle on 2014, 2016, 2017.
+// Modifications copyright (c) 2014-2017 Oracle and/or its affiliates.
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 // Contributed and/or modified by Adam Wulkiewicz, on behalf of Oracle
 
@@ -18,7 +23,10 @@
 #include <boost/math/constants/constants.hpp>
 
 #include <boost/geometry/core/radius.hpp>
+<<<<<<< HEAD
 #include <boost/geometry/core/srs.hpp>
+=======
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 #include <boost/geometry/util/condition.hpp>
 #include <boost/geometry/util/math.hpp>
@@ -75,6 +83,7 @@ public:
         CT const lon1 = lo1;
         CT const lat1 = la1;
 
+<<<<<<< HEAD
         if ( math::equals(distance, Dist(0)) || distance < Dist(0) )
         {
             result.lon2 = lon1;
@@ -82,6 +91,8 @@ public:
             return result;
         }
 
+=======
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
         CT const radius_a = CT(get_radius<0>(spheroid));
         CT const radius_b = CT(get_radius<2>(spheroid));
         CT const flattening = formula::flattening<CT>(spheroid);

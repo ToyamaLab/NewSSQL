@@ -3,8 +3,13 @@
 // Copyright (c) 2007-2015 Barend Gehrels, Amsterdam, the Netherlands.
 // Copyright (c) 2017 Adam Wulkiewicz, Lodz, Poland.
 
+<<<<<<< HEAD
 // This file was modified by Oracle on 2013-2016.
 // Modifications copyright (c) 2013-2016 Oracle and/or its affiliates.
+=======
+// This file was modified by Oracle on 2013-2019.
+// Modifications copyright (c) 2013-2019 Oracle and/or its affiliates.
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 // Contributed and/or modified by Adam Wulkiewicz, on behalf of Oracle
 
@@ -16,6 +21,10 @@
 #define BOOST_GEOMETRY_ALGORITHMS_DETAIL_RELATE_RESULT_HPP
 
 #include <cstddef>
+<<<<<<< HEAD
+=======
+#include <cstring>
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 #include <boost/mpl/assert.hpp>
 #include <boost/mpl/at.hpp>
@@ -24,6 +33,10 @@
 #include <boost/mpl/end.hpp>
 #include <boost/mpl/is_sequence.hpp>
 #include <boost/mpl/next.hpp>
+<<<<<<< HEAD
+=======
+#include <boost/mpl/size.hpp>
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 #include <boost/static_assert.hpp>
 #include <boost/throw_exception.hpp>
 #include <boost/tuple/tuple.hpp>
@@ -652,6 +665,13 @@ private:
     Mask const& m_mask;
 };
 
+<<<<<<< HEAD
+=======
+// --------------- FALSE MASK ----------------
+
+struct false_mask {};
+
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 // --------------- COMPILE-TIME MASK ----------------
 
 // static_check_characters

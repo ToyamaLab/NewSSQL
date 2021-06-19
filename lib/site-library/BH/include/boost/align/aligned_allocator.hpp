@@ -8,15 +8,26 @@ Distributed under the Boost Software License, Version 1.0.
 #ifndef BOOST_ALIGN_ALIGNED_ALLOCATOR_HPP
 #define BOOST_ALIGN_ALIGNED_ALLOCATOR_HPP
 
+<<<<<<< HEAD
 #include <boost/align/detail/addressof.hpp>
 #include <boost/align/detail/is_alignment_constant.hpp>
 #include <boost/align/detail/max_objects.hpp>
 #include <boost/align/detail/max_size.hpp>
+=======
+#include <boost/align/detail/add_reference.hpp>
+#include <boost/align/detail/is_alignment_constant.hpp>
+#include <boost/align/detail/max_objects.hpp>
+#include <boost/align/detail/max_size.hpp>
+#include <boost/align/detail/throw_exception.hpp>
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 #include <boost/align/aligned_alloc.hpp>
 #include <boost/align/aligned_allocator_forward.hpp>
 #include <boost/align/alignment_of.hpp>
 #include <boost/static_assert.hpp>
+<<<<<<< HEAD
 #include <boost/throw_exception.hpp>
+=======
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 #include <new>
 
 #if !defined(BOOST_NO_CXX11_RVALUE_REFERENCES)
@@ -36,6 +47,7 @@ public:
     typedef const T* const_pointer;
     typedef void* void_pointer;
     typedef const void* const_void_pointer;
+<<<<<<< HEAD
     typedef std::size_t size_type;
     typedef std::ptrdiff_t difference_type;
     typedef T& reference;
@@ -48,6 +60,16 @@ private:
     };
 
 public:
+=======
+    typedef typename detail::add_lvalue_reference<T>::type reference;
+    typedef typename detail::add_lvalue_reference<const
+        T>::type const_reference;
+    typedef std::size_t size_type;
+    typedef std::ptrdiff_t difference_type;
+    typedef detail::true_type propagate_on_container_move_assignment;
+    typedef detail::true_type is_always_equal;
+
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     template<class U>
     struct rebind {
         typedef aligned_allocator<U, Alignment> other;
@@ -63,6 +85,7 @@ public:
     aligned_allocator(const aligned_allocator<U, Alignment>&)
         BOOST_NOEXCEPT { }
 
+<<<<<<< HEAD
     pointer address(reference value) const BOOST_NOEXCEPT {
         return detail::addressof(value);
     }
@@ -78,6 +101,19 @@ public:
         void* p = aligned_alloc(min_align, sizeof(T) * size);
         if (!p) {
             boost::throw_exception(std::bad_alloc());
+=======
+    pointer allocate(size_type size, const_void_pointer = 0) {
+        enum {
+            m = detail::max_size<Alignment,
+                alignment_of<value_type>::value>::value
+        };
+        if (size == 0) {
+            return 0;
+        }
+        void* p = boost::alignment::aligned_alloc(m, sizeof(T) * size);
+        if (!p) {
+            detail::throw_exception(std::bad_alloc());
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
         }
         return static_cast<T*>(p);
     }
@@ -107,6 +143,14 @@ public:
     void construct(U* ptr, const V& value) {
         ::new((void*)ptr) U(value);
     }
+<<<<<<< HEAD
+=======
+
+    template<class U, class V>
+    void construct(U* ptr, V& value) {
+        ::new((void*)ptr) U(value);
+    }
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 #endif
 
     template<class U>
@@ -121,6 +165,7 @@ public:
     }
 };
 
+<<<<<<< HEAD
 template<std::size_t Alignment>
 class aligned_allocator<void, Alignment> {
     BOOST_STATIC_ASSERT(detail::is_alignment_constant<Alignment>::value);
@@ -136,6 +181,8 @@ public:
     };
 };
 
+=======
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 template<class T, class U, std::size_t Alignment>
 inline bool
 operator==(const aligned_allocator<T, Alignment>&,

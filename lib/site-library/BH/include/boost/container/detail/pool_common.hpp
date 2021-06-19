@@ -26,7 +26,11 @@
 
 namespace boost {
 namespace container {
+<<<<<<< HEAD
 namespace container_detail {
+=======
+namespace dtl {
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 template<class VoidPointer>
 struct node_slist
@@ -48,7 +52,11 @@ struct is_stateless_segment_manager
    static const bool value = false;
 };
 
+<<<<<<< HEAD
 }  //namespace container_detail {
+=======
+}  //namespace dtl {
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 }  //namespace container {
 }  //namespace boost {
 

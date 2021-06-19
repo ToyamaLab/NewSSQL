@@ -5,8 +5,13 @@
 // Copyright (c) 2009-2014 Mateusz Loskot, London, UK.
 // Copyright (c) 2013-2014 Adam Wulkiewicz, Lodz, Poland.
 
+<<<<<<< HEAD
 // This file was modified by Oracle on 2013-2017.
 // Modifications copyright (c) 2013-2017, Oracle and/or its affiliates.
+=======
+// This file was modified by Oracle on 2013-2018.
+// Modifications copyright (c) 2013-2018, Oracle and/or its affiliates.
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
 // Contributed and/or modified by Adam Wulkiewicz, on behalf of Oracle
 // Contributed and/or modified by Menelaos Karavelas, on behalf of Oracle
@@ -41,8 +46,14 @@
 #include <boost/geometry/algorithms/detail/check_iterator_range.hpp>
 #include <boost/geometry/algorithms/detail/point_on_border.hpp>
 
+<<<<<<< HEAD
 #include <boost/geometry/algorithms/detail/disjoint/multirange_geometry.hpp>
 #include <boost/geometry/algorithms/detail/disjoint/linear_segment_or_box.hpp>
+=======
+#include <boost/geometry/algorithms/detail/disjoint/linear_linear.hpp>
+#include <boost/geometry/algorithms/detail/disjoint/linear_segment_or_box.hpp>
+#include <boost/geometry/algorithms/detail/disjoint/multirange_geometry.hpp>
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 #include <boost/geometry/algorithms/detail/disjoint/point_box.hpp>
 #include <boost/geometry/algorithms/detail/disjoint/segment_box.hpp>
 

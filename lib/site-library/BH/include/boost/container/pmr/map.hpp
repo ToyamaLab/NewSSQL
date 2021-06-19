@@ -27,13 +27,21 @@ namespace pmr {
 template <class Key
          ,class T
          ,class Compare  = std::less<Key>
+<<<<<<< HEAD
          ,class Options = tree_assoc_defaults >
+=======
+         ,class Options = void >
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 using map = boost::container::map<Key, T, Compare, polymorphic_allocator<std::pair<const Key, T> >, Options>;
 
 template <class Key
          ,class T
          ,class Compare  = std::less<Key>
+<<<<<<< HEAD
          ,class Options = tree_assoc_defaults >
+=======
+         ,class Options = void >
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 using multimap = boost::container::multimap<Key, T, Compare, polymorphic_allocator<std::pair<const Key, T> >, Options>;
 
 #endif
@@ -43,7 +51,11 @@ using multimap = boost::container::multimap<Key, T, Compare, polymorphic_allocat
 template <class Key
          ,class T
          ,class Compare  = std::less<Key>
+<<<<<<< HEAD
          ,class Options = tree_assoc_defaults >
+=======
+         ,class Options = void >
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 struct map_of
 {
    typedef boost::container::map<Key, T, Compare, polymorphic_allocator<std::pair<const Key, T> >, Options> type;
@@ -54,7 +66,11 @@ struct map_of
 template <class Key
          ,class T
          ,class Compare  = std::less<Key>
+<<<<<<< HEAD
          ,class Options = tree_assoc_defaults >
+=======
+         ,class Options = void >
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 struct multimap_of
 {
    typedef boost::container::multimap<Key, T, Compare, polymorphic_allocator<std::pair<const Key, T> >, Options> type;

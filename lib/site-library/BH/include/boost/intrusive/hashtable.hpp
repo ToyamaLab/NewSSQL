@@ -115,26 +115,110 @@ bool priv_algo_is_permutation(ForwardIterator1 first1, ForwardIterator1 last1, F
 template<int Dummy = 0>
 struct prime_list_holder
 {
+<<<<<<< HEAD
    static const std::size_t prime_list[];
    static const std::size_t prime_list_size;
 
    static std::size_t suggested_upper_bucket_count(std::size_t n)
+=======
+   private:
+
+   template <class SizeType> // sizeof(SizeType) < sizeof(std::size_t)
+   static BOOST_INTRUSIVE_FORCEINLINE SizeType truncate_size_type(std::size_t n, detail::true_)
+   {
+      return n < std::size_t(SizeType(-1)) ? static_cast<SizeType>(n) : SizeType(-1);
+   }
+
+   template <class SizeType> // sizeof(SizeType) == sizeof(std::size_t)
+   static BOOST_INTRUSIVE_FORCEINLINE SizeType truncate_size_type(std::size_t n, detail::false_)
+   {
+      return static_cast<SizeType>(n);
+   }
+
+   template <class SizeType>  //sizeof(SizeType) > sizeof(std::size_t)
+   static BOOST_INTRUSIVE_FORCEINLINE SizeType suggested_upper_bucket_count_dispatch(SizeType n, detail::true_)
+   {
+      std::size_t const c = n > std::size_t(-1)
+                            ? std::size_t(-1)
+                            : suggested_upper_bucket_count_impl(static_cast<std::size_t>(n));
+      return static_cast<SizeType>(c);
+   }
+
+   template <class SizeType>  //sizeof(SizeType) > sizeof(std::size_t)
+   static BOOST_INTRUSIVE_FORCEINLINE SizeType suggested_lower_bucket_count_dispatch(SizeType n, detail::true_)
+   {
+      std::size_t const c = n > std::size_t(-1)
+                            ? std::size_t(-1)
+                            : suggested_lower_bucket_count_impl(static_cast<std::size_t>(n));
+      return static_cast<SizeType>(c);
+   }
+
+   template <class SizeType>
+   static BOOST_INTRUSIVE_FORCEINLINE SizeType suggested_upper_bucket_count_dispatch(SizeType n, detail::false_)
+   {
+      std::size_t const c = suggested_upper_bucket_count_impl(static_cast<std::size_t>(n));
+      return truncate_size_type<SizeType>(c, detail::bool_<(sizeof(SizeType) < sizeof(std::size_t))>());
+
+   }
+
+   template <class SizeType>
+   static BOOST_INTRUSIVE_FORCEINLINE SizeType suggested_lower_bucket_count_dispatch(SizeType n, detail::false_)
+   {
+      std::size_t const c = suggested_lower_bucket_count_impl(static_cast<std::size_t>(n));
+      return truncate_size_type<SizeType>(c, detail::bool_<(sizeof(SizeType) < sizeof(std::size_t))>());
+   }
+
+   static const std::size_t prime_list[];
+   static const std::size_t prime_list_size;
+
+   static std::size_t suggested_lower_bucket_count_impl(std::size_t n)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
    {
       const std::size_t *primes     = &prime_list_holder<0>::prime_list[0];
       const std::size_t *primes_end = primes + prime_list_holder<0>::prime_list_size;
       std::size_t const* bound = std::lower_bound(primes, primes_end, n);
+<<<<<<< HEAD
       bound -= (bound == primes_end);
       return *bound;
    }
 
    static std::size_t suggested_lower_bucket_count(std::size_t n)
+=======
+      //Tables have upper SIZE_MAX, so we must always found an entry
+      BOOST_INTRUSIVE_INVARIANT_ASSERT(bound != primes_end);
+      bound -= std::size_t(bound != primes);
+      return *bound;
+   }
+
+   static std::size_t suggested_upper_bucket_count_impl(std::size_t n)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
    {
       const std::size_t *primes     = &prime_list_holder<0>::prime_list[0];
       const std::size_t *primes_end = primes + prime_list_holder<0>::prime_list_size;
       std::size_t const* bound = std::upper_bound(primes, primes_end, n);
+<<<<<<< HEAD
       bound -= (bound != primes);
       return *bound;
    }
+=======
+      bound -= std::size_t(bound == primes_end);
+      return *bound;
+   }
+
+   public:
+
+   template <class SizeType>
+   static BOOST_INTRUSIVE_FORCEINLINE SizeType suggested_upper_bucket_count(SizeType n)
+   {
+      return (suggested_upper_bucket_count_dispatch)(n, detail::bool_<(sizeof(SizeType) > sizeof(std::size_t))>());
+   }
+
+   template <class SizeType>
+   static BOOST_INTRUSIVE_FORCEINLINE SizeType suggested_lower_bucket_count(SizeType n)
+   {
+      return (suggested_lower_bucket_count_dispatch)(n, detail::bool_<(sizeof(SizeType) > sizeof(std::size_t))>());
+   }
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 };
 
 #if !defined(BOOST_INTRUSIVE_DOXYGEN_INVOKED)
@@ -184,9 +268,15 @@ const std::size_t prime_list_holder<Dummy>::prime_list[] = {
    BOOST_INTRUSIVE_PRIME_C(432345564227567621),    BOOST_INTRUSIVE_PRIME_C(864691128455135207),
    BOOST_INTRUSIVE_PRIME_C(1729382256910270481),   BOOST_INTRUSIVE_PRIME_C(3458764513820540933),
    BOOST_INTRUSIVE_PRIME_C(6917529027641081903),   BOOST_INTRUSIVE_PRIME_C(13835058055282163729),
+<<<<<<< HEAD
    BOOST_INTRUSIVE_PRIME_C(18446744073709551557)
 #else
    BOOST_INTRUSIVE_PRIME_C(4294967291)
+=======
+   BOOST_INTRUSIVE_PRIME_C(18446744073709551557),  BOOST_INTRUSIVE_PRIME_C(18446744073709551615)   //Upper limit, just in case
+#else
+   BOOST_INTRUSIVE_PRIME_C(4294967291),            BOOST_INTRUSIVE_PRIME_C(4294967295)             //Upper limit, just in case
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 #endif
    };
 
@@ -229,7 +319,11 @@ struct unordered_bucket_impl
    typedef typename
       get_slist_impl_from_supposed_value_traits
          <SupposedValueTraits>::type            slist_impl;
+<<<<<<< HEAD
    typedef detail::bucket_impl<slist_impl>      implementation_defined;
+=======
+   typedef bucket_impl<slist_impl>              implementation_defined;
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
    typedef implementation_defined               type;
 };
 
@@ -312,7 +406,11 @@ struct group_functions
    typedef circular_slist_algorithms<node_traits>                 node_algorithms;
 
    static slist_node_ptr get_bucket_before_begin
+<<<<<<< HEAD
       (const slist_node_ptr &bucket_beg, const slist_node_ptr &bucket_end, const node_ptr &p)
+=======
+      (slist_node_ptr bucket_beg, slist_node_ptr bucket_end, node_ptr p)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
    {
       //First find the last node of p's group.
       //This requires checking the first node of the next group or
@@ -343,7 +441,11 @@ struct group_functions
       return possible_end;
    }
 
+<<<<<<< HEAD
    static node_ptr get_prev_to_first_in_group(const slist_node_ptr &bucket_node, const node_ptr &first_in_group)
+=======
+   static node_ptr get_prev_to_first_in_group(slist_node_ptr bucket_node, node_ptr first_in_group)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
    {
       node_ptr nb = detail::dcast_bucket_ptr<node>(bucket_node);
       node_ptr n;
@@ -353,7 +455,11 @@ struct group_functions
       return nb;
    }
 
+<<<<<<< HEAD
    static void erase_from_group(const slist_node_ptr &end_ptr, const node_ptr &to_erase_ptr, detail::true_)
+=======
+   static void erase_from_group(slist_node_ptr end_ptr, node_ptr to_erase_ptr, detail::true_)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
    {
       node_ptr const nxt_ptr(node_traits::get_next(to_erase_ptr));
       //Check if the next node is in the group (not end node) and reverse linked to
@@ -366,7 +472,11 @@ struct group_functions
    BOOST_INTRUSIVE_FORCEINLINE static void erase_from_group(const slist_node_ptr&, const node_ptr&, detail::false_)
    {}
 
+<<<<<<< HEAD
    BOOST_INTRUSIVE_FORCEINLINE static node_ptr get_last_in_group(const node_ptr &first_in_group, detail::true_)
+=======
+   BOOST_INTRUSIVE_FORCEINLINE static node_ptr get_last_in_group(node_ptr first_in_group, detail::true_)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
    {  return group_traits::get_next(first_in_group);  }
 
    BOOST_INTRUSIVE_FORCEINLINE static node_ptr get_last_in_group(node_ptr n, detail::false_)
@@ -386,10 +496,17 @@ struct group_functions
       return node_traits::get_next(group_traits::get_next(ptr));
    }
 
+<<<<<<< HEAD
    BOOST_INTRUSIVE_FORCEINLINE static node_ptr get_first_in_group(const node_ptr &n, detail::false_)
    {  return n;  }
 
    BOOST_INTRUSIVE_FORCEINLINE static void insert_in_group(const node_ptr &first_in_group, const node_ptr &n, true_)
+=======
+   BOOST_INTRUSIVE_FORCEINLINE static node_ptr get_first_in_group(node_ptr n, detail::false_)
+   {  return n;  }
+
+   BOOST_INTRUSIVE_FORCEINLINE static void insert_in_group(node_ptr first_in_group, node_ptr n, true_)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
    {  group_algorithms::link_after(first_in_group, n);  }
 
    static void insert_in_group(const node_ptr&, const node_ptr&, false_)
@@ -506,7 +623,11 @@ struct unordered_default_bucket_traits
    typedef typename detail::
       get_slist_impl_from_supposed_value_traits
          <supposed_value_traits>::type          slist_impl;
+<<<<<<< HEAD
    typedef detail::bucket_traits_impl
+=======
+   typedef bucket_traits_impl
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
       <slist_impl>                              implementation_defined;
    typedef implementation_defined               type;
 };
@@ -541,10 +662,17 @@ struct downcast_node_to_value_t
    :  public detail::node_to_value<ValueTraits, IsConst>
 {
    typedef detail::node_to_value<ValueTraits, IsConst>  base_t;
+<<<<<<< HEAD
    typedef typename base_t::result_type                     result_type;
    typedef ValueTraits                                  value_traits;
    typedef typename detail::get_slist_impl
       <typename detail::reduced_slist_node_traits
+=======
+   typedef typename base_t::result_type                 result_type;
+   typedef ValueTraits                                  value_traits;
+   typedef typename get_slist_impl
+      <typename reduced_slist_node_traits
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
          <typename value_traits::node_traits>::type
       >::type                                               slist_impl;
    typedef typename detail::add_const_if_c
@@ -606,11 +734,19 @@ struct bucket_plus_vtraits
    typedef typename value_traits::node_traits            node_traits;
    typedef unordered_group_adapter<node_traits>          group_traits;
    typedef typename slist_impl::iterator                 siterator;
+<<<<<<< HEAD
    typedef detail::bucket_impl<slist_impl>               bucket_type;
    typedef detail::group_functions<node_traits>          group_functions_t;
    typedef typename slist_impl::node_algorithms          node_algorithms;
    typedef typename slist_impl::node_ptr                 slist_node_ptr;
    typedef typename node_traits::node_ptr                node_ptr;
+=======
+   typedef bucket_impl<slist_impl>               bucket_type;
+   typedef detail::group_functions<node_traits>          group_functions_t;
+   typedef typename slist_impl::node_algorithms          node_algorithms;
+   typedef typename slist_impl::node_ptr                slist_node_ptr;
+   typedef typename node_traits::node_ptr               node_ptr;
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
    typedef typename node_traits::node                    node;
    typedef typename value_traits::value_type             value_type;
    typedef typename value_traits::pointer                pointer;
@@ -1072,7 +1208,11 @@ struct bucket_hash_equal_t
    typedef BucketTraits                         bucket_traits;
    typedef typename bucket_plus_vtraits_t::slist_impl       slist_impl;
    typedef typename slist_impl::iterator                    siterator;
+<<<<<<< HEAD
    typedef detail::bucket_impl<slist_impl>                  bucket_type;
+=======
+   typedef bucket_impl<slist_impl>                  bucket_type;
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
    typedef typename detail::unordered_bucket_ptr_impl<value_traits>::type bucket_ptr;
 
    template<class BucketTraitsType>
@@ -1320,6 +1460,7 @@ struct hashdata_internal
       <const_pointer>::reference                            const_reference;
    typedef typename value_traits::node_traits               node_traits;
    typedef typename node_traits::node                       node;
+<<<<<<< HEAD
    typedef typename node_traits::node_ptr                   node_ptr;
    typedef typename node_traits::const_node_ptr             const_node_ptr;
    typedef detail::node_functions<node_traits>              node_functions_t;
@@ -1329,6 +1470,17 @@ struct hashdata_internal
       >::type                                               slist_impl;
    typedef typename slist_impl::node_algorithms             node_algorithms;
    typedef typename slist_impl::node_ptr                    slist_node_ptr;
+=======
+   typedef typename node_traits::node_ptr                  node_ptr;
+   typedef typename node_traits::const_node_ptr          const_node_ptr;
+   typedef detail::node_functions<node_traits>              node_functions_t;
+   typedef typename get_slist_impl
+      <typename reduced_slist_node_traits
+         <typename value_traits::node_traits>::type
+      >::type                                               slist_impl;
+   typedef typename slist_impl::node_algorithms             node_algorithms;
+   typedef typename slist_impl::node_ptr                   slist_node_ptr;
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
    typedef hash_key_types_base
       < typename ValueTraits::value_type
@@ -1476,16 +1628,24 @@ struct hashdata_internal
 
    static BOOST_INTRUSIVE_FORCEINLINE size_type suggested_upper_bucket_count(size_type n)
    {
+<<<<<<< HEAD
       std::size_t c = prime_list_holder<0>::suggested_upper_bucket_count
          (sizeof(size_type) > sizeof(std::size_t) && n > std::size_t(-1) ? std::size_t(-1) : static_cast<std::size_t>(n));
       return sizeof(size_type) < sizeof(std::size_t) && c > size_type(-1) ? size_type(-1) : static_cast<size_type>(c);
+=======
+      return prime_list_holder<0>::suggested_upper_bucket_count(n);
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
    }
 
    static BOOST_INTRUSIVE_FORCEINLINE size_type suggested_lower_bucket_count(size_type n)
    {
+<<<<<<< HEAD
       std::size_t c = prime_list_holder<0>::suggested_lower_bucket_count
          (sizeof(size_type) > sizeof(std::size_t) && n > std::size_t(-1) ? std::size_t(-1) : static_cast<std::size_t>(n));
       return sizeof(size_type) < sizeof(std::size_t) && c > size_type(-1) ? size_type(-1) : static_cast<size_type>(c);
+=======
+      return prime_list_holder<0>::suggested_lower_bucket_count(n);
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
    }
 
    const_local_iterator cbegin(size_type n) const
@@ -1497,6 +1657,10 @@ struct hashdata_internal
 
    using internal_type::end;
    using internal_type::cend;
+<<<<<<< HEAD
+=======
+
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
    local_iterator end(size_type n)
    {  return local_iterator(this->priv_bucket_pointer()[n].end(), this->priv_value_traits_ptr());  }
 
@@ -1637,7 +1801,11 @@ class hashtable_impl
    typedef SizeType                                                  size_type;
    typedef typename internal_type::key_equal                         key_equal;
    typedef typename internal_type::hasher                            hasher;
+<<<<<<< HEAD
    typedef detail::bucket_impl<slist_impl>                           bucket_type;
+=======
+   typedef bucket_impl<slist_impl>                           bucket_type;
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
    typedef typename internal_type::bucket_ptr                        bucket_ptr;
    typedef typename slist_impl::iterator                             siterator;
    typedef typename slist_impl::const_iterator                       const_siterator;
@@ -1680,7 +1848,11 @@ class hashtable_impl
    //See documentation for more explanations
    BOOST_STATIC_ASSERT((!compare_hash || store_hash));
 
+<<<<<<< HEAD
    typedef typename slist_impl::node_ptr                             slist_node_ptr;
+=======
+   typedef typename slist_impl::node_ptr                            slist_node_ptr;
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
    typedef typename pointer_traits
       <slist_node_ptr>::template rebind_pointer
          < void >::type                                              void_pointer;
@@ -3370,7 +3542,11 @@ class hashtable_impl
       , size_type &found_bucket
       , size_type &cnt) const
    {
+<<<<<<< HEAD
       cnt = 0;
+=======
+      size_type internal_cnt = 0;
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
       //Let's see if the element is present
       
       siterator prev;
@@ -3386,20 +3562,35 @@ class hashtable_impl
          //the same bucket
          bucket_type &b = this->priv_bucket_pointer()[n_bucket];
          siterator it = to_return.first;
+<<<<<<< HEAD
          ++cnt;   //At least one is found
          if(optimize_multikey){
             to_return.second = ++(priv_last_in_group)(it);
             cnt += boost::intrusive::iterator_distance(++it, to_return.second);
+=======
+         ++internal_cnt;   //At least one is found
+         if(optimize_multikey){
+            to_return.second = ++(priv_last_in_group)(it);
+            internal_cnt += boost::intrusive::iterator_distance(++it, to_return.second);
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
          }
          else{
             siterator const bend = b.end();
             while(++it != bend &&
                   this->priv_is_value_equal_to_key(this->priv_value_from_slist_node(it.pointed_node()), h, key, equal_func)){
+<<<<<<< HEAD
                ++cnt;
+=======
+               ++internal_cnt;
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
             }
             to_return.second = it;
          }
       }
+<<<<<<< HEAD
+=======
+      cnt = internal_cnt;
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
       return to_return;
    }
 
@@ -3454,14 +3645,20 @@ class hashtable_impl
 };
 
 /// @cond
+<<<<<<< HEAD
 #if !defined(BOOST_INTRUSIVE_VARIADIC_TEMPLATES)
+=======
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 template < class T
          , bool UniqueKeys
          , class PackedOptions
          >
+<<<<<<< HEAD
 #else
 template <class T, bool UniqueKeys, class ...Options>
 #endif
+=======
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 struct make_bucket_traits
 {
    //Real value traits must be calculated from options
@@ -3471,8 +3668,13 @@ struct make_bucket_traits
    typedef typename PackedOptions::bucket_traits            specified_bucket_traits;
 
    //Real bucket traits must be calculated from options and calculated value_traits
+<<<<<<< HEAD
    typedef typename detail::get_slist_impl
       <typename detail::reduced_slist_node_traits
+=======
+   typedef typename get_slist_impl
+      <typename reduced_slist_node_traits
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
          <typename value_traits::node_traits>::type
       >::type                                            slist_impl;
 
@@ -3481,7 +3683,11 @@ struct make_bucket_traits
                      < specified_bucket_traits
                      , default_bucket_traits
                      >::value
+<<<<<<< HEAD
                   , detail::bucket_traits_impl<slist_impl>
+=======
+                  , bucket_traits_impl<slist_impl>
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
                   , specified_bucket_traits
                   >::type                                type;
 };

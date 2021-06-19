@@ -2,14 +2,22 @@
 
 S3method(print,json)
 S3method(print,scalar)
+<<<<<<< HEAD
 S3method(rbind,pages)
+=======
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 export(base64_dec)
 export(base64_enc)
 export(flatten)
 export(fromJSON)
 export(minify)
+<<<<<<< HEAD
 export(prettify)
 export(rbind.pages)
+=======
+export(parse_json)
+export(prettify)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 export(rbind_pages)
 export(read_json)
 export(serializeJSON)

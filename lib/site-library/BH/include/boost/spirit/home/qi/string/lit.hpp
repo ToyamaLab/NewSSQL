@@ -118,9 +118,14 @@ namespace boost { namespace spirit { namespace qi
 
         String str;
 
+<<<<<<< HEAD
     private:
         // silence MSVC warning C4512: assignment operator could not be generated
         literal_string& operator= (literal_string const&);
+=======
+        // silence MSVC warning C4512: assignment operator could not be generated
+        BOOST_DELETED_FUNCTION(literal_string& operator= (literal_string const&))
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     };
 
     template <typename String, bool no_attribute>

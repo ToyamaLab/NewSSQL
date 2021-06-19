@@ -148,10 +148,59 @@ public class Mobile_HTML5G1 extends Grouper {
 		String classid2 = Mobile_HTML5Env.getClassID(tfe);
 
 
-		if (Incremental.flag || Ehtml.flag) {
+		if (Ehtml.infinitescroll_flag && (Incremental.flag || Ehtml.flag)) {
 			Infinitescroll.G1(this, html_env, data_info, data, tfe);
 			return null;
 		}else{
+			boolean isEhtml = Ehtml.isEhtml();
+			
+			if (isEhtml) {
+				String row = "";
+				String column = "";
+				
+				// ページネーション
+				if (decos.containsKey("row") && decos.containsKey("column")) {
+					html_env.g1PaginationRowNum = Integer.parseInt(decos
+							.getStr("row"));
+					row = " row=\'" + html_env.g1PaginationRowNum + "\'";
+					html_env.g1PaginationColumnNum = Integer.parseInt(decos
+							.getStr("column"));
+					column = " column=\'" + html_env.g1PaginationColumnNum + "\'";
+				} else if (decos.containsKey("column")) { // 複合反復子
+					html_env.g1RetNum = Integer.parseInt(decos.getStr("column"));
+					column = " column=\'" + html_env.g1RetNum + "\'";
+				}
+//				if (decos.containsKey("row") && decos.containsKey("column")) {
+//					html_env.itemNumPerPage = Integer.parseInt(decos.getStr("row"));
+//					column = " row=\'"
+//						+ html_env.itemNumPerPage
+//						+ "\'";
+//				}
+				String outType = "div";
+				if (html_env.xmlDepth != 0) {
+					// 親のoutTypeを継承
+					outType = html_env.outTypeList.get(html_env.xmlDepth - 1);
+				}
+				if (decos.containsKey("table") || !outType.equals("div")) {
+					html_env.outTypeList.add(html_env.xmlDepth, "table");
+				} else {
+					html_env.outTypeList.add(html_env.xmlDepth, "div");
+				}
+				if (decos.containsKey("div")) {
+					html_env.outTypeList.add(html_env.xmlDepth, "div");
+				}
+				Log.info("out:"+html_env.outTypeList);
+
+				// System.out.println("G1 tableFlg = " + tableFlg + ", divFlg = " +
+				// divFlg);
+				html_env.append_css_def_td(HTMLEnv.getClassID(this), this.decos);
+				Incremental.outXMLData(html_env.xmlDepth, "<Grouper"
+						+ html_env.gLevel + " type=\'G1\' outType=\'"
+						+ html_env.outTypeList.get(html_env.xmlDepth)
+						+ "\' class=\'" + HTMLEnv.getClassID(this) + "\'" + row + column + ">\n");
+			}
+			
+			
 			html_env.append_css_def_td(classid, this.decos);
 			//20130309
 			G1Flg=true;
@@ -277,6 +326,11 @@ public class Mobile_HTML5G1 extends Grouper {
 					if(firstFlg){
 						html_env.code.append("<DIV Class=\"row\">\n");
 						html_env.code.append("<DIV Class=\""+classid+"\">\n");
+						if (isEhtml) {
+//							html_env.append_css_def_td(HTMLEnv.getClassID(this), this.decos);
+							Incremental.outXMLData(html_env.xmlDepth, "<div" + html_env.cNum + " type=\'row\' outType=\'div\' class=\'" + classid + "\'>\n");
+							Incremental.outXMLData(html_env.xmlDepth, "<div" + html_env.cNum + " type=\'" + classid + "\' outType=\'div\' class=\'" + classid + "\'>\n");
+						}
 						if(Sass.outofloopFlg.peekFirst()){
 							//        				Sass.makeClass(classid);
 							//        				Sass.defineGridBasic(classid, decos);
@@ -286,6 +340,9 @@ public class Mobile_HTML5G1 extends Grouper {
 					}
 
 					html_env.code.append("<DIV Class=\"row\">\n");
+					if (isEhtml) {
+						Incremental.outXMLData(html_env.xmlDepth, "<div" + html_env.cNum + " type=\'row\' outType=\'div\' class=\'" + classid + "\'>\n");
+					}
 					if(Sass.outofloopFlg.peekFirst()){
 						//        			Sass.makeRowClass();
 					}
@@ -314,6 +371,11 @@ public class Mobile_HTML5G1 extends Grouper {
 
 			Mobile_HTML5.beforeWhileProcess(getSymbol(), decos, html_env);
 			while (this.hasMoreItems()) {
+				if (isEhtml) {
+					html_env.gLevel++;
+					html_env.xmlDepth++;
+				}
+				
 				Mobile_HTML5.gLevel1++;
 				Mobile_HTML5.whileProcess1_1(getSymbol(), decos, html_env, data, data_info, tfe, null, -1);
 
@@ -387,7 +449,14 @@ public class Mobile_HTML5G1 extends Grouper {
 					classid = classid2;
 				}else if(Sass.isBootstrapFlg()){
 					(tfe).decos.put("G1",""+(numberOfColumns - Mobile_HTML5Function.func_null_count));
+					if (isEhtml) {
+						html_env.append_css_def_td(HTMLEnv.getClassID(this), ((TFE)tfe).decos);
+					}
+					
 					html_env.code.append("<div class=\"" + classid2 +"\">\n");
+					if (isEhtml) {
+						Incremental.outXMLData(html_env.xmlDepth, "<div" + html_env.cNum + " type=\'" + classid2 + "\' outType=\'div\' class=\'" + classid2 + "\'>\n");
+					}
 					if(Sass.outofloopFlg.peekFirst()){
 						//            		Sass.makeClass(classid2);
 						//            		Sass.defineGridBasic(classid2, (tfe).decos);
@@ -428,6 +497,9 @@ public class Mobile_HTML5G1 extends Grouper {
 					else if(tableFlg)	        html_env.code.append("</TD>\n");    //20130314 table
 				}else if(Sass.isBootstrapFlg()){
 					html_env.code.append("</div>\n");//classid2
+					if (isEhtml) {
+						Incremental.outXMLData(html_env.xmlDepth, "</div"+ html_env.cNum + ">\n");
+					}
 					if(Sass.outofloopFlg.peekFirst()){
 						//            		Sass.closeBracket();//classid2
 					}
@@ -452,6 +524,14 @@ public class Mobile_HTML5G1 extends Grouper {
 
 				if(!Mobile_HTML5.whileProcess2_2(getSymbol(), decos, html_env, data, data_info, tfe, null, -1))	break;
 				Mobile_HTML5.gLevel1--;
+				
+				if (isEhtml) {
+					html_env.gLevel--;
+					html_env.xmlDepth--;
+					if (decos.containsKey("row") && decos.containsKey("column")) {
+						html_env.itemCount++;
+					}
+				}
 			}	// /while
 
 			//20160527 bootstrap
@@ -530,6 +610,9 @@ public class Mobile_HTML5G1 extends Grouper {
 				//        	}
 
 				html_env.code.append("</DIV>\n");//.row
+				if (isEhtml) {
+					Incremental.outXMLData(html_env.xmlDepth, "</div"+ html_env.cNum + ">\n");
+				}
 				if(Sass.outofloopFlg.peekFirst()){
 					//        		Sass.closeBracket();//row
 				}
@@ -537,6 +620,10 @@ public class Mobile_HTML5G1 extends Grouper {
 				if(firstFlg){
 					html_env.code.append("</DIV>\n");//.classid
 					html_env.code.append("</DIV>\n");//.row
+					if (isEhtml) {
+						Incremental.outXMLData(html_env.xmlDepth, "</div"+ html_env.cNum + ">\n");
+						Incremental.outXMLData(html_env.xmlDepth, "</div"+ html_env.cNum + ">\n");
+					}
 					if(Sass.outofloopFlg.peekFirst()){
 						//        			Sass.closeBracket();//classid
 						//        			Sass.closeBracket();//row
@@ -581,6 +668,10 @@ public class Mobile_HTML5G1 extends Grouper {
 			Mobile_HTML5Function.Func_seq_num_initialization(html_env.getGlevel());
 
 			Log.out("TFEId = " + classid);
+			
+			if (isEhtml) {
+				Incremental.outXMLData(html_env.xmlDepth, "</Grouper" + html_env.gLevel + ">\n");
+			}
 			return null;
 		}
 	}

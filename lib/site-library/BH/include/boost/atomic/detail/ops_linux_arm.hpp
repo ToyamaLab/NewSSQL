@@ -58,11 +58,19 @@ namespace detail {
 
 struct linux_arm_cas_base
 {
+<<<<<<< HEAD
+=======
+    static BOOST_CONSTEXPR_OR_CONST bool full_cas_based = true;
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
     static BOOST_CONSTEXPR_OR_CONST bool is_always_lock_free = true;
 
     static BOOST_FORCEINLINE void fence_before_store(memory_order order) BOOST_NOEXCEPT
     {
+<<<<<<< HEAD
         if ((order & memory_order_release) != 0)
+=======
+        if ((static_cast< unsigned int >(order) & static_cast< unsigned int >(memory_order_release)) != 0u)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
             hardware_full_fence();
     }
 
@@ -74,7 +82,11 @@ struct linux_arm_cas_base
 
     static BOOST_FORCEINLINE void fence_after_load(memory_order order) BOOST_NOEXCEPT
     {
+<<<<<<< HEAD
         if ((order & (memory_order_consume | memory_order_acquire)) != 0)
+=======
+        if ((static_cast< unsigned int >(order) & (static_cast< unsigned int >(memory_order_consume) | static_cast< unsigned int >(memory_order_acquire))) != 0u)
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
             hardware_full_fence();
     }
 
@@ -89,8 +101,13 @@ template< bool Signed >
 struct linux_arm_cas :
     public linux_arm_cas_base
 {
+<<<<<<< HEAD
     typedef typename make_storage_type< 4u, Signed >::type storage_type;
     typedef typename make_storage_type< 4u, Signed >::aligned aligned_storage_type;
+=======
+    typedef typename make_storage_type< 4u >::type storage_type;
+    typedef typename make_storage_type< 4u >::aligned aligned_storage_type;
+>>>>>>> ddff10c8c1a385735ed59fadb33c4b79e43db9ce
 
     static BOOST_CONSTEXPR_OR_CONST std::size_t storage_size = 4u;
     static BOOST_CONSTEXPR_OR_CONST bool is_signed = Signed;
