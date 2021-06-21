@@ -313,10 +313,10 @@ public class HTMLC2 extends Connector implements Serializable {
 				} else {
 					HTMLDecoration.ends.get(0).append("</TABLE>\n");
 				}
-				HTMLDecoration.ends.get(0).append(HTMLEnv.getNewTableBorderDIV_end());
+				HTMLDecoration.ends.get(0).append(HTMLEnv.getNewTableBorderDIV_end(this.getSymbol()));
 			} else {
 				htmlEnv.code.append("</TABLE>\n");
-				htmlEnv.code.append(HTMLEnv.getNewTableBorderDIV_end());
+				htmlEnv.code.append(HTMLEnv.getNewTableBorderDIV_end(this.getSymbol()));
 			}
 			HTMLEnv.end_table(this.getSymbol());
 

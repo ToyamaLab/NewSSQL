@@ -765,10 +765,10 @@ public class HTMLAttribute extends Attribute {
 					} else {
 						HTMLDecoration.ends.get(0).append("</td></tr></table>\n");
 					}
-					HTMLDecoration.ends.get(0).append(HTMLEnv.getNewTableBorderDIV_end());
+					HTMLDecoration.ends.get(0).append(HTMLEnv.getNewTableBorderDIV_end("HTMLAttribute"));
 				} else {
 					htmlEnv.code.append("</td></tr></table>\n");
-					htmlEnv.code.append(HTMLEnv.getNewTableBorderDIV_end());
+					htmlEnv.code.append(HTMLEnv.getNewTableBorderDIV_end("HTMLAttribute"));
 					Log.out("</td></tr></table>");
 				}
 			}
