@@ -1,7 +1,6 @@
 package supersql.parser;
 
 import java.io.BufferedReader;
-import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -15,15 +14,11 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Hashtable;
 import java.util.Iterator;
-import java.util.List;
 import java.util.StringTokenizer;
 import java.util.TreeSet;
-import java.util.stream.Stream;
-
-import org.antlr.v4.runtime.*;
-import org.antlr.v4.runtime.misc.Interval;
-import org.antlr.v4.runtime.tree.*;
-
+import org.antlr.v4.runtime.ANTLRInputStream;
+import org.antlr.v4.runtime.CommonTokenStream;
+import org.antlr.v4.runtime.tree.ParseTree;
 import supersql.codegenerator.AttributeItem;
 import supersql.codegenerator.CodeGenerator;
 import supersql.codegenerator.TFE;
@@ -583,13 +578,11 @@ public class Start_Parse {
 				Log.info(b);
 				VRcjoinarray.query = b;
 
-				if(a.equals(" ") || a.equals("") || a.equals("\r")){
-				}else{
-
-					ANTLRInputStream input_a = new ANTLRInputStream(a);
-					prefixLexer lexer_a = new prefixLexer(input_a);
-					CommonTokenStream tokens_a = new CommonTokenStream(lexer_a);
-
+				ANTLRInputStream input_a = new ANTLRInputStream(a);
+				prefixLexer lexer_a = new prefixLexer(input_a);
+				CommonTokenStream tokens_a = new CommonTokenStream(lexer_a);
+				if (tokens_a.getNumberOfOnChannelTokens() > 1) {
+					// If the token_a has EOF + something except for comments, parse it.
 					prefixParser parser_a = new prefixParser(tokens_a);
 					ParseTree tree_a = parser_a.prefix(); // begin parsing at rule query
 					List_tree_a = TreeConst.createSSQLParseTree(tree_a, parser_a);
