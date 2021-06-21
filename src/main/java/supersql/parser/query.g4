@@ -8,8 +8,8 @@ import java.io.*;
 }
 
 ////////////////////////////////////////////////////Parse rules/////////////////////////////////////////////
-query :
-
+query :	
+	
     media
 
     root
@@ -44,6 +44,7 @@ operand :
   | NUMERIC_LITERAL
   | sl
   | (sorting)?ggplot
+  | sqlprocess
   )(DECORATOR)?
 ;
 
@@ -281,6 +282,15 @@ sqlfunc  :
     CLOSE_PARENTHESE
   )
   ;
+
+//for sql process
+sqlprocess:
+	('&'
+	    OPEN_PARENTHESE
+	    	.*?
+	    CLOSE_PARENTHESE
+	)
+	;
 
 aggregate :
     ag_function_name
@@ -844,7 +854,7 @@ IDENTIFIER
 STRING_LITERAL  : '"' ( ~'"')* '"'  | '\'' (~'\'')* '\'' ;
 
 MULTI_LINE_COMMENT  :
-  '/*' .*? ( '*/' | EOF ) -> channel(HIDDEN)  ;
+  '/*' .*? ( '*/' | EOF ) -> channel(HIDDEN) ;
 SINGLE_LINE_COMMENT :
   '--' ~[\r\n]* -> channel(HIDDEN)  ;
 WS  : [ \t\r\n　]+ -> channel(HIDDEN) ;

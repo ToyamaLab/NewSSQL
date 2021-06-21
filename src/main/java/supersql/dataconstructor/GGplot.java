@@ -312,6 +312,7 @@ public class GGplot {
 					result_y[i] = Integer.parseInt(buffer_y.get(i));
 				}
 				engine.assign("result_y", result_y);
+				//Log.out("result_y: " + result_y);
 			} catch(NumberFormatException e) {
 				try {
 					double result_y[] = new double[buffer_y.size()];
@@ -319,6 +320,7 @@ public class GGplot {
 						result_y[i] = Double.parseDouble(buffer_y.get(i));
 					}
 					engine.assign("result_y", result_y);
+					
 				} catch (NumberFormatException e1) {
 					String result_y[] = new String[buffer_y.size()];
 					for (int i = 0; i < buffer_y.size(); i++) {

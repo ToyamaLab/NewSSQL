@@ -194,6 +194,16 @@ public interface queryListener extends ParseTreeListener {
 	 */
 	void exitSqlfunc(queryParser.SqlfuncContext ctx);
 	/**
+	 * Enter a parse tree produced by {@link queryParser#sqlprocess}.
+	 * @param ctx the parse tree
+	 */
+	void enterSqlprocess(queryParser.SqlprocessContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link queryParser#sqlprocess}.
+	 * @param ctx the parse tree
+	 */
+	void exitSqlprocess(queryParser.SqlprocessContext ctx);
+	/**
 	 * Enter a parse tree produced by {@link queryParser#aggregate}.
 	 * @param ctx the parse tree
 	 */

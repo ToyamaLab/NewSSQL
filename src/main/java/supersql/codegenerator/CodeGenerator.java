@@ -395,6 +395,8 @@ public class CodeGenerator {
 		TFE out_sch = null;
 		String decos = new String();
 		String iterator = new String();
+	
+ 		
 		boolean add_deco = false;
 		//		if(flag){
 		//			tfe_tree.add(tfe_tree.size(), "}}");
@@ -441,16 +443,14 @@ public class CodeGenerator {
 			}
 			else{
 				Log.out("function in read_att: " + ((ExtList)((ExtList)tfe_tree.get(1)).get(0)).get(0).toString());
-				Log.out("tfe_tree.get(1): " + ((ExtList)tfe_tree.get(1)));
-				if( ((ExtList)((ExtList)tfe_tree.get(1)).get(0)).get(0).toString().equals("sorting") ){
-					if(decos.isEmpty()){
+				if( ((ExtList)((ExtList)tfe_tree.get(1)).get(0)).get(0).toString().equals("sorting")){
+					
+					if(decos.isEmpty()){	
 						decos = ((ExtList)((ExtList)((ExtList)tfe_tree.get(1)).get(0)).get(1)).get(1).toString();
-					}
-					if(decos.equals("ggplot")) {
-						Log.out("decos: " + decos);
 					}
 					add_deco = true;
 					((ExtList)tfe_tree.get(1)).remove(0);
+					
 				}
 				if( ((ExtList)((ExtList)tfe_tree.get(1)).get(0)).get(0).toString().equals("aggregate") ){
 
@@ -516,16 +516,42 @@ public class CodeGenerator {
 					ExtList tfe_tree_buf = new ExtList();
 					String dec_tmp = ((ExtList)tfe_tree.get(1)).get(((ExtList)tfe_tree.get(1)).size() - 1).toString();
 					String gg_decos;
+					boolean sort_flag = false;
 
+					Log.out("tfe_tree in ggplot: " + tfe_tree);
 					att1.add("operand");
 					att1.add(new ExtList());
-					att1.getExtList(1).add(tfe_tree.getExtList(1, 0, 1, 2));
+					//added by li 20210615 for sorting
+
+					if(tfe_tree.getExtList(1, 0, 1, 2).get(0).equals("sorting")) {
+						sort_flag = true;
+						att1.getExtList(1).add(tfe_tree.getExtList(1, 0, 1, 3));
+						//att1.add(tfe_tree.getExtList(1, 0, 1, 2));
+					}else {
+						att1.getExtList(1).add(tfe_tree.getExtList(1, 0, 1, 2));
+					}
+					
+					//att1.getExtList(1).add(tfe_tree.getExtList(1, 0, 1, 2));
 					att1.add("ggplot_att");
 					att2.add("operand");
 					att2.add(new ExtList());
-					att2.getExtList(1).add(tfe_tree.getExtList(1, 0, 1, 4));
+					//added by li 20210615 for sorting
+					if(!sort_flag&&!tfe_tree.getExtList(1, 0, 1, 4).get(0).equals("sorting")) {
+						att2.getExtList(1).add(tfe_tree.getExtList(1, 0, 1, 4));
+					}else if(!sort_flag&&tfe_tree.getExtList(1, 0, 1, 4).get(0).equals("sorting")) {
+						//sorting found
+						att2.getExtList(1).add(tfe_tree.getExtList(1, 0, 1, 5));
+						sort_flag = true;
+						//att2.add(tfe_tree.getExtList(1, 0, 1, 4));
+					}else if(sort_flag&&tfe_tree.getExtList(1, 0, 1, 4).get(0).equals("sorting")){
+						Log.err("Double sort mark in ggplot!!");
+					}
+					
+					
 					att2.add("ggplot_att");
-
+					Log.out("In ggplot att1: " + att1);
+					Log.out("att2: " + att2);
+					//
 //					}
 
 
@@ -534,10 +560,11 @@ public class CodeGenerator {
 					tfe_tree_buf.getExtList(1).add(att1);
 					tfe_tree_buf.getExtList(1).add(tfe_tree.getExtListString(1, 0, 1, 3));
 					tfe_tree_buf.getExtList(1).add(att2);
-
+					
 //					tfe_tree.clear();
 
 //					tfe_tree = tfe_tree_buf;
+
 					out_sch = read_attribute(tfe_tree_buf);
 
 					//					Log.info(tfe_tree);
@@ -597,8 +624,31 @@ public class CodeGenerator {
 						out_sch = func_read((ExtList)((ExtList)((ExtList)tfe_tree.get(1)).get(0)).get(1));
 						//out_sch = func_read((ExtList)((ExtList)((ExtList)tfe_tree.get(1)).get(0)).get(1)).fnc;
 					}
+				}else if( ((ExtList)((ExtList)tfe_tree.get(1)).get(0)).get(0).toString().equals("sqlprocess") ) {
+					ExtList base = ((ExtList) ((ExtList) tfe_tree.get(1)).get(0)); 
+					int p_size = ((ExtList)base.get(1)).size();
+					String sql = ((ExtList)base.get(1)).get(2).toString();
+					
+					Log.out("Is a sql process!");
+					 
+					
+					Log.out("base:" + base.get(1));
+					Log.out("p_size:" + p_size);
+					for(int i = 3; i < p_size -1; i++) {
+						sql += ((ExtList)base.get(1)).get(i);
+						Log.out("sql: " + sql);
+					}
+					Attribute func = makeAttribute(sql);
+                 	out_sch = func;
+                 	
+                 	//for(int i = 0; i < argArith.unnest().size(); i++) {
+                 		
+                 		
+                 	//}
 				}
 				else if( ((ExtList)((ExtList)tfe_tree.get(1)).get(0)).get(0).toString().equals("sqlfunc") ){
+					int sqlfunc_arg_size = 0;
+					
                     sqlfunc_flag++;
 //                    System.out.println("====sqlfunc eval start====");
                     ExtList base = ((ExtList) ((ExtList) tfe_tree.get(1)).get(0)); 
@@ -606,36 +656,86 @@ public class CodeGenerator {
                     builder = "";
 //                    System.out.println("base: " + base);
                     ArrayList<Integer> isSQLFuncIdx = new ArrayList<>();
-                    for (int i = 3; i < base.getExtList(1).size(); i += 2) {
-                        ExtList arg = base.getExtList(1, i);
-//                        System.out.println("arg: " + arg);
-                        if (arg.getExtListString(1, 0, 0).equals("sqlfunc")) {
-                            isSQLFuncIdx.add(i);
+                    try {
+                    	//add by li to use concat in sqlfunc
+                    	
+                        if(base.getExtList(1,3,1,0,1,0,1,0,1,0,1,0,1,0).get(0).toString().equals(("concat_exp"))) {
+                        	//concat確認
+                        	if(GlobalEnv.getdbms().equals("sqlserver")){
+    	                    	Log.out("SQLFunc has a concat in first arg!");
+    	                    	
+    	                       	String sqlfunc = getText(base, Start_Parse.ruleNames);
+    	                      	String new_arg = null;
+    	                        new_arg = sqlfunc.replace("||", "+");
+    	                        //sqlserverの場合"||"を"+"に置換
+    	                        Log.out("new_arg: " + new_arg);
+    	                        Attribute func = makeAttribute(new_arg);
+                            	out_sch = func;
+    	                        useTablesInSQLFunc.addAll(getUsedtablesInSQLFunc(base));
+    		                    Log.out("useTablesInSQLFunc: " + useTablesInSQLFunc);
+    		                    if (inner_sqlfunc_count == 0) useTablesInSQLFunc = new HashSet<>();
+    		                    sqlfunc_flag--;
+                        	}
+                        //
                         }
-                    }
-                    if (isSQLFuncIdx.size() > 0) {
-                        // sql関数の入れ子になっていたらその下も確認しないとダメ
-                        for (int idx : isSQLFuncIdx) {
-                            ExtList arg = base.getExtList(1, idx);
-                            inner_sqlfunc_count++;
-                            read_attribute(arg);
-                            inner_sqlfunc_count--;
+					} catch (Exception e) {
+						// TODO: handle exception
+                        for (int i = 3; i < base.getExtList(1).size(); i += 2) {
+                            ExtList arg = base.getExtList(1, i);
+//                            System.out.println("arg: " + arg);
+                            Log.out("arg of sqlfunc:" + arg);
+                            try {
+                            	Log.out("arg.getExtListString(1, 0, 0):" + arg.getExtListString(1, 0, 0));
+                            	 if (arg.getExtListString(1, 0, 0).equals("sqlfunc")) {
+                                     isSQLFuncIdx.add(i);
+                                 }
+                            	 sqlfunc_arg_size++;
+    						} catch (Exception e1) {
+    							// TODO: handle exception
+    							Log.out("SQLFunc arg size is 0");
+    						}
+                           
                         }
-                    }
-                    // useTablesInSQLFuncに利用するテーブルを入れておく
-                    useTablesInSQLFunc.addAll(getUsedtablesInSQLFunc(base));
-                    Log.out("useTablesInSQLFunc: " + useTablesInSQLFunc);
-                    if (inner_sqlfunc_count == 0) {
-                        // 入子の大元のSQLFuncだったらAttributeに登録しuseTablesだけ更新しておく
-//                        System.out.println("usedTablesInSQLFunc: " + useTablesInSQLFunc);
-                        String sqlfunc = getText(base, Start_Parse.ruleNames);
-                        builder = "";
-                        Attribute func = makeAttribute(sqlfunc);
-//                        System.out.println("out_sch: " + func);
-                        out_sch = func;
-                    }
-                    if (inner_sqlfunc_count == 0) useTablesInSQLFunc = new HashSet<>();
-                    sqlfunc_flag--;
+                       Log.out("SQLFunc arg size: " + sqlfunc_arg_size);
+                       
+                        if (isSQLFuncIdx.size() > 0) {
+                            // sql関数の入れ子になっていたらその下も確認しないとダメ
+                            for (int idx : isSQLFuncIdx) {
+                                ExtList arg = base.getExtList(1, idx);
+                                inner_sqlfunc_count++;
+                                read_attribute(arg);
+                                inner_sqlfunc_count--;
+                            }
+                        }
+                        
+                        if(sqlfunc_arg_size==0) {
+                        //引数が0個の時の処理
+                        //added by li 20210615
+                        	//Log.out("FuncIdx.size() == 0");
+                        	String sqlfunc = getText(base, Start_Parse.ruleNames);
+                        	Attribute func = makeAttribute(sqlfunc);
+                        	out_sch = func;
+                        }else {
+    	                    // useTablesInSQLFuncに利用するテーブルを入れておく
+    	                    useTablesInSQLFunc.addAll(getUsedtablesInSQLFunc(base));
+    	                    Log.out("useTablesInSQLFunc: " + useTablesInSQLFunc);
+    	                    if (inner_sqlfunc_count == 0) {
+    	                        // 入子の大元のSQLFuncだったらAttributeに登録しuseTablesだけ更新しておく
+    	//                        System.out.println("usedTablesInSQLFunc: " + useTablesInSQLFunc);
+    	                        String sqlfunc = getText(base, Start_Parse.ruleNames);
+    	                        builder = "";
+    	                        Attribute func = makeAttribute(sqlfunc);
+    	//                        System.out.println("out_sch: " + func);
+    	                        out_sch = func;
+    	                    }
+    	                    
+    	                    if (inner_sqlfunc_count == 0) useTablesInSQLFunc = new HashSet<>();
+    	                    sqlfunc_flag--;
+                       
+                        }
+    
+                        //
+					}
 				}
 				else if( ((ExtList)((ExtList)tfe_tree.get(1)).get(0)).get(0).toString().equals("if_then_else") ){
 					out_sch = IfCondition.IfCondition((ExtList)((ExtList)((ExtList)tfe_tree.get(1)).get(0)).get(1));
@@ -676,7 +776,7 @@ public class CodeGenerator {
 //				System.out.println("tfe_tree_deco2:::"+tfe_tree);
 			}else if(add_deco){
 				String deco = "@{" + decos + "}";
-
+				Log.out("out_sch: " + out_sch);
 				setDecoration(out_sch, deco);
 			}
 		}else if(tfe_tree.get(0).toString().equals("Decoration")){
@@ -859,7 +959,7 @@ public class CodeGenerator {
         for (int i = 3; i < base.getExtList(1).size(); i += 2) {
             ExtList arg = base.getExtList(1, i);
 //            System.out.println("arg: " + arg);
-            // attributeの場合
+                       // attributeの場合
             if (arg.getExtListString(1, 0, 0).equals("attribute")) {
                 // table_aliasがある場合
                 if (arg.getExtListString(1, 0, 1, 0, 0).equals("table_alias")) {
@@ -944,22 +1044,15 @@ public class CodeGenerator {
                                 usedTables.add(correTableList.get(0));
                             }
                         }
-                     //Added by li 20210613 to fix the sqlfunc
-                    }else if (argArith.getExtListString(1, 0, 1, 0, 0).equals("arith")){
-                        Log.out("In arith argArith get(1,2,1,0,1,0,1,0,0)" + argArith.getExtListString(1, 2, 1, 0, 1, 0, 1, 0, 0));
-                        Log.out("argArith get(1,2,1,0,1,0,1,0): "  + argArith.getExtList(1,2,1,0,1,0,1,0));
-                        if (argArith.getExtListString(1, 2, 1, 0, 1, 0, 1, 0, 0).equals("table_alias")) {
-                        	builder = "";
-                        	usedTables.add(getText(argArith.getExtList(1, 2, 1, 0, 1, 0, 1, 0), Start_Parse.ruleNames));
-                            builder = "";
-                        }
+                     //Added by li 20210613 to fix the arith in sqlfunc
                     }else {
-                    	ExtList tmp_x = new ExtList();
-                    	ExtList tmp_any_name = new ExtList();
-                    	ExtList tmp_any_name2 = new ExtList();
-                    	ExtList tmp_table_alias = new ExtList();
+                    	
                     	try {
 							for(i = 0; i < argArith.unnest().size(); i++) {
+								ExtList tmp_x = new ExtList();
+		                    	ExtList tmp_any_name = new ExtList();
+		                    	ExtList tmp_any_name2 = new ExtList();
+		                    	ExtList tmp_table_alias = new ExtList();
 								if(argArith.unnest().get(i).toString().equals("table_alias")) {
 									//Log.out("argArith.unnest():" + argArith.unnest().get(i) + ", index: " + i);
 									tmp_x.add(argArith.unnest().get(i+2));
@@ -968,12 +1061,30 @@ public class CodeGenerator {
 									//Log.out("tmp_any_name: " + tmp_any_name);
 									tmp_any_name2.add(tmp_any_name);
 									//Log.out("tmp_any_name2: " + tmp_any_name2);
+									Log.out("table alias: " + tmp_x);
 									tmp_table_alias.add(argArith.unnest().get(i));
 									tmp_table_alias.add(tmp_any_name2);
-									//Log.out("tmp_table_alias: " + tmp_table_alias);
-									builder = "";
-		                        	usedTables.add(getText(tmp_table_alias, Start_Parse.ruleNames));
-		                            builder = "";
+									//Log.out("tmp_table_alias: " + tmp_table_alias.getExtList(1,0,1).get(0));
+									try {
+										if(usedTables.contains(tmp_table_alias.getExtList(1,0,1).get(0))) {
+											//同じテーブルを除去
+											Log.out("The same table!");
+										}else {
+											builder = "";
+				                        	usedTables.add(getText(tmp_table_alias, Start_Parse.ruleNames));
+				                        	Log.out("use Table: " +usedTables);
+				                            builder = "";
+										}
+									} catch (Exception e) {
+										// TODO: handle exception
+										builder = "";
+			                        	usedTables.add(getText(tmp_table_alias, Start_Parse.ruleNames));
+			                        	Log.out("use Table: " +usedTables);
+			                            builder = "";
+									}
+									
+									
+		                           //
 								}
 							}
 						} catch (Exception e) {
@@ -984,6 +1095,23 @@ public class CodeGenerator {
                     //
                 }
             }
+            //add by li to use concat in sqlfunc 20210617*
+            /*
+            try {
+            	  if(base.getExtList(1,3,1,0,1,0,1,0,1,0,1,0,1,0).get(0).toString().equals(("concat_exp"))) {
+               	   ExtList tmp_table_alias = new ExtList();
+               	   //tmp_table_alias.add(argArith.unnest().get(i));
+               	   Log.out("concat get: " + base.getExtList(1,3,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1));
+               	   builder = "";
+               	   tmp_table_alias.add(base.getExtList(1,3,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1));
+                  	   usedTables.add(getText(tmp_table_alias, Start_Parse.ruleNames));
+                      builder = "";
+                  }
+			} catch (Exception e) {
+				// TODO: handle exception
+			}
+            */
+           //
         }
         return new ArrayList<>(usedTables);
     }
@@ -1150,7 +1278,7 @@ public class CodeGenerator {
 		String name;
 		String key = "";
 		int equalidx = token.indexOf('=');
-
+		
 		boolean equalSignOutsideDoubleQuote = false;
 		boolean equalSignOutsideSingleQuote = false;
 		if(token.contains("\"")){
@@ -1456,7 +1584,7 @@ public class CodeGenerator {
 
 			if (token.toLowerCase().contains("asc") || token.toLowerCase().contains("desc")) {
 				Log.out("@ order by found @");
-
+				Log.out("tfe: " + tfe);
 				new Asc_Desc().addOrderBy(token, tfe.toString());
 				new Preprocessor().setOrderBy();
 				tfe.setOrderBy(token);

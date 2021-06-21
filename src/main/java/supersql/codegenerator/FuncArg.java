@@ -1,6 +1,7 @@
 package supersql.codegenerator;
 
 import supersql.codegenerator.HTML.HTMLC0;
+import supersql.codegenerator.HTML.HTMLCONCAT;
 import supersql.codegenerator.HTML.HTMLFunction;
 import supersql.codegenerator.Mobile_HTML5.Mobile_HTML5Function;
 import supersql.codegenerator.Mobile_HTML5.Mobile_HTML5_dynamic;
@@ -150,11 +151,15 @@ public class FuncArg {
 			if(HTMLFunction.HTMLFunctionFlag || Mobile_HTML5Function.Mobile_HTML5FunctionFlag){
 				// Concat対策
 				// C0かつその下がHTMLCONCATだったら
+				Log.out("In concat tfe: " + tfe);
 				if (tfe instanceof HTMLC0 && tfe.makele0().getExtListString(1, 0).equals("HTMLCONCAT")) {
 					Log.out("[Found concat in SSQL Function]");
 					Log.out("[TFE le0]: " + tfe.makele0());
 					Log.out("[Data]: " + Data);
 					return ((HTMLC0) tfe).getConcatStr(Data);
+				}else if(tfe instanceof HTMLCONCAT){
+					
+					return tfe.work(Data);
 				}
 				return tfe.work(Data);
 			}

@@ -1,5 +1,6 @@
 package supersql.codegenerator.HTML;
 
+import supersql.codegenerator.CodeGenerator;
 import supersql.codegenerator.Connector;
 import supersql.codegenerator.DecorateList;
 import supersql.codegenerator.Ehtml;

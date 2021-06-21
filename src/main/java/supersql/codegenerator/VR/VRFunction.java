@@ -21,7 +21,6 @@ import java.util.Hashtable;
 import java.util.Stack;
 
 import org.antlr.v4.parse.ANTLRParser.element_return;
-import org.omg.CORBA.PUBLIC_MEMBER;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 

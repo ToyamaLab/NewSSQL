@@ -577,12 +577,23 @@ public class Start_Parse {
 //				Log.info(a);
 				Log.info(b);
 				VRcjoinarray.query = b;
+// <<<<<<< feature/fix_concat_in_func
+				if(a.equals(" ") || a.equals("") || a.equals("\r")){
+					
+				}else{
 
-				ANTLRInputStream input_a = new ANTLRInputStream(a);
-				prefixLexer lexer_a = new prefixLexer(input_a);
-				CommonTokenStream tokens_a = new CommonTokenStream(lexer_a);
-				if (tokens_a.getNumberOfOnChannelTokens() > 1) {
-					// If the token_a has EOF + something except for comments, parse it.
+					ANTLRInputStream input_a = new ANTLRInputStream(a);
+					prefixLexer lexer_a = new prefixLexer(input_a);
+					CommonTokenStream tokens_a = new CommonTokenStream(lexer_a);
+
+// =======
+
+// 				ANTLRInputStream input_a = new ANTLRInputStream(a);
+// 				prefixLexer lexer_a = new prefixLexer(input_a);
+// 				CommonTokenStream tokens_a = new CommonTokenStream(lexer_a);
+// 				if (tokens_a.getNumberOfOnChannelTokens() > 1) {
+// 					// If the token_a has EOF + something except for comments, parse it.
+// >>>>>>> develop
 					prefixParser parser_a = new prefixParser(tokens_a);
 					ParseTree tree_a = parser_a.prefix(); // begin parsing at rule query
 					List_tree_a = TreeConst.createSSQLParseTree(tree_a, parser_a);

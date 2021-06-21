@@ -238,6 +238,18 @@ public class queryBaseListener implements queryListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
+	@Override public void enterSqlprocess(queryParser.SqlprocessContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitSqlprocess(queryParser.SqlprocessContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
 	@Override public void enterAggregate(queryParser.AggregateContext ctx) { }
 	/**
 	 * {@inheritDoc}
