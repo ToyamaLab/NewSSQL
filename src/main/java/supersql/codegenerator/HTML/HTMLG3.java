@@ -88,6 +88,7 @@ public class HTMLG3 extends Grouper {
 		StringBuffer parentheader2 = html_env2.header;
 		StringBuffer parentfooter2 = html_env2.footer;
 		Log.out("------- G3 -------");
+		
 
 		html_env.css = new StringBuffer();
 		html_env.header = new StringBuffer();
@@ -132,6 +133,7 @@ public class HTMLG3 extends Grouper {
 //						"//-->" +
 //						"</script>\n"
 						);
+				html_env.code.append(HTMLEnv.getNewTableBorderDIV_end_C3G3());
 				html_env.code.append("</DIV>\n\n");
 				foreachContents.append(html_env.code);
 			}
@@ -196,7 +198,7 @@ public class HTMLG3 extends Grouper {
 //						pw.close();
 //					}
 					html_env.header = new StringBuffer();
-					Jscss.process();	//masato 20141231
+					//Jscss.process();	//masato 20141231
 					html_env.footer = new StringBuffer();
 //					html_env2.header = new StringBuffer();
 //					html_env2.footer = new StringBuffer();
@@ -245,6 +247,8 @@ public class HTMLG3 extends Grouper {
 				e.printStackTrace();
 				GlobalEnv.addErr("Error[HTMLG3]: File IO Error in HTMLG3");
 			}
+		} else {
+			Jscss.process();	//foreach1
 		}
 
 		html_env.fileName = parentfile;

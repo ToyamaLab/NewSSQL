@@ -23,6 +23,10 @@ import java.util.Date;
 import java.util.Hashtable;
 
 import org.antlr.v4.parse.ANTLRParser.wildcard_return;
+import org.antlr.v4.runtime.CommonToken;
+
+import com.ibm.db2.jcc.a.a;
+import com.ibm.db2.jcc.sqlj.m;
 
 import supersql.codegenerator.Attribute;
 import supersql.codegenerator.CodeGenerator;
@@ -1443,27 +1447,77 @@ public class HTMLFunction extends Function implements Serializable{
 		htmlEnv2.code.append("<VALUE type=\"form\">" + form + "</VALUE>");
 		return;
 	}
-
-	private String Func_line() {
-		String statement = "\n<hr";
-		try{
-			//size
-			FuncArg fa1 = (FuncArg) this.Args.get(0);
-			statement += " size=\""+fa1.getStr()+"\"";
-			//color
-			FuncArg fa2 = (FuncArg) this.Args.get(1);
-			if(!fa2.getStr().equals(""))
-				statement += " color=\""+fa2.getStr()+"\"";
-			else
-				statement += " color=\"black\"";
-		}catch(Exception e){
-			statement += " color=\"black\"";
+	
+	// hline(), vline()
+	private String Func_hline() {
+		String size="1", color="black", width="100%", margin="";		//default: 引数なしの場合
+		size = getArg(0, size);
+		color = getArg(1, color);
+		
+		// width
+		if (isArgEmpty(2) && decos.containsKey("width")) {
+			String deco_width = decos.getStr("width").replace("\"", "").trim();
+			if (!deco_width.equals("")) width = deco_width;	//nullの場合はdefaultを使用
+		} else {
+			width = getArg(2, width);	//引数と装飾子の両方に指定があった場合は引数優先
 		}
-		statement += ">\n";
+		if (GlobalEnv.isNumber(width)) width += "px";
+		// margin 上下の余白
+		if (!isArgEmpty(3)) {
+			margin = getArg(3, margin);
+			if (!margin.equals("")) {
+				if (GlobalEnv.isNumber(margin)) margin += "px";
+				margin = " margin:"+margin+" 0;";
+			}
+		}
 
-		//    	// 各引数毎に処理した結果をHTMLに書きこむ
-		htmlEnv.code.append(statement);
-		return statement;
+		String stmt = "\n<div style=\"border-top:"+size+"px solid "+color+"; width:"+width+";"+margin+"\""+getClassStr()+"></div>";
+		//String stmt = "\n<hr size=\""+size+"px\" color=\""+color+"\" width=\""+width+"\""+getClassStr()+"></div>";
+		htmlEnv.code.append(stmt);
+		return stmt;
+	}
+	private String Func_vline() {
+		String size="1", color="black", height=(!HTMLEnv.isInsideTable()? "100vh" : "100%"), margin="";	//[重要] default: 引数なしの場合   height: tableの外側100vh, 内側100%
+		size = getArg(0, size);
+		color = getArg(1, color);
+		
+		// height
+		if (isArgEmpty(2) && decos.containsKey("height")) {
+			String deco_height = decos.getStr("height").replace("\"", "").trim();
+			if (!deco_height.equals("")) height = deco_height;	//nullの場合はdefaultを使用
+		} else {
+			height = getArg(2, height);	//引数と装飾子の両方に指定があった場合は引数優先
+		}
+		if (GlobalEnv.isNumber(height)) height += "px";
+		// margin 左右の余白
+		if (!isArgEmpty(3)) {
+			margin = getArg(3, margin);
+			if (!margin.equals("")) {
+				if (GlobalEnv.isNumber(margin)) margin += "px";
+				margin = " margin:0 "+margin+";";
+			}
+		}
+		
+		String stmt = "\n<div style=\"border-left:"+size+"px solid "+color+"; height:"+height+";"+margin+"\""+getClassStr()+"></div>";
+		htmlEnv.code.append(stmt);
+		return stmt;
+	}
+	
+	// hspace(), vspace()
+	private String Func_hspace() {
+		return getSpaceStmt("width");
+	}
+	private String Func_vspace() {
+		return getSpaceStmt("height");
+	}
+	private String getSpaceStmt(String type) {
+		String stmt = "\n<div style=\""+type+":";
+		String arg1 = getArg(0, "10px");	//default(引数なしの場合): 10px
+		if (GlobalEnv.isNumber(arg1)) arg1 += "px";
+		stmt += arg1+";\""+getClassStr()+"></div>\n";
+		
+		htmlEnv.code.append(stmt);
+		return stmt;
 	}
 
 	// added by goto 20130308 start "anchor" anchor(), a(), url(), mail()
@@ -1982,11 +2036,18 @@ public class HTMLFunction extends Function implements Serializable{
 			Func_hidden();
 		} else if (FuncName.equalsIgnoreCase("session")) {
 			// Func_session(); not use
-		} else if(FuncName.equalsIgnoreCase("line")){
-			Func_line();
-		} else if(FuncName.equalsIgnoreCase("testconcat")){
-			Log.out("testconcat:" + getArg(0).getStr());
-		}
+		} else if(FuncName.equalsIgnoreCase("line") || FuncName.equalsIgnoreCase("hline") || FuncName.equalsIgnoreCase("hl") || FuncName.equalsIgnoreCase("l")){
+			Func_hline();
+		} else if(FuncName.equalsIgnoreCase("vline") || FuncName.equalsIgnoreCase("vl")){
+			Func_vline();
+		} else if(FuncName.equalsIgnoreCase("space") || FuncName.equalsIgnoreCase("hspace") || FuncName.equalsIgnoreCase("hs") || FuncName.equalsIgnoreCase("s")){
+			Func_hspace();
+		} else if(FuncName.equalsIgnoreCase("vspace") || FuncName.equalsIgnoreCase("vs")){
+			Func_vspace();
+		} 
+//		else if(FuncName.equalsIgnoreCase("testconcat")){
+//			Log.out("testconcat:" + getArg(0).getStr());
+//		}
 		// tk start//////////////////////////////////
 		else if (FuncName.equalsIgnoreCase("embed")) {
 			Log.out("[enter embed]");
@@ -2015,4 +2076,34 @@ public class HTMLFunction extends Function implements Serializable{
 		htmlEnv.append_css_def_td(HTMLEnv.getClassID(this), this.decos);
 		return null;
 	}
+	
+	
+	// 引数の個数を返す
+	private int getArgSize() {
+		return this.Args.size();
+	}
+	
+	// i番目の引数の値を返す、引数指定なし(またはnullの)場合はdefaultStrを返す
+	private String getArg(int i, String defaultStr) {
+		try{
+			String arg = ((FuncArg) this.Args.get(i)).getStr().trim();
+			return (!arg.equals(""))? arg : defaultStr;
+		}catch(Exception e){
+			return defaultStr;
+		}
+	}
+	
+	// i番目の引数が空(null, '', ' 'など)かどうかを返す
+	private boolean isArgEmpty(int i) {
+		if (getArgSize()>i) 
+			return ((FuncArg) this.Args.get(i)).getStr().isEmpty();
+		else
+			return true;
+	}
+	
+	private String getClassStr() {
+		return  " class=\"TFE"+this.getId()+"\"";
+	}
+	
+	// TODO? 装飾子の値を返す、装飾子指定なしの場合にdefaultStrが指定されていた場合はdefaultStrを返す
 }

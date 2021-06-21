@@ -530,13 +530,13 @@ public class HTMLG2 extends Grouper implements Serializable {
 					}
 					HTMLDecoration.ends.get(0).append("</TR></TABLE>\n");
 				}
-				HTMLDecoration.ends.get(0).append(HTMLEnv.getNewTableBorderDIV_end());
+				HTMLDecoration.ends.get(0).append(HTMLEnv.getNewTableBorderDIV_end(this.getSymbol()));
 			} else {
 				if (flag) {
 					html_env.code.append("</TABLE>\n");
 				}
 				html_env.code.append("</TR></TABLE>\n");
-				html_env.code.append(HTMLEnv.getNewTableBorderDIV_end());
+				html_env.code.append(HTMLEnv.getNewTableBorderDIV_end(this.getSymbol()));
 				if (pageFlag) {//taji add
 					html_env.code.append("</div>\n");
 					html_env.code.append("</div>\n");
