@@ -262,6 +262,9 @@ public class HTMLEnv extends LocalEnv implements Serializable{
 		}
 		return "";
 	}
+	public static boolean isInsideTable() {
+		return insideTable;
+	}
 	
 	//old table
 	private static boolean isOldTableBorder = false;
