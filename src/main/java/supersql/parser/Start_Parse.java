@@ -582,8 +582,8 @@ public class Start_Parse {
 //				Log.info(a);
 				Log.info(b);
 				VRcjoinarray.query = b;
-
 				if(a.equals(" ") || a.equals("") || a.equals("\r")){
+					
 				}else{
 
 					ANTLRInputStream input_a = new ANTLRInputStream(a);

@@ -46,6 +46,7 @@ public class AttributeItem implements Serializable{
 		UseTables = new ExtHashSet();
 		StringTokenizer st1 = new StringTokenizer(str, ".");
 		// 'で囲われてたらそれは定数
+		Log.out("str in AttributeItem: " + str);
 		if (str.startsWith("'") && str.endsWith("'")) {
 			isConst = true;
 			UseAtts.add(str);

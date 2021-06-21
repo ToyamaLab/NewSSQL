@@ -1,10 +1,11 @@
-// Generated from query.g4 by ANTLR 4.8
+// Generated from query.g4 by ANTLR 4.5
 
 package supersql.parser;
 
 import java.util.*;
 import java.io.*;
 
+import org.antlr.v4.runtime.misc.NotNull;
 import org.antlr.v4.runtime.tree.ParseTreeListener;
 
 /**
@@ -192,6 +193,16 @@ public interface queryListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitSqlfunc(queryParser.SqlfuncContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link queryParser#sqlprocess}.
+	 * @param ctx the parse tree
+	 */
+	void enterSqlprocess(queryParser.SqlprocessContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link queryParser#sqlprocess}.
+	 * @param ctx the parse tree
+	 */
+	void exitSqlprocess(queryParser.SqlprocessContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link queryParser#aggregate}.
 	 * @param ctx the parse tree

@@ -535,7 +535,7 @@ public class CodeGenerator {
 					att1.add("ggplot_att");
 					att2.add("operand");
 					att2.add(new ExtList());
-					
+					//added by li 20210615 for sorting
 					if(!sort_flag&&!tfe_tree.getExtList(1, 0, 1, 4).get(0).equals("sorting")) {
 						att2.getExtList(1).add(tfe_tree.getExtList(1, 0, 1, 4));
 					}else if(!sort_flag&&tfe_tree.getExtList(1, 0, 1, 4).get(0).equals("sorting")) {
@@ -546,12 +546,12 @@ public class CodeGenerator {
 					}else if(sort_flag&&tfe_tree.getExtList(1, 0, 1, 4).get(0).equals("sorting")){
 						Log.err("Double sort mark in ggplot!!");
 					}
-					//added by li 20210615 for sorting
+					
 					
 					att2.add("ggplot_att");
 					Log.out("In ggplot att1: " + att1);
 					Log.out("att2: " + att2);
-
+					//
 //					}
 
 
@@ -624,6 +624,27 @@ public class CodeGenerator {
 						out_sch = func_read((ExtList)((ExtList)((ExtList)tfe_tree.get(1)).get(0)).get(1));
 						//out_sch = func_read((ExtList)((ExtList)((ExtList)tfe_tree.get(1)).get(0)).get(1)).fnc;
 					}
+				}else if( ((ExtList)((ExtList)tfe_tree.get(1)).get(0)).get(0).toString().equals("sqlprocess") ) {
+					ExtList base = ((ExtList) ((ExtList) tfe_tree.get(1)).get(0)); 
+					int p_size = ((ExtList)base.get(1)).size();
+					String sql = ((ExtList)base.get(1)).get(2).toString();
+					
+					Log.out("Is a sql process!");
+					 
+					
+					Log.out("base:" + base.get(1));
+					Log.out("p_size:" + p_size);
+					for(int i = 3; i < p_size -1; i++) {
+						sql += ((ExtList)base.get(1)).get(i);
+						Log.out("sql: " + sql);
+					}
+					Attribute func = makeAttribute(sql);
+                 	out_sch = func;
+                 	
+                 	//for(int i = 0; i < argArith.unnest().size(); i++) {
+                 		
+                 		
+                 	//}
 				}
 				else if( ((ExtList)((ExtList)tfe_tree.get(1)).get(0)).get(0).toString().equals("sqlfunc") ){
 					int sqlfunc_arg_size = 0;

@@ -417,13 +417,20 @@ public class QueryBuffer {
             bufGroupClause.append(" GROUP BY ");
             boolean existAggregateAtt = false;
             int j = 0;
+
             for (Object attnum : this.schf) {
                 if (!this.aggregate_attnum_list.contains(attnum) && !atts.get((int)attnum).isConst) {
                     String attribute = atts.get((int) attnum).getSQLimage();
+                    //changed by li 20210621 for line()
+                    boolean isNumeric =  attribute.matches("[+-]?\\d*(\\.\\d+)?");
+                    
                     //if (!attribute.startsWith("'") || !attribute.endsWith("'")) {
                 	if ((!attribute.startsWith("'") || !attribute.endsWith("'")) &&
-                		(!attribute.startsWith("N'") || !attribute.endsWith("'"))) {
+                		(!attribute.startsWith("N'") || !attribute.endsWith("'")) 
+                		&& !isNumeric) {
+                	//
                 	    existAggregateAtt = true;
+                	    Log.out("Attribute in group by: " + attribute + ", is Numeric: " + isNumeric);
                         if (j == 0) {
                             bufGroupClause.append(attribute);
                             j++;

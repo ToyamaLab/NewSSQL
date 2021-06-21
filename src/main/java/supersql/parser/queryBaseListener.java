@@ -1,4 +1,4 @@
-// Generated from query.g4 by ANTLR 4.8
+// Generated from query.g4 by ANTLR 4.5
 
 package supersql.parser;
 
@@ -7,6 +7,7 @@ import java.io.*;
 
 
 import org.antlr.v4.runtime.ParserRuleContext;
+import org.antlr.v4.runtime.misc.NotNull;
 import org.antlr.v4.runtime.tree.ErrorNode;
 import org.antlr.v4.runtime.tree.TerminalNode;
 
@@ -232,6 +233,18 @@ public class queryBaseListener implements queryListener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitSqlfunc(queryParser.SqlfuncContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterSqlprocess(queryParser.SqlprocessContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitSqlprocess(queryParser.SqlprocessContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
