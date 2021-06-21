@@ -98,7 +98,7 @@ public class ExtList<T> extends ArrayList<T>{
 				}
 			}
 		}
-		Log.err("Index is wrong.");
+		Log.out("Index is wrong.");
 		return null;
 	}
 

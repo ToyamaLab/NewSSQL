@@ -108,6 +108,7 @@ public class HTMLC3 extends Connector {
 	
 				//added by goto 20161019 for new foreach
 				htmlEnv.code.insert(0, "<DIV id=\""+ID+"_"+foreachID+"\" style=\"display:none\">\n");
+				htmlEnv.code.append(HTMLEnv.getNewTableBorderDIV_end_C3G3());
 				htmlEnv.code.append("</DIV>\n\n");
 				LinkForeach.C3contents.append(htmlEnv.code);
 

@@ -99,7 +99,7 @@ public class HTMLEnv extends LocalEnv implements Serializable{
 		if (decos.containsKey("debug")) {		 //20210416
 			String d = decos.getStr("debug").toLowerCase().trim();
 			String[] ds = d.split("\\s*,\\s*");
-			System.out.println("debug = "+Arrays.toString(ds));
+			//System.out.println("debug = "+Arrays.toString(ds));
 			if (Arrays.asList(ds).contains("on")) {
 //				if (!isUseOldTable) {	//new table
 //					System.out.println("new table");
@@ -157,13 +157,16 @@ public class HTMLEnv extends LocalEnv implements Serializable{
 	
 	// new table
 	public static boolean isNewTableBorder = false;		//20210416  new table border	//TODO 実行引数や装飾子でfalseにする処理
-//	public static boolean isNewTableBorder = true;		//20210416  new table border	//TODO 実行引数や装飾子でfalseにする処理
 	private static boolean insideTable = false;			//20210416  new table border
+	private static boolean newTableBorderDIV_startFlag = false;	//foreach TFE全体@table でdivが閉じられない問題対策用    TODO 他の方法の検討 
 	private static int newTableBorderNum = 10001;
 	public static String getNewTableBorderDIV_start() {
-		if (!insideTable && isNewTableBorder) 
+		if (!insideTable && isNewTableBorder) {
 //		if (!insideTable && (isNewTableBorder || isOldTableBorder)) 
+//			System.out.println("getNewTableBorderDIV_start");
+			newTableBorderDIV_startFlag = true;
 			return "<div id=\""+getCurrentNewTableBorderID()+"\">";
+		}
 		return "";
 	}
 	public static String getNewTableBorderStyle() {				//20210416  new table border
@@ -180,11 +183,28 @@ public class HTMLEnv extends LocalEnv implements Serializable{
 		}
 		return "";
 	}
-	public static String getNewTableBorderDIV_end() {
-		if (!insideTable && isNewTableBorder) 
+	public static String getNewTableBorderDIV_end(String symbol) {
+	//public static String getNewTableBorderDIV_end() {
+		//System.out.println("!! "+!insideTable +" "+ isNewTableBorder);
+		if (!insideTable && isNewTableBorder) {
+		//if (insideTable && isNewTableBorder) {
+//		if (symbol.equals(new_table_start_symbol) && currnt_nestDepth == new_table_start_nestDepth && isNewTableBorder) {
 //		if (!insideTable && (isNewTableBorder || isOldTableBorder)) 
-			return "</div>";
+//			System.out.println("getNewTableBorderDIV_end: "+symbol);
+			newTableBorderDIV_startFlag = false;
+			return getNewTableBorderDIV_endStr();
+		}
 		return "";
+	}
+	public static String getNewTableBorderDIV_end_C3G3() {	//C3(%), G3(foreach)から呼ばれる
+		if (newTableBorderDIV_startFlag) {
+			newTableBorderDIV_startFlag = false;
+			return getNewTableBorderDIV_endStr();
+		}
+		return "";
+	}
+	public static String getNewTableBorderDIV_endStr() {
+		return "</div>";
 	}
 //	public static String getNewTableBorderTableStyle(DecorateList decos) {
 //		String s = "";
@@ -261,6 +281,9 @@ public class HTMLEnv extends LocalEnv implements Serializable{
 //			}
 		}
 		return "";
+	}
+	public static boolean isInsideTable() {
+		return insideTable;
 	}
 	
 	//old table
@@ -926,24 +949,25 @@ public class HTMLEnv extends LocalEnv implements Serializable{
 					css = css.substring(css.indexOf(",")+1);
 				}
 			}
-		} else if (cssFile.length() == 0) {
-			if (GlobalEnv.isServlet()) {
-				cssFile.append("<link rel=\"stylesheet\" type=\"text/css\" href=\""
-						+ GlobalEnv.getFileDirectory() + "/default.css \">\n");
-			} else {
-				if (Utils.getOs().contains("Windows")) {
-					cssFile.append("<link rel=\"stylesheet\" type=\"text/css\" href=\"default.css\">\n");
-				} else {
-					// itc
-					if (GlobalEnv.isOpt())
-						//cssFile.append("<link rel=\"stylesheet\" type=\"text/css\" href=\"http://www.db.ics.keio.ac.jp/ssqlcss/default_opt.css\">\n");
-						cssFile.append("<link rel=\"stylesheet\" type=\"text/css\" href=\"jscss/default_opt.css\">\n");			//TODO jscss以下へ
-					else
-						//cssFile.append("<link rel=\"stylesheet\" type=\"text/css\" href=\"http://www.db.ics.keio.ac.jp/ssqlcss/default.css\">\n");
-						cssFile.append("<link rel=\"stylesheet\" type=\"text/css\" href=\"jscss/default.css\">\n");				//TODO jscss以下へ
-				}
-			}
-		}
+		} 
+//		else if (cssFile.length() == 0) {
+//			if (GlobalEnv.isServlet()) {
+//				cssFile.append("<link rel=\"stylesheet\" type=\"text/css\" href=\""
+//						+ GlobalEnv.getFileDirectory() + "/default.css \">\n");
+//			} else {
+//				if (Utils.getOs().contains("Windows")) {
+//					cssFile.append("<link rel=\"stylesheet\" type=\"text/css\" href=\"default.css\">\n");
+//				} else {
+//					// itc
+//					if (GlobalEnv.isOpt())
+//						//cssFile.append("<link rel=\"stylesheet\" type=\"text/css\" href=\"http://www.db.ics.keio.ac.jp/ssqlcss/default_opt.css\">\n");
+//						cssFile.append("<link rel=\"stylesheet\" type=\"text/css\" href=\"jscss/default_opt.css\">\n");			//TODO jscss以下へ
+//					else
+//						//cssFile.append("<link rel=\"stylesheet\" type=\"text/css\" href=\"http://www.db.ics.keio.ac.jp/ssqlcss/default.css\">\n");
+//						cssFile.append("<link rel=\"stylesheet\" type=\"text/css\" href=\"jscss/default.css\">\n");				//TODO jscss以下へ
+//				}
+//			}
+//		}
 
 		//added by goto 20130703  ex) jsfile=" a.js; b.js "
 		if (decos.containsKey("jsfile")) {

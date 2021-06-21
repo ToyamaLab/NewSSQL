@@ -123,13 +123,14 @@ public class LinkForeach {
 					//"}\n" +
 					"});\n";
 		}
-		r += "function get_id(){\n" +  //added by li 20201207
+		r += 
+				"function get_id(){\n" +  //added by li 20201207
 
 				"     $(\"div\").each(function() {\n" + 
 				"          var url = location.href ;\n" + 
 				"          var foreach_id = $(this).attr('id') ;\n" + 
 				"          if(foreach_id != 'ssql_body_contents'){\n" + 
-				"               var id = foreach_id.substr(\"ssql_foreach_\".length);\n" + 
+				"               var id = foreach_id.substr(\""+ID1+"_\".length);\n" + 
 				"               //console.log( url );\n" + 
 				"               document.body.innerHTML += \"<a href=\" + url + \"?att=\" + id + \">\" + foreach_id + \"<a><br>\";\n" + 
 				"          }\n" + 

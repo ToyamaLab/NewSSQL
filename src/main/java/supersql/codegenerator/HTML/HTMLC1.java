@@ -325,10 +325,10 @@ public class HTMLC1 extends Connector implements Serializable {
 				} else {
 					HTMLDecoration.ends.get(0).append("</TR></TABLE>\n");
 				}
-				HTMLDecoration.ends.get(0).append(HTMLEnv.getNewTableBorderDIV_end());
+				HTMLDecoration.ends.get(0).append(HTMLEnv.getNewTableBorderDIV_end(this.getSymbol()));
 			} else {
 				htmlEnv.code.append("</TR></TABLE>\n");
-				htmlEnv.code.append(HTMLEnv.getNewTableBorderDIV_end());
+				htmlEnv.code.append(HTMLEnv.getNewTableBorderDIV_end(this.getSymbol()));
 			}
 			HTMLEnv.end_table(this.getSymbol());
 

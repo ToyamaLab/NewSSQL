@@ -397,7 +397,7 @@ public class HTMLG1 extends Grouper implements Serializable {
 			if (html_env.decorationStartFlag.size() > 0) {
 				if (html_env.decorationStartFlag.get(0)) {
 					HTMLDecoration.ends.get(0).append("</TR></TABLE>\n");
-					HTMLDecoration.ends.get(0).append(HTMLEnv.getNewTableBorderDIV_end());
+					HTMLDecoration.ends.get(0).append(HTMLEnv.getNewTableBorderDIV_end(this.getSymbol()));
 					if (pageFlag) {
 						HTMLDecoration.ends.get(0).append("</div>\n");
 						HTMLDecoration.ends.get(0).append("</div>\n");
@@ -406,7 +406,7 @@ public class HTMLG1 extends Grouper implements Serializable {
 					html_env.decorationStartFlag.set(0, false);
 				} else {
 					HTMLDecoration.ends.get(0).append("</TR></TABLE>\n");
-					HTMLDecoration.ends.get(0).append(HTMLEnv.getNewTableBorderDIV_end());
+					HTMLDecoration.ends.get(0).append(HTMLEnv.getNewTableBorderDIV_end(this.getSymbol()));
 					if (pageFlag) {
 						HTMLDecoration.ends.get(0).append("</div>\n");
 						HTMLDecoration.ends.get(0).append("</div>\n");
@@ -415,7 +415,7 @@ public class HTMLG1 extends Grouper implements Serializable {
 				}
 			} else {
 				html_env.code.append("</TR></TABLE>\n");
-				html_env.code.append(HTMLEnv.getNewTableBorderDIV_end());
+				html_env.code.append(HTMLEnv.getNewTableBorderDIV_end(this.getSymbol()));
 				if (pageFlag) {
 					html_env.code.append("</div>\n");
 					html_env.code.append("</div>\n");
