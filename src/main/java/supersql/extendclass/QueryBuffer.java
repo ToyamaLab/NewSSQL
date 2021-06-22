@@ -417,20 +417,39 @@ public class QueryBuffer {
             bufGroupClause.append(" GROUP BY ");
             boolean existAggregateAtt = false;
             int j = 0;
-
+            HashSet<String> usedTables = new HashSet<>();
+          
+            
+           
+            
             for (Object attnum : this.schf) {
                 if (!this.aggregate_attnum_list.contains(attnum) && !atts.get((int)attnum).isConst) {
                     String attribute = atts.get((int) attnum).getSQLimage();
                     //changed by li 20210621 for line()
-                    boolean isNumeric =  attribute.matches("[+-]?\\d*(\\.\\d+)?");
+                    //boolean isNumeric =  attribute.matches("[+-]?\\d*(\\.\\d+)?");
+                    for(int index = 0; index < this.schf.size(); index++){
+                        int attnum_tmp = Integer.parseInt(this.schf.getExtListString(index));
+                        AttributeItem attribute_tmp = (AttributeItem)atts.get(attnum);
+                        usedTables.addAll(attribute_tmp.getUseTables());
+                    }
+                    Log.out("useTables: " + usedTables);
+                   
+                    Log.out("attribute: " + attribute);
+                    boolean is_Table = false;
                     
+                    for(String s : usedTables) {
+                    	if(attribute.startsWith(s)) {
+                    		is_Table = true;
+                    	}
+                    }
                     //if (!attribute.startsWith("'") || !attribute.endsWith("'")) {
                 	if ((!attribute.startsWith("'") || !attribute.endsWith("'")) &&
-                		(!attribute.startsWith("N'") || !attribute.endsWith("'")) 
-                		&& !isNumeric) {
+                		(!attribute.startsWith("N'") || !attribute.endsWith("'"))
+                		&& is_Table
+                		) {
                 	//
                 	    existAggregateAtt = true;
-                	    Log.out("Attribute in group by: " + attribute + ", is Numeric: " + isNumeric);
+                	    //Log.out("Attribute in group by: " + attribute + ", is Numeric: " + isNumeric);
                         if (j == 0) {
                             bufGroupClause.append(attribute);
                             j++;

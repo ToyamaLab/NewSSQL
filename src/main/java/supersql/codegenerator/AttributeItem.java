@@ -47,23 +47,53 @@ public class AttributeItem implements Serializable{
 		StringTokenizer st1 = new StringTokenizer(str, ".");
 		// 'で囲われてたらそれは定数
 		Log.out("str in AttributeItem: " + str);
+		
 		if (str.startsWith("'") && str.endsWith("'")) {
 			isConst = true;
 			UseAtts.add(str);
 			//Log.err("Break 定数 str: " + str);
 		} else if (CodeGenerator.sqlfunc_flag > 0) {
-			Log.out("Break CodeGenerator.sqlfunc_flag > 0 str: " + str);
+			Log.out("CodeGenerator.sqlfunc_flag > 0 str: " + str);
 			// sql関数だったら
 			UseAtts.add(str);
 			//Log.out("useTablesInSQLFunc: " + CodeGenerator.useTablesInSQLFunc);
 			UseTables.addAll(CodeGenerator.useTablesInSQLFunc);
 		//} else if (st1.countTokens() == 2) {
-		//Changed by li 20210610
-		} else if (st1.countTokens() == 2 || st1.countTokens() == 3) {
+		//added by li 20210621 for sqlprocess
+		}else if(str.startsWith("&")) {
+			if(GlobalEnv.getDriverName().equals("sqlserver") && str.contains("||")) {
+				str = str.replace("||", "+");
+			}
+			if(str.contains("#")) {
+				String[] table_tmp = str.split("#");
+				//ArrayList<String> table_list = new ArrayList();
+				for(int i = 1; i < table_tmp.length; i += 2) {
+					String str_tmp = str.replace("#","");
+					String attribute = str_tmp.substring(2, str_tmp.length()-1);
+					
+					Log.out("table: " + table_tmp[i]);
+					Log.out("attribute: " + attribute);
+					UseTables.add(table_tmp[i]);
+					UseAtts.add(attribute);
+					Image = attribute;
+				}	
+			}else {
+				String table = "x";
+				String attribute = str.substring(2, str.length()-1);
+				Log.out("table: " + table);
+				Log.out("attribute: " + attribute);
+				UseTables.add(table);
+				UseAtts.add(attribute);
+				Image = attribute;
+			}	
+		} 
+		//changed by li 20210610 for ggplot
+		else if ((st1.countTokens() == 2 || st1.countTokens() == 3) &&!str.startsWith("&")) {
 		    //while(st1.hasMoreTokens()) {
 		      //  Log.err("break st1 token:" + st1.nextToken());
 		      //}
 			//st1 is table.attribute
+			
 			String table = st1.nextToken();
 			String attribute = st1.nextToken();
 			boolean onlyStartAndEnd = true;
@@ -81,7 +111,15 @@ public class AttributeItem implements Serializable{
 				// "e.id"みたいな場合
 				str = str.substring(1, str.length() - 1);
 				UseAtts.add(str);
-			} else {
+				//added by li 20210621 to fix like (e.salary / 10)
+			} else if(str.startsWith("(")) {
+				str = str.substring(1, str.length() - 1);
+				table = table.substring(1, table.length());
+				UseTables.add(table);
+				UseAtts.add(str);
+			}
+			//
+			else{
 				// その他
 				UseTables.add(table);
 				UseAtts.add(attribute);

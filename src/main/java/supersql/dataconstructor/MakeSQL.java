@@ -370,6 +370,7 @@ public class MakeSQL {
 			qb.treeNum = treenum;
 			qb.sep_sch = tmp_sep;
 			HashMap<Integer, AttributeItem> att_tmp = new HashMap();
+			
 			ExtList att_list = new ExtList();
 			//make att_tmp and att_list.
 			//att_tmp is a set of attribute number and attribute name.
@@ -379,6 +380,7 @@ public class MakeSQL {
 				att_list.add(((AttributeItem)atts.get(attnum)).getSQLimage());
 			}
 			//set att_tmp to qb
+			
 			qb.setAtts(att_tmp);
 			HashSet tg = new HashSet();
 			//make tg. tg is a list of using table aliases.
@@ -483,6 +485,7 @@ public class MakeSQL {
 			qb.sep_sch = sep_sch_remain;
 			qb.treeNum = treenum;
 			HashMap<Integer, AttributeItem> att_set = new HashMap<>();
+			
 			for (int i = 0; i < sep_sch_remain.unnest().size(); i++) {
 				int attnum = (int)sep_sch_remain.unnest().get(i);
 				AttributeItem attname = (AttributeItem) atts.get(attnum);
