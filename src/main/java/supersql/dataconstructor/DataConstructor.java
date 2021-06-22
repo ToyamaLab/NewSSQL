@@ -1152,7 +1152,6 @@ public class DataConstructor {
 				if (result.size() == 1 && result.get(0) instanceof ExtList) {
 					if (result.getExtList(0).size() == 1 && !(result.getExtList(0).get(0) instanceof ExtList)) {
 						qb = new ArrayList<>(msql.makeMultipleSQL(result.getExtList(0)));
-						
 						if (singleValue) {
 							ExtList buf = new ExtList();
 							buf.add(sep_sch.get(i));
@@ -1169,7 +1168,9 @@ public class DataConstructor {
 					ExtList tmp = new ExtList();
 					ExtList n = result.getExtList(j);
 					tmp.add(n);
+
 					qb = new ArrayList<>(msql.makeMultipleSQL(tmp));
+					
 					for (QueryBuffer q : qb) {
 						q.forestNum = i;
 						q.treeNum = i;

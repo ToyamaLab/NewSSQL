@@ -627,14 +627,14 @@ public class CodeGenerator {
 				}else if( ((ExtList)((ExtList)tfe_tree.get(1)).get(0)).get(0).toString().equals("sqlprocess") ) {
 					ExtList base = ((ExtList) ((ExtList) tfe_tree.get(1)).get(0)); 
 					int p_size = ((ExtList)base.get(1)).size();
-					String sql = ((ExtList)base.get(1)).get(2).toString();
+					String sql = "&";
 					
 					Log.out("Is a sql process!");
 					 
 					
 					Log.out("base:" + base.get(1));
 					Log.out("p_size:" + p_size);
-					for(int i = 3; i < p_size -1; i++) {
+					for(int i = 1; i < p_size ; i++) {
 						sql += ((ExtList)base.get(1)).get(i);
 						Log.out("sql: " + sql);
 					}
