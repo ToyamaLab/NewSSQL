@@ -390,18 +390,7 @@ public class VRFunction extends Function {
 					Log.out("break: " + (getArg(1).tfe));
 					Log.out("In text Arg(" + i + ") " + (getArg(i).tfe).countconnectitem());
 				}
-				/*
-				Connector tmp = ((Connector)getArg(1).tfe);
-				Log.out(tmp.tfes.get(0));
-				Log.out(tmp.tfes.get(1));
-				Connector tmp2 = ((Connector)tmp.tfes.get(0));
-				Log.out(tmp2.tfes.get(0));
-				Connector tmp3 = ((Connector)tmp2.tfes.get(0));
-				Log.out(tmp3.tfes.get(0));
-				Log.out(tmp3.tfes.get(1));
-				*/
-				//String contents = tmp3.tfes.get(0).toString() + tmp3.tfes.get(1).toString();
-				//String t_size = tmp.tfes.get(1).toString();
+				
 				
 				String contents = getArg(1).getStr();
 				String t_size = getArg(2).getStr();

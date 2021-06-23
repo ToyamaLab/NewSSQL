@@ -51,7 +51,7 @@ public class AttributeItem implements Serializable{
 		if (str.startsWith("'") && str.endsWith("'")) {
 			isConst = true;
 			UseAtts.add(str);
-			//Log.err("Break 定数 str: " + str);
+			//Log.err("定数 str: " + str);
 		} else if (CodeGenerator.sqlfunc_flag > 0) {
 			Log.out("CodeGenerator.sqlfunc_flag > 0 str: " + str);
 			// sql関数だったら
@@ -93,7 +93,8 @@ public class AttributeItem implements Serializable{
 		      //  Log.err("break st1 token:" + st1.nextToken());
 		      //}
 			//st1 is table.attribute
-			
+			Log.out("str: " + str);
+			boolean isNumeric =  str.matches("[+-]?\\d*(\\.\\d+)?");
 			String table = st1.nextToken();
 			String attribute = st1.nextToken();
 			boolean onlyStartAndEnd = true;
@@ -116,6 +117,10 @@ public class AttributeItem implements Serializable{
 				str = str.substring(1, str.length() - 1);
 				table = table.substring(1, table.length());
 				UseTables.add(table);
+				UseAtts.add(str);
+			//added by li for unity with decimal 20210623
+			}else if(isNumeric) {
+				Log.out("Number is: " + str);
 				UseAtts.add(str);
 			}
 			//
