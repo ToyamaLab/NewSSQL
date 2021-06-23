@@ -1,8 +1,6 @@
 package supersql.codegenerator;
 
 import java.io.Serializable;
-
-
 import org.apache.log4j.net.SyslogAppender;
 import supersql.common.Log;
 import supersql.extendclass.ExtList;

@@ -123,7 +123,6 @@ public class CodeGenerator {
 				unity_dv_flag = true;
 			}
 			factory = new VRFactory();
-			Ehtml.setType(0, 0);
 		}else if(media.toLowerCase().equals("pdf")){
 			factory = new PDFFactory();
 		}else if(media.toLowerCase().equals("php")){	//added by goto 20161104
@@ -261,6 +260,7 @@ public class CodeGenerator {
 	//
 	//		return tmp;
 	//	}
+
 
 	public Hashtable get_attp() {
 		return this.attp;
@@ -405,6 +405,7 @@ public class CodeGenerator {
 		//		}
 		//		Log.info("tfe_tree"+tfe_tree);
 		Asc_Desc ascDesc = new Asc_Desc();
+
 //		Log.info("ExtList:"+tfe_tree.getExtList(new int[]{1, 0}));
 //		Log.info("String:"+tfe_tree.getExtListString(new int[] {1, 0, 0}));
 //		Log.info("tfe_tree:"+tfe_tree);
@@ -482,9 +483,26 @@ public class CodeGenerator {
 						tfe_tree.add(tfe_tree.size(), "true");
 						((ExtList)tfe_tree.get(1)).add(((ExtList)tfe_tree.get(1)).size(), dec_tmp);
 					}
+
+
+					//					Log.info(tfe_tree);
+				}
+				if( ((ExtList)((ExtList)tfe_tree.get(1)).get(0)).get(0).toString().equals("join_string") ){
+					String operand = getText((ExtList)((ExtList)tfe_tree.get(1)).get(0), Start_Parse.ruleNames);
+					builder = new String();
+					Attribute Att = makeAttribute(operand);
+					out_sch = Att;
+				}
+				else if( ((ExtList)((ExtList)tfe_tree.get(1)).get(0)).get(0).toString().equals("attribute") ){
+					//					att = ((ExtList)((ExtList)((ExtList)((ExtList)((ExtList)tfe_tree.get(1)).get(0)).get(1)).get(0)).get(1)).get(0).toString();
+					//					att = att + ((ExtList)tfe_tree.get(1)).get(1).toString();
+					//					if( ((ExtList)((ExtList)((ExtList)((ExtList)((ExtList)tfe_tree.get(1)).get(2)).get(1)).get(0)).get(1)).get(0) instanceof ExtList){
+					//						att = att + ((ExtList)((ExtList)((ExtList)((ExtList)((ExtList)((ExtList)((ExtList)tfe_tree.get(1)).get(2)).get(1)).get(0)).get(1)).get(0)).get(1)).get(0);
+					//					}else{
+					//						att = att + ((ExtList)((ExtList)((ExtList)((ExtList)((ExtList)tfe_tree.get(1)).get(2)).get(1)).get(0)).get(1)).get(0);
+					//					}
+
 //										Log.info(tfe_tree);
-
-
 				}
 
 				if( ((ExtList)((ExtList)tfe_tree.get(1)).get(0)).get(0).toString().equals("join_string") ){
@@ -1473,6 +1491,9 @@ public class CodeGenerator {
 
 		//decos.split(",")
 		ArrayList<String> decoList = splitComma(decos);
+
+//		System.out.println("decoList:::"+decoList);
+
 		ExtList new_list = new ExtList();
 		ExtList med = new ExtList();
 		extList.add("true");
@@ -1522,6 +1543,7 @@ public class CodeGenerator {
 			decos = decos.substring(decos.indexOf("{")+1, decos.lastIndexOf("}"));
 		else
 			return;
+
 		//decos.split(",")
 		ArrayList<String> decoList = splitComma(decos);
 
@@ -1554,8 +1576,6 @@ public class CodeGenerator {
 					Log.out("Value does not exit.");
 				}
 			}
-
-
 			//added by goto 170604 for asc/desc@dynamic
 			if (token.toLowerCase().contains("dynamic")) {
 				Log.out("@ dynamic found @");
