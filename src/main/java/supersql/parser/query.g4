@@ -185,7 +185,7 @@ OPEN_BRACKET
 exp
 CLOSE_BRACKET
 {List<String> groupersList = new ArrayList<>();}
-(grouper_token=(C1|C2|C3|C4|CIRCLE) NUMERIC_LITERAL {groupersList.add($grouper_token.text);})+
+(grouper_token=(C1|C2|C3|C4|CIRCLE) NUMERIC_LITERAL {groupersList.add($grouper_token.	);})+
 grouper_token=(C1|C2|C3|C4|CIRCLE) {groupersList.add($grouper_token.text);}
 {Set<String> groupersSet = new HashSet<>(groupersList); if(groupersList.size() != groupersSet.size()){throw new RuntimeException("Two identical connectors used in composite connector at line " + $grouper_token.line);}}
 */

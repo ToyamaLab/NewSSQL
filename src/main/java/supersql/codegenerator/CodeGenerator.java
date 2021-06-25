@@ -730,10 +730,12 @@ public class CodeGenerator {
                         //引数が0個の時の処理
                         //added by li 20210615
                         	//Log.out("FuncIdx.size() == 0");
+                        	
                         	String sqlfunc = getText(base, Start_Parse.ruleNames);
                         	Attribute func = makeAttribute(sqlfunc);
                         	out_sch = func;
                         }else {
+                        	
     	                    // useTablesInSQLFuncに利用するテーブルを入れておく
     	                    useTablesInSQLFunc.addAll(getUsedtablesInSQLFunc(base));
     	                    Log.out("useTablesInSQLFunc: " + useTablesInSQLFunc);

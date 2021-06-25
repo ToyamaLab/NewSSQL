@@ -48,9 +48,10 @@ public class VRFunction extends Function {
 	private final int IMAGE = 8;
 	private final int POSITION = 9;
 	private final int MOVE = 10;
+	private final int CAMERA = 11;
 	public static TFE att;
 	protected static String updateFile;
-	private static Element[] options = new Element[11];
+	private static Element[] options = new Element[12];
 	public static List att_name;
 	public static java.util.List<Element> filterset = new ArrayList<>();
 	static Boolean argFlag = false;
@@ -101,15 +102,19 @@ public class VRFunction extends Function {
 	public String work(ExtList data_info) {
 		//2017/09/21 tatsu AddFunction
 		this.setDataList(data_info);
+		
+		VRFunctionFlag = true;
+		
 		String FuncName = this.getFuncName().toLowerCase();
 		
 		switch (FuncName) {
-		case "testconcat":
-			try {
-				Log.info("Func test100: " + getArg(0).getStr());
-			} catch (Exception e) {
-				// TODO: handle exception
-			}
+		case "scene":
+			Element scene = vrEnv.xml.createElement("Scene");
+			String scene_name = getArg(0).getStr();
+	
+			scene.setAttribute("name", scene_name);
+			vrEnv.currentNode.appendChild(scene);
+			break;
 		case "asset":
 			try{
 				if (VRAttribute.elearrayXML.size() > VRAttribute.elearraySeq) {
@@ -390,8 +395,6 @@ public class VRFunction extends Function {
 					Log.out("break: " + (getArg(1).tfe));
 					Log.out("In text Arg(" + i + ") " + (getArg(i).tfe).countconnectitem());
 				}
-				
-				
 				String contents = getArg(1).getStr();
 				String t_size = getArg(2).getStr();
 				//String t_size = getArg(sizeArg()-1).getStr();		
@@ -583,7 +586,34 @@ public class VRFunction extends Function {
 			options[HOP] = oldhop;
 
 			break;
+			
+		case "camera":			
+			Element oldcamera = options[CAMERA];
+			String cType = getArg(sizeArg()-1).getStr();
+			Element camera = vrEnv.xml.createElement("camera");
+			
+			camera.setAttribute("type", cType);
+			
+			/*
+			if (getArg(sizeArg()-1).getTFE().decos.containsKey("name")){
+				camera.setAttribute("speed_name", getArg(sizeArg()-1).getTFE().decos.getStr("name"));
+			} else {
+				camera.setAttribute("speed_name", getArg(sizeArg()-1).toString());
+			}
+			if (getArg(sizeArg()-2).getTFE().decos.containsKey("name")){
+				camera.setAttribute("top_name", getArg(sizeArg()-2).getTFE().decos.getStr("name"));
+			} else {
+				camera.setAttribute("top_name", getArg(sizeArg()-2).toString());
+			}
+			*/
+			options[CAMERA] = camera;
+			for (int i = 0; i < sizeArg()-1; i++) {
+				getArg(i).workAtt();
+			}
+			options[CAMERA] = oldcamera;
 
+			break;
+			
 		case "rotate":
 			Element oldrotate = options[ROTATE];
 			String rX = getArg(sizeArg()-3).getStr();
@@ -620,7 +650,7 @@ public class VRFunction extends Function {
 			}
 			options[ROTATE] = oldrotate;
 			break;
-		
+		/*
 		case "scene":
 			//scene(..., destination, ref) or scene(..., destination)
 		try{
@@ -683,7 +713,7 @@ public class VRFunction extends Function {
 		}catch(Exception e){
 			System.err.println("Scene function needs two or three argument");
 		}
-			
+		*/
 		case "image":
 			Element oldImage = options[IMAGE];
 			String imageName = getArg(sizeArg()-1).getStr();
@@ -834,6 +864,66 @@ public class VRFunction extends Function {
 		case "popup":
 			
 			break;
+		
+		//implement by li 20210623 for evn function
+		case "env":
+			Element env = vrEnv.xml.createElement("Environment");
+			String object = getArg(0).getStr();
+			String component = getArg(1).getStr();
+			String attribute = getArg(2).getStr();
+			String env_value = getArg(3).getStr();
+			for(int i = 0; i < sizeArg(); i++) {
+				Log.out("arg of env: " + getArg(i).getStr());
+			}
+			env.setAttribute("object",object);
+			env.setAttribute("component", component);
+			env.setAttribute("attribute", attribute);
+			env.setAttribute("value", env_value);
+			vrEnv.currentNode.appendChild(env);
+			break;
+		//
+		case "annotation":
+			Element anno = vrEnv.xml.createElement("Annotation");
+			String anno_type = getArg(0).getStr();
+			String anno_contents = getArg(1).getStr();
+			for(int i = 0; i < sizeArg(); i++) {
+				Log.out("arg of anno: " + getArg(i).getStr());
+			}
+			anno.setAttribute("type", anno_type);
+			anno.setAttribute("contents", anno_contents);
+			vrEnv.currentNode.appendChild(anno);
+			break;
+		
+		case "chart":
+			Element chart = vrEnv.xml.createElement("Chart");
+			String chart_type = getArg(0).getStr();
+			String data_x = getArg(1).getStr();
+			String data_y = getArg(2).getStr();
+			for(int i = 0; i < sizeArg(); i++) {
+				Log.out("arg of chart: " + getArg(i).getStr());
+			}
+			chart.setAttribute("type", chart_type);
+			chart.setAttribute("data_x", data_x);
+			chart.setAttribute("data_y", data_y);
+			vrEnv.currentNode.appendChild(chart);
+			break;
+		
+		case "random":
+			Element random = vrEnv.xml.createElement("Random");
+			String asset_folder = getArg(0).getStr();
+			String number = getArg(1).getStr();
+			String max_size = getArg(2).getStr();
+			String min_size = getArg(3).getStr();
+			for(int i = 0; i < sizeArg(); i++) {
+				Log.out("arg of random: " + getArg(i).getStr());
+			}
+			random.setAttribute("asset_folder", asset_folder);
+			random.setAttribute("number", number);
+			random.setAttribute("max_size", max_size);
+			random.setAttribute("min_size", min_size);
+			
+			vrEnv.currentNode.appendChild(random);
+			break;			
 			
 		default:
 			break;
