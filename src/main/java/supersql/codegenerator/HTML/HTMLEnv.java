@@ -892,6 +892,7 @@ public class HTMLEnv extends LocalEnv implements Serializable{
 					if (!(decos.get(key).toString().startsWith("\"") && decos.get(key).toString().endsWith("\""))
 							&& !(decos.get(key).toString().startsWith("\'") && decos.get(key).toString().endsWith("\'"))
 							&& !supersql.codegenerator.CodeGenerator.isNumber(decos.get(key).toString())
+							&& !"".equals(decos.get(key).toString())
 							) {
 						decorationProperty.get(0).add(0, key);
 					}

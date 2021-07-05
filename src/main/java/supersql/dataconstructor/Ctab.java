@@ -19,14 +19,14 @@ public class Ctab {
 //		Log.out("top:::"+top);
 //		Log.out("side:::"+side);
 //		Log.out("value:::"+value);
-		//addTag(top, "ctab_head");
+		addTag(top, "ctab_head");
 		addTag(top, "width=100");
 		addTag(top, "height=50");
-		//addTag(side, "ctab_side");
+		addTag(side, "ctab_side");
 		addTag(side, "width=100");
 		addTag(side, "height=50");
 //		addTag(side, "border=0");
-		//addTag(value, "ctab_value");
+		addTag(value, "ctab_value");
 		addTag(value, "width=100");
 		addTag(value, "height=50");
 //		addTag(value, "border=0");

@@ -1,0 +1,4 @@
+GENERATE HTML
+[st.state@{bgcolor=c.name, font-color='blue', width=100, height=1000}],
+FROM store st, color c
+WHERE c.id = 1
