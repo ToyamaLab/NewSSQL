@@ -84,6 +84,10 @@ public class Tasuku extends JFrame {
 
 	int[] nest_cnt2 = new int[64];
 
+	// 編集中のhtmlが入る場所。出力先ディレクトリにすることで、tmp.htmlがSSQL本体の方に作られて、
+	// permission errorになることを回避する
+	static final String tmpFile = GlobalEnv.getOutputDirPath() + "/tmp.html";
+
 	public Tasuku() {
 
 		if (HTMLEnv.css != null)
@@ -169,9 +173,9 @@ public class Tasuku extends JFrame {
 
 					tfe_id_arr.add(10000);
 
-					FileWriter file1 = new FileWriter("tmp.html", true);
+					FileWriter file1 = new FileWriter(tmpFile, true);
 					BufferedWriter pw1 = new BufferedWriter(new BufferedWriter(file1));
-					//FileWriter file2 = new FileWriter("tmp.html", false);
+					//FileWriter file2 = new FileWriter(tmpFile, false);
 					//BufferedWriter pw2 = new BufferedWriter(new BufferedWriter(file2));
 					String tmp = "";
 
@@ -192,7 +196,7 @@ public class Tasuku extends JFrame {
 
 						pw1.close();
 
-						Path sourcePath = Paths.get("tmp.html");
+						Path sourcePath = Paths.get(tmpFile);
 						Path destinationPath = Paths.get(html_file);
 
 						try {
@@ -202,7 +206,7 @@ public class Tasuku extends JFrame {
 							e1.printStackTrace();
 						}
 
-						File newdir = new File("tmp.html");
+						File newdir = new File(tmpFile);
 						newdir.delete();
 					}
 
@@ -2057,7 +2061,7 @@ public class Tasuku extends JFrame {
 
 		if (filename != null) {
 			try {
-				FileWriter file1 = new FileWriter("tmp.html", true);
+				FileWriter file1 = new FileWriter(tmpFile, true);
 				BufferedWriter pw1 = new BufferedWriter(new BufferedWriter(file1));
 
 				try (BufferedReader in = new BufferedReader(new FileReader(new File(html_file)))) {
@@ -2224,7 +2228,7 @@ public class Tasuku extends JFrame {
 					Collections.sort(rrr);
 					//System.out.println(rrr);
 
-					Path sourcePath = Paths.get("tmp.html");
+					Path sourcePath = Paths.get(tmpFile);
 					Path destinationPath = Paths.get(html_file);
 
 					try {
@@ -2233,7 +2237,7 @@ public class Tasuku extends JFrame {
 						e.printStackTrace();
 					}
 
-					File newdir = new File("tmp.html");
+					File newdir = new File(tmpFile);
 					newdir.delete();
 
 				}

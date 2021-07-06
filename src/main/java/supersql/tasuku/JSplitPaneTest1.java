@@ -1810,7 +1810,7 @@ public class JSplitPaneTest1 extends JFrame {
 			in.close();
 
 		} catch (Exception e) {
-			System.out.println(e);
+			e.printStackTrace();
 		}
 
 	}
