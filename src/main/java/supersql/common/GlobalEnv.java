@@ -1092,6 +1092,10 @@ public class GlobalEnv {
 		return false;
 	}
 
+	public static boolean isSSstyle() {
+		return (seek("-ssstyle") != null && seek("-ssstyle").equalsIgnoreCase("on"));
+	}
+
 
 	//added by goto 20141201
 	private static String getCurrentPath(){

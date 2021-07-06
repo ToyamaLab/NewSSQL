@@ -152,28 +152,28 @@ public class FrontEnd {
 			}
 		}
 
-		try {
-			int n = 0;
-			int m = 0;
-			n = GlobalEnv.getfilename().lastIndexOf("/") + 1;
-			m = GlobalEnv.getfilename().lastIndexOf(".ssql") + 5;
-			filename = GlobalEnv.getfilename().substring(n, m);
-			filename = filename.replace(".ssql", ".html");
-			html_file = GlobalEnv.getOutputDirPath() + "/" + filename;
-			Preview_URL = /*"file://" +*/ html_file ;
-			pre_css = HTMLEnv.css.toString();
-
-			ssql = HTMLwrite_ssql_embedded.Html_Embed();
-			Tasuku.Html_tfe_add();
-
-			T_parser.parser(ssql);
-
-			tasuku = new Tasuku();
-
-		}
-		catch (Exception e) {
-			e.printStackTrace();
-			System.exit(-1);
+		if (GlobalEnv.isSSstyle()) {
+			try {
+				int n = 0;
+				int m = 0;
+				n = GlobalEnv.getfilename().lastIndexOf("/") + 1;
+				m = GlobalEnv.getfilename().lastIndexOf(".ssql") + 5;
+				filename = GlobalEnv.getfilename().substring(n, m);
+				filename = filename.replace(".ssql", ".html");
+				html_file = GlobalEnv.getOutputDirPath() + "/" + filename;
+				Preview_URL = /*"file://" +*/ html_file ;
+				pre_css = HTMLEnv.css.toString();
+	
+				ssql = HTMLwrite_ssql_embedded.Html_Embed();
+				Tasuku.Html_tfe_add();
+				T_parser.parser(ssql);
+	
+				tasuku = new Tasuku();
+	
+			} catch (Exception e) {
+				e.printStackTrace();
+				System.exit(-1);
+			}
 		}
 
 		if (GlobalEnv.getErrFlag() != 0 && GlobalEnv.getOnlineFlag() == 0)
