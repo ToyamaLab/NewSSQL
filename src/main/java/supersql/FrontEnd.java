@@ -39,7 +39,7 @@ public class FrontEnd {
 		static Tasuku tasuku;
 
 		public static String ssql = "";
-		static String pre_css;
+		public static String pre_css;
 
 		static JFrame main_frame;
 
@@ -58,8 +58,8 @@ public class FrontEnd {
 
 
 		static String filename;
-		static String html_file;
-		static String Preview_URL;
+		public static String html_file;
+		public static String Preview_URL;
 
 	public static void main(String[] args) {
 		panel_option.setSelected(false);
@@ -172,7 +172,7 @@ public class FrontEnd {
 
 		}
 		catch (Exception e) {
-			System.out.println(e);
+			e.printStackTrace();
 			System.exit(-1);
 		}
 

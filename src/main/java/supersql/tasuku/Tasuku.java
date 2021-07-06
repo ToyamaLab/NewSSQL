@@ -27,6 +27,7 @@ import java.util.TimerTask;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
+import supersql.FrontEnd;
 import supersql.codegenerator.HTML.HTMLEnv;
 import supersql.common.GlobalEnv;
 
@@ -41,7 +42,7 @@ public class Tasuku extends JFrame {
 	static int nest_cnt = 0;
 	JSplitPaneTest1 jsp = new JSplitPaneTest1();
 	static boolean skip_id_flag = false;
-	static String html_file = FrontEnd_Tasuku.html_file;
+	static String html_file = FrontEnd.html_file;
 	static int distance = 0;
 	static String[] query_layout;
 	static String[] query_layout2;
@@ -118,13 +119,13 @@ public class Tasuku extends JFrame {
 			String s = T_parser.ssql_parse.get(i);
 			if (s.equals("!") || s.equals(","))
 				continue;
-			if (FrontEnd_Tasuku.ssql.contains("[" + s + "]"))
+			if (FrontEnd.ssql.contains("[" + s + "]"))
 				nest_cnt2[cnt99]--;
-			else if (FrontEnd_Tasuku.ssql.contains("[ " + s + "]"))
+			else if (FrontEnd.ssql.contains("[ " + s + "]"))
 				nest_cnt2[cnt99]--;
-			else if (FrontEnd_Tasuku.ssql.contains("[" + s + " ]"))
+			else if (FrontEnd.ssql.contains("[" + s + " ]"))
 				nest_cnt2[cnt99]--;
-			else if (FrontEnd_Tasuku.ssql.contains("[ " + s + " ]"))
+			else if (FrontEnd.ssql.contains("[ " + s + " ]"))
 				nest_cnt2[cnt99]--;
 			cnt99++;
 		}
@@ -1224,7 +1225,7 @@ public class Tasuku extends JFrame {
 		Query_layout_add();
 		JSplitPaneTest1.undo_btn.setEnabled(false);
 		JSplitPaneTest1.redo_btn.setEnabled(false);
-		Preview.preview(FrontEnd_Tasuku.Preview_URL);
+		Preview.preview(FrontEnd.Preview_URL);
 		JSplitPaneTest1.main_frame.setLocation(0, JSplitPaneTest1.frame.getHeight() + 50);
 		JSplitPaneTest1.main_frame.setVisible(true);
 		Time_reload();
@@ -1602,7 +1603,7 @@ public class Tasuku extends JFrame {
 				//System.out.println(query_layout2[i]);
 			}
 
-		String ssql2 = FrontEnd_Tasuku.ssql;
+		String ssql2 = FrontEnd.ssql;
 
 		String ssql = "";
 		StringBuilder sb = new StringBuilder(ssql2);
@@ -2052,7 +2053,7 @@ public class Tasuku extends JFrame {
 		m = GlobalEnv.getfilename().lastIndexOf(".ssql") + 5;
 		String filename = GlobalEnv.getfilename().substring(n, m);
 		filename = filename.replace(".ssql", ".html");
-		html_file = FrontEnd_Tasuku.html_file;
+		html_file = FrontEnd.html_file;
 
 		if (filename != null) {
 			try {

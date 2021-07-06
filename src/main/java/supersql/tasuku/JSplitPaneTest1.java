@@ -45,6 +45,7 @@ import javax.swing.ScrollPaneConstants;
 import javax.swing.WindowConstants;
 import javax.swing.border.LineBorder;
 
+import supersql.FrontEnd;
 import supersql.codegenerator.HTML.HTMLEnv;
 import supersql.common.GlobalEnv;
 
@@ -158,7 +159,7 @@ public class JSplitPaneTest1 extends JFrame {
 	public static ArrayList<JSplitPane> check_tmp = new ArrayList<JSplitPane>();
 
 	String filename = GlobalEnv.getfilename();
-	String html_file = FrontEnd_Tasuku.html_file;
+	String html_file = FrontEnd.html_file;
 
 
 
@@ -205,7 +206,7 @@ public class JSplitPaneTest1 extends JFrame {
 	static JButton nosaveFinish_Button = new JButton("保存しないで終了");
 	static JButton save_Button = new JButton("保存");
 
-	static JTextField preview_text = new JTextField(FrontEnd_Tasuku.Preview_URL);
+	static JTextField preview_text = new JTextField(FrontEnd.Preview_URL);
 
 	public JSplitPaneTest1() {
 		//nest_tmp = null;
@@ -238,7 +239,7 @@ public class JSplitPaneTest1 extends JFrame {
 		//textArea1 = new JTextArea(8, 30);
 		textArea2 = new JTextArea();
 		//textArea2.setPreferredSize(new Dimension(w / 4 - 10, h / 16));
-		textArea2.setText(FrontEnd_Tasuku.ssql);
+		textArea2.setText(FrontEnd.ssql);
 		//textArea1.setLineWrap(true);
 		textArea2.setLineWrap(true);
 		textArea2.setEditable(false);
@@ -740,10 +741,10 @@ public class JSplitPaneTest1 extends JFrame {
 		r.setLayout(new GridLayout(1, 5));
 		s.setLayout(new GridLayout(1, 4));
 
-		icon1 = new ImageIcon("./img/font_color.png");
-		icon2 = new ImageIcon("./img/back_color.png");
-		icon3 = new ImageIcon("./img/back_color.png");
-		icon4 = new ImageIcon("./img/line_color.png");
+		icon1 = new ImageIcon("./images/font_color.png");
+		icon2 = new ImageIcon("./images/back_color.png");
+		icon3 = new ImageIcon("./images/back_color.png");
+		icon4 = new ImageIcon("./images/line_color.png");
 
 		int cnt_tmp = 0;
 
@@ -1131,10 +1132,10 @@ public class JSplitPaneTest1 extends JFrame {
 					OutputStreamWriter osw = new OutputStreamWriter(fos, "SJIS");
 					PrintWriter pw = new PrintWriter(osw);
 
-					pw.println(FrontEnd_Tasuku.pre_css);
+					pw.println(FrontEnd.pre_css);
 
 					pw.close();
-					Preview.preview(FrontEnd_Tasuku.Preview_URL);
+					Preview.preview(FrontEnd.Preview_URL);
 
 				} catch (Exception ex) {
 					System.out.println(ex);
@@ -1153,8 +1154,8 @@ public class JSplitPaneTest1 extends JFrame {
 	public class previewListener implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			FrontEnd_Tasuku.Preview_URL = preview_text.getText();
-			Preview.preview(FrontEnd_Tasuku.Preview_URL);
+			FrontEnd.Preview_URL = preview_text.getText();
+			Preview.preview(FrontEnd.Preview_URL);
 		}
 	}
 
@@ -1212,13 +1213,13 @@ public class JSplitPaneTest1 extends JFrame {
 					//System.out.println(JSplitPaneTest1.jPanel_name.get(0));
 					osw.close();
 					pw.close();
-					//Preview.preview(FrontEnd_Tasuku.Preview_URL);
+					//Preview.preview(FrontEnd.Preview_URL);
 
 				} catch (Exception ex) {
 					System.out.println(ex);
 				}
 
-				Preview.preview(FrontEnd_Tasuku.Preview_URL);
+				Preview.preview(FrontEnd.Preview_URL);
 
 				redo_btn.setEnabled(true);
 				jButton.get(button_index).doClick();
@@ -1274,13 +1275,13 @@ public class JSplitPaneTest1 extends JFrame {
 					//System.out.println(JSplitPaneTest1.jPanel_name.get(0));
 					osw.close();
 					pw.close();
-					//Preview.preview(FrontEnd_Tasuku.Preview_URL);
+					//Preview.preview(FrontEnd.Preview_URL);
 
 				} catch (Exception ex) {
 					System.out.println(ex);
 				}
 
-				Preview.preview(FrontEnd_Tasuku.Preview_URL);
+				Preview.preview(FrontEnd.Preview_URL);
 
 				undo_btn.setEnabled(true);
 				jButton.get(button_index).doClick();
@@ -1365,7 +1366,7 @@ public class JSplitPaneTest1 extends JFrame {
 
 			}
 			Tasuku.Query_layout_add();
-			Preview.preview(FrontEnd_Tasuku.Preview_URL);
+			Preview.preview(FrontEnd.Preview_URL);
 		}
 	}
 
@@ -1714,7 +1715,7 @@ public class JSplitPaneTest1 extends JFrame {
 						//html_undo.add(//html_tmp);
 						Tasuku.Query_layout_add();
 
-						Preview.preview(FrontEnd_Tasuku.Preview_URL);
+						Preview.preview(FrontEnd.Preview_URL);
 
 					} catch (FileNotFoundException e2) {
 						e2.printStackTrace();
@@ -1761,12 +1762,12 @@ public class JSplitPaneTest1 extends JFrame {
 						OutputStreamWriter osw = new OutputStreamWriter(fos, "SJIS");
 						PrintWriter pw = new PrintWriter(osw);
 
-						pw.println(FrontEnd_Tasuku.pre_css);
+						pw.println(FrontEnd.pre_css);
 						//System.out.println(HTMLEnv.css.toString());
 						//System.out.println(JSplitPaneTest1.jPanel_name.get(0));
 
 						pw.close();
-						Preview.preview(FrontEnd_Tasuku.Preview_URL);
+						Preview.preview(FrontEnd.Preview_URL);
 
 					} catch (Exception ex) {
 						System.out.println(ex);
@@ -1780,7 +1781,7 @@ public class JSplitPaneTest1 extends JFrame {
 			case "保存":
 
 				write_SSQL(textArea2.getText());
-				FrontEnd_Tasuku.pre_css = HTMLEnv.css.toString();
+				FrontEnd.pre_css = HTMLEnv.css.toString();
 
 				break;
 
@@ -1951,7 +1952,7 @@ public class JSplitPaneTest1 extends JFrame {
 
 			}
 			Tasuku.Query_layout_add();
-			Preview.preview(FrontEnd_Tasuku.Preview_URL);
+			Preview.preview(FrontEnd.Preview_URL);
 
 		}
 	}
@@ -2270,7 +2271,7 @@ public class JSplitPaneTest1 extends JFrame {
 
 			//main_frame.setAlwaysOnTop(true);
 			Tasuku.Query_layout_add();
-			Preview.preview(FrontEnd_Tasuku.Preview_URL);
+			Preview.preview(FrontEnd.Preview_URL);
 		}
 	}
 
@@ -2332,7 +2333,7 @@ public class JSplitPaneTest1 extends JFrame {
 			//main_frame.setAlwaysOnTop(true);
 
 			Tasuku.Query_layout_add();
-			Preview.preview(FrontEnd_Tasuku.Preview_URL);
+			Preview.preview(FrontEnd.Preview_URL);
 		}
 	}
 
@@ -2379,7 +2380,7 @@ public class JSplitPaneTest1 extends JFrame {
 			//main_frame.setAlwaysOnTop(true);
 
 			Tasuku.Query_layout_add();
-			Preview.preview(FrontEnd_Tasuku.Preview_URL);
+			Preview.preview(FrontEnd.Preview_URL);
 		}
 	}
 
@@ -2570,7 +2571,7 @@ public class JSplitPaneTest1 extends JFrame {
 
 
 			Tasuku.Query_layout_add();
-			Preview.preview(FrontEnd_Tasuku.Preview_URL);
+			Preview.preview(FrontEnd.Preview_URL);
 		}
 	}
 
@@ -2663,7 +2664,7 @@ public class JSplitPaneTest1 extends JFrame {
 				line_action_flag = true;
 				Tasuku.Query_layout_add();
 				line_action_flag = false;
-				Preview.preview(FrontEnd_Tasuku.Preview_URL);
+				Preview.preview(FrontEnd.Preview_URL);
 			}
 		}
 	}

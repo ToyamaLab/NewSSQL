@@ -5,6 +5,7 @@ import java.io.File;
 import java.io.FileReader;
 import java.util.ArrayList;
 
+import supersql.FrontEnd;
 import supersql.codegenerator.HTML.HTMLEnv;
 import supersql.common.GlobalEnv;
 
@@ -1042,7 +1043,7 @@ public class T_parser {
 			else if (ssql.contains("From"))
 				ssql = ssql.replace("From", a2 + " From");
 
-			FrontEnd_Tasuku.ssql = ssql;
+			FrontEnd.ssql = ssql;
 			//JSplitPaneTest1.textArea2.setText(ssql);
 			table_at_flag = true;
 
