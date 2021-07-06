@@ -1,8 +1,17 @@
 package supersql;
 
-import java.util.Arrays;
+import java.awt.Dimension;
+import java.awt.Toolkit;
+
+import javax.swing.JButton;
+import javax.swing.JCheckBox;
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
 
 import supersql.codegenerator.CodeGenerator;
+import supersql.codegenerator.HTML.HTMLEnv;
 import supersql.codegenerator.Responsive.Responsive;
 import supersql.common.GlobalEnv;
 import supersql.common.Log;
@@ -11,6 +20,9 @@ import supersql.common.LogInfo;
 import supersql.common.Ssedit;
 import supersql.dataconstructor.DataConstructor;
 import supersql.parser.Start_Parse;
+import supersql.tasuku.HTMLwrite_ssql_embedded;
+import supersql.tasuku.T_parser;
+import supersql.tasuku.Tasuku;
 
 public class FrontEnd {
 
@@ -23,7 +35,34 @@ public class FrontEnd {
 	public static long aftercg;
 	public static long aftersql;
 
+		//tasuku
+		static Tasuku tasuku;
+
+		public static String ssql = "";
+		static String pre_css;
+
+		static JFrame main_frame;
+
+		static JFrame frame_first;
+		static JPanel panel_first;
+		static JScrollPane scrollPane1;
+		static JScrollPane scrollPane2;
+		static JTextArea textArea1;
+		static JTextArea textArea2;
+		static JButton btn_first_go;
+		static JButton btn_first_add;
+		static Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+		static int w = screenSize.width;
+		static int h = screenSize.height;
+		static JCheckBox panel_option = new JCheckBox();
+
+
+		static String filename;
+		static String html_file;
+		static String Preview_URL;
+
 	public static void main(String[] args) {
+		panel_option.setSelected(false);
 		new FrontEnd(args);
 	}
 
@@ -111,6 +150,30 @@ public class FrontEnd {
 			if (GlobalEnv.isSsedit_autocorrect()) {
 				Ssedit.sseditInfo();
 			}
+		}
+
+		try {
+			int n = 0;
+			int m = 0;
+			n = GlobalEnv.getfilename().lastIndexOf("/") + 1;
+			m = GlobalEnv.getfilename().lastIndexOf(".ssql") + 5;
+			filename = GlobalEnv.getfilename().substring(n, m);
+			filename = filename.replace(".ssql", ".html");
+			html_file = GlobalEnv.getOutputDirPath() + "/" + filename;
+			Preview_URL = /*"file://" +*/ html_file ;
+			pre_css = HTMLEnv.css.toString();
+
+			ssql = HTMLwrite_ssql_embedded.Html_Embed();
+			Tasuku.Html_tfe_add();
+
+			T_parser.parser(ssql);
+
+			tasuku = new Tasuku();
+
+		}
+		catch (Exception e) {
+			System.out.println(e);
+			System.exit(-1);
 		}
 
 		if (GlobalEnv.getErrFlag() != 0 && GlobalEnv.getOnlineFlag() == 0)
