@@ -134,7 +134,7 @@ public class JSplitPaneTest1 extends JFrame {
 	JLabel label_name2;
 	JPanel size_panel = new JPanel();
 	public static JLabel size_label = new JLabel();
-	static JCheckBox debugCheckBox = new JCheckBox("debug");
+//	static JCheckBox debugCheckBox = new JCheckBox("debug");
 
 	ImageIcon icon1 = null;
 	ImageIcon icon2 = null;
@@ -265,14 +265,14 @@ public class JSplitPaneTest1 extends JFrame {
 		panel_first.add(undo_btn);
 		panel_first.add(redo_btn);
 
-		debugCheckBox.addActionListener(new debugListener());
+//		debugCheckBox.addActionListener(new debugListener());
 
 		panel_option = new JCheckBox("サイズパネル", false);
 		panel_option.addActionListener(new panel_optionListener());
 		panel_option.setPreferredSize(new Dimension(w/12, h/32));
-		debugCheckBox.setPreferredSize(new Dimension(w/20, h/32));
+//		debugCheckBox.setPreferredSize(new Dimension(w/20, h/32));
 		panel_first.add(panel_option);
-		panel_first.add(debugCheckBox);
+//		panel_first.add(debugCheckBox);
 		panel_first.add(btn_change_panel);
 		panel_first.add(scrollPane2);
 
@@ -305,7 +305,7 @@ public class JSplitPaneTest1 extends JFrame {
 		undo_btn.setPreferredSize(new Dimension(w/30 *2/3, h/20 *2/3));
 		redo_btn.setPreferredSize(new Dimension(w/30 *2/3, h/20 *2/3));
 		panel_option.setPreferredSize(new Dimension(w/12 *2/3, h/32 *2/3));
-		debugCheckBox.setPreferredSize(new Dimension(w/20 *2/3, h/32 *2/3));
+//		debugCheckBox.setPreferredSize(new Dimension(w/20 *2/3, h/32 *2/3));
 			btn_change_panel.setPreferredSize(new Dimension(w / 8 *2/3, h / 20*2/3));
 			scrollPane2.setPreferredSize(new Dimension(w / 4*2/3 - 10, h / 4*2/3));
 			undo_btn.setPreferredSize(new Dimension(w/32*2/3, h/20*2/3));
@@ -1185,10 +1185,10 @@ public class JSplitPaneTest1 extends JFrame {
 				}
 
 				textArea2.setText(textArea_undo.get(undo_cnt));
-				if(textArea2.getText().contains("debug='on"))
-					debugCheckBox.setSelected(true);
-				else if(textArea2.getText().contains("debug='off"))
-					debugCheckBox.setSelected(false);
+//				if(textArea2.getText().contains("debug='on"))
+//					debugCheckBox.setSelected(true);
+//				else if(textArea2.getText().contains("debug='off"))
+//					debugCheckBox.setSelected(false);
 
 				try {
 					int n = 0;
@@ -1246,10 +1246,10 @@ public class JSplitPaneTest1 extends JFrame {
 				}
 
 				textArea2.setText(textArea_undo.get(undo_cnt));
-				if(textArea2.getText().contains("debug='on"))
-					debugCheckBox.setSelected(true);
-				else if(textArea2.getText().contains("debug='off"))
-					debugCheckBox.setSelected(false);
+//				if(textArea2.getText().contains("debug='on"))
+//					debugCheckBox.setSelected(true);
+//				else if(textArea2.getText().contains("debug='off"))
+//					debugCheckBox.setSelected(false);
 
 				try {
 					int n = 0;
@@ -1677,10 +1677,10 @@ public class JSplitPaneTest1 extends JFrame {
 									//html_tmp += line + "\n";
 									continue;
 								}
-								if (debugCheckBox.isSelected())
-									tmp = line.substring(0, f) + "\"1" + line.substring(l + 2);
-								else
-									tmp = line.substring(0, f) + "\"0" + line.substring(l + 2);
+//								if (debugCheckBox.isSelected())
+//									tmp = line.substring(0, f) + "\"1" + line.substring(l + 2);
+//								else
+//									tmp = line.substring(0, f) + "\"0" + line.substring(l + 2);
 
 								pw1.write(tmp);
 								pw1.newLine();
@@ -1706,11 +1706,11 @@ public class JSplitPaneTest1 extends JFrame {
 						File newdir = new File("tmp.html");
 						newdir.delete();
 
-						if (debugCheckBox.isSelected())
-							T_parser.table_at_flag2 = true;
-						else {
+//						if (debugCheckBox.isSelected())
+//							T_parser.table_at_flag2 = true;
+//						else {
 							T_parser.table_at_flag2 = false;
-						}
+//						}
 						line_action_flag = true;
 						//html_undo.add(//html_tmp);
 						Tasuku.Query_layout_add();

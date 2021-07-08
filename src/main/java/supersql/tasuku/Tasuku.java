@@ -104,10 +104,18 @@ public class Tasuku extends JFrame {
 		System.out.println(ppp);
 		//System.out.println(ppp.size() + "~~9090");
 		for (int i = 0; i < ppp.size(); i++)
-			tfe_id_arr.add(Integer.parseInt(ppp.get(i)));
+			try {
+				tfe_id_arr.add(Integer.parseInt(ppp.get(i)));
+			} catch (Exception e) {
+				// TODO: handle exception
+			}
 		//System.out.println(tfe_id_arr.size() + "9090");
 		for (int i = 0; i < 64; i++)
-			nest_cnt2[i] = T_parser.nest_cnt[i];
+			try {
+				nest_cnt2[i] = T_parser.nest_cnt[i];
+			} catch (Exception e) {
+				// TODO: handle exception
+			}
 
 		size_change();
 	}
@@ -1411,9 +1419,9 @@ public class Tasuku extends JFrame {
 			query_layout2[i] = "";
 		}
 
-		if (T_parser.table_at != "") {
-
-		}
+//		if (T_parser.table_at != "") {
+//
+//		}
 		query_layout_table = "";
 		query_layout_table2 = "";
 
@@ -1427,19 +1435,25 @@ public class Tasuku extends JFrame {
 		//for(int i = 0; i < query_layout.length; i++)
 
 		for (int i = 0; i < tfe_id_arr.size(); i++) {
-
 			int cnt = countStringInString(css, String.valueOf(tfe_id_arr.get(i)));
+//			System.out.println("tfe_id_arr: "+tfe_id_arr);
+//			System.out.println("cnt: "+cnt);
+			for (int j = 0; j < cnt; j++){
+				try {
+					if (css.contains(String.valueOf(tfe_id_arr.get(i)))) {
 
-			for (int j = 0; j < cnt; j++)
-				if (css.contains(String.valueOf(tfe_id_arr.get(i)))) {
-
-					n1 = css.indexOf(String.valueOf(tfe_id_arr.get(i)), l) + 7;
-					m1 = css.indexOf("}", n1);
-					query_layout[i] += css.substring(n1, m1 - 2);
-					query_layout[i] += ",";
-					l = m1;
-
+						n1 = css.indexOf(String.valueOf(tfe_id_arr.get(i)), l) + 7;
+						m1 = css.indexOf("}", n1);
+//						System.out.println("css: "+css);
+//						System.out.println("m1: "+m1);
+						query_layout[i] += css.substring(n1, m1 - 2);
+						query_layout[i] += ",";
+						l = m1;
+					}
+				} catch (Exception e) {
+					// TODO: handle exception
 				}
+			}
 			l = 0;
 			//System.out.println(css);
 
@@ -1463,7 +1477,7 @@ public class Tasuku extends JFrame {
 
 				if (q_csv.contains("width")) {
 					n = q_csv.indexOf("width") + 6;
-					m = q_csv.indexOf(",", n) - 2;
+					m = q_csv.indexOf((q_csv.substring(n).contains(";")? ";" : ","), n) - 2;
 					if (!q_csv.substring(n, m).equals("0") && !q_csv.substring(n, m).equals("00")) {
 						//query_layout2[i] += ", ";
 						query_layout2[i] += "width=" + q_csv.substring(n, m);
@@ -1474,7 +1488,7 @@ public class Tasuku extends JFrame {
 				if (q_csv.contains("height")) {
 
 					n = q_csv.indexOf("height") + 7;
-					m = q_csv.indexOf(",", n) - 2;
+					m = q_csv.indexOf((q_csv.substring(n).contains(";")? ";" : ","), n) - 2;
 					if (!q_csv.substring(n, m).equals("0") && !q_csv.substring(n, m).equals("00")) {
 						query_layout2[i] += ", ";
 						query_layout2[i] += "height=" + q_csv.substring(n, m);
@@ -1485,7 +1499,7 @@ public class Tasuku extends JFrame {
 				if (q_csv.contains("font-size")) {
 
 					n = q_csv.indexOf("font-size") + 10;
-					m = q_csv.indexOf(",", n) - 2;
+					m = q_csv.indexOf((q_csv.substring(n).contains(";")? ";" : ","), n) - 2;
 					if (!q_csv.substring(n, m).equals("0") && !q_csv.substring(n, m).equals("00")) {
 						query_layout2[i] += ", ";
 						query_layout2[i] += "font-size=" + q_csv.substring(n, m);
@@ -1521,7 +1535,7 @@ public class Tasuku extends JFrame {
 				if (q_csv.contains("margin-top")) {
 
 					n = q_csv.indexOf("margin-top") + 11;
-					m = q_csv.indexOf(",", n) - 2;
+					m = q_csv.indexOf((q_csv.substring(n).contains(";")? ";" : ","), n) - 2;
 					if (!q_csv.substring(n, m).equals("0") && !q_csv.substring(n, m).equals("00")) {
 						query_layout2[i] += ", ";
 						query_layout2[i] += "margin-top='" + q_csv.substring(n, m) + "px'";
@@ -1532,7 +1546,7 @@ public class Tasuku extends JFrame {
 				if (q_csv.contains("margin-right")) {
 
 					n = q_csv.indexOf("margin-right") + 13;
-					m = q_csv.indexOf(",", n) - 2;
+					m = q_csv.indexOf((q_csv.substring(n).contains(";")? ";" : ","), n) - 2;
 					if (!q_csv.substring(n, m).equals("0") && !q_csv.substring(n, m).equals("00")) {
 						query_layout2[i] += ", ";
 						query_layout2[i] += "margin-right='" + q_csv.substring(n, m) + "px'";
@@ -1543,7 +1557,7 @@ public class Tasuku extends JFrame {
 				if (q_csv.contains("margin-bottom")) {
 
 					n = q_csv.indexOf("margin-bottom") + 14;
-					m = q_csv.indexOf(",", n) - 2;
+					m = q_csv.indexOf((q_csv.substring(n).contains(";")? ";" : ","), n) - 2;
 					if (!q_csv.substring(n, m).equals("0") && !q_csv.substring(n, m).equals("00")) {
 						query_layout2[i] += ", ";
 						query_layout2[i] += "margin-bottom='" + q_csv.substring(n, m) + "px'";
@@ -1554,7 +1568,7 @@ public class Tasuku extends JFrame {
 				if (q_csv.contains("margin-left")) {
 
 					n = q_csv.indexOf("margin-left") + 12;
-					m = q_csv.indexOf(",", n) - 2;
+					m = q_csv.indexOf((q_csv.substring(n).contains(";")? ";" : ","), n) - 2;
 					if (!q_csv.substring(n, m).equals("0") && !q_csv.substring(n, m).equals("00")) {
 						query_layout2[i] += ", ";
 						query_layout2[i] += "margin-left='" + q_csv.substring(n, m) + "px'";
@@ -1565,7 +1579,7 @@ public class Tasuku extends JFrame {
 				if (q_csv.contains("background-color")) {
 					query_layout2[i] += ", ";
 					n = q_csv.indexOf("background-color") + 17;
-					m = q_csv.indexOf(",", n);
+					m = q_csv.indexOf((q_csv.substring(n).contains(";")? ";" : ","), n);
 					query_layout2[i] += "bgcolor='" + q_csv.substring(n, m) + "'";
 
 					n = 0;
@@ -1576,7 +1590,7 @@ public class Tasuku extends JFrame {
 				if (q_csv.contains("color")) {
 
 					n = q_csv.indexOf("color") + 6;
-					m = q_csv.indexOf(",", n);
+					m = q_csv.indexOf((q_csv.substring(n).contains(";")? ";" : ","), n);
 
 					if (q_csv.charAt(0) == 'c') {
 						query_layout2[i] += ", ";
@@ -1590,7 +1604,6 @@ public class Tasuku extends JFrame {
 						//if (q_csv.charAt(n - 7) != '-') {
 						query_layout2[i] += ", ";
 						//System.out.println(q_csv.charAt(n - 7) + "9090909090");
-
 						query_layout2[i] += "color=\'" + q_csv.substring(n, m) + "\'";
 						n = 0;
 						m = 0;
@@ -1599,6 +1612,7 @@ public class Tasuku extends JFrame {
 				}
 
 				query_layout2[i] += "}";
+				System.out.println("query_layout2[i] = "+query_layout2[i]);
 
 				if (query_layout2[i].contains("{, ")) {
 					query_layout2[i] = query_layout2[i].replace("{, ", "{");
@@ -1824,16 +1838,17 @@ public class Tasuku extends JFrame {
 		n1 = 0;
 		m1 = 0;
 
-		if (T_parser.table_at_flag == true) {
-			int a = ssql.lastIndexOf("@");
-			int f = ssql.indexOf("}", a);
-			//System.out.println(a + "??" + f + "78787");
-			if (a < f && a != -1 && f != -1)
-				ssql = ssql.substring(0, a) + ssql.substring(f + 1);
-			//System.out.println(ssql);
-			//T_parser.table_at_flag = true;
-		}
-		T_parser.table_at_flag = true;
+//		if (T_parser.table_at_flag == true) {
+//			int a = ssql.lastIndexOf("@");
+//			int f = ssql.indexOf("}", a);
+//			//System.out.println(a + "??" + f + "78787");
+//			if (a < f && a != -1 && f != -1)
+//				ssql = ssql.substring(0, a) + ssql.substring(f + 1);
+//			//System.out.println(ssql);
+//			//T_parser.table_at_flag = true;
+//		}
+//		T_parser.table_at_flag = true;
+		T_parser.table_at_flag = false;
 		int a1 = css.indexOf("body");
 		int f2 = css.indexOf("}", a1);
 		if (a1 != -1 && f2 != -1)
@@ -1841,14 +1856,14 @@ public class Tasuku extends JFrame {
 
 		query_layout_table2 += "@{";
 
-		if (T_parser.table_at_flag2)
-			query_layout_table2 += "debug='on'";
-		else {
-			query_layout_table2 += "debug='off'";
-		}
+//		if (T_parser.table_at_flag2)
+//			query_layout_table2 += "debug='on'";
+//		else {
+//			query_layout_table2 += "debug='off'";
+//		}
 
 		if (query_layout_table.contains("text-align: center")) {
-			query_layout_table2 += ", ";
+//			query_layout_table2 += ", ";
 			query_layout_table2 += "table-align='center'";
 		}
 		if (query_layout_table.contains("text-align: right")) {
@@ -1912,7 +1927,7 @@ public class Tasuku extends JFrame {
 				query_layout_table2 += T_parser.table_at.substring(n2, m2 + 1);
 			}
 		}
-
+		
 		query_layout_table2 += "}";
 		if (query_layout_table2.contains("{, ")) {
 			query_layout_table2 = query_layout_table2.replace("{, ", "{");
@@ -1920,14 +1935,26 @@ public class Tasuku extends JFrame {
 		if (query_layout_table2.contains(", }")) {
 			query_layout_table2 = query_layout_table2.replace(", }", "}");
 		}
-
-		if (!query_layout_table2.contains("@{}"))
-			if (ssql.contains("FROM"))
-				ssql = ssql.replace("FROM", query_layout_table2 + " FROM");
-			else if (ssql.contains("from"))
-				ssql = ssql.replace("from", query_layout_table2 + " from");
-			else if (ssql.contains("From"))
-				ssql = ssql.replace("From", query_layout_table2 + " From");
+		//System.out.println("query_layout_table2: "+query_layout_table2);
+		query_layout_table2 = T_parser.table_at+"\n";	//TODO これだと問題となるケースは無いか
+//		System.out.println(ssql);
+//		System.out.println(ssql.length());
+		if (!query_layout_table2.contains("@{}")){		//TODO コメントアウトでOKか
+//			int current_ssqlquery_length = ssql.length();
+//			ssql = ssql.substring(0, T_parser.table_at_first_index)
+//			       +query_layout_table2
+//			       +ssql.substring(T_parser.table_at_first_index+1+T_parser.table_at.length());
+//			T_parser.table_at_first_index += current_ssqlquery_length-ssql.length();
+			
+//			if (ssql.contains("FROM"))
+//				ssql = ssql.replace("FROM", query_layout_table2 + " FROM");
+//			else if (ssql.contains("from"))
+//				ssql = ssql.replace("from", query_layout_table2 + " from");
+//			else if (ssql.contains("From"))
+//				ssql = ssql.replace("From", query_layout_table2 + " From");
+		
+		}
+		//ssql = T_parser.ssqlquery_org;	//TODO これだと問題となるケースは無いか
 
 		StringBuilder sb2 = new StringBuilder(ssql);
 		int l2 = 0;
@@ -1957,65 +1984,65 @@ public class Tasuku extends JFrame {
 
 		JSplitPaneTest1.textArea2.setText(ssql);
 
-		if (!JSplitPaneTest1.debugCheckBox.isSelected()) {
-
-			for (int i = JSplitPaneTest1.undo_cnt + 1; i < JSplitPaneTest1.textArea_undo.size(); i++) {
-				JSplitPaneTest1.textArea_undo.remove(i);
-				JSplitPaneTest1.css_undo.remove(i);
-				//JSplitPaneTest1.html_undo.remove(i);
-				JSplitPaneTest1.w_undo.remove(i);
-				JSplitPaneTest1.h_undo.remove(i);
-				JSplitPaneTest1.f_undo.remove(i);
-				JSplitPaneTest1.mt_undo.remove(i);
-				JSplitPaneTest1.mr_undo.remove(i);
-				JSplitPaneTest1.mb_undo.remove(i);
-				JSplitPaneTest1.ml_undo.remove(i);
-				//JSplitPaneTest1.l_undo.remove(i);
-
-			}
-			JSplitPaneTest1.textArea_undo.add(ssql);
-			JSplitPaneTest1.undo_cnt = JSplitPaneTest1.textArea_undo.size() - 1;
-			JSplitPaneTest1.undo_btn.setEnabled(true);
-			JSplitPaneTest1.redo_btn.setEnabled(false);
-			JSplitPaneTest1.css_undo.add(HTMLEnv.css.toString());
-			/*if(JSplitPaneTest1.line_action_flag == false)
-				JSplitPaneTest1.html_undo.add("dmy");*/
-			JSplitPaneTest1.line_action_flag = false;
-			//System.out.println(HTMLEnv.css.toString());
-
-			String[] w = new String[64];
-			String[] h = new String[64];
-			String[] f1 = new String[64];
-			String[] t = new String[64];
-			String[] r = new String[64];
-			String[] b = new String[64];
-			String[] l1 = new String[64];
-			//String[] li = new String[32];
-
-			for (int i = 0; i < tfe_name_arr.size(); i++) {
-
-				w[i] = (String.valueOf(T_parser.w_load[i]));
-				h[i] = (String.valueOf(T_parser.h_load[i]));
-				f1[i] = (String.valueOf(T_parser.f_load[i]));
-				t[i] = (String.valueOf(T_parser.mt_load[i]));
-				r[i] = (String.valueOf(T_parser.mr_load[i]));
-				b[i] = (String.valueOf(T_parser.mb_load[i]));
-				l1[i] = (String.valueOf(T_parser.ml_load[i]));
-			}
-
-			/*for (int i = 0; i < T_parser.line_list.size(); i++)
-				li[i] = T_parser.line_list.get(i);*/
-
-			JSplitPaneTest1.w_undo.add(w);
-			JSplitPaneTest1.h_undo.add(h);
-			JSplitPaneTest1.f_undo.add(f1);
-			JSplitPaneTest1.mt_undo.add(t);
-			JSplitPaneTest1.mr_undo.add(r);
-			JSplitPaneTest1.mb_undo.add(b);
-			JSplitPaneTest1.ml_undo.add(l1);
-			//JSplitPaneTest1.l_undo.add(li);
-
-		}
+//		if (!JSplitPaneTest1.debugCheckBox.isSelected()) {
+//
+//			for (int i = JSplitPaneTest1.undo_cnt + 1; i < JSplitPaneTest1.textArea_undo.size(); i++) {
+//				JSplitPaneTest1.textArea_undo.remove(i);
+//				JSplitPaneTest1.css_undo.remove(i);
+//				//JSplitPaneTest1.html_undo.remove(i);
+//				JSplitPaneTest1.w_undo.remove(i);
+//				JSplitPaneTest1.h_undo.remove(i);
+//				JSplitPaneTest1.f_undo.remove(i);
+//				JSplitPaneTest1.mt_undo.remove(i);
+//				JSplitPaneTest1.mr_undo.remove(i);
+//				JSplitPaneTest1.mb_undo.remove(i);
+//				JSplitPaneTest1.ml_undo.remove(i);
+//				//JSplitPaneTest1.l_undo.remove(i);
+//
+//			}
+//			JSplitPaneTest1.textArea_undo.add(ssql);
+//			JSplitPaneTest1.undo_cnt = JSplitPaneTest1.textArea_undo.size() - 1;
+//			JSplitPaneTest1.undo_btn.setEnabled(true);
+//			JSplitPaneTest1.redo_btn.setEnabled(false);
+//			JSplitPaneTest1.css_undo.add(HTMLEnv.css.toString());
+//			/*if(JSplitPaneTest1.line_action_flag == false)
+//				JSplitPaneTest1.html_undo.add("dmy");*/
+//			JSplitPaneTest1.line_action_flag = false;
+//			//System.out.println(HTMLEnv.css.toString());
+//
+//			String[] w = new String[64];
+//			String[] h = new String[64];
+//			String[] f1 = new String[64];
+//			String[] t = new String[64];
+//			String[] r = new String[64];
+//			String[] b = new String[64];
+//			String[] l1 = new String[64];
+//			//String[] li = new String[32];
+//
+//			for (int i = 0; i < tfe_name_arr.size(); i++) {
+//
+//				w[i] = (String.valueOf(T_parser.w_load[i]));
+//				h[i] = (String.valueOf(T_parser.h_load[i]));
+//				f1[i] = (String.valueOf(T_parser.f_load[i]));
+//				t[i] = (String.valueOf(T_parser.mt_load[i]));
+//				r[i] = (String.valueOf(T_parser.mr_load[i]));
+//				b[i] = (String.valueOf(T_parser.mb_load[i]));
+//				l1[i] = (String.valueOf(T_parser.ml_load[i]));
+//			}
+//
+//			/*for (int i = 0; i < T_parser.line_list.size(); i++)
+//				li[i] = T_parser.line_list.get(i);*/
+//
+//			JSplitPaneTest1.w_undo.add(w);
+//			JSplitPaneTest1.h_undo.add(h);
+//			JSplitPaneTest1.f_undo.add(f1);
+//			JSplitPaneTest1.mt_undo.add(t);
+//			JSplitPaneTest1.mr_undo.add(r);
+//			JSplitPaneTest1.mb_undo.add(b);
+//			JSplitPaneTest1.ml_undo.add(l1);
+//			//JSplitPaneTest1.l_undo.add(li);
+//
+//		}
 
 	}
 

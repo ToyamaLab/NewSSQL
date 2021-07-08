@@ -53,7 +53,9 @@ public class T_parser {
 	public static ArrayList<String> image_name_List = new ArrayList<String>();
 
 	static int[] sameName_cnt = new int[64];
+	static String ssqlquery_org = "";
 	static String table_at = "";
+	static int table_at_first_index = 0;
 	static boolean table_at_flag = true;
 	static boolean table_at_flag2 = false;
 	static ArrayList<String> line_list = new ArrayList<String>();
@@ -72,6 +74,7 @@ public class T_parser {
 	static ArrayList<String> check_9 = new ArrayList<String>();
 
 	public static void parser(String ssql) {
+		ssqlquery_org = ssql;
 
 
 		for(int i = 0; i < 64; i++) {
@@ -621,32 +624,32 @@ public class T_parser {
 
 			else if (ccc.contains("}") && atmark_flag == true) {
 				atmark_flag = false;
-				if(!l_tmp.contains("debug"))
-					if(tmp == "" && layout_load_name_tmp != "") {
-						layout_load_name.add(layout_load_name_tmp);
-						layout_load_flag = true;
-						if(l_tmp != "") {
-							layout_load.add(l_tmp);
-							layout_load_flag = true;
-							System.out.println(l_tmp);}
-					}else if(tmp != ""){
-						layout_load_name.add(tmp);
-						layout_load_flag = true;
-						if(l_tmp != "") {
-							layout_load.add(l_tmp);
-							layout_load_flag = true;
-							System.out.println(l_tmp);}
-					}
-				if(!l_tmp.contains("debug"))
-					/*if(l_tmp != "") {
-						layout_load.add(l_tmp);
-						layout_load_flag = true;
-						System.out.println(l_tmp);
-
-					}*/
-					l_tmp = "";
-				layout_load_name_tmp = "";
-				//tmp = "";
+//				if(!l_tmp.contains("debug"))
+//					if(tmp == "" && layout_load_name_tmp != "") {
+//						layout_load_name.add(layout_load_name_tmp);
+//						layout_load_flag = true;
+//						if(l_tmp != "") {
+//							layout_load.add(l_tmp);
+//							layout_load_flag = true;
+//							System.out.println(l_tmp);}
+//					}else if(tmp != ""){
+//						layout_load_name.add(tmp);
+//						layout_load_flag = true;
+//						if(l_tmp != "") {
+//							layout_load.add(l_tmp);
+//							layout_load_flag = true;
+//							System.out.println(l_tmp);}
+//					}
+//				if(!l_tmp.contains("debug"))
+//					/*if(l_tmp != "") {
+//						layout_load.add(l_tmp);
+//						layout_load_flag = true;
+//						System.out.println(l_tmp);
+//
+//					}*/
+//					l_tmp = "";
+//				layout_load_name_tmp = "";
+//				//tmp = "";
 				continue;
 			}
 
@@ -997,18 +1000,24 @@ public class T_parser {
 			f = ssql.lastIndexOf("from");
 		if(ssql.contains("From"))
 			f = ssql.lastIndexOf("From");
-		if(a < f && a!= -1 && f!=-1)
+		if(a < f && a!= -1 && f!=-1){
 			table_at = ssql.substring(a, f);
+			table_at_first_index = a;
+			if (table_at.contains("}")) {
+				table_at = table_at.substring(0, table_at.indexOf("}")+1);
+			}
+		}
 		else {
 			table_at_flag = false;
 		}
 
-		table_at_flag2 = false;
-		if(table_at.contains("'on'") || table_at.contains("\"on\"")) {
-			table_at_flag2 = true;
-			JSplitPaneTest1.debugCheckBox.setSelected(true);
-		}
-		if(!table_at.contains("css-file") &&!table_at.contains("debug") &&
+//		table_at_flag2 = false;
+//		if(table_at.contains("'on'") || table_at.contains("\"on\"")) {
+//			table_at_flag2 = true;
+//			JSplitPaneTest1.debugCheckBox.setSelected(true);
+//		}
+		System.out.println("table_at: "+table_at);
+		if(!table_at.contains("css-file") && !table_at.contains("debug") && !table_at.contains("table") && !table_at.contains("border") &&
 				ssql.split("}" + "").length - 1 != 1 && ssql.split("]" + "").length - 1 != 0 && ssql.split("!" + "").length - 1 != 0)
 			if(table_at.contains("width") || table_at.contains("font-size") || table_at.contains("margin")) {
 				table_at = "";
@@ -1019,33 +1028,34 @@ public class T_parser {
 
 		//if(table_at_flag == false) {
 
-			int a1 = ssql.lastIndexOf("@");
-			int f1 = ssql.indexOf("}", a);
-			System.out.println(a1 + "??" + f1 + "78787");
-			if (a1 < f1 && a1!=-1 && f1!=-1)
-				ssql = ssql.substring(0, a1) + ssql.substring(f1 + 1);
+//			int a1 = ssql.lastIndexOf("@");
+//			int f1 = ssql.indexOf("}", a);
+//			System.out.println(a1 + "??" + f1 + "78787");
+//			if (a1 < f1 && a1!=-1 && f1!=-1)
+//				ssql = ssql.substring(0, a1) + ssql.substring(f1 + 1);
 			System.out.println(ssql);
 
-			String a2 = "";
-			a2 += "@{";
+//			String a2 = "";
+//			a2 += "@{";
+//
+//			if (table_at_flag2)
+//				a2 += "debug='on'";
+//			else {
+//				a2 += "debug='off'";
+//			}
+//			a2 += "}";
 
-			if (table_at_flag2)
-				a2 += "debug='on'";
-			else {
-				a2 += "debug='off'";
-			}
-			a2 += "}";
-
-			if (ssql.contains("FROM"))
-				ssql = ssql.replace("FROM", a2 + " FROM");
-			else if (ssql.contains("from"))
-				ssql = ssql.replace("from", a2 + " from");
-			else if (ssql.contains("From"))
-				ssql = ssql.replace("From", a2 + " From");
+//			if (ssql.contains("FROM"))
+//				ssql = ssql.replace("FROM", a2 + " FROM");
+//			else if (ssql.contains("from"))
+//				ssql = ssql.replace("from", a2 + " from");
+//			else if (ssql.contains("From"))
+//				ssql = ssql.replace("From", a2 + " From");
 
 			FrontEnd.ssql = ssql;
 			//JSplitPaneTest1.textArea2.setText(ssql);
-			table_at_flag = true;
+//			table_at_flag = true;
+			table_at_flag = false;
 
 
 		System.out.println("##################################");
