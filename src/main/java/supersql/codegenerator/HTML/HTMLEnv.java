@@ -24,7 +24,6 @@ import supersql.codegenerator.Modifier;
 import supersql.codegenerator.Responsive.Responsive;
 import supersql.common.GlobalEnv;
 import supersql.common.Log;
-import supersql.common.Utils;
 import supersql.parser.Start_Parse;
 
 public class HTMLEnv extends LocalEnv implements Serializable{
@@ -47,6 +46,8 @@ public class HTMLEnv extends LocalEnv implements Serializable{
 	protected static int IDOld = 0; // add oka
 	public static String cond = "";
 	public static String bg = "";
+	public static String bgsize = ""; //add ayumi 20210714
+	public static boolean bgrepeat = false;//add ayumi 20210714
 	public static String bgcolor = "";
 	public static String pos = "";
 	public ArrayList<ArrayList<String>> decorationProperty = new ArrayList<ArrayList<String>>();
@@ -71,7 +72,7 @@ public class HTMLEnv extends LocalEnv implements Serializable{
 	public static int formPartsNumber = 1;
 	public static String nameId = "";
 	public static int searchId = 0;
-	
+
 
 	/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	//20210416  new table border
@@ -88,14 +89,14 @@ public class HTMLEnv extends LocalEnv implements Serializable{
 			currnt_nestDepth++;
 			//System.out.println(symbol+" start "+currnt_nestDepth);
 		}
-		
+
 		//System.out.println("isUseOldTable = "+isUseOldTable);
-		
-		if (decos.containsKey("border1") || decos.containsKey("tableborder1") || 
+
+		if (decos.containsKey("border1") || decos.containsKey("tableborder1") ||
 			decos.containsKey("old_table") || decos.containsKey("old_border") || decos.containsKey("old_tableborder")) {
 			decos.put("table1", "");
 		}
-		
+
 		if (decos.containsKey("debug")) {		 //20210416
 			String d = decos.getStr("debug").toLowerCase().trim();
 			String[] ds = d.split("\\s*,\\s*");
@@ -128,7 +129,7 @@ public class HTMLEnv extends LocalEnv implements Serializable{
 				}
 			}
 		}
-		
+
 		if (decos.containsKey("table")) {
 		//if (decos.containsKey("table") || decos.containsKey("new_table")) {
 			//System.out.println("table");
@@ -147,22 +148,22 @@ public class HTMLEnv extends LocalEnv implements Serializable{
 		end_new_table(symbol);
 		end_old_table(symbol);
 		//tableBorder = "0";					//TODO ok? -> TFE全体にtableborder/borderが指定されていない場合はok?
-		
+
 		if (symbol.endsWith("G1") || symbol.endsWith("G2")) {
 			//System.out.println(symbol+" end "+currnt_nestDepth);
 			currnt_nestDepth--;
 		}
 	}
 
-	
+
 	// new table
 	public static boolean isNewTableBorder = false;		//20210416  new table border	//TODO 実行引数や装飾子でfalseにする処理
 	private static boolean insideTable = false;			//20210416  new table border
-	private static boolean newTableBorderDIV_startFlag = false;	//foreach TFE全体@table でdivが閉じられない問題対策用    TODO 他の方法の検討 
+	private static boolean newTableBorderDIV_startFlag = false;	//foreach TFE全体@table でdivが閉じられない問題対策用    TODO 他の方法の検討
 	private static int newTableBorderNum = 10001;
 	public static String getNewTableBorderDIV_start() {
 		if (!insideTable && isNewTableBorder) {
-//		if (!insideTable && (isNewTableBorder || isOldTableBorder)) 
+//		if (!insideTable && (isNewTableBorder || isOldTableBorder))
 //			System.out.println("getNewTableBorderDIV_start");
 			newTableBorderDIV_startFlag = true;
 			return "<div id=\""+getCurrentNewTableBorderID()+"\">";
@@ -189,7 +190,7 @@ public class HTMLEnv extends LocalEnv implements Serializable{
 		if (!insideTable && isNewTableBorder) {
 		//if (insideTable && isNewTableBorder) {
 //		if (symbol.equals(new_table_start_symbol) && currnt_nestDepth == new_table_start_nestDepth && isNewTableBorder) {
-//		if (!insideTable && (isNewTableBorder || isOldTableBorder)) 
+//		if (!insideTable && (isNewTableBorder || isOldTableBorder))
 //			System.out.println("getNewTableBorderDIV_end: "+symbol);
 			newTableBorderDIV_startFlag = false;
 			return getNewTableBorderDIV_endStr();
@@ -216,12 +217,12 @@ public class HTMLEnv extends LocalEnv implements Serializable{
 //		return " style=\""+s+"border:0;\" ";
 //	}
 //	public static String getNewTableBorderDIV_start2() {	//[重要]セルの途中で折返しがあった場合でも縦線を途切れさせないため  CSSと連携 -> おそらく不要
-////		if (isNewTableBorder && insideTable) 
+////		if (isNewTableBorder && insideTable)
 ////			return "<div>";
 //		return "";
 //	}
 //	public static String getNewTableBorderDIV_end2() {		//[重要]セルの途中で折返しがあった場合でも縦線を途切れさせないため  CSSと連携 -> おそらく不要
-////		if (isNewTableBorder && insideTable) 
+////		if (isNewTableBorder && insideTable)
 ////			return "</div>";
 //		return "";
 //	}
@@ -273,7 +274,7 @@ public class HTMLEnv extends LocalEnv implements Serializable{
 				//s += "tr, td { border:solid; border-collapse:collapse; }\n\n";
 				//s += "td { empty-cells:hide; }\n";
 				//s += "th:empty, td:empty { border-collapse:collapse; border:0; visibility:hidden; }\n\n";
-			} 
+			}
 //			else if (HTMLEnv.isOldTableBorder) {
 //				return "\n"+
 //					   id+"table, "+id+"tr, "+id+"td { border:"+tableBorder+"px solid black; }\n\n";
@@ -285,7 +286,7 @@ public class HTMLEnv extends LocalEnv implements Serializable{
 	public static boolean isInsideTable() {
 		return insideTable;
 	}
-	
+
 	//old table
 	private static boolean isOldTableBorder = false;
 	private static void start_old_table(DecorateList decos, HTMLEnv html_env) {
@@ -310,8 +311,8 @@ public class HTMLEnv extends LocalEnv implements Serializable{
 		}
 	}
 	/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-	
-	
+
+
 
 	public static void computeConditionalDecorations(DecorateList decos,
 			StringBuffer css) {
@@ -950,7 +951,7 @@ public class HTMLEnv extends LocalEnv implements Serializable{
 					css = css.substring(css.indexOf(",")+1);
 				}
 			}
-		} 
+		}
 //		else if (cssFile.length() == 0) {
 //			if (GlobalEnv.isServlet()) {
 //				cssFile.append("<link rel=\"stylesheet\" type=\"text/css\" href=\""
@@ -1161,8 +1162,85 @@ public class HTMLEnv extends LocalEnv implements Serializable{
         }
 
         //added by goto 20130311  "background"
-        if (decos.containsKey("background"))
+        if (decos.containsKey("background")) {
         	bg = decos.getStr("background");
+        //added by ayumi 20210714 background option
+        } else if (decos.containsKey("backgroundcover")) {
+        	bg = decos.getStr("backgroundcover");
+        	bgsize = "cover";
+        } else if (decos.containsKey("backgroundcontain")) {
+        	bg = decos.getStr("backgroundcontain");
+        	bgsize = "contain";
+        } else if (decos.containsKey("backgroundtile")) {
+        	bg = decos.getStr("backgroundtile");
+        	bgsize = "20%";
+        	bgrepeat = true;
+        }
+        //added by ayumi 20210714 "pbgimage"
+        if (decos.containsKey("pbgimage")) {
+        	bg = decos.getStr("pbgimage");
+		} else if (decos.containsKey("pbgimagecover")) {
+			bgsize = "cover";
+        	bg = decos.getStr("pbgimagecover");
+		} else if (decos.containsKey("pbgimagecontain")) {
+        	bg = decos.getStr("pbgimagecontain");
+        	bgsize = "contain";
+		} else if (decos.containsKey("pbgimagetile")) {
+        	bg = decos.getStr("pbgimagetile");
+        	bgsize = "20%";
+        	bgrepeat = true;
+		}
+
+      //added by ayumi 20210714 "pbg"
+        if (decos.containsKey("pbg")) {
+        	bg = decos.getStr("pbg");
+		} else if (decos.containsKey("pbgcover")) {
+        	bg = decos.getStr("pbgcover");
+			bgsize = "cover";
+		} else if (decos.containsKey("pbgcontain")) {
+        	bg = decos.getStr("pbgcontain");
+        	bgsize = "contain";
+		} else if (decos.containsKey("pbgtile")) {
+        	bg = decos.getStr("pbgtile");
+        	bgsize = "20%";
+        	bgrepeat = true;
+		}
+
+        //added by ayumi 20210714 "bgsize"
+        if (decos.containsKey("backgroundsize")) {
+        	String[] sizes = (decos.getStr("backgroundsize")).split("[\s]*,[\s]*");
+        	for(int i=0;i<sizes.length;i++) {
+        		if(i==0) {
+        			bgsize = "";
+        			bgsize += sizes[i];
+        		}else {
+        			bgsize += " ";
+        			bgsize += sizes[i];
+        		}
+        	}
+		} else if (decos.containsKey("pbgimagesize")) {
+			String[] sizes = (decos.getStr("pbgimagesize")).split("[\s]*,[\s]*");
+        	for(int i=0;i<sizes.length;i++) {
+        		if(i==0) {
+        			bgsize = "";
+        			bgsize += sizes[i];
+        		}else {
+        			bgsize += " ";
+        			bgsize += sizes[i];
+        		}
+        	}
+		} else if (decos.containsKey("pbgsize")) {
+			String[] sizes = (decos.getStr("pbgsize")).split("[\s]*,[\s]*");
+        	for(int i=0;i<sizes.length;i++) {
+        		if(i==0) {
+        			bgsize = "";
+        			bgsize += sizes[i];
+        		}else {
+        			bgsize += " ";
+        			bgsize += sizes[i];
+        		}
+        	}
+		}
 
 //<<<<<<< HEAD
         //tbt add
@@ -1227,7 +1305,7 @@ public class HTMLEnv extends LocalEnv implements Serializable{
 		// charsetFlg=1;
 		// }
 		// added by goto 20120715 end
-		
+
 		//added by goto 20161217  for responsive
 		Responsive.check(decos);
 
@@ -1546,9 +1624,16 @@ public class HTMLEnv extends LocalEnv implements Serializable{
 			if (!bg.equals("")){
 //	            body_css.append("body { background-image: url(../"+bg+"); }");
 				body_css.append("\tbackground-image: url(../"+bg+");\n");
+				if(bgrepeat == false) {                                 //added by ayumi 20210714
+					body_css.append("\tbackground-repeat: no-repeat;\n");
+				}
 	        }
+			// added by ayumi 20210714
+			if (!bgsize.equals("")) {
+				body_css.append("\tbackground-size: " + bgsize + ";\n");
+			}
 			if(!bgcolor.equals("")){
-				body_css.append("\tbackground-color: "+bgcolor+";\n");
+				body_css.append("\tbackground-color: "+ bgcolor +";\n");
 			}
 			if(!pos.equals("")){
 				body_css.append("\ttext-align: "+pos+";\n");
@@ -1635,7 +1720,7 @@ public class HTMLEnv extends LocalEnv implements Serializable{
 //		}
 		Modifier.getClassModifierPutValue(decos, cssclass, classId);
 		Modifier.getIdModifierPutValue(decos, cssclass, classId);//kotani_idmodifier_ok
-		
+
 		if (decos.containsKey("div"))
 		if (decos.containsKey("divalign"))
 			div.append(" align=" + decos.getStr("divalign"));
