@@ -1208,7 +1208,7 @@ public class HTMLEnv extends LocalEnv implements Serializable{
 
         //added by ayumi 20210714 "bgsize"
         if (decos.containsKey("backgroundsize")) {
-        	String[] sizes = (decos.getStr("backgroundsize")).split("[\s]*,[\s]*");
+        	String[] sizes = (decos.getStr("backgroundsize")).split("[\\s]*,[\\s]*");
         	for(int i=0;i<sizes.length;i++) {
         		if(i==0) {
         			bgsize = "";
@@ -1219,7 +1219,7 @@ public class HTMLEnv extends LocalEnv implements Serializable{
         		}
         	}
 		} else if (decos.containsKey("pbgimagesize")) {
-			String[] sizes = (decos.getStr("pbgimagesize")).split("[\s]*,[\s]*");
+			String[] sizes = (decos.getStr("pbgimagesize")).split("[\\s]*,[\\s]*");
         	for(int i=0;i<sizes.length;i++) {
         		if(i==0) {
         			bgsize = "";
@@ -1230,7 +1230,7 @@ public class HTMLEnv extends LocalEnv implements Serializable{
         		}
         	}
 		} else if (decos.containsKey("pbgsize")) {
-			String[] sizes = (decos.getStr("pbgsize")).split("[\s]*,[\s]*");
+			String[] sizes = (decos.getStr("pbgsize")).split("[\\s]*,[\\s]*");
         	for(int i=0;i<sizes.length;i++) {
         		if(i==0) {
         			bgsize = "";
