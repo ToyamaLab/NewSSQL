@@ -10,6 +10,7 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 
+import net.sourceforge.htmlunit.corejs.javascript.ast.TryStatement;
 import supersql.codegenerator.CodeGenerator;
 import supersql.codegenerator.HTML.HTMLEnv;
 import supersql.codegenerator.Responsive.Responsive;
@@ -35,7 +36,8 @@ public class FrontEnd {
 	public static long aftercg;
 	public static long aftersql;
 
-		//tasuku
+	
+		//tasuku SSstyle
 		static Tasuku tasuku;
 
 		public static String ssql = "";
@@ -51,18 +53,17 @@ public class FrontEnd {
 		static JTextArea textArea2;
 		static JButton btn_first_go;
 		static JButton btn_first_add;
-		static Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-		static int w = screenSize.width;
-		static int h = screenSize.height;
-		static JCheckBox panel_option = new JCheckBox();
-
+		static Dimension screenSize;
+		static int w;
+		static int h;
+		static JCheckBox panel_option;
 
 		static String filename;
 		public static String html_file;
 		public static String Preview_URL;
 
+		
 	public static void main(String[] args) {
-		panel_option.setSelected(false);
 		new FrontEnd(args);
 	}
 
@@ -76,10 +77,23 @@ public class FrontEnd {
 	public void execSuperSQL(String[] args) {
 		start = System.currentTimeMillis();
 		//Log.info("0");
-
 		GlobalEnv.setGlobalEnv(args);
 		if(GlobalEnv.versionProcess())	return;	//added by goto 170612  for --version
-
+		
+		if (GlobalEnv.isSSstyle()) {
+			try {
+				//SSstyle
+				screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+				w = screenSize.width;
+				h = screenSize.height;
+				panel_option = new JCheckBox();
+				panel_option.setSelected(false);
+			} catch (Exception e) {
+				e.printStackTrace();
+				System.exit(-1);
+			}
+		}
+		
 		Log.info("//Entering SuperSQL System//");
 //		Log.info("1");
 
