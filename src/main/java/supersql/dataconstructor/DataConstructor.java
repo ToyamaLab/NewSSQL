@@ -65,11 +65,11 @@ public class DataConstructor {
 		GlobalEnv.afterMakeSch = System.currentTimeMillis();
 //		Log.info("Schema: " + sep_sch);
 
-		// Check Optimization Parameters
-		if (GlobalEnv.getOptLevel() == 0 || !GlobalEnv.isOptimizable()
-				|| Start_Parse.isDbpediaQuery() || Start_Parse.isJsonQuery()) {
-			sqlQueries = null;
-		} else {
+//		// Check Optimization Parameters
+//		if (GlobalEnv.getOptLevel() == 0 || !GlobalEnv.isOptimizable()
+//				|| Start_Parse.isDbpediaQuery() || Start_Parse.isJsonQuery()) {
+//			sqlQueries = null;
+//		} else {
 		// Initialize QueryDivider
 			long start = System.nanoTime();
 
@@ -88,7 +88,7 @@ public class DataConstructor {
 
 			long end = System.nanoTime();
 			exectime[ISDIVIS] = end - start;
-		}
+//		}
 
 		// Make SQL
 		//make table relation

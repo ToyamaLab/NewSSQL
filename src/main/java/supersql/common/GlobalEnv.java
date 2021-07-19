@@ -16,6 +16,8 @@ import java.util.Hashtable;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.apache.xalan.xsltc.compiler.sym;
+
 import supersql.FrontEnd;
 import supersql.codegenerator.Ehtml;
 import supersql.codegenerator.Incremental;
@@ -193,16 +195,16 @@ public class GlobalEnv {
 			envs.put(key, "");
 		}
 
-		//added by goto 20120707 start
-		//optimize level　"-O0,-O1,-O2,-O3"
-		//optimize level が設定されていればオプションを書き直す
-		for (int i = 0; i <= 3; i++)
-		if(envs.containsKey("-O"+i)){
-			envs.remove("-O"+i);
-			envs.put("-O", Integer.toString(i));
-			break;
-		}
-		//added by goto 20120707 end
+//		//added by goto 20120707 start
+//		//optimize level　"-O0,-O1,-O2,-O3"
+//		//optimize level が設定されていればオプションを書き直す
+//		for (int i = 0; i <= 3; i++)
+//		if(envs.containsKey("-O"+i)){
+//			envs.remove("-O"+i);
+//			envs.put("-O", Integer.toString(i));
+//			break;
+//		}
+//		//added by goto 20120707 end
 
 		setQuietLog();
 
@@ -644,9 +646,13 @@ public class GlobalEnv {
 	}
 
 	// add tbt 180718 to set multiple query
+	// add goto 210719 -O0 -O1
 	private static void setMulti() {
-		//if (seek("-multiquery") != null) {
-		if (seek("-singlequery") == null || seek("-multiquery") != null) {
+		if ((seek("-O0") == null && seek("-singlequery") == null) || 
+			(seek("-O1") != null || seek("-multiquery") != null)) {
+			// optimize level:
+			//	-O0  singlequery
+			//	-O1  multiquery  (Default)     -oはgetoutfilename()で使用しているため使わない
 			GlobalEnv.setMultiQuery();
 		}
 		if(seek("-multigb") != null){
@@ -1026,19 +1032,19 @@ public class GlobalEnv {
 		return tupleNum;
 	}
 
-	//added by ria 20110628 start
-	public static int getOptLevel()
-	{
-		String s = seek( "-O" );
-		if ( s == null )
-		{
-			return 2;
-		}
-		else
-		{
-			return Integer.parseInt( s );
-		}
-	}
+//	//added by ria 20110628 start
+//	public static int getOptLevel()
+//	{
+//		String s = seek( "-O" );
+//		if ( s == null )
+//		{
+//			return 2;
+//		}
+//		else
+//		{
+//			return Integer.parseInt( s );
+//		}
+//	}
 
 	public static void setOptimizable( boolean b )
 	{
