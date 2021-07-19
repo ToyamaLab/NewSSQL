@@ -617,7 +617,7 @@ public class CodeGenerator {
 							}
 						}
 						Ctab ctab = new Ctab();
-						GlobalEnv.setMultiQuery();
+						//GlobalEnv.setMultiQuery();
 						ExtList result = ctab.makeCtab(fn);
 						out_sch = read_attribute(result);
 					}else {

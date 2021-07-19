@@ -1,35 +1,15 @@
 package supersql.codegenerator.VR;
 
-import supersql.codegenerator.CodeGenerator;
-import supersql.codegenerator.Connector;
-import supersql.codegenerator.DecorateList;
-import supersql.codegenerator.FuncArg;
-import supersql.codegenerator.Function;
-import supersql.codegenerator.Manager;
-import supersql.codegenerator.TFE;
-import supersql.codegenerator.HTML.HTMLEnv;
-import supersql.common.Log;
-import supersql.extendclass.ExtList;
-
-import java.awt.GradientPaint;
-import java.awt.List;
-import java.awt.print.Printable;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Enumeration;
-import java.util.Hashtable;
-import java.util.Stack;
 
-import org.antlr.v4.parse.ANTLRParser.element_return;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 
-import com.gargoylesoftware.htmlunit.javascript.host.Location;
-import com.ibm.db2.jcc.am.de;
-import com.ibm.db2.jcc.am.in;
-import com.mysql.fabric.xmlrpc.base.Value;
-
-import net.sourceforge.htmlunit.corejs.javascript.commonjs.module.provider.CachingModuleScriptProviderBase;
+import supersql.codegenerator.Function;
+import supersql.codegenerator.Manager;
+import supersql.codegenerator.TFE;
+import supersql.common.Log;
+import supersql.extendclass.ExtList;
 
 public class VRFunction extends Function {
 
@@ -51,7 +31,6 @@ public class VRFunction extends Function {
 	public static TFE att;
 	protected static String updateFile;
 	private static Element[] options = new Element[11];
-	public static List att_name;
 	public static java.util.List<Element> filterset = new ArrayList<>();
 	static Boolean argFlag = false;
 	static Float[] oldPosition = {0f,0f,0f};
