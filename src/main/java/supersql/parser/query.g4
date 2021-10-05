@@ -245,17 +245,19 @@ function  :
     OPEN_PARENTHESE
     (
       (
-        operand
-        | exp
-        //| expr
-      )
-      (','
-        (
-          operand
-          | exp
-          //| expr
-        )
-      )*
+	      (
+	        operand
+	        | exp
+	        //| expr
+	      )
+	      (','
+	        (
+	          operand
+	          | exp
+	          //| expr
+	        )
+	      )*
+      )?
     )
     CLOSE_PARENTHESE
   )
@@ -783,6 +785,7 @@ CLOSE_BRACKET : ']' ;
 OPEN_BRACE  : '{' ;
 CLOSE_BRACE : '}' ;
 SEMICOLON : ';' ;
+COLON: ':';
 
 DECORATOR :
   '@'(WS)*'{'

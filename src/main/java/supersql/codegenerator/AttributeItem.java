@@ -54,11 +54,27 @@ public class AttributeItem implements Serializable{
 			//Log.err("定数 str: " + str);
 		} else if (CodeGenerator.sqlfunc_flag > 0) {
 			Log.out("CodeGenerator.sqlfunc_flag > 0 str: " + str);
-			// sql関数だったら
-			UseAtts.add(str);
-			//Log.out("useTablesInSQLFunc: " + CodeGenerator.useTablesInSQLFunc);
-			UseTables.addAll(CodeGenerator.useTablesInSQLFunc);
-		//} else if (st1.countTokens() == 2) {
+			//added by li 20210703 for cast function
+			if(str.startsWith("CAST")) {
+				if(str.contains("asFLOAT") || str.contains("asfloat") || str.contains("ASfloat") || str.contains("ASFLOAT")) {
+					str = str.replace("as", " as ");
+				}else if(str.contains("asINT") || str.contains("asint") || str.contains("ASint") || str.contains("ASINT")) {
+					str = str.replace("as", " as ");
+				}else if(str.contains("asDOUBLE") || str.contains("asdouble") || str.contains("ASdouble") || str.contains("ASDOUBLE")) {
+					str = str.replace("as", " as ");
+				}
+				Image = str;
+				Log.out("str for cast: " + str);
+				UseAtts.add(str);
+				//Log.out("useTablesInSQLFunc: " + CodeGenerator.useTablesInSQLFunc);
+				UseTables.addAll(CodeGenerator.useTablesInSQLFunc);
+			}else {
+				// sql関数だったら
+				UseAtts.add(str);
+				//Log.out("useTablesInSQLFunc: " + CodeGenerator.useTablesInSQLFunc);
+				UseTables.addAll(CodeGenerator.useTablesInSQLFunc);
+			//} else if (st1.countTokens() == 2) {
+			}		
 		//added by li 20210621 for sqlprocess
 		}else if(str.startsWith("&")) {
 			if(GlobalEnv.getDriverName().equals("sqlserver") && str.contains("||")) {
@@ -93,9 +109,10 @@ public class AttributeItem implements Serializable{
 		      //  Log.err("break st1 token:" + st1.nextToken());
 		      //}
 			//st1 is table.attribute
-			Log.out("str: " + str);
+			//Log.out("str: " + str);
 			boolean isNumeric =  str.matches("[+-]?\\d*(\\.\\d+)?");
 			String table = st1.nextToken();
+
 			String attribute = st1.nextToken();
 			boolean onlyStartAndEnd = true;
 			// エイリアスに""がついてたら除去(Imageでは持ってるのでSQLクエリ作るときはそっち使う)
@@ -115,7 +132,8 @@ public class AttributeItem implements Serializable{
 				//added by li 20210621 to fix like (e.salary / 10)
 			} else if(str.startsWith("(")) {
 				str = str.substring(1, str.length() - 1);
-				table = table.substring(1, table.length());
+				table = table.substring(table.length() - 1, table.length());
+				//Log.out("table: " + table);
 				UseTables.add(table);
 				UseAtts.add(str);
 			//added by li for unity with decimal 20210623
@@ -161,27 +179,33 @@ public class AttributeItem implements Serializable{
 			if (str.startsWith("\"") && str.endsWith("\"")) {
 				str = str.substring(1, str.length() - 1);
 			}
-			UseAtts.add(str);
-			ArrayList<String> containedTableList = new ArrayList<>();
-			for(Map.Entry<String, ExtList> ent: GlobalEnv.tableAtts.entrySet()){
-				String tableName = ent.getKey();
-				ExtList attributes = ent.getValue();
-				if(attributes.contains(str)){
-					for (FromTable fromTable: From.getFromItems()) {
-						if(fromTable.getTableName().equals(tableName)) {
-							containedTableList.add(fromTable.getAlias());
+			if(!str.equals("")) {
+				UseAtts.add(str);
+				ArrayList<String> containedTableList = new ArrayList<>();
+				for(Map.Entry<String, ExtList> ent: GlobalEnv.tableAtts.entrySet()){
+					String tableName = ent.getKey();
+					ExtList attributes = ent.getValue();
+					if(attributes.contains(str)){
+						for (FromTable fromTable: From.getFromItems()) {
+							if(fromTable.getTableName().equals(tableName)) {
+								containedTableList.add(fromTable.getAlias());
+							}
 						}
 					}
 				}
+				if(containedTableList.size() > 1){
+					Log.err("Attribute <" + str + "> is contained by more than two tables.");
+					Log.err("Please use alias in From clause");
+				}else if (containedTableList.size() == 0){
+					Log.err("Attribute <" + str + "> isn't contained by any tables.");
+				}else{
+					UseTables.add(containedTableList.get(0));
+				}
+			}else {
+				Log.err("Null item. Need some args");
+				//Image = "null";
 			}
-			if(containedTableList.size() > 1){
-				Log.err("Attribute <" + str + "> is contained by more than two tables.");
-				Log.err("Please use alias in From clause");
-			}else if (containedTableList.size() == 0){
-				Log.err("Attribute <" + str + "> isn't contained by any tables.");
-			}else{
-				UseTables.add(containedTableList.get(0));
-			}
+			
 		}
 
 		Log.out("[AttributeItem] useAtts: " + UseAtts);

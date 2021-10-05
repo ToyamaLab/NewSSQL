@@ -912,8 +912,9 @@ public class VRFunction extends Function {
 			Element random = vrEnv.xml.createElement("Random");
 			String asset_folder = getArg(0).getStr();
 			String number = getArg(1).getStr();
-			String max_size = getArg(2).getStr();
-			String min_size = getArg(3).getStr();
+			String min_size = getArg(2).getStr();
+			String max_size = getArg(3).getStr();
+			
 			for(int i = 0; i < sizeArg(); i++) {
 				Log.out("arg of random: " + getArg(i).getStr());
 			}
