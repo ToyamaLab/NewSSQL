@@ -87,7 +87,7 @@ public class ExtList<T> extends ArrayList<T>{
 				if(i >= length - 1){
 					return return_value;
 				}else{
-					Log.err("return value is "+return_value+".");
+					Log.out("return value is "+return_value+".");
 					break;
 				}
 			}else{

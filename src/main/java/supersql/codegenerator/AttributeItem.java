@@ -165,7 +165,7 @@ public class AttributeItem implements Serializable{
 					Log.err("Attribute <" + str + "> is contained by more than two tables.");
 					Log.err("Please use alias in From clause");
 				} else if (containedTableList.size() == 0){
-					Log.err("Attribute <" + str + "> isn't contained by any tables.");
+					Log.out("Attribute <" + str + "> isn't contained by any tables.");
 				} else {
 					UseTables.add(containedTableList.get(0));
 				}
@@ -176,12 +176,13 @@ public class AttributeItem implements Serializable{
 		     // }
 			//Log.err("Break else str: " + str);
 			// ""で囲まれてたら除去
+			ArrayList<String> containedTableList = new ArrayList<>();
 			if (str.startsWith("\"") && str.endsWith("\"")) {
 				str = str.substring(1, str.length() - 1);
 			}
 			if(!str.equals("")) {
 				UseAtts.add(str);
-				ArrayList<String> containedTableList = new ArrayList<>();
+				
 				for(Map.Entry<String, ExtList> ent: GlobalEnv.tableAtts.entrySet()){
 					String tableName = ent.getKey();
 					ExtList attributes = ent.getValue();
@@ -205,7 +206,16 @@ public class AttributeItem implements Serializable{
 				Log.err("Null item. Need some args");
 				//Image = "null";
 			}
-			
+
+			if(containedTableList.size() > 1){
+				Log.err("Attribute <" + str + "> is contained by more than two tables.");
+				Log.err("Please use alias in From clause");
+			}else if (containedTableList.size() == 0){
+				Log.out("Attribute <" + str + "> isn't contained by any tables.");
+			}else{
+				UseTables.add(containedTableList.get(0));
+			}
+
 		}
 
 		Log.out("[AttributeItem] useAtts: " + UseAtts);

@@ -428,7 +428,7 @@ public class CodeGenerator {
 				ExtList new_out = checkDecoration(tfe_tree, decos);
 				//					Log.info(new_out);
 				out_sch = read_attribute(new_out);
-				System.out.println("decolator:"+decos);
+				Log.out("decolator:"+decos);
 			}
 
 			else if( ((ExtList)tfe_tree.get(1)).get(0) instanceof String ){
@@ -635,7 +635,7 @@ public class CodeGenerator {
 							}
 						}
 						Ctab ctab = new Ctab();
-						GlobalEnv.setMultiQuery();
+						//GlobalEnv.setMultiQuery();
 						ExtList result = ctab.makeCtab(fn);
 						out_sch = read_attribute(result);
 					}else {

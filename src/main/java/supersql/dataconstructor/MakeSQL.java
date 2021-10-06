@@ -1,18 +1,26 @@
 package supersql.dataconstructor;
 
-import java.util.*;
-import java.awt.List;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Hashtable;
+import java.util.Iterator;
+import java.util.Map;
 
-import net.sf.jsqlparser.statement.select.FromItem;
 import supersql.codegenerator.AttributeItem;
-import supersql.codegenerator.Debug;
-import supersql.codegenerator.VR.VRFunction;
 import supersql.common.GlobalEnv;
 import supersql.common.Log;
 import supersql.extendclass.ExtList;
 import supersql.extendclass.QueryBuffer;
-import supersql.parser.*;
+import supersql.parser.From;
+import supersql.parser.FromInfo;
 //ryuryu
+import supersql.parser.FromParse;
+import supersql.parser.FromTable;
+import supersql.parser.Preprocessor;
+import supersql.parser.Start_Parse;
+import supersql.parser.WhereInfo;
+import supersql.parser.WhereParse;
 
 
 public class MakeSQL {
@@ -65,7 +73,6 @@ public class MakeSQL {
 		//hanki end
 
 		int tmp_flag = 0; //ryuryu
-		VRFunction.att_name = new List();
 		HashSet tg1 = new HashSet();
 		//SELECT句に属性追加
 		HashMap<Integer, AttributeItem> atts_list = new HashMap<>();
@@ -75,11 +82,9 @@ public class MakeSQL {
 
 			atts_list.put(itemno, att1);
 			if (idx != 0) {
-				VRFunction.att_name.add(att1.getSQLimage());
 				buf.append(", " + att1.getSQLimage());
 			} else {
 				buf.append(att1.getSQLimage());
-				VRFunction.att_name.add(att1.getSQLimage());
 			}
 			////			else if(SSQLparser.xpathExist == 1){
 			////

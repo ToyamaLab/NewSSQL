@@ -5,7 +5,13 @@ import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -13,14 +19,19 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 import supersql.codegenerator.AttributeItem;
-import supersql.codegenerator.Debug;
 import supersql.common.GlobalEnv;
 import supersql.common.Log;
 import supersql.db.ConnectDB;
 import supersql.db.GetFromDB;
 import supersql.extendclass.ExtList;
 import supersql.extendclass.QueryBuffer;
-import supersql.parser.*;
+import supersql.parser.From;
+import supersql.parser.FromTable;
+import supersql.parser.JoinItem;
+import supersql.parser.Preprocessor;
+import supersql.parser.Start_Parse;
+import supersql.parser.WhereInfo;
+import supersql.parser.WhereParse;
 
 public class DataConstructor {
 
@@ -54,11 +65,11 @@ public class DataConstructor {
 		GlobalEnv.afterMakeSch = System.currentTimeMillis();
 //		Log.info("Schema: " + sep_sch);
 
-		// Check Optimization Parameters
-		if (GlobalEnv.getOptLevel() == 0 || !GlobalEnv.isOptimizable()
-				|| Start_Parse.isDbpediaQuery() || Start_Parse.isJsonQuery()) {
-			sqlQueries = null;
-		} else {
+//		// Check Optimization Parameters
+//		if (GlobalEnv.getOptLevel() == 0 || !GlobalEnv.isOptimizable()
+//				|| Start_Parse.isDbpediaQuery() || Start_Parse.isJsonQuery()) {
+//			sqlQueries = null;
+//		} else {
 		// Initialize QueryDivider
 			long start = System.nanoTime();
 
@@ -77,7 +88,7 @@ public class DataConstructor {
 
 			long end = System.nanoTime();
 			exectime[ISDIVIS] = end - start;
-		}
+//		}
 
 		// Make SQL
 		//make table relation

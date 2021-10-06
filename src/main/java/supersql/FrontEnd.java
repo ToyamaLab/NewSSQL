@@ -1,8 +1,17 @@
 package supersql;
 
-import java.util.Arrays;
+import java.awt.Dimension;
+import java.awt.Toolkit;
+
+import javax.swing.JButton;
+import javax.swing.JCheckBox;
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
 
 import supersql.codegenerator.CodeGenerator;
+import supersql.codegenerator.HTML.HTMLEnv;
 import supersql.codegenerator.Responsive.Responsive;
 import supersql.common.GlobalEnv;
 import supersql.common.Log;
@@ -11,6 +20,9 @@ import supersql.common.LogInfo;
 import supersql.common.Ssedit;
 import supersql.dataconstructor.DataConstructor;
 import supersql.parser.Start_Parse;
+import supersql.tasuku.HTMLwrite_ssql_embedded;
+import supersql.tasuku.T_parser;
+import supersql.tasuku.Tasuku;
 
 public class FrontEnd {
 
@@ -23,6 +35,33 @@ public class FrontEnd {
 	public static long aftercg;
 	public static long aftersql;
 
+	
+		//tasuku SSstyle
+		static Tasuku tasuku;
+
+		public static String ssql = "";
+		public static String pre_css;
+
+		static JFrame main_frame;
+
+		static JFrame frame_first;
+		static JPanel panel_first;
+		static JScrollPane scrollPane1;
+		static JScrollPane scrollPane2;
+		static JTextArea textArea1;
+		static JTextArea textArea2;
+		static JButton btn_first_go;
+		static JButton btn_first_add;
+		static Dimension screenSize;
+		static int w;
+		static int h;
+		static JCheckBox panel_option;
+
+		static String filename;
+		public static String html_file;
+		public static String Preview_URL;
+
+		
 	public static void main(String[] args) {
 		new FrontEnd(args);
 	}
@@ -37,10 +76,23 @@ public class FrontEnd {
 	public void execSuperSQL(String[] args) {
 		start = System.currentTimeMillis();
 		//Log.info("0");
-
 		GlobalEnv.setGlobalEnv(args);
 		if(GlobalEnv.versionProcess())	return;	//added by goto 170612  for --version
-
+		
+		if (GlobalEnv.isSSstyle()) {
+			try {
+				//SSstyle
+				screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+				w = screenSize.width;
+				h = screenSize.height;
+				panel_option = new JCheckBox();
+				panel_option.setSelected(false);
+			} catch (Exception e) {
+				e.printStackTrace();
+				System.exit(-1);
+			}
+		}
+		
 		Log.info("//Entering SuperSQL System//");
 //		Log.info("1");
 
@@ -110,6 +162,30 @@ public class FrontEnd {
 			LogError.logErr();
 			if (GlobalEnv.isSsedit_autocorrect()) {
 				Ssedit.sseditInfo();
+			}
+		}
+
+		if (GlobalEnv.isSSstyle()) {
+			try {
+				int n = 0;
+				int m = 0;
+				n = GlobalEnv.getfilename().lastIndexOf("/") + 1;
+				m = GlobalEnv.getfilename().lastIndexOf(".ssql") + 5;
+				filename = GlobalEnv.getfilename().substring(n, m);
+				filename = filename.replace(".ssql", ".html");
+				html_file = GlobalEnv.getOutputDirPath() + "/" + filename;
+				Preview_URL = /*"file://" +*/ html_file ;
+				pre_css = HTMLEnv.css.toString();
+	
+				ssql = HTMLwrite_ssql_embedded.Html_Embed();
+				Tasuku.Html_tfe_add();
+				T_parser.parser(ssql);
+	
+				tasuku = new Tasuku();
+	
+			} catch (Exception e) {
+				e.printStackTrace();
+				System.exit(-1);
 			}
 		}
 
