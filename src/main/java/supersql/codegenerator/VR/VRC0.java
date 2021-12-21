@@ -29,4 +29,8 @@ public class VRC0 extends Connector {
 		return null;
 	}
 
+	public String getConcatStr(ExtList data) {
+		return data.stream().reduce("", (l, r) -> l.toString() + r.toString()).toString();
+	}
+
 }

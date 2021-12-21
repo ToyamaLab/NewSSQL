@@ -4,6 +4,8 @@ import java.io.Serializable;
 
 import org.apache.bcel.verifier.exc.StaticCodeConstraintException;
 import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
 
 import supersql.codegenerator.CodeGenerator;
 import supersql.codegenerator.Connector;
@@ -160,6 +162,7 @@ public class VRC1 extends Connector implements Serializable {
 				}
 				vrEnv.cNum--;
 				vrEnv.xmlDepth--;
+				
 			} else {
 				if (VRAttribute.genre.equals("")) {// kotani 16/10/04
 					if (vrEnv.gLevel == 0) {
@@ -217,6 +220,7 @@ public class VRC1 extends Connector implements Serializable {
 		}
 
 		Log.out("+++++++ C1 +++++++");
+
 		return null;
 	}
 }

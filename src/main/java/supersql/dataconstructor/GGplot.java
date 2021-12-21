@@ -19,8 +19,7 @@ import supersql.dataconstructor.TreeGenerator;
 
 public class GGplot {
 
-//	private static int count;
-	private static int count = 0;
+	private static int count;
 	private ExtList result;
 
 	public GGplot () {
@@ -30,14 +29,9 @@ public class GGplot {
 	/* navigate the whole schema in this method */
 	public ExtList ggplot(ExtList criteria_set, ExtList info, ExtList sch, ExtList tuples) {
 
-//		System.out.println();
 //		System.out.println(tuples);
 //		System.out.println(sch);
 //		System.out.println(info);
-		
-//if (tuples.toString().equals("[[]]")) {
-//	return tuples;
-//}
 		boolean is_ggplot = false;
 		boolean is_ggplot_1 = false;
 		boolean aethFlag = true;
@@ -108,13 +102,20 @@ public class GGplot {
 				//Comment out by li 20210610
 				/*
 				if (!is_ggplot) {
+<<<<<<< HEAD
 					Log.out("the criteria_set before: " + criteria_set);
 //				if (count>=0 && !is_ggplot) {
+=======
+>>>>>>> e225b599d4c19531ec17f62c4c2ecb8a55171f34
 					if (criteria_set.size() >= 1) {
 						if (Integer.parseInt(sch.get(i).toString()) == Integer.parseInt(criteria_set.get(criteria_set.size() - 1).toString()) + 1) {
 							criteria_set.add(sch.get(i));
 						} else {
+<<<<<<< HEAD
 //							System.out.println(count+" "+i);
+=======
+							aeth[count] = Integer.parseInt(sch.get(i).toString());
+>>>>>>> e225b599d4c19531ec17f62c4c2ecb8a55171f34
 						}
 					} else {
 						criteria_set.add(sch.get(i));
@@ -221,10 +222,6 @@ public class GGplot {
 			/* find tuples with the same criteria */
 
 			x = (ExtList)(tuples.get(0));
-			//System.out.println(x+" "+x.size()+" "+tuples.size());
-//			if (x.size()<2) {
-//				break;
-//			}
 			for (int i = 1; i < tuples.size(); i++) {
 				y = (ExtList)(tuples.get(i));
 				//Log.out("criteria: " + criteria);
@@ -498,10 +495,7 @@ public class GGplot {
 
 	        for (int i = 0; i < buffer.size(); i++) {
 	        		buffer.getExtList(i).set(Integer.parseInt(target_x), "ggplot" + r_html_filename + "_" + count + ".html");
-	        		//buffer.getExtList(i).set(Integer.parseInt(target_y), r_html_filename);
-	        		buffer.getExtList(i).set(Integer.parseInt(target_y), "");
-//	        		System.out.println(buffer.getExtListString(i, Integer.parseInt(target_x)));
-//	        		System.out.println(buffer.getExtListString(i, Integer.parseInt(target_y)));
+	        		buffer.getExtList(i).set(Integer.parseInt(target_y), r_html_filename);
 	        }
 //	        buffer.getExtList(0).set(Integer.parseInt(target_x), "ggplot" + name + ".html");
 //	        buffer.getExtList(0).set(Integer.parseInt(target_y), name);
@@ -514,7 +508,7 @@ public class GGplot {
 //			System.out.println(count);
 
 		}
-		count++;
+
 		return tuples_buffer;
 
 	}

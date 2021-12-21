@@ -79,6 +79,7 @@ public class MakeSQL {
 		for (idx = 0; idx < schf.size(); idx++) {
 			itemno = (Integer) (schf.get(idx));
 			AttributeItem att1 = (AttributeItem) (atts.get(itemno));
+
 			atts_list.put(itemno, att1);
 			if (idx != 0) {
 				buf.append(", " + att1.getSQLimage());

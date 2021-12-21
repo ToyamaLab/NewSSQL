@@ -8,8 +8,8 @@ import java.io.*;
 }
 
 ////////////////////////////////////////////////////Parse rules/////////////////////////////////////////////
-query :	
-	
+query :
+
     media
 
     root
@@ -44,7 +44,6 @@ operand :
   | NUMERIC_LITERAL
   | sl
   | (sorting)?ggplot
-  | sqlprocess
   )(DECORATOR)?
 ;
 
@@ -164,33 +163,18 @@ composite_iterator  :
   NUMERIC_LITERAL C2 (NUMERIC_LITERAL C1)?
   )//[]%2, or []%2,3! or []%2! or []%2!3,
   //;
-   
-  |
-  OPEN_BRACKET
-  exp
-  CLOSE_BRACKET
-  C4
-
-  |
-  OPEN_BRACKET
-  exp
-  CLOSE_BRACKET
-  CIRCLE
-
 
 //Merged by li 20210531
-/*|
+|
 //composite_iterator :
 OPEN_BRACKET
 exp
 CLOSE_BRACKET
 {List<String> groupersList = new ArrayList<>();}
-(grouper_token=(C1|C2|C3|C4|CIRCLE) NUMERIC_LITERAL {groupersList.add($grouper_token.	);})+
+(grouper_token=(C1|C2|C3|C4|CIRCLE) NUMERIC_LITERAL {groupersList.add($grouper_token.text);})+
 grouper_token=(C1|C2|C3|C4|CIRCLE) {groupersList.add($grouper_token.text);}
 {Set<String> groupersSet = new HashSet<>(groupersList); if(groupersList.size() != groupersSet.size()){throw new RuntimeException("Two identical connectors used in composite connector at line " + $grouper_token.line);}}
-*/
 ;
-
 
 exp : 
   t_exp
@@ -225,7 +209,6 @@ n_exp :
   (operand | concat_exp)
     (C0 (operand | concat_exp) )*
     ;
-  
 //tbt end
 
 sorting :
@@ -245,19 +228,17 @@ function  :
     OPEN_PARENTHESE
     (
       (
-	      (
-	        operand
-	        | exp
-	        //| expr
-	      )
-	      (','
-	        (
-	          operand
-	          | exp
-	          //| expr
-	        )
-	      )*
-      )?
+        operand
+        | exp
+        //| expr
+      )
+      (','
+        (
+          operand
+          | exp
+          //| expr
+        )
+      )*
     )
     CLOSE_PARENTHESE
   )
@@ -285,30 +266,19 @@ sqlfunc  :
   )
   ;
 
-//for sql process
-sqlprocess:
-	('&'
-	    OPEN_PARENTHESE
-	    	.*?
-	    CLOSE_PARENTHESE
-	)
-	;
-
 aggregate :
     ag_function_name
     OPEN_BRACKET
     attribute
     CLOSE_BRACKET
     ;
-	
+
 ggplot :
 	gg_function_name
 	OPEN_BRACKET
-	(sorting)?
     attribute
     (
     C1
-    (sorting)?
     attribute
     )*
     CLOSE_BRACKET
@@ -635,7 +605,6 @@ gg_keyword
   : K_GGPLOT
   ;
 
-  
 collation_name
   : any_name
   ;
@@ -775,9 +744,11 @@ K_GGPLOT : G G P L O T ;
 C0  : '?' ;
 C1  : ',' ;
 C2  : '!' ;
-C3  : '%' ;
-C4  : '#' ;
-CIRCLE  : '◯';
+C3  : '#' ;
+C4  : '%' ;
+//C3  : '%' ;
+//C4  : '#' ;
+CIRCLE  : '◯' | '@';
 DOT : '.' ;
 OPEN_PARENTHESE : '(' ;
 CLOSE_PARENTHESE  : ')' ;
@@ -786,7 +757,6 @@ CLOSE_BRACKET : ']' ;
 OPEN_BRACE  : '{' ;
 CLOSE_BRACE : '}' ;
 SEMICOLON : ';' ;
-COLON: ':';
 
 DECORATOR :
   '@'(WS)*'{'
@@ -858,7 +828,7 @@ IDENTIFIER
 STRING_LITERAL  : '"' ( ~'"')* '"'  | '\'' (~'\'')* '\'' ;
 
 MULTI_LINE_COMMENT  :
-  '/*' .*? ( '*/' | EOF ) -> channel(HIDDEN) ;
+  '/*' .*? ( '*/' | EOF ) -> channel(HIDDEN)  ;
 SINGLE_LINE_COMMENT :
   '--' ~[\r\n]* -> channel(HIDDEN)  ;
 WS  : [ \t\r\n　]+ -> channel(HIDDEN) ;

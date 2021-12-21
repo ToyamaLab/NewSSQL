@@ -2,6 +2,8 @@ package supersql.codegenerator.VR;
 
 import org.apache.log4j.net.SyslogAppender;
 import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
 
 import supersql.codegenerator.CodeGenerator;
 import supersql.codegenerator.Grouper;
@@ -15,7 +17,8 @@ public class VRG4 extends Grouper {
 	private VREnv vrEnv;
 	private VREnv vr_env2;
 	boolean retFlag = false;	// 20140611_masato pagenationフラグ
-
+	static int clip_id = 0;
+	
 	public VRG4(Manager manager, VREnv henv, VREnv henv2) {
 		this.vrEnv = henv;
 		this.vr_env2 = henv2;
@@ -42,6 +45,7 @@ public class VRG4 extends Grouper {
 		
 		String margin = "10.0";
 		String timerange = "";
+		String tween = "";
 		
 		if (vrEnv.decorationStartFlag.size() > 0 
 				&& ((vrEnv.decorationStartFlag.get(0) || decos.size()>0) 
@@ -104,6 +108,10 @@ public class VRG4 extends Grouper {
 		if (decos.containsKey("interval")) {
 			timerange = decos.getStr("interval");
 		}
+
+		if (decos.containsKey("tween")) { //アニメーション補間用装飾子　added by li 20211117
+			tween = decos.getStr("tween");
+		}
 		
 		this.setDataList(data_info);
 
@@ -121,13 +129,22 @@ public class VRG4 extends Grouper {
 				grouper.setAttribute("type","G4");
 				grouper.setAttribute("margin", margin);
 				grouper.setAttribute("timerange", timerange);
+				grouper.setAttribute("tween", tween); //added by li 20211117
+				grouper.setAttribute("clip_id", Integer.valueOf(clip_id).toString());//add by li 20211110
+				clip_id++;
 				vrEnv.currentNode = vrEnv.currentNode.appendChild(grouper);
 				VRG1.level++;
 				while(this.hasMoreItems()){
 					this.worknextItem();
 				}
+				Log.out("current node in G4" + vrEnv.currentNode.getNodeName());
+				
 				vrEnv.currentNode = vrEnv.currentNode.getParentNode();
+
 				if (vrEnv.currentNode.getNodeName().equals("foreach")){
+					//NodeList foreach_nodes = ((Element) vrEnv.currentNode).getElementsByTagName("foreach");
+					//Log.out("length of foreach_nodes" + foreach_nodes.getLength());
+					Log.out("foreachid: " + ((Element) vrEnv.currentNode).getAttribute("id"));
 					vrEnv.currentNode = vrEnv.currentNode.getParentNode();
 				}
 				VRG1.level--;

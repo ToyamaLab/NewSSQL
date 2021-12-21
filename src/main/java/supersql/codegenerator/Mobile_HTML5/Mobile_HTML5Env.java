@@ -2020,7 +2020,7 @@ public class Mobile_HTML5Env extends LocalEnv {
 					"	margin: 0px;\n" +
 					"	width: 100%;\n" +
 					"	background: #f0f0f0;						/* pngがインポートされなかったとき */\n" +
-					"	background-image: url(http://www.db.ics.keio.ac.jp/ssqljscss/code_bg/code_bg1.png);\n" +		//TODO jscss以下へ
+					"	background-image: url(http://www.db.ics.keio.ac.jp/ssqljscss/code_bg/code_bg1.png);\n" +
 					"	overflow: auto;\n" +
 					"}\n" +
 					"#bgcolor { margin-left:35px; }\n" +
@@ -2047,7 +2047,7 @@ public class Mobile_HTML5Env extends LocalEnv {
 					"    });\n" +
 					"    function c(val,color1,color2,bg){\n" +
 					"        $(\"body,ol\").css(\"background\",bg);		//pngがインポートされなかったとき\n" +
-					"        $(\"body,ol\").css(\"background-image\",\"url(http://www.db.ics.keio.ac.jp/ssqljscss/code_bg/code_bg\"+val+\".png)\");\n" +			//TODO jscss以下へ
+					"        $(\"body,ol\").css(\"background-image\",\"url(http://www.db.ics.keio.ac.jp/ssqljscss/code_bg/code_bg\"+val+\".png)\");\n" +
 					"        $(\"ol\").css(\"color\",color1);\n" +
 					"        $(\"#t1\").css(\"color\",color2);\n" +
 					"    }\n" +

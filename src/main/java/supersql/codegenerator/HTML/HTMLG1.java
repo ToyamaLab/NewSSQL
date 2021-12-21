@@ -93,7 +93,6 @@ public class HTMLG1 extends Grouper implements Serializable {
 					+ html_env.gLevel + ">\n");
 			return null;
 		} else {
-			HTMLEnv.start_table(this.getSymbol(), decos, html_env);
 			
 			String classname = Modifier.getClassName(decos, HTMLEnv.getClassID(this));
 //			if (this.decos.containsKey("class")) {
@@ -141,7 +140,6 @@ public class HTMLG1 extends Grouper implements Serializable {
 
 			if (!GlobalEnv.isOpt()) {
 				if (html_env.decorationStartFlag.size() > 0) {
-					HTMLDecoration.fronts.get(0).append(HTMLEnv.getNewTableBorderDIV_start());
 					if (html_env.decorationStartFlag.get(0)) {
 						HTMLDecoration.fronts.get(0).append("<TABLE cellSpacing=\"0\" cellPadding=\"0\" border=\"");
 						HTMLDecoration.fronts.get(0).append(html_env.tableBorder + "\"");
@@ -155,8 +153,7 @@ public class HTMLG1 extends Grouper implements Serializable {
 						}
 						HTMLDecoration.ends.get(0).append(" nest\"");
 						HTMLDecoration.ends.get(0).append(html_env.getOutlineMode());
-						HTMLDecoration.ends.get(0).append(HTMLEnv.getNewTableBorderStyle()+">");
-						if (!HTMLEnv.isNewTableBorder)	HTMLDecoration.ends.get(0).append("<TR>");	//TODO 不要？
+						HTMLDecoration.ends.get(0).append("><TR>");
 						html_env.decorationStartFlag.set(0, false);
 					} else {
 						HTMLDecoration.ends.get(0).append("<TABLE cellSpacing=\"0\" cellPadding=\"0\" border=\"");
@@ -171,11 +168,9 @@ public class HTMLG1 extends Grouper implements Serializable {
 						}
 						HTMLDecoration.ends.get(0).append(" nest\"");
 						HTMLDecoration.ends.get(0).append(html_env.getOutlineMode());
-						HTMLDecoration.ends.get(0).append(HTMLEnv.getNewTableBorderStyle()+">");
-						if (!HTMLEnv.isNewTableBorder)	HTMLDecoration.ends.get(0).append("<TR>");	//TODO 不要？
+						HTMLDecoration.ends.get(0).append("><TR>");
 					}
 				} else {
-					html_env.code.append(HTMLEnv.getNewTableBorderDIV_start());
 					html_env.code
 							.append("<TABLE cellSpacing=\"0\" cellPadding=\"0\" border=\"");
 					html_env.code.append(html_env.tableBorder + "\"");
@@ -204,8 +199,7 @@ public class HTMLG1 extends Grouper implements Serializable {
 					html_env.code.append(html_env.getOutlineMode());
 	
 					html_env.code.append(Modifier.getIdModifierValue(decos) + " ");//kotani_idmodifier_ok
-					html_env.code.append(HTMLEnv.getNewTableBorderStyle()+">");
-					if (!HTMLEnv.isNewTableBorder)	html_env.code.append("<TR>");	//TODO 不要？
+					html_env.code.append("><TR>");
 				}
 			}
 			// tk end//////////////////////////////////////////////////////
@@ -423,7 +417,6 @@ public class HTMLG1 extends Grouper implements Serializable {
 				}
 			}
 			Log.out("</TR></TABLE>");
-			HTMLEnv.end_table(this.getSymbol());
 
 			Log.out("TFEId = " + HTMLEnv.getClassID(this));
 			// html_env.append_css_def_td(HTMLEnv.getClassID(this), this.decos);

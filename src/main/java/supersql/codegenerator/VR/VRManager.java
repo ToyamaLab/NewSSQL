@@ -138,7 +138,7 @@ public class VRManager extends Manager {
 		/*** start oka ***/
 
 		getOutfilename();
-
+	
 		Log.out("[VRManager:generateCode]");
 		
 		vrEnv.fileName = vrEnv.outFile + ".xml";
@@ -185,8 +185,11 @@ public class VRManager extends Manager {
 						transformer.setOutputProperty("{http://xml.apache.org/xslt}indent-amount", "2");
 						transformer.setOutputProperty(OutputKeys.DOCTYPE_PUBLIC, "yes");
 						DOMSource source = new DOMSource(vrEnv.xml);
+						//DOMSource source_2D = new DOMSource(vrEnv2.xml);
 						StreamResult result = new StreamResult(new File(vrEnv.fileName));
+						//StreamResult result_2D = new StreamResult(new File(vrEnv2.fileName));
 						transformer.transform(source, result);
+						//transformer.transform(source_2D, result_2D);
 					} catch (TransformerException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
@@ -203,7 +206,7 @@ public class VRManager extends Manager {
 					pw2.println(VREnv.header);
 					pw2.println(vrEnv2.code);
 					pw2.println(vrEnv2.footer);
-					pw2.close();
+					pw2.close();	
 					
 					//TODO: check if the optimizer does anything on the generated XML
 					//TODO: check if the generated XML can/should be optimized

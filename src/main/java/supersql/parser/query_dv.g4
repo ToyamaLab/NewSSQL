@@ -1,4 +1,5 @@
-grammar query ;
+
+grammar query_dv ;
 
 @header{
 package supersql.parser;
@@ -8,19 +9,19 @@ import java.io.*;
 }
 
 ////////////////////////////////////////////////////Parse rules/////////////////////////////////////////////
-query :	
-	
+query :
+    
     media
-
-    root
-
+    
+    root 
+    
     from_where?
 
     ;
 
-root  :
+root  : 
     (
-      operand
+      operand 
       |exp
     )
       (DECORATOR )?
@@ -31,20 +32,17 @@ media : K_GENERATE IDENTIFIER ;
 operand :
   (
   (sorting)?attribute
-//  | (sorting)?join_string
-  | (sorting)?as_pair
+  | (sorting)?join_string
   | function
   | sqlfunc
   | OPEN_BRACE exp CLOSE_BRACE
   | grouper
   | composite_iterator
   | if_then_else
+  | NUMERIC_LITERAL
   | (sorting)?aggregate
   | arithmetics
-  | NUMERIC_LITERAL
   | sl
-  | (sorting)?ggplot
-  | sqlprocess
   )(DECORATOR)?
 ;
 
@@ -52,145 +50,75 @@ attribute :
   (table_alias '.')? column_name
   ;
 
-//tbt fixed 180803
-//add aggregate and sqlfunc to join_string rule and make as_pair rule
-//join_string :
-//  (
-//    (attribute | NUMERIC_LITERAL | arithmetics | sl | aggregate | sqlfunc)
-//    ('||'
-//    (attribute | NUMERIC_LITERAL | arithmetics | sl | aggregate | sqlfunc)
-//    )+
-//  )
-//  ;
-
-as_pair :
+join_string :
   (
-    (attribute | aggregate | sqlfunc)
-     K_AS
-    (any_name)
+    (attribute | NUMERIC_LITERAL | arithmetics | sl)
+    ('||'
+    (attribute | NUMERIC_LITERAL | arithmetics | sl)
+    )+
   )
   ;
-//tbt end
 
 grouper :
     OPEN_BRACKET
     exp
     CLOSE_BRACKET
-    C1
-  |
-    OPEN_BRACKET
-    exp
-    CLOSE_BRACKET
+    (C1
+    |
     C2
-  |
-    OPEN_BRACKET
-    exp
-    CLOSE_BRACKET
+    |
     C3
     |
     C4
     |
     CIRCLE
+    ) 
   ;
-
   /**grouper is [exp], | ! | % | # | ◯ */
   
-  /**grouper is [exp], | ! | % */
-
-
-
 /*
 composite_iterator  :
-  (
-    OPEN_BRACKET
-    exp
-    CLOSE_BRACKET
-    C1
-    (
-    NUMERIC_LITERAL //NUMERIC_LITERAL is number
-      (
-        (C1 | C3)
-        |
-        (C2 (NUMERIC_LITERAL C3)?) //()? There is or Nothing. Either ok.
-      )
-    )//[],2! or [],2!3% or [],2% or [],2,
-  )
-  |
-  (
-    OPEN_BRACKET
-    exp
-    CLOSE_BRACKET
-    C2
-    (
-    NUMERIC_LITERAL
-      (
-        (C2 | C3)
-        |
-        (C1 (NUMERIC_LITERAL C3)?)
-      )
-    )
-  )//[]!2, or []!2% or []!2,3% or []!2!
-  ;
-*/
-
-composite_iterator  :
-  OPEN_BRACKET
+  OPEN_BRACKET 
   exp
   CLOSE_BRACKET
   C1
   (
   NUMERIC_LITERAL C2 (NUMERIC_LITERAL C3)?
-  |
+  | 
   NUMERIC_LITERAL C3 (NUMERIC_LITERAL C2)?
   )//[],2! or [],2!3% or [],2% or [],2%3!
-  |
-  OPEN_BRACKET
-  exp
-  CLOSE_BRACKET
+  | 
+  OPEN_BRACKET 
+  exp 
+  CLOSE_BRACKET 
   C2
   (
-  NUMERIC_LITERAL C1 (NUMERIC_LITERAL C3)?
-  |
+  NUMERIC_LITERAL C1 (NUMERIC_LITERAL C3)? 
+  | 
   NUMERIC_LITERAL C3 (NUMERIC_LITERAL C1)?
   )//[]!2, or []!2,3! or []!2% or []!2%3,
-  |
-  OPEN_BRACKET
+  | 
+  OPEN_BRACKET 
   exp
-  CLOSE_BRACKET
+  CLOSE_BRACKET 
   C3
   (
-  NUMERIC_LITERAL C1 (NUMERIC_LITERAL C2)?
-  |
+  NUMERIC_LITERAL C1 (NUMERIC_LITERAL C2)? 
+  | 
   NUMERIC_LITERAL C2 (NUMERIC_LITERAL C1)?
   )//[]%2, or []%2,3! or []%2! or []%2!3,
-  //;
-   
-  |
-  OPEN_BRACKET
-  exp
-  CLOSE_BRACKET
-  C4
+  ;
+*/
 
-  |
-  OPEN_BRACKET
-  exp
-  CLOSE_BRACKET
-  CIRCLE
-
-
-//Merged by li 20210531
-/*|
-//composite_iterator :
+composite_iterator :
 OPEN_BRACKET
 exp
 CLOSE_BRACKET
 {List<String> groupersList = new ArrayList<>();}
-(grouper_token=(C1|C2|C3|C4|CIRCLE) NUMERIC_LITERAL {groupersList.add($grouper_token.	);})+
+(grouper_token=(C1|C2|C3|C4|CIRCLE) NUMERIC_LITERAL {groupersList.add($grouper_token.text);})+
 grouper_token=(C1|C2|C3|C4|CIRCLE) {groupersList.add($grouper_token.text);}
 {Set<String> groupersSet = new HashSet<>(groupersList); if(groupersList.size() != groupersSet.size()){throw new RuntimeException("Two identical connectors used in composite connector at line " + $grouper_token.line);}}
-*/
 ;
-
 
 exp : 
   t_exp
@@ -201,38 +129,30 @@ t_exp :
   (C4 (d_exp | operand) )*
   ;
 
-concat_exp :
-  (operand)
-  ('||' (operand))+
-  ;
-
 d_exp :
   v_exp
   (C3 (v_exp | operand) )*
-    ;
-
+  ;
+    
 v_exp :
   h_exp
   (C2 (h_exp | operand))*
-    ;
-
+  ;
+    
 h_exp :
   (operand | n_exp)
   (C1 (operand | n_exp) )*
   ;
 
 n_exp :
-  (operand | concat_exp)
-    (C0 (operand | concat_exp) )*
-    ;
-  
-//tbt end
+  operand C0 operand
+  ;
 
 sorting :
     OPEN_PARENTHESE
     K_ASC
     CLOSE_PARENTHESE
-    |
+    | 
     OPEN_PARENTHESE
     K_DESC
     CLOSE_PARENTHESE
@@ -245,19 +165,17 @@ function  :
     OPEN_PARENTHESE
     (
       (
-	      (
-	        operand
-	        | exp
-	        //| expr
-	      )
-	      (','
-	        (
-	          operand
-	          | exp
-	          //| expr
-	        )
-	      )*
-      )?
+        operand
+        | exp
+        //| expr 
+      )
+      ((',')
+        (
+          operand
+          | exp
+          //| expr
+        )
+      )* 
     )
     CLOSE_PARENTHESE
   )
@@ -271,83 +189,61 @@ sqlfunc  :
       (
       operand
       | exp
-      //| expr
-      )
-      (','
+      //| expr 
+      ) 
+      (',' 
         (
         operand
         | exp
         //| expr
         )
-      )*
+      )* 
     )*
     CLOSE_PARENTHESE
   )
   ;
 
-//for sql process
-sqlprocess:
-	('&'
-	    OPEN_PARENTHESE
-	    	.*?
-	    CLOSE_PARENTHESE
-	)
-	;
-
 aggregate :
-    ag_function_name
+    ag_function_name 
     OPEN_BRACKET
     attribute
     CLOSE_BRACKET
     ;
-	
-ggplot :
-	gg_function_name
-	OPEN_BRACKET
-	(sorting)?
-    attribute
-    (
-    C1
-    (sorting)?
-    attribute
-    )*
-    CLOSE_BRACKET
-    ;
 
 //if then else
-if_then_else  :
+if_then_else  : 
     (
       (
       K_IF
       OPEN_PARENTHESE
-      expr
+      expr 
       CLOSE_PARENTHESE
       K_THEN
       OPEN_PARENTHESE
       exp
-//      operand
-//      (',' operand)*
+//      operand 
+//      (',' operand)* 
       CLOSE_PARENTHESE
-      K_ELSE
+      K_ELSE 
       OPEN_PARENTHESE
       exp
-//      operand
-//      (',' operand)*
+//      operand 
+//      (',' operand)* 
       CLOSE_PARENTHESE
       )
       |
       (OPEN_PARENTHESE
-      expr
+      expr 
       CLOSE_PARENTHESE '?'
       exp':'exp
-//      ( operand  (',' operand)* )
+//      ( operand  (',' operand)* ) 
 //      ':' ( operand (',' operand)* )
       )
     )
     ;
 
 arithmetics :
-  OPEN_PARENTHESE
+  OPEN_PARENTHESE 
     arithmetics ( '*' | '/' | '%' | '+' | '-' ) arithmetics
   CLOSE_PARENTHESE
   | arithmetics ( '*' | '/' | '%' | '+' | '-' ) arithmetics
@@ -364,35 +260,35 @@ from_where
    :
     ( sql_stmt_list | error )
    ;
-
+   
 error
-  : UNEXPECTED_CHAR
-  {
-
-  throw new RuntimeException("UNEXPECTED_CHAR=" + $UNEXPECTED_CHAR.text);
+  : UNEXPECTED_CHAR 
+  { 
+  
+  throw new RuntimeException("UNEXPECTED_CHAR=" + $UNEXPECTED_CHAR.text); 
   }
   ;
 
 sql_stmt_list
-   :
+   : 
     sql_stmt ( ';'+ sql_stmt )* ';'*
    ;
 
 sql_stmt
-  :
+  :  
   ( factored_select_stmt
   | select_stmt )
-
+  
   ;
 
 
 factored_select_stmt
-   :
+   : 
    ( K_WITH K_RECURSIVE? common_table_expression ( ',' common_table_expression )* )?
      select_core ( compound_operator select_core )*
      ( K_ORDER K_BY ordering_term ( ',' ordering_term )* )?
      ( K_LIMIT expr ( ( K_OFFSET | ',' ) expr )? )?
-
+    
    ;
 
 select_core
@@ -401,7 +297,7 @@ select_core
   ( K_FROM ( table_or_subquery ( ',' table_or_subquery )* | join_clause ) )
   where_clause ?
   ;
-
+  
 where_clause  :
 (
   ( K_WHERE expr )
@@ -415,18 +311,18 @@ where_clause  :
   | K_VALUES '(' expr ( ',' expr )* ')' ( ',' '(' expr ( ',' expr )* ')' )*
 )
   ;
-
+  
 result_column
-  :
+  : 
   '*'
   | table_name '.' '*'
   | expr ( K_AS? column_alias )?
-
+  
   ;
 
 
 table_or_subquery
-  :
+  : 
   ( database_name '.' )? table_name ( K_AS? table_alias )?
   ( K_INDEXED K_BY index_name
   | K_NOT K_INDEXED )?
@@ -434,7 +330,7 @@ table_or_subquery
      | join_clause )
   ')' ( K_AS? table_alias )?
   | '(' select_stmt ')' ( K_AS? table_alias )?
-
+  
   ;
 
 keyword
@@ -459,7 +355,7 @@ keyword
   | K_ESCAPE
   | K_EXCEPT
   | K_EXISTS
-  | K_FAIL
+  | K_FAIL 
   | K_FROM
   | K_FULL
   | K_GLOB
@@ -507,7 +403,6 @@ keyword
   | K_AVG
   | K_SUM
   | K_COUNT
-  | K_GGPLOT
   ;
 
 select_stmt
@@ -558,7 +453,7 @@ expr
   | ( ( database_name '.' )? table_alias '.' )? column_name
   | unary_operator expr
   | expr '||' expr
-  | expr ( '*' | '/' | '%' | '\\') expr
+  | expr ( '*' | '/' | '%' ) expr
   | expr ( '+' | '-' ) expr
   | expr ( '<<' | '>>' | '&' | '|' ) expr
   | expr ( '<' | '<=' | '>' | '>=' ) expr
@@ -574,7 +469,7 @@ expr
   | expr K_NOT? K_BETWEEN expr K_AND expr
   | expr K_NOT? K_IN ( '(' ( select_stmt
                         | expr ( ',' expr )*
-                        )?
+                        )? 
                     ')'
                   | ( database_name '.' )? table_name )
   | ( ( K_NOT )? K_EXISTS )? '(' select_stmt ')'
@@ -609,7 +504,7 @@ type_name
   ;
 
 function_name
-  :
+  : 
   any_name
   ;
 
@@ -627,24 +522,15 @@ ag_keyword
   |K_COUNT
   ;
 
-gg_function_name
-  : gg_keyword
-  ;
-
-gg_keyword
-  : K_GGPLOT
-  ;
-
-  
-collation_name
+collation_name 
   : any_name
   ;
-
+  
 database_name
   : any_name
   ;
-
-table_name
+  
+table_name 
   : any_name
   ;
 
@@ -653,28 +539,28 @@ column_alias
   | STRING_LITERAL
   ;
 
-column_name
-  :
+column_name 
+  : 
   any_name
-
+  
+  ;
+  
+table_alias 
+  : 
+  any_name
+  
   ;
 
-table_alias
-  :
+index_name 
+  : 
   any_name
-
-  ;
-
-index_name
-  :
-  any_name
-
+  
   ;
 
 any_name
   : keyword
-  | IDENTIFIER
-  | STRING_LITERAL
+  | IDENTIFIER 
+//  | STRING_LITERAL 
 //  | '(' any_name ')'
   ;
 
@@ -685,7 +571,7 @@ signed_number
   ;
 
 raise_function
-  : K_RAISE '(' ( K_IGNORE
+  : K_RAISE '(' ( K_IGNORE 
              | ( K_ROLLBACK | K_ABORT | K_FAIL ) ',' error_message )
          ')'
   ;
@@ -696,76 +582,75 @@ error_message
 
 
 //////////////////////////////////////////Lexer rules/////////////////////////////////////////////////////
-K_ABORT : A B O R T;
-K_ADD : A D D;
+K_ABORT : A B O R T;    
+K_ADD : A D D;      
 K_ALL : A L L;
-K_AND : A N D;
-K_AS : A S;
+K_AND : A N D;        
+K_AS : A S;       
 K_ASC : A S C DIGIT*;
-K_BETWEEN : B E T W E E N;
-K_BY : B Y;
+K_BETWEEN : B E T W E E N;  
+K_BY : B Y;       
 K_CASE : C A S E;
-K_CAST : C A S T;
+K_CAST : C A S T;     
 K_COLLATE : C O L L A T E;
-K_CROSS : C R O S S;
+K_CROSS : C R O S S;    
 K_CURRENT_DATE : C U R R E N T '_' D A T E;
-K_CURRENT_TIME : C U R R E N T '_' T I M E;
+K_CURRENT_TIME : C U R R E N T '_' T I M E;     
 K_CURRENT_TIMESTAMP : C U R R E N T '_' T I M E S T A M P;
-K_DESC : D E S C DIGIT*;
+K_DESC : D E S C DIGIT*;  
 K_DISTINCT : D I S T I N C T;
-K_ELSE : E L S E;
-K_END : E N D;
-K_ESCAPE : E S C A P E;
-K_EXCEPT : E X C E P T;
-K_EXISTS : E X I S T S;
+K_ELSE : E L S E;     
+K_END : E N D;      
+K_ESCAPE : E S C A P E; 
+K_EXCEPT : E X C E P T;   
+K_EXISTS : E X I S T S; 
 K_FAIL : F A I L;
-K_FULL  : F U L L ;
-K_FROM : F R O M;
+K_FULL  : F U L L ;   
+K_FROM : F R O M;   
 K_GLOB : G L O B;
-K_GROUP : G R O U P;
-K_HAVING : H A V I N G;
+K_GROUP : G R O U P;    
+K_HAVING : H A V I N G; 
 K_IF : I F;
-K_IGNORE : I G N O R E;
-K_IN : I N;
+K_IGNORE : I G N O R E;   
+K_IN : I N;       
 K_INDEXED : I N D E X E D;
-K_INNER : I N N E R;
+K_INNER : I N N E R;    
 K_INTERSECT : I N T E R S E C T;
-K_IS : I S;
-K_ISNULL : I S N U L L;
+K_IS : I S;         
+K_ISNULL : I S N U L L; 
 K_JOIN : J O I N;
-K_LEFT : L E F T;
-K_LIKE : L I K E;
+K_LEFT : L E F T;     
+K_LIKE : L I K E;   
 K_LIMIT : L I M I T;
-K_MATCH : M A T C H;
+K_MATCH : M A T C H;    
 K_NATURAL : N A T U R A L;
-K_NO : N O;
-K_NOT : N O T;
+K_NO : N O;         
+K_NOT : N O T;      
 K_NOTNULL : N O T N U L L;
-K_NULL : N U L L;
+K_NULL : N U L L;     
 K_OFFSET : O F F S E T; K_ON : O N;
-K_OR : O R;
-K_ORDER : O R D E R;
+K_OR : O R;         
+K_ORDER : O R D E R;  
 K_OUTER : O U T E R;
-K_RAISE : R A I S E;
+K_RAISE : R A I S E;    
 K_RECURSIVE : R E C U R S I V E;
-K_REGEXP : R E G E X P;
-K_RIGHT : R I G H T ;
+K_REGEXP : R E G E X P; 
+K_RIGHT : R I G H T ; 
 K_ROLLBACK : R O L L B A C K;
-K_SELECT : S E L E C T;
-K_THEN : T H E N;
+K_SELECT : S E L E C T;   
+K_THEN : T H E N;   
 K_UNION : U N I O N;
-K_USING : U S I N G;
+K_USING : U S I N G;    
 K_VALUES : V A L U E S;
-K_WHEN : W H E N;
-K_WHERE : W H E R E;
+K_WHEN : W H E N;     
+K_WHERE : W H E R E;  
 K_WITH  : W I T H;
-K_GENERATE  : G E N E R A T E ;
+K_GENERATE  : G E N E R A T E ;         
 K_MAX : M A X ;
-K_MIN : M I N ;
-K_AVG : A V G ;
-K_COUNT : C O U N T ;
+K_MIN : M I N ;   
+K_AVG : A V G ; 
+K_COUNT : C O U N T ;     
 K_SUM : S U M ;
-K_GGPLOT : G G P L O T ;
 
 //MEDIA : K_GENERATE (WS)+ [a-zA-Z_-]+[0-9]* ;
 
@@ -777,7 +662,7 @@ C1  : ',' ;
 C2  : '!' ;
 C3  : '%' ;
 C4  : '#' ;
-CIRCLE  : '◯';
+CIRCLE  : '◯' | '@';
 DOT : '.' ;
 OPEN_PARENTHESE : '(' ;
 CLOSE_PARENTHESE  : ')' ;
@@ -786,55 +671,36 @@ CLOSE_BRACKET : ']' ;
 OPEN_BRACE  : '{' ;
 CLOSE_BRACE : '}' ;
 SEMICOLON : ';' ;
-COLON: ':';
 
 DECORATOR :
   '@'(WS)*'{'
     (
       (WS)*[a-zA-Z_.-]+(WS)*[0-9]*
-      |
+      | 
       (WS)*[a-zA-Z_0-9.-]+(WS)*'='
       (WS)*(
-        '#'?[a-zA-Z_0-9.-]+
-        | [0-9]+('%')?
-        | STRING_LITERAL
+        '#'?[a-zA-Z_0-9.-]+ 
+        | [0-9]+('%')? 
+        | STRING_LITERAL 
         | (('~' | '.' | [a-zA-Z_0-9]+ | ':')+((WS)*('/' | '//')[a-zA-Z_0-9.]+)*)
-      )(WS)*
-      ('||'
-        (
-          '#'?[a-zA-Z_0-9.-]+
-          | [0-9]+('%')?
-          | STRING_LITERAL
-          | (('~' | '.' | [a-zA-Z_0-9]+ | ':')+((WS)*('/' | '//')[a-zA-Z_0-9.]+)*)
-        )(WS)*
-      )*
+      )
     )
       ((WS)*','
         (
-          (WS)*[a-zA-Z_.-]+(WS)*[0-9]*
+          WS)*[a-zA-Z_.-]+(WS)*[0-9]* 
           | (WS)*[a-zA-Z_0-9.-]+(WS)*'='
           (WS)*(
-            '#'?[a-zA-Z_0-9.-]+
-            | [0-9]+('%')?
-            | STRING_LITERAL
+            '#'?[a-zA-Z_0-9.-]+ 
+            | [0-9]+('%')? 
+            | STRING_LITERAL 
             | (('~' | '.' | [a-zA-Z_0-9]+)((WS)*'/'[a-zA-Z_0-9.]+)*)
-          )(WS)*
-          ('||'
-            (
-              '#'?[a-zA-Z_0-9.-]+
-              | [0-9]+('%')?
-              | STRING_LITERAL
-              | (('~' | '.' | [a-zA-Z_0-9]+ | ':')+((WS)*('/' | '//')[a-zA-Z_0-9.]+)*)
-            )(WS)*
-          )*
-        )
+          )
       )*(WS)*
-  '}'
+  '}' 
       ;
 
-
 NUMERIC_LITERAL
-  :(DIGIT+('.'DIGIT+)?)([eE][+-]?DIGIT+)?
+  : DIGIT+ ( '.' DIGIT* )? ( E [-+]? DIGIT+ )?
   | '.' DIGIT+ ( E [-+]? DIGIT+ )?
   ;
 
@@ -848,17 +714,18 @@ BIND_PARAMETER
   ;
 
 IDENTIFIER
-  :
+  : 
 //  '"' (~'"' | '""')* '"'
 //  | '`' (~'`' | '``')* '`'
-//  |
-  [a-zA-Z_0-9]*[a-zA-Z_][a-zA-Z_0-9]* // TODO check: needs more chars in set
+//  | 
+  [a-zA-Z_0-9]* [a-zA-Z_] [a-zA-Z_0-9]* // TODO check: needs more chars in set
   ;
 
-STRING_LITERAL  : '"' ( ~'"')* '"'  | '\'' (~'\'')* '\'' ;
+STRING_LITERAL  : '\"' ( ~'\"')* '\"'  | '\'' (~'\'')* '\'' ;
+//STRING_LITERAL  : '"' ( ~'"')* '"'  | '\'' (~'\'')* '\'' ;
 
 MULTI_LINE_COMMENT  :
-  '/*' .*? ( '*/' | EOF ) -> channel(HIDDEN) ;
+  '/*' .*? ( '*/' | EOF ) -> channel(HIDDEN)  ; 
 SINGLE_LINE_COMMENT :
   '--' ~[\r\n]* -> channel(HIDDEN)  ;
 WS  : [ \t\r\n　]+ -> channel(HIDDEN) ;
@@ -867,7 +734,7 @@ UNEXPECTED_CHAR
   : .
   ;
 
-fragment DIGIT : [-]?[0-9]('.'[0-9])?;
+fragment DIGIT : [0-9];
 fragment A : [aA];  fragment B : [bB];
 fragment C : [cC];  fragment D : [dD];
 fragment E : [eE];  fragment F : [fF];

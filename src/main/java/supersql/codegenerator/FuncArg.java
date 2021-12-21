@@ -6,6 +6,9 @@ import supersql.codegenerator.HTML.HTMLFunction;
 import supersql.codegenerator.Mobile_HTML5.Mobile_HTML5Function;
 import supersql.codegenerator.Mobile_HTML5.Mobile_HTML5_dynamic;
 import supersql.codegenerator.Mobile_HTML5.Mobile_HTML5_stream;
+import supersql.codegenerator.VR.VRC0;
+import supersql.codegenerator.VR.VRCONCAT;
+import supersql.codegenerator.VR.VRFunction;
 import supersql.codegenerator.infinitescroll.Infinite_dynamic;
 import supersql.common.Log;
 import supersql.extendclass.ExtList;
@@ -148,17 +151,21 @@ public class FuncArg {
 //			
 ////			return null;
 //			return null;
-			if(HTMLFunction.HTMLFunctionFlag || Mobile_HTML5Function.Mobile_HTML5FunctionFlag){
+			if(HTMLFunction.HTMLFunctionFlag || Mobile_HTML5Function.Mobile_HTML5FunctionFlag || VRFunction.VRFunctionFlag){
 				// Concat対策
 				// C0かつその下がHTMLCONCATだったら
 				Log.out("In concat tfe: " + tfe);
+				//Log.out("tfe.makele0().getExtListString(1, 0): " + tfe.makele0().getExtListString(1, 0));
 				if (tfe instanceof HTMLC0 && tfe.makele0().getExtListString(1, 0).equals("HTMLCONCAT")) {
 					Log.out("[Found concat in SSQL Function]");
 					Log.out("[TFE le0]: " + tfe.makele0());
 					Log.out("[Data]: " + Data);
 					return ((HTMLC0) tfe).getConcatStr(Data);
+				}else if(tfe instanceof VRC0 && tfe.makele0().getExtListString(1, 0).equals("VRCONCAT")) {
+					return ((VRC0) tfe).getConcatStr(Data);
 				}else if(tfe instanceof HTMLCONCAT){
-					
+					return tfe.work(Data);
+				}else if(tfe instanceof VRCONCAT) {
 					return tfe.work(Data);
 				}
 				return tfe.work(Data);

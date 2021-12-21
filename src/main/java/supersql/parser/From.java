@@ -63,6 +63,7 @@ public class From {
             PlainSelect pselect = (PlainSelect) select.getSelectBody();
             FromTable fromTable = new FromTable(pselect.getFromItem().toString());
             fromItems.add(fromTable);
+            //Log.out("pselect.getJoins().size() " + pselect.getJoins().size());
             for (int i = 0; i < pselect.getJoins().size(); i++) {
                 JoinItem joinItem = new JoinItem(pselect.getJoins().get(i));
                 joinItems.add(joinItem);
