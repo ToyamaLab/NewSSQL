@@ -30,14 +30,16 @@ public class VRFunction extends Function {
 	private final int POSITION = 9;
 	private final int MOVE = 10;
 	private final int CAMERA = 11;
+	private final int TWEEN = 12;
 	public static TFE att;
 	protected static String updateFile;
-	private static Element[] options = new Element[12];
+	private static Element[] options = new Element[13];
 	public static List att_name;
 	public static java.util.List<Element> filterset = new ArrayList<>();
 	static Boolean argFlag = false;
 	static Float[] oldPosition = {0f,0f,0f};
 	static Element passedfilter = null;
+	int id = 0;
 	
 	//added by li 20210601
 	public static boolean VRFunctionFlag = false;
@@ -89,6 +91,15 @@ public class VRFunction extends Function {
 		String FuncName = this.getFuncName().toLowerCase();
 		
 		switch (FuncName) {
+		case "clip":
+
+			Log.out("argsize of clip" + sizeArg());
+			for (int i = 0; i < sizeArg(); i++) {
+				Log.out("argL: " + getArg(i).toString());
+				getArg(i).workAtt();
+			}
+			break;
+			
 		case "scene":
 			Element scene = vrEnv.xml.createElement("Scene");
 			String scene_name = getArg(0).getStr();
@@ -197,7 +208,7 @@ public class VRFunction extends Function {
 					cube.setAttribute("size", getArg(1).getStr());
 					cube.setAttribute("size_name", getArg(1).getTFE().decos.getStr("filtername"));
 					cube.setAttribute("filter", getArg(1).getTFE().decos.getStr("filter"));
-					
+
 					if (getArg(sizeArg()-1).getTFE().decos.containsKey("name")){
 						cube.setAttribute("csize_name", getArg(sizeArg()-1).getTFE().decos.getStr("name"));
 					} else {
@@ -373,8 +384,8 @@ public class VRFunction extends Function {
 			case "text":
 				Element text = vrEnv.xml.createElement("text");
 				for(int i = 0; i < sizeArg(); i++){
-					Log.out("break: " + (getArg(1).tfe));
-					Log.out("In text Arg(" + i + ") " + (getArg(i).tfe).countconnectitem());
+					//Log.out("break: " + (getArg(1).tfe));
+					//Log.out("In text Arg(" + i + ") " + (getArg(i).tfe).countconnectitem());
 				}
 				String contents = getArg(1).getStr();
 				String t_size = getArg(2).getStr();
@@ -593,6 +604,29 @@ public class VRFunction extends Function {
 			}
 			options[CAMERA] = oldcamera;
 
+			break;
+			
+		case "tween":			//added by li for tween 20211117
+			Element oldtween = options[TWEEN];
+			//String cType = getArg(sizeArg()-1).getStr();
+			Element tween = vrEnv.xml.createElement("tween");
+			
+			tween.setAttribute("switch", "on");
+
+			for (int i = 1; i < sizeArg(); i++) {
+				//getArg(i).workAtt();
+				//Log.out("arg of tween: " + getArg(i).getStr());
+				Element tween_attr = vrEnv.xml.createElement("attribute");
+				if(i == 1) {
+					tween_attr.setAttribute("name", getArg(i).getStr()); //第二引数あるとしたらオブジェクト名にする
+				}else {
+					tween_attr.setAttribute("value", getArg(i).getStr()); //第三引数以降は補間したいvalueを取得
+				}
+				tween.appendChild(tween_attr);
+			}
+			options[TWEEN] = tween;
+			getArg(0).workAtt();
+			options[TWEEN] = oldtween;
 			break;
 			
 		case "rotate":
@@ -814,9 +848,32 @@ public class VRFunction extends Function {
 				
 		case "foreach":
 			String fId = getArg(sizeArg()-1).getStr();
+			//Log.out("foreach id : " + getArg(sizeArg()-1).getStr());
 			Element foreach = vrEnv.xml.createElement("foreach");
 			foreach.setAttribute("id", fId);
-			vrEnv.currentNode = vrEnv.currentNode.appendChild(foreach);
+			Log.out("currentNode of foreach: " + vrEnv.currentNode.getNodeName());
+			Log.out("parent of currentNode of foreach: " + vrEnv.currentNode.getParentNode().getNodeName());
+			//vrEnv.currentNode = vrEnv.currentNode.appendChild(foreach);
+			
+			//強引にXMLファイルを直している added by li 20211110
+			if(!vrEnv.currentNode.getNodeName().startsWith("Grouper")){
+				Node parent = vrEnv.currentNode.getParentNode();
+				do {
+					Log.out("parent node in loop: " + parent.getNodeName());
+					if(parent.getNodeName().startsWith("Grouper")) {	
+						parent = parent.appendChild(foreach);
+						foreach = (Element) foreach.appendChild(vrEnv.currentNode);
+						break;
+					}else {
+						parent = parent.getParentNode();
+					}	
+				}while(parent != null);
+				
+			}else{
+				vrEnv.currentNode = vrEnv.currentNode.appendChild(foreach);
+			}
+			VRG4.clip_id = 0;//reset clip_id
+			///////////////
 			break;
 			
 		case "filter":
@@ -861,6 +918,7 @@ public class VRFunction extends Function {
 			env.setAttribute("attribute", attribute);
 			env.setAttribute("value", env_value);
 			vrEnv.currentNode.appendChild(env);
+			addOptions(env);
 			break;
 		//
 		case "annotation":
@@ -873,6 +931,7 @@ public class VRFunction extends Function {
 			anno.setAttribute("type", anno_type);
 			anno.setAttribute("contents", anno_contents);
 			vrEnv.currentNode.appendChild(anno);
+			addOptions(anno);
 			break;
 		
 		case "chart":

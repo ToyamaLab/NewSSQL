@@ -14,7 +14,7 @@ public class LinkForeach {
 
 	public static boolean plink_glink = false;				//added by goto 20161109 for plink/glink
 
-	private String r;
+	private String r;	
 	
 	public LinkForeach() {
 

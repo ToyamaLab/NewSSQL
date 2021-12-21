@@ -506,11 +506,13 @@ public class QueryBuffer {
     }
 
     private void makeUsedTables(ArrayList<String> usedTables) {
+    	
         for (int i = 0; i < usedTables.size(); i++) {
             ArrayList<String> relatedtables = GlobalEnv.relatedTableSet.get(usedTables.get(i));
-//            System.out.println("rel: " + GlobalEnv.relatedTableSet);
-//            System.out.println("used: " + usedTables);
-//            System.out.println("relatedtables:::"+relatedtables);
+            System.out.println("rel: " + GlobalEnv.relatedTableSet);
+            System.out.println("used: " + usedTables);
+            System.out.println("relatedtables:::"+relatedtables);
+            Log.out("relatedtables.size(): " + relatedtables.size());
             for (int j = 0; j < relatedtables.size(); j++) {
                 if(relatedtables.get(j).equals("contains_one_side_constraint")){
                     continue;

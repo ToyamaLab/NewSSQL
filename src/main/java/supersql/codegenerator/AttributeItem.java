@@ -57,11 +57,20 @@ public class AttributeItem implements Serializable{
 			//added by li 20210703 for cast function
 			if(str.startsWith("CAST")) {
 				if(str.contains("asFLOAT") || str.contains("asfloat") || str.contains("ASfloat") || str.contains("ASFLOAT")) {
-					str = str.replace("as", " as ");
+					str = str.replace("asFLOAT", " as float");
+					str = str.replace("asfloat", " as float");
+					str = str.replace("ASfloat", " AS float");
+					str = str.replace("ASFLOAT", " AS float");
 				}else if(str.contains("asINT") || str.contains("asint") || str.contains("ASint") || str.contains("ASINT")) {
-					str = str.replace("as", " as ");
+					str = str.replace("asINT", " as int");
+					str = str.replace("asint", " as int");
+					str = str.replace("ASint", " as int");					
+					str = str.replace("ASINT", " as int");	
 				}else if(str.contains("asDOUBLE") || str.contains("asdouble") || str.contains("ASdouble") || str.contains("ASDOUBLE")) {
-					str = str.replace("as", " as ");
+					str = str.replace("asDOUBLE", " as double");
+					str = str.replace("asdouble", " as double");
+					str = str.replace("ASdouble", " as double");
+					str = str.replace("ASDOUBLE", " as double");
 				}
 				Image = str;
 				Log.out("str for cast: " + str);

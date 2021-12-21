@@ -164,16 +164,6 @@ public interface queryListener extends ParseTreeListener {
 	 */
 	void exitN_exp(queryParser.N_expContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link queryParser#cast}.
-	 * @param ctx the parse tree
-	 */
-	void enterCast(queryParser.CastContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link queryParser#cast}.
-	 * @param ctx the parse tree
-	 */
-	void exitCast(queryParser.CastContext ctx);
-	/**
 	 * Enter a parse tree produced by {@link queryParser#sorting}.
 	 * @param ctx the parse tree
 	 */

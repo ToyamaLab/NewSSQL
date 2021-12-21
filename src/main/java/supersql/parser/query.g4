@@ -300,7 +300,7 @@ aggregate :
     attribute
     CLOSE_BRACKET
     ;
-
+	
 ggplot :
 	gg_function_name
 	OPEN_BRACKET
@@ -635,6 +635,7 @@ gg_keyword
   : K_GGPLOT
   ;
 
+  
 collation_name
   : any_name
   ;

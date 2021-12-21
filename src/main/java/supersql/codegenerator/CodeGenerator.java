@@ -642,7 +642,8 @@ public class CodeGenerator {
 						out_sch = func_read((ExtList)((ExtList)((ExtList)tfe_tree.get(1)).get(0)).get(1));
 						//out_sch = func_read((ExtList)((ExtList)((ExtList)tfe_tree.get(1)).get(0)).get(1)).fnc;
 					}
-				}else if( ((ExtList)((ExtList)tfe_tree.get(1)).get(0)).get(0).toString().equals("sqlprocess") ) {
+				}
+				else if( ((ExtList)((ExtList)tfe_tree.get(1)).get(0)).get(0).toString().equals("sqlprocess") ) {
 					ExtList base = ((ExtList) ((ExtList) tfe_tree.get(1)).get(0)); 
 					int p_size = ((ExtList)base.get(1)).size();
 					String sql = "&";
@@ -693,6 +694,15 @@ public class CodeGenerator {
     		                    Log.out("useTablesInSQLFunc: " + useTablesInSQLFunc);
     		                    if (inner_sqlfunc_count == 0) useTablesInSQLFunc = new HashSet<>();
     		                    sqlfunc_flag--;
+                        	}else {
+                        		//Postgres用 by li 20211017
+                        		String sqlfunc = getText(base, Start_Parse.ruleNames);
+    	                        Attribute func = makeAttribute(sqlfunc);
+                            	out_sch = func;
+    	                        useTablesInSQLFunc.addAll(getUsedtablesInSQLFunc(base));
+    		                    Log.out("useTablesInSQLFunc: " + useTablesInSQLFunc);
+    		                    if (inner_sqlfunc_count == 0) useTablesInSQLFunc = new HashSet<>();
+    		                    sqlfunc_flag--;          
                         	}
                         //
                         }
