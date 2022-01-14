@@ -355,6 +355,7 @@ public class Suggest {
 			Ssedit.AutocorrectAlgorirhm_SQL(tName, null, tNames, null, "from");
 		} catch (IOException e) {
 			// TODO 自動生成された catch ブロック
+			System.out.println("catch");
 			e.printStackTrace();
 		}
 
