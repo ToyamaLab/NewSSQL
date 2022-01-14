@@ -27,11 +27,16 @@
 			<artifactId>javax.servlet-api</artifactId>
 			<version>4.0.0-b05</version>
 		</dependency>
-		<dependency>
-			<groupId>org.eclipse.ecf</groupId>
-			<artifactId>org.apache.log4j</artifactId>
-			<version>1.2.15.v201012070815</version>
-		</dependency>
+	  	<dependency>
+		    <groupId>org.apache.logging.log4j</groupId>
+		    <artifactId>log4j-api</artifactId>
+		    <version>2.17.1</version>
+	  	</dependency>
+	  	<dependency>
+		    <groupId>org.apache.logging.log4j</groupId>
+		    <artifactId>log4j-core</artifactId>
+		    <version>2.17.1</version>
+	  	</dependency>
 		<dependency>
 			<groupId>com.ibm.db2.jcc</groupId>
 			<artifactId>db2jcc</artifactId>
@@ -81,11 +86,13 @@
     		<artifactId>postgresql</artifactId>
     		<version>9.4.1208.jre7</version>
 		</dependency>
+		<!--
 		<dependency>
 			<groupId>org.slf4j</groupId>
 			<artifactId>slf4j-log4j12</artifactId>
 			<version>1.7.25</version>
 		</dependency>
+		-->
 		<!-- https://mvnrepository.com/artifact/com.github.jsqlparser/jsqlparser -->
 		<dependency>
 			<groupId>com.github.jsqlparser</groupId>

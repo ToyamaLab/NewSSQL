@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!-- <!DOCTYPE log4j:configuration SYSTEM "log4j.dtd"> -->
+
+<Configuration status="WARN">
+    <Properties>
+      <!-- ログを転送するサーバ -->
+      <Property name="SyslogHost" value="131.113.101.124" />
+      <!--　ポート番号-->
+      <Property name="SyslogPort" value="514" />
+      <!-- ファシリティの設定 -->
+      <Property name="Facility" value="local0" />
+    </Properties>
+
+   <Appenders>
+      <Syslog name="syslog" host="${SyslogHost}" port="${SyslogPort}" facility="${Facility}" newLine="true" protocol="UDP" />
+   </Appenders>
+
+   <Loggers>
+      <Root level="trace">
+        <AppenderRef ref="syslog" />
+      </Root>
+   </Loggers>
+</Configuration>

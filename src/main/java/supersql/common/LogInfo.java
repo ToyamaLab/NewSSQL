@@ -1,19 +1,29 @@
 package supersql.common;
 
-import org.apache.log4j.Logger;
-import org.apache.log4j.xml.DOMConfigurator;
+import java.io.File;
+
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.core.LoggerContext;
 
 public class LogInfo {
-	// (1)Loggerオブジェクトの生成
-	static Logger log = Logger.getLogger(LogInfo.class.getName());
-	// (2)設定ファイルの読み込み
-//	private final String INFO_XML = "/home/kyozai/toyama/SuperSQL/log4j/log4j_info.xml";
-	private final String INFO_XML = GlobalEnv.getworkingDir() + GlobalEnv.OS_FS + "log4j" + GlobalEnv.OS_FS + "log4j_info.xml";
+	// Loggerオブジェクト
+	static Logger log = null;
+	// 設定ファイル
+	private final String INFO_XML = GlobalEnv.getworkingDir() + GlobalEnv.OS_FS + "log4j" + GlobalEnv.OS_FS + "log4j2_info.xml";
 
 
-	// 20140625_masato 実習用　
 	public LogInfo(){
-		DOMConfigurator.configure(INFO_XML);
+//		DOMConfigurator.configure(INFO_XML);
+		if (log == null) {
+			// (1)設定ファイルの読み込み
+			File file = new File(INFO_XML);
+			LoggerContext context = (LoggerContext) LogManager.getContext(false);
+			context.setConfigLocation(file.toURI());
+			
+			// (2)Loggerオブジェクトの生成
+			log = LogManager.getLogger(LogInfo.class.getName());
+		}
 	}
 
 	public static void logInfo(boolean succeeded) {
@@ -26,8 +36,8 @@ public class LogInfo {
 	}
 
 	private void logInfo(String queryInfo) {
-		log.debug(queryInfo);
+//		log.debug(queryInfo);
+		log.trace(queryInfo);
 	}
-
 }
 

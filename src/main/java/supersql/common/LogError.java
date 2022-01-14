@@ -1,19 +1,29 @@
 package supersql.common;
 
-import org.apache.log4j.Logger;
-import org.apache.log4j.xml.DOMConfigurator;
+import java.io.File;
+
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.core.LoggerContext;
 
 public class LogError {
-	// (1)Loggerオブジェクトの生成
-	static Logger log = Logger.getLogger(LogError.class.getName());
-	// (2)設定ファイルの読み込み
-//	private final String ERR_XML = "/home/kyozai/toyama/SuperSQL/log4j/log4j_err.xml";
-	private final String ERR_XML = GlobalEnv.getworkingDir() + GlobalEnv.OS_FS + "log4j" + GlobalEnv.OS_FS + "log4j_err.xml";
+	// Loggerオブジェクト
+	static Logger log = null;
+	// 設定ファイル
+	private final String ERR_XML = GlobalEnv.getworkingDir() + GlobalEnv.OS_FS + "log4j" + GlobalEnv.OS_FS + "log4j2_err.xml";
 
 
-	// 20140625_masato 実習用　
 	public LogError(){
-		DOMConfigurator.configure(ERR_XML);
+//		DOMConfigurator.configure(ERR_XML);
+		if (log == null) {
+			// (1)設定ファイルの読み込み
+			File file = new File(ERR_XML);
+			LoggerContext context = (LoggerContext) LogManager.getContext(false);
+			context.setConfigLocation(file.toURI());
+			
+			// (2)Loggerオブジェクトの生成
+			log = LogManager.getLogger(LogInfo.class.getName());
+		}
 	}
 
 	public static void logErr() {
@@ -27,7 +37,8 @@ public class LogError {
 	}
 
 	private void logErr(String queryInfo) {
-		log.debug(queryInfo);
+//		log.debug(queryInfo);
+		log.trace(queryInfo);
 	}
 }
 

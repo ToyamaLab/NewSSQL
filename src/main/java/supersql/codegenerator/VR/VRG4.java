@@ -1,6 +1,5 @@
 package supersql.codegenerator.VR;
 
-import org.apache.log4j.net.SyslogAppender;
 import org.w3c.dom.Element;
 
 import supersql.codegenerator.CodeGenerator;
