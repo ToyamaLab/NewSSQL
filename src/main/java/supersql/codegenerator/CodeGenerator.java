@@ -1,9 +1,18 @@
 package supersql.codegenerator;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Hashtable;
+import java.util.List;
 
+import supersql.FrontEnd;
 import supersql.codegenerator.Compiler.Compiler;
 import supersql.codegenerator.Compiler.JSP.JSPFactory;
 import supersql.codegenerator.Compiler.PHP.PHP;
@@ -60,6 +69,50 @@ public class CodeGenerator {
 
 	public static boolean limitFlag;
 
+	//20210413 yama
+	public static int t_cont_count = 0;
+
+	//20210414 yama
+	public static int appbar_count = 0;
+	public static int t_appbar_count = 0;
+	public static int tab_count = 0;
+	public static int vtab_count = 0;
+	public static int f_vtab_count = 0;
+	public static int embed_count = 0;
+	public static int gridlist_count = 0;
+	public static int button_count = 0;
+	public static int textfield_count = 0;
+	public static int u_textfield_count = 0;
+	public static int text_count = 0;
+	public static int card_count = 0;
+	public static int grid_count = 0;
+	public static int cont_maxnest = 0;
+	public static int list_count = 0;
+	public static int divider_count = 0;
+	public static int avatar_count = 0;
+
+	public static boolean tabflag;
+	public static boolean t_contflag;
+	//20210906 yama
+	public static boolean t_embedflag;
+	//20211118 yama
+	public static boolean contflag;
+
+	//20210506 yama
+	public static ArrayList<Integer> embed_List = new ArrayList<Integer>();
+	//20210519 yama
+	public static List<List<String>> embedlines = new ArrayList<>();
+	//20210706 yama tab内で使われているコンポーネントのリスト ex)textfield, button
+	public static List<List<String>> t_cont_List = new ArrayList<>();
+	//20211118 yama grid, card内で使われているコンポーネントのリスト ex)list, button
+	public static List<List<String>> cont_List = new ArrayList<>();
+	//20211118 yama grid
+	public static ArrayList<ArrayList<Integer>> grid_Lg_List = new ArrayList<>();
+	public static ArrayList<ArrayList<Integer>> grid_Md_List = new ArrayList<>();
+	public static ArrayList<ArrayList<Integer>> grid_Sm_List = new ArrayList<>();
+	public static ArrayList<ArrayList<Integer>> grid_Xs_List = new ArrayList<>();
+	public static ArrayList<ArrayList<String>> grid_Align_List = new ArrayList<>();
+
 	public void CodeGenerator(Start_Parse parser) {
 		attno = 0;
 		initialize(parser);
@@ -87,10 +140,20 @@ public class CodeGenerator {
 	public static void setFactory(String media) {
 		if (media.toLowerCase().equals("html")) {
 			factory = new HTMLFactory();
+			Ehtml.setType(0, 0);
+			// Sass.bootstrapFlg(true);	// OK?
+		//20210412 yama media react_tHTML
+		}else if (media.toLowerCase().equals("react")) {
+			factory = new HTMLFactory();
+			Ehtml.setType(0, 0);
+			// Sass.bootstrapFlg(true);	// OK?
 		}else if(media.toLowerCase().equals("mobile_html5")){
 			factory = new Mobile_HTML5Factory();
+			Ehtml.setType(1, 1);
+			// Sass.bootstrapFlg(true);	// OK?
 		} else if (media.toLowerCase().equals("bhtml") || media.toLowerCase().equals("html_bootstrap") || media.toLowerCase().equals("responsivehtml")|| media.toLowerCase().equals("responsive_html")) {
 			factory = new Mobile_HTML5Factory();
+			Ehtml.setType(1, 1);
 			Sass.bootstrapFlg(true);
 		}else if(media.toLowerCase().equals("web")) {
 			factory = new WebFactory();
@@ -266,15 +329,20 @@ public class CodeGenerator {
 
 	public void generateCode(Start_Parse parser, ExtList data_info) {
 		ITFE tfe_info = parser.get_TFEschema();
+//		Log.info("2-2-3-1-1");
 		//	ɬ�פʤ饳���ȥ����ȳ�����Manager������ѹ�
 		//	manager.preProcess(tab,le,le1,le2,le3);
 		//	manager.createSchema(tab,le,le1,le2,le3);
 		// ?�ֳ��� Grouper�ΤȤ���data_info��Ĵ����?
+		//20210419 yama
+		System.out.println("aaa ");
 		if (tfe_info instanceof Grouper && data_info.size() != 0) {
 			data_info = (ExtList) data_info.get(0);
 		}
+//		Log.info("2-2-3-1-2");
 
 		manager.generateCode(tfe_info, data_info);
+//		Log.info("2-2-3-1-3");
 
 		manager.finish();
 
@@ -402,6 +470,8 @@ public class CodeGenerator {
 //		Log.info("String:"+tfe_tree.getExtListString(new int[] {1, 0, 0}));
 //		Log.info("tfe_tree:"+tfe_tree);
 		if(tfe_tree.get(0).toString().equals("operand")){
+			//20210422 yama test
+			//System.out.println(tfe_tree);
 			if (tfe_tree.getExtListString(tfe_tree.size() - 1) instanceof String) {
 				if(tfe_tree.getExtListString(tfe_tree.size() - 1).equals("ggplot_att")) {
 					add_deco = true;
@@ -560,6 +630,2730 @@ public class CodeGenerator {
 						GlobalEnv.setMultiQuery();
 						ExtList result = ctab.makeCtab(fn);
 						out_sch = read_attribute(result);
+					//20210506 yama embed
+					//}else if (func_name.equals("embed")){
+						//out_sch = func_read((ExtList)((ExtList)((ExtList)tfe_tree.get(1)).get(0)).get(1));
+						//拡張子より前のファイル名を抽出 [c1]
+						//System.out.println("a " +fn.getExtList(2, 1, 0, 1, 0, 1, 0, 1));
+
+					//20201130 yama appbar
+					}else if(func_name.equals("appbar")){
+						out_sch = func_read((ExtList)((ExtList)((ExtList)tfe_tree.get(1)).get(0)).get(1));
+
+						//20210414 yama
+						appbar_count++;
+
+						//20210413 yama
+						String abstr = fn.getExtList(2, 1, 0, 1).toString();
+						String abpath;
+						String abcsspath;
+
+						if(appbar_count > 1) {
+							Preprocessor.putComponentList("App" + appbar_count);
+							abpath = GlobalEnv.getOutputDirPath() + "/../src/app" + appbar_count + ".js";
+							abcsspath = GlobalEnv.getOutputDirPath()+"/../src/app" + appbar_count + ".css";
+						} else {
+							Preprocessor.putComponentList("App");
+							abpath = GlobalEnv.getOutputDirPath() + "/../src/app.js";
+							abcsspath = GlobalEnv.getOutputDirPath()+"/../src/app.css";
+						}
+
+						File file = new File(abpath);
+						File cssfile = new File(abcsspath);
+
+						//delete an old file
+						if (file.exists()) {
+				            file.delete();
+				        }
+
+						//create a new file
+					    try{
+					      if (!file.createNewFile()){
+					        System.out.println("Could not create app.js file.");
+					      }
+					    }catch(IOException e){
+					      System.out.println(e);
+					    }
+
+					    //write to file
+					    try {
+				            FileWriter fw = new FileWriter(file, true);
+
+				            fw.write("import React from 'react';\n" +
+				            		"import logo from './logo.svg';\n");
+
+				            if(appbar_count > 1) {
+				            	fw.write("import './app" + appbar_count + ".css';\n");
+				            } else {
+				            	fw.write("import './app.css';\n");
+				            }
+
+				            fw.write("import Button from '@material-ui/core/Button';\n" +
+				            		"import { makeStyles } from '@material-ui/core/styles';\n" +
+				            		"import AppBar from '@material-ui/core/AppBar';\n" +
+				            		"import Toolbar from '@material-ui/core/Toolbar';\n" +
+				            		"import Typography from '@material-ui/core/Typography';\n" +
+				            		"import IconButton from '@material-ui/core/IconButton';\n" +
+				            		"import MenuIcon from '@material-ui/icons/Menu';\n" +
+				            		"import Drawer from '@material-ui/core/Drawer';\n" +
+				            		"import MenuItem from '@material-ui/core/MenuItem';\n" +
+				            		"import clsx from 'clsx';\n" +
+				            		"import List from '@material-ui/core/List';\n" +
+				            		"import Divider from '@material-ui/core/Divider';\n" +
+				            		"import ListItem from '@material-ui/core/ListItem';\n" +
+				            		"import ListItemIcon from '@material-ui/core/ListItemIcon';\n" +
+				            		"import ListItemText from '@material-ui/core/ListItemText';\n" +
+				            		"import InboxIcon from '@material-ui/icons/MoveToInbox';\n" +
+				            		"import MailIcon from '@material-ui/icons/Mail';\n" +
+				            		"var appbar = '"+abstr.substring(2, abstr.length() - 2)+"';\n" +
+				            		"\n" +
+				            		"const useStyles = makeStyles((theme) => ({\n" +
+				            		"  root: {\n" +
+				            		"    flexGrow: 1,\n" +
+				            		"  },\n" +
+				            		"  menuButton: {\n" +
+				            		"    marginRight: theme.spacing(2),\n" +
+				            		"  },\n" +
+				            		"  title: {\n" +
+				            		"    flexGrow: 1,\n" +
+				            		"  },\n" +
+				            		"}));\n" +
+				            		"\n" +
+				            		"export default function App() {\n" +
+				            		"  const classes = useStyles();\n" +
+				            		"\n" +
+				            		"  const [state, setState] = React.useState({\n" +
+				            		"    top: false,\n" +
+				            		"    left: false,\n" +
+				            		"    bottom: false,\n" +
+				            		"    right: false,\n" +
+				            		"  });\n" +
+				            		"\n" +
+				            		"  const toggleDrawer = (anchor, open) => (event) => {\n" +
+				            		"    if (event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {\n" +
+				            		"      return;\n" +
+				            		"    }\n" +
+				            		"\n" +
+				            		"    setState({ ...state, [anchor]: open });\n" +
+				            		"  };\n" +
+				            		"\n" +
+				            		"  const list = (anchor) => (\n" +
+				            		"    <div\n" +
+				            		"      className={clsx(classes.list, {\n" +
+				            		"        [classes.fullList]: anchor === 'top' || anchor === 'bottom',\n" +
+				            		"      })}\n" +
+				            		"      role=\"presentation\"\n" +
+				            		"      onClick={toggleDrawer(anchor, false)}\n" +
+				            		"      onKeyDown={toggleDrawer(anchor, false)}\n" +
+				            		"    >\n" +
+				            		"      <List>\n" +
+				            		"        {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => (\n" +
+				            		"          <ListItem button key={text}>\n" +
+				            		"            <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>\n" +
+				            		"            <ListItemText primary={text} />\n" +
+				            		"          </ListItem>\n" +
+				            		"        ))}\n" +
+				            		"      </List>\n" +
+				            		"      <Divider />\n" +
+				            		"      <List>\n" +
+				            		"        {['All mail', 'Trash', 'Spam'].map((text, index) => (\n" +
+				            		"          <ListItem button key={text}>\n" +
+				            		"            <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>\n" +
+				            		"            <ListItemText primary={text} />\n" +
+				            		"          </ListItem>\n" +
+				            		"        ))}\n" +
+				            		"      </List>\n" +
+				            		"    </div>\n" +
+				            		"  );\n" +
+				            		"\n" +
+				            		"  return (\n" +
+				            		"    <div className=\"App\">\n" +
+				            		"      <div className={classes.root}>\n" +
+				            		"        <AppBar position=\"static\">\n" +
+				            		"          <Toolbar>\n" +
+				            		"            <React.Fragment key=\"left\">\n" +
+				            		"              <IconButton edge=\"start\" className={classes.menuButton} color=\"inherit\" aria-label=\"menu\" onClick={toggleDrawer(\"left\", true)}>\n" +
+				            		"                <MenuIcon />\n" +
+				            		"              </IconButton>\n" +
+				            		"              <Drawer open={state[\"left\"]} onClose={toggleDrawer(\"left\", false)}>\n" +
+				            		"                {list(\"left\")}\n" +
+				            		"              </Drawer>\n" +
+				            		"            </React.Fragment>\n" +
+				            		"\n" +
+				            		"            <Typography variant=\"h6\" className={classes.title}>\n" +
+				            		"              {appbar}\n" +
+				            		"            </Typography>\n" +
+				            		"\n" +
+				            		"            <a className=\"App-link\" href=\"https://reactjs.org\" target=\"_blank\" rel=\"noopener noreferrer\">\n" +
+				            		"              <Button color=\"inherit\">\n" +
+				            		"                Login\n" +
+				            		"              </Button>\n" +
+				            		"            </a>\n" +
+				            		"          </Toolbar>\n" +
+				            		"        </AppBar>\n" +
+				            		"      </div>\n" +
+				            		"    </div>\n" +
+				            		"  );\n" +
+				            		"}\n" +
+				            		"\n" +
+				            		"//export default App;\n");
+
+				            fw.close();
+				        } catch (IOException ex) {
+				            ex.printStackTrace();
+				        }
+
+						//delete an old file
+						if (cssfile.exists()) {
+				            cssfile.delete();
+				        }
+
+						//create a new file
+					    try{
+					      if (!cssfile.createNewFile()){
+					        System.out.println("Could not create app.css file.");
+					      }
+					    }catch(IOException e){
+					      System.out.println(e);
+					    }
+
+					    //write to file
+						try {
+				            FileWriter fw = new FileWriter(cssfile, true);
+				            fw.write(".App {\n" +
+				            		"  text-align: left !important;\n" +
+				            		"}\n" +
+				            		"\n" +
+				            		".App-logo {\n" +
+				            		"  height: 40vmin;\n" +
+				            		"  pointer-events: none;\n" +
+				            		"}\n" +
+				            		"\n" +
+				            		"@media (prefers-reduced-motion: no-preference) {\n" +
+				            		"  .App-logo {\n" +
+				            		"    animation: App-logo-spin infinite 20s linear;\n" +
+				            		"  }\n" +
+				            		"}\n" +
+				            		"\n" +
+				            		".App-header {\n" +
+				            		"  text-align: center;\n" +
+				            		"  background-color: #282c34;\n" +
+				            		"  min-height: 100vh;\n" +
+				            		"  display: flex;\n" +
+				            		"  flex-direction: column;\n" +
+				            		"  align-items: center;\n" +
+				            		"  justify-content: center;\n" +
+				            		"  font-size: calc(10px + 2vmin);\n" +
+				            		"  color: white;\n" +
+				            		"}\n" +
+				            		"\n" +
+				            		".App-link {\n" +
+				            		"  color: #61dafb;\n" +
+				            		"}\n" +
+				            		"\n" +
+				            		"@keyframes App-logo-spin {\n" +
+				            		"  from {\n" +
+				            		"    transform: rotate(0deg);\n" +
+				            		"  }\n" +
+				            		"  to {\n" +
+				            		"    transform: rotate(360deg);\n" +
+				            		"  }\n" +
+				            		"}\n");
+				            fw.close();
+				        } catch (IOException ex) {
+				            ex.printStackTrace();
+				        }
+					//20211110 yama tab_appbar
+					}else if(func_name.equals("t_appbar")){
+						tabflag = true;
+
+						ExtList tmp1 = new ExtList();
+						ExtList tmp2 = new ExtList();
+						ExtList tmp3 = new ExtList();
+						ExtList tmp4 = new ExtList();
+						ExtList tmp5 = new ExtList();
+						ExtList tmp6 = new ExtList();
+						ExtList tmp7 = new ExtList();
+						ExtList tmp8 = new ExtList();
+						ExtList tmp9 = new ExtList();
+						ExtList tmp10 = new ExtList();
+						ExtList tmp11 = new ExtList();
+						ExtList result = new ExtList();
+
+						tmp1.add(fn.getExtList(2));
+						t_cont_List.add(new ArrayList<String>());
+						for (int i = 0; i < fn.size() / 2 - 2; i++) {
+							tmp1.add(fn.get(i * 2 + 3));
+							tmp1.add(fn.getExtList(i * 2 + 4));
+							t_cont_List.add(new ArrayList<String>());
+						}
+						tmp2.add("h_exp");
+						tmp2.add(tmp1);
+						tmp3.add(tmp2);
+						tmp4.add("v_exp");
+						tmp4.add(tmp3);
+						tmp5.add(tmp4);
+						tmp6.add("d_exp");
+						tmp6.add(tmp5);
+						tmp7.add(tmp6);
+						tmp8.add("exp");
+						tmp8.add(tmp7);
+						tmp9.add("[");
+						tmp9.add(tmp8);
+						tmp9.add("]");
+						tmp9.add("!");
+						tmp10.add("grouper");
+						tmp10.add(tmp9);
+						tmp11.add(tmp10);
+						result.add("operand");
+						result.add(tmp11);
+						out_sch = read_attribute(result);
+
+						//20210414 yama
+						t_appbar_count++;
+
+						//20210413 yama
+						String abstr = fn.getExtList(2, 1, 0, 1).toString();
+						String abpath;
+						String abcsspath;
+
+						if(t_appbar_count > 1) {
+							Preprocessor.putComponentList("T_App" + t_appbar_count);
+							abpath = GlobalEnv.getOutputDirPath() + "/../src/t_app" + t_appbar_count + ".js";
+							abcsspath = GlobalEnv.getOutputDirPath()+"/../src/t_app" + t_appbar_count + ".css";
+						} else {
+							Preprocessor.putComponentList("T_App");
+							abpath = GlobalEnv.getOutputDirPath() + "/../src/t_app.js";
+							abcsspath = GlobalEnv.getOutputDirPath()+"/../src/t_app.css";
+						}
+
+						File file = new File(abpath);
+						File cssfile = new File(abcsspath);
+
+						//delete an old file
+						if (file.exists()) {
+				            file.delete();
+				        }
+
+						//create a new file
+					    try{
+					      if (!file.createNewFile()){
+					        System.out.println("Could not create t_app.js file.");
+					      }
+					    }catch(IOException e){
+					      System.out.println(e);
+					    }
+
+					    //write to file
+					    try {
+				            FileWriter fw = new FileWriter(file, true);
+
+				            fw.write("import React from 'react';\n" +
+				            		"import logo from './picts/facebook-icon.png';\n");
+
+				            if(t_appbar_count > 1) {
+				            	fw.write("import './t_app" + t_appbar_count + ".css';\n");
+				            } else {
+				            	fw.write("import './t_app.css';\n");
+				            }
+
+				            fw.write("import { styled, alpha } from '@mui/material/styles';\n" +
+				            		"import AppBar from '@mui/material/AppBar';\n" +
+				            		"import Box from '@mui/material/Box';\n" +
+				            		"import Toolbar from '@mui/material/Toolbar';\n" +
+				            		"import IconButton from '@mui/material/IconButton';\n" +
+				            		"import Typography from '@mui/material/Typography';\n" +
+				            		"import InputBase from '@mui/material/InputBase';\n" +
+				            		"import Badge from '@mui/material/Badge';\n" +
+				            		"import MenuItem from '@mui/material/MenuItem';\n" +
+				            		"import Menu from '@mui/material/Menu';\n" +
+				            		"import MenuIcon from '@mui/icons-material/Menu';\n" +
+				            		"import FacebookIcon from '@mui/icons-material/Facebook';\n" +
+				            		"import SearchIcon from '@mui/icons-material/Search';\n" +
+				            		"import Stack from '@mui/material/Stack';\n" +
+				            		"import BarButton from '@mui/material/Button';\n" +
+				            		"import AccountCircleIcon from '@mui/icons-material/AccountCircle';\n" +
+				            		"import AppsIcon from '@mui/icons-material/Apps';\n" +
+				            		"import MessageIcon from '@mui/icons-material/Message';\n" +
+				            		"import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';\n" +
+				            		"import NotificationsIcon from '@mui/icons-material/Notifications';\n" +
+				            		"import MoreIcon from '@mui/icons-material/MoreVert';\n" +
+				            		"\n" +
+				            		"import PropTypes from 'prop-types';\n" +
+				            		"import { makeStyles } from '@material-ui/core/styles';\n" +
+				            		"import Tabs from '@material-ui/core/Tabs';\n" +
+				            		"import Tab from '@material-ui/core/Tab';\n" +
+				            		"import HomeIcon from '@mui/icons-material/Home';\n" +
+				            		"import PeopleOutlineIcon from '@mui/icons-material/PeopleOutline';\n" +
+				            		"import GroupsIcon from '@mui/icons-material/Groups';\n");
+
+				            for (int i = 0; i < t_cont_List.size(); i++) {
+			            		for (int j = 0; j < t_cont_List.get(i).size(); j++) {
+			            			fw.write("import " + t_cont_List.get(i).get(j) + " from './" + t_cont_List.get(i).get(j).toString().toLowerCase() + "';\n");
+			            		}
+			            	}
+
+				            fw.write("\n" +
+				            		"const Search = styled('div')(({ theme }) => ({\n" +
+				            		"  position: 'relative',\n" +
+				            		"  borderRadius: theme.shape.borderRadius,\n" +
+				            		"  backgroundColor: alpha(theme.palette.common.white, 0.15),\n" +
+				            		"  '&:hover': {\n" +
+				            		"    backgroundColor: alpha(theme.palette.common.white, 0.25),\n" +
+				            		"  },\n" +
+				            		"  marginRight: theme.spacing(2),\n" +
+				            		"  marginLeft: 0,\n" +
+				            		"  width: '100%',\n" +
+				            		"  [theme.breakpoints.up('sm')]: {\n" +
+				            		"    marginLeft: theme.spacing(3),\n" +
+				            		"    width: 'auto',\n" +
+				            		"  },\n" +
+				            		"}));\n" +
+				            		"\n" +
+				            		"const SearchIconWrapper = styled('div')(({ theme }) => ({\n" +
+				            		"  padding: theme.spacing(0, 2),\n" +
+				            		"  height: '100%',\n" +
+				            		"  position: 'absolute',\n" +
+				            		"  pointerEvents: 'none',\n" +
+				            		"  display: 'flex',\n" +
+				            		"  alignItems: 'center',\n" +
+				            		"  justifyContent: 'center',\n" +
+				            		"}));\n" +
+				            		"\n" +
+				            		"const StyledInputBase = styled(InputBase)(({ theme }) => ({\n" +
+				            		"  color: 'inherit',\n" +
+				            		"  '& .MuiInputBase-input': {\n" +
+				            		"    padding: theme.spacing(1, 1, 1, 0),\n" +
+				            		"    // vertical padding + font size from searchIcon\n" +
+				            		"    paddingLeft: `calc(1em + ${theme.spacing(4)})`,\n" +
+				            		"    transition: theme.transitions.create('width'),\n" +
+				            		"    width: '100%',\n" +
+				            		"    [theme.breakpoints.up('md')]: {\n" +
+				            		"      width: '20ch',\n" +
+				            		"    },\n" +
+				            		"  },\n" +
+				            		"}));\n" +
+				            		"\n" +
+				            		"function TabPanel(props) {\n" +
+				            		"  const { children, value, index, ...other } = props;\n" +
+				            		"\n" +
+				            		"  return (\n" +
+				            		"    <div\n" +
+				            		"      role=\"tabpanel\"\n" +
+				            		"      hidden={value !== index}\n" +
+				            		"      id={`nav-tabpanel-${index}`}\n" +
+				            		"      aria-labelledby={`nav-tab-${index}`}\n" +
+				            		"      {...other}\n" +
+				            		"    >\n" +
+				            		"      {value === index && (\n" +
+				            		"        <Box p={0}>\n" +
+				            		"          <Typography>{children}</Typography>\n" +
+				            		"        </Box>\n" +
+				            		"      )}\n" +
+				            		"    </div>\n" +
+				            		"  );\n" +
+				            		"}\n" +
+				            		"\n" +
+				            		"TabPanel.propTypes = {\n" +
+				            		"  children: PropTypes.node,\n" +
+				            		"  index: PropTypes.any.isRequired,\n" +
+				            		"  value: PropTypes.any.isRequired,\n" +
+				            		"};\n" +
+				            		"\n" +
+				            		"function a11yProps(index) {\n" +
+				            		"  return {\n" +
+				            		"    id: `nav-tab-${index}`,\n" +
+				            		"    'aria-controls': `nav-tabpanel-${index}`,\n" +
+				            		"  };\n" +
+				            		"}\n" +
+				            		"\n" +
+				            		"function LinkTab(props) {\n" +
+				            		"  return (\n" +
+				            		"    <Tab\n" +
+				            		"      component=\"a\"\n" +
+				            		"      onClick={(event) => {\n" +
+				            		"        event.preventDefault();\n" +
+				            		"      }}\n" +
+				            		"      {...props}\n" +
+				            		"    />\n" +
+				            		"  );\n" +
+				            		"}\n" +
+				            		"\n" +
+				            		"const useStyles = makeStyles((theme) => ({\n" +
+				            		"  root: {\n" +
+				            		"    flexGrow: 1,\n" +
+				            		"    backgroundColor: theme.palette.background.paper,\n" +
+				            		"    width: 1200,\n" +
+				            		"  },\n" +
+				            		"}));\n" +
+				            		"\n" +
+				            		"export default function PrimarySearchAppBar() {\n" +
+				            		"  const [anchorEl, setAnchorEl] = React.useState(null);\n" +
+				            		"  const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);\n" +
+				            		"\n" +
+				            		"  const isMenuOpen = Boolean(anchorEl);\n" +
+				            		"  const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);\n" +
+				            		"\n" +
+				            		"  const handleProfileMenuOpen = (event) => {\n" +
+				            		"    setAnchorEl(event.currentTarget);\n" +
+				            		"  };\n" +
+				            		"\n" +
+				            		"  const handleMobileMenuClose = () => {\n" +
+				            		"    setMobileMoreAnchorEl(null);\n" +
+				            		"  };\n" +
+				            		"\n" +
+				            		"  const handleMenuClose = () => {\n" +
+				            		"    setAnchorEl(null);\n" +
+				            		"    handleMobileMenuClose();\n" +
+				            		"  };\n" +
+				            		"\n" +
+				            		"  const handleMobileMenuOpen = (event) => {\n" +
+				            		"    setMobileMoreAnchorEl(event.currentTarget);\n" +
+				            		"  };\n" +
+				            		"\n" +
+				            		"  const menuId = 'primary-search-account-menu';\n" +
+				            		"  const renderMenu = (\n" +
+				            		"    <Menu\n" +
+				            		"      anchorEl={anchorEl}\n" +
+				            		"      anchorOrigin={{\n" +
+				            		"        vertical: 'top',\n" +
+				            		"        horizontal: 'right',\n" +
+				            		"      }}\n" +
+				            		"      id={menuId}\n" +
+				            		"      keepMounted\n" +
+				            		"      transformOrigin={{\n" +
+				            		"        vertical: 'top',\n" +
+				            		"        horizontal: 'right',\n" +
+				            		"      }}\n" +
+				            		"      open={isMenuOpen}\n" +
+				            		"      onClose={handleMenuClose}\n" +
+				            		"    >\n" +
+				            		"      <MenuItem onClick={handleMenuClose}>Profile</MenuItem>\n" +
+				            		"      <MenuItem onClick={handleMenuClose}>My account</MenuItem>\n" +
+				            		"    </Menu>\n" +
+				            		"  );\n" +
+				            		"\n" +
+				            		"  const mobileMenuId = 'primary-search-account-menu-mobile';\n" +
+				            		"  const renderMobileMenu = (\n" +
+				            		"    <Menu\n" +
+				            		"      anchorEl={mobileMoreAnchorEl}\n" +
+				            		"      anchorOrigin={{\n" +
+				            		"        vertical: 'top',\n" +
+				            		"        horizontal: 'right',\n" +
+				            		"      }}\n" +
+				            		"      id={mobileMenuId}\n" +
+				            		"      keepMounted\n" +
+				            		"      transformOrigin={{\n" +
+				            		"        vertical: 'top',\n" +
+				            		"        horizontal: 'right',\n" +
+				            		"      }}\n" +
+				            		"      open={isMobileMenuOpen}\n" +
+				            		"      onClose={handleMobileMenuClose}\n" +
+				            		"    >\n" +
+				            		"      <MenuItem>\n" +
+				            		"        <IconButton size=\"large\" aria-label=\"show 4 new mails\" color=\"inherit\">\n" +
+				            		"          <Badge badgeContent={4} color=\"error\">\n" +
+				            		"            <ArrowDropDownIcon />\n" +
+				            		"          </Badge>\n" +
+				            		"        </IconButton>\n" +
+				            		"        <p>Messages</p>\n" +
+				            		"      </MenuItem>\n" +
+				            		"      <MenuItem>\n" +
+				            		"        <IconButton\n" +
+				            		"          size=\"large\"\n" +
+				            		"          aria-label=\"show 17 new notifications\"\n" +
+				            		"          color=\"inherit\"\n" +
+				            		"        >\n" +
+				            		"          <Badge badgeContent={17} color=\"error\">\n" +
+				            		"            <NotificationsIcon />\n" +
+				            		"          </Badge>\n" +
+				            		"        </IconButton>\n" +
+				            		"        <p>Notifications</p>\n" +
+				            		"      </MenuItem>\n" +
+				            		"      <MenuItem onClick={handleProfileMenuOpen}>\n" +
+				            		"        <IconButton\n" +
+				            		"          size=\"large\"\n" +
+				            		"          aria-label=\"account of current user\"\n" +
+				            		"          aria-controls=\"primary-search-account-menu\"\n" +
+				            		"          aria-haspopup=\"true\"\n" +
+				            		"          color=\"inherit\"\n" +
+				            		"        >\n" +
+				            		"          <AppsIcon />\n" +
+				            		"        </IconButton>\n" +
+				            		"        <p>Profile</p>\n" +
+				            		"      </MenuItem>\n" +
+				            		"    </Menu>\n" +
+				            		"  );\n" +
+				            		"\n" +
+				            		"  const classes = useStyles();\n" +
+				            		"  const [value, setValue] = React.useState(0);\n" +
+				            		"\n" +
+				            		"  const handleChange = (event, newValue) => {\n" +
+				            		"    setValue(newValue);\n" +
+				            		"  };\n" +
+				            		"\n" +
+				            		"  return (\n" +
+				            		"    <Box sx={{ flexGrow: 1, bgcolor: '#F0F2F5' }}>\n" +
+				            		"      <AppBar position=\"static\" style={{ color: \"#000000\", backgroundColor: \"#FFFFFF\" }}>\n" +
+				            		"        <Toolbar>\n" +
+				            		"          <img src={logo} width=\"50\"/>\n" +
+				            		"          <Search style={{ color: \"#000000\", backgroundColor: \"#F0F2F5\", borderRadius: 20}}>\n" +
+				            		"            <SearchIconWrapper>\n" +
+				            		"              <SearchIcon />\n" +
+				            		"            </SearchIconWrapper>\n" +
+				            		"            <StyledInputBase\n" +
+				            		"              placeholder=\"Facebookを検索\"\n" +
+				            		"              inputProps={{ 'aria-label': 'search' }}\n" +
+				            		"            />\n" +
+				            		"          </Search>\n" +
+				            		"          <Box sx={{ flexGrow: 1 }} />\n" +
+				            		"          <Box sx={{ display: { xs: 'none', md: 'flex' } }}>\n" +
+				            		"            <Stack direction=\"row\" spacing={1}>\n" +
+				            		"              <Tabs\n" +
+				            		"                variant=\"fullWidth\"\n" +
+				            		"                value={value}\n" +
+				            		"                onChange={handleChange}\n" +
+				            		"                textColor=\"primary\"\n" +
+				            		"                indicatorColor=\"primary\"\n" +
+				            		"                aria-label=\"nav tabs example\"\n" +
+				            		"              >\n");
+				            for(int i = 0; i < fn.size() / 2 - 1; i++) {
+			            		String t_cont1 = fn.getExtList(i * 2 + 2, 1, 0, 1, 2, 1, 0, 1).toString();
+			            		String tabName = t_cont1.substring(2, t_cont1.length() - 2);
+
+								fw.write("                <Tab icon={<" + tabName + " />} />\n");
+							}
+//				            for(int i = 0; i < t_cont_count; i++) {
+//			            		fw.write("                <Tab icon={<HomeIcon />} />\n");
+//			            	}
+				            fw.write("              </Tabs>\n" +
+				            		"              <BarButton variant=\"text\" style={{ color: \"#000000\", backgroundColor: \"#F0F2F5\", borderRadius: 20}}><b>友達を検索</b></BarButton>\n" +
+				            		"              <BarButton variant=\"text\" style={{ color: \"#000000\", borderRadius: 20}} startIcon={<AccountCircleIcon />}><b>匿名太郎</b></BarButton>\n" +
+				            		"              <IconButton size=\"large\" style={{ color: \"#000000\", backgroundColor: \"#F0F2F5\", borderRadius: 100}}>\n" +
+				            		"                <AppsIcon />\n" +
+				            		"              </IconButton>\n" +
+				            		"              <IconButton size=\"large\" style={{ color: \"#000000\", backgroundColor: \"#F0F2F5\", borderRadius: 100}}>\n" +
+				            		"                <MessageIcon />\n" +
+				            		"              </IconButton>\n" +
+				            		"              <IconButton size=\"large\" style={{ color: \"#000000\", backgroundColor: \"#F0F2F5\", borderRadius: 100}}>\n" +
+				            		"                <Badge badgeContent={3} color=\"error\">\n" +
+				            		"                  <NotificationsIcon />\n" +
+				            		"                </Badge>\n" +
+				            		"              </IconButton>\n" +
+				            		"              <IconButton\n" +
+				            		"                size=\"large\"\n" +
+				            		"                edge=\"end\"\n" +
+				            		"                aria-label=\"account of current user\"\n" +
+				            		"                aria-controls={menuId}\n" +
+				            		"                aria-haspopup=\"true\"\n" +
+				            		"                onClick={handleProfileMenuOpen}\n" +
+				            		"                style={{ color: \"#000000\", backgroundColor: \"#F0F2F5\", borderRadius: 100}}\n" +
+				            		"              >\n" +
+				            		"                <ArrowDropDownIcon />\n" +
+				            		"              </IconButton>\n" +
+				            		"            </Stack>\n" +
+				            		"          </Box>\n" +
+				            		"          <Box sx={{ display: { xs: 'flex', md: 'none' } }}>\n" +
+				            		"            <IconButton\n" +
+				            		"              size=\"large\"\n" +
+				            		"              aria-label=\"show more\"\n" +
+				            		"              aria-controls={mobileMenuId}\n" +
+				            		"              aria-haspopup=\"true\"\n" +
+				            		"              onClick={handleMobileMenuOpen}\n" +
+				            		"              color=\"inherit\"\n" +
+				            		"            >\n" +
+				            		"              <MoreIcon />\n" +
+				            		"            </IconButton>\n" +
+				            		"          </Box>\n" +
+				            		"        </Toolbar>\n" +
+				            		"      </AppBar>\n");
+
+				            int j = 0;
+				            for(int i = 0; i < t_cont_count; i++) {
+			            		fw.write("      <TabPanel value={value} index={" + i + "}>\n" +
+			            				"        <Box p={3}>\n");
+			            				for(; j < embed_List.size() && embed_List.get(j).equals(i); j++) {
+			            					//System.out.println(j);
+			            					for(int k = 0; k < embedlines.get(j).size(); k++) {
+			            						fw.write("          " + embedlines.get(j).get(k) + "\n");
+			            					}
+			            				}
+		            					for(int k = 0; k < t_cont_List.get(i).size(); k++) {
+		            						fw.write("          <" + t_cont_List.get(i).get(k) + " />\n");
+		            					}
+			            	fw.write("        </Box>\n" +
+			            			"      </TabPanel>\n");
+			            	}
+//				            	fw.write("      <TabPanel value={value} index={0}>\n" +
+//				            		"        <Grid container spacing={5}>\n" +
+//				            		"          <Grid item xs={4} md={3}>\n" +
+//				            		"            <List />\n" +
+//				            		"          </Grid>\n" +
+//				            		"          <Grid item xs={8} md={6}>\n" +
+//				            		"            <Card />\n" +
+//				            		"          </Grid>\n" +
+//				            		"          <Grid item xs={2} md={3}>\n" +
+//				            		"            <List2 />\n" +
+//				            		"          </Grid>\n" +
+//				            		"        </Grid>\n" +
+//				            		"      </TabPanel>\n" +
+//				            		"      <TabPanel value={value} index={1}>\n" +
+//				            		"        <Paper elevation={3}>\n" +
+//				            		"          <Box p={3}>\n" +
+//				            		"          </Box>\n" +
+//				            		"        </Paper>\n" +
+//				            		"      </TabPanel>\n" +
+//				            		"      <TabPanel value={value} index={2}>\n" +
+//				            		"        <Paper elevation={3}>\n" +
+//				            		"          <Box p={3}>\n" +
+//				            		"          </Box>\n" +
+//				            		"        </Paper>\n" +
+//				            		"      </TabPanel>\n" +
+				            fw.write("      {renderMobileMenu}\n" +
+				            		"      {renderMenu}\n" +
+				            		"    </Box>\n" +
+				            		"  );\n" +
+				            		"}\n" +
+				            		"");
+
+				            fw.close();
+				        } catch (IOException ex) {
+				            ex.printStackTrace();
+				        }
+
+						//delete an old file
+						if (cssfile.exists()) {
+				            cssfile.delete();
+				        }
+
+						//create a new file
+					    try{
+					      if (!cssfile.createNewFile()){
+					        System.out.println("Could not create t_app.css file.");
+					      }
+					    }catch(IOException e){
+					      System.out.println(e);
+					    }
+
+					    //write to file
+						try {
+				            FileWriter fw = new FileWriter(cssfile, true);
+				            fw.write(".App {\n" +
+				            		"  text-align: left !important;\n" +
+				            		"}\n" +
+				            		"\n" +
+				            		".App-logo {\n" +
+				            		"  height: 40vmin;\n" +
+				            		"  pointer-events: none;\n" +
+				            		"}\n" +
+				            		"\n" +
+				            		"@media (prefers-reduced-motion: no-preference) {\n" +
+				            		"  .App-logo {\n" +
+				            		"    animation: App-logo-spin infinite 20s linear;\n" +
+				            		"  }\n" +
+				            		"}\n" +
+				            		"\n" +
+				            		".App-header {\n" +
+				            		"  text-align: center;\n" +
+				            		"  background-color: #282c34;\n" +
+				            		"  min-height: 100vh;\n" +
+				            		"  display: flex;\n" +
+				            		"  flex-direction: column;\n" +
+				            		"  align-items: center;\n" +
+				            		"  justify-content: center;\n" +
+				            		"  font-size: calc(10px + 2vmin);\n" +
+				            		"  color: white;\n" +
+				            		"}\n" +
+				            		"\n" +
+				            		".App-link {\n" +
+				            		"  color: #61dafb;\n" +
+				            		"}\n" +
+				            		"\n" +
+				            		"@keyframes App-logo-spin {\n" +
+				            		"  from {\n" +
+				            		"    transform: rotate(0deg);\n" +
+				            		"  }\n" +
+				            		"  to {\n" +
+				            		"    transform: rotate(360deg);\n" +
+				            		"  }\n" +
+				            		"}\n");
+				            fw.close();
+				        } catch (IOException ex) {
+				            ex.printStackTrace();
+				        }
+
+						t_cont_count = 0;
+						embed_List.clear();
+						t_cont_List.clear();
+						t_contflag = false;
+
+					}else if(func_name.equals("tab")){
+						tabflag = true;
+
+						ExtList tmp1 = new ExtList();
+						ExtList tmp2 = new ExtList();
+						ExtList tmp3 = new ExtList();
+						ExtList tmp4 = new ExtList();
+						ExtList tmp5 = new ExtList();
+						ExtList tmp6 = new ExtList();
+						ExtList tmp7 = new ExtList();
+						ExtList tmp8 = new ExtList();
+						ExtList tmp9 = new ExtList();
+						ExtList tmp10 = new ExtList();
+						ExtList tmp11 = new ExtList();
+						ExtList result = new ExtList();
+
+						tmp1.add(fn.getExtList(2));
+						t_cont_List.add(new ArrayList<String>());
+						for (int i = 0; i < fn.size() / 2 - 2; i++) {
+							tmp1.add(fn.get(i * 2 + 3));
+							tmp1.add(fn.getExtList(i * 2 + 4));
+							t_cont_List.add(new ArrayList<String>());
+						}
+						tmp2.add("h_exp");
+						tmp2.add(tmp1);
+						tmp3.add(tmp2);
+						tmp4.add("v_exp");
+						tmp4.add(tmp3);
+						tmp5.add(tmp4);
+						tmp6.add("d_exp");
+						tmp6.add(tmp5);
+						tmp7.add(tmp6);
+						tmp8.add("exp");
+						tmp8.add(tmp7);
+						tmp9.add("[");
+						tmp9.add(tmp8);
+						tmp9.add("]");
+						tmp9.add("!");
+						tmp10.add("grouper");
+						tmp10.add(tmp9);
+						tmp11.add(tmp10);
+						result.add("operand");
+						result.add(tmp11);
+						out_sch = read_attribute(result);
+
+						//20210414 yama
+						tab_count++;
+
+						//20210413 yama
+						String tabpath;
+
+						if(tab_count > 1) {
+							Preprocessor.putComponentList("Tab" + tab_count);
+							tabpath = GlobalEnv.getOutputDirPath() + "/../src/tab" + tab_count + ".js";
+						} else {
+							Preprocessor.putComponentList("Tab");
+							tabpath = GlobalEnv.getOutputDirPath() + "/../src/tab.js";
+						}
+
+						File file = new File(tabpath);
+
+						//delete an old file
+						if (file.exists()) {
+				            file.delete();
+				        }
+
+						//create a new file
+					    try{
+					      if (!file.createNewFile()){
+					        System.out.println("Could not create tab.js file.");
+					      }
+					    }catch(IOException e){
+					      System.out.println(e);
+					    }
+
+					    //write to file
+					    try {
+				            FileWriter fw = new FileWriter(file, true);
+
+			            	fw.write("import React from 'react';\n" +
+			            			"import PropTypes from 'prop-types';\n" +
+			            			"import { makeStyles } from '@material-ui/core/styles';\n" +
+			            			"import AppBar from '@material-ui/core/AppBar';\n" +
+			            			"import Tabs from '@material-ui/core/Tabs';\n" +
+			            			"import Tab from '@material-ui/core/Tab';\n" +
+			            			"import Typography from '@material-ui/core/Typography';\n" +
+			            			"import Box from '@material-ui/core/Box';\n" +
+			            			"import './tab.css';\n" +
+			            			"import Paper from '@material-ui/core/Paper';\n");
+
+			            	for (int i = 0; i < t_cont_List.size(); i++) {
+			            		for (int j = 0; j < t_cont_List.get(i).size(); j++) {
+			            			fw.write("import " + t_cont_List.get(i).get(j) + " from './" + t_cont_List.get(i).get(j).toString().toLowerCase() + "';\n");
+			            		}
+			            	}
+
+			            	for(int i = 0; i < fn.size() / 2 - 1; i++) {
+			            		String t_cont2;
+
+//			            		if(t_embed_List.contains(i)){
+//			            			System.out.println(fn.getExtList(i * 2 + 2, 1, 0, 1, 4, 1));
+//			            			t_cont2 = fn.getExtList(i * 2 + 2, 1, 0, 1, 4, 1, 0, 1, 2, 1, 0, 1).toString();
+//			            		} else {
+//			            			//ここをTFE対応に変える
+//			            			t_cont2 = fn.getExtList(i * 2 + 2, 1, 0, 1, 4, 1, 0, 1).toString();
+//			            			System.out.println("t_cont2: " + t_cont2);
+//			            		}
+
+								//String[] fileName = t_cont2.substring(2, t_cont2.length() - 2).split("\\.");
+								String[] fileName = "c1.ssql".split("\\.");
+			            		System.out.println("filename: " + fileName[0]);
+
+								//20210421 yama hikisuu2 TFE taiou
+								if (fileName[1].equals("ssql")) {
+									fw.write("import c" + i +" from './" + fileName[0] +".js';\n");
+								}
+							}
+
+			            	for(int i = 0; i < fn.size() / 2 - 1; i++) {
+			            		String t_cont1 = fn.getExtList(i * 2 + 2, 1, 0, 1, 2, 1, 0, 1).toString();
+			            		String tabName = t_cont1.substring(2, t_cont1.length() - 2);
+
+								fw.write("var tlabel" + i + " = '" + tabName + "';\n");
+							}
+
+			            	fw.write("\n" +
+			            			"function TabPanel(props) {\n" +
+			            			"  const { children, value, index, ...other } = props;\n" +
+			            			"\n" +
+			            			"  return (\n" +
+			            			"    <div\n" +
+			            			"      role=\"tabpanel\"\n" +
+			            			"      hidden={value !== index}\n" +
+			            			"      id={`nav-tabpanel-${index}`}\n" +
+			            			"      aria-labelledby={`nav-tab-${index}`}\n" +
+			            			"      {...other}\n" +
+			            			"    >\n" +
+			            			"      {value === index && (\n" +
+			            			"        <Box p={0}>\n" +
+			            			"          <Typography>{children}</Typography>\n" +
+			            			"        </Box>\n" +
+			            			"      )}\n" +
+			            			"    </div>\n" +
+			            			"  );\n" +
+			            			"}\n" +
+			            			"\n" +
+			            			"TabPanel.propTypes = {\n" +
+			            			"  children: PropTypes.node,\n" +
+			            			"  index: PropTypes.any.isRequired,\n" +
+			            			"  value: PropTypes.any.isRequired,\n" +
+			            			"};\n" +
+			            			"\n" +
+			            			"function a11yProps(index) {\n" +
+			            			"  return {\n" +
+			            			"    id: `nav-tab-${index}`,\n" +
+			            			"    'aria-controls': `nav-tabpanel-${index}`,\n" +
+			            			"  };\n" +
+			            			"}\n" +
+			            			"\n" +
+			            			"function LinkTab(props) {\n" +
+			            			"  return (\n" +
+			            			"    <Tab\n" +
+			            			"      component=\"a\"\n" +
+			            			"      onClick={(event) => {\n" +
+			            			"        event.preventDefault();\n" +
+			            			"      }}\n" +
+			            			"      {...props}\n" +
+			            			"    />\n" +
+			            			"  );\n" +
+			            			"}\n" +
+			            			"\n" +
+			            			"const useStyles = makeStyles((theme) => ({\n" +
+			            			"  root: {\n" +
+			            			"    flexGrow: 1,\n" +
+			            			"    backgroundColor: theme.palette.background.paper,\n" +
+			            			"    width: 1200,\n" +
+			            			"  },\n" +
+			            			"}));\n" +
+			            			"\n" +
+			            			"export default function NavTabs() {\n" +
+			            			"  const classes = useStyles();\n" +
+			            			"  const [value, setValue] = React.useState(0);\n" +
+			            			"\n" +
+			            			"  const handleChange = (event, newValue) => {\n" +
+			            			"    setValue(newValue);\n" +
+			            			"  };\n" +
+			            			"\n" +
+			            			"  return (\n" +
+			            			"    <div className=\"tab\">\n" +
+			            			"      <AppBar position=\"static\">\n" +
+			            			"        <Tabs\n" +
+			            			"          variant=\"fullWidth\"\n" +
+			            			"          value={value}\n" +
+			            			"          onChange={handleChange}\n" +
+			            			"          aria-label=\"nav tabs example\"\n" +
+			            			"        >\n");
+			            	for(int i = 0; i < t_cont_count; i++) {
+			            		fw.write("          <LinkTab label={tlabel" + i + "} {...a11yProps(" + i + ")} />\n");
+			            	}
+
+			            	fw.write("        </Tabs>\n" +
+			            			"      </AppBar>\n");
+
+			            	int j = 0;
+			            	for(int i = 0; i < t_cont_count; i++) {
+			            		fw.write("      <TabPanel value={value} index={" + i + "}>\n" +
+			            			"        <Paper elevation={3}>\n" +
+			            			"          <Box p={3}>\n");
+			            				for(; j < embed_List.size() && embed_List.get(j).equals(i); j++) {
+			            					//System.out.println(j);
+			            					for(int k = 0; k < embedlines.get(j).size(); k++) {
+			            						fw.write("            " + embedlines.get(j).get(k) + "\n");
+			            					}
+			            				}
+		            					for(int k = 0; k < t_cont_List.get(i).size(); k++) {
+		            						fw.write("            <" + t_cont_List.get(i).get(k) + " />\n");
+		            					}
+			            			//"            <div dangerouslySetInnerHTML={{__html: c" + i + "}} />\n" +
+			            		fw.write("          </Box>\n" +
+			            			"        </Paper>\n" +
+			            			"      </TabPanel>\n");
+			            	}
+
+			            	//System.out.println();
+
+			            	fw.write("    </div>\n" +
+			            			"  );\n" +
+			            			"}\n");
+
+				            fw.close();
+				        } catch (IOException ex) {
+				            ex.printStackTrace();
+				        }
+
+					    String tabcsspath = GlobalEnv.getOutputDirPath()+"/../src/tab.css";
+						File cssfile = new File(tabcsspath);
+
+						//delete an old file
+						if (cssfile.exists()) {
+				            cssfile.delete();
+				        }
+
+						//create a new file
+					    try{
+					      if (!cssfile.createNewFile()){
+					        System.out.println("Could not create tab.css file.");
+					      }
+					    }catch(IOException e){
+					      System.out.println(e);
+					    }
+
+					    //write to file
+						try {
+				            FileWriter fw = new FileWriter(cssfile, true);
+				            fw.write(".tab {\n" +
+				            		"  margin-left: 10%;\n" +
+				            		"  margin-right: 10%;\n" +
+				            		"}\n" +
+				            		".paper {\n" +
+				            		"  width: 1000;\n" +
+				            		"}\n");
+				            fw.close();
+				        } catch (IOException ex) {
+				            ex.printStackTrace();
+				        }
+
+						t_cont_count = 0;
+						embed_List.clear();
+						t_cont_List.clear();
+						t_contflag = false;
+
+					//20210706 yama vtab
+					}else if(func_name.equals("vtab")){
+						tabflag = true;
+
+						ExtList tmp1 = new ExtList();
+						ExtList tmp2 = new ExtList();
+						ExtList tmp3 = new ExtList();
+						ExtList tmp4 = new ExtList();
+						ExtList tmp5 = new ExtList();
+						ExtList tmp6 = new ExtList();
+						ExtList tmp7 = new ExtList();
+						ExtList tmp8 = new ExtList();
+						ExtList tmp9 = new ExtList();
+						ExtList tmp10 = new ExtList();
+						ExtList tmp11 = new ExtList();
+						ExtList result = new ExtList();
+
+						tmp1.add(fn.getExtList(2));
+						t_cont_List.add(new ArrayList<String>());
+						for (int i = 0; i < fn.size() / 2 - 2; i++) {
+							tmp1.add(fn.get(i * 2 + 3));
+							tmp1.add(fn.getExtList(i * 2 + 4));
+							t_cont_List.add(new ArrayList<String>());
+						}
+						tmp2.add("h_exp");
+						tmp2.add(tmp1);
+						tmp3.add(tmp2);
+						tmp4.add("v_exp");
+						tmp4.add(tmp3);
+						tmp5.add(tmp4);
+						tmp6.add("d_exp");
+						tmp6.add(tmp5);
+						tmp7.add(tmp6);
+						tmp8.add("exp");
+						tmp8.add(tmp7);
+						tmp9.add("[");
+						tmp9.add(tmp8);
+						tmp9.add("]");
+						tmp9.add("!");
+						tmp10.add("grouper");
+						tmp10.add(tmp9);
+						tmp11.add(tmp10);
+						result.add("operand");
+						result.add(tmp11);
+						out_sch = read_attribute(result);
+
+						vtab_count++;
+
+						String vtabpath;
+
+						if(vtab_count > 1) {
+							Preprocessor.putComponentList("VTab" + vtab_count);
+							vtabpath = GlobalEnv.getOutputDirPath() + "/../src/vtab" + vtab_count + ".js";
+						} else {
+							Preprocessor.putComponentList("VTab");
+							vtabpath = GlobalEnv.getOutputDirPath() + "/../src/vtab.js";
+						}
+
+						File file = new File(vtabpath);
+
+						//delete an old file
+						if (file.exists()) {
+				            file.delete();
+				        }
+
+						//create a new file
+					    try{
+					      if (!file.createNewFile()){
+					        System.out.println("Could not create vtab.js file.");
+					      }
+					    }catch(IOException e){
+					      System.out.println(e);
+					    }
+
+					    //write to file
+					    try {
+				            FileWriter fw = new FileWriter(file, true);
+
+			            	fw.write("import React from 'react';\n" +
+			            			"import PropTypes from 'prop-types';\n" +
+			            			"import { makeStyles } from '@material-ui/core/styles';\n" +
+			            			"import Tabs from '@material-ui/core/Tabs';\n" +
+			            			"import Tab from '@material-ui/core/Tab';\n" +
+			            			"import Typography from '@material-ui/core/Typography';\n" +
+			            			"import Box from '@material-ui/core/Box';\n" +
+			            			"import './vtab.css';\n" +
+			            			"import Paper from '@material-ui/core/Paper';\n");
+
+			            	for (int i = 0; i < t_cont_List.size(); i++) {
+			            		for (int j = 0; j < t_cont_List.get(i).size(); j++) {
+			            			fw.write("import " + t_cont_List.get(i).get(j) + " from './" + t_cont_List.get(i).get(j).toString().toLowerCase() + "';\n");
+			            		}
+			            	}
+
+			            	for(int i = 0; i < fn.size() / 2 - 1; i++) {
+			            		String t_cont2;
+								String[] fileName = "c1.ssql".split("\\.");
+
+								if(fileName[1].equals("ssql")) {
+									fw.write("import c" + i +" from './" + fileName[0] +".js';\n");
+								}
+							}
+
+			            	for(int i = 0; i < fn.size() / 2 - 1; i++) {
+			            		String t_cont1 = fn.getExtList(i * 2 + 2, 1, 0, 1, 2, 1, 0, 1).toString();
+			            		String tabName = t_cont1.substring(2, t_cont1.length() - 2);
+
+								fw.write("var tlabel" + i + " = '" + tabName + "';\n");
+							}
+
+			            	fw.write("\n" +
+			            			"function TabPanel(props) {\n" +
+			            			"  const { children, value, index, ...other } = props;\n" +
+			            			"\n" +
+			            			"  return (\n" +
+			            			"    <div\n" +
+			            			"      role=\"tabpanel\"\n" +
+			            			"      hidden={value !== index}\n" +
+			            			"      id={`vertical-tabpanel-${index}`}\n" +
+			            			"      aria-labelledby={`vertical-tab-${index}`}\n" +
+			            			"      {...other}\n" +
+			            			"    >\n" +
+			            			"      {value === index && (\n" +
+			            			"        <Box p={3}>\n" +
+			            			"          <Typography>{children}</Typography>\n" +
+			            			"        </Box>\n" +
+			            			"      )}\n" +
+			            			"    </div>\n" +
+			            			"  );\n" +
+			            			"}\n" +
+			            			"\n" +
+			            			"TabPanel.propTypes = {\n" +
+			            			"  children: PropTypes.node,\n" +
+			            			"  index: PropTypes.any.isRequired,\n" +
+			            			"  value: PropTypes.any.isRequired,\n" +
+			            			"};\n" +
+			            			"\n" +
+			            			"function a11yProps(index) {\n" +
+			            			"  return {\n" +
+			            			"    id: `vertical-tab-${index}`,\n" +
+			            			"    'aria-controls': `vertical-tabpanel-${index}`,\n" +
+			            			"  };\n" +
+			            			"}\n" +
+			            			"\n" +
+			            			"const useStyles = makeStyles((theme) => ({\n" +
+			            			"  root: {\n" +
+			            			"    flexGrow: 1,\n" +
+			            			//"    backgroundColor: theme.palette.background.paper,\n" +
+			            			"    backgroundColor: '#FFFFF2',\n" +
+			            			"    display: 'flex',\n" +
+			            			"    height: 600,\n" +
+			            			"  },\n" +
+			            			"  tabs: {\n" +
+			            			"    borderRight: `1px solid ${theme.palette.divider}`,\n" +
+			            			"    backgroundColor: '#E8F1FA',\n" +
+			            			"  },\n" +
+			            			"}));\n" +
+			            			"\n" +
+			            			"export default function VerticalTabs() {\n" +
+			            			"  const classes = useStyles();\n" +
+			            			"  const [value, setValue] = React.useState(0);\n" +
+			            			"\n" +
+			            			"  const handleChange = (event, newValue) => {\n" +
+			            			"    setValue(newValue);\n" +
+			            			"  };\n" +
+			            			"\n" +
+			            			"  return (\n" +
+			            			"    <div className={classes.root}>\n" +
+			            			"      <Tabs\n" +
+			            			"        orientation=\"vertical\"\n" +
+			            			"        variant=\"scrollable\"\n" +
+			            			"        value={value}\n" +
+			            			"        onChange={handleChange}\n" +
+			            			"        aria-label=\"Vertical tabs example\"\n" +
+			            			"        className={classes.tabs}\n" +
+			            			"      >\n");
+			            	for(int i = 0; i < t_cont_count; i++) {
+			            		fw.write("          <Tab label={tlabel" + i + "} {...a11yProps(" + i + ")} />\n");
+			            	}
+
+			            	fw.write("        </Tabs>\n");
+
+			            	int j = 0;
+			            	for(int i = 0; i < t_cont_count; i++) {
+			            		fw.write("      <TabPanel value={value} index={" + i + "}>\n");
+	            				for(; j < embed_List.size() && embed_List.get(j).equals(i); j++) {
+	            					for(int k = 0; k < embedlines.get(j).size(); k++) {
+	            						fw.write("            " + embedlines.get(j).get(k) + "\n");
+	            					}
+	            				}
+	            				for(int k = 0; k < t_cont_List.get(i).size(); k++) {
+            						fw.write("            <" + t_cont_List.get(i).get(k) + " />\n");
+            					}
+			            		fw.write("      </TabPanel>\n");
+			            	}
+
+			            	fw.write("    </div>\n" +
+			            			"  );\n" +
+			            			"}\n");
+
+				            fw.close();
+				        } catch (IOException ex) {
+				            ex.printStackTrace();
+				        }
+
+					    String vtabcsspath = GlobalEnv.getOutputDirPath()+"/../src/vtab.css";
+						File cssfile = new File(vtabcsspath);
+
+						//delete an old file
+						if (cssfile.exists()) {
+				            cssfile.delete();
+				        }
+
+						//create a new file
+					    try{
+					      if (!cssfile.createNewFile()){
+					        System.out.println("Could not create vtab.css file.");
+					      }
+					    }catch(IOException e){
+					      System.out.println(e);
+					    }
+
+					    //write to file
+						try {
+				            FileWriter fw = new FileWriter(cssfile, true);
+				            fw.write(".tab {\n" +
+				            		"  margin-left: 10%;\n" +
+				            		"  margin-right: 10%;\n" +
+				            		"}\n" +
+				            		".paper {\n" +
+				            		"  width: 1000;\n" +
+				            		"}\n");
+				            fw.close();
+				        } catch (IOException ex) {
+				            ex.printStackTrace();
+				        }
+
+						t_cont_count = 0;
+						embed_List.clear();
+						t_cont_List.clear();
+						t_contflag = false;
+
+					//20210413 yama t_cont
+					}else if(func_name.equals("t_cont")){
+						t_contflag = true;
+
+						ExtList tmp1 = new ExtList();
+						ExtList tmp2 = new ExtList();
+						ExtList tmp3 = new ExtList();
+						ExtList tmp4 = new ExtList();
+						ExtList tmp5 = new ExtList();
+						ExtList tmp6 = new ExtList();
+						ExtList tmp7 = new ExtList();
+						ExtList tmp8 = new ExtList();
+						ExtList tmp9 = new ExtList();
+						ExtList tmp10 = new ExtList();
+						ExtList tmp11 = new ExtList();
+						ExtList result = new ExtList();
+
+						//System.out.println(tfe_tree.getExtList(1, 0, 1, 4));
+						tmp1.add(fn.getExtList(4));
+						for (int i = 0; i < fn.size() / 2 - 3; i++) {
+							tmp1.add(fn.get(i * 2 + 5));
+							//System.out.println(fn.get(5));
+							tmp1.add(fn.getExtList(i * 2 + 6));
+						}
+						tmp2.add("h_exp");
+						tmp2.add(tmp1);
+						tmp3.add(tmp2);
+						tmp4.add("v_exp");
+						tmp4.add(tmp3);
+						tmp5.add(tmp4);
+						tmp6.add("d_exp");
+						tmp6.add(tmp5);
+						tmp7.add(tmp6);
+						tmp8.add("exp");
+						tmp8.add(tmp7);
+						tmp9.add("[");
+						tmp9.add(tmp8);
+						tmp9.add("]");
+						tmp9.add("!");
+						tmp10.add("grouper");
+						tmp10.add(tmp9);
+						tmp11.add(tmp10);
+						result.add("operand");
+						result.add(tmp11);
+						out_sch = read_attribute(result);
+						//System.out.println(result);
+
+						t_cont_count++;
+
+					//20210506 yama embed
+					}else if(func_name.equals("embed")) {
+						embed_count++;
+
+						if(tabflag || contflag) {
+							if (tabflag) {
+								t_embedflag = true;
+							}
+							out_sch = func_read((ExtList)((ExtList)((ExtList)tfe_tree.get(1)).get(0)).get(1));
+
+							//componentリストの一時退避
+							ExtList component_list = Preprocessor.getComponentList();
+							//From句&Where句の一時退避
+							String fromClause = Preprocessor.getFromClause();
+							String whereClause = Preprocessor.getWhereClause();
+
+							String embedfile = fn.getExtList(2, 1, 0, 1).toString();
+							String[] input = new String[4];
+							input[0] = "-f";
+							input[1] = GlobalEnv.getOutputDirPath() + "/../src/" + embedfile.substring(2, embedfile.length() - 2).toString();
+							input[2] = "-d";
+							input[3] = GlobalEnv.getOutputDirPath();
+
+							ExtList execFile_list = Preprocessor.getExecFileList();
+
+							if(!execFile_list.contains(embedfile.substring(2, embedfile.length() - 2).toString())) {
+								execFile_list.add(embedfile.substring(2, embedfile.length() - 2).toString());
+								FrontEnd.execEmbedSuperSQL(input, execFile_list);
+								Preprocessor.removeExecFileList();
+							} else {
+								System.err.println("There is a loop in the file embedding!");
+								System.exit(-1);
+							}
+
+							//componentリストを戻す
+							for (int i = 0; i < component_list.size(); i++) {
+								Preprocessor.putComponentList(component_list.get(i).toString());
+							}
+							//From句&Where句を戻す
+							Preprocessor.setFromClause(fromClause);
+							Preprocessor.setWhereClause(whereClause);
+
+							String[] fileName = embedfile.substring(2, embedfile.length() - 2).split("\\.");
+							String path = GlobalEnv.getOutputDirPath() + "/" + fileName[0] + ".html";
+							File file = new File(path);
+
+							List<String> list = new ArrayList<>();
+							embedlines.add(list);
+
+							try (BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(file), StandardCharsets.UTF_8));){
+							    String str;
+								//List<String> lines = new ArrayList<>();
+							    while ((str = reader.readLine()) != null) {
+							    	if(str.equals("<!DOCTYPE html>")) {
+							    	} else {
+							    		list.add(str);
+							    	}
+							    }
+							} catch (IOException e) {
+							    e.printStackTrace();
+							}
+
+							if (tabflag) {
+								embed_List.add(t_cont_count);
+								t_embedflag = false;
+							}
+							if (contflag) {
+								cont_List.get(cont_List.size() - 1).add("Embed" + embed_count);
+							}
+
+						} else {
+							out_sch = func_read((ExtList)((ExtList)((ExtList)tfe_tree.get(1)).get(0)).get(1));
+
+//							String embedfile = fn.getExtList(2, 1, 0, 1).toString();
+//							String[] fileName = embedfile.substring(2, embedfile.length() - 2).split("\\.");
+//
+//							String path = GlobalEnv.getOutputDirPath() + "/../src/" + fileName[0] + ".html";
+//							File file = new File(path);
+//
+//							List<String> list = new ArrayList<>();
+//							embedlines.add(list);
+//
+//							try (BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(file), StandardCharsets.UTF_8));){
+//							    String str;
+//								//List<String> lines = new ArrayList<>();
+//							    while ((str = reader.readLine()) != null) {
+//							        list.add(str);
+//							    }
+//							} catch (IOException e) {
+//							    e.printStackTrace();
+//							}
+//
+//							String tmp = "";
+//							ExtList tmp1 = new ExtList();
+//							ExtList tmp2 = new ExtList();
+//							ExtList tmp3 = new ExtList();
+//							ExtList result = new ExtList();
+//
+//							for(int i = 0; i < list.size(); i++) {
+//        						tmp = tmp.concat("\'" + list.get(i) + "\'");
+//        					}
+//							tmp1.add(tmp);
+//							tmp2.add("sl");
+//							tmp2.add(tmp1);
+//							tmp3.add(tmp2);
+//							result.add("operand");
+//							result.add(tmp3);
+//							//System.out.println(result);
+//							out_sch = read_attribute(result);
+						}
+
+					//20210628 yama button
+					}else if(func_name.equals("button")){
+						out_sch = func_read((ExtList)((ExtList)((ExtList)tfe_tree.get(1)).get(0)).get(1));
+
+						button_count++;
+
+						String buttonstr = fn.getExtList(2, 1, 0, 1).toString();
+						String buttonpath;
+
+						if (button_count > 1) {
+							if (contflag) {
+								cont_List.get(cont_List.size() - 1).add("Button" + button_count);
+							} else if (t_contflag) {
+								t_cont_List.get(t_cont_count).add("Button" + button_count);
+							} else {
+								Preprocessor.putComponentList("Button" + button_count);
+							}
+							buttonpath = GlobalEnv.getOutputDirPath() + "/../src/button" + button_count + ".js";
+						} else {
+							if (contflag) {
+								cont_List.get(cont_List.size() - 1).add("Button");
+							} else if (t_contflag) {
+								t_cont_List.get(t_cont_count).add("Button");
+							} else {
+								Preprocessor.putComponentList("Button");
+							}
+							buttonpath = GlobalEnv.getOutputDirPath() + "/../src/button.js";
+						}
+
+						File file = new File(buttonpath);
+
+						//delete an old file
+						if (file.exists()) {
+				            file.delete();
+				        }
+
+						//create a new file
+					    try{
+					      if (!file.createNewFile()){
+					        System.out.println("Could not create button.js file.");
+					      }
+					    }catch(IOException e){
+					      System.out.println(e);
+					    }
+
+					    String dec_button = ((ExtList)tfe_tree.get(1)).get(((ExtList)tfe_tree.get(1)).size() - 1).toString();
+					    String[] dec = dec_button.substring(2, dec_button.length() - 1).replace('\'', '\"').split(",");
+
+					    //write to file
+					    try {
+				            FileWriter fw = new FileWriter(file, true);
+
+				            fw.write("import React from 'react';\n" +
+				            		"import { makeStyles } from '@material-ui/core/styles';\n" +
+				            		"import Button from '@material-ui/core/Button';\n" +
+				            		"var button = '" + buttonstr.substring(2, buttonstr.length() - 2) + "';\n" +
+				            		"\n" +
+				            		"const useStyles = makeStyles((theme) => ({\n" +
+				            		"  root: {\n" +
+				            		"    '& > *': {\n" +
+				            		"      margin: theme.spacing(1),\n" +
+				            		"      textTransform: 'none'," +
+				            		"    },\n" +
+				            		"  },\n" +
+				            		"}));\n" +
+				            		"\n" +
+				            		"export default function ContainedButtons() {\n" +
+				            		"  const classes = useStyles();\n" +
+				            		"\n" +
+				            		"  return (\n" +
+				            		"    <div className={classes.root}>\n" +
+				            		"      <Button variant=\"contained\" ");
+				            if(dec_button.startsWith("@{")) {
+				            	for(int i = 0; i < dec.length; i++) {
+				            		fw.write(dec[i] + " ");
+				            	}
+				            }
+				            fw.write(">\n" +
+				            		"        {button}\n" +
+				            		"      </Button>\n" +
+				            		"    </div>\n" +
+				            		"  );\n" +
+				            		"}");
+
+				            fw.close();
+				        } catch (IOException ex) {
+				            ex.printStackTrace();
+				        }
+
+					//20210706 yama textfield
+					}else if(func_name.equals("textfield")){
+						out_sch = func_read((ExtList)((ExtList)((ExtList)tfe_tree.get(1)).get(0)).get(1));
+
+						textfield_count++;
+
+						String textfieldstr = fn.getExtList(2, 1, 0, 1).toString();
+						String textfieldpath;
+
+						if (textfield_count > 1) {
+							if (contflag) {
+								cont_List.get(cont_List.size() - 1).add("Textfield" + textfield_count);
+							} else if (t_contflag) {
+								t_cont_List.get(t_cont_count).add("Textfield" + textfield_count);
+							} else {
+								Preprocessor.putComponentList("Textfield" + textfield_count);
+							}
+							textfieldpath = GlobalEnv.getOutputDirPath() + "/../src/textfield" + textfield_count + ".js";
+						} else {
+							if (contflag) {
+								cont_List.get(cont_List.size() - 1).add("Textfield");
+							} else if (t_contflag) {
+								t_cont_List.get(t_cont_count).add("Textfield");
+							} else {
+								Preprocessor.putComponentList("Textfield");
+							}
+							textfieldpath = GlobalEnv.getOutputDirPath() + "/../src/textfield.js";
+						}
+
+						File file = new File(textfieldpath);
+
+						//delete an old file
+						if (file.exists()) {
+				            file.delete();
+				        }
+
+						//create a new file
+					    try{
+					      if (!file.createNewFile()){
+					        System.out.println("Could not create textfield.js file.");
+					      }
+					    }catch(IOException e){
+					      System.out.println(e);
+					    }
+
+					    String dec_textfield = ((ExtList)tfe_tree.get(1)).get(((ExtList)tfe_tree.get(1)).size() - 1).toString();
+					    String[] dec = dec_textfield.substring(2, dec_textfield.length() - 1).replace('\'', '\"').split(",");
+
+					    //write to file
+					    try {
+				            FileWriter fw = new FileWriter(file, true);
+
+				            fw.write("import React from 'react';\n" +
+				            		"import { makeStyles } from '@material-ui/core/styles';\n" +
+				            		"import TextField from '@material-ui/core/TextField';\n" +
+				            		"var textfield = '" + textfieldstr.substring(2, textfieldstr.length() - 2) + "';\n" +
+				            		"\n" +
+				            		"const useStyles = makeStyles((theme) => ({\n" +
+				            		"  root: {\n" +
+				            		"    '& > *': {\n" +
+				            		"      margin: theme.spacing(1),\n" +
+				            		"      width: '50ch',\n" +
+				            		"      backgroundColor: '#FFFFFF',\n" +
+				            		"    },\n" +
+				            		"  },\n" +
+				            		"}));\n" +
+				            		"\n" +
+				            		"export default function BasicTextFields() {\n" +
+				            		"  const classes = useStyles();\n" +
+				            		"\n" +
+				            		"  return (\n" +
+				            		"    <form className={classes.root} noValidate autoComplete=\"off\">\n" +
+				            		"      <TextField id=\"outlined-basic\" label={textfield} variant=\"outlined\" />\n" +
+				            		"    </form>\n" +
+				            		"  );\n" +
+				            		"}\n" +
+				            		"");
+				            if(dec_textfield.startsWith("@{")) {
+				            	for(int i = 0; i < dec.length; i++) {
+				            		fw.write(dec[i] + " ");
+				            	}
+				            }
+				            fw.write("");
+
+				            fw.close();
+				        } catch (IOException ex) {
+				            ex.printStackTrace();
+				        }
+
+					//20211220 yama unstyled_textfield
+					}else if(func_name.equals("u_textfield")){
+						out_sch = func_read((ExtList)((ExtList)((ExtList)tfe_tree.get(1)).get(0)).get(1));
+
+						u_textfield_count++;
+
+						String u_textfieldstr = fn.getExtList(2, 1, 0, 1).toString();
+						String u_textfieldpath;
+
+						if (u_textfield_count > 1) {
+							if (contflag) {
+								cont_List.get(cont_List.size() - 1).add("U_Textfield" + u_textfield_count);
+							} else if (t_contflag) {
+								t_cont_List.get(t_cont_count).add("U_Textfield" + u_textfield_count);
+							} else {
+								Preprocessor.putComponentList("U_Textfield" + u_textfield_count);
+							}
+							u_textfieldpath = GlobalEnv.getOutputDirPath() + "/../src/u_textfield" + u_textfield_count + ".js";
+						} else {
+							if (contflag) {
+								cont_List.get(cont_List.size() - 1).add("U_Textfield");
+							} else if (t_contflag) {
+								t_cont_List.get(t_cont_count).add("U_Textfield");
+							} else {
+								Preprocessor.putComponentList("U_Textfield");
+							}
+							u_textfieldpath = GlobalEnv.getOutputDirPath() + "/../src/u_textfield.js";
+						}
+
+						File file = new File(u_textfieldpath);
+
+						//delete an old file
+						if (file.exists()) {
+				            file.delete();
+				        }
+
+						//create a new file
+					    try{
+					      if (!file.createNewFile()){
+					        System.out.println("Could not create u_textfield.js file.");
+					      }
+					    }catch(IOException e){
+					      System.out.println(e);
+					    }
+
+					    String dec_textfield = ((ExtList)tfe_tree.get(1)).get(((ExtList)tfe_tree.get(1)).size() - 1).toString();
+					    String[] dec = dec_textfield.substring(2, dec_textfield.length() - 1).replace('\'', '\"').split(",");
+					    int width = 300;
+					    for (int i = 0; i < dec.length; i++) {
+					    	if (dec[i].split("=")[0].trim().equals("width")) {
+					    		width = Integer.parseInt(dec[i].split("=")[1]);
+					    	}
+					    }
+
+					    //write to file
+					    try {
+				            FileWriter fw = new FileWriter(file, true);
+
+				            fw.write("import React from 'react';\n" +
+				            		"import InputUnstyled from '@mui/core/InputUnstyled';\n" +
+				            		"import { styled } from '@mui/system';\n" +
+				            		"var u_textfield = '" + u_textfieldstr.substring(2, u_textfieldstr.length() - 2) + "';\n" +
+				            		"\n" +
+				            		"const StyledInputElement = styled('input')`\n" +
+				            		"  width: " + width + "px;\n" +
+				            		"  font-size: 1rem;\n" +
+				            		"  font-family: IBM Plex Sans, sans-serif;\n" +
+				            		"  font-weight: 400;\n" +
+				            		"  line-height: 1.4375em;\n" +
+				            		"  background: rgb(243, 246, 249);\n" +
+				            		"  border: 1px solid #e5e8ec;\n" +
+				            		"  border-radius: 30px;\n" +
+				            		"  padding: 6px 10px;\n" +
+				            		"  color: #20262d;\n" +
+				            		"  transition: width 300ms ease;\n" +
+				            		"`;\n" +
+				            		"\n" +
+				            		"const CustomInput = React.forwardRef(function CustomInput(props, ref) {\n" +
+				            		"  return (\n" +
+				            		"    <InputUnstyled components={{ Input: StyledInputElement }} {...props} ref={ref} />\n" +
+				            		"  );\n" +
+				            		"});\n" +
+				            		"\n" +
+				            		"export default function UnstyledInput() {\n" +
+				            		"  return (\n" +
+				            		"    <CustomInput aria-label=\"Demo input\" placeholder={u_textfield} />\n" +
+				            		"  );\n" +
+				            		"}\n" +
+				            		"");
+
+				            fw.close();
+				        } catch (IOException ex) {
+				            ex.printStackTrace();
+				        }
+
+					//20211218 yama text
+					}else if(func_name.equals("text")){
+						out_sch = func_read((ExtList)((ExtList)((ExtList)tfe_tree.get(1)).get(0)).get(1));
+
+						text_count++;
+
+						String textstr = fn.getExtList(2, 1, 0, 1).toString();
+						String textpath;
+
+						if (text_count > 1) {
+							if (contflag) {
+								cont_List.get(cont_List.size() - 1).add("Text" + text_count);
+							} else if (t_contflag) {
+								t_cont_List.get(t_cont_count).add("Text" + text_count);
+							} else {
+								Preprocessor.putComponentList("Text" + text_count);
+							}
+							textpath = GlobalEnv.getOutputDirPath() + "/../src/text" + text_count + ".js";
+						} else {
+							if (contflag) {
+								cont_List.get(cont_List.size() - 1).add("Text");
+							} else if (t_contflag) {
+								t_cont_List.get(t_cont_count).add("Text");
+							} else {
+								Preprocessor.putComponentList("Text");
+							}
+							textpath = GlobalEnv.getOutputDirPath() + "/../src/text.js";
+						}
+
+						File file = new File(textpath);
+
+						//delete an old file
+						if (file.exists()) {
+				            file.delete();
+				        }
+
+						//create a new file
+					    try{
+					      if (!file.createNewFile()){
+					        System.out.println("Could not create text.js file.");
+					      }
+					    }catch(IOException e){
+					      System.out.println(e);
+					    }
+
+					    String dec_text = ((ExtList)tfe_tree.get(1)).get(((ExtList)tfe_tree.get(1)).size() - 1).toString();
+					    String[] dec = dec_text.substring(2, dec_text.length() - 1).replace('\'', '\"').split(",");
+					    String fontSize = "", color = "", bgcolor = "", fontWeight = "", lineHeight = "", letterSpacing = "", textAlign = "";
+
+					    for (int i = 0; i < dec.length; i++) {
+						    if (dec[i].split("=")[0].trim().equals("size") || dec[i].split("=")[0].trim().equals("font-size")) {
+						    	fontSize = dec[i].split("=")[1];
+						    } else if (dec[i].split("=")[0].trim().equals("color") || dec[i].split("=")[0].trim().equals("font-color")) {
+						    	color = "'" + dec[i].split("=")[1].substring(1, dec[i].split("=")[1].length() - 1) + "'";
+						    } else if (dec[i].split("=")[0].trim().equals("bgcolor") || dec[i].split("=")[0].trim().equals("background-color")) {
+						    	bgcolor = "'" + dec[i].split("=")[1].substring(1, dec[i].split("=")[1].length() - 1) + "'";
+						    } else if (dec[i].split("=")[0].trim().equals("font-weight")) {
+						    	fontWeight = dec[i].split("=")[1];
+						    } else if (dec[i].split("=")[0].trim().equals("line-height")) {
+						    	lineHeight = dec[i].split("=")[1];
+						    } else if (dec[i].split("=")[0].trim().equals("spacing") || dec[i].split("=")[0].trim().equals("letter-spacing")) {
+						    	letterSpacing = dec[i].split("=")[1];
+						    } else if (dec[i].split("=")[0].trim().equals("align") || dec[i].split("=")[0].trim().equals("text-align")) {
+						    	textAlign = "'" + dec[i].split("=")[1].substring(1, dec[i].split("=")[1].length() - 1) + "'";
+						    }
+					    }
+
+					    //write to file
+					    try {
+				            FileWriter fw = new FileWriter(file, true);
+
+				            fw.write("import React from 'react';\n" +
+				            		"var text = '" + textstr.substring(2, textstr.length() - 2) + "';\n" +
+				            		"\n" +
+				            		"export default function Text() {\n" +
+				            		"  return (\n" +
+				            		"    <div");
+				            if (fontSize.equals("") && color.equals("") && fontWeight.equals("") && lineHeight.equals("") && letterSpacing.equals("") && textAlign.equals("")) {
+				            } else {
+				            	fw.write(" style={{");
+
+				            	if (!fontSize.equals("")) {
+				            		fw.write("fontSize: '" + fontSize + "px', ");
+				            	}
+				            	if (!color.equals("")) {
+				            		fw.write("color: " + color + ", ");
+				            	}
+				            	if (!bgcolor.equals("")) {
+				            		fw.write("backgroundColor: " + bgcolor + ", ");
+				            	}
+				            	if (!fontWeight.equals("")) {
+				            		fw.write("fontWeight: '" + fontWeight + "', ");
+				            	}
+				            	if (!lineHeight.equals("")) {
+				            		fw.write("lineHeight: '" + lineHeight + "', ");
+				            	}
+				            	if (!letterSpacing.equals("")) {
+				            		fw.write("letterSpacing: '" + letterSpacing + "', ");
+				            	}
+				            	if (!textAlign.equals("")) {
+				            		fw.write("textAlign: " + textAlign);
+				            	}
+
+				            	fw.write("}}");
+				            }
+				            fw.write(">{text}</div>\n" +
+				            		"  );\n" +
+				            		"}\n");
+
+				            fw.close();
+				        } catch (IOException ex) {
+				            ex.printStackTrace();
+				        }
+
+					//20211218 yama icon
+					}else if(func_name.equals("icon")){
+						out_sch = func_read((ExtList)((ExtList)((ExtList)tfe_tree.get(1)).get(0)).get(1));
+
+						String textstr = fn.getExtList(2, 1, 0, 1).toString().substring(2, fn.getExtList(2, 1, 0, 1).toString().length() - 2);
+
+						if (contflag) {
+							cont_List.get(cont_List.size() - 1).add(textstr);
+						} else if (t_contflag) {
+							t_cont_List.get(t_cont_count).add(textstr);
+						} else {
+							Preprocessor.putComponentList(textstr);
+						}
+
+					//20211218 yama br
+					}else if(func_name.equals("br")){
+						out_sch = func_read((ExtList)((ExtList)((ExtList)tfe_tree.get(1)).get(0)).get(1));
+
+						int brnum = Integer.parseInt(fn.getExtList(2, 1).toString().substring(1, fn.getExtList(2, 1).toString().length() - 1));
+
+						for (int i = 0; i < brnum; i++) {
+							if (contflag) {
+								cont_List.get(cont_List.size() - 1).add("br");
+							} else if (t_contflag) {
+								t_cont_List.get(t_cont_count).add("br");
+							} else {
+								Preprocessor.putComponentList("br");
+							}
+						}
+
+					//20211118 yama list
+					}else if(func_name.equals("list")){
+						out_sch = func_read((ExtList)((ExtList)((ExtList)tfe_tree.get(1)).get(0)).get(1));
+
+						list_count++;
+
+						String listpath;
+
+						if (list_count > 1) {
+							if (contflag) {
+								cont_List.get(cont_List.size() - 1).add("List" + list_count);
+							} else if (t_contflag) {
+								t_cont_List.get(t_cont_count).add("List" + list_count);
+							} else {
+								Preprocessor.putComponentList("List" + list_count);
+							}
+							listpath = GlobalEnv.getOutputDirPath() + "/../src/list" + list_count + ".js";
+						} else {
+							if (contflag) {
+								cont_List.get(cont_List.size() - 1).add("List");
+							} else if (t_contflag) {
+								t_cont_List.get(t_cont_count).add("List");
+							} else {
+								Preprocessor.putComponentList("List");
+							}
+							listpath = GlobalEnv.getOutputDirPath() + "/../src/list.js";
+						}
+
+						File file = new File(listpath);
+
+						//delete an old file
+						if (file.exists()) {
+				            file.delete();
+				        }
+
+						//create a new file
+					    try{
+					      if (!file.createNewFile()){
+					        System.out.println("Could not create list.js file.");
+					      }
+					    }catch(IOException e){
+					      System.out.println(e);
+					    }
+
+					    //write to file
+					    try {
+				            FileWriter fw = new FileWriter(file, true);
+
+				            fw.write("import React from 'react';\n" +
+				            		"import ListSubheader from '@mui/material/ListSubheader';\n" +
+				            		"import List from '@mui/material/List';\n" +
+				            		"import ListItem from '@material-ui/core/ListItem';\n" +
+				            		"import ListItemIcon from '@mui/material/ListItemIcon';\n" +
+				            		"import ListItemText from '@mui/material/ListItemText';\n" +
+				            		"import Collapse from '@mui/material/Collapse';\n" +
+				            		"import InboxIcon from '@mui/icons-material/MoveToInbox';\n" +
+				            		"import DraftsIcon from '@mui/icons-material/Drafts';\n" +
+				            		"import Box from '@mui/material/Box';\n" +
+				            		"import SendIcon from '@mui/icons-material/Send';\n" +
+				            		"import ExpandLess from '@mui/icons-material/ExpandLess';\n" +
+				            		"import ExpandMore from '@mui/icons-material/ExpandMore';\n" +
+				            		"import StarBorder from '@mui/icons-material/StarBorder';\n");
+
+				            for (int i = 0; i < fn.size() / 2 - 1; i++) {
+				            	String listpic = fn.getExtList(i * 2 + 2, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1).toString();
+				            	fw.write("import pict" + i + " from './picts/" + listpic.substring(2, listpic.length() - 2) + "';\n");
+				            }
+
+				            fw.write("\n" +
+				            		"function ListItemLink(props) {\n" +
+				            		"  return <ListItem button component=\"a\" {...props} />;\n" +
+				            		"}\n" +
+				            		"export default function NestedList() {\n" +
+				            		"  const [open, setOpen] = React.useState(false);\n" +
+				            		"\n" +
+				            		"  const handleClick = () => {\n" +
+				            		"    setOpen(!open);\n" +
+				            		"  };\n" +
+				            		"\n" +
+				            		"  return (\n" +
+				            		"    <div>\n" +
+				            		"      <Box sx={{ m: 1 }} />\n" +
+				            		"      <List\n" +
+				            		"        sx={{ width: '100%', maxWidth: 360, bgcolor: '#F0F2F5' }}\n" +
+				            		"        component=\"nav\"\n" +
+				            		"      >\n");
+
+				            for (int i = 0; i < fn.size() / 2 - 1; i++) {
+				            	String liststr = fn.getExtList(i * 2 + 2, 1, 0, 1, 0, 1, 0, 1, 0, 1, 2, 1, 0, 1).toString();
+
+				            	if ((fn.getExtList(i * 2 + 2, 1, 0, 1, 0, 1, 0, 1, 0, 1).size() + 1) / 2 == 3) {
+				            		String urlstr = fn.getExtList(i * 2 + 2, 1, 0, 1, 0, 1, 0, 1, 0, 1, 4, 1, 0, 1).get(0).toString();
+				            		fw.write("        <ListItemLink href=\"" + urlstr.substring(1, urlstr.length() - 1) + "\">\n");
+				            	} else {
+						            fw.write("        <ListItemLink>\n");
+				            	}
+						        fw.write("          <ListItemIcon>\n" +
+					            		"            <img src={pict" + i + "} width=\"40\"/>\n" +
+					            		"          </ListItemIcon>\n" +
+					            		"          <ListItemText primary=\"" + liststr.substring(2, liststr.length() - 2) + "\" />\n" +
+					            		"        </ListItemLink>\n"
+						        );
+				            }
+
+				            fw.write("      </List>\n" +
+				            		"    </div>\n" +
+				            		"  );\n" +
+				            		"}\n" +
+				            		"");
+
+				            fw.close();
+				        } catch (IOException ex) {
+				            ex.printStackTrace();
+				        }
+					//20211220 yama divider
+					}else if(func_name.equals("divider")){
+						out_sch = func_read((ExtList)((ExtList)((ExtList)tfe_tree.get(1)).get(0)).get(1));
+
+						divider_count++;
+
+						String dividerstr = fn.getExtList(2, 1, 0, 1).toString();
+						String dividerpath;
+
+						if (divider_count > 1) {
+							if (contflag) {
+								cont_List.get(cont_List.size() - 1).add("Divider" + divider_count);
+							} else if (t_contflag) {
+								t_cont_List.get(t_cont_count).add("Divider" + divider_count);
+							} else {
+								Preprocessor.putComponentList("Divider" + divider_count);
+							}
+							dividerpath = GlobalEnv.getOutputDirPath() + "/../src/divider" + divider_count + ".js";
+						} else {
+							if (contflag) {
+								cont_List.get(cont_List.size() - 1).add("Divider");
+							} else if (t_contflag) {
+								t_cont_List.get(t_cont_count).add("Divider");
+							} else {
+								Preprocessor.putComponentList("Divider");
+							}
+							dividerpath = GlobalEnv.getOutputDirPath() + "/../src/divider.js";
+						}
+
+						File file = new File(dividerpath);
+
+						//delete an old file
+						if (file.exists()) {
+				            file.delete();
+				        }
+
+						//create a new file
+					    try{
+					      if (!file.createNewFile()){
+					        System.out.println("Could not create divider.js file.");
+					      }
+					    }catch(IOException e){
+					      System.out.println(e);
+					    }
+
+					    //write to file
+					    try {
+				            FileWriter fw = new FileWriter(file, true);
+
+				            fw.write("import React from 'react';\n" +
+				            		"import Divider from '@material-ui/core/Divider';\n");
+
+				            fw.write("\n" +
+				            "export default function Dividers() {\n" +
+				            "  return (" +
+				            "    <Divider variant=\"" + dividerstr + "\" />" +
+				            "  )" +
+				            "}\n");
+
+				            fw.close();
+				        } catch (IOException ex) {
+				            ex.printStackTrace();
+				        }
+
+					//20211220 yama avatar
+					}else if(func_name.equals("avatar")){
+						out_sch = func_read((ExtList)((ExtList)((ExtList)tfe_tree.get(1)).get(0)).get(1));
+
+						avatar_count++;
+
+						String avatarstr = fn.getExtList(2, 1, 0, 1).toString().substring(2, fn.getExtList(2, 1, 0, 1).toString().length() - 2);
+						String avatarpath;
+
+						if (avatar_count > 1) {
+							if (contflag) {
+								cont_List.get(cont_List.size() - 1).add("Avatar" + avatar_count);
+							} else if (t_contflag) {
+								t_cont_List.get(t_cont_count).add("Avatar" + avatar_count);
+							} else {
+								Preprocessor.putComponentList("Avatar" + avatar_count);
+							}
+							avatarpath = GlobalEnv.getOutputDirPath() + "/../src/avatar" + avatar_count + ".js";
+						} else {
+							if (contflag) {
+								cont_List.get(cont_List.size() - 1).add("Avatar");
+							} else if (t_contflag) {
+								t_cont_List.get(t_cont_count).add("Avatar");
+							} else {
+								Preprocessor.putComponentList("Avatar");
+							}
+							avatarpath = GlobalEnv.getOutputDirPath() + "/../src/avatar.js";
+						}
+
+						File file = new File(avatarpath);
+
+						//delete an old file
+						if (file.exists()) {
+				            file.delete();
+				        }
+
+						//create a new file
+					    try{
+					      if (!file.createNewFile()){
+					        System.out.println("Could not create avatar.js file.");
+					      }
+					    }catch(IOException e){
+					      System.out.println(e);
+					    }
+
+					    //write to file
+					    try {
+				            FileWriter fw = new FileWriter(file, true);
+
+				            fw.write("import React from 'react';\n" +
+				            		"import Avatar from '@mui/material/Avatar';\n" +
+				            		"\n" +
+				            		"function stringToColor(string) {\n" +
+				            		"  let hash = 0;\n" +
+				            		"  let i;\n" +
+				            		"\n" +
+				            		"  /* eslint-disable no-bitwise */\n" +
+				            		"  for (i = 0; i < string.length; i += 1) {\n" +
+				            		"    hash = string.charCodeAt(i) + ((hash << 5) - hash);\n" +
+				            		"  }\n" +
+				            		"\n" +
+				            		"  let color = '#';\n" +
+				            		"\n" +
+				            		"  for (i = 0; i < 3; i += 1) {\n" +
+				            		"    const value = (hash >> (i * 8)) & 0xff;\n" +
+				            		"    color += `00${value.toString(16)}`.substr(-2);\n" +
+				            		"  }\n" +
+				            		"  /* eslint-enable no-bitwise */\n" +
+				            		"\n" +
+				            		"  return color;\n" +
+				            		"}\n" +
+				            		"\n" +
+				            		"function stringAvatar(name) {\n" +
+				            		"  return {\n" +
+				            		"    sx: {\n" +
+				            		"      bgcolor: stringToColor(name),\n" +
+				            		"    },\n" +
+				            		"    children: `${name.split(' ')[0][0]}${name.split(' ')[1][0]}`,\n" +
+				            		"  };\n" +
+				            		"}\n" +
+				            		"\n" +
+				            		"export default function Avatars() {\n" +
+				            		"  return (\n" +
+				            		"    <Avatar sx={{ width: 35, height: 35 }} {...stringAvatar('" + avatarstr + "')} />\n" +
+				            		"  )\n" +
+				            		"}\n");
+
+				            fw.close();
+				        } catch (IOException ex) {
+				            ex.printStackTrace();
+				        }
+
+					//20211118 yama f_card
+					}else if(func_name.equals("card")){
+						contflag = true;
+						List<String> contlist = new ArrayList<>();
+						cont_List.add(contlist);
+						cont_maxnest = cont_List.size();
+
+						ExtList tmp1 = new ExtList();
+						ExtList tmp2 = new ExtList();
+						ExtList tmp3 = new ExtList();
+						ExtList tmp4 = new ExtList();
+						ExtList tmp5 = new ExtList();
+						ExtList tmp6 = new ExtList();
+						ExtList tmp7 = new ExtList();
+						ExtList tmp8 = new ExtList();
+						ExtList tmp9 = new ExtList();
+						ExtList tmp10 = new ExtList();
+						ExtList tmp11 = new ExtList();
+						ExtList result = new ExtList();
+
+						tmp1.add(fn.getExtList(2));
+						for (int i = 0; i < fn.size() / 2 - 2; i++) {
+							tmp1.add(fn.get(i * 2 + 3));
+							tmp1.add(fn.getExtList(i * 2 + 4));
+						}
+						tmp2.add("h_exp");
+						tmp2.add(tmp1);
+						tmp3.add(tmp2);
+						tmp4.add("v_exp");
+						tmp4.add(tmp3);
+						tmp5.add(tmp4);
+						tmp6.add("d_exp");
+						tmp6.add(tmp5);
+						tmp7.add(tmp6);
+						tmp8.add("exp");
+						tmp8.add(tmp7);
+						tmp9.add("[");
+						tmp9.add(tmp8);
+						tmp9.add("]");
+						tmp9.add("!");
+						tmp10.add("grouper");
+						tmp10.add(tmp9);
+						tmp11.add(tmp10);
+						result.add("operand");
+						result.add(tmp11);
+						out_sch = read_attribute(result);
+
+						card_count++;
+
+						String cardpath;
+
+						if (card_count > 1) {
+							if (contflag && cont_List.size() > 1) {
+								cont_List.get(cont_List.size() - 2).add("Cards" + card_count);
+//							} else if (c_cont_List.size() != 1) {
+//								c_cont_List.get(c_cont_List.size() - 2).add("Card" + card_count);
+							} else if (t_contflag) {
+								t_cont_List.get(t_cont_count).add("Cards" + card_count);
+							} else {
+								Preprocessor.putComponentList("Cards" + card_count);
+							}
+							cardpath = GlobalEnv.getOutputDirPath() + "/../src/cards" + card_count + ".js";
+						} else {
+							if (contflag && cont_List.size() > 1) {
+								cont_List.get(cont_List.size() - 2).add("Cards");
+							} else if (t_contflag) {
+								t_cont_List.get(t_cont_count).add("Cards");
+							} else {
+								Preprocessor.putComponentList("Cards");
+							}
+							cardpath = GlobalEnv.getOutputDirPath() + "/../src/cards.js";
+						}
+
+						File file = new File(cardpath);
+
+						//delete an old file
+						if (file.exists()) {
+				            file.delete();
+				        }
+
+						//create a new file
+					    try{
+					      if (!file.createNewFile()){
+					        System.out.println("Could not create cards.js file.");
+					      }
+					    }catch(IOException e){
+					      System.out.println(e);
+					    }
+
+					    //write to file
+					    try {
+				            FileWriter fw = new FileWriter(file, true);
+
+				            fw.write("import React from 'react';\n" +
+				            		"import Box from '@mui/material/Box';\n" +
+				            		"import Card from '@mui/material/Card';\n" +
+				            		"import CardActions from '@mui/material/CardActions';\n" +
+				            		"import CardContent from '@mui/material/CardContent';\n");
+
+				            for (int i = 0; i < cont_List.get(cont_List.size() - 1).size(); i++) {
+				            	if (cont_List.get(cont_List.size() - 1).get(i).contains("Icon")) {
+				            		fw.write("import " + cont_List.get(cont_List.size() - 1).get(i) + " from '@mui/icons-material/" + cont_List.get(cont_List.size() - 1).get(i).substring(0, cont_List.get(cont_List.size() - 1).get(i).length() - 4) + "';\n");
+				            	} else if (cont_List.get(cont_List.size() - 1).get(i).contains("Embed") || cont_List.get(cont_List.size() - 1).get(i).contains("br")) {
+				            		//何もしない
+				            	} else {
+				            		fw.write("import " + cont_List.get(cont_List.size() - 1).get(i) + " from './" + cont_List.get(cont_List.size() - 1).get(i).toString().toLowerCase() + "';\n");
+				            	}
+			            	}
+
+				            fw.write("\n" +
+				            		"export default function BasicCard() {\n" +
+				            		"  return (\n" +
+				            		"    <Card sx={{ minWidth: 275 }}>\n" +
+				            		"      <CardContent style={{fontSize: '20px'}}>\n");
+
+//				            for(; j < embed_List.size() && embed_List.get(j).equals(i); j++) {
+//            					for(int k = 0; k < embedlines.get(j).size(); k++) {
+//            						fw.write("            " + embedlines.get(j).get(k) + "\n");
+//            					}
+//            				}
+
+				            for(int i = 0; i < cont_List.get(cont_List.size() - 1).size(); i++) {
+				            	if (cont_List.get(cont_List.size() - 1).get(i).contains("Embed")) {
+				            		for(int k = 0; k < embedlines.get(Integer.parseInt(cont_List.get(cont_List.size() - 1).get(i).substring(5)) - 1).size(); k++) {
+	            						fw.write("          " + embedlines.get(Integer.parseInt(cont_List.get(cont_List.size() - 1).get(i).substring(5)) - 1).get(k) + "\n");
+	            					}
+				            		embedlines.get(Integer.parseInt(cont_List.get(cont_List.size() - 1).get(i).substring(5)) - 1).clear();
+					            } else {
+					            	fw.write("        <" + cont_List.get(cont_List.size() - 1).get(i) + " />\n");
+					            }
+				            }
+
+				            fw.write("      </CardContent>\n" +
+				            		"    </Card>\n" +
+				            		"  );\n" +
+				            		"}\n" +
+				            		"");
+
+				            fw.close();
+				        } catch (IOException ex) {
+				            ex.printStackTrace();
+				        }
+
+					    cont_List.remove(cont_List.size() - 1);
+						if (cont_List.size() == 0) {
+							contflag = false;
+						}
+
+					//20211118 yama grid
+					}else if(func_name.equals("grid")){
+						contflag = true;
+						List<String> contlist = new ArrayList<>();
+						cont_List.add(contlist);
+						cont_maxnest = cont_List.size();
+
+						ExtList tmp1 = new ExtList();
+						ExtList tmp2 = new ExtList();
+						ExtList tmp3 = new ExtList();
+						ExtList tmp4 = new ExtList();
+						ExtList tmp5 = new ExtList();
+						ExtList tmp6 = new ExtList();
+						ExtList tmp7 = new ExtList();
+						ExtList tmp8 = new ExtList();
+						ExtList tmp9 = new ExtList();
+						ExtList tmp10 = new ExtList();
+						ExtList tmp11 = new ExtList();
+						ExtList result = new ExtList();
+
+						tmp1.add(fn.getExtList(2));
+						for (int i = 0; i < fn.size() / 2 - 2; i++) {
+							tmp1.add(fn.get(i * 2 + 3));
+							tmp1.add(fn.getExtList(i * 2 + 4));
+						}
+						tmp2.add("h_exp");
+						tmp2.add(tmp1);
+						tmp3.add(tmp2);
+						tmp4.add("v_exp");
+						tmp4.add(tmp3);
+						tmp5.add(tmp4);
+						tmp6.add("d_exp");
+						tmp6.add(tmp5);
+						tmp7.add(tmp6);
+						tmp8.add("exp");
+						tmp8.add(tmp7);
+						tmp9.add("[");
+						tmp9.add(tmp8);
+						tmp9.add("]");
+						tmp9.add("!");
+						tmp10.add("grouper");
+						tmp10.add(tmp9);
+						tmp11.add(tmp10);
+						result.add("operand");
+						result.add(tmp11);
+						//System.out.println(g_cont_List);
+						out_sch = read_attribute(result);
+
+						grid_count++;
+
+						String gridpath;
+
+						if (grid_count > 1) {
+							if (contflag && cont_List.size() > 1) {
+								System.out.println(cont_List);
+								cont_List.get(cont_List.size() - 2).add("Grids" + grid_count);
+							} else if (t_contflag) {
+								t_cont_List.get(t_cont_count).add("Grids" + grid_count);
+							} else {
+								Preprocessor.putComponentList("Grids" + grid_count);
+							}
+							gridpath = GlobalEnv.getOutputDirPath() + "/../src/grids" + grid_count + ".js";
+						} else {
+							if (contflag && cont_List.size() > 1) {
+								cont_List.get(cont_List.size() - 2).add("Grids");
+							} else if (t_contflag) {
+								t_cont_List.get(t_cont_count).add("Grids");
+							} else {
+								Preprocessor.putComponentList("Grids");
+							}
+							gridpath = GlobalEnv.getOutputDirPath() + "/../src/grids.js";
+						}
+						//System.out.println(g_cont_List.size() +" "+ g_cont_List);
+
+						File file = new File(gridpath);
+
+						//delete an old file
+						if (file.exists()) {
+				            file.delete();
+				        }
+
+						//create a new file
+					    try{
+					      if (!file.createNewFile()){
+					        System.out.println("Could not create grids.js file.");
+					      }
+					    }catch(IOException e){
+					      System.out.println(e);
+					    }
+
+					    //write to file
+					    try {
+				            FileWriter fw = new FileWriter(file, true);
+
+				            fw.write("import React from 'react';\n" +
+				            		"import { styled } from '@mui/material/styles';\n" +
+				            		"import Box from '@mui/material/Box';\n" +
+				            		"import Paper from '@mui/material/Paper';\n" +
+				            		"import Grid from '@mui/material/Grid';\n");
+
+				            for (int i = 0; i < cont_List.get(cont_List.size() - 1).size(); i++) {
+				            	if (cont_List.get(cont_List.size() - 1).get(i).contains("Icon")) {
+				            		fw.write("import " + cont_List.get(cont_List.size() - 1).get(i) + " from '@mui/icons-material/" + cont_List.get(cont_List.size() - 1).get(i).substring(0, cont_List.get(cont_List.size() - 1).get(i).length() - 4) + "';\n");
+				            	} else if (cont_List.get(cont_List.size() - 1).get(i).contains("Embed") || cont_List.get(cont_List.size() - 1).get(i).contains("br")) {
+				            		//何もしない
+				            	} else {
+				            		fw.write("import " + cont_List.get(cont_List.size() - 1).get(i) + " from './" + cont_List.get(cont_List.size() - 1).get(i).toString().toLowerCase() + "';\n");
+				            	}
+			            	}
+
+				            fw.write("\n" +
+//				            		"const Item = styled(Paper)(({ theme }) => ({\n" +
+//				            		"  ...theme.typography.body2,\n" +
+//				            		"  padding: theme.spacing(1),\n" +
+//				            		"  textAlign: 'center',\n" +
+//				            		"  color: theme.palette.text.secondary,\n" +
+//				            		"}));\n" +
+//				            		"\n" +
+				            		"export default function FullWidthGrid() {\n" +
+				            		"  return (\n");
+
+				            String[] grid_outer_deco = ((ExtList)tfe_tree.get(1)).get( ((ExtList)tfe_tree.get(1)).size() - 1 ).toString().substring(2, ((ExtList)tfe_tree.get(1)).get( ((ExtList)tfe_tree.get(1)).size() - 1 ).toString().length() - 1).split(",");
+				            int spacing = 0, fontSize = 0, height = 0;
+				            for (int i = 0; i < grid_outer_deco.length; i++) {
+				            	if (grid_outer_deco[i].split("=")[0].trim().equals("spacing") || grid_outer_deco[i].split("=")[0].trim().equals("space")) {
+				            		spacing = Integer.parseInt(grid_outer_deco[i].split("=")[1].trim());
+				            	} else if (grid_outer_deco[i].split("=")[0].trim().equals("font-size")) {
+				            		fontSize = Integer.parseInt(grid_outer_deco[i].split("=")[1].trim());
+				            	} else if (grid_outer_deco[i].split("=")[0].trim().equals("height")) {
+				            		height = Integer.parseInt(grid_outer_deco[i].split("=")[1].trim());
+				            	}
+				            }
+
+				            fw.write("    <Grid container spacing={" + spacing + "}");
+				            if (fontSize != 0) {
+				            	fw.write(" fontSize={" + fontSize + "}");
+				            }
+				            if (height != 0) {
+				            	fw.write(" style={{ height: " + height + " }}");
+				            }
+				            fw.write(">\n");
+
+				            ArrayList<Integer> lglist = new ArrayList<>();
+							grid_Lg_List.add(lglist);
+							ArrayList<Integer> mdlist = new ArrayList<>();
+							grid_Md_List.add(mdlist);
+							ArrayList<Integer> smlist = new ArrayList<>();
+							grid_Sm_List.add(smlist);
+							ArrayList<Integer> xslist = new ArrayList<>();
+							grid_Xs_List.add(xslist);
+							ArrayList<String> alignlist = new ArrayList<>();
+							grid_Align_List.add(alignlist);
+
+				            //末尾がtrueなら@{}内にmd=があるか調べる
+				            for (int i = 0; i < tfe_tree.getExtList(1, 0, 1).size() / 2 - 1; i++) {
+				            	if (tfe_tree.getExtList(1, 0, 1, (i + 1) * 2).size() == 3 && tfe_tree.getExtList(1, 0, 1, (i + 1) * 2).get(2).equals("true")) {
+					            	if (tfe_tree.getExtList(1, 0, 1, (i + 1) * 2, 1).get(1).toString().substring(0, 2).equals("@{")) {
+					            		String[] grid_deco = tfe_tree.getExtList(1, 0, 1, (i + 1) * 2, 1).get(1).toString().substring(2, tfe_tree.getExtList(1, 0, 1, (i + 1) * 2, 1).get(1).toString().length() - 1).split(",");
+					            		boolean lgflag = false, mdflag = false, smflag = false, xsflag = false, alignflag = false;
+
+					            		for (int j = 0; j < grid_deco.length; j++) {
+					            			if (grid_deco[j].split("=")[0].trim().equals("lg")) {
+					            				grid_Lg_List.get(grid_Lg_List.size() - 1).add(Integer.parseInt(grid_deco[j].split("=")[1].trim()));
+					            				lgflag = true;
+					            			}
+					            			if (grid_deco[j].split("=")[0].trim().equals("md")) {
+					            				grid_Md_List.get(grid_Md_List.size() - 1).add(Integer.parseInt(grid_deco[j].split("=")[1].trim()));
+					            				mdflag = true;
+					            			}
+					            			if (grid_deco[j].split("=")[0].trim().equals("sm")) {
+					            				grid_Sm_List.get(grid_Sm_List.size() - 1).add(Integer.parseInt(grid_deco[j].split("=")[1].trim()));
+					            				smflag = true;
+					            			}
+					            			if (grid_deco[j].split("=")[0].trim().equals("xs")) {
+					            				grid_Xs_List.get(grid_Xs_List.size() - 1).add(Integer.parseInt(grid_deco[j].split("=")[1].trim()));
+					            				xsflag = true;
+					            			}
+					            			if (grid_deco[j].split("=")[0].trim().equals("align") || grid_deco[j].split("=")[0].trim().equals("text-align")) {
+					            				grid_Align_List.get(grid_Align_List.size() - 1).add(grid_deco[j].split("=")[1].substring(1, grid_deco[j].split("=")[1].length() - 1).trim());
+					            				alignflag = true;
+					            			}
+					            		}
+
+					            		if (!lgflag) {
+					            			grid_Lg_List.get(grid_Lg_List.size() - 1).add(null);
+					            		}
+					            		if (!mdflag) {
+					            			grid_Md_List.get(grid_Md_List.size() - 1).add(null);
+					            		}
+					            		if (!smflag) {
+					            			grid_Sm_List.get(grid_Sm_List.size() - 1).add(null);
+					            		}
+					            		if (!xsflag) {
+					            			grid_Xs_List.get(grid_Xs_List.size() - 1).add(null);
+					            		}
+					            		if (!alignflag) {
+					            			grid_Align_List.get(grid_Align_List.size() - 1).add(null);
+					            		}
+					            	}
+					            } else {
+					            	grid_Lg_List.get(grid_Lg_List.size() - 1).add(null);
+					            	grid_Md_List.get(grid_Md_List.size() - 1).add(null);
+					            	grid_Sm_List.get(grid_Sm_List.size() - 1).add(null);
+					            	grid_Xs_List.get(grid_Xs_List.size() - 1).add(null);
+					            	grid_Align_List.get(grid_Align_List.size() - 1).add(null);
+					            }
+				            }
+
+				            for(int i = 0; i < cont_List.get(cont_List.size() - 1).size(); i++) {
+				            	fw.write("      <Grid item");
+				            	if (grid_Lg_List.get(grid_Lg_List.size() - 1).get(i) != null) {
+				            		fw.write(" lg={" + grid_Lg_List.get(grid_Lg_List.size() - 1).get(i) + "}");
+				            	}
+				            	if (grid_Md_List.get(grid_Md_List.size() - 1).get(i) != null) {
+				            		fw.write(" md={" + grid_Md_List.get(grid_Md_List.size() - 1).get(i) + "}");
+				            	}
+				            	if (grid_Sm_List.get(grid_Sm_List.size() - 1).get(i) != null) {
+				            		fw.write(" sm={" + grid_Sm_List.get(grid_Sm_List.size() - 1).get(i) + "}");
+				            	}
+				            	if (grid_Xs_List.get(grid_Xs_List.size() - 1).get(i) != null) {
+				            		fw.write(" xs={" + grid_Xs_List.get(grid_Xs_List.size() - 1).get(i) + "}");
+				            	}
+				            	if (grid_Align_List.get(grid_Align_List.size() - 1).get(i) != null) {
+				            		fw.write(" textAlign=\"" + grid_Align_List.get(grid_Align_List.size() - 1).get(i) + "\"");
+				            	}
+			            		fw.write(">\n");
+			            		if (cont_List.get(cont_List.size() - 1).get(i).contains("Embed")) {
+				            		for(int k = 0; k < embedlines.get(Integer.parseInt(cont_List.get(cont_List.size() - 1).get(i).substring(5)) - 1).size(); k++) {
+	            						fw.write("          " + embedlines.get(Integer.parseInt(cont_List.get(cont_List.size() - 1).get(i).substring(5)) - 1).get(k) + "\n");
+	            					}
+				            		embedlines.get(Integer.parseInt(cont_List.get(cont_List.size() - 1).get(i).substring(5)) - 1).clear();
+					            } else {
+					            	fw.write("        <" + cont_List.get(cont_List.size() - 1).get(i) + " />\n");
+					            }
+			            		fw.write("      </Grid>\n");
+			            	}
+
+				            fw.write("    </Grid>\n" +
+				            		"  );\n" +
+				            		"}\n");
+
+				            fw.close();
+				        } catch (IOException ex) {
+				            ex.printStackTrace();
+				        }
+
+					    cont_List.remove(cont_List.size() - 1);
+					    grid_Lg_List.remove(grid_Lg_List.size() - 1);
+					    grid_Md_List.remove(grid_Md_List.size() - 1);
+					    grid_Sm_List.remove(grid_Sm_List.size() - 1);
+					    grid_Xs_List.remove(grid_Xs_List.size() - 1);
+						if (cont_List.size() == 0) {
+							contflag = false;
+						}
+
+					//20210419 yama gridlist
+					}else if(func_name.equals("gridlist")){
+						out_sch = func_read((ExtList)((ExtList)((ExtList)tfe_tree.get(1)).get(0)).get(1));
+
+						gridlist_count++;
+
+						String glstr = fn.getExtList(2, 1, 0, 1).toString();
+						String glpath;
+						String tdpath;
+
+						if(gridlist_count > 1) {
+							Preprocessor.putComponentList("GridList" + appbar_count);
+							glpath = GlobalEnv.getOutputDirPath() + "/../src/gridlist" + appbar_count + ".js";
+							tdpath = GlobalEnv.getOutputDirPath()+"/../src/tileData" + appbar_count + ".js";
+						} else {
+							Preprocessor.putComponentList("GridList");
+							glpath = GlobalEnv.getOutputDirPath() + "/../src/gridlist.js";
+							tdpath = GlobalEnv.getOutputDirPath()+"/../src/tileData.js";
+						}
+
+						File file = new File(glpath);
+						File tdfile = new File(tdpath);
+
+						//delete an old file
+						if (file.exists()) {
+				            file.delete();
+				        }
+
+						//create a new file
+					    try{
+					      if (!file.createNewFile()){
+					        System.out.println("Could not create gridlist.js file.");
+					      }
+					    }catch(IOException e){
+					      System.out.println(e);
+					    }
+
+					    //write to file
+					    try {
+				            FileWriter fw = new FileWriter(file, true);
+
+				            fw.write("import React from 'react';\n" +
+				            		"import { makeStyles } from '@material-ui/core/styles';\n" +
+				            		"import GridList from '@material-ui/core/GridList';\n" +
+				            		"import GridListTile from '@material-ui/core/GridListTile';\n" +
+				            		"import tileData from './tileData';\n" +
+				            		"\n" +
+				            		"const useStyles = makeStyles((theme) => ({\n" +
+				            		"  root: {\n" +
+				            		"    display: 'flex',\n" +
+				            		"    flexWrap: 'wrap',\n" +
+				            		"    justifyContent: 'space-around',\n" +
+				            		"    overflow: 'hidden',\n" +
+				            		"    backgroundColor: theme.palette.background.paper,\n" +
+				            		"  },\n" +
+				            		"  gridList: {\n" +
+				            		"    width: 500,\n" +
+				            		"    height: 450,\n" +
+				            		"  },\n" +
+				            		"}));\n" +
+				            		"\n" +
+				            		"export default function ImageGridList() {\n" +
+				            		"  const classes = useStyles();\n" +
+				            		"\n" +
+				            		"  return (\n" +
+				            		"    <div className={classes.root}>\n" +
+				            		"      <GridList cellHeight={160} className={classes.gridList} cols={3}>\n" +
+				            		"        {tileData.map((tile) => (\n" +
+				            		"          <GridListTile key={tile.img} cols={tile.cols || 1}>\n" +
+				            		"            <img src={tile.img} alt={tile.title} />\n" +
+				            		"          </GridListTile>\n" +
+				            		"        ))}\n" +
+				            		"      </GridList>\n" +
+				            		"    </div>\n" +
+				            		"  );\n" +
+				            		"}\n");
+				            fw.close();
+				        } catch (IOException ex) {
+				            ex.printStackTrace();
+				        }
+
+					    int atr_num = (fn.size() - 1) / 2;
+
+					    ExtList tmp1 = new ExtList();
+						ExtList tmp2 = new ExtList();
+						ExtList tmp3 = new ExtList();
+						ExtList tmp4 = new ExtList();
+						ExtList tmp5 = new ExtList();
+						ExtList tmp6 = new ExtList();
+						ExtList tmp7 = new ExtList();
+						ExtList tmp8 = new ExtList();
+						ExtList tmp9 = new ExtList();
+						ExtList tmp10 = new ExtList();
+						ExtList tmp11 = new ExtList();
+						ExtList result = new ExtList();
+
+						tmp1.add(fn.getExtList(2));
+						for (int i = 0; i < atr_num - 1; i++) {
+							tmp1.add(fn.get(i * 2 + 3));
+							tmp1.add(fn.getExtList(i * 2 + 4));
+						}
+						tmp2.add("h_exp");
+						tmp2.add(tmp1);
+						tmp3.add(tmp2);
+						tmp4.add("v_exp");
+						tmp4.add(tmp3);
+						tmp5.add(tmp4);
+						tmp6.add("d_exp");
+						tmp6.add(tmp5);
+						tmp7.add(tmp6);
+						tmp8.add("exp");
+						tmp8.add(tmp7);
+						tmp9.add("[");
+						tmp9.add(tmp8);
+						tmp9.add("]");
+						tmp9.add("!");
+						tmp10.add("grouper");
+						tmp10.add(tmp9);
+						tmp11.add(tmp10);
+						result.add("operand");
+						result.add(tmp11);
+						out_sch = read_attribute(result);
+
+					    //delete an old file
+						if (tdfile.exists()) {
+				            tdfile.delete();
+				        }
+
+						//create a new file
+					    try{
+					      if (!tdfile.createNewFile()){
+					        System.out.println("Could not create tileData.js file.");
+					      }
+					    }catch(IOException e){
+					      System.out.println(e);
+					    }
+
+					    //write to file
+						try {
+				            FileWriter fw = new FileWriter(tdfile, true);
+				            fw.write("\n" +
+				            		"import dog1 from './picts/dog1.jpg';\n" +
+				            		"import dog2 from './picts/dog2.jpg';\n" +
+				            		"import dog3 from './picts/dog3.jpg';\n" +
+				            		"import dog4 from './picts/dog4.jpg';\n" +
+				            		"import dog5 from './picts/dog5.jpg';\n" +
+				            		"import dog6 from './picts/dog6.jpg';\n" +
+				            		"import dog7 from './picts/dog7.jpg';\n" +
+				            		"import dog8 from './picts/dog8.jpg';\n" +
+				            		"import dog9 from './picts/dog9.jpg';\n" +
+				            		"import dog10 from './picts/dog10.jpg';\n" +
+				            		"\n" +
+				            		"const tileData = [\n" +
+				            		"    {\n" +
+				            		"      img: dog1,\n" +
+				            		"      title: 'お顔',\n" +
+				            		"      author: 'yama',\n" +
+				            		"      cols: 2,\n" +
+				            		"    },\n" +
+				            		"    {\n" +
+				            		"      img: dog2,\n" +
+				            		"      title: '眠い',\n" +
+				            		"    },\n" +
+				            		"    {\n" +
+				            		"      img: dog3,\n" +
+				            		"      title: '恥ずかしい',\n" +
+				            		"    },\n" +
+				            		"    {\n" +
+				            		"      img: dog4,\n" +
+				            		"      title: '細目',\n" +
+				            		"    },\n" +
+				            		"    {\n" +
+				            		"      img: dog5,\n" +
+				            		"      title: 'はまり',\n" +
+				            		"    },\n" +
+				            		"    {\n" +
+				            		"      img: dog6,\n" +
+				            		"      title: 'お顔',\n" +
+				            		"    },\n" +
+				            		"    {\n" +
+				            		"      img: dog7,\n" +
+				            		"      title: '眠い',\n" +
+				            		"      cols: 2,\n" +
+				            		"    },\n" +
+				            		"    {\n" +
+				            		"      img: dog8,\n" +
+				            		"      title: '恥ずかしい',\n" +
+				            		"    },\n" +
+				            		"    {\n" +
+				            		"      img: dog9,\n" +
+				            		"      title: '細目',\n" +
+				            		"    },\n" +
+				            		"    {\n" +
+				            		"      img: dog10,\n" +
+				            		"      title: 'はまり',\n" +
+				            		"    },\n" +
+				            		"];\n" +
+				            		"\n" +
+				            		"export default tileData;\n");
+				            fw.close();
+				        } catch (IOException ex) {
+				            ex.printStackTrace();
+						}
+
 					}else{
 						out_sch = func_read((ExtList)((ExtList)((ExtList)tfe_tree.get(1)).get(0)).get(1));
 						//out_sch = func_read((ExtList)((ExtList)((ExtList)tfe_tree.get(1)).get(0)).get(1)).fnc;

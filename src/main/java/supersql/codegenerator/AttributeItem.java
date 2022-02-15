@@ -26,7 +26,7 @@ public class AttributeItem implements Serializable{
 	public AttributeItem() {
 	}
 
-	
+
 	public AttributeItem(String str) {
 		IsStr = true;
 		Image = str;
@@ -113,7 +113,7 @@ public class AttributeItem implements Serializable{
 
 		return attno;
 	}
-	
+
 
 	@Override
 	public String toString() {
@@ -168,13 +168,13 @@ public class AttributeItem implements Serializable{
 		//Log.out("[Att sig] : " + sig);
 		return sig.toString();
 	}
-	
+
 	//added by ria 20110913 start
-	public ExtList makeschImage() 
+	public ExtList makeschImage()
 	{
 		ExtList outsch = new ExtList();
-		
-		if (!IsStr) 
+
+		if (!IsStr)
 		{
 			outsch.add(Image);
 		}

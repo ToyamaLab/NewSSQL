@@ -98,6 +98,8 @@ public class Grouper extends Operator implements Serializable{
 
     public void worknextItem() {
         ExtList subdata = (ExtList) (data.get(dindex));
+        //20210422 yama test
+        //System.out.println(subdata);
         if (tfe instanceof Connector || tfe instanceof Attribute
                 || tfe instanceof Function || tfe instanceof IfCondition || tfe instanceof Decorator) {
         	tfe.work(subdata);

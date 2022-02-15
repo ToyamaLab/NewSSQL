@@ -136,10 +136,10 @@ public class Connector extends Operator implements Serializable{
 		}
 		sindex++;
 		dindex += ci;
-		if(GlobalEnv.joinFlag){
+//		if(GlobalEnv.joinFlag){
 			return string;
-		}
-		return null;
+//		}
+//		return null;
 
 	}
 	// tbt end

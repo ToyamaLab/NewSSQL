@@ -14,7 +14,7 @@ public abstract class Operator extends TFE implements IOperator, Serializable{
 
 	protected ExtList data;
     protected int dindex;
-    
+
     public Operator() {
     	super();
     }
