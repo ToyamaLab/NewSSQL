@@ -39,7 +39,7 @@ public class HTMLG1 extends Grouper implements Serializable {
 		if (Incremental.flag || Ehtml.flag) {
 			String row = "";
 			String column = "";
-			
+
 			// ページネーション
 			if (decos.containsKey("row") && decos.containsKey("column")) {
 				html_env.g1PaginationRowNum = Integer.parseInt(decos
@@ -71,7 +71,7 @@ public class HTMLG1 extends Grouper implements Serializable {
 			if (decos.containsKey("div")) {
 				html_env.outTypeList.add(html_env.xmlDepth, "div");
 			}
-			System.out.println("out:"+html_env.outTypeList);
+			Log.info("out:"+html_env.outTypeList);
 
 			// System.out.println("G1 tableFlg = " + tableFlg + ", divFlg = " +
 			// divFlg);
@@ -94,7 +94,7 @@ public class HTMLG1 extends Grouper implements Serializable {
 					+ html_env.gLevel + ">\n");
 			return null;
 		} else {
-			
+
 			String classname = Modifier.getClassName(decos, HTMLEnv.getClassID(this));
 //			if (this.decos.containsKey("class")) {
 //				classname = this.decos.getStr("class");
@@ -124,7 +124,7 @@ public class HTMLG1 extends Grouper implements Serializable {
 			// 20140602_masato
 			if (pageFlag) {
 				String paginationHTML_JS = HTMLPagination.getPaginationHTML_JS1();
-				
+
 				if (html_env.decorationStartFlag.size() > 0) {
 					if (html_env.decorationStartFlag.get(0)) {
 						HTMLDecoration.fronts.get(0)
@@ -175,30 +175,30 @@ public class HTMLG1 extends Grouper implements Serializable {
 					html_env.code
 							.append("<TABLE cellSpacing=\"0\" cellPadding=\"0\" border=\"");
 					html_env.code.append(html_env.tableBorder + "\"");
-	
+
 					html_env.code.append(" class=\"");
-	
+
 					if (html_env.embedFlag)
 						html_env.code.append("embed ");
-	
+
 					if (decos.containsKey("outborder"))
 						html_env.code.append(" noborder ");
-	
+
 //					if (decos.containsKey("class")) {
 //						// class=menu�Ȃǂ̎w�肪��������t��
 //						html_env.code.append(decos.getStr("class") + " ");
 //					}
 					html_env.code.append(Modifier.getClassModifierValue(decos) + " ");//kotani_idmodifier_ok
-					
-				
+
+
 					if (html_env.haveClass == 1) {
 						// class=menu�Ȃǂ̎w�肪��������t��
 						html_env.code.append(HTMLEnv.getClassID(this) + " ");
 					}
 					html_env.code.append("nest\"");
-	
+
 					html_env.code.append(html_env.getOutlineMode());
-	
+
 					html_env.code.append(Modifier.getIdModifierValue(decos) + " ");//kotani_idmodifier_ok
 					html_env.code.append("><TR>");
 				}
@@ -224,8 +224,8 @@ public class HTMLG1 extends Grouper implements Serializable {
 						html_env2.code.append(" class=\"");//kotani_idmodifier_ok
 						html_env2.code.append(Modifier.getClassModifierValue(decos)+ " ");//ここで中途半端にclassやって
 					}
-					
-					
+
+
 					if (html_env.writtenClassId.contains(HTMLEnv
 							.getClassID(this))) {
 						// TFE10000�Ȃǂ̎w�肪��������t��
@@ -237,12 +237,12 @@ public class HTMLG1 extends Grouper implements Serializable {
 //									+ HTMLEnv.getClassID(this) + "\"");
 //						}
 						html_env2.code.append(Modifier.getClassName(decos, HTMLEnv.getClassID(this)));//kotani_idmodifier_ok、ここでidで終わらせる
-						
+
 					} else if (decos.containsKey("class")) {
 						html_env2.code.append("\"");
 					}
 					html_env2.code.append(Modifier.getIdModifierValue(decos));//kotani_idmodifier_ok
-					
+
 					html_env2.code.append(" border=\"" + html_env.tableBorder
 							+ "\"");
 
@@ -266,7 +266,7 @@ public class HTMLG1 extends Grouper implements Serializable {
 						}
 					}
 					html_env2.code.append(Modifier.getIdModifierValue(decos)+ " ");//kotani_idmodifier_ok
-					
+
 					html_env2.code.append(">");
 				}
 
@@ -299,7 +299,7 @@ public class HTMLG1 extends Grouper implements Serializable {
 					html_env.code.append("</TD>\n");
 				}
 				Log.out("</TD>");
-				
+
 				if (retFlag) {
 					if ((count % i) == 0) { // 20140526_masato
 						if (html_env.decorationStartFlag.size() > 0) {
@@ -344,31 +344,31 @@ public class HTMLG1 extends Grouper implements Serializable {
 								html_env.code
 										.append("<TABLE cellSpacing=\"0\" cellPadding=\"0\" border=\"");
 								html_env.code.append(html_env.tableBorder + "\"");
-	
+
 								html_env.code.append(" class=\"");
-	
+
 								if (html_env.embedFlag)
 									html_env.code.append("embed ");
-	
+
 								if (decos.containsKey("outborder"))
 									html_env.code.append(" noborder ");
-	
+
 //								if (decos.containsKey("class")) {
 //									html_env.code.append(decos.getStr("class")+ " ");
 //								}
 								html_env.code.append(Modifier.getClassModifierValue(decos)+ " ");
 								html_env.code.append(Modifier.getIdModifierValue(decos)+ " ");//kotani_idmodifier_ok
-								
+
 								if (html_env.haveClass == 1) {
 									// class=menu�Ȃǂ̎w�肪��������t��
 									html_env.code.append(HTMLEnv.getClassID(this)
 											+ " ");
 								}
 								html_env.code.append("nest\"");
-	
+
 								// masato_20140602 なんじゃこりゃ？
 								// html_env.code.append(html_env.getOutlineMode());
-	
+
 								html_env.code.append(">");
 							}
 						}
@@ -388,7 +388,7 @@ public class HTMLG1 extends Grouper implements Serializable {
 			}
 
 			// html_env2.code.append("</tfe>");
-			
+
 			if (html_env.decorationStartFlag.size() > 0) {
 				if (html_env.decorationStartFlag.get(0)) {
 					HTMLDecoration.ends.get(0).append("</TR></TABLE>\n");

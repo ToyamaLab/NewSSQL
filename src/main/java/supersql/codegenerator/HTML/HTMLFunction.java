@@ -40,6 +40,9 @@ public class HTMLFunction extends Function {
 	protected static String updateFile;
 	private boolean link1 = false; //added by goto 20161025 for link1/foreach1
 
+	public static boolean HTMLFunctionFlag = false;
+
+
 	public static String createForm(DecorateList decos) {
 		new String();
 		String path = new String();
@@ -1070,15 +1073,52 @@ public class HTMLFunction extends Function {
 		htmlEnv.linkUrl = target;
 		htmlEnv.plinkFlag = true;
 
+		// added by masato 20151124 for plink
+		String form_type = (glink_flag)? "glink" : "plink"; 	//TODO
+		if(image_link_flag)	form_type = "image_"+form_type;
+		if (htmlEnv.plinkFlag) {
+			String tmp = "";
+			for (int i = 0; i < htmlEnv.valueArray.size(); i++) {
+				tmp += " value" + (i + 1) + "='" + htmlEnv.valueArray.get(i) + "'";
+			}
+			Incremental.outXMLData(htmlEnv.xmlDepth, "<"+form_type+" target='" + htmlEnv.linkUrl + "'" + tmp + ">\n");
+		}
+
 		if (this.Args.get(0) instanceof FuncArg) {
 			Log.out("ARGS are function");
 			FuncArg fa = this.Args.get(0);
 			fa.workAtt();
 		} else
 			this.workAtt("default");
-		// tk//////////////////////////////////////////////////
+
+		// added by masato 20151124 for plink
+		if (htmlEnv.plinkFlag) {
+			Incremental.outXMLData(htmlEnv.xmlDepth, "</"+form_type+">\n");
+		}
+
 
 		htmlEnv.plinkFlag = false;
+		return;
+	}
+	// Func_glink
+	private static boolean glink_flag = false;
+	private void Func_glink(ExtList data_info) {	 	//TODO 動作確認
+		glink_flag = true;
+		Func_plink(data_info);
+		glink_flag = false;
+		return;
+	}
+	private static boolean image_link_flag = false;
+	private void Func_image_plink(ExtList data_info) {	 	//TODO 動作確認
+		image_link_flag = true;
+		Func_plink(data_info);
+		image_link_flag = false;
+		return;
+	}
+	private void Func_image_glink(ExtList data_info) {	 	//TODO 動作確認
+		image_link_flag = true;
+		Func_glink(data_info);
+		image_link_flag = false;
 		return;
 	}
 
@@ -1101,28 +1141,45 @@ public class HTMLFunction extends Function {
 		htmlEnv.code.append(statement);
 	}
 
+	//20210604 yama Func_embed()
+	protected void Func_embed() {
+		String target1 = this.Args.get(0).getStr().trim().replaceAll("ssql$", "html");
+		String target2 = "300";
+		String target3 = "150";
+
+		if(decos.containsKey("width")) {
+			target2 = decos.getStr("width");
+		}
+
+		if(decos.containsKey("height")) {
+			target3 = decos.getStr("height");
+		}
+
+		if (this.Args.size() == 3) {
+			target2 = this.Args.get(1).getStr().trim();
+			target3 = this.Args.get(2).getStr().trim();
+		}
+
+		String statement = "<iframe src=" + target1 + " width=" + target2 + " height=" +target3 + " frameborder=\"0\" style=\"border: none\"></iframe>";
+		htmlEnv.code.append(statement);
+	}
 
 	protected void Func_imagefile() {
+		HTMLFunctionFlag = true;
 		/*
 		 * ImageFile function : <td> <img src="${imgpath}/"+att /> </td>
 		 */
 		// little change by masato 20150623
-		String path = "./";
+		String path = "";
 		try {
 			path = this.Args.get(1).toString();
-			if(!path.endsWith("/'")) {
-				path = path.substring(0, path.length() - 1) + "/'";
-
-			}
 		} catch (Exception e) {
 			try {
-				if(this.Args.get(0).getStr().startsWith("http://") || this.Args.get(0).getStr().startsWith("https://")) {
-					path = this.getAtt("path", "");
-				}
+				path = this.getAtt("path", ".");
 			} catch (Exception e2) { }
 		}
 		if (path == null) {
-			path = "";
+			path = ".";
 		} else {
 			if (path.startsWith("'") || path.startsWith("\"")) {
 				path = path.substring(1, path.length() - 1);
@@ -1215,11 +1272,9 @@ public class HTMLFunction extends Function {
 		if (htmlEnv.plinkFlag) {
 			String tmp = "";
 			for (int i = 0; i < htmlEnv.valueArray.size(); i++) {
-				tmp += " value" + (i + 1) + "='" + htmlEnv.valueArray.get(i)
-						+ "'";
+				tmp += " value" + (i + 1) + "='" + htmlEnv.valueArray.get(i) + "'";
 			}
-			Incremental.outXMLData(htmlEnv.xmlDepth, "<PostLink target='"
-					+ htmlEnv.linkUrl + "'" + tmp + ">\n");
+			Incremental.outXMLData(htmlEnv.xmlDepth, "<PostLink target='" + htmlEnv.linkUrl + "'" + tmp + ">\n");
 		}
 		// tk/////////////////////////////////////////////////////////////////////////////////
 
@@ -1229,7 +1284,7 @@ public class HTMLFunction extends Function {
 			String today = sdf.format(d1);
 
 			if (htmlEnv.decorationStartFlag.size() > 0) {
-				HTMLDecoration.ends.get(0).append("<a href=\"" + path
+				HTMLDecoration.ends.get(0).append("<a href=\"" + path + "/"
 						+ this.Args.get(0).getStr() + "\" rel=\"lightbox[lb"
 						+ today + "]\">");
 				if (decos.getStr("lightbox").compareTo("root") == 0
@@ -1241,13 +1296,13 @@ public class HTMLFunction extends Function {
 					HTMLDecoration.ends.get(0).append(Modifier.getClassModifierValue(decos));//kotani_id_modifier
 					HTMLDecoration.ends.get(0).append(Modifier.getIdModifierValue(decos));
 
-					HTMLDecoration.ends.get(0).append(" \" src=\"" + path
+					HTMLDecoration.ends.get(0).append(" \" src=\"" + path + "/"
 							+ this.Args.get(0).getStr()
 							+ "\" onLoad=\"initLightbox()\"/>");
 				}
 				HTMLDecoration.ends.get(0).append("</a>");
 			} else {
-				htmlEnv.code.append("<a href=\"" + path
+				htmlEnv.code.append("<a href=\"" + path + "/"
 						+ this.Args.get(0).getStr() + "\" rel=\"lightbox[lb"
 						+ today + "]\">");
 
@@ -1261,7 +1316,7 @@ public class HTMLFunction extends Function {
 					htmlEnv.code.append(Modifier.getClassModifierValue(decos));//kotani_idmodifier_ok
 					htmlEnv.code.append(Modifier.getIdModifierValue(decos));
 
-					htmlEnv.code.append(" \" src=\"" + path
+					htmlEnv.code.append(" \" src=\"" + path + "/"
 							+ this.Args.get(0).getStr()
 							+ "\" onLoad=\"initLightbox()\"/>");
 				}
@@ -1270,9 +1325,9 @@ public class HTMLFunction extends Function {
 		} else {
 			// added by masato 20151124 image function for xml
 			if (Ehtml.flag || Incremental.flag) {
-				Incremental.outXMLData(htmlEnv.xmlDepth, "<Img class=\'"
-						+ HTMLEnv.getClassID(this) + "\' src='" + path
-						+ this.Args.get(0).getStr() + "'></Img>\n");
+				Incremental.outXMLData(htmlEnv.xmlDepth, "<img class=\'"
+						+ HTMLEnv.getClassID(this) + "\' src='" + path + "/"
+						+ this.Args.get(0).getStr() + "'></img>\n");
 
 			} else {
 				if (htmlEnv.decorationStartFlag.size() > 0) {
@@ -1285,7 +1340,7 @@ public class HTMLFunction extends Function {
 //						}
 						HTMLDecoration.ends.get(0).append(" " + Modifier.getClassModifierValue(decos));//kotani_idmodifier_ok
 						HTMLDecoration.ends.get(0).append(" " + Modifier.getIdModifierValue(decos));
-						HTMLDecoration.ends.get(0).append("\" src=\"" + path + this.Args.get(0).getStr() + "\"/>");
+						HTMLDecoration.ends.get(0).append("\" src=\"" + path + "/" + this.Args.get(0).getStr() + "\"/>");
 						htmlEnv.decorationStartFlag.set(0, false);
 					} else {
 						HTMLDecoration.ends.get(0).append("<img");
@@ -1297,7 +1352,7 @@ public class HTMLFunction extends Function {
 						HTMLDecoration.ends.get(0).append(" " + Modifier.getClassModifierValue(decos));//kotani_idmodifier_ok
 						HTMLDecoration.ends.get(0).append(" " + Modifier.getIdModifierValue(decos));
 
-						HTMLDecoration.ends.get(0).append("\" src=\"" + path + this.Args.get(0).getStr() + "\"/>");
+						HTMLDecoration.ends.get(0).append("\" src=\"" + path + "/" + this.Args.get(0).getStr() + "\"/>");
 					}
 				} else {
 					htmlEnv.code.append("<img class=\"" + HTMLEnv.getClassID(this)
@@ -1308,9 +1363,10 @@ public class HTMLFunction extends Function {
 //						htmlEnv.code.append(decos.getStr("class"));
 					htmlEnv.code.append(Modifier.getClassModifierValue(decos));
 					htmlEnv.code.append(Modifier.getIdModifierValue(decos));//kotani_idmodifier_ok
-					htmlEnv.code.append(" \" src=\"" + path
+					//20210513 yama
+					htmlEnv.code.append(" \" src=\"" + path + "/"
 							+ this.Args.get(0).getStr() + "\"/>");
-					htmlEnv2.code.append(" \" src=\"" + path
+					htmlEnv2.code.append(" \" src=\"" + path + "/"
 							+ this.Args.get(0).getStr() + "\" ");
 					if (decos.containsKey("width")) {
 						htmlEnv2.code.append("width=\""
@@ -1338,6 +1394,7 @@ public class HTMLFunction extends Function {
 			Incremental.outXMLData(htmlEnv.xmlDepth, "</PostLink>\n");
 		}
 		// tk///////////////////////////////////////////////////////////////////////////////////
+		HTMLFunctionFlag = false;
 		return;
 	}
 
@@ -1887,7 +1944,11 @@ public class HTMLFunction extends Function {
 		else if (FuncName.equalsIgnoreCase("plink")) {
 			Func_plink(data_info);
 		} else if (FuncName.equalsIgnoreCase("glink")) {
-			// Func_glink(data_info);
+			Func_glink(data_info);					// TODO  動作確認
+		} else if (FuncName.equalsIgnoreCase("image_plink")) {
+			Func_image_plink(data_info);
+		} else if (FuncName.equalsIgnoreCase("image_glink")) {
+			Func_image_glink(data_info);
 		} else if (FuncName.equalsIgnoreCase("null")) {
 			Func_null();
 		}
@@ -1916,10 +1977,11 @@ public class HTMLFunction extends Function {
 			Func_line();
 		}
 		// tk start//////////////////////////////////
-		else if (FuncName.equalsIgnoreCase("embed")) {
-			Log.out("[enter embed]");
-			Func_embed(data_info);
-		}
+		//20210604 yama commentout
+//		else if (FuncName.equalsIgnoreCase("embed")) {
+//			Log.out("[enter embed]");
+//			Func_embed(data_info);
+//		}
 		// tk end////////////////////////////////////
 		else if (FuncName.equalsIgnoreCase("anchor")
 				|| FuncName.equalsIgnoreCase("a")) {
@@ -1933,11 +1995,18 @@ public class HTMLFunction extends Function {
 		// for educ2018
 		else if (FuncName.equalsIgnoreCase("echo")) {
 			Func_echo();
-		}
 		// for educ2018
 //		else if(FuncName.equalsIgnoreCase("shift_image")){
 //			Func_simage();
 //		}
+		//20210422 yama
+		} else if (FuncName.equalsIgnoreCase("tab")) {
+			//System.out.println(data_info.get(0));
+			//this.work((ExtList)data_info.get(0));
+		//20210604 yama
+		} else if (FuncName.equalsIgnoreCase("embed") && !CodeGenerator.tabflag) {
+			Func_embed();
+		}
 
 		Log.out("TFEId = " + HTMLEnv.getClassID(this));
 		htmlEnv.append_css_def_td(HTMLEnv.getClassID(this), this.decos);

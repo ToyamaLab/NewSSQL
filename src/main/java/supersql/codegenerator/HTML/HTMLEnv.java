@@ -20,6 +20,7 @@ import supersql.codegenerator.Jscss;
 import supersql.codegenerator.LinkForeach;
 import supersql.codegenerator.LocalEnv;
 import supersql.codegenerator.Modifier;
+import supersql.codegenerator.Responsive.Responsive;
 import supersql.common.GlobalEnv;
 import supersql.common.Log;
 import supersql.common.Utils;
@@ -45,7 +46,7 @@ public class HTMLEnv extends LocalEnv implements Serializable{
 	protected static int IDOld = 0; // add oka
 	public static String cond = "";
 	public static String bg = "";
-	public static String color = "";
+	public static String bgcolor = "";
 	public static String pos = "";
 	public ArrayList<ArrayList<String>> decorationProperty = new ArrayList<ArrayList<String>>();
 	public ArrayList<Boolean> decorationStartFlag = new ArrayList<Boolean>();
@@ -69,6 +70,11 @@ public class HTMLEnv extends LocalEnv implements Serializable{
 	public static int formPartsNumber = 1;
 	public static String nameId = "";
 	public static int searchId = 0;
+
+	//20201119 yama
+	public static String frame = "";
+	//20210706
+	public static boolean reactFlag;
 
 	public static void computeConditionalDecorations(DecorateList decos,
 			StringBuffer css) {
@@ -145,6 +151,7 @@ public class HTMLEnv extends LocalEnv implements Serializable{
 		}
 
 		result = "TFE" + tfe.getId();
+//		Ehtml.tfe_id = result;
 		return result;
 	}
 
@@ -656,7 +663,8 @@ public class HTMLEnv extends LocalEnv implements Serializable{
 
 		haveClass = 0;
 		// ������classid��������������������?����������������������������������������������������������������������?������
-		if (writtenClassId.contains(classid)) {
+		//20210906 yama
+		if (writtenClassId != null && writtenClassId.contains(classid)) {
 			// �������������������������������������?������������������
 			haveClass = 1;
 			Log.out("==> already created style");
@@ -905,24 +913,33 @@ public class HTMLEnv extends LocalEnv implements Serializable{
         	if(!style.matches(".*;\\s*$"))	cssbuf.append(";");	//���������";"���������������������
         }
 
+        //20201119 yama "frame"
+        if (decos.containsKey("frame")) {
+        	frame = decos.getStr("frame");
+        }
+//        //20210706 yama reactFlag
+//        if (decos.containsKey("react") && decos.getStr("react").equals("on")) {
+//			reactFlag = true;
+//		}
+
         //added by goto 20130311  "background"
         if (decos.containsKey("background"))
         	bg = decos.getStr("background");
 
-      //tbt add
-      	if(decos.containsKey("page-bgcolor") || decos.containsKey("pbgcolor")){
-      		if(decos.containsKey("page-bgcolor")){
-      			color = decos.getStr("page-bgcolor");
-      		}else{
-      			color = decos.getStr("pbgcolor");
-      		}
-      	}
+        //tbt add
+  		if(decos.containsKey("page-bgcolor")){
+  			bgcolor = decos.getStr("page-bgcolor");
+  		}else if(decos.containsKey("pbgcolor")){
+  			bgcolor = decos.getStr("pbgcolor");
+  		}
 
-      	if(decos.containsKey("table-align")){
+  		if(decos.containsKey("page-align")){
+  			pos = decos.getStr("page-align");
+  		}else if(decos.containsKey("palign")){
+  			pos = decos.getStr("palign");
+  		}else if(decos.containsKey("table-align")){
       		pos = decos.getStr("table-align");
-      	}
-
-      	if(decos.containsKey("talign")){
+      	}else if(decos.containsKey("talign")){
       		pos = decos.getStr("talign");
       	}
 
@@ -955,6 +972,9 @@ public class HTMLEnv extends LocalEnv implements Serializable{
 		// charsetFlg=1;
 		// }
 		// added by goto 20120715 end
+
+		//added by goto 20161217  for responsive
+		Responsive.check(decos);
 
 		if (decos.containsKey("description"))
 			metabuf.append("<meta name=\"Description\" content=\""
@@ -1134,9 +1154,12 @@ public class HTMLEnv extends LocalEnv implements Serializable{
 		}
 
 		if (GlobalEnv.getframeworklist() == null) {
-			footer.append("<BR><BR>\n");
+			footer.append("<BR/><BR/>\n");
 			footer.append("</div>\n");
-			footer.append("<!-- SuperSQL Body  End -->");
+			//20210706 yama reactFlag
+			if(reactFlag = false) {
+				footer.append("<!-- SuperSQL Body  End -->");
+			}
 			footer.append(LinkForeach.getC3contents());	//added by goto 20161019 for new foreach
 			footer.append("</BODY>\n</HTML>\n");
 			Log.out("</body>\n</html>");
@@ -1147,7 +1170,12 @@ public class HTMLEnv extends LocalEnv implements Serializable{
 
 	public void getHeader() {
 		if (GlobalEnv.getframeworklist() == null) {
-			header.insert(0, "<!DOCTYPE html>\n<HTML>\n<HEAD>\n");
+			//20210706 yama reactFlag
+			if(reactFlag) {
+				header.insert(0, "<HTML>\n<HEAD>\n");
+			} else {
+				header.insert(0, "<!DOCTYPE html>\n<HTML>\n<HEAD>\n");
+			}
 			Log.out("<HTML>\n<head>");
 //			header.append("<STYLE TYPE=\"text/css\">\n");
 //			header.append("<!--\n");
@@ -1181,7 +1209,9 @@ public class HTMLEnv extends LocalEnv implements Serializable{
 	public void header_creation() {
 		// tk start////////////////////////////////////////////////////
 		header.append(meta);
-		// masato
+
+		if (!title.equals(""))
+			header.append("<title>"+title+"</title>\n");
 
 		if (GlobalEnv.isAjax()) {
 			String js = GlobalEnv.getJsDirectory();
@@ -1247,10 +1277,13 @@ public class HTMLEnv extends LocalEnv implements Serializable{
 
 		if (GlobalEnv.getframeworklist() == null) {
 			// 20140528_masato
+			//20210706 yama reactFlag
+			if(reactFlag = false) {
+				header.append("<!-- SuperSQL JavaScript & CSS -->\n");
+			}
 			header.append(
 					// 20140701_masato
-					"<!-- SuperSQL JavaScript & CSS -->\n"
-					+ "<link rel=\"stylesheet\" type=\"text/css\" href=\"jscss/ssql-pagination.css\">\n"
+					"<link rel=\"stylesheet\" type=\"text/css\" href=\"jscss/ssql-pagination.css\">\n"
 					+ "<script type=\"text/javascript\" src=\"jscss/jquery.js\"></script>\n"
 					+ "<script type=\"text/javascript\" src=\"jscss/jquery-p.js\"></script>\n");
 
@@ -1264,8 +1297,8 @@ public class HTMLEnv extends LocalEnv implements Serializable{
 //	            body_css.append("body { background-image: url(../"+bg+"); }");
 				body_css.append("\tbackground-image: url(../"+bg+");\n");
 	        }
-			if(!color.equals("")){
-				body_css.append("\tbackground-color: "+color+";\n");
+			if(!bgcolor.equals("")){
+				body_css.append("\tbackground-color: "+bgcolor+";\n");
 			}
 			if(!pos.equals("")){
 				body_css.append("\ttext-align: "+pos+";\n");
@@ -1275,24 +1308,33 @@ public class HTMLEnv extends LocalEnv implements Serializable{
 			css.insert(0, "#ssql_body_contents {\n"+ssql_body_css+"}\n\n");
 			css.insert(0,"body {\n"+body_css+"}\n");
 
-
-			header.append("<!-- Generated CSS -->\n");
+			//20210706 yama reactFlag
+			if(reactFlag = false) {
+				header.append("<!-- Generated CSS -->\n");
+			}
 			header.append("<link rel=\"stylesheet\" type=\"text/css\" href=\""+ Jscss.getGenerateCssFileName(0) + "\">\n");
 			header.append("</HEAD>\n");
 			//changed by goto 20161019
 			Log.out("<body>");
 			code_tmp = "";
 			code_tmp += "<BODY class=\"body\">\n";
-			code_tmp += "<!-- SuperSQL Body  Start -->";
-			code_tmp += "<div id=\"ssql_body_contents\">\n";	//added by goto 20161019 for new foreach
-			if(!title.toString().trim().equals("")){
-				code_tmp += "<div";
-				code_tmp += div;
-				code_tmp += titleClass;
-				code_tmp += ">";
-				code_tmp += title;
-				code_tmp += "</div>";
+			//20210706 yama reactFlag
+			if(reactFlag = false) {
+				code_tmp += "<!-- SuperSQL Body  Start -->";
 			}
+			//20201119 yama
+        	if (!frame.isEmpty()) {
+        		code_tmp += "<div id="+frame+"></div>\n";
+        	}
+			code_tmp += "<div id=\"ssql_body_contents\">\n";	//added by goto 20161019 for new foreach
+//			if(!title.toString().trim().equals("")){
+//				code_tmp += "<div";
+//				code_tmp += div;
+//				code_tmp += titleClass;
+//				code_tmp += ">";
+//				code_tmp += title;
+//				code_tmp += "</div>";
+//			}
 		}
 
 		if (Connector.loginFlag) {

@@ -2,8 +2,6 @@ package supersql.codegenerator.HTML;
 
 import java.io.Serializable;
 
-import org.apache.xpath.operations.Mod;
-
 import supersql.codegenerator.Connector;
 import supersql.codegenerator.Ehtml;
 import supersql.codegenerator.ITFE;
@@ -43,7 +41,7 @@ public class HTMLC1 extends Connector implements Serializable {
 
 		if (Incremental.flag || Ehtml.flag) {
 			String outType = "div";
-			
+
 			if(htmlEnv.xmlDepth!=0){
 				// 親のoutTypeを継承
 				outType = htmlEnv.outTypeList.get(htmlEnv.xmlDepth-1);
@@ -56,7 +54,7 @@ public class HTMLC1 extends Connector implements Serializable {
 			if (decos.containsKey("div")) {
 				htmlEnv.outTypeList.add(htmlEnv.xmlDepth, "div");
 			}
-			System.out.println("out:"+htmlEnv.outTypeList);
+			Log.info("out:"+htmlEnv.outTypeList);
 
 //			System.out.println("C1 tableFlg = " + tableFlg + ", divFlg = " + divFlg);
 			htmlEnv.append_css_def_td(HTMLEnv.getClassID(this), this.decos);
@@ -64,9 +62,12 @@ public class HTMLC1 extends Connector implements Serializable {
 						"<Connector" + htmlEnv.cNum
 								+ " type=\'C1\' outType=\'" + htmlEnv.outTypeList.get(htmlEnv.xmlDepth) + "\' class=\'"
 								+ HTMLEnv.getClassID(this) + "\'>\n");
+//			String ret = "";
 			while (this.hasMoreItems()) {
 				htmlEnv.cNum++;
 				htmlEnv.xmlDepth++;
+//				Incremental.outXMLData(htmlEnv.xmlDepth, "<"+HTMLEnv.getClassID(this)+" outType='"+htmlEnv.outTypeList.get(htmlEnv.xmlDepth)+"'>"+ret+"</"+HTMLEnv.getClassID(this)+">\n");
+//				ret = this.worknextItem();
 				this.worknextItem();
 				htmlEnv.cNum--;
 				htmlEnv.xmlDepth--;
@@ -91,8 +92,8 @@ public class HTMLC1 extends Connector implements Serializable {
 			if (decos.containsKey("delete")) {
 				HTMLEnv.setIDU("delete");
 			}
-			
-			
+
+
 //			if (this.decos.containsKey("class")) {
 //				classname = this.decos.getStr("class");
 //			} else {
@@ -128,13 +129,13 @@ public class HTMLC1 extends Connector implements Serializable {
 							.append("<TABLE cellSpacing=\"0\" cellPadding=\"0\" border=\"");
 					htmlEnv.code.append(htmlEnv.tableBorder + "\"");
 					htmlEnv.code.append(htmlEnv.getOutlineMode());
-	
+
 					// classid������Ȥ��ˤ�������
 					if (htmlEnv.writtenClassId.contains(HTMLEnv.getClassID(this))) {
 						htmlEnv.code.append(" class=\"");
 						htmlEnv.code.append(HTMLEnv.getClassID(this));
 					}
-	
+
 					if (decos.containsKey("class")) {
 						if (!htmlEnv.writtenClassId.contains(HTMLEnv
 								.getClassID(this))) {
@@ -144,12 +145,12 @@ public class HTMLC1 extends Connector implements Serializable {
 						}
 
 						htmlEnv.code.append(Modifier.getClassModifierValue(decos) + "\" ");//kotani_idmodifier_ok
-						
+
 					} else if (htmlEnv.writtenClassId.contains(HTMLEnv
 							.getClassID(this))) {
 						htmlEnv.code.append("\" ");
 					}
-					
+
 					htmlEnv.code.append(Modifier.getIdModifierValue(decos));//kotani_idmodifier_ok
 					htmlEnv.code.append("><TR>");
 				}
@@ -213,13 +214,13 @@ public class HTMLC1 extends Connector implements Serializable {
 					}
 					//htmlEnv2.code.append(decos.getStr("class") + "\" ");
 					htmlEnv2.code.append(Modifier.getClassModifierValue(decos) + "\" ");//kotani_idmodifier_ok
-					
+
 				} else if (htmlEnv.writtenClassId.contains(HTMLEnv
 						.getClassID(this))) {
 					htmlEnv2.code.append("\" ");
 				}
 				htmlEnv2.code.append(Modifier.getIdModifierValue(decos));//kotani_idmodifier_ok
-				
+
 				if (decos.containsKey("form")) {
 					htmlEnv2.code.append(" form=\"" + HTMLEnv.getFormNumber()
 							+ "\" ");
@@ -242,7 +243,7 @@ public class HTMLC1 extends Connector implements Serializable {
 				htmlEnv.cNum++;
 				htmlEnv.xmlDepth++;
 				ITFE tfe = tfes.get(i);
-				
+
 				if (htmlEnv.decorationStartFlag.size() > 0) {
 					HTMLDecoration.ends.get(0).append("<TD class=\"" + classname + " nest\">\n");
 				} else {

@@ -20,7 +20,9 @@ import supersql.codegenerator.Jscss;
 import supersql.codegenerator.Manager;
 import supersql.common.GlobalEnv;
 import supersql.common.Log;
+import supersql.dataconstructor.DataConstructor;
 import supersql.extendclass.ExtList;
+import supersql.parser.Preprocessor;
 
 public class HTMLManager extends Manager implements Serializable {
 
@@ -181,24 +183,115 @@ public class HTMLManager extends Manager implements Serializable {
 			return;
 		}
 
+		//20210413 yama index.js
+		String indexpath = GlobalEnv.getOutputDirPath()+"/../src/index.js";
+		File file = new File(indexpath);
+
+		//delete an old file
+		if (file.exists()) {
+            file.delete();
+        }
+
+		//create a new file
+	    try{
+	      if (!file.createNewFile()){
+	        System.out.println("Could not create index.js file.");
+	      }
+	    }catch(IOException e){
+	      System.out.println(e);
+	    }
+
+	    //write to file
+		try {
+            FileWriter fw = new FileWriter(file, true);
+            fw.write("import React from 'react';\n" +
+            		"import ReactDOM from 'react-dom';\n" +
+            		"import './index.css';\n");
+            for(int i = 0; i < Preprocessor.getComponentList().size(); i++) {
+            	fw.write("import " + Preprocessor.getComponentList().get(i) + " from './" + Preprocessor.getComponentList().get(i).toString().toLowerCase() + "';\n");
+            }
+            fw.write("import * as serviceWorker from './serviceWorker';\n" +
+            		"\n" +
+            		"ReactDOM.render(\n" +
+            		"  <React.StrictMode>\n");
+            for(int i = 0; i < Preprocessor.getComponentList().size(); i++){
+            	fw.write("    <"+ Preprocessor.getComponentList().get(i) +" />\n");
+            }
+            fw.write("  </React.StrictMode>,\n" +
+            		"  document.getElementById('root')\n" +
+            		");\n" +
+            		"\n" +
+            		"// If you want your app to work offline and load faster, you can change\n" +
+            		"// unregister() to register() below. Note this comes with some pitfalls.\n" +
+            		"// Learn more about service workers: https://bit.ly/CRA-PWA\n" +
+            		"serviceWorker.unregister();\n");
+            fw.close();
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+
+		String indexcsspath = GlobalEnv.getOutputDirPath()+"/../src/index.css";
+		File cssfile = new File(indexcsspath);
+
+		//delete an old file
+		if (cssfile.exists()) {
+            cssfile.delete();
+        }
+
+		//create a new file
+	    try{
+	      if (!cssfile.createNewFile()){
+	        System.out.println("Could not create index.css file.");
+	      }
+	    }catch(IOException e){
+	      System.out.println(e);
+	    }
+
+	    //write to file
+		try {
+            FileWriter fw = new FileWriter(cssfile, true);
+            fw.write("body {\n" +
+            		"  margin: 0;\n" +
+            		"  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',\n" +
+            		"    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',\n" +
+            		"    sans-serif;\n" +
+            		"  -webkit-font-smoothing: antialiased;\n" +
+            		"  -moz-osx-font-smoothing: grayscale;\n" +
+            		"}\n" +
+            		"\n" +
+            		"code {\n" +
+            		"  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',\n" +
+            		"    monospace;\n" +
+            		"}\n");
+            fw.close();
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+
 		// ?�ֳ�¦��G3�Ǥʤ�??]
-		htmlEnv.fileName = htmlEnv.outFile + ".html";
+		//20210412 yama media react_tHTML
+		if (CodeGenerator.getMedia().equalsIgnoreCase("react_tHTML")) {
+			htmlEnv.fileName = htmlEnv.outFile + ".js";
+		} else {
+			htmlEnv.fileName = htmlEnv.outFile + ".html";
+		}
 		htmlEnv2.fileName = htmlEnv.outFile + ".xml";
 
 		htmlEnv.setOutlineMode();
 
+		//20210419 yama kokowo naosu
+		//if (data_info.size() != 0 && gridlist_flag)
 		if (data_info.size() == 0
 		// added by goto 20130306 "FROM�ʤ��������к� 3/3"
-				/*&& !DataConstructor.SQL_string
-						.equals("SELECT DISTINCT  FROM ;") && !DataConstructor.SQL_string.equals("SELECT  FROM ;")*/) {
-//			Log.out("no data");
-//			htmlEnv.code.append("<div class=\"nodata\" >");
-//			htmlEnv.code.append("NO DATA FOUND");
-//			htmlEnv.code.append("</div>");
-			tfe_info.work(data_info);
-
+				&& !DataConstructor.SQL_string
+						.equals("SELECT DISTINCT  FROM ;") && !DataConstructor.SQL_string.equals("SELECT  FROM ;")) {
+			Log.out("no data");
+			htmlEnv.code.append("<div class=\"nodata\" >");
+			htmlEnv.code.append("NO DATA FOUND");
+			htmlEnv.code.append("</div>");
 		} else
 			tfe_info.work(data_info);
+
 
 		// add by masato 20151118 start for incremental
 		if (Ehtml.flag) {
@@ -207,14 +300,17 @@ public class HTMLManager extends Manager implements Serializable {
 			String id = "ssqlResult" + GlobalEnv.getQueryNum();
 			String phpFileName = htmlEnv.outFile.substring(htmlEnv.outFile.lastIndexOf(GlobalEnv.OS_FS) + 1, htmlEnv.outFile.length());
 			//TODO -scrolled 1 -> ssqlresult1-1.xml, -scrolled == null -> ssqlresult1.xml
-			String path = "";
+
+			String xmlFileName = htmlEnv.outFile.substring(htmlEnv.outFile.lastIndexOf(GlobalEnv.OS_FS) + 1, htmlEnv.outFile.length());
+			String path = htmlEnv.outDir + GlobalEnv.OS_FS + "GeneratedXML" + GlobalEnv.OS_FS + xmlFileName + GlobalEnv.OS_FS + id + ".xml";
+//			String path = "";
 			Incremental.createXML(path, htmlEnv.xmlCode);
 			// 既存のHTMLのヘッダー内に書き込むjsコード
 			Ehtml.appendToHeadFromBody(path);
 			// XMLをparseして生成したテーブルをappendするhtmlコード（divタグ）
 			Ehtml.createBaseHTMLCode();
 			// cssの生成・コピー
-			Jscss.process();
+			Jscss.process();	//TODO
 
 			// TODO 終了どうする？
 //			System.exit(0);
@@ -240,7 +336,8 @@ public class HTMLManager extends Manager implements Serializable {
 //					+ Utils.getEncode() + "\"?><SSQL>");
 //			htmlEnv2.footer.append("</SSQL>");
 			try {
-				if (CodeGenerator.getMedia().equalsIgnoreCase("html")) {
+				//20210412 yama media react_tHTML
+				if (CodeGenerator.getMedia().equalsIgnoreCase("html") || CodeGenerator.getMedia().equalsIgnoreCase("react")) {
 					if (!GlobalEnv.isOpt()) {
 						// changed by goto 20120715 start
 						PrintWriter pw;
@@ -264,8 +361,14 @@ public class HTMLManager extends Manager implements Serializable {
 						html += htmlEnv.header;
 						html += htmlEnv.code;
 						html += htmlEnv.footer;
-						html = FileFormatter.process(html);
-						pw.println(html);
+						//20210412 yama media react_tHTML
+						if (CodeGenerator.getMedia().equalsIgnoreCase("react_tHTML")) {
+							String[] fileName = htmlEnv.outFile.split("/");
+							html = "const "+ fileName[fileName.length - 1] +" = `\n" + FileFormatter.process(html) + "\n`\n\nexport default "+ fileName[fileName.length - 1] +";";
+						} else {
+							html = FileFormatter.process(html);
+						}
+							pw.println(html);
 
 						pw.close();
 					}
