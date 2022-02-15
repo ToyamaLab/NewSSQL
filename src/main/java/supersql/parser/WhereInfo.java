@@ -17,7 +17,7 @@ public class WhereInfo implements Serializable {
 			setSparqlWhereQuery("");
 		else{
 			this.where_clause = new ExtList();
-		}	
+		}
 	}
 
 	public WhereInfo(String line) {
@@ -56,7 +56,7 @@ public class WhereInfo implements Serializable {
 						}
 					}
 				}
-				
+
 				if (!inQ && ch.equals("(")) {
 					paren++;
 					buf.append(ch);
@@ -87,11 +87,11 @@ public class WhereInfo implements Serializable {
 		return where_clause;
 	}
 
-	
+
 	public String getWhereSig(FromInfo from) {
-		
+
 		StringBuffer sig = new StringBuffer();
-		
+
 		Iterator whei = where_clause.iterator();
 		while (whei.hasNext()){
 			sig.append(((WhereParse)whei.next()).getWhereSig(from));
@@ -99,7 +99,7 @@ public class WhereInfo implements Serializable {
 		}
 
 		return sig.toString();
-		
+
 	}
 
 	public String getSparqlWhereQuery() {

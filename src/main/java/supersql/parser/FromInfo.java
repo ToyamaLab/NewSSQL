@@ -3,7 +3,6 @@ package supersql.parser;
 
 import java.io.Serializable;
 import java.util.Hashtable;
-import java.util.StringTokenizer;
 
 import supersql.common.Log;
 
@@ -18,7 +17,8 @@ public class FromInfo implements Serializable {
 		this.line = line;
 		this.from_table = new Hashtable();
 //		this.makeInfo(line);
-		
+		//20210925 yama
+		Preprocessor.setFromClause(line);
 		Log.out("FromInfo [line] : " + line);
 	}
 
@@ -49,7 +49,7 @@ public class FromInfo implements Serializable {
 //			}
 //		}
 //	}
-	
+
 //	private String addDeco(String st){
 //		Log.out("@from decoration found@");
 //		TFEtokenizer toks = new TFEtokenizer(st);
@@ -120,7 +120,7 @@ public class FromInfo implements Serializable {
 	public Hashtable getFromTable() {
 		return from_table;
 	}
-	
+
 	public String getOrigTable (String alias) {
 		return ((FromParse)from_table.get(alias)).getRealName();
 	}

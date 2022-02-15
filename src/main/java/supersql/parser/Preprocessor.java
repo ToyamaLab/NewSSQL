@@ -24,6 +24,16 @@ public class Preprocessor {
 	private static ExtList ggplot_list;
 	private static ExtList ggdeco_list;
 	private static ExtList ctab_list;
+	//20210413 yama
+	private static ExtList component_list;
+	//20210419 yama
+	private static ExtList tileData_list;
+	//20210924 yama
+	private static ExtList execFile_list;
+
+	//20210925 yama
+	private static String fromClause;
+	private static String whereClause;
 
 	private static int ggplot_count = 0;
 	private static int ggdeco_count = 0;
@@ -47,6 +57,10 @@ public class Preprocessor {
 		ggplot_list = new ExtList();
 		ggdeco_list = new ExtList();
 		ctab_list = new ExtList();
+		//20210413 yama
+		component_list = new ExtList();
+		//20210924 yama
+		execFile_list = new ExtList();
 
 	}
 
@@ -124,6 +138,58 @@ public class Preprocessor {
 
 	public static  ExtList getCtabList(){
 		return ctab_list;
+	}
+
+	//20210413 yama
+	public static void putComponentList(String component_name){
+		component_list.add(component_name);
+	}
+
+	public static ExtList getComponentList(){
+		return component_list;
+	}
+
+	//20210419 yama
+	public static void putTileDataList(String tileData_name){
+		tileData_list.add(tileData_name);
+	}
+
+	public static ExtList getTileDataList(){
+		return tileData_list;
+	}
+
+	//20210924 yama
+	public static void putExecFileList(String execFile_name){
+		execFile_list.add(execFile_name);
+	}
+
+	public static void setExecFileList(ExtList fileList){
+		execFile_list = fileList;
+	}
+
+	public static ExtList getExecFileList(){
+		return execFile_list;
+	}
+
+	public static void removeExecFileList() {
+		execFile_list.remove(execFile_list.size() - 1);
+	}
+
+	//20210925 yama From and Where Clause
+	public static void setFromClause(String fromInfo) {
+		fromClause = fromInfo;
+	}
+
+	public static String getFromClause() {
+		return fromClause;
+	}
+
+	public static void setWhereClause(String whereInfo) {
+		whereClause = whereInfo;
+	}
+
+	public static String getWhereClause() {
+		return whereClause;
 	}
 
 	public boolean setOrderBy(){

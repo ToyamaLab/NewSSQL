@@ -21,6 +21,8 @@ public class WhereParse implements Serializable {
 		this.useatts = new ExtList();
 		this.usetables = new ExtHashSet();
 		this.parseString(line);
+		//20210925 yama
+		Preprocessor.setWhereClause(line);
 	}
 
 	public void parseString(String line) {

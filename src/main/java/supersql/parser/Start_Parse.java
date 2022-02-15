@@ -1,7 +1,6 @@
 package supersql.parser;
 
 import java.io.BufferedReader;
-import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -15,14 +14,12 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Hashtable;
 import java.util.Iterator;
-import java.util.List;
 import java.util.StringTokenizer;
 import java.util.TreeSet;
-import java.util.stream.Stream;
 
-import org.antlr.v4.runtime.*;
-import org.antlr.v4.runtime.misc.Interval;
-import org.antlr.v4.runtime.tree.*;
+import org.antlr.v4.runtime.ANTLRInputStream;
+import org.antlr.v4.runtime.CommonTokenStream;
+import org.antlr.v4.runtime.tree.ParseTree;
 
 import supersql.codegenerator.AttributeItem;
 import supersql.codegenerator.CodeGenerator;
@@ -521,19 +518,26 @@ public class Start_Parse {
 		}
 
 		if(parameters != null){
-			String where_tmp = "";
+			String where_tmp = "", p = "";
 			for(int i = 0; i < parameters.length; i++){
 				if(i != 0){
-					where_tmp += "AND"; 
+					where_tmp += " AND ";
 				}
-				where_tmp += parameter_atts.get(i) + " = " + parameters[i];
+				// where_tmp += parameter_atts.get(i) + " = " + parameters[i];
+				p = parameters[i];
+				where_tmp += parameter_atts.get(i) + " = ";
+				if(GlobalEnv.isNumber(p)) {
+					where_tmp +=  p;
+				} else {
+					where_tmp +=  "'" + p + "'";
+				}
 			}
 
 			// where句の中身をチェック
 			if(where_c.toString().equals("")){
 				where_c.append(where_tmp);
 			} else {
-				where_tmp += "AND ";
+				where_tmp += " AND ";
 				where_c.insert(0, where_tmp);
 			}
 		}
@@ -563,7 +567,7 @@ public class Start_Parse {
 
 	private void parseSSQL(String query, int id){
 		if(query==null) return;
-		
+
 		query = query.trim();
 		String after_from = "";
 
@@ -580,6 +584,7 @@ public class Start_Parse {
 				String b = query.substring(query.toLowerCase().indexOf("generate"));
 //				Log.info(a);
 				Log.info(b);
+				b = b.replaceFirst("(?i)React.js", "React");
 				VRcjoinarray.query = b;
 
 				if(a.equals(" ") || a.equals("") || a.equals("\r")){
@@ -713,7 +718,7 @@ public class Start_Parse {
 //						alias_name.put(alias, name);
 //					}
 //					Log.info(alias_name);
-					
+
 					//					Log.info(list_from_where);
 					//					String from1 = getText( list_from_where, ruleNames );
 					//					after_from = from1.substring(from1.toLowerCase().indexOf("from") + 4);
