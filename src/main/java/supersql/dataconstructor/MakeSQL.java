@@ -7,11 +7,18 @@ import java.util.Iterator;
 import java.util.Map;
 
 import supersql.codegenerator.AttributeItem;
+import supersql.codegenerator.CodeGenerator;
 import supersql.common.GlobalEnv;
 import supersql.common.Log;
 import supersql.extendclass.ExtList;
 import supersql.extendclass.QueryBuffer;
-import supersql.parser.*;
+import supersql.parser.From;
+import supersql.parser.FromInfo;
+import supersql.parser.FromParse;
+import supersql.parser.Preprocessor;
+import supersql.parser.Start_Parse;
+import supersql.parser.WhereInfo;
+import supersql.parser.WhereParse;
 //ryuryu
 
 
@@ -217,6 +224,10 @@ public class MakeSQL {
 						fClauseAfter += ",";
 					}
 				}
+				if (!CodeGenerator.t_embedflag) {
+					//20210925 yama
+					fClauseAfter = Preprocessor.getFromClause() + ",";
+				}
 				if (fClauseAfter.charAt(fClauseAfter.length() - 1) == ',') {
 					fClauseAfter = fClauseAfter.substring(0, fClauseAfter.length() - 1);
 				}
@@ -253,8 +264,13 @@ public class MakeSQL {
 //					Log.info(buf.toString());
 				} else {
 					flag = true;
-					buf.append(" WHERE " + whe.getLine());
-//					Log.info(buf.toString());
+					if (!CodeGenerator.t_embedflag) {
+						//20210925 yama
+						buf.append(" WHERE " + Preprocessor.getWhereClause());
+					} else {
+						buf.append(" WHERE " + whe.getLine());
+//						Log.info(buf.toString());
+					}
 				}
 			}
 		}
