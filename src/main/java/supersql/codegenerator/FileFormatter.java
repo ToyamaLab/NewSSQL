@@ -6,29 +6,35 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 
 public class FileFormatter {
+	static boolean isExec = true;
+//	static boolean isExec = false;
 	
 	public FileFormatter() {
 		
 	}
 
     public static String process(String html) {
-    	String r = "";
-    	try {
-			Document doc = Jsoup.parse(html);
-			doc.outputSettings().prettyPrint(true);
-			doc.outputSettings().indentAmount(5);
-			doc.outputSettings().outline(true);
-			r = doc.html();
-			
-			r = r.replace("<!--?php", "<?php")
-				 .replace("?--><!DOCTYPE html>", "?>\n<!DOCTYPE html>")
-				 .replace("?-->", "?>");
-			
-		} catch (Exception e) {
-			e.printStackTrace();
+    	if (isExec) {
+	    	String r = "";
+	    	try {
+				Document doc = Jsoup.parse(html);
+				doc.outputSettings().prettyPrint(true);
+				doc.outputSettings().indentAmount(5);
+				doc.outputSettings().outline(true);
+				r = doc.html();
+				
+				r = r.replace("<!--?php", "<?php")
+					 .replace("?--><!DOCTYPE html>", "?>\n<!DOCTYPE html>")
+					 .replace("?-->", "?>");
+				
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+	
+	        return (!r.equals(""))? r : html;
+    	} else {
+			return html;
 		}
-
-        return (!r.equals(""))? r : html;
     	
     	
 //    	// Create an instance of HtmlCleaner

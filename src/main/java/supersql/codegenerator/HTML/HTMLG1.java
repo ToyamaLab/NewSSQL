@@ -120,6 +120,7 @@ public class HTMLG1 extends Grouper implements Serializable {
 				pageFlag = true;
 				retFlag = false;
 			}
+//			System.out.println("G1  i = " + i + ", j = "+j);
 
 			// 20140602_masato
 			if (pageFlag) {
