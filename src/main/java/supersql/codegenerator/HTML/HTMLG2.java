@@ -174,6 +174,15 @@ public class HTMLG2 extends Grouper implements Serializable {
 					//					html_env.code.append(">");
 					//					html_env.code.append("<TR><TD class=\""
 					//							+ HTMLEnv.getClassID(tfe) + " nest\">\n");
+										html_env.code
+										.append("<TABLE cellSpacing=\"0\" cellPadding=\"0\" border=\"");
+										html_env.code.append(html_env.tableBorder + "\" ");
+										html_env.code.append("class=\"");
+										html_env.code.append("nest\"");
+										html_env.code.append(html_env.getOutlineMode());
+										html_env.code.append(">");
+										html_env.code.append("<TR><TD class=\""
+												+ HTMLEnv.getClassID(tfe) + " nest\">\n");
 				}
 			}
 
@@ -183,6 +192,7 @@ public class HTMLG2 extends Grouper implements Serializable {
 				i = Integer.parseInt(decos.getStr("row"));
 				j = Integer.parseInt(decos.getStr("column"));
 			}
+//			System.out.println("G2  i = " + i + ", j = "+j);
 
 			// 20140613_masato && j != 1を追加　→　[tfe]!3%とかのとき
 			if (!GlobalEnv.isOpt()) {
@@ -363,7 +373,8 @@ public class HTMLG2 extends Grouper implements Serializable {
 					if (html_env.decorationStartFlag.size() > 0) {
 						HTMLDecoration.ends.get(0).append("</TD></TR>\n");
 					} else {
-						html_env.code.append("</TD></TR>\n");
+//						html_env.code.append("</TD></TR>\n");
+						html_env.code.append("</TR>\n");
 					}
 					Log.out("</TD></TR>");
 					// }
@@ -374,6 +385,7 @@ public class HTMLG2 extends Grouper implements Serializable {
 					if (i != 0) {
 						if (count % i == 0) {
 							if (html_env.decorationStartFlag.size() > 0) {
+//								HTMLDecoration.ends.get(0).append("</TABLE></TD>");
 								HTMLDecoration.ends.get(0).append("</TABLE></TD>");
 								if (!this.hasMoreItems()) {
 									flag = true;
@@ -388,6 +400,7 @@ public class HTMLG2 extends Grouper implements Serializable {
 									HTMLDecoration.ends.get(0).append(">");
 								}
 							} else {
+//								System.out.println("G2  count = "+count);
 								html_env.code.append("</TABLE></TD>");
 								if (!this.hasMoreItems()) {
 									flag = true;
